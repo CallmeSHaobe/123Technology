@@ -1,0 +1,10 @@
+
+plugins {
+    id 'com.gtnewhorizons.gtnhconvention'
+}
+
+
+minecraft {
+    extraRunJvmArguments.add("-Xmx12G")
+    extraRunJvmArguments.add("-Xms12G")
+}

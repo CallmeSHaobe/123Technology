@@ -1,0 +1,21 @@
+{
+	"modListVersion": 1,
+	"modList": [{
+		"modid": "${modId}",
+		"name": "${modName}",
+		"description": "asdasd",
+		"version": "${modVersion}",
+		"mcversion": "1.7.10",
+		"url": "tps://github.com/CallmeSHaobe/123ht",
+		"updateUrl": "",
+		"authorList": ["SinTho0r4s"],
+		"credits": "",
+		"logoFile": "",
+		"screenshots": [],
+		"parent": "",
+		"requiredMods": [],
+		"dependencies": [],
+		"dependants": [],
+		"useDependencyInformation": false
+	}]
+}
