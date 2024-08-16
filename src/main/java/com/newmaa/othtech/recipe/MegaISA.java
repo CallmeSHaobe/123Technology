@@ -1,17 +1,20 @@
 package com.newmaa.othtech.recipe;
 
-import com.newmaa.othtech.common.recipemap.Recipemaps;
-import gregtech.api.enums.*;
-import gregtech.api.interfaces.IRecipeMap;
-import gregtech.api.util.GT_ModHandler;
-import gregtech.api.util.GT_OreDictUnificator;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
+import com.newmaa.othtech.common.recipemap.Recipemaps;
+
+import gregtech.api.enums.*;
+import gregtech.api.interfaces.IRecipeMap;
+import gregtech.api.util.GT_ModHandler;
+import gregtech.api.util.GT_OreDictUnificator;
+
 public class MegaISA implements IRecipePool {
+
     @Override
-    public void loadRecipes(){
+    public void loadRecipes() {
         Fluid laoda = FluidRegistry.getFluid("molten.helicopter");
         Fluid quantum = FluidRegistry.getFluid("molten.quantum");
         Fluid Sun = FluidRegistry.getFluid("molten.sunnarium");
@@ -29,30 +32,29 @@ public class MegaISA implements IRecipePool {
         GT_Values.RA.stdBuilder()
             .fluidInputs(new FluidStack(laoda, 123123))
             .itemInputs(GT_ModHandler.getModItem("123Technology", "LookNEIdust", 1))
-            .itemOutputs(                GT_ModHandler.getModItem("miscutils", "itemDustRhenium", 64),
+            .itemOutputs(
+                GT_ModHandler.getModItem("miscutils", "itemDustRhenium", 64),
                 GT_ModHandler.getModItem("miscutils", "itemDustThallium", 64),
                 GT_ModHandler.getModItem("miscutils", "itemDustSelenium", 64),
                 GT_ModHandler.getModItem("miscutils", "itemDustGermanium", 64),
                 GT_ModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 2044),
                 GT_ModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 2073),
-                GT_ModHandler.getModItem("dreamcraft", "item.LapotronDust", 64 ))
-            .fluidOutputs(
-                new FluidStack(quantum, 177120)
-            )
+                GT_ModHandler.getModItem("dreamcraft", "item.LapotronDust", 64))
+            .fluidOutputs(new FluidStack(quantum, 177120))
             .noOptimize()
             .eut(TierEU.RECIPE_MAX)
             .duration(20)
             .addTo(ISA);
         GT_Values.RA.stdBuilder()
-            .itemInputs(ItemList.Robot_Arm_UXV.get(0),
-            GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Gold, 1))
+            .itemInputs(ItemList.Robot_Arm_UXV.get(0), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Gold, 1))
             .fluidOutputs(new FluidStack(Sun, 144))
             .noOptimize()
             .duration(100)
             .eut(123123123)
             .addTo(ISA);
         GT_Values.RA.stdBuilder()
-            .itemInputs(ItemList.Robot_Arm_UXV.get(0),
+            .itemInputs(
+                ItemList.Robot_Arm_UXV.get(0),
                 GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Glowstone, 1))
             .fluidOutputs(new FluidStack(Sun, 288))
             .noOptimize()
@@ -60,8 +62,9 @@ public class MegaISA implements IRecipePool {
             .eut(123123123)
             .addTo(ISA);
         GT_Values.RA.stdBuilder()
-            .itemInputs(GT_ModHandler.getModItem("tectech", "gt.spacetime_compression_field_generator", 0, 2),
-            ItemList.Field_Generator_UMV.get(1))
+            .itemInputs(
+                GT_ModHandler.getModItem("tectech", "gt.spacetime_compression_field_generator", 0, 2),
+                ItemList.Field_Generator_UMV.get(1))
             .fluidInputs(new FluidStack(WNt, 5760))
             .fluidOutputs(new FluidStack(white, 36))
             .noOptimize()
@@ -69,25 +72,28 @@ public class MegaISA implements IRecipePool {
             .eut(2000000000)
             .addTo(ISA);
         GT_Values.RA.stdBuilder()
-            .itemInputs(GT_ModHandler.getModItem("tectech", "gt.spacetime_compression_field_generator", 0, 5),
+            .itemInputs(
+                GT_ModHandler.getModItem("tectech", "gt.spacetime_compression_field_generator", 0, 5),
                 ItemList.Field_Generator_UMV.get(2))
-            .fluidInputs(new FluidStack(BNt,5760))
+            .fluidInputs(new FluidStack(BNt, 5760))
             .fluidOutputs(new FluidStack(black, 36))
             .noOptimize()
             .duration(8000)
             .eut(2000000000)
             .addTo(ISA);
         GT_Values.RA.stdBuilder()
-            .itemInputs(GT_ModHandler.getModItem("tectech", "gt.spacetime_compression_field_generator", 0, 8),
+            .itemInputs(
+                GT_ModHandler.getModItem("tectech", "gt.spacetime_compression_field_generator", 0, 8),
                 ItemList.Field_Generator_UXV.get(0))
-            .fluidInputs(new FluidStack(space,16 * 144), new FluidStack(lava, 1000))
+            .fluidInputs(new FluidStack(space, 16 * 144), new FluidStack(lava, 1000))
             .fluidOutputs(new FluidStack(inf, 576), new FluidStack(Hy, 288))
             .noOptimize()
             .duration(16000)
             .eut(2000000000)
             .addTo(ISA);
         GT_Values.RA.stdBuilder()
-            .itemInputs(GT_ModHandler.getModItem("tectech", "gt.spacetime_compression_field_generator", 0, 2),
+            .itemInputs(
+                GT_ModHandler.getModItem("tectech", "gt.spacetime_compression_field_generator", 0, 2),
                 ItemList.Field_Generator_UXV.get(1))
             .fluidInputs(new FluidStack(WNt, 5760))
             .fluidOutputs(new FluidStack(white, 576))
@@ -96,15 +102,15 @@ public class MegaISA implements IRecipePool {
             .eut(2000000000)
             .addTo(ISA);
         GT_Values.RA.stdBuilder()
-            .itemInputs(GT_ModHandler.getModItem("tectech", "gt.spacetime_compression_field_generator", 0, 5),
+            .itemInputs(
+                GT_ModHandler.getModItem("tectech", "gt.spacetime_compression_field_generator", 0, 5),
                 ItemList.Field_Generator_UXV.get(2))
-            .fluidInputs(new FluidStack(BNt,5760))
+            .fluidInputs(new FluidStack(BNt, 5760))
             .fluidOutputs(new FluidStack(black, 576))
             .noOptimize()
             .duration(80000)
             .eut(2000000000)
             .addTo(ISA);
-
 
     }
 }

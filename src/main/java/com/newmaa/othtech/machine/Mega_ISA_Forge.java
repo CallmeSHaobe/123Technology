@@ -102,7 +102,6 @@ public class Mega_ISA_Forge extends GTCM_MultiMachineBase<Mega_ISA_Forge> {
             return false;
         }
 
-
         parallel = (int) Math.min((long) piece * getCoilTier() * Parallel_PerPiece_ISA_Forge, Integer.MAX_VALUE);
         speedBonus = (float) (Math
             .pow(SpeedBonus_MultiplyPerVoltageTier_ISA_Forge, GT_Utility.getTier(this.getMaxInputEu()))
@@ -114,7 +113,6 @@ public class Mega_ISA_Forge extends GTCM_MultiMachineBase<Mega_ISA_Forge> {
     public void construct(ItemStack stackSize, boolean hintsOnly) {
         int piece = stackSize.stackSize;
         this.buildPiece(STRUCTURE_PIECE_MAIN, stackSize, hintsOnly, horizontalOffSet, verticalOffSet, depthOffSet);
-
 
     }
 

@@ -1,6 +1,5 @@
 package com.newmaa.othtech.recipe;
 
-import gregtech.GT_Mod;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -64,16 +63,14 @@ public class loadRecipe implements IRecipePool {
                 new FluidStack(water, 123123), new FluidStack(water, 123123) },
             GT_ModHandler.getModItem("123Technology", "dustIrOsSm", 1),
             114514,
-            1919810
-        );
+            1919810);
         TT_recipeAdder.addResearchableAssemblylineRecipe(
-            GT_ModHandler.getModItem("gregtech","gt.blockmachines", 1, 31027),
+            GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 31027),
             (int) 409600000,
             32000,
             (int) 123123123,
             514,
-            new ItemStack[] {
-                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 31027),
+            new ItemStack[] { GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 31027),
                 GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 31028),
                 GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 1004),
                 GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 13532),
@@ -83,23 +80,16 @@ public class loadRecipe implements IRecipePool {
                 GT_ModHandler.getModItem("tectech", "gt.time_acceleration_field_generator", 32),
                 GT_ModHandler.getModItem("tectech", "gt.stabilisation_field_generator", 32),
                 GT_ModHandler.getModItem("eternalsingularity", "eternal_singularity", 64),
-                ItemList.Field_Generator_UMV.get(64),
-                GT_ModHandler.getModItem("miscutils","milledMonazite", 64),
+                ItemList.Field_Generator_UMV.get(64), GT_ModHandler.getModItem("miscutils", "milledMonazite", 64),
                 GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 2083),
                 GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 2092),
                 GT_ModHandler.getModItem("123Technology", "dustIrOsSm", 64),
-                GT_ModHandler.getModItem("123Technology", "LookNEIdust", 64)
-            },
-            new FluidStack[]{
-                new FluidStack(white, 4608),
-                new FluidStack(cuihuaji, 123123),
-                new FluidStack(Ewater, 4096000),
-                new FluidStack(songyou, 32000000)
-            },
+                GT_ModHandler.getModItem("123Technology", "LookNEIdust", 64) },
+            new FluidStack[] { new FluidStack(white, 4608), new FluidStack(cuihuaji, 123123),
+                new FluidStack(Ewater, 4096000), new FluidStack(songyou, 32000000) },
             GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 20000),
-             105000,
-             123123123
-        );
+            105000,
+            123123123);
 
     }
 }

@@ -39,7 +39,6 @@ public class CommonProxy {
         new MegaISA().loadRecipes();
         new Comass().loadRecipes();
 
-
     }
 
     // register server commands in this event handler (Remove if not needed)

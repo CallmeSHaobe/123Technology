@@ -1,15 +1,18 @@
 package com.newmaa.othtech.common.item;
 
-import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-import java.util.List;
+import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class dustSnAs extends Item {
+
     public dustSnAs() {
         super();
 
@@ -21,7 +24,7 @@ public class dustSnAs extends Item {
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(final ItemStack itemStack, final EntityPlayer player, final List toolTip,
-                               final boolean advancedToolTips) {
+        final boolean advancedToolTips) {
 
         toolTip.add("§7SnAs☆");
 
