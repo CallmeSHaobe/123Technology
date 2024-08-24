@@ -9,9 +9,9 @@ import gregtech.api.recipe.RecipeMapBuilder;
 
 public class Recipemaps {
 
-    public static final RecipeMap<OTH_RecipeMapBackend> Mega_ISA_Forge = RecipeMapBuilder
-        .of("othtech.megaisa.map", OTH_RecipeMapBackend::new)
-        .maxIO(16, 16, 16, 4)
+    public static final RecipeMap<OTH_RecipeMapBackend> MegaIsaForge = RecipeMapBuilder
+        .of("otht.recipe.MegaIsaForge", OTH_RecipeMapBackend::new)
+        .maxIO(16, 16, 16, 16)
         .progressBar(GT_UITextures.PROGRESSBAR_ARROW_MULTIPLE)
         .frontend(OTH_GeneralFrontend::new)
         .neiHandlerInfo(
@@ -19,4 +19,15 @@ public class Recipemaps {
                 .setMaxRecipesPerPage(1))
         .disableOptimize()
         .build();
+    public static final RecipeMap<OTH_RecipeMapBackend> QFTMega = RecipeMapBuilder
+        .of("otht.recipe.MegaQFT", OTH_RecipeMapBackend::new)
+        .maxIO(8, 8, 8, 8)
+        .progressBar(GT_UITextures.PROGRESSBAR_ARROW_MULTIPLE)
+        .frontend(OTH_GeneralFrontend::new)
+        .neiHandlerInfo(
+            builder -> builder.setDisplayStack(ItemList.Field_Generator_MAX.get(1))
+                .setMaxRecipesPerPage(2))
+        .disableOptimize()
+        .build();
+
 }

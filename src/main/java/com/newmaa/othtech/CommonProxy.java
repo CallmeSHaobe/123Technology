@@ -3,8 +3,6 @@ package com.newmaa.othtech;
 import com.newmaa.othtech.common.OreDictionaryLoader;
 import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
 import com.newmaa.othtech.common.item.ItemLoader;
-import com.newmaa.othtech.machine.MachineLoader;
-import com.newmaa.othtech.recipe.*;
 
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
@@ -29,15 +27,6 @@ public class CommonProxy {
 
     // postInit "Handle interaction with other mods, complete your setup based on this." (Remove if not needed)
     public void postInit(FMLPostInitializationEvent event) {
-        MachineLoader.loadMachines();
-        new loadRecipe().loadRecipes();
-        new QFT().loadRecipes();
-        new MAXs().loadRecipes();
-        new EBF().loadRecipes();
-        new Freezer().loadRecipes();
-        new Mixer().loadRecipes();
-        new MegaISA().loadRecipes();
-        new Comass().loadRecipes();
 
     }
 

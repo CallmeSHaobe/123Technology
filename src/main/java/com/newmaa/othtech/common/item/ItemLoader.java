@@ -19,6 +19,11 @@ public class ItemLoader {
     public static Item ShikanokoNoko = new ShikanokoNoko();
     public static Item dustSnAs = new dustSnAs();
     public static Item ingotSnAs = new ingotSnAs();
+    public static Item IsaBee = new IsaBee();
+    public static Item MagBee = new MagBee();
+    public static Item socCosmic = new socCosmic();
+    public static Item socInf = new socInf();
+    public static Item socNor = new socNor();
 
     public ItemLoader(FMLPreInitializationEvent event) {
         IRegistry(LookNEIdust, "LookNEIdust");
@@ -32,6 +37,11 @@ public class ItemLoader {
         IRegistry(ShikanokoNoko, "ShikanokoNoko");
         IRegistry(dustSnAs, "dustSnAs");
         IRegistry(ingotSnAs, "ingotSnAs");
+        IRegistry(IsaBee, "IsaBee");
+        IRegistry(MagBee, "MagBee");
+        IRegistry(socCosmic, "socCosmic");
+        IRegistry(socInf, "socInf");
+        IRegistry(socNor, "socNor");
     }
 
     private static void IRegistry(Item item, String name) {

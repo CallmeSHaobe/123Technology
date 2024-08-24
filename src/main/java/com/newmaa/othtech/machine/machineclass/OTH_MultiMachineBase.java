@@ -1,6 +1,6 @@
 package com.newmaa.othtech.machine.machineclass;
 
-import static gregtech.api.util.GT_Utility.filterValidMTEs;
+import static com.newmaa.othtech.Utils.Utils.filterValidMTEs;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,12 +14,16 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
 import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.NotNull;
 
 import com.gtnewhorizon.structurelib.alignment.constructable.IConstructable;
 import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructable;
+import com.newmaa.othtech.Config;
+import com.newmaa.othtech.machine.machineclass.OTH_processingLogics.OTH_ProcessingLogic;
 
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
+import gregtech.api.logic.ProcessingLogic;
 import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_ExtendedPowerMultiBlockBase;
 import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch;
 import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Dynamo;
@@ -35,15 +39,15 @@ import gregtech.common.tileentities.machines.GT_MetaTileEntity_Hatch_Input_ME;
 import gregtech.common.tileentities.machines.IDualInputHatch;
 import gregtech.common.tileentities.machines.IDualInputInventory;
 
-public abstract class GTCM_MultiMachineBase<T extends GTCM_MultiMachineBase<T>>
+public abstract class OTH_MultiMachineBase<T extends OTH_MultiMachineBase<T>>
     extends GT_MetaTileEntity_ExtendedPowerMultiBlockBase<T> implements IConstructable, ISurvivalConstructable {
 
     // region Class Constructor
-    public GTCM_MultiMachineBase(int aID, String aName, String aNameRegional) {
+    public OTH_MultiMachineBase(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
     }
 
-    public GTCM_MultiMachineBase(String aName) {
+    public OTH_MultiMachineBase(String aName) {
         super(aName);
     }
 
@@ -68,6 +72,22 @@ public abstract class GTCM_MultiMachineBase<T extends GTCM_MultiMachineBase<T>>
      * <p>
      * If this machine doesn't use recipemap or does some complex things, override {@link #checkProcessing()}.
      */
+    @ApiStatus.OverrideOnly
+    protected ProcessingLogic createProcessingLogic() {
+        return new OTH_ProcessingLogic() {
+
+            @NotNull
+            @Override
+            public CheckRecipeResult process() {
+
+                setEuModifier(getEuModifier());
+                setSpeedBonus(getSpeedBonus());
+                setOverclock(isEnablePerfectOverclock() ? 2 : 1, 2);
+                return super.process();
+            }
+
+        }.setMaxParallelSupplier(this::getLimitedMaxParallel);
+    }
 
     /**
      * Proxy Perfect Overclock Supplier.
@@ -236,7 +256,7 @@ public abstract class GTCM_MultiMachineBase<T extends GTCM_MultiMachineBase<T>>
         }
 
         Map<GT_Utility.ItemId, ItemStack> inputsFromME = new HashMap<>();
-        for (GT_MetaTileEntity_Hatch_InputBus tHatch : filterValidMTEs(mInputBusses)) {
+        for (GT_MetaTileEntity_Hatch_InputBus tHatch : GT_Utility.filterValidMTEs(mInputBusses)) {
             tHatch.mRecipeMap = getRecipeMap();
             IGregTechTileEntity tileEntity = tHatch.getBaseMetaTileEntity();
             boolean isMEBus = tHatch instanceof GT_MetaTileEntity_Hatch_InputBus_ME;
@@ -269,7 +289,7 @@ public abstract class GTCM_MultiMachineBase<T extends GTCM_MultiMachineBase<T>>
     public ArrayList<FluidStack> getStoredFluidsWithDualInput() {
         ArrayList<FluidStack> rList = new ArrayList<>();
         Map<Fluid, FluidStack> inputsFromME = new HashMap<>();
-        for (GT_MetaTileEntity_Hatch_Input tHatch : filterValidMTEs(mInputHatches)) {
+        for (GT_MetaTileEntity_Hatch_Input tHatch : GT_Utility.filterValidMTEs(mInputHatches)) {
             setHatchRecipeMap(tHatch);
             if (tHatch instanceof GT_MetaTileEntity_Hatch_MultiInput multiInputHatch) {
                 for (FluidStack tFluid : multiInputHatch.getStoredFluid()) {
@@ -326,6 +346,19 @@ public abstract class GTCM_MultiMachineBase<T extends GTCM_MultiMachineBase<T>>
         String[] origin = super.getInfoData();
         String[] ret = new String[origin.length + 3];
         System.arraycopy(origin, 0, ret, 0, origin.length);
+        // ret[origin.length] = EnumChatFormatting.AQUA + texter("Parallels", "MachineInfoData.Parallels")
+        // + ": "
+        // + EnumChatFormatting.GOLD
+        // + this.getLimitedMaxParallel();
+        // ret[origin.length + 1] = EnumChatFormatting.AQUA + texter("Speed multiplier",
+        // "MachineInfoData.SpeedMultiplier")
+        // + ": "
+        // + EnumChatFormatting.GOLD
+        // + dSpeed;
+        // ret[origin.length + 2] = EnumChatFormatting.AQUA + texter("EU Modifier", "MachineInfoData.EuModifier")
+        // + ": "
+        // + EnumChatFormatting.GOLD
+        // + dEUMod;
         return ret;
     }
 
@@ -521,6 +554,12 @@ public abstract class GTCM_MultiMachineBase<T extends GTCM_MultiMachineBase<T>>
     @Override
     public boolean supportsBatchMode() {
         return true;
+    }
+
+    @Override
+    public boolean getDefaultBatchMode() {
+        if (!supportsBatchMode()) return false;
+        return Config.DEFAULT_BATCH_MODE;
     }
 
     @Override

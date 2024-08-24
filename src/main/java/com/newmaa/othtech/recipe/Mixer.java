@@ -30,27 +30,26 @@ public class Mixer implements IRecipePool {
             .duration(200)
             .eut(6144)
             .addTo(LMixer);
-        GT_Values.RA.stdBuilder()
-            .itemInputs(
-                GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Tin, 1),
-                GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Arsenic, 1),
-                GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Fireclay, 4))
-            .itemOutputs(GT_ModHandler.getModItem("123Technology", "dustSnAs", 1))
-            .noOptimize()
-            .duration(200)
-            .eut(30)
-            .addTo(LMixer);
+        // GT_Values.RA.stdBuilder()
+        // .itemInputs(
+        // GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Tin, 1),
+        // GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Arsenic, 1),
+        // GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Fireclay, 4))
+        // .itemOutputs(GT_ModHandler.getModItem("123Technology", "dustSnAs", 1))
+        // .noOptimize()
+        // .duration(200)
+        // .eut(30)
+        // .addTo(LMixer);
         GT_Values.RA.stdBuilder()
             .itemOutputs(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 5, 10101))
             .itemInputs(
                 GT_Utility.getIntegratedCircuit(17),
                 GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Tin, 20),
                 GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 20),
-                GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Glowstone, 10),
+                GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Glowstone, 30),
                 GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Copper, 2),
                 GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Silver, 8),
                 GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Phosphorus, 40),
-                GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Glowstone, 20),
                 GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Redstone, 10),
                 GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Aluminium, 5))
             .noOptimize()
