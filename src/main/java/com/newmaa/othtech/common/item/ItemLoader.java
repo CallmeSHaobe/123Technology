@@ -13,8 +13,8 @@ public class ItemLoader {
     public static Item ingotHotDog = new ingotHotDog();
 
     public static Item ingotDog = new ingotDog();
-    public static Item lengjingqidian = new lengjingqidian();
-    public static Item jixieqidian = new jixieqidian();
+    public static Item singularity1 = new singularity1();
+    public static Item singularity2 = new singularity2();
     public static Item Dasima = new Dasima();
     public static Item ShikanokoNoko = new ShikanokoNoko();
     public static Item dustSnAs = new dustSnAs();
@@ -31,8 +31,8 @@ public class ItemLoader {
         IRegistry(itemZhangww, "itemZhangww");
         IRegistry(ingotHotDog, "ingotHotDog");
         IRegistry(ingotDog, "ingotDog");
-        IRegistry(lengjingqidian, "lengjingqidian");
-        IRegistry(jixieqidian, "jixieqidian");
+        IRegistry(singularity1, "singularity1");
+        IRegistry(singularity2, "singularity2");
         IRegistry(Dasima, "Dasima");
         IRegistry(ShikanokoNoko, "ShikanokoNoko");
         IRegistry(dustSnAs, "dustSnAs");

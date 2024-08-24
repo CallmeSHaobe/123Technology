@@ -253,5 +253,58 @@ public class Mega_ISA_ForgePool implements IRecipePool {
             .duration(1800 * 20)
             .eut(TierEU.MAX)
             .addTo(ISA);
+        GT_Values.RA.stdBuilder()
+            .itemOutputs(GT_ModHandler.getModItem("GalacticraftAmunRa", "item.baseItem", 1, 26))
+            .itemInputs(
+                GT_ModHandler.getModItem("GalacticraftAmunRa", "item.baseItem", 0, 26),
+                GT_ModHandler.getModItem("123Technology", "IsaBee", 0))
+            .fluidInputs(
+                new FluidStack(FluidRegistry.getFluidID("molten.blackdwarfmatter"), 72),
+                new FluidStack(FluidRegistry.getFluidID("molten.whitedwarfmatter"), 72))
+            .noOptimize()
+            .duration(100 * 20)
+            .eut(123123123)
+            .addTo(ISA);
+        GT_Values.RA.stdBuilder()
+            .itemOutputs(GT_ModHandler.getModItem("123Technology", "singularity1", 1))
+            .itemInputs(
+                GT_Utility.getIntegratedCircuit(12),
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 0, 15410),
+                GT_ModHandler.getModItem("eternalsingularity", "eternal_singularity", 0),
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 4, 4239),
+                GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 32230),
+                GT_ModHandler.getModItem("miscutils", "itemPlateDenseChromaticGlass", 64),
+                GT_ModHandler.getModItem("miscutils", "itemPlateDenseChromaticGlass", 64),
+                GT_ModHandler.getModItem("miscutils", "itemPlateDenseChromaticGlass", 64),
+                GT_ModHandler.getModItem("miscutils", "itemPlateDenseChromaticGlass", 64),
+                GT_ModHandler.getModItem("miscutils", "itemPlateDenseChromaticGlass", 64))
+            .fluidInputs(
+                new FluidStack(FluidRegistry.getFluidID("molten.hypogen"), 144000),
+                new FluidStack(FluidRegistry.getFluidID("molten.infinity"), 144000),
+                new FluidStack(FluidRegistry.getFluidID("molten.spacetime"), 144000))
+            .fluidOutputs(new FluidStack(FluidRegistry.getFluidID("dimensionallytranscendentresidue"), 288000))
+            .noOptimize()
+            .duration(123 * 20)
+            .eut(TierEU.MAX / 2)
+            .addTo(ISA);
+        GT_Values.RA.stdBuilder()
+            .itemOutputs(GT_ModHandler.getModItem("123Technology", "singularity2", 4))
+            .itemInputs(
+                GT_Utility.getIntegratedCircuit(13),
+                GT_ModHandler.getModItem("eternalsingularity", "eternal_singularity", 0),
+                GT_OreDictUnificator.get(OrePrefixes.circuit, Materials.Optical, 64),
+                GT_OreDictUnificator.get(OrePrefixes.circuit, Materials.Bio, 64),
+                GT_OreDictUnificator.get(OrePrefixes.circuit, Materials.Infinite, 64),
+                ItemList.Robot_Arm_UIV.get(64),
+                ItemList.Robot_Arm_UEV.get(64),
+                ItemList.Robot_Arm_UHV.get(64))
+            .fluidInputs(
+                new FluidStack(FluidRegistry.getFluidID("molten.mutatedlivingsolder"), 144000),
+                new FluidStack(FluidRegistry.getFluidID("exciteddtsc"), 128000),
+                new FluidStack(FluidRegistry.getFluidID("molten.infinity"), 144000))
+            .noOptimize()
+            .duration(123 * 20)
+            .eut(TierEU.MAX / 2)
+            .addTo(ISA);
     }
 }

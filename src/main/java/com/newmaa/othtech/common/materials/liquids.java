@@ -37,7 +37,7 @@ public class liquids implements Runnable {
         new Pair<>(MagmatterA, 1),
         new Pair<>(Materials.Stone, 2));
     public static final Werkstoff Galaxy = new Werkstoff(
-        new short[] {18, 80, 161},
+        new short[] { 18, 80, 161 },
         "Galaxy",
         subscriptNumbers("☆"),
         new Werkstoff.Stats(),
@@ -45,10 +45,9 @@ public class liquids implements Runnable {
         new Werkstoff.GenerationFeatures().disable()
             .addCells(),
         offsetID_01 + 3,
-        TextureSet.SET_FLUID
-    );
+        TextureSet.SET_FLUID);
     public static final Werkstoff Void = new Werkstoff(
-        new short[] {166, 212, 223},
+        new short[] { 166, 212, 223 },
         "虚空熵流",
         subscriptNumbers("Vi"),
         new Werkstoff.Stats(),
@@ -56,10 +55,9 @@ public class liquids implements Runnable {
         new Werkstoff.GenerationFeatures().addCells()
             .addCells(),
         offsetID_01 + 4,
-        TextureSet.SET_FLUID
-    );
+        TextureSet.SET_FLUID);
     public static final Werkstoff Stars = new Werkstoff(
-        new short[] {221, 226, 188},
+        new short[] { 221, 226, 188 },
         "星尘凝融",
         subscriptNumbers("St"),
         new Werkstoff.Stats(),
@@ -67,8 +65,7 @@ public class liquids implements Runnable {
         new Werkstoff.GenerationFeatures().addCells()
             .addCells(),
         offsetID_01 + 5,
-        TextureSet.SET_FLUID
-    );
+        TextureSet.SET_FLUID);
 
     @Override
     public void run() {

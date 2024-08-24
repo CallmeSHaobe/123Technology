@@ -1,6 +1,5 @@
 package com.newmaa.othtech.recipe;
 
-import com.github.technus.tectech.recipe.TecTechRecipeMaps;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -31,7 +30,6 @@ public class loadRecipe implements IRecipePool {
         Fluid white = FluidRegistry.getFluid("molten.whitedwarfmatter");
         Fluid cuihuaji = FluidRegistry.getFluid("exciteddtsc");
         final RecipeMap<?> Nan = RecipeMaps.nanoForgeRecipes;
-
 
         // dustIrOsSm assembler
         // GT_Values.RA.stdBuilder()

@@ -214,6 +214,7 @@ public class Mega_QFT_Pool implements IRecipePool {
         GT_Values.RA.stdBuilder()
             .itemInputs(
                 GT_Utility.getIntegratedCircuit(18),
+                GT_ModHandler.getModItem("tectech", "item.tm.itemAstralArrayFabricator", 0),
                 GT_ModHandler.getModItem("eternalsingularity", "eternal_singularity", 64),
                 GT_ModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 32417))
             .fluidInputs(new FluidStack(FluidRegistry.getFluidID("primordialmatter"), 1152 * 64))
@@ -246,14 +247,11 @@ public class Mega_QFT_Pool implements IRecipePool {
             .addTo(MQFT);
         GT_Values.RA.stdBuilder()
             .fluidOutputs(liquids.Void.getFluidOrGas(4000))
-            .itemInputs(
-                GT_Utility.getIntegratedCircuit(24),
-                GT_ModHandler.getModItem("123Technology", "IsaBee", 0))
+            .itemInputs(GT_Utility.getIntegratedCircuit(24), GT_ModHandler.getModItem("123Technology", "IsaBee", 0))
             .fluidInputs(
                 new FluidStack(FluidRegistry.getFluidID("lubricant"), 64000),
                 new FluidStack(FluidRegistry.getFluidID("cryotheum"), 32000),
-                liquids.Galaxy.getFluidOrGas(20 * 144)
-            )
+                liquids.Galaxy.getFluidOrGas(20 * 144))
             .noOptimize()
             .duration(100 * 20)
             .eut(TierEU.UXV)
@@ -263,13 +261,11 @@ public class Mega_QFT_Pool implements IRecipePool {
             .itemInputs(
                 GT_Utility.getIntegratedCircuit(24),
                 GT_ModHandler.getModItem("123Technology", "MagBee", 0),
-                GT_ModHandler.getModItem("GalacticraftAmunRa","item.baseItem", 4, 26)
-            )
+                GT_ModHandler.getModItem("GalacticraftAmunRa", "item.baseItem", 4, 26))
             .fluidInputs(
                 new FluidStack(FluidRegistry.getFluidID("exciteddtsc"), 10000),
                 new FluidStack(FluidRegistry.getFluidID("molten.mutatedlivingsolder"), 24 * 144),
-                new FluidStack(FluidRegistry.getFluidID("molten.magmatter"), 144)
-            )
+                new FluidStack(FluidRegistry.getFluidID("molten.magmatter"), 144))
             .noOptimize()
             .duration(120 * 20)
             .eut(TierEU.UXV / 2)
