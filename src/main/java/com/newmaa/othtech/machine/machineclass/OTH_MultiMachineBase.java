@@ -9,6 +9,8 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 
+import gregtech.api.enums.Textures;
+import gregtech.api.interfaces.ITexture;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
@@ -570,6 +572,14 @@ public abstract class OTH_MultiMachineBase<T extends OTH_MultiMachineBase<T>>
     @Override
     public int getRecipeCatalystPriority() {
         return -1;
+    }
+    protected int getCasingTextureId() {
+        return 0;
+    }
+
+
+    protected ITexture getCasingTexture() {
+        return Textures.BlockIcons.getCasingTextureForId(getCasingTextureId());
     }
 
     // endregion

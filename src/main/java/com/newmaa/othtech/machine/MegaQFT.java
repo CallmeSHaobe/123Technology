@@ -2,16 +2,8 @@ package com.newmaa.othtech.machine;
 
 import static com.github.technus.tectech.thing.casing.TT_Container_Casings.*;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
-import static gregtech.api.enums.GT_HatchElement.Energy;
-import static gregtech.api.enums.GT_HatchElement.ExoticEnergy;
-import static gregtech.api.enums.GT_HatchElement.InputBus;
-import static gregtech.api.enums.GT_HatchElement.InputHatch;
-import static gregtech.api.enums.GT_HatchElement.Muffler;
-import static gregtech.api.enums.GT_HatchElement.OutputBus;
-import static gregtech.api.enums.GT_HatchElement.OutputHatch;
-import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_DTPF_OFF;
-import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_DTPF_ON;
-import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FUSION1_GLOW;
+import static gregtech.api.enums.GT_HatchElement.*;
+import static gregtech.api.enums.Textures.BlockIcons.*;
 import static gregtech.api.util.GT_StructureUtility.ofFrame;
 
 import java.util.ArrayList;
@@ -30,8 +22,6 @@ import org.jetbrains.annotations.NotNull;
 import com.github.technus.tectech.thing.block.QuantumGlassBlock;
 import com.github.technus.tectech.thing.casing.TT_Container_Casings;
 import com.google.common.collect.ImmutableList;
-import com.gtnewhorizon.structurelib.alignment.constructable.IConstructable;
-import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructable;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
@@ -56,7 +46,7 @@ import gregtech.api.util.GT_Utility;
 import gtPlusPlus.core.block.ModBlocks;
 
 // spotless:off
-public class MegaQFT extends OTH_MultiMachineBase<MegaQFT> implements IConstructable, ISurvivalConstructable {
+public class MegaQFT extends OTH_MultiMachineBase<MegaQFT> {
 
     public MegaQFT(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
@@ -193,7 +183,7 @@ public class MegaQFT extends OTH_MultiMachineBase<MegaQFT> implements IConstruct
     @Override
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
         repairMachine();
-        multiplier = 1 + Math.max(0 , stabilisationFieldMetadata * 2);
+        multiplier = 1 + ((int) Math.pow(stabilisationFieldMetadata, 1.1) - stabilisationFieldMetadata);
         return checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet);
 
     }
@@ -381,7 +371,9 @@ public class MegaQFT extends OTH_MultiMachineBase<MegaQFT> implements IConstruct
             .addInfo("§d*物质依旧守恒，只不过从虚粒子转为了实粒子")
             .addInfo("狄拉克逆变模式会有意想不到的惊喜")
             .addInfo("§9时间膨胀场发生器每提升一级，减少10%的配方时间")
-            .addInfo("§9稳定力场发生器每提升一级，产量额外提升2.0倍")
+            .addInfo("§9稳定力场发生器等级<6时, 产量不变")
+            .addInfo("§9稳定力场发生器等级≤8, ≥6时，产量为二倍")
+            .addInfo("§9稳定力场发生器等级≥9时, 产量为三倍")
             .addInfo("§q支持§bTecTech§q能源仓及激光仓，但不支持无线电网直接供给EU")
             .addSeparator()
             .addController("Mega QFT")

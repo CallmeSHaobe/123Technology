@@ -1,5 +1,6 @@
 package com.newmaa.othtech.recipe;
 
+import gregtech.api.util.GT_Utility;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -30,6 +31,7 @@ public class loadRecipe implements IRecipePool {
         Fluid white = FluidRegistry.getFluid("molten.whitedwarfmatter");
         Fluid cuihuaji = FluidRegistry.getFluid("exciteddtsc");
         final RecipeMap<?> Nan = RecipeMaps.nanoForgeRecipes;
+        final RecipeMap<?> Assem = RecipeMaps.assemblerRecipes;
 
         // dustIrOsSm assembler
         // GT_Values.RA.stdBuilder()
@@ -91,7 +93,7 @@ public class loadRecipe implements IRecipePool {
                 GT_ModHandler.getModItem("123Technology", "LookNEIdust", 64) },
             new FluidStack[] { new FluidStack(white, 4608), new FluidStack(cuihuaji, 123123),
                 new FluidStack(Ewater, 4096000), new FluidStack(songyou, 32000000) },
-            GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 20000),
+            GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 22123),
             105000,
             123123123);
         // IsaBee
@@ -137,9 +139,28 @@ public class loadRecipe implements IRecipePool {
                 new FluidStack(FluidRegistry.getFluidID("exciteddtsc"), 256000),
                 new FluidStack(FluidRegistry.getFluidID("plasma.neptunium"), 256000),
                 new FluidStack(FluidRegistry.getFluidID("plasma.fermium"), 256000) },
-            GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 20005),
+            GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 22128),
             1234 * 20,
             123123123);
-
+        GT_Values.RA.stdBuilder()
+            .itemOutputs(
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 23520)
+            )
+            .itemInputs(
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 860),
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 31027),
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 31028),
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 995),
+                ItemList.Robot_Arm_LuV.get(16),
+                GT_OreDictUnificator.get(OrePrefixes.circuit, Materials.Superconductor, 64),
+                GT_Utility.getIntegratedCircuit(17)
+            )
+            .fluidInputs(
+                new FluidStack(FluidRegistry.getFluidID("molten.indalloy140"), 128 * 144)
+            )
+            .noOptimize()
+            .duration(123 * 20)
+            .eut(32000)
+            .addTo(Assem);
     }
 }

@@ -76,12 +76,15 @@ public class RecipesFromTST implements IRecipePool {
             256,
             (int) TierEU.UEV,
             64,
-            new ItemStack[] { GT_ModHandler.getModItem("tectech", "gt.blockcasingsTT", 16),
-                ItemList.Field_Generator_UMV.get(3), ItemList.Emitter_UMV.get(6),
-                GT_ModHandler.getModItem("dreamcraft", "item.PikoCircuit", 1), ItemList.Field_Generator_UEV.get(24),
-                GT_ModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 28581),
+            new ItemStack[] { GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 16, 4684),
+                GT_ModHandler.getModItem("tectech", "gt.blockcasingsTT", 4, 12),
+                GT_ModHandler.getModItem("gregtech", "gt.blockcasings", 4, 14),
+                GT_ModHandler.getModItem("gregtech", "gt.blockcasings", 4, 13),
+                GT_ModHandler.getModItem("tectech", "gt.blockcasingsTT", 16), ItemList.Field_Generator_UMV.get(8),
+                ItemList.Emitter_UMV.get(6), GT_ModHandler.getModItem("dreamcraft", "item.PikoCircuit", 8),
+                ItemList.Field_Generator_UEV.get(24), GT_ModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 28581),
                 GT_ModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 23581),
-                GT_OreDictUnificator.get(OrePrefixes.circuit, Materials.Optical, 24),
+                GT_ModHandler.getModItem("gregtech", "gt.metaitem.01", 8, 22581),
 
             },
             new FluidStack[] { FluidRegistry.getFluidStack("molten.mutatedlivingsolder", 18432),
@@ -90,7 +93,7 @@ public class RecipesFromTST implements IRecipePool {
                 FluidRegistry.getFluidStack("exciteddtec", 16000) },
             GT_ModHandler.getModItem("tectech", "gt.blockcasingsTT", 1, 10),
             512 * 20,
-            1966080);
+            (int) TierEU.UMV);
 
     }
 

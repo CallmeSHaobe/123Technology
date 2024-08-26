@@ -92,7 +92,10 @@ public class Mega_QFT_Pool implements IRecipePool {
             .eut(TierEU.UIV)
             .addTo(MQFT);
         GT_Values.RA.stdBuilder()
-            .itemInputs(GT_Utility.getIntegratedCircuit(3), Materials.Carbon.getDust(64), Materials.Osmium.getDust(24))
+            .itemInputs(GT_Utility.getIntegratedCircuit(3),
+                Materials.Carbon.getDust(64),
+                Materials.Osmium.getDust(24)
+            )
             .fluidInputs(new FluidStack(N2, 64000), new FluidStack(H2, 64000))
             .fluidOutputs(
                 new FluidStack(FluidRegistry.getFluidID("xenoxene"), 32 * 1000),

@@ -24,7 +24,16 @@ public class ItemLoader {
     public static Item socCosmic = new socCosmic();
     public static Item socInf = new socInf();
     public static Item socNor = new socNor();
-
+    public static Item boardTrans = new boardTrans();
+    public static Item capTrans = new capTrans();
+    public static Item transTrans = new transTrans();
+    public static Item induTrans = new induTrans();
+    public static Item resTrans = new resTrans();
+    public static Item dioTrans = new dioTrans();
+    public static Item leCasimir = new leCasimir();
+    public static Item finCasimir = new finCasimir();
+    public static Item boardCasimir = new boardCasimir();
+    public static Item energyHatchSpacetime = new energyHatchSpacetime();
     public ItemLoader(FMLPreInitializationEvent event) {
         IRegistry(LookNEIdust, "LookNEIdust");
         IRegistry(dustIrOsSm, "dustIrOsSm");
@@ -42,6 +51,16 @@ public class ItemLoader {
         IRegistry(socCosmic, "socCosmic");
         IRegistry(socInf, "socInf");
         IRegistry(socNor, "socNor");
+        IRegistry(boardTrans, "boardTrans");
+        IRegistry(capTrans, "capTrans");
+        IRegistry(transTrans, "transTrans");
+        IRegistry(induTrans, "induTrans");
+        IRegistry(resTrans, "resTrans");
+        IRegistry(dioTrans, "dioTrans");
+        IRegistry(leCasimir, "leCasimir");
+        IRegistry(finCasimir, "finCasimir");
+        IRegistry(boardCasimir, "boardCasimir");
+        IRegistry(energyHatchSpacetime, "energyHatchSpacetime");
     }
 
     private static void IRegistry(Item item, String name) {

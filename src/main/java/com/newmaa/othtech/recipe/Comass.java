@@ -202,7 +202,7 @@ public class Comass implements IRecipePool {
                 ItemList.Electric_Motor_MAX.get(32),
                 ItemList.Electric_Piston_MAX.get(48),
                 GT_ModHandler.getModItem("GoodGenerator", "circuitWrap", 6, 14),
-                GT_ModHandler.getModItem("GoodGenerator", "circuitWrap", 12, 16),
+                GT_ModHandler.getModItem("GoodGenerator", "circuitWrap", 12, 13),
                 GT_ModHandler.getModItem("GoodGenerator", "circuitWrap", 24, 12),
                 GT_ModHandler.getModItem("tectech", "item.tm.itemAstralArrayFabricator", 1),
                 GT_Utility.getIntegratedCircuit(4))
