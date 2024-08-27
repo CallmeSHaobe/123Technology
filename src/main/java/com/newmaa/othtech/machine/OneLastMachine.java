@@ -1,17 +1,29 @@
 package com.newmaa.othtech.machine;
 
-import com.github.bartimaeusnek.bartworks.common.blocks.BW_Blocks;
-import com.github.bartimaeusnek.bartworks.common.blocks.BW_GlasBlocks;
-import com.github.bartimaeusnek.bartworks.common.blocks.BW_GlasBlocks2;
+import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
+import static gregtech.api.enums.GT_HatchElement.*;
+import static gregtech.api.enums.Textures.BlockIcons.*;
+import static gregtech.api.util.GT_StructureUtility.ofFrame;
+
+import java.util.Arrays;
+import java.util.Collection;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.StatCollector;
+import net.minecraftforge.common.util.ForgeDirection;
+
+import org.jetbrains.annotations.NotNull;
+
+import com.github.bartimaeusnek.bartworks.API.BorosilicateGlass;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
-import com.gtnewhorizons.gtnhintergalactic.recipe.IGRecipeMaps;
-import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTH_processingLogics.OTH_ProcessingLogic;
+
 import gregtech.api.GregTech_API;
-import gregtech.api.enums.HeatingCoilLevel;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.TAE;
 import gregtech.api.enums.Textures;
@@ -19,7 +31,6 @@ import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.logic.ProcessingLogic;
-import gregtech.api.multitileentity.multiblock.casing.Glasses;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.recipe.check.CheckRecipeResult;
@@ -29,29 +40,12 @@ import gregtech.api.util.GT_HatchElementBuilder;
 import gregtech.api.util.GT_Multiblock_Tooltip_Builder;
 import gregtech.api.util.GT_Recipe;
 import gregtech.api.util.GT_Utility;
-import gregtech.common.blocks.GT_Block_Casings5;
 import gtPlusPlus.api.recipe.GTPPRecipeMaps;
 import gtPlusPlus.core.block.ModBlocks;
 import gtPlusPlus.xmod.gregtech.common.blocks.textures.TexturesGtBlock;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.StatCollector;
-import net.minecraftforge.common.util.ForgeDirection;
-import org.jetbrains.annotations.NotNull;
-import com.github.bartimaeusnek.bartworks.API.BorosilicateGlass;
-
-import java.util.Arrays;
-import java.util.Collection;
-
-import static com.github.technus.tectech.thing.casing.TT_Container_Casings.sBlockCasingsTT;
-import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
-import static gregtech.api.enums.GT_HatchElement.*;
-import static gregtech.api.enums.Textures.BlockIcons.*;
-import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_DTPF_OFF;
-import static gregtech.api.util.GT_StructureUtility.ofFrame;
 
 public class OneLastMachine extends OTH_MultiMachineBase<OneLastMachine> {
+
     public OneLastMachine(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
     }
@@ -61,9 +55,11 @@ public class OneLastMachine extends OTH_MultiMachineBase<OneLastMachine> {
     }
 
     private byte mode = 0;
+
     public int getTextureIndex() {
         return TAE.getIndexFromPage(2, 2);
     }
+
     @Override
     protected int getCasingTextureId() {
         return getTextureIndex();
@@ -87,9 +83,10 @@ public class OneLastMachine extends OTH_MultiMachineBase<OneLastMachine> {
     }
 
     @Override
-    protected int getMaxParallelRecipes(){
+    protected int getMaxParallelRecipes() {
         return Math.max(9, 32 - (GT_Utility.getTier(this.getMaxInputVoltage()) * 2));
     }
+
     @Override
     protected float getSpeedBonus() {
         return (float) (1 + (GT_Utility.getTier(this.getMaxInputVoltage()) * 0.1));
@@ -110,16 +107,25 @@ public class OneLastMachine extends OTH_MultiMachineBase<OneLastMachine> {
         if (mode == 11) return GTPPRecipeMaps.vacuumFurnaceRecipes;
         return RecipeMaps.compressorRecipes;
     }
+
     @NotNull
     @Override
     public Collection<RecipeMap<?>> getAvailableRecipeMaps() {
         return Arrays.asList(
-            RecipeMaps.compressorRecipes, RecipeMaps.latheRecipes, RecipeMaps.polarizerRecipes,
-            RecipeMaps.fermentingRecipes, RecipeMaps.fluidExtractionRecipes, RecipeMaps.extractorRecipes,
-            RecipeMaps.laserEngraverRecipes, RecipeMaps.autoclaveRecipes, RecipeMaps.fluidSolidifierRecipes,
-            GTPPRecipeMaps.millingRecipes, GTPPRecipeMaps.flotationCellRecipes, GTPPRecipeMaps.vacuumFurnaceRecipes
-        );
+            RecipeMaps.compressorRecipes,
+            RecipeMaps.latheRecipes,
+            RecipeMaps.polarizerRecipes,
+            RecipeMaps.fermentingRecipes,
+            RecipeMaps.fluidExtractionRecipes,
+            RecipeMaps.extractorRecipes,
+            RecipeMaps.laserEngraverRecipes,
+            RecipeMaps.autoclaveRecipes,
+            RecipeMaps.fluidSolidifierRecipes,
+            GTPPRecipeMaps.millingRecipes,
+            GTPPRecipeMaps.flotationCellRecipes,
+            GTPPRecipeMaps.vacuumFurnaceRecipes);
     }
+
     @Override
     protected ProcessingLogic createProcessingLogic() {
         return new OTH_ProcessingLogic() {
@@ -143,6 +149,7 @@ public class OneLastMachine extends OTH_MultiMachineBase<OneLastMachine> {
             .setMaxParallelSupplier(this::getMaxParallelRecipes);
 
     }
+
     @Override
     public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ) {
         if (getBaseMetaTileEntity().isServerSide()) {
@@ -150,17 +157,20 @@ public class OneLastMachine extends OTH_MultiMachineBase<OneLastMachine> {
             GT_Utility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("Mode." + this.mode));
         }
     }
+
     @Override
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
         repairMachine();
         return checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet);
 
     }
+
     @Override
     public void construct(ItemStack stackSize, boolean hintsOnly) {
         repairMachine();
         buildPiece(STRUCTURE_PIECE_MAIN, stackSize, hintsOnly, horizontalOffSet, verticalOffSet, depthOffSet);
     }
+
     @Override
     public int getPollutionPerSecond(final ItemStack aStack) {
         return 123123;
@@ -183,26 +193,30 @@ public class OneLastMachine extends OTH_MultiMachineBase<OneLastMachine> {
             true);
 
     }
+
     private static final String STRUCTURE_PIECE_MAIN = "main";
 
     private final int horizontalOffSet = 24;
     private final int verticalOffSet = 3;
     private final int depthOffSet = 40;
     private static IStructureDefinition<OneLastMachine> STRUCTURE_DEFINITION = null;
+
     @Override
     public IStructureDefinition<OneLastMachine> getStructureDefinition() {
         if (STRUCTURE_DEFINITION == null) {
             STRUCTURE_DEFINITION = StructureDefinition.<OneLastMachine>builder()
                 .addShape(STRUCTURE_PIECE_MAIN, shapeMain)
                 .addElement('F', ofBlock(ModBlocks.blockCasings3Misc, 2))
-                .addElement('E',
+                .addElement(
+                    'E',
                     GT_HatchElementBuilder.<OneLastMachine>builder()
                         .atLeast(Energy.or(ExoticEnergy))
                         .adder(OneLastMachine::addToMachineList)
                         .dot(1)
                         .casingIndex(getTextureIndex())
                         .buildAndChain(ModBlocks.blockCasings3Misc, 2))
-                .addElement('D',
+                .addElement(
+                    'D',
                     GT_HatchElementBuilder.<OneLastMachine>builder()
                         .atLeast(InputBus, OutputBus, InputHatch, OutputHatch, Muffler, Maintenance)
                         .adder(OneLastMachine::addToMachineList)
@@ -217,7 +231,8 @@ public class OneLastMachine extends OTH_MultiMachineBase<OneLastMachine> {
         }
         return STRUCTURE_DEFINITION;
     }
-    //spotless:off
+
+    // spotless:off
     private final String[][] shapeMain = new String[][]{{
             "                                                 ",
             "                      G   G                      ",

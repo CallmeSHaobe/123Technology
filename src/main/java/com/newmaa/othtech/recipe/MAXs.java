@@ -362,5 +362,6 @@ public class MAXs implements IRecipePool {
             ItemList.Field_Generator_MAX.get(1),
             2460,
             512000000);
+
     }
 }

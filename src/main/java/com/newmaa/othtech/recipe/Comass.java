@@ -1,14 +1,17 @@
 package com.newmaa.othtech.recipe;
 
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
+import com.github.technus.tectech.recipe.TT_recipeAdder;
 import com.newmaa.othtech.common.materials.liquids;
 
 import goodgenerator.api.recipe.GoodGeneratorRecipeMaps;
 import gregtech.api.enums.GT_Values;
 import gregtech.api.enums.ItemList;
+import gregtech.api.enums.TierEU;
 import gregtech.api.interfaces.IRecipeMap;
 import gregtech.api.util.GT_ModHandler;
 import gregtech.api.util.GT_Utility;
@@ -247,5 +250,33 @@ public class Comass implements IRecipePool {
             .specialValue(14)
             .eut(512000000)
             .addTo(comass);
+        TT_recipeAdder.addResearchableAssemblylineRecipe(
+            GT_ModHandler.getModItem("GoodGenerator", "componentAssemblylineCasing", 1, 12),
+            (int) TierEU.UMV,
+            4096,
+            (int) TierEU.UMV,
+            123,
+            new ItemStack[] { GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 4239),
+                GT_ModHandler.getModItem("dreamcraft", "item.StargateShieldingFoil", 2),
+                GT_ModHandler.getModItem("gregtech", "gt.metaitem.01", 12, 22143),
+                GT_ModHandler.getModItem("gregtech", "gt.metaitem.01", 12, 22139), ItemList.Robot_Arm_MAX.get(8),
+                ItemList.Electric_Piston_MAX.get(10), ItemList.Electric_Motor_MAX.get(16),
+                GT_ModHandler.getModItem("gregtech", "gt.metaitem.02", 4, 31143),
+                GT_ModHandler.getModItem("gregtech", "gt.metaitem.02", 16, 20143),
+                GT_ModHandler.getModItem("gregtech", "gt.metaitem.02", 4, 31139),
+                GT_ModHandler.getModItem("gregtech", "gt.metaitem.02", 16, 20139),
+                GT_ModHandler.getModItem("tectech", "item.tm.itemAstralArrayFabricator", 2),
+                GT_ModHandler.getModItem("gregtech", "gt.blockcasings5", 64, 13),
+                GT_ModHandler.getModItem("123Technology", "singularity2", 12),
+                GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 16, 4139),
+                GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 16, 4141) },
+            new FluidStack[] { new FluidStack(Um, 114000),
+                new FluidStack(FluidRegistry.getFluid("molten.whitedwarfmatter"), 514000),
+                new FluidStack(FluidRegistry.getFluid("molten.blackdwarfmatter"), 191000),
+                new FluidStack(FluidRegistry.getFluidID("rawstarmatter"), 9810) },
+            GT_ModHandler.getModItem("GoodGenerator", "componentAssemblylineCasing", 1, 13),
+            2460,
+            2000000000);
+
     }
 }

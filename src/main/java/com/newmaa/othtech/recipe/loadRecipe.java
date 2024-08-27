@@ -1,6 +1,5 @@
 package com.newmaa.othtech.recipe;
 
-import gregtech.api.util.GT_Utility;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -17,6 +16,7 @@ import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GT_ModHandler;
 import gregtech.api.util.GT_OreDictUnificator;
+import gregtech.api.util.GT_Utility;
 
 public class loadRecipe implements IRecipePool {
 
@@ -143,9 +143,7 @@ public class loadRecipe implements IRecipePool {
             1234 * 20,
             123123123);
         GT_Values.RA.stdBuilder()
-            .itemOutputs(
-                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 23520)
-            )
+            .itemOutputs(GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 23520))
             .itemInputs(
                 GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 860),
                 GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 31027),
@@ -153,11 +151,8 @@ public class loadRecipe implements IRecipePool {
                 GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 995),
                 ItemList.Robot_Arm_LuV.get(16),
                 GT_OreDictUnificator.get(OrePrefixes.circuit, Materials.Superconductor, 64),
-                GT_Utility.getIntegratedCircuit(17)
-            )
-            .fluidInputs(
-                new FluidStack(FluidRegistry.getFluidID("molten.indalloy140"), 128 * 144)
-            )
+                GT_Utility.getIntegratedCircuit(17))
+            .fluidInputs(new FluidStack(FluidRegistry.getFluidID("molten.indalloy140"), 128 * 144))
             .noOptimize()
             .duration(123 * 20)
             .eut(32000)

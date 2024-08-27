@@ -26,7 +26,8 @@ public class MachineLoader {
         inf_WirelessHatch = new infWirelessHatch(22124, "infWirelessEnergyHatch", "神人无线能源仓", 14).getStackForm(1);
         OTHItemList.inf_WirelessHatch.set(inf_WirelessHatch);
 
-        legendary_WirelessHatch = new legendaryWireless(22125, "legendaryWirelessEnergyHatch", "传奇无线能源仓", 13).getStackForm(1);
+        legendary_WirelessHatch = new legendaryWireless(22125, "legendaryWirelessEnergyHatch", "传奇无线能源仓", 13)
+            .getStackForm(1);
         OTHItemList.legendary_WirelessHatch.set(legendary_WirelessHatch);
 
         WirelessMAX = new MAXwireless(22126, "MAX1048576Hatch", "MAX 1,048,576A 无线能源仓", 14).getStackForm(1);

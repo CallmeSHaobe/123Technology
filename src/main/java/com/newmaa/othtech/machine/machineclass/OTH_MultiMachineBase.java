@@ -9,8 +9,6 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 
-import gregtech.api.enums.Textures;
-import gregtech.api.interfaces.ITexture;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
@@ -23,6 +21,8 @@ import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructa
 import com.newmaa.othtech.Config;
 import com.newmaa.othtech.machine.machineclass.OTH_processingLogics.OTH_ProcessingLogic;
 
+import gregtech.api.enums.Textures;
+import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.logic.ProcessingLogic;
@@ -573,10 +573,10 @@ public abstract class OTH_MultiMachineBase<T extends OTH_MultiMachineBase<T>>
     public int getRecipeCatalystPriority() {
         return -1;
     }
+
     protected int getCasingTextureId() {
         return 0;
     }
-
 
     protected ITexture getCasingTexture() {
         return Textures.BlockIcons.getCasingTextureForId(getCasingTextureId());

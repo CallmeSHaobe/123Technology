@@ -1,15 +1,18 @@
 package com.newmaa.othtech.common.item;
 
-import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-import java.util.List;
+import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class dioTrans extends Item {
+
     public dioTrans() {
         super();
 
@@ -21,7 +24,7 @@ public class dioTrans extends Item {
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(final ItemStack itemStack, final EntityPlayer player, final List toolTip,
-                               final boolean advancedToolTips) {
+        final boolean advancedToolTips) {
 
         toolTip.add("§a为防止多维时空的信息污染，每个时空在成型时单方面被注入一道信息流，这是独属于创世纪的火光");
     }

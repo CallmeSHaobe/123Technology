@@ -34,6 +34,7 @@ public class ItemLoader {
     public static Item finCasimir = new finCasimir();
     public static Item boardCasimir = new boardCasimir();
     public static Item energyHatchSpacetime = new energyHatchSpacetime();
+
     public ItemLoader(FMLPreInitializationEvent event) {
         IRegistry(LookNEIdust, "LookNEIdust");
         IRegistry(dustIrOsSm, "dustIrOsSm");
