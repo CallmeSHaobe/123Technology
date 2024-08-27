@@ -253,7 +253,7 @@ public class Circuit implements IRecipePool {
             .itemInputs(
                 GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 16, 32177),
                 GT_Utility.getIntegratedCircuit(16))
-            .itemOutputs(GT_ModHandler.getModItem("GoodGenerator", "circuitWrap", 12, 14))
+            .itemOutputs(GT_ModHandler.getModItem("GoodGenerator", "circuitWrap", 1, 14))
             .fluidInputs(new FluidStack(FluidRegistry.getFluidID("molten.plastic"), 72))
             .noOptimize()
             .duration(30 * 20)
