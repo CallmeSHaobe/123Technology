@@ -285,9 +285,7 @@ public class Circuit implements IRecipePool {
                 ItemList.Field_Generator_UMV.get(0),
                 GT_Utility.getIntegratedCircuit(1),
                 GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32722),
-                GT_ModHandler.getModItem("bartworks", "gt.bwMetaGeneratedgemExquisite", 4, 11499),
-                GT_ModHandler.getModItem("miscutils", "MU-metaitem.01", 0, 32140),
-                GT_ModHandler.getModItem("miscutils", "MU-metaitem.02", 0, 18320))
+                GT_ModHandler.getModItem("bartworks", "gt.bwMetaGeneratedgemExquisite", 4, 11499))
             .fluidInputs(
                 new FluidStack(FluidRegistry.getFluidID("ic2uumatter"), 1600),
                 new FluidStack(FluidRegistry.getFluidID("molten.hypogen"), 36),
