@@ -363,7 +363,5 @@ public class MAXs implements IRecipePool {
             2460,
             512000000);
 
-
-
     }
 }

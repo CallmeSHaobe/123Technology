@@ -401,6 +401,13 @@ public abstract class OTH_MultiMachineBase<T extends OTH_MultiMachineBase<T>>
         return false;
     }
 
+    public boolean isMachineRunning() {
+        boolean aRunning = this.getBaseMetaTileEntity()
+            .isActive();
+        // log("Queried Multiblock is currently running: "+aRunning);
+        return aRunning;
+    }
+
     @Override
     public boolean addEnergyOutput(long aEU) {
         if (aEU <= 0) {

@@ -18,7 +18,7 @@ import gregtech.api.util.GT_ModHandler;
 import gregtech.api.util.GT_OreDictUnificator;
 import gregtech.api.util.GT_Utility;
 
-public class loadRecipe implements IRecipePool {
+public class Main implements IRecipePool {
 
     @Override
     public void loadRecipes()

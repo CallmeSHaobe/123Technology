@@ -3,13 +3,31 @@ package com.newmaa.othtech.machine;
 import static com.github.technus.tectech.thing.casing.TT_Container_Casings.sBlockCasingsBA0;
 import static com.github.technus.tectech.thing.casing.TT_Container_Casings.sBlockCasingsTT;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
-import static gregtech.api.enums.GT_HatchElement.*;
-import static gregtech.api.enums.Textures.BlockIcons.*;
+import static com.newmaa.othtech.Utils.Utils.NEGATIVE_ONE;
+import static gregtech.api.enums.GT_HatchElement.OutputBus;
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_DTPF_OFF;
+import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_DTPF_ON;
+import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FUSION1_GLOW;
+import static gregtech.common.misc.WirelessNetworkManager.addEUToGlobalEnergyMap;
 import static gregtech.common.tileentities.machines.multi.GT_MetaTileEntity_FusionComputer.STRUCTURE_PIECE_MAIN;
 
+import java.math.BigInteger;
+import java.util.HashSet;
+import java.util.List;
+import java.util.UUID;
+
+import javax.annotation.Nonnull;
+
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import org.jetbrains.annotations.NotNull;
@@ -22,9 +40,11 @@ import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTH_processingLogics.OTH_ProcessingLogic;
 
+import alkalus.main.core.util.MathUtils;
 import galaxyspace.core.register.GSBlocks;
 import gregtech.api.GregTech_API;
 import gregtech.api.enums.Textures;
+import gregtech.api.interfaces.IGlobalWirelessEnergy;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
@@ -33,12 +53,21 @@ import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.render.TextureFactory;
+import gregtech.api.util.GT_HatchElementBuilder;
 import gregtech.api.util.GT_Multiblock_Tooltip_Builder;
+import gregtech.api.util.GT_OverclockCalculator;
 import gregtech.api.util.GT_Recipe;
 import gregtech.api.util.GT_Utility;
+import gregtech.common.items.GT_IntegratedCircuit_Item;
+import gtPlusPlus.api.objects.data.AutoMap;
+import gtPlusPlus.api.objects.minecraft.BlockPos;
 import gtPlusPlus.core.block.ModBlocks;
+import gtPlusPlus.core.util.minecraft.EntityUtils;
+import gtPlusPlus.core.util.minecraft.PlayerUtils;
+import mcp.mobius.waila.api.IWailaConfigHandler;
+import mcp.mobius.waila.api.IWailaDataAccessor;
 
-public class GT_TE_EVACannon extends OTH_MultiMachineBase<GT_TE_EVACannon> {
+public class GT_TE_EVACannon extends OTH_MultiMachineBase<GT_TE_EVACannon> implements IGlobalWirelessEnergy {
 
     public GT_TE_EVACannon(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
@@ -47,6 +76,10 @@ public class GT_TE_EVACannon extends OTH_MultiMachineBase<GT_TE_EVACannon> {
     public GT_TE_EVACannon(String aName) {
         super(aName);
     }
+
+    private UUID ownerUUID;
+    private String costingWirelessEU = "0";
+    private int overclockParameter = 1;
 
     @Override
     public ITexture[] getTexture(final IGregTechTileEntity baseMetaTileEntity, final ForgeDirection sideDirection,
@@ -140,12 +173,22 @@ public class GT_TE_EVACannon extends OTH_MultiMachineBase<GT_TE_EVACannon> {
     }
 
     @Override
+    public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
+        int z) {
+        super.getWailaNBTData(player, tile, tag, world, x, y, z);
+        final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
+        if (tileEntity != null) {
+            tag.setString("costingWirelessEU", costingWirelessEU);
+        }
+    }
+
+    @Override
     protected boolean isEnablePerfectOverclock() {
         return true;
     }
 
     protected int getMaxParallelRecipes() {
-        return Integer.MAX_VALUE;
+        return 1;
     }
 
     protected float getSpeedBonus() {
@@ -162,24 +205,92 @@ public class GT_TE_EVACannon extends OTH_MultiMachineBase<GT_TE_EVACannon> {
     protected ProcessingLogic createProcessingLogic() {
         return new OTH_ProcessingLogic() {
 
-            @NotNull
+            @Nonnull
             @Override
-            public CheckRecipeResult process() {
-
-                setEuModifier(getEuModifier());
-                setSpeedBonus(getSpeedBonus());
-                setOverclock(isEnablePerfectOverclock() ? 2 : 1, 2);
-                return super.process();
+            protected GT_OverclockCalculator createOverclockCalculator(@Nonnull GT_Recipe recipe) {
+                return GT_OverclockCalculator.ofNoOverclock(recipe);
             }
+        }.setMaxParallel(1);
+    }
 
-            @Override
-            protected @NotNull CheckRecipeResult validateRecipe(GT_Recipe recipe) {
-                return CheckRecipeResultRegistry.SUCCESSFUL;
-            }
+    @Override
+    public void onFirstTick(IGregTechTileEntity aBaseMetaTileEntity) {
+        super.onFirstTick(aBaseMetaTileEntity);
+        this.ownerUUID = aBaseMetaTileEntity.getOwnerUuid();
+    }
 
-        }.enablePerfectOverclock()
-            .setMaxParallelSupplier(this::getMaxParallelRecipes);
+    @NotNull
+    @Override
+    public CheckRecipeResult checkProcessing() {
+        setupProcessingLogic(processingLogic);
 
+        CheckRecipeResult result = doCheckRecipe();
+        // inputs are consumed at this point
+        updateSlots();
+        if (!result.wasSuccessful()) return result;
+
+        mEfficiency = 10000;
+        mEfficiencyIncrease = 10000;
+        flushOverclockParameter();
+        BigInteger costingWirelessEUTemp = BigInteger.valueOf(processingLogic.getCalculatedEut())
+            .multiply(BigInteger.valueOf((long) 4096 * getOverclockEUCostMultiplier()));
+        costingWirelessEU = GT_Utility.formatNumbers(costingWirelessEUTemp);
+        if (!addEUToGlobalEnergyMap(ownerUUID, costingWirelessEUTemp.multiply(NEGATIVE_ONE))) {
+            return CheckRecipeResultRegistry.insufficientPower(costingWirelessEUTemp.longValue());
+        }
+
+        // set progress time a fixed value
+        mMaxProgresstime = getProgressTime(10 * 20);
+        mOutputItems = processingLogic.getOutputItems();
+        mOutputFluids = processingLogic.getOutputFluids();
+
+        return result;
+    }
+
+    private int damageEvaCannon = 0;
+
+    private void flushOverclockParameter() {
+        ItemStack items = getControllerSlot();
+        if (items != null && items.getItem() instanceof GT_IntegratedCircuit_Item
+            && items.getItemDamage() > 0
+            && items.getItemDamage() < 2
+            && items.stackSize > 0) {
+            this.overclockParameter = 16;
+            damageEvaCannon = 32767;
+        } else {
+            this.overclockParameter = 256;
+            damageEvaCannon = Integer.MAX_VALUE;
+        }
+    }
+
+    @Override
+    public void getWailaBody(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor,
+        IWailaConfigHandler config) {
+        super.getWailaBody(itemStack, currentTip, accessor, config);
+        final NBTTagCompound tag = accessor.getNBTData();
+        currentTip.add(
+            "Current EU cost" + EnumChatFormatting.RESET
+                + ": "
+                + EnumChatFormatting.GOLD
+                + tag.getString("costingWirelessEU")
+                + EnumChatFormatting.RESET
+                + " EU");
+    }
+
+    private int getOverclockEUCostMultiplier() {
+        return this.overclockParameter;
+    }
+
+    private int getProgressTime(int basicTickCost) {
+        return basicTickCost;
+    }
+
+    @Override
+    protected void setProcessingLogicPower(ProcessingLogic logic) {
+        // The voltage is only used for recipe finding
+        logic.setAvailableVoltage(Long.MAX_VALUE);
+        logic.setAvailableAmperage(1);
+        logic.setAmperageOC(false);
     }
 
     @Override
@@ -214,6 +325,128 @@ public class GT_TE_EVACannon extends OTH_MultiMachineBase<GT_TE_EVACannon> {
 
     }
 
+    @Override
+    public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
+        if (aTick % 20 == 0 && isMachineRunning()) {
+            checkForEntities(aBaseMetaTileEntity, aTick);
+        }
+        super.onPostTick(aBaseMetaTileEntity, aTick);
+    }
+
+    private final AutoMap<BlockPos> mFrontBlockPosCache = new AutoMap<>();
+
+    public void checkForEntities(IGregTechTileEntity aBaseMetaTileEntity, long aTime) {
+
+        if (aTime % 100 == 0) {
+            mFrontBlockPosCache.clear();
+        }
+        if (mFrontBlockPosCache.isEmpty()) {
+            ForgeDirection tSide = aBaseMetaTileEntity.getBackFacing();
+            int aTileX = aBaseMetaTileEntity.getXCoord();
+            int aTileY = aBaseMetaTileEntity.getYCoord();
+            int aTileZ = aBaseMetaTileEntity.getZCoord();
+            boolean xFacing = tSide.offsetX != 0;
+            boolean zFacing = tSide.offsetZ != 0;
+
+            // Check Casings
+            int aX = aTileX - 3;
+            int aY = aTileY + 9;
+            int aZ = aTileZ + 141;
+            mFrontBlockPosCache.add(new BlockPos(aX, aY, aZ, aBaseMetaTileEntity.getWorld()));
+
+        }
+
+        AutoMap<EntityLivingBase> aEntities = getEntities(mFrontBlockPosCache, aBaseMetaTileEntity.getWorld());
+        if (!aEntities.isEmpty()) {
+            for (EntityLivingBase aFoundEntity : aEntities) {
+                if (aFoundEntity instanceof EntityPlayer aPlayer) {
+                    if (PlayerUtils.isCreative(aPlayer) || !PlayerUtils.canTakeDamage(aPlayer)) {
+                        continue;
+                    } else {
+                        if (aFoundEntity.getHealth() > 0) {
+                            EntityUtils
+                                .doDamage(aFoundEntity, EVACannon, getPlayerDamageValue(aPlayer, damageEvaCannon));
+                            if ((aBaseMetaTileEntity.isClientSide()) && (aBaseMetaTileEntity.isActive())) {
+                                generateParticles(aFoundEntity);
+                            }
+                        }
+                    }
+                } else if (aFoundEntity.getHealth() > 0) {
+                    EntityUtils.doDamage(aFoundEntity, EVACannon, damageEvaCannon);
+                    if ((aBaseMetaTileEntity.isClientSide()) && (aBaseMetaTileEntity.isActive())) {
+                        generateParticles(aFoundEntity);
+                    }
+                }
+            }
+        }
+    }
+
+    private static void generateParticles(EntityLivingBase aEntity) {
+        BlockPos aPlayerPosBottom = EntityUtils.findBlockPosOfEntity(aEntity);
+        BlockPos aPlayerPosTop = aPlayerPosBottom.getUp();
+        AutoMap<BlockPos> aEntityPositions = new AutoMap<>();
+        aEntityPositions.add(aPlayerPosBottom);
+        aEntityPositions.add(aPlayerPosTop);
+        for (int i = 0; i < 64; i++) {
+            BlockPos aEffectPos = aEntityPositions.get(aEntity.height > 1f ? MathUtils.randInt(0, 1) : 0);
+            float aOffsetX = MathUtils.randFloat(-0.05f, 0.35f);
+            float aOffsetY = MathUtils.randFloat(-0.05f, 0.35f);
+            float aOffsetZ = MathUtils.randFloat(-0.05f, 0.35f);
+            aEntity.worldObj.spawnParticle(
+                "yellowdust",
+                aEffectPos.xPos + aOffsetX,
+                aEffectPos.yPos + 0.3f + aOffsetY,
+                aEffectPos.zPos + aOffsetZ,
+                0.0D,
+                0.0D,
+                0.0D);
+        }
+    }
+
+    private int getPlayerDamageValue(EntityPlayer player, int damage) {
+        int armorValue = player.getTotalArmorValue();
+        return Math.max(damageEvaCannon, 0);
+    }
+
+    private static AutoMap<EntityLivingBase> getEntities(AutoMap<BlockPos> aPositionsToCheck, World aWorld) {
+        AutoMap<EntityLivingBase> aEntities = new AutoMap<>();
+        HashSet<Chunk> aChunksToCheck = new HashSet<>();
+        if (!aPositionsToCheck.isEmpty()) {
+            Chunk aLocalChunk;
+            for (BlockPos aPos : aPositionsToCheck) {
+                aLocalChunk = aWorld.getChunkFromBlockCoords(aPos.xPos, aPos.zPos);
+                aChunksToCheck.add(aLocalChunk);
+            }
+        }
+        if (!aChunksToCheck.isEmpty()) {
+            AutoMap<EntityLivingBase> aEntitiesFound = new AutoMap<>();
+            for (Chunk aChunk : aChunksToCheck) {
+                if (aChunk.isChunkLoaded) {
+                    List[] aEntityLists = aChunk.entityLists;
+                    for (List aEntitySubList : aEntityLists) {
+                        for (Object aEntity : aEntitySubList) {
+                            if (aEntity instanceof EntityLivingBase aPlayer) {
+                                aEntitiesFound.add(aPlayer);
+                            }
+                        }
+                    }
+                }
+            }
+            if (!aEntitiesFound.isEmpty()) {
+                for (EntityLivingBase aEntity : aEntitiesFound) {
+                    BlockPos aPlayerPos = EntityUtils.findBlockPosOfEntity(aEntity);
+                    for (BlockPos aBlockSpaceToCheck : aPositionsToCheck) {
+                        if (aBlockSpaceToCheck.equals(aPlayerPos)) {
+                            aEntities.add(aEntity);
+                        }
+                    }
+                }
+            }
+        }
+        return aEntities;
+    }
+
+    private static final DamageSource EVACannon = new DamageSource("otht.evaCannon").setDamageBypassesArmor();
     private static final String STRUCTURE_PIECE_MAIN = "main";
 
     private final int horizontalOffSet = 141;
@@ -227,7 +460,14 @@ public class GT_TE_EVACannon extends OTH_MultiMachineBase<GT_TE_EVACannon> {
             STRUCTURE_DEFINITION = StructureDefinition.<GT_TE_EVACannon>builder()
                 .addShape(STRUCTURE_PIECE_MAIN, shapeMain)
                 .addElement('A', BorosilicateGlass.ofBoroGlass(10))
-                .addElement('C', ofBlock(GregTech_API.sBlockCasings8, 5))
+                .addElement(
+                    'C',
+                    GT_HatchElementBuilder.<GT_TE_EVACannon>builder()
+                        .atLeast(OutputBus)
+                        .adder(GT_TE_EVACannon::addToMachineList)
+                        .dot(1)
+                        .casingIndex(1024 + 12)
+                        .buildAndChain(GregTech_API.sBlockCasings8, 5))
                 .addElement('D', ofBlock(GregTech_API.sBlockCasings8, 10))
                 .addElement('E', ofBlock(GregTech_API.sBlockCasings8, 13))
                 .addElement('F', ofBlock(GregTech_API.sBlockCasings8, 14))
@@ -359,8 +599,8 @@ public class GT_TE_EVACannon extends OTH_MultiMachineBase<GT_TE_EVACannon> {
             "                                                                                                                                                                                                                                      ",
             "                                                                                                                                                                                                                                      ",
             "                                                                                                                                                                                                                                      ",
-            "                                                                                                                                                                                                                                      ",
-            "                                                                                                                                                                                                                                      ",
+            "                                                                                                                                                                                                                                       ",
+            "                                                                                                                                                                                                                                     ",
             "                                                                                                                                                                                                                                      ",
             "                                                                                                                                                                                                                                      ",
             "                                                                                                                                                                                                                                      ",
