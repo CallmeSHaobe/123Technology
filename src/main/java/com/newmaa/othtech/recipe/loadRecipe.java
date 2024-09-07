@@ -70,6 +70,7 @@ public class loadRecipe implements IRecipePool {
             GT_ModHandler.getModItem("123Technology", "dustIrOsSm", 1),
             114514,
             1919810);
+        // isaforge
         TT_recipeAdder.addResearchableAssemblylineRecipe(
             GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 31027),
             (int) 409600000,
@@ -93,7 +94,7 @@ public class loadRecipe implements IRecipePool {
                 GT_ModHandler.getModItem("123Technology", "LookNEIdust", 64) },
             new FluidStack[] { new FluidStack(white, 4608), new FluidStack(cuihuaji, 123123),
                 new FluidStack(Ewater, 4096000), new FluidStack(songyou, 32000000) },
-            GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 22123),
+            GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 23521),
             105000,
             123123123);
         // IsaBee
@@ -139,7 +140,7 @@ public class loadRecipe implements IRecipePool {
                 new FluidStack(FluidRegistry.getFluidID("exciteddtsc"), 256000),
                 new FluidStack(FluidRegistry.getFluidID("plasma.neptunium"), 256000),
                 new FluidStack(FluidRegistry.getFluidID("plasma.fermium"), 256000) },
-            GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 22128),
+            GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 23526),
             1234 * 20,
             123123123);
         // 9in1
