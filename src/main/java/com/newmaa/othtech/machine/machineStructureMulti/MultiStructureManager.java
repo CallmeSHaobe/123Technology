@@ -1,6 +1,6 @@
 package com.newmaa.othtech.machine.machineStructureMulti;
 
-import static com.newmaa.othtech.MyMod.LOG;
+import static com.newmaa.othtech.OTHTechnology.LOG;
 
 import java.util.ArrayList;
 import java.util.HashMap;

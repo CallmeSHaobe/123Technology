@@ -46,13 +46,13 @@ import gregtech.api.util.GT_Utility;
 import gtPlusPlus.core.block.ModBlocks;
 
 // spotless:off
-public class MegaQFT extends OTH_MultiMachineBase<MegaQFT> {
+public class GT_TE_MegaQFTFake extends OTH_MultiMachineBase<GT_TE_MegaQFTFake> {
 
-    public MegaQFT(int aID, String aName, String aNameRegional) {
+    public GT_TE_MegaQFTFake(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
     }
 
-    public MegaQFT(String aName) {
+    public GT_TE_MegaQFTFake(String aName) {
         super(aName);
     }
 
@@ -217,7 +217,7 @@ public class MegaQFT extends OTH_MultiMachineBase<MegaQFT> {
     private final int verticalOffSet = 22;
     private final int depthOffSet = 1;
 
-    private static IStructureDefinition<MegaQFT> STRUCTURE_DEFINITION = null;
+    private static IStructureDefinition<GT_TE_MegaQFTFake> STRUCTURE_DEFINITION = null;
 
     public static int getBlockStabilisationFieldGeneratorTier(Block block, int meta) {
         if (block == StabilisationFieldGenerators && meta <= 8) {
@@ -242,14 +242,14 @@ public class MegaQFT extends OTH_MultiMachineBase<MegaQFT> {
 
 
     @Override
-    public IStructureDefinition<MegaQFT> getStructureDefinition() {
+    public IStructureDefinition<GT_TE_MegaQFTFake> getStructureDefinition() {
         if (STRUCTURE_DEFINITION == null) {
-            STRUCTURE_DEFINITION = StructureDefinition.<MegaQFT>builder()
+            STRUCTURE_DEFINITION = StructureDefinition.<GT_TE_MegaQFTFake>builder()
                 .addShape(STRUCTURE_PIECE_MAIN, transpose(shapeMain))
                 .addElement('J',
                     withChannel("StabilisationFieldGenerators",
                                ofBlocksTiered(
-                        MegaQFT::getBlockStabilisationFieldGeneratorTier,
+                        GT_TE_MegaQFTFake::getBlockStabilisationFieldGeneratorTier,
                         ImmutableList.of(
                             Pair.of(TT_Container_Casings.StabilisationFieldGenerators, 0),
                             Pair.of(TT_Container_Casings.StabilisationFieldGenerators, 1),
@@ -266,7 +266,7 @@ public class MegaQFT extends OTH_MultiMachineBase<MegaQFT> {
                 .addElement('I',
                     withChannel("SpacetimeCompressionFieldGenerators",
                         ofBlocksTiered(
-                            MegaQFT::getBlockSpacetimeCompressionFieldGeneratorTier,
+                            GT_TE_MegaQFTFake::getBlockSpacetimeCompressionFieldGeneratorTier,
                             ImmutableList.of(
                                 Pair.of(TT_Container_Casings.SpacetimeCompressionFieldGenerators, 0),
                                 Pair.of(TT_Container_Casings.SpacetimeCompressionFieldGenerators, 1),
@@ -283,7 +283,7 @@ public class MegaQFT extends OTH_MultiMachineBase<MegaQFT> {
                 .addElement('K',
                     withChannel("TimeAccelerationFieldGenerators",
                         ofBlocksTiered(
-                            MegaQFT::getBlockTimeAccelerationFieldGeneratorTier,
+                            GT_TE_MegaQFTFake::getBlockTimeAccelerationFieldGeneratorTier,
                             ImmutableList.of(
                                 Pair.of(TT_Container_Casings.TimeAccelerationFieldGenerator, 0),
                                 Pair.of(TT_Container_Casings.TimeAccelerationFieldGenerator, 1),
@@ -311,9 +311,9 @@ public class MegaQFT extends OTH_MultiMachineBase<MegaQFT> {
                 .addElement('P', ofBlock(QuantumGlassBlock.INSTANCE, 0))
                 .addElement(
                     'B',
-                    GT_HatchElementBuilder.<MegaQFT>builder()
+                    GT_HatchElementBuilder.<GT_TE_MegaQFTFake>builder()
                         .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch, Muffler)
-                        .adder(MegaQFT::addToMachineList)
+                        .adder(GT_TE_MegaQFTFake::addToMachineList)
                         .dot(1)
                         .casingIndex(1024 + 12)
                         .buildAndChain(GregTech_API.sBlockCasings8, 3))
@@ -425,7 +425,7 @@ public class MegaQFT extends OTH_MultiMachineBase<MegaQFT> {
 
     @Override
     public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-        return new MegaQFT(this.mName);
+        return new GT_TE_MegaQFTFake(this.mName);
     }
 
     @Override

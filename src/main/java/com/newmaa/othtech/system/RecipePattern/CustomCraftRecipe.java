@@ -1,6 +1,6 @@
 package com.newmaa.othtech.system.RecipePattern;
 
-import static com.newmaa.othtech.MyMod.LOG;
+import static com.newmaa.othtech.OTHTechnology.LOG;
 import static gregtech.api.enums.GT_Values.W;
 
 import java.util.ArrayList;

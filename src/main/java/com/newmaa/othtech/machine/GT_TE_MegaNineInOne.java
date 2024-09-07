@@ -2,7 +2,6 @@ package com.newmaa.othtech.machine;
 
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
 import static gregtech.api.enums.GT_HatchElement.*;
-import static gregtech.api.enums.Textures.BlockIcons.*;
 import static gregtech.api.util.GT_StructureUtility.ofFrame;
 
 import java.util.Arrays;
@@ -44,13 +43,13 @@ import gtPlusPlus.api.recipe.GTPPRecipeMaps;
 import gtPlusPlus.core.block.ModBlocks;
 import gtPlusPlus.xmod.gregtech.common.blocks.textures.TexturesGtBlock;
 
-public class OneLastMachine extends OTH_MultiMachineBase<OneLastMachine> {
+public class GT_TE_MegaNineInOne extends OTH_MultiMachineBase<GT_TE_MegaNineInOne> {
 
-    public OneLastMachine(int aID, String aName, String aNameRegional) {
+    public GT_TE_MegaNineInOne(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
     }
 
-    public OneLastMachine(String aName) {
+    public GT_TE_MegaNineInOne(String aName) {
         super(aName);
     }
 
@@ -199,27 +198,27 @@ public class OneLastMachine extends OTH_MultiMachineBase<OneLastMachine> {
     private final int horizontalOffSet = 24;
     private final int verticalOffSet = 3;
     private final int depthOffSet = 40;
-    private static IStructureDefinition<OneLastMachine> STRUCTURE_DEFINITION = null;
+    private static IStructureDefinition<GT_TE_MegaNineInOne> STRUCTURE_DEFINITION = null;
 
     @Override
-    public IStructureDefinition<OneLastMachine> getStructureDefinition() {
+    public IStructureDefinition<GT_TE_MegaNineInOne> getStructureDefinition() {
         if (STRUCTURE_DEFINITION == null) {
-            STRUCTURE_DEFINITION = StructureDefinition.<OneLastMachine>builder()
+            STRUCTURE_DEFINITION = StructureDefinition.<GT_TE_MegaNineInOne>builder()
                 .addShape(STRUCTURE_PIECE_MAIN, shapeMain)
                 .addElement('F', ofBlock(ModBlocks.blockCasings3Misc, 2))
                 .addElement(
                     'E',
-                    GT_HatchElementBuilder.<OneLastMachine>builder()
+                    GT_HatchElementBuilder.<GT_TE_MegaNineInOne>builder()
                         .atLeast(Energy.or(ExoticEnergy))
-                        .adder(OneLastMachine::addToMachineList)
+                        .adder(GT_TE_MegaNineInOne::addToMachineList)
                         .dot(1)
                         .casingIndex(getTextureIndex())
                         .buildAndChain(ModBlocks.blockCasings3Misc, 2))
                 .addElement(
                     'D',
-                    GT_HatchElementBuilder.<OneLastMachine>builder()
+                    GT_HatchElementBuilder.<GT_TE_MegaNineInOne>builder()
                         .atLeast(InputBus, OutputBus, InputHatch, OutputHatch, Muffler, Maintenance)
-                        .adder(OneLastMachine::addToMachineList)
+                        .adder(GT_TE_MegaNineInOne::addToMachineList)
                         .dot(1)
                         .casingIndex(getTextureIndex())
                         .buildAndChain(ModBlocks.blockCasings3Misc, 2))
@@ -696,7 +695,7 @@ public class OneLastMachine extends OTH_MultiMachineBase<OneLastMachine> {
 
     @Override
     public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-        return new OneLastMachine(this.mName);
+        return new GT_TE_MegaNineInOne(this.mName);
     }
 
 

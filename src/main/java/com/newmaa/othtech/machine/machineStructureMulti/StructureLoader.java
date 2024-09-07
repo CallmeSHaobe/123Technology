@@ -1,6 +1,6 @@
 package com.newmaa.othtech.machine.machineStructureMulti;
 
-import static com.newmaa.othtech.MyMod.LOG;
+import static com.newmaa.othtech.OTHTechnology.LOG;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.zip.ZipInputStream;
 
-import com.newmaa.othtech.MyMod;
+import com.newmaa.othtech.OTHTechnology;
 
 public class StructureLoader {
 
@@ -65,10 +65,10 @@ public class StructureLoader {
         }
         MultiStructureDefinition.OffSet offSet = structure.machineOffSet;
         LOG.info(
-            Objects.requireNonNull(MyMod.class.getResource(""))
+            Objects.requireNonNull(OTHTechnology.class.getResource(""))
                 .getPath());
         try (ZipInputStream zipInputStream = new ZipInputStream(
-            Objects.requireNonNull(MyMod.class.getResourceAsStream(assetRoot + name + ".zip"))
+            Objects.requireNonNull(OTHTechnology.class.getResourceAsStream(assetRoot + name + ".zip"))
             // Objects.requireNonNull(LanguageUtil0.class.getResourceAsStream(zipFilePath))
             ,
             StandardCharsets.UTF_8)) {

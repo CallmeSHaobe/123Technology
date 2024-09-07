@@ -14,11 +14,10 @@ import java.util.function.IntFunction;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
-import com.newmaa.othtech.MyMod;
+import com.newmaa.othtech.OTHTechnology;
 
 import gregtech.api.enums.HeatingCoilLevel;
 import gregtech.api.metatileentity.MetaTileEntity;
-import scala.actors.migration.pattern;
 
 public final class Utils {
 
@@ -205,7 +204,7 @@ public final class Utils {
     public static ItemStack setStackSize(ItemStack itemStack, int amount) {
         if (itemStack == null) return null;
         if (amount < 0) {
-            MyMod.LOG
+            OTHTechnology.LOG
                 .info("Error! Trying to set a item stack size lower than zero! " + itemStack + " to amount " + amount);
             return itemStack;
         }
@@ -247,7 +246,7 @@ public final class Utils {
     public static FluidStack setStackSize(FluidStack fluidStack, int amount) {
         if (fluidStack == null) return null;
         if (amount < 0) {
-            MyMod.LOG
+            OTHTechnology.LOG
                 .info("Error! Trying to set a item stack size lower than zero! " + fluidStack + " to amount " + amount);
             return fluidStack;
         }

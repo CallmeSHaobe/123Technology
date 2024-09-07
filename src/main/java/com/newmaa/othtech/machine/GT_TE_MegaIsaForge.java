@@ -44,13 +44,13 @@ import gregtech.api.util.GT_Multiblock_Tooltip_Builder;
 import gregtech.api.util.GT_Recipe;
 import gregtech.api.util.GT_Utility;
 
-public class Mega_ISA_Forge extends OTH_MultiMachineBase<Mega_ISA_Forge> {
+public class GT_TE_MegaIsaForge extends OTH_MultiMachineBase<GT_TE_MegaIsaForge> {
 
-    public Mega_ISA_Forge(int aID, String aName, String aNameRegional) {
+    public GT_TE_MegaIsaForge(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
     }
 
-    public Mega_ISA_Forge(String aName) {
+    public GT_TE_MegaIsaForge(String aName) {
         super(aName);
     }
 
@@ -186,16 +186,16 @@ public class Mega_ISA_Forge extends OTH_MultiMachineBase<Mega_ISA_Forge> {
     private final int horizontalOffSet = 24;
     private final int verticalOffSet = 75;
     private final int depthOffSet = 18;
-    private static IStructureDefinition<Mega_ISA_Forge> STRUCTURE_DEFINITION = null;
+    private static IStructureDefinition<GT_TE_MegaIsaForge> STRUCTURE_DEFINITION = null;
 
     @Override
-    public IStructureDefinition<Mega_ISA_Forge> getStructureDefinition() {
+    public IStructureDefinition<GT_TE_MegaIsaForge> getStructureDefinition() {
         if (STRUCTURE_DEFINITION == null) {
-            STRUCTURE_DEFINITION = StructureDefinition.<Mega_ISA_Forge>builder()
+            STRUCTURE_DEFINITION = StructureDefinition.<GT_TE_MegaIsaForge>builder()
                 .addShape(STRUCTURE_PIECE_MAIN, shapeMain)
                 .addElement(
                     'A',
-                    withChannel("coil", ofCoil(Mega_ISA_Forge::setCoilLevel, Mega_ISA_Forge::getCoilLevel)))
+                    withChannel("coil", ofCoil(GT_TE_MegaIsaForge::setCoilLevel, GT_TE_MegaIsaForge::getCoilLevel)))
                 .addElement('B', ofBlock(GregTech_API.sBlockCasings8, 3))
                 .addElement('C', ofBlock(sBlockCasingsBA0, 12))
                 .addElement('D', ofBlock(sBlockCasingsTT, 8))
@@ -203,9 +203,9 @@ public class Mega_ISA_Forge extends OTH_MultiMachineBase<Mega_ISA_Forge> {
                 .addElement('F', ofBlock(sBlockCasingsTT, 10))
                 .addElement(
                     'G',
-                    GT_HatchElementBuilder.<Mega_ISA_Forge>builder()
+                    GT_HatchElementBuilder.<GT_TE_MegaIsaForge>builder()
                         .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch, Muffler)
-                        .adder(Mega_ISA_Forge::addToMachineList)
+                        .adder(GT_TE_MegaIsaForge::addToMachineList)
                         .dot(1)
                         .casingIndex(1024 + 12)
                         .buildAndChain(sBlockCasingsTT, 12))
@@ -2192,7 +2192,7 @@ public class Mega_ISA_Forge extends OTH_MultiMachineBase<Mega_ISA_Forge> {
 
     @Override
     public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-        return new Mega_ISA_Forge(this.mName);
+        return new GT_TE_MegaIsaForge(this.mName);
     }
 
     @Override

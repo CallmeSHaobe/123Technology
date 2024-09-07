@@ -10,8 +10,9 @@ public enum OTHItemList {
     inf_WirelessHatch,
     inf_infWirelessHatch,
     Mega_QFT,
-
     NineInOne,
+    MEBFpp,
+    MFREpp,
 
     legendary_WirelessHatch,
 

@@ -142,6 +142,7 @@ public class loadRecipe implements IRecipePool {
             GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 22128),
             1234 * 20,
             123123123);
+        // 9in1
         GT_Values.RA.stdBuilder()
             .itemOutputs(GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 23520))
             .itemInputs(
@@ -150,6 +151,36 @@ public class loadRecipe implements IRecipePool {
                 GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 31028),
                 GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 995),
                 ItemList.Robot_Arm_LuV.get(16),
+                GT_OreDictUnificator.get(OrePrefixes.circuit, Materials.Superconductor, 64),
+                GT_Utility.getIntegratedCircuit(17))
+            .fluidInputs(new FluidStack(FluidRegistry.getFluidID("molten.indalloy140"), 128 * 144))
+            .noOptimize()
+            .duration(123 * 20)
+            .eut(32000)
+            .addTo(Assem);
+        // MEBF
+        GT_Values.RA.stdBuilder()
+            .itemOutputs(GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 23527))
+            .itemInputs(
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 963),
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 963),
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 963),
+                ItemList.Field_Generator_LuV.get(16),
+                GT_OreDictUnificator.get(OrePrefixes.circuit, Materials.Superconductor, 64),
+                GT_Utility.getIntegratedCircuit(17))
+            .fluidInputs(new FluidStack(FluidRegistry.getFluidID("molten.indalloy140"), 128 * 144))
+            .noOptimize()
+            .duration(123 * 20)
+            .eut(32000)
+            .addTo(Assem);
+        // Freezer
+        GT_Values.RA.stdBuilder()
+            .itemOutputs(GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 23528))
+            .itemInputs(
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 910),
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 910),
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 910),
+                ItemList.Electric_Piston_LuV.get(16),
                 GT_OreDictUnificator.get(OrePrefixes.circuit, Materials.Superconductor, 64),
                 GT_Utility.getIntegratedCircuit(17))
             .fluidInputs(new FluidStack(FluidRegistry.getFluidID("molten.indalloy140"), 128 * 144))

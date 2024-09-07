@@ -20,7 +20,7 @@ public class Recipemaps {
         .disableOptimize()
         .build();
     public static final RecipeMap<OTH_RecipeMapBackend> QFTMega = RecipeMapBuilder
-        .of("otht.recipe.MegaQFT", OTH_RecipeMapBackend::new)
+        .of("otht.recipe.GT_TE_MegaQFTFake", OTH_RecipeMapBackend::new)
         .maxIO(8, 8, 8, 8)
         .progressBar(GT_UITextures.PROGRESSBAR_ARROW_MULTIPLE)
         .frontend(OTH_GeneralFrontend::new)

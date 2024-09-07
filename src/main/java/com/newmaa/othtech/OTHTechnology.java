@@ -16,9 +16,9 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 
 @Mod(
-    modid = MyMod.MODID,
-    version = MyMod.VERSION,
-    name = MyMod.modName,
+    modid = OTHTechnology.MODID,
+    version = OTHTechnology.VERSION,
+    name = OTHTechnology.modName,
     dependencies = "required-after:IC2;" + "required-after:structurelib;"
         + "required-after:modularui;"
         + "after:GalacticraftCore;"
@@ -29,7 +29,7 @@ import cpw.mods.fml.common.event.FMLServerStartingEvent;
         + "required-after:gregtech;"
         + "after:GalacticraftPlanets",
     acceptedMinecraftVersions = "1.7.10")
-public class MyMod {
+public class OTHTechnology {
 
     public static final String MODID = "123Technology";
 

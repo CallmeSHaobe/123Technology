@@ -27,3 +27,5 @@ item.leCasimir.name=§5微型卡西米尔发生器
 item.finCasimir.name=§5卡西米尔鳍片
 item.boardCasimir.name=§5卡西米尔基板
 item.energyHatchSpacetime.name=§5时空能源接收器
+GT5U.gui.text.nowater=§4机器因炽焱而憋憋
+GT5U.gui.text.nolava=§4机器因凛冰而憋憋
