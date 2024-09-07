@@ -70,7 +70,7 @@ public class loadRecipe implements IRecipePool {
             GT_ModHandler.getModItem("123Technology", "dustIrOsSm", 1),
             114514,
             1919810);
-        // isaforge
+        // isaforgea
         TT_recipeAdder.addResearchableAssemblylineRecipe(
             GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 31027),
             (int) 409600000,
