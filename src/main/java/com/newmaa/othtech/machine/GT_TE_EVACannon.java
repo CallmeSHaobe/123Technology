@@ -1447,7 +1447,9 @@ public class GT_TE_EVACannon extends OTH_MultiMachineBase<GT_TE_EVACannon> {
         final GT_Multiblock_Tooltip_Builder tt = new GT_Multiblock_Tooltip_Builder();
         tt.addMachineType("§l§5老登的终极造物 - 阳电子炮")
             .addInfo("§6§l来自另一世界的恐怖武器, 功率消耗极高")
-            .addInfo("§6§l伤害无法想象")
+            .addInfo("§6§l编程电路决定伤害, 1 = 32768, 2 = 2147483647")
+            .addInfo("§4最好保持炮口前方为空...")
+            .addInfo("§q耗时固定10s")
             .addInfo("§q只支持无线电网直接供给EU")
             .addSeparator()
             .addController("EVA专用阳电子炮")
