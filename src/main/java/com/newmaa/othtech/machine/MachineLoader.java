@@ -3,7 +3,10 @@ package com.newmaa.othtech.machine;
 import net.minecraft.item.ItemStack;
 
 import com.newmaa.othtech.common.OTHItemList;
-import com.newmaa.othtech.machine.hatch.*;
+import com.newmaa.othtech.machine.hatch.MAXwireless;
+import com.newmaa.othtech.machine.hatch.WTFHatch;
+import com.newmaa.othtech.machine.hatch.infWirelessHatch;
+import com.newmaa.othtech.machine.hatch.legendaryWireless;
 
 public class MachineLoader {
 
@@ -16,6 +19,7 @@ public class MachineLoader {
     public static ItemStack NineInOne;
     public static ItemStack MEBFpp;
     public static ItemStack MFREpp;
+    public static ItemStack EVACannon;
 
     public static void loadMachines() {
         final int IDs = 23520;
@@ -46,6 +50,9 @@ public class MachineLoader {
 
         MFREpp = new GT_TE_MegaFreezerGTpp(IDs + 8, "MegaFreezerGTPP", "巨型凛冰冷冻机").getStackForm(1);
         OTHItemList.MFREpp.set(MFREpp);
+
+        EVACannon = new GT_TE_EVACannon(IDs + 9, "EVACannon", "§l§6EVA专用改造阳电子炮GT").getStackForm(1);
+        OTHItemList.EVACannon.set(EVACannon);
 
     }
 }

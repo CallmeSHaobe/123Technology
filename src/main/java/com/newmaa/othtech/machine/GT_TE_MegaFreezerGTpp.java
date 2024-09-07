@@ -73,7 +73,7 @@ public class GT_TE_MegaFreezerGTpp extends OTH_MultiMachineBase<GT_TE_MegaFreeze
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        return RecipeMaps.blastFurnaceRecipes;
+        return RecipeMaps.vacuumFreezerRecipes;
 
     }
 

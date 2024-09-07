@@ -114,24 +114,44 @@ public class GT_TE_MegaQFTFake extends OTH_MultiMachineBase<GT_TE_MegaQFTFake> {
     @NotNull
     @Override
     public CheckRecipeResult checkProcessing() {
+
+
         setupProcessingLogic(processingLogic);
+
         CheckRecipeResult result = doCheckRecipe();
         result = postCheckRecipe(result, processingLogic);
+        // inputs are consumed at this point
         updateSlots();
-        if(!result.wasSuccessful()) return result;
+        if (!result.wasSuccessful()) return result;
+
         mEfficiency = 10000;
         mEfficiencyIncrease = 10000;
         mMaxProgresstime = processingLogic.getDuration();
         setEnergyUsage(processingLogic);
+
+        // if in this state , no extra settings is in need.
+        if (multiplier < 1) {
+            mOutputItems = processingLogic.getOutputItems();
+            mOutputFluids = processingLogic.getOutputFluids();
+            return result;
+        }
+
         ItemStack[] outputItemStack = processingLogic.getOutputItems();
         FluidStack[] outputFluidStack = processingLogic.getOutputFluids();
-        if (mode != 0) {
+
+        if (mode != 2) {
+            // compressor mode and extractor mode
             mOutputItems = outputItemStack;
             mOutputFluids = outputFluidStack;
         } else {
+
+
+
+            // process Items
             List<ItemStack> extraItems = new ArrayList<>();
             for (ItemStack items : outputItemStack) {
                 if (items.stackSize <= Integer.MAX_VALUE / multiplier) {
+                    // set amount directly if in integer area
                     items.stackSize *= multiplier;
                 } else {
                     for (int i = 0; i < multiplier - 1; i++) {
@@ -139,31 +159,41 @@ public class GT_TE_MegaQFTFake extends OTH_MultiMachineBase<GT_TE_MegaQFTFake> {
                     }
                 }
             }
+
             if (extraItems.isEmpty()) {
+                // no over integer amount
                 mOutputItems = outputItemStack;
             } else {
                 extraItems.addAll(Arrays.asList(outputItemStack));
-                mOutputItems = extraItems.toArray(new ItemStack[]{});
+                mOutputItems = extraItems.toArray(new ItemStack[] {});
             }
-        }
-        List<FluidStack> extraFluids = new ArrayList<>();
-        for (FluidStack fluids : outputFluidStack) {
-            if (fluids.amount <= Integer.MAX_VALUE / multiplier) {
-                fluids.amount *= multiplier;
-            } else {
-                for (int i = 0; i < multiplier - 1; i++) {
-                    extraFluids.add(fluids.copy());
+
+            // process Fluids
+            List<FluidStack> extraFluids = new ArrayList<>();
+            for (FluidStack fluids : outputFluidStack) {
+                if (fluids.amount <= Integer.MAX_VALUE / multiplier) {
+                    fluids.amount *= multiplier;
+                } else {
+                    for (int i = 0; i < multiplier - 1; i++) {
+                        extraFluids.add(fluids.copy());
+                    }
                 }
             }
+
+            if (extraFluids.isEmpty()) {
+                mOutputFluids = outputFluidStack;
+            } else {
+                extraFluids.addAll(Arrays.asList(outputFluidStack));
+                mOutputFluids = extraFluids.toArray(new FluidStack[] {});
+            }
+
         }
-        if (extraFluids.isEmpty()) {
-            mOutputFluids = outputFluidStack;
-        } else {
-            extraFluids.addAll(Arrays.asList(outputFluidStack));
-            mOutputFluids = extraFluids.toArray(new FluidStack[] {});
-        }
+
         return result;
     }
+
+
+
     @Override
     protected ProcessingLogic createProcessingLogic() {
 
@@ -183,7 +213,18 @@ public class GT_TE_MegaQFTFake extends OTH_MultiMachineBase<GT_TE_MegaQFTFake> {
     @Override
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
         repairMachine();
-        multiplier = 1 + ((int) Math.pow(stabilisationFieldMetadata, 1.1) - stabilisationFieldMetadata);
+        if (stabilisationFieldMetadata < 6) {
+            multiplier = 0;
+        }else{
+            if (stabilisationFieldMetadata >= 6 & stabilisationFieldMetadata <= 8){
+                multiplier = 2;
+            }else{
+                if (stabilisationFieldMetadata > 9) {
+                    multiplier = 3;
+                }
+            }
+        }
+
         return checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet);
 
     }

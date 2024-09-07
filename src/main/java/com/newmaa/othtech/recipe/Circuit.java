@@ -280,7 +280,7 @@ public class Circuit implements IRecipePool {
             .addTo(ISA);
         // general soc
         GT_Values.RA.stdBuilder()
-            .itemOutputs(GT_ModHandler.getModItem("123Technology", "socNor", 4))
+            .itemOutputs(GT_ModHandler.getModItem("123Technology", "socNor", 16))
             .itemInputs(
                 ItemList.Field_Generator_UMV.get(0),
                 GT_Utility.getIntegratedCircuit(1),

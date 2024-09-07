@@ -14,6 +14,8 @@ public enum OTHItemList {
     MEBFpp,
     MFREpp,
 
+    EVACannon,
+
     legendary_WirelessHatch,
 
     WirelessMAX,
