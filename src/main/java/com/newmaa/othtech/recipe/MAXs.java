@@ -118,19 +118,19 @@ public class MAXs implements IRecipePool {
                 GT_ModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 22583),
                 GT_OreDictUnificator.get(OrePrefixes.circuit, Materials.Transcendent, 64),
                 GT_ModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 32417),
-                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 22126),
-                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 22126),
-                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 22126),
-                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 22126),
-                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 22126),
-                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 22126),
-                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 22126),
-                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 22126) },
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23524),
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23524),
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23524),
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23524),
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23524),
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23524),
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23524),
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23524) },
             new FluidStack[] { new FluidStack(FluidRegistry.getFluidID("cryotheum"), 64000000),
                 new FluidStack(FluidRegistry.getFluidID("molten.mutatedlivingsolder"), 64000000),
                 new FluidStack(FluidRegistry.getFluidID("ic2uumatter"), 64000000),
                 new FluidStack(FluidRegistry.getFluidID("exciteddtsc"), 64000000) },
-            GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 22124),
+            GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 23522),
             20000,
             2000000000);
         TT_recipeAdder.addResearchableAssemblylineRecipe(
@@ -155,11 +155,11 @@ public class MAXs implements IRecipePool {
             new FluidStack[] { new FluidStack(UMVsc, 576000000),
                 new FluidStack(FluidRegistry.getFluidID("exciteddtsc"), 114514000),
                 new FluidStack(FluidRegistry.getFluidID("molten.mutatedlivingsolder"), 114514000) },
-            GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 22125),
+            GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 23523),
             1024 * 20,
             (int) TierEU.UXV);
         GT_Values.RA.stdBuilder()
-            .itemOutputs(GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 22126))
+            .itemOutputs(GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 23524))
             .itemInputs(
                 GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 4, 286),
                 ItemList.Electric_Pump_MAX.get(64),
