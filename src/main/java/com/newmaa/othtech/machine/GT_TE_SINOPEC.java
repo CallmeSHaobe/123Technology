@@ -272,7 +272,7 @@ public class GT_TE_SINOPEC extends OTH_MultiMachineBase<GT_TE_SINOPEC> {
                 Textures.BlockIcons
                     .getCasingTextureForId(GT_Utility.getCasingTextureIndex(sBlockCasings4, 0)),
                 TextureFactory.builder()
-                    .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_GLOW)
+                    .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE)
                     .extFacing()
                     .build(),
                 TextureFactory.builder()
