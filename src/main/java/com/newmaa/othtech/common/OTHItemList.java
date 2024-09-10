@@ -15,6 +15,9 @@ public enum OTHItemList {
     MFREpp,
 
     EVACannon,
+    HatchME,
+    BusME,
+    SINOPECd,
 
     legendary_WirelessHatch,
 

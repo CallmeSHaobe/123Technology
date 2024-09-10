@@ -96,7 +96,7 @@ public class Mega_QFT_Pool implements IRecipePool {
             .fluidInputs(new FluidStack(N2, 64000), new FluidStack(H2, 64000))
             .fluidOutputs(
                 new FluidStack(FluidRegistry.getFluidID("xenoxene"), 32 * 1000),
-                new FluidStack(FluidRegistry.getFluidID("radoxpoly"), 256 * 144),
+                new FluidStack(FluidRegistry.getFluidID("molten.radoxpoly"), 256 * 144),
                 new FluidStack(FluidRegistry.getFluidID("molten.kevlar"), 128 * 144))
             .noOptimize()
             .duration(200 * 20)

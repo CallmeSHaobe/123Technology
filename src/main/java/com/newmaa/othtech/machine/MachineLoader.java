@@ -1,12 +1,9 @@
 package com.newmaa.othtech.machine;
 
+import com.newmaa.othtech.machine.hatch.*;
 import net.minecraft.item.ItemStack;
 
 import com.newmaa.othtech.common.OTHItemList;
-import com.newmaa.othtech.machine.hatch.MAXwireless;
-import com.newmaa.othtech.machine.hatch.WTFHatch;
-import com.newmaa.othtech.machine.hatch.infWirelessHatch;
-import com.newmaa.othtech.machine.hatch.legendaryWireless;
 
 public class MachineLoader {
 
@@ -20,6 +17,9 @@ public class MachineLoader {
     public static ItemStack MEBFpp;
     public static ItemStack MFREpp;
     public static ItemStack EVACannon;
+    public static ItemStack HatchME;
+    public static ItemStack BusME;
+    public static ItemStack SINOPECd;
 
     public static void loadMachines() {
         final int IDs = 23520;
@@ -53,6 +53,15 @@ public class MachineLoader {
 
         EVACannon = new GT_TE_EVACannon(IDs + 9, "EVACannon", "§l§6EVA专用改造阳电子炮GT").getStackForm(1);
         OTHItemList.EVACannon.set(EVACannon);
+
+        HatchME = new GT_MetaTileEntity_Hatch_Output_ME_B(IDs + 11, "OutputHatchME", "存储输出仓(ME)").getStackForm(1);
+        OTHItemList.HatchME.set(HatchME);
+
+        BusME = new GT_MetaTileEntity_Hatch_OutputBus_ME_B(IDs + 12, "OutputBusME", "存储输出总线(ME)").getStackForm(1);
+        OTHItemList.BusME.set(BusME);
+
+        SINOPECd = new GT_TE_SINOPEC(IDs + 13, "SINOPEC", "中国石化集成工厂").getStackForm(1);
+        OTHItemList.SINOPECd.set(SINOPECd);
 
     }
 }

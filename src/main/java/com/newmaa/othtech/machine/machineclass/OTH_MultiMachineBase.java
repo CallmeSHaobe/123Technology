@@ -2,13 +2,14 @@ package com.newmaa.othtech.machine.machineclass;
 
 import static com.newmaa.othtech.Utils.Utils.filterValidMTEs;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 import javax.annotation.Nonnull;
 
+import com.newmaa.othtech.machine.hatch.GT_MetaTileEntity_Hatch_OutputBus_ME_B;
+import com.newmaa.othtech.machine.hatch.GT_MetaTileEntity_Hatch_Output_ME_B;
+import gregtech.api.interfaces.fluid.IFluidStore;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
@@ -415,6 +416,55 @@ public abstract class OTH_MultiMachineBase<T extends OTH_MultiMachineBase<T>>
         }
         if (!mDynamoHatches.isEmpty()) {
             return addEnergyOutputMultipleDynamos(aEU, true);
+        }
+        return false;
+    }
+    @Override
+    public List<ItemStack> getItemOutputSlots(ItemStack[] toOutput) {
+        List<ItemStack> ret = new ArrayList<>();
+        for (final GT_MetaTileEntity_Hatch tBus : filterValidMTEs(mOutputBusses)) {
+            if (!(tBus instanceof GT_MetaTileEntity_Hatch_OutputBus_ME_B)) {
+                final IInventory tBusInv = tBus.getBaseMetaTileEntity();
+                for (int i = 0; i < tBusInv.getSizeInventory(); i++) {
+                    final ItemStack stackInSlot = tBus.getStackInSlot(i);
+
+                    if (stackInSlot == null && tBus instanceof IItemLockable lockable && lockable.isLocked()) {
+                        // getItemOutputSlots is only used to calculate free room for the purposes of parallels and
+                        // void protection. We can use a fake item stack here without creating weirdness in the output
+                        // bus' actual inventory.
+                        assert lockable.getLockedItem() != null;
+                        ItemStack fakeItemStack = lockable.getLockedItem()
+                            .copy();
+                        fakeItemStack.stackSize = 0;
+                        ret.add(fakeItemStack);
+                    } else {
+                        ret.add(stackInSlot);
+                    }
+                }
+            }
+        }
+        return ret;
+    }
+    @Override
+    public boolean canDumpItemToME() {
+        for (GT_MetaTileEntity_Hatch tHatch : filterValidMTEs(mOutputBusses)) {
+            if (tHatch instanceof GT_MetaTileEntity_Hatch_OutputBus_ME_B) {
+                if ((((GT_MetaTileEntity_Hatch_OutputBus_ME_B) tHatch).canAcceptItem())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean canDumpFluidToME() {
+        for (IFluidStore tHatch : getFluidOutputSlots(new FluidStack[0])) {
+            if (tHatch instanceof GT_MetaTileEntity_Hatch_Output_ME_B) {
+                if ((((GT_MetaTileEntity_Hatch_Output_ME_B) tHatch).canAcceptFluid())) {
+                    return true;
+                }
+            }
         }
         return false;
     }
