@@ -184,7 +184,7 @@ public class SINOPEC_Pool implements IRecipePool {
                 new FluidStack(CH4, 6000),
                 FluidRegistry.getFluidStack("bioethanol", 1500),
                 FluidRegistry.getFluidStack("liquid_heavy_oil", 120000),
-                FluidRegistry.getFluidStack("xeonxene", 2500))
+                FluidRegistry.getFluidStack("xenoxene", 2500))
             .itemOutputs(GT_ModHandler.getModItem("IC2", "itemFertilizer", 10))
             .itemInputs(GT_Utility.getIntegratedCircuit(24))
             .noOptimize()
@@ -208,7 +208,7 @@ public class SINOPEC_Pool implements IRecipePool {
                 new FluidStack(CH4, 6000),
                 FluidRegistry.getFluidStack("bioethanol", 1500),
                 FluidRegistry.getFluidStack("liquid_heavy_oil", 120000),
-                FluidRegistry.getFluidStack("xeonxene", 2500))
+                FluidRegistry.getFluidStack("xenoxene", 2500))
             .itemOutputs(GT_ModHandler.getModItem("IC2", "itemFertilizer", 10))
             .itemInputs(GT_Utility.getIntegratedCircuit(1))
             .noOptimize()
