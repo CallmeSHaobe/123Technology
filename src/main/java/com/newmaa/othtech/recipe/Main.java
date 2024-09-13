@@ -189,5 +189,21 @@ public class Main implements IRecipePool {
             .duration(123 * 20)
             .eut(32000)
             .addTo(Assem);
+        // SINOPEC
+        GT_Values.RA.stdBuilder()
+            .itemOutputs(GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 23533))
+            .itemInputs(
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 16, 31021),
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 16, 1160),
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 16, 1169),
+                ItemList.Robot_Arm_IV.get(8),
+                ItemList.Pump_IV.get(8),
+                GT_OreDictUnificator.get(OrePrefixes.circuit, Materials.Ultimate, 16),
+                GT_Utility.getIntegratedCircuit(17))
+            .fluidInputs(new FluidStack(FluidRegistry.getFluidID("molten.tungstensteel"), 128 * 144))
+            .noOptimize()
+            .duration(123 * 20)
+            .eut(8000)
+            .addTo(Assem);
     }
 }

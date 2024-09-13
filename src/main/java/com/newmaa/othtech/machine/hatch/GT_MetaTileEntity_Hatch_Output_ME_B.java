@@ -19,7 +19,6 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
 
-import com.glodblock.github.common.item.FCBaseItemCell;
 import com.glodblock.github.common.storage.IStorageFluidCell;
 import com.gtnewhorizons.modularui.api.screen.ModularWindow;
 import com.gtnewhorizons.modularui.api.screen.UIBuildContext;
@@ -76,17 +75,13 @@ public class GT_MetaTileEntity_Hatch_Output_ME_B extends GT_MetaTileEntity_Hatch
             aName,
             aNameRegional,
             3,
-            new String[] {
-                "为多方块机器输出流体",
-                "直接存储到ME系统",
-                "能够缓存无限数量的流体",
-                "使用螺丝刀切换缓存模式",
-                "手持剪线钳右键改变仓室与ME网络的连接方式",
-                "来自 GT5.09.48.66, GTNH2.6.1"},
+            new String[] { "为多方块机器输出流体", "直接存储到ME系统", "能够缓存无限数量的流体", "使用螺丝刀切换缓存模式", "手持剪线钳右键改变仓室与ME网络的连接方式",
+                "来自 GT5.09.48.66, GTNH2.6.1" },
             1);
     }
 
-    public GT_MetaTileEntity_Hatch_Output_ME_B(String aName, int aTier, String[] aDescription, ITexture[][][] aTextures) {
+    public GT_MetaTileEntity_Hatch_Output_ME_B(String aName, int aTier, String[] aDescription,
+        ITexture[][][] aTextures) {
         super(aName, aTier, 1, aDescription, aTextures);
     }
 

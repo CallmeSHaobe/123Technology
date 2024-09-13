@@ -196,23 +196,6 @@ public class Mega_QFT_Pool implements IRecipePool {
             .addTo(MQFT);
         GT_Values.RA.stdBuilder()
             .itemInputs(
-                GT_Utility.getIntegratedCircuit(17),
-                GT_ModHandler.getModItem("tectech", "item.tm.itemAstralArrayFabricator", 0),
-                GT_ModHandler.getModItem("eternalsingularity", "eternal_singularity", 64),
-                GT_ModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 32417))
-            .fluidInputs(new FluidStack(FluidRegistry.getFluidID("primordialmatter"), 1152 * 64))
-            .itemOutputs(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 32757))
-            .fluidOutputs(
-                new FluidStack(FluidRegistry.getFluidID("molten.eternity"), 63 * 64 * 144),
-                new FluidStack(FluidRegistry.getFluidID("molten.shirabon"), 64 * 64 * 144),
-                new FluidStack(FluidRegistry.getFluidID("spatialfluid"), 128 * 64 * 144),
-                new FluidStack(FluidRegistry.getFluidID("molten.infinity"), 64 * 144 * 4))
-            .noOptimize()
-            .duration(400 * 20)
-            .eut(TierEU.MAX)
-            .addTo(MQFT);
-        GT_Values.RA.stdBuilder()
-            .itemInputs(
                 GT_Utility.getIntegratedCircuit(18),
                 GT_ModHandler.getModItem("tectech", "item.tm.itemAstralArrayFabricator", 0),
                 GT_ModHandler.getModItem("eternalsingularity", "eternal_singularity", 64),
@@ -220,9 +203,9 @@ public class Mega_QFT_Pool implements IRecipePool {
             .fluidInputs(new FluidStack(FluidRegistry.getFluidID("primordialmatter"), 1152 * 64))
             .itemOutputs(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 32757))
             .fluidOutputs(
-                new FluidStack(FluidRegistry.getFluidID("molten.eternity"), 63 * 64 * 144),
-                new FluidStack(FluidRegistry.getFluidID("molten.shirabon"), 64 * 64 * 144),
-                new FluidStack(FluidRegistry.getFluidID("temporalfluid"), 128 * 64 * 144),
+                new FluidStack(FluidRegistry.getFluidID("molten.eternity"), 63 * 64 * 144 / 4),
+                new FluidStack(FluidRegistry.getFluidID("molten.shirabon"), 64 * 64 * 144 / 4),
+                new FluidStack(FluidRegistry.getFluidID("temporalfluid"), 128 * 64 * 144 / 4),
                 new FluidStack(FluidRegistry.getFluidID("molten.infinity"), 64 * 144 * 4))
             .noOptimize()
             .duration(400 * 20)

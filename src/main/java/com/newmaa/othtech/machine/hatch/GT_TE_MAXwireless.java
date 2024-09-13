@@ -8,19 +8,19 @@ import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Wireless_Hatch;
 
-public class infWirelessHatch extends GT_MetaTileEntity_Wireless_Hatch {
+public class GT_TE_MAXwireless extends GT_MetaTileEntity_Wireless_Hatch {
 
-    public infWirelessHatch(int aID, String aName, String aNameRegional, int aTier) {
+    public GT_TE_MAXwireless(int aID, String aName, String aNameRegional, int aTier) {
         super(aID, aName, aNameRegional, aTier);
     }
 
-    public infWirelessHatch(String aName, byte aTier, String[] aDescription, ITexture[][][] aTextures) {
+    public GT_TE_MAXwireless(String aName, byte aTier, String[] aDescription, ITexture[][][] aTextures) {
         super(aName, aTier, aDescription, aTextures);
     }
 
     @Override
     public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-        return new infWirelessHatch(mName, (byte) 14, new String[] { "" }, mTextures);
+        return new GT_TE_MAXwireless(mName, (byte) 14, new String[] { "" }, mTextures);
     }
 
     // endregion
@@ -28,6 +28,7 @@ public class infWirelessHatch extends GT_MetaTileEntity_Wireless_Hatch {
     // region IO info
 
     private static final long LongMaxDecreaseInt = Long.MAX_VALUE - Integer.MAX_VALUE;
+    private static final long max = 1048576;
 
     @Override
     public long getMinimumStoredEU() {
@@ -46,7 +47,7 @@ public class infWirelessHatch extends GT_MetaTileEntity_Wireless_Hatch {
 
     @Override
     public long maxAmperesIn() {
-        return Integer.MAX_VALUE;
+        return max;
     }
 
     // endregion
@@ -56,8 +57,7 @@ public class infWirelessHatch extends GT_MetaTileEntity_Wireless_Hatch {
     public String[] getDescription() {
         return new String[] { EnumChatFormatting.GRAY + "Stores energy globally in a network, up to 2^(2^31) EU.",
             EnumChatFormatting.GRAY + "Does not connect to wires. This block accepts EU into the network.",
-            EnumChatFormatting.WHITE + "2,147,483,647 * 2,147,483,647 EU/t(4,611,686,014,132,420,609EU/t)",
-            EnumChatFormatting.GOLD + "123Technology" };
+            EnumChatFormatting.WHITE + "1,048,576A", EnumChatFormatting.GOLD + "123Technology" };
     }
 
     @Override

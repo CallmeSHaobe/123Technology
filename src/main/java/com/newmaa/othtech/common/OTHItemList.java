@@ -1,9 +1,12 @@
 package com.newmaa.othtech.common;
 
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import com.newmaa.othtech.Utils.Utils;
+
+import gregtech.api.util.GT_Log;
 
 public enum OTHItemList {
 
@@ -18,6 +21,9 @@ public enum OTHItemList {
     HatchME,
     BusME,
     SINOPECd,
+    ChemCasing,
+    ProcessingCasing,
+    BoilerCasing,
 
     legendary_WirelessHatch,
 
@@ -67,6 +73,36 @@ public enum OTHItemList {
 
     public ItemStack getInternalStack_unsafe() {
         return mStack;
+    }
+
+    public Item getItem() {
+        sanityCheck();
+        if (Utils.isStackInvalid(mStack)) return null;// TODO replace a default issue item
+        return mStack.getItem();
+    }
+
+    public Block getBlock() {
+        sanityCheck();
+        return Block.getBlockFromItem(getItem());
+    }
+
+    public ItemStack get(int aAmount, Object... aReplacements) {
+        sanityCheck();
+        // if invalid, return a replacements
+        if (Utils.isStackInvalid(mStack)) {
+            GT_Log.out.println("Object in the ItemList is null at:");
+        }
+        return Utils.copyAmount(aAmount, mStack);
+    }
+
+    private void sanityCheck() {
+        if (mHasNotBeenSet)
+            throw new IllegalAccessError("The Enum '" + name() + "' has not been set to an Item at this time!");
+        if (mDeprecated && !mWarned) {
+            new Exception(this + " is now deprecated").printStackTrace(GT_Log.err);
+            // warn only once
+            mWarned = true;
+        }
     }
 
 }

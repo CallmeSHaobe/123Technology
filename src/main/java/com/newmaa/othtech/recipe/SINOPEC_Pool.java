@@ -1,6 +1,11 @@
 package com.newmaa.othtech.recipe;
 
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
+
 import com.newmaa.othtech.common.recipemap.Recipemaps;
+
 import gregtech.api.enums.GT_Values;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
@@ -9,15 +14,11 @@ import gregtech.api.recipe.RecipeMap;
 import gregtech.api.util.GT_ModHandler;
 import gregtech.api.util.GT_OreDictUnificator;
 import gregtech.api.util.GT_Utility;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
 
-public class SINOPEC_Pool implements IRecipePool{
+public class SINOPEC_Pool implements IRecipePool {
+
     @Override
-    public void loadRecipes(){
+    public void loadRecipes() {
         final RecipeMap<?> SINOPEC = Recipemaps.SINOPEC;
         Fluid gas = FluidRegistry.getFluid("gas_gas");
         Fluid nap = FluidRegistry.getFluid("liquid_naphtha");
@@ -35,24 +36,17 @@ public class SINOPEC_Pool implements IRecipePool{
         Fluid CH4 = FluidRegistry.getFluid("methane");
         Fluid steam = FluidRegistry.getFluid("water");
         Fluid He = FluidRegistry.getFluid("helium");
-        //oils
+        // oils
         GT_Values.RA.stdBuilder()
             .fluidOutputs(
-                    new FluidStack(gas, 144000),
-                    new FluidStack(nap, 360000),
-                    new FluidStack(naphthenicacid, 6000),
-                    new FluidStack(lig, 120000),
-                    new FluidStack(hea, 24000)
-                )
-            .fluidInputs(
-                new FluidStack(FluidRegistry.getFluidID("liquid_medium_oil"), 240000)
-            )
-            .itemInputs(
-                GT_Utility.getIntegratedCircuit(24)
-            )
-            .itemOutputs(
-                GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Sulfur, 52)
-            )
+                new FluidStack(gas, 144000),
+                new FluidStack(nap, 360000),
+                new FluidStack(naphthenicacid, 6000),
+                new FluidStack(lig, 120000),
+                new FluidStack(hea, 24000))
+            .fluidInputs(new FluidStack(FluidRegistry.getFluidID("liquid_medium_oil"), 240000))
+            .itemInputs(GT_Utility.getIntegratedCircuit(24))
+            .itemOutputs(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Sulfur, 52))
             .noOptimize()
             .duration(3600)
             .eut(TierEU.EV)
@@ -63,17 +57,10 @@ public class SINOPEC_Pool implements IRecipePool{
                 new FluidStack(nap, 96000),
                 new FluidStack(naphthenicacid, 12000),
                 new FluidStack(lig, 240000),
-                new FluidStack(hea, 72000)
-            )
-            .fluidInputs(
-                new FluidStack(FluidRegistry.getFluidID("oil"), 240000)
-            )
-            .itemInputs(
-                GT_Utility.getIntegratedCircuit(24)
-            )
-            .itemOutputs(
-                GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Sulfur, 55)
-            )
+                new FluidStack(hea, 72000))
+            .fluidInputs(new FluidStack(FluidRegistry.getFluidID("oil"), 240000))
+            .itemInputs(GT_Utility.getIntegratedCircuit(24))
+            .itemOutputs(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Sulfur, 55))
             .noOptimize()
             .duration(3600)
             .eut(TierEU.EV)
@@ -84,17 +71,10 @@ public class SINOPEC_Pool implements IRecipePool{
                 new FluidStack(nap, 72000),
                 new FluidStack(naphthenicacid, 6000),
                 new FluidStack(lig, 48000),
-                new FluidStack(hea, 24000)
-            )
-            .fluidInputs(
-                new FluidStack(FluidRegistry.getFluidID("liquid_light_oil"), 360000)
-            )
-            .itemInputs(
-                GT_Utility.getIntegratedCircuit(24)
-            )
-            .itemOutputs(
-                GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Sulfur, 49)
-            )
+                new FluidStack(hea, 24000))
+            .fluidInputs(new FluidStack(FluidRegistry.getFluidID("liquid_light_oil"), 360000))
+            .itemInputs(GT_Utility.getIntegratedCircuit(24))
+            .itemOutputs(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Sulfur, 49))
             .noOptimize()
             .duration(3600)
             .eut(TierEU.EV)
@@ -105,26 +85,16 @@ public class SINOPEC_Pool implements IRecipePool{
                 new FluidStack(nap, 36000),
                 new FluidStack(naphthenicacid, 12000),
                 new FluidStack(lig, 108000),
-                new FluidStack(hea, 600000)
-            )
-            .fluidInputs(
-                new FluidStack(FluidRegistry.getFluidID("liquid_heavy_oil"), 24000)
-            )
-            .itemInputs(
-                GT_Utility.getIntegratedCircuit(24)
-            )
-            .itemOutputs(
-                GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Sulfur, 96)
-            )
+                new FluidStack(hea, 600000))
+            .fluidInputs(new FluidStack(FluidRegistry.getFluidID("liquid_heavy_oil"), 24000))
+            .itemInputs(GT_Utility.getIntegratedCircuit(24))
+            .itemOutputs(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Sulfur, 96))
             .noOptimize()
             .duration(3600)
             .eut(TierEU.EV)
             .addTo(SINOPEC);
         GT_Values.RA.stdBuilder()
-            .fluidInputs(
-                new FluidStack(steam, 50),
-                new FluidStack(hea, 5000)
-            )
+            .fluidInputs(new FluidStack(steam, 50), new FluidStack(hea, 5000))
             .fluidOutputs(
                 new FluidStack(lig, 2000),
                 new FluidStack(nap, 2000),
@@ -136,23 +106,15 @@ public class SINOPEC_Pool implements IRecipePool{
                 new FluidStack(C3H6, 500),
                 new FluidStack(C2H6, 70),
                 new FluidStack(C2H4, 750),
-                new FluidStack(CH4, 750)
-            )
-            .itemInputs(
-                GT_Utility.getIntegratedCircuit(24)
-            )
-            .itemOutputs(
-                GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 1)
-            )
+                new FluidStack(CH4, 750))
+            .itemInputs(GT_Utility.getIntegratedCircuit(24))
+            .itemOutputs(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 1))
             .noOptimize()
             .duration(240)
             .eut(TierEU.EV)
             .addTo(SINOPEC);
         GT_Values.RA.stdBuilder()
-            .fluidInputs(
-                new FluidStack(steam, 50),
-                new FluidStack(lig, 5000)
-            )
+            .fluidInputs(new FluidStack(steam, 50), new FluidStack(lig, 5000))
             .fluidOutputs(
                 new FluidStack(hea, 1000),
                 new FluidStack(nap, 2500),
@@ -164,45 +126,29 @@ public class SINOPEC_Pool implements IRecipePool{
                 new FluidStack(C3H6, 2000),
                 new FluidStack(C2H6, 300),
                 new FluidStack(C2H4, 1500),
-                new FluidStack(CH4, 1500)
-            )
-            .itemInputs(
-                GT_Utility.getIntegratedCircuit(24)
-            )
-            .itemOutputs(
-                GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 1)
-            )
+                new FluidStack(CH4, 1500))
+            .itemInputs(GT_Utility.getIntegratedCircuit(24))
+            .itemOutputs(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 1))
             .noOptimize()
             .duration(240)
             .eut(TierEU.EV)
             .addTo(SINOPEC);
         GT_Values.RA.stdBuilder()
-            .fluidInputs(
-                new FluidStack(steam, 50),
-                new FluidStack(gas, 5000)
-            )
+            .fluidInputs(new FluidStack(steam, 50), new FluidStack(gas, 5000))
             .fluidOutputs(
                 new FluidStack(C3H6, 100),
                 new FluidStack(C2H6, 500),
                 new FluidStack(C2H4, 2000),
                 new FluidStack(CH4, 6000),
-                new FluidStack(He, 700)
-            )
-            .itemInputs(
-                GT_Utility.getIntegratedCircuit(24)
-            )
-            .itemOutputs(
-                GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 1)
-            )
+                new FluidStack(He, 700))
+            .itemInputs(GT_Utility.getIntegratedCircuit(24))
+            .itemOutputs(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 1))
             .noOptimize()
             .duration(240)
             .eut(TierEU.EV)
             .addTo(SINOPEC);
         GT_Values.RA.stdBuilder()
-            .fluidInputs(
-                new FluidStack(steam, 50),
-                new FluidStack(nap, 5000)
-            )
+            .fluidInputs(new FluidStack(steam, 50), new FluidStack(nap, 5000))
             .fluidOutputs(
                 new FluidStack(hea, 500),
                 new FluidStack(lig, 1000),
@@ -214,24 +160,16 @@ public class SINOPEC_Pool implements IRecipePool{
                 new FluidStack(C3H6, 4000),
                 new FluidStack(C2H6, 500),
                 new FluidStack(C2H4, 3500),
-                new FluidStack(CH4, 3500)
-            )
-            .itemInputs(
-                GT_Utility.getIntegratedCircuit(24)
-            )
-            .itemOutputs(
-                GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 1)
-            )
+                new FluidStack(CH4, 3500))
+            .itemInputs(GT_Utility.getIntegratedCircuit(24))
+            .itemOutputs(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 1))
             .noOptimize()
             .duration(240)
             .eut(TierEU.EV)
             .addTo(SINOPEC);
-        //radoX
+        // radoX
         GT_Values.RA.stdBuilder()
-            .fluidInputs(
-                FluidRegistry.getFluidStack("rawradox", 1000000),
-                Materials.Silver.getPlasma(2299)
-            )
+            .fluidInputs(FluidRegistry.getFluidStack("rawradox", 1000000), Materials.Silver.getPlasma(2299))
             .fluidOutputs(
                 FluidRegistry.getFluidStack("aceticacid", 250),
                 FluidRegistry.getFluidStack("crackedradox", 134500),
@@ -246,23 +184,15 @@ public class SINOPEC_Pool implements IRecipePool{
                 new FluidStack(CH4, 6000),
                 FluidRegistry.getFluidStack("bioethanol", 1500),
                 FluidRegistry.getFluidStack("liquid_heavy_oil", 120000),
-                FluidRegistry.getFluidStack("xeonxene", 2500)
-            )
-            .itemOutputs(
-                GT_ModHandler.getModItem("IC2", "itemFertilizer", 10)
-            )
-            .itemInputs(
-                GT_Utility.getIntegratedCircuit(24)
-            )
+                FluidRegistry.getFluidStack("xeonxene", 2500))
+            .itemOutputs(GT_ModHandler.getModItem("IC2", "itemFertilizer", 10))
+            .itemInputs(GT_Utility.getIntegratedCircuit(24))
             .noOptimize()
             .duration(3600 * 20)
             .eut(TierEU.UHV)
             .addTo(SINOPEC);
         GT_Values.RA.stdBuilder()
-            .fluidInputs(
-                FluidRegistry.getFluidStack("rawradox", 1000000),
-                Materials.Silver.getPlasma(1945)
-            )
+            .fluidInputs(FluidRegistry.getFluidStack("rawradox", 1000000), Materials.Silver.getPlasma(1945))
             .fluidOutputs(
                 FluidRegistry.getFluidStack("aceticacid", 250),
                 FluidRegistry.getFluidStack("crackedradox", 131500),
@@ -278,19 +208,14 @@ public class SINOPEC_Pool implements IRecipePool{
                 new FluidStack(CH4, 6000),
                 FluidRegistry.getFluidStack("bioethanol", 1500),
                 FluidRegistry.getFluidStack("liquid_heavy_oil", 120000),
-                FluidRegistry.getFluidStack("xeonxene", 2500)
-            )
-            .itemOutputs(
-                GT_ModHandler.getModItem("IC2", "itemFertilizer", 10)
-            )
-            .itemInputs(
-                GT_Utility.getIntegratedCircuit(1)
-            )
+                FluidRegistry.getFluidStack("xeonxene", 2500))
+            .itemOutputs(GT_ModHandler.getModItem("IC2", "itemFertilizer", 10))
+            .itemInputs(GT_Utility.getIntegratedCircuit(1))
             .noOptimize()
             .duration(3600 * 20)
             .eut(TierEU.UHV)
             .addTo(SINOPEC);
-        //naquadah fuels
+        // naquadah fuels
         GT_Values.RA.stdBuilder()
             .fluidInputs(
                 FluidRegistry.getFluidStack("naquadah solution", 20000),
@@ -310,19 +235,13 @@ public class SINOPEC_Pool implements IRecipePool{
                 FluidRegistry.getFluidStack("molten.plutonium", 1266),
                 FluidRegistry.getFluidStack("molten.thulium", 324),
                 FluidRegistry.getFluidStack("molten.thorium", 2072),
-                FluidRegistry.getFluidStack("molten.uranium", 2880)
-            )
-            .itemOutputs(
-                GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Naquadah, 8)
-            )
-            .itemInputs(
-                GT_Utility.getIntegratedCircuit(24)
-            )
+                FluidRegistry.getFluidStack("molten.uranium", 2880))
+            .itemOutputs(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Naquadah, 8))
+            .itemInputs(GT_Utility.getIntegratedCircuit(24))
             .noOptimize()
             .duration(240 * 20)
             .eut(TierEU.UHV)
             .addTo(SINOPEC);
     }
-
 
 }

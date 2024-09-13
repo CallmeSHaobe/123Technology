@@ -8,19 +8,19 @@ import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Wireless_Hatch;
 
-public class MAXwireless extends GT_MetaTileEntity_Wireless_Hatch {
+public class GT_TE_WTFHatch extends GT_MetaTileEntity_Wireless_Hatch {
 
-    public MAXwireless(int aID, String aName, String aNameRegional, int aTier) {
+    public GT_TE_WTFHatch(int aID, String aName, String aNameRegional, int aTier) {
         super(aID, aName, aNameRegional, aTier);
     }
 
-    public MAXwireless(String aName, byte aTier, String[] aDescription, ITexture[][][] aTextures) {
+    public GT_TE_WTFHatch(String aName, byte aTier, String[] aDescription, ITexture[][][] aTextures) {
         super(aName, aTier, aDescription, aTextures);
     }
 
     @Override
     public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-        return new MAXwireless(mName, (byte) 14, new String[] { "" }, mTextures);
+        return new GT_TE_WTFHatch(mName, (byte) 14, new String[] { "" }, mTextures);
     }
 
     // endregion
@@ -28,16 +28,15 @@ public class MAXwireless extends GT_MetaTileEntity_Wireless_Hatch {
     // region IO info
 
     private static final long LongMaxDecreaseInt = Long.MAX_VALUE - Integer.MAX_VALUE;
-    private static final long max = 1048576;
 
     @Override
     public long getMinimumStoredEU() {
-        return 512;
+        return Integer.MAX_VALUE;
     }
 
     @Override
     public long maxEUInput() {
-        return Integer.MAX_VALUE;
+        return LongMaxDecreaseInt;
     }
 
     @Override
@@ -47,7 +46,7 @@ public class MAXwireless extends GT_MetaTileEntity_Wireless_Hatch {
 
     @Override
     public long maxAmperesIn() {
-        return max;
+        return LongMaxDecreaseInt;
     }
 
     // endregion
@@ -57,7 +56,9 @@ public class MAXwireless extends GT_MetaTileEntity_Wireless_Hatch {
     public String[] getDescription() {
         return new String[] { EnumChatFormatting.GRAY + "Stores energy globally in a network, up to 2^(2^31) EU.",
             EnumChatFormatting.GRAY + "Does not connect to wires. This block accepts EU into the network.",
-            EnumChatFormatting.WHITE + "1,048,576A", EnumChatFormatting.GOLD + "123Technology" };
+            EnumChatFormatting.DARK_PURPLE
+                + "9,223,372,034,707,292,160 * 9,223,372,034,707,292,160 EU/t(85,070,591,690,620,534,613,323,169,079,597,465,600EU/t)",
+            EnumChatFormatting.GOLD + "123Technology" };
     }
 
     @Override

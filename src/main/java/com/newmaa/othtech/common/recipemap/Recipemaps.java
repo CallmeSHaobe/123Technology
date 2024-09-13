@@ -1,6 +1,5 @@
 package com.newmaa.othtech.common.recipemap;
 
-import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.recipemap.recipeMapFrontends.OTH_GeneralFrontend;
 
 import gregtech.api.enums.ItemList;

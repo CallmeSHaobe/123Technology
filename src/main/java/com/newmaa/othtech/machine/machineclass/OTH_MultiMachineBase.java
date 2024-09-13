@@ -2,13 +2,14 @@ package com.newmaa.othtech.machine.machineclass;
 
 import static com.newmaa.othtech.Utils.Utils.filterValidMTEs;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 
-import com.newmaa.othtech.machine.hatch.GT_MetaTileEntity_Hatch_OutputBus_ME_B;
-import com.newmaa.othtech.machine.hatch.GT_MetaTileEntity_Hatch_Output_ME_B;
-import gregtech.api.interfaces.fluid.IFluidStore;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
@@ -20,10 +21,13 @@ import org.jetbrains.annotations.NotNull;
 import com.gtnewhorizon.structurelib.alignment.constructable.IConstructable;
 import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructable;
 import com.newmaa.othtech.Config;
+import com.newmaa.othtech.machine.hatch.GT_MetaTileEntity_Hatch_OutputBus_ME_B;
+import com.newmaa.othtech.machine.hatch.GT_MetaTileEntity_Hatch_Output_ME_B;
 import com.newmaa.othtech.machine.machineclass.OTH_processingLogics.OTH_ProcessingLogic;
 
 import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
+import gregtech.api.interfaces.fluid.IFluidStore;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.logic.ProcessingLogic;
@@ -419,6 +423,7 @@ public abstract class OTH_MultiMachineBase<T extends OTH_MultiMachineBase<T>>
         }
         return false;
     }
+
     @Override
     public List<ItemStack> getItemOutputSlots(ItemStack[] toOutput) {
         List<ItemStack> ret = new ArrayList<>();
@@ -445,6 +450,7 @@ public abstract class OTH_MultiMachineBase<T extends OTH_MultiMachineBase<T>>
         }
         return ret;
     }
+
     @Override
     public boolean canDumpItemToME() {
         for (GT_MetaTileEntity_Hatch tHatch : filterValidMTEs(mOutputBusses)) {

@@ -69,18 +69,13 @@ public class GT_MetaTileEntity_Hatch_OutputBus_ME_B extends GT_MetaTileEntity_Ha
             aName,
             aNameRegional,
             3,
-            new String[]{
-                "为多方块机器输出物品",
-                "直接存储到ME系统",
-                "能够缓存无限数量的物品",
-                "使用螺丝刀切换缓存模式",
-                "手持剪线钳右键改变仓室与ME网络的连接方式",
-                "来自 GT5.09.48.66, GTNH2.6.1ee"},
+            new String[] { "为多方块机器输出物品", "直接存储到ME系统", "能够缓存无限数量的物品", "使用螺丝刀切换缓存模式", "手持剪线钳右键改变仓室与ME网络的连接方式",
+                "来自 GT5.09.48.66, GTNH2.6.1ee" },
             1);
     }
 
     public GT_MetaTileEntity_Hatch_OutputBus_ME_B(String aName, int aTier, String[] aDescription,
-                                                  ITexture[][][] aTextures) {
+        ITexture[][][] aTextures) {
         super(aName, aTier, 1, aDescription, aTextures);
     }
 
@@ -91,12 +86,12 @@ public class GT_MetaTileEntity_Hatch_OutputBus_ME_B extends GT_MetaTileEntity_Ha
 
     @Override
     public ITexture[] getTexturesActive(ITexture aBaseTexture) {
-        return new ITexture[]{aBaseTexture, TextureFactory.of(OVERLAY_ME_HATCH_ACTIVE)};
+        return new ITexture[] { aBaseTexture, TextureFactory.of(OVERLAY_ME_HATCH_ACTIVE) };
     }
 
     @Override
     public ITexture[] getTexturesInactive(ITexture aBaseTexture) {
-        return new ITexture[]{aBaseTexture, TextureFactory.of(OVERLAY_ME_HATCH)};
+        return new ITexture[] { aBaseTexture, TextureFactory.of(OVERLAY_ME_HATCH) };
     }
 
     @Override
@@ -193,7 +188,7 @@ public class GT_MetaTileEntity_Hatch_OutputBus_ME_B extends GT_MetaTileEntity_Ha
 
     @Override
     public boolean onWireCutterRightClick(ForgeDirection side, ForgeDirection wrenchingSide, EntityPlayer aPlayer,
-                                          float aX, float aY, float aZ) {
+        float aX, float aY, float aZ) {
         additionalConnection = !additionalConnection;
         updateValidGridProxySides();
         aPlayer.addChatComponentMessage(
@@ -270,7 +265,7 @@ public class GT_MetaTileEntity_Hatch_OutputBus_ME_B extends GT_MetaTileEntity_Ha
             tooltip.add(
                 "Current cache capacity: " + EnumChatFormatting.YELLOW
                     + ReadableNumberConverter.INSTANCE
-                    .toWideReadableForm(stack.stackTagCompound.getLong("baseCapacity")));
+                        .toWideReadableForm(stack.stackTagCompound.getLong("baseCapacity")));
         }
     }
 
@@ -382,6 +377,3 @@ public class GT_MetaTileEntity_Hatch_OutputBus_ME_B extends GT_MetaTileEntity_Ha
         getBaseMetaTileEntity().add1by1Slot(builder);
     }
 }
-
-
-
