@@ -169,10 +169,11 @@ public class SINOPEC_Pool implements IRecipePool {
             .addTo(SINOPEC);
         // radoX
         GT_Values.RA.stdBuilder()
-            .fluidInputs(FluidRegistry.getFluidStack("rawradox", 1000000), Materials.Silver.getPlasma(2299))
+            .fluidInputs(FluidRegistry.getFluidStack("rawradox", 1000000), Materials.Silver.getPlasma(2560))
             .fluidOutputs(
                 FluidRegistry.getFluidStack("aceticacid", 250),
-                FluidRegistry.getFluidStack("crackedradox", 134500),
+                FluidRegistry.getFluidStack("radoxgas", 14795),
+                FluidRegistry.getFluidStack("lightradox", 2690),
                 FluidRegistry.getFluidStack("carbondioxide", 4000),
                 FluidRegistry.getFluidStack("oil", 60000),
                 FluidRegistry.getFluidStack("mutagen", 1000),
@@ -192,10 +193,11 @@ public class SINOPEC_Pool implements IRecipePool {
             .eut(TierEU.UHV)
             .addTo(SINOPEC);
         GT_Values.RA.stdBuilder()
-            .fluidInputs(FluidRegistry.getFluidStack("rawradox", 1000000), Materials.Silver.getPlasma(1945))
+            .fluidInputs(FluidRegistry.getFluidStack("rawradox", 1000000), Materials.Silver.getPlasma(2560))
             .fluidOutputs(
                 FluidRegistry.getFluidStack("aceticacid", 250),
-                FluidRegistry.getFluidStack("crackedradox", 131500),
+                FluidRegistry.getFluidStack("radoxgas", 14465),
+                FluidRegistry.getFluidStack("lightradox", 2630),
                 FluidRegistry.getFluidStack("heavyradox", 30000),
                 FluidRegistry.getFluidStack("carbondioxide", 4000),
                 FluidRegistry.getFluidStack("oil", 60000),
@@ -239,7 +241,7 @@ public class SINOPEC_Pool implements IRecipePool {
             .itemOutputs(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Naquadah, 8))
             .itemInputs(GT_Utility.getIntegratedCircuit(24))
             .noOptimize()
-            .duration(240 * 20)
+            .duration(1800 * 20)
             .eut(TierEU.UHV)
             .addTo(SINOPEC);
     }

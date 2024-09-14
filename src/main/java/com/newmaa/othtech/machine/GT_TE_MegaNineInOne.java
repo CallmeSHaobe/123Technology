@@ -211,7 +211,7 @@ public class GT_TE_MegaNineInOne extends OTH_MultiMachineBase<GT_TE_MegaNineInOn
                     GT_HatchElementBuilder.<GT_TE_MegaNineInOne>builder()
                         .atLeast(Energy.or(ExoticEnergy))
                         .adder(GT_TE_MegaNineInOne::addToMachineList)
-                        .dot(1)
+                        .dot(2)
                         .casingIndex(getTextureIndex())
                         .buildAndChain(ModBlocks.blockCasings3Misc, 2))
                 .addElement(

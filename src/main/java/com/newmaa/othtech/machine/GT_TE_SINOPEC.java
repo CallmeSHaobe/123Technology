@@ -25,6 +25,7 @@ import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_ASSEMBLY_LINE
 import static gregtech.api.util.GT_StructureUtility.ofCoil;
 import static gregtech.api.util.GT_StructureUtility.ofFrame;
 
+import gtPlusPlus.core.util.minecraft.ItemUtils;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -68,7 +69,8 @@ public class GT_TE_SINOPEC extends OTH_MultiMachineBase<GT_TE_SINOPEC> {
         super(aName);
     }
 
-    private byte mode = 0;
+
+    private boolean $123 = false;
 
     private HeatingCoilLevel coilLevel;
 
@@ -83,27 +85,39 @@ public class GT_TE_SINOPEC extends OTH_MultiMachineBase<GT_TE_SINOPEC> {
     public int getCoilTier() {
         return Utils.getCoilTier(coilLevel);
     }
+    @Override
+    public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
+        super.onPostTick(aBaseMetaTileEntity, aTick);
+        if (aTick % 20 == 0 && !$123) {
+            ItemStack aGuiStack = this.getControllerSlot();
+            if (aGuiStack != null) {
+                if (GT_Utility.areStacksEqual(aGuiStack, GT_ModHandler.getModItem("123Technology", "dustIrOsSm", 1))) {
+                    this.$123 = true;
+                    mInventory[1] = ItemUtils.depleteStack(aGuiStack);
+                }
+            }
+        }
+    }
 
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
         super.saveNBTData(aNBT);
+        aNBT.setBoolean("$123", $123);
     }
 
     @Override
     public void loadNBTData(final NBTTagCompound aNBT) {
         super.loadNBTData(aNBT);
+        $123 = aNBT.getBoolean("123");
     }
 
     @Override
     protected boolean isEnablePerfectOverclock() {
-        if (getControllerSlot() == GT_ModHandler.getModItem("123Technology", "dustIrOsSm", 1)) {
-            return true;
-        }
-        return false;
+        return $123;
     }
 
     protected int getMaxParallelRecipes() {
-        if (getControllerSlot() == GT_ModHandler.getModItem("123Technology", "dustIrOsSm", 1)) {
+        if ($123 == true) {
             return 256;
         }
         return 64;
@@ -207,21 +221,21 @@ public class GT_TE_SINOPEC extends OTH_MultiMachineBase<GT_TE_SINOPEC> {
                         .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch)
                         .adder(GT_TE_SINOPEC::addToMachineList)
                         .dot(1)
-                        .casingIndex(1024 + 12)
+                        .casingIndex(48)
                         .buildAndChain(sBlockCasings4, 0))
                 .addElement(
                     'O',
                     GT_HatchElementBuilder.<GT_TE_SINOPEC>builder()
                         .atLeast(Muffler)
                         .adder(GT_TE_SINOPEC::addToMachineList)
-                        .dot(1)
-                        .casingIndex(1024 + 12)
-                        .buildAndChain(sBlockMetal7, 11))
+                        .dot(2)
+                        .casingIndex(48)
+                        .buildAndChain(sBlockCasings4, 0))
                 .build();
         }
         return STRUCTURE_DEFINITION;
     }
-
+    //Structure by LyeeR
     private final String[][] shapeMain = new String[][] {
         { "                                                ", "                                                ",
             "                                                ", "                                                ",
