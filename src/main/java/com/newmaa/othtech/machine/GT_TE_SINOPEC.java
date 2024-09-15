@@ -1087,7 +1087,7 @@ public class GT_TE_SINOPEC extends OTH_MultiMachineBase<GT_TE_SINOPEC> {
             .addPollutionAmount(64000)
             .addSeparator()
             .addController("中国石化")
-            .beginStructureBlock(49, 76, 49, false)
+            .beginStructureBlock(33, 49, 48, false)
             .addInputBus("AnyInputBus", 1)
             .addOutputBus("AnyOutputBus", 1)
             .addInputHatch("AnyInputHatch", 1)

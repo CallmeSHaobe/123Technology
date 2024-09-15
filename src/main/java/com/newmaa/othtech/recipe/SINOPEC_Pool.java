@@ -244,6 +244,8 @@ public class SINOPEC_Pool implements IRecipePool {
             .duration(1800 * 20)
             .eut(TierEU.UHV)
             .addTo(SINOPEC);
+        // Other Fuels
+
     }
 
 }
