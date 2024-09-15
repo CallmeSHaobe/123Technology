@@ -8,7 +8,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Stream;
 
-import gtPlusPlus.core.recipe.common.CI;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -43,10 +45,8 @@ import gregtech.api.util.GT_Recipe;
 import gregtech.api.util.GT_Utility;
 import gtPlusPlus.api.recipe.GTPPRecipeMaps;
 import gtPlusPlus.core.block.ModBlocks;
+import gtPlusPlus.core.recipe.common.CI;
 import gtPlusPlus.xmod.gregtech.common.blocks.textures.TexturesGtBlock;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 public class GT_TE_MegaNineInOne extends OTH_MultiMachineBase<GT_TE_MegaNineInOne> {
 
@@ -71,7 +71,7 @@ public class GT_TE_MegaNineInOne extends OTH_MultiMachineBase<GT_TE_MegaNineInOn
     private static final int MODE_ISA = 9;
     private static final int MODE_FLOAT = 10;
     private static final int MODE_VACUUM = 11;
-    private static final int[][] MODE_MAP = new int[][] { { 0, 1, 2 }, { 3, 4, 5 }, { 6, 7, 8 }, {9, 10, 11}};
+    private static final int[][] MODE_MAP = new int[][] { { 0, 1, 2 }, { 3, 4, 5 }, { 6, 7, 8 }, { 9, 10, 11 } };
 
     public int getTextureIndex() {
         return TAE.getIndexFromPage(2, 2);
@@ -115,10 +115,10 @@ public class GT_TE_MegaNineInOne extends OTH_MultiMachineBase<GT_TE_MegaNineInOn
     public RecipeMap<?> getRecipeMap() {
         return null;
     }
+
     protected float getEuModifier() {
         return 0.99F;
     }
-
 
     private ItemStack getCircuit(ItemStack[] t) {
         for (ItemStack j : t) {
@@ -159,6 +159,7 @@ public class GT_TE_MegaNineInOne extends OTH_MultiMachineBase<GT_TE_MegaNineInOn
     @Override
     protected ProcessingLogic createProcessingLogic() {
         return new OTH_ProcessingLogic() {
+
             private ItemStack lastCircuit = null;
 
             @NotNull
@@ -174,6 +175,7 @@ public class GT_TE_MegaNineInOne extends OTH_MultiMachineBase<GT_TE_MegaNineInOn
             protected @NotNull CheckRecipeResult validateRecipe(GT_Recipe recipe) {
                 return CheckRecipeResultRegistry.SUCCESSFUL;
             }
+
             @Nonnull
             @Override
             protected Stream<GT_Recipe> findRecipeMatches(@Nullable RecipeMap<?> map) {
@@ -216,13 +218,13 @@ public class GT_TE_MegaNineInOne extends OTH_MultiMachineBase<GT_TE_MegaNineInOn
             return RecipeMaps.autoclaveRecipes;
         } else if (aMode == MODE_FLUIDSOLIDIFY) {
             return RecipeMaps.fluidSolidifierRecipes;
-        } else if (aMode == MODE_ISA){
+        } else if (aMode == MODE_ISA) {
             return GTPPRecipeMaps.millingRecipes;
-        } else if (aMode == MODE_FLOAT){
+        } else if (aMode == MODE_FLOAT) {
             return GTPPRecipeMaps.flotationCellRecipes;
-        } else if (aMode == MODE_VACUUM){
+        } else if (aMode == MODE_VACUUM) {
             return GTPPRecipeMaps.vacuumFurnaceRecipes;
-        }else {
+        } else {
             return null;
         }
     }
@@ -234,7 +236,12 @@ public class GT_TE_MegaNineInOne extends OTH_MultiMachineBase<GT_TE_MegaNineInOn
         } else {
             mInternalMode = 0;
         }
-        GT_Utility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal(mInternalMode == 0 ? "Metal" : mInternalMode == 1 ? "Fluid" : mInternalMode == 2 ? "Misc" : mInternalMode == 3 ? "Isa" : "Null"));
+        GT_Utility.sendChatToPlayer(
+            aPlayer,
+            StatCollector.translateToLocal(
+                mInternalMode == 0 ? "Metal"
+                    : mInternalMode == 1 ? "Fluid"
+                        : mInternalMode == 2 ? "Misc" : mInternalMode == 3 ? "Isa" : "Null"));
     }
 
     @Override

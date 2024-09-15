@@ -25,7 +25,6 @@ import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_ASSEMBLY_LINE
 import static gregtech.api.util.GT_StructureUtility.ofCoil;
 import static gregtech.api.util.GT_StructureUtility.ofFrame;
 
-import gtPlusPlus.core.util.minecraft.ItemUtils;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -58,6 +57,7 @@ import gregtech.api.util.GT_HatchElementBuilder;
 import gregtech.api.util.GT_ModHandler;
 import gregtech.api.util.GT_Multiblock_Tooltip_Builder;
 import gregtech.api.util.GT_Utility;
+import gtPlusPlus.core.util.minecraft.ItemUtils;
 
 public class GT_TE_SINOPEC extends OTH_MultiMachineBase<GT_TE_SINOPEC> {
 
@@ -68,7 +68,6 @@ public class GT_TE_SINOPEC extends OTH_MultiMachineBase<GT_TE_SINOPEC> {
     public GT_TE_SINOPEC(String aName) {
         super(aName);
     }
-
 
     private boolean $123 = false;
 
@@ -85,6 +84,7 @@ public class GT_TE_SINOPEC extends OTH_MultiMachineBase<GT_TE_SINOPEC> {
     public int getCoilTier() {
         return Utils.getCoilTier(coilLevel);
     }
+
     @Override
     public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
         super.onPostTick(aBaseMetaTileEntity, aTick);
@@ -235,7 +235,8 @@ public class GT_TE_SINOPEC extends OTH_MultiMachineBase<GT_TE_SINOPEC> {
         }
         return STRUCTURE_DEFINITION;
     }
-    //Structure by LyeeR
+
+    // Structure by LyeeR
     private final String[][] shapeMain = new String[][] {
         { "                                                ", "                                                ",
             "                                                ", "                                                ",
