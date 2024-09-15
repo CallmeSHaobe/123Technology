@@ -6,7 +6,9 @@ import static gregtech.api.util.GT_StructureUtility.ofFrame;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.stream.Stream;
 
+import gtPlusPlus.core.recipe.common.CI;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -43,6 +45,9 @@ import gtPlusPlus.api.recipe.GTPPRecipeMaps;
 import gtPlusPlus.core.block.ModBlocks;
 import gtPlusPlus.xmod.gregtech.common.blocks.textures.TexturesGtBlock;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 public class GT_TE_MegaNineInOne extends OTH_MultiMachineBase<GT_TE_MegaNineInOne> {
 
     public GT_TE_MegaNineInOne(int aID, String aName, String aNameRegional) {
@@ -53,7 +58,20 @@ public class GT_TE_MegaNineInOne extends OTH_MultiMachineBase<GT_TE_MegaNineInOn
         super(aName);
     }
 
-    private byte mode = 0;
+    protected int mInternalMode = 0;
+    private static final int MODE_COMPRESSOR = 0;
+    private static final int MODE_LATHE = 1;
+    private static final int MODE_MAGNETIC = 2;
+    private static final int MODE_FERMENTER = 3;
+    private static final int MODE_FLUIDEXTRACT = 4;
+    private static final int MODE_EXTRACTOR = 5;
+    private static final int MODE_LASER = 6;
+    private static final int MODE_AUTOCLAVE = 7;
+    private static final int MODE_FLUIDSOLIDIFY = 8;
+    private static final int MODE_ISA = 9;
+    private static final int MODE_FLOAT = 10;
+    private static final int MODE_VACUUM = 11;
+    private static final int[][] MODE_MAP = new int[][] { { 0, 1, 2 }, { 3, 4, 5 }, { 6, 7, 8 }, {9, 10, 11}};
 
     public int getTextureIndex() {
         return TAE.getIndexFromPage(2, 2);
@@ -67,13 +85,15 @@ public class GT_TE_MegaNineInOne extends OTH_MultiMachineBase<GT_TE_MegaNineInOn
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
         super.saveNBTData(aNBT);
-        aNBT.setByte("mode", mode);
+        aNBT.setInteger("mInternalMode", mInternalMode);
+
     }
 
     @Override
     public void loadNBTData(final NBTTagCompound aNBT) {
         super.loadNBTData(aNBT);
-        mode = aNBT.getByte("mode");
+        this.mInternalMode = aNBT.getInteger("mInternalMode");
+
     }
 
     @Override
@@ -83,7 +103,7 @@ public class GT_TE_MegaNineInOne extends OTH_MultiMachineBase<GT_TE_MegaNineInOn
 
     @Override
     protected int getMaxParallelRecipes() {
-        return Math.max(9, 32 - (GT_Utility.getTier(this.getMaxInputVoltage()) * 2));
+        return Math.max(9, 256 - (GT_Utility.getTier(this.getMaxInputVoltage()) * 2));
     }
 
     @Override
@@ -93,18 +113,29 @@ public class GT_TE_MegaNineInOne extends OTH_MultiMachineBase<GT_TE_MegaNineInOn
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        if (mode == 1) return RecipeMaps.latheRecipes;
-        if (mode == 2) return RecipeMaps.polarizerRecipes;
-        if (mode == 3) return RecipeMaps.fermentingRecipes;
-        if (mode == 4) return RecipeMaps.fluidExtractionRecipes;
-        if (mode == 5) return RecipeMaps.extractorRecipes;
-        if (mode == 6) return RecipeMaps.laserEngraverRecipes;
-        if (mode == 7) return RecipeMaps.autoclaveRecipes;
-        if (mode == 8) return RecipeMaps.fluidSolidifierRecipes;
-        if (mode == 9) return GTPPRecipeMaps.millingRecipes;
-        if (mode == 10) return GTPPRecipeMaps.flotationCellRecipes;
-        if (mode == 11) return GTPPRecipeMaps.vacuumFurnaceRecipes;
-        return RecipeMaps.compressorRecipes;
+        return null;
+    }
+    protected float getEuModifier() {
+        return 0.99F;
+    }
+
+
+    private ItemStack getCircuit(ItemStack[] t) {
+        for (ItemStack j : t) {
+            if (j.getItem() == CI.getNumberedCircuit(0)
+                .getItem()) {
+                if (j.getItemDamage() >= 20 && j.getItemDamage() <= 22) {
+                    return j;
+                }
+            }
+        }
+        return null;
+    }
+
+    private int getCircuitID(ItemStack circuit) {
+        int H = circuit.getItemDamage();
+        int T = (H == 20 ? 0 : (H == 21 ? 1 : (H == 22 ? 2 : -1)));
+        return MODE_MAP[this.mInternalMode][T];
     }
 
     @NotNull
@@ -128,6 +159,7 @@ public class GT_TE_MegaNineInOne extends OTH_MultiMachineBase<GT_TE_MegaNineInOn
     @Override
     protected ProcessingLogic createProcessingLogic() {
         return new OTH_ProcessingLogic() {
+            private ItemStack lastCircuit = null;
 
             @NotNull
             @Override
@@ -135,7 +167,6 @@ public class GT_TE_MegaNineInOne extends OTH_MultiMachineBase<GT_TE_MegaNineInOn
 
                 setEuModifier(getEuModifier());
                 setSpeedBonus(getSpeedBonus());
-                setOverclock(isEnablePerfectOverclock() ? 2 : 1, 2);
                 return super.process();
             }
 
@@ -143,18 +174,67 @@ public class GT_TE_MegaNineInOne extends OTH_MultiMachineBase<GT_TE_MegaNineInOn
             protected @NotNull CheckRecipeResult validateRecipe(GT_Recipe recipe) {
                 return CheckRecipeResultRegistry.SUCCESSFUL;
             }
+            @Nonnull
+            @Override
+            protected Stream<GT_Recipe> findRecipeMatches(@Nullable RecipeMap<?> map) {
+                ItemStack circuit = getCircuit(inputItems);
+                if (circuit == null) {
+                    return Stream.empty();
+                }
+                if (!GT_Utility.areStacksEqual(circuit, lastCircuit)) {
+                    lastRecipe = null;
+                    lastCircuit = circuit;
+                }
+                RecipeMap<?> foundMap = getRecipeMap(getCircuitID(circuit));
+                if (foundMap == null) {
+                    return Stream.empty();
+                }
+                return super.findRecipeMatches(foundMap);
+            }
 
         }.enablePerfectOverclock()
             .setMaxParallelSupplier(this::getMaxParallelRecipes);
 
     }
 
+    private static RecipeMap<?> getRecipeMap(int aMode) {
+        if (aMode == MODE_COMPRESSOR) {
+            return RecipeMaps.compressorRecipes;
+        } else if (aMode == MODE_LATHE) {
+            return RecipeMaps.latheRecipes;
+        } else if (aMode == MODE_MAGNETIC) {
+            return RecipeMaps.polarizerRecipes;
+        } else if (aMode == MODE_FERMENTER) {
+            return RecipeMaps.fermentingRecipes;
+        } else if (aMode == MODE_FLUIDEXTRACT) {
+            return RecipeMaps.fluidExtractionRecipes;
+        } else if (aMode == MODE_EXTRACTOR) {
+            return RecipeMaps.extractorRecipes;
+        } else if (aMode == MODE_LASER) {
+            return RecipeMaps.laserEngraverRecipes;
+        } else if (aMode == MODE_AUTOCLAVE) {
+            return RecipeMaps.autoclaveRecipes;
+        } else if (aMode == MODE_FLUIDSOLIDIFY) {
+            return RecipeMaps.fluidSolidifierRecipes;
+        } else if (aMode == MODE_ISA){
+            return GTPPRecipeMaps.millingRecipes;
+        } else if (aMode == MODE_FLOAT){
+            return GTPPRecipeMaps.flotationCellRecipes;
+        } else if (aMode == MODE_VACUUM){
+            return GTPPRecipeMaps.vacuumFurnaceRecipes;
+        }else {
+            return null;
+        }
+    }
+
     @Override
     public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ) {
-        if (getBaseMetaTileEntity().isServerSide()) {
-            this.mode = (byte) ((this.mode + 1) % 12);
-            GT_Utility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("Mode." + this.mode));
+        if (mInternalMode < 3) {
+            mInternalMode++;
+        } else {
+            mInternalMode = 0;
         }
+        GT_Utility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal(mInternalMode == 0 ? "Metal" : mInternalMode == 1 ? "Fluid" : mInternalMode == 2 ? "Misc" : mInternalMode == 3 ? "Isa" : "Null"));
     }
 
     @Override
@@ -635,12 +715,15 @@ public class GT_TE_MegaNineInOne extends OTH_MultiMachineBase<GT_TE_MegaNineInOn
     protected GT_Multiblock_Tooltip_Builder createTooltip() {
         final GT_Multiblock_Tooltip_Builder tt = new GT_Multiblock_Tooltip_Builder();
         tt.addMachineType("§c§l老登的终极造物 - 九合一 (巨型加工厂)")
-            .addInfo("§a共有十二种模式")
-            .addInfo("§amode 0 - 8为原九合一九种模式")
-            .addInfo("§amode 9 - 11为艾萨研磨机 工业浮选机 真空干燥炉模式")
+            .addInfo("§a共有十二种模式, 使用螺丝刀切换类模式， 使用编程电路20 21 22切换内部模式")
+            .addInfo("§aMetal类: 压缩机 车床 电力磁化机")
+            .addInfo("§aFluid类: 发酵槽 流体提取机 提取机")
+            .addInfo("§aMisc类: 激光蚀刻机 高压釜 流体固化机")
+            .addInfo("§aIsa类: 艾萨研磨机 工业浮选机 真空干燥炉")
             .addInfo("§b并行耗时公式来自某位§9冰之妖精")
-            .addInfo("§b电压等级提高一级，并行 -2， 最低为⑨, 默认为32")
-            .addInfo("§b电压等级提高一级，速度 -10%")
+            .addInfo("§b电压等级提高一级，并行 -2， 最低为⑨, 默认为256")
+            .addInfo("§b配方耗时 = NEI耗时 * (1 + 能源仓电压) * 10%")
+            .addInfo("§bEU消耗 : 99%")
             .addInfo("§b执行无损超频")
             .addInfo("§q支持§bTecTech§q能源仓及激光仓，但不支持无线电网直接供给EU")
             .addInfo("§e九合一，我们敬爱你口牙！！ ---Sukune_News")
