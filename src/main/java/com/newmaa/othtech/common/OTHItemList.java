@@ -24,6 +24,7 @@ public enum OTHItemList {
     ChemCasing,
     ProcessingCasing,
     BoilerCasing,
+    Chem,
 
     legendary_WirelessHatch,
 

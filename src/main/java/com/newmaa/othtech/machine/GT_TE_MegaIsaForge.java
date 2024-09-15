@@ -104,7 +104,7 @@ public class GT_TE_MegaIsaForge extends OTH_MultiMachineBase<GT_TE_MegaIsaForge>
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        if (mode == 1) return Recipemaps.MegaIsaForge;
+        if (mode == 0) return Recipemaps.MegaIsaForge;
         return IGRecipeMaps.spaceAssemblerRecipes;
     }
 
@@ -124,7 +124,7 @@ public class GT_TE_MegaIsaForge extends OTH_MultiMachineBase<GT_TE_MegaIsaForge>
 
                 setEuModifier(getEuModifier());
                 setSpeedBonus(getSpeedBonus());
-                setOverclock(isEnablePerfectOverclock() ? 2 : 1, 2);
+                setOverclock(isEnablePerfectOverclock() ? 4 : 2, 4);
                 return super.process();
             }
 
@@ -142,8 +142,14 @@ public class GT_TE_MegaIsaForge extends OTH_MultiMachineBase<GT_TE_MegaIsaForge>
     @Override
     public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ) {
         if (getBaseMetaTileEntity().isServerSide()) {
-            this.mode = (byte) ((this.mode + 1) % 2);
-            GT_Utility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("Mode." + this.mode));
+            if (mode < 1) {
+                mode++;
+            } else {
+                mode = 0;
+            }
+            GT_Utility.sendChatToPlayer(
+                aPlayer,
+                StatCollector.translateToLocal(mode == 1 ? "太空组装模式" : mode == 0 ? "艾萨锻炉模式" : "Null"));
         }
     }
 

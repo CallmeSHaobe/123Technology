@@ -205,5 +205,24 @@ public class Main implements IRecipePool {
             .duration(123 * 20)
             .eut(8000)
             .addTo(Assem);
+        // CHEM
+        GT_Values.RA.stdBuilder()
+            .itemOutputs(GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 23534))
+            .itemInputs(
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 2, 13366),
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 16, 998),
+                ItemList.Electric_Motor_LuV.get(16),
+                ItemList.Electric_Pump_LuV.get(16),
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 4, 31030),
+                GT_ModHandler.getModItem("miscutils", "item.BasicAgrichemItem", 64, 13),
+                GT_OreDictUnificator.get(OrePrefixes.circuit, Materials.Elite, 16),
+                GT_OreDictUnificator.get(OrePrefixes.circuit, Materials.Master, 16),
+                GT_OreDictUnificator.get(OrePrefixes.circuit, Materials.Ultimate, 16),
+                GT_Utility.getIntegratedCircuit(17))
+            .fluidInputs(new FluidStack(FluidRegistry.getFluidID("molten.zeron100"), 4 * 144))
+            .noOptimize()
+            .duration(123 * 20)
+            .eut(12300)
+            .addTo(Assem);
     }
 }

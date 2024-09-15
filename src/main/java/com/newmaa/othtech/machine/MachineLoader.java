@@ -26,6 +26,8 @@ public class MachineLoader {
     public static ItemStack BusME;
     public static ItemStack SINOPECd;
 
+    public static ItemStack Chem;
+
     public static void loadMachines() {
         final int IDs = 23520;
         NineInOne = new GT_TE_MegaNineInOne(IDs, "Mega9in1", "§l§c终极压缩巨型加工厂").getStackForm(1);
@@ -68,6 +70,9 @@ public class MachineLoader {
 
         SINOPECd = new GT_TE_SINOPEC(IDs + 13, "SINOPEC", "中国石化集成工厂").getStackForm(1);
         OTHItemList.SINOPECd.set(SINOPECd);
+
+        Chem = new GT_TE_CHEM(IDs + 14, "CHEMOTH", "铑钯蜜汁化工厂").getStackForm(1);
+        OTHItemList.Chem.set(Chem);
 
     }
 }
