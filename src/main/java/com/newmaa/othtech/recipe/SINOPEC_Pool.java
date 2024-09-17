@@ -1,9 +1,12 @@
 package com.newmaa.othtech.recipe;
 
+import static com.newmaa.othtech.Utils.Utils.setStackSize;
+
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
+import com.newmaa.othtech.Utils.recipes.RecipeBuilder;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 
 import gregtech.api.enums.GT_Values;
@@ -244,8 +247,56 @@ public class SINOPEC_Pool implements IRecipePool {
             .duration(1800 * 20)
             .eut(TierEU.UHV)
             .addTo(SINOPEC);
-        // Other Fuels
+        // Bios
+        GT_Values.RA.stdBuilder()
+            .fluidInputs(FluidRegistry.getFluidStack("water", 123750))
+            .fluidOutputs(
+                FluidRegistry.getFluidStack("ammonia", 19800),
+                FluidRegistry.getFluidStack("aceticacid", 4950),
+                FluidRegistry.getFluidStack("methanol", 29700),
+                FluidRegistry.getFluidStack("methane", 118800),
+                FluidRegistry.getFluidStack("bioethanol", 29700),
+                FluidRegistry.getFluidStack("carbondioxide", 79200))
+            .itemOutputs(setStackSize(GT_ModHandler.getModItem("IC2", "itemFertilizer", 1), 198))
+            .itemInputs(
+                GT_Utility.getIntegratedCircuit(24),
+                setStackSize(GT_ModHandler.getModItem("IC2", "itemFuelPlantBall", 1), 96))
+            .noOptimize()
+            .duration(180 * 20)
+            .eut(TierEU.HV)
+            .addTo(SINOPEC);
 
+        RecipeBuilder.builder()
+            .fluidInputs(FluidRegistry.getFluidStack("sulfuricacid", 24000))
+            .fluidOutputs(
+                FluidRegistry.getFluidStack("aceticacid", 12800),
+                new FluidStack(C2H4, 9600),
+                FluidRegistry.getFluidStack("carbondioxide", 31200),
+                new FluidStack(C6H6, 32000),
+                FluidRegistry.getFluidStack("carbonmonoxide", 19200),
+                FluidRegistry.getFluidStack("fluid.ethylbenzene", 8000),
+                FluidRegistry.getFluidStack("hydrogen", 9600),
+                new FluidStack(C7H8, 8000),
+                FluidRegistry.getFluidStack("methanol", 38400),
+                new FluidStack(steam, 64000),
+                new FluidStack(nap, 6000),
+                new FluidStack(CH4, 10400),
+                FluidRegistry.getFluidStack("fluid.kerosene", 24000),
+                FluidRegistry.getFluidStack("phenol", 8000),
+                FluidRegistry.getFluidStack("methylacetate", 1280),
+                FluidRegistry.getFluidStack("creosote", 20000),
+                FluidRegistry.getFluidStack("fluid.naphthalene", 48000),
+                FluidRegistry.getFluidStack("dimethylbenzene", 44000),
+                FluidRegistry.getFluidStack("bioethanol", 29700),
+                FluidRegistry.getFluidStack("fluid.anthracene", 2000),
+                FluidRegistry.getFluidStack("acetone", 6400))
+            .itemInputs(
+                GT_Utility.getIntegratedCircuit(24),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.log, Materials.Wood, 1), 1280))
+            .noOptimize()
+            .duration(360 * 20)
+            .eut(TierEU.HV)
+            .addTo(SINOPEC);
     }
 
 }

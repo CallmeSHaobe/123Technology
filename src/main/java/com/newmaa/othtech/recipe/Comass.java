@@ -1,18 +1,21 @@
 package com.newmaa.othtech.recipe;
 
+import static com.newmaa.othtech.Utils.Utils.setStackSize;
+
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 import com.github.technus.tectech.recipe.TT_recipeAdder;
+import com.newmaa.othtech.Utils.recipes.RecipeBuilder;
 import com.newmaa.othtech.common.materials.liquids;
 
 import goodgenerator.api.recipe.GoodGeneratorRecipeMaps;
 import gregtech.api.enums.GT_Values;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.TierEU;
-import gregtech.api.interfaces.IRecipeMap;
+import gregtech.api.recipe.RecipeMap;
 import gregtech.api.util.GT_ModHandler;
 import gregtech.api.util.GT_Utility;
 
@@ -20,7 +23,7 @@ public class Comass implements IRecipePool {
 
     @Override
     public void loadRecipes() {
-        final IRecipeMap comass = GoodGeneratorRecipeMaps.componentAssemblyLineRecipes;
+        final RecipeMap<?> comass = GoodGeneratorRecipeMaps.componentAssemblyLineRecipes;
         Fluid UIVsc = FluidRegistry.getFluid("molten.superconductoruivbase");
         Fluid UMVsc = FluidRegistry.getFluid("molten.superconductorumvbase");
         Fluid Um = FluidRegistry.getFluid("molten.universium");
@@ -28,16 +31,12 @@ public class Comass implements IRecipePool {
         Fluid Mm = FluidRegistry.getFluid("molten.magnetohydrodynamicallyconstrainedstarmatter");
         Fluid Ma = FluidRegistry.getFluid("molten.magmatter");
         Fluid Cg = FluidRegistry.getFluid("molten.chromaticglass");
+        ItemStack coil = GT_ModHandler.getModItem("gregtech", "gt.blockcasings5", 1, 13);
 
-        GT_Values.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GT_ModHandler.getModItem("eternalsingularity", "combined_singularity", 48, 15),
-                GT_ModHandler.getModItem("gregtech", "gt.blockcasings5", 64, 13),
-                GT_ModHandler.getModItem("gregtech", "gt.blockcasings5", 64, 13),
-                GT_ModHandler.getModItem("gregtech", "gt.blockcasings5", 64, 13),
-                GT_ModHandler.getModItem("gregtech", "gt.blockcasings5", 64, 13),
-                GT_ModHandler.getModItem("gregtech", "gt.blockcasings5", 64, 13),
-                GT_ModHandler.getModItem("gregtech", "gt.blockcasings5", 64, 13),
+                setStackSize(coil, 6 * 64),
                 GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 48, 4141))
             .itemOutputs(ItemList.Electric_Motor_MAX.get(64))
             .fluidInputs(
@@ -55,14 +54,10 @@ public class Comass implements IRecipePool {
         GT_Values.RA.stdBuilder()
             .itemInputs(
                 ItemList.Electric_Motor_MAX.get(48),
-                GT_ModHandler.getModItem("tectech", "gt.spacetime_compression_field_generator", 64, 8),
-                GT_ModHandler.getModItem("tectech", "gt.spacetime_compression_field_generator", 32, 8),
-                GT_ModHandler.getModItem("gregtech", "gt.blockcasings5", 64, 13),
-                GT_ModHandler.getModItem("gregtech", "gt.blockcasings5", 64, 13),
-                GT_ModHandler.getModItem("gregtech", "gt.blockcasings5", 64, 13),
-                GT_ModHandler.getModItem("gregtech", "gt.blockcasings5", 64, 13),
-                GT_ModHandler.getModItem("gregtech", "gt.blockcasings5", 64, 13),
-                GT_ModHandler.getModItem("gregtech", "gt.blockcasings5", 64, 13),
+                setStackSize(
+                    GT_ModHandler.getModItem("tectech", "gt.spacetime_compression_field_generator", 1, 8),
+                    64 + 32),
+                setStackSize(coil, 6 * 64),
                 GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 48, 4141),
                 GT_Utility.getIntegratedCircuit(3))
             .itemOutputs(ItemList.Electric_Pump_MAX.get(64))
@@ -83,12 +78,7 @@ public class Comass implements IRecipePool {
         GT_Values.RA.stdBuilder()
             .itemInputs(
                 ItemList.Electric_Motor_MAX.get(48),
-                GT_ModHandler.getModItem("gregtech", "gt.blockcasings5", 64, 13),
-                GT_ModHandler.getModItem("gregtech", "gt.blockcasings5", 64, 13),
-                GT_ModHandler.getModItem("gregtech", "gt.blockcasings5", 64, 13),
-                GT_ModHandler.getModItem("gregtech", "gt.blockcasings5", 64, 13),
-                GT_ModHandler.getModItem("gregtech", "gt.blockcasings5", 64, 13),
-                GT_ModHandler.getModItem("gregtech", "gt.blockcasings5", 64, 13),
+                setStackSize(coil, 6 * 64),
                 GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 48, 4141),
                 GT_Utility.getIntegratedCircuit(2))
             .itemOutputs(ItemList.Electric_Piston_MAX.get(64))
@@ -108,16 +98,11 @@ public class Comass implements IRecipePool {
             .addTo(comass);
         GT_Values.RA.stdBuilder()
             .itemInputs(
-                ItemList.Electric_Motor_MAX.get(64),
-                ItemList.Electric_Motor_MAX.get(32),
-                GT_ModHandler.getModItem("gregtech", "gt.blockcasings5", 64, 13),
-                GT_ModHandler.getModItem("gregtech", "gt.blockcasings5", 64, 13),
-                GT_ModHandler.getModItem("gregtech", "gt.blockcasings5", 64, 13),
-                GT_ModHandler.getModItem("gregtech", "gt.blockcasings5", 64, 13),
-                GT_ModHandler.getModItem("gregtech", "gt.blockcasings5", 64, 13),
-                GT_ModHandler.getModItem("gregtech", "gt.blockcasings5", 64, 13),
-                GT_ModHandler.getModItem("tectech", "gt.time_acceleration_field_generator", 64, 8),
-                GT_ModHandler.getModItem("tectech", "gt.time_acceleration_field_generator", 32, 8),
+                setStackSize(ItemList.Electric_Motor_MAX.get(1), 96),
+                setStackSize(coil, 6 * 64),
+                setStackSize(
+                    GT_ModHandler.getModItem("tectech", "gt.time_acceleration_field_generator", 1, 8),
+                    64 + 32),
                 GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 48, 4141),
                 GT_Utility.getIntegratedCircuit(5))
             .itemOutputs(ItemList.Conveyor_Module_MAX.get(64))
@@ -139,19 +124,10 @@ public class Comass implements IRecipePool {
             .itemInputs(
                 ItemList.Electric_Motor_MAX.get(48),
                 GT_ModHandler.getModItem("GoodGenerator", "circuitWrap", 12, 14),
-                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 48, 4239),
-                GT_ModHandler.getModItem("gregtech", "gt.blockcasings5", 64, 13),
-                GT_ModHandler.getModItem("gregtech", "gt.blockcasings5", 64, 13),
-                GT_ModHandler.getModItem("gregtech", "gt.blockcasings5", 64, 13),
-                GT_ModHandler.getModItem("gregtech", "gt.blockcasings5", 64, 13),
-                GT_ModHandler.getModItem("gregtech", "gt.blockcasings5", 64, 13),
-                GT_ModHandler.getModItem("gregtech", "gt.blockcasings5", 64, 13),
-                GT_ModHandler.getModItem("tectech", "gt.stabilisation_field_generator", 64, 8),
-                GT_ModHandler.getModItem("tectech", "gt.stabilisation_field_generator", 32, 8),
+                setStackSize(coil, 6 * 64),
+                setStackSize(GT_ModHandler.getModItem("tectech", "gt.stabilisation_field_generator", 1, 8), 96),
                 GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 4141),
-                GT_ModHandler.getModItem("123Technology", "singularity1", 64),
-                GT_ModHandler.getModItem("123Technology", "singularity1", 64),
-                GT_ModHandler.getModItem("123Technology", "singularity1", 64),
+                setStackSize(GT_ModHandler.getModItem("123Technology", "singularity1", 1), 192),
                 GT_Utility.getIntegratedCircuit(6))
             .itemOutputs(ItemList.Emitter_MAX.get(64))
             .fluidInputs(
@@ -172,18 +148,10 @@ public class Comass implements IRecipePool {
                 ItemList.Electric_Motor_MAX.get(48),
                 GT_ModHandler.getModItem("GoodGenerator", "circuitWrap", 12, 14),
                 GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 48, 4239),
-                GT_ModHandler.getModItem("gregtech", "gt.blockcasings5", 64, 13),
-                GT_ModHandler.getModItem("gregtech", "gt.blockcasings5", 64, 13),
-                GT_ModHandler.getModItem("gregtech", "gt.blockcasings5", 64, 13),
-                GT_ModHandler.getModItem("gregtech", "gt.blockcasings5", 64, 13),
-                GT_ModHandler.getModItem("gregtech", "gt.blockcasings5", 64, 13),
-                GT_ModHandler.getModItem("gregtech", "gt.blockcasings5", 64, 13),
-                GT_ModHandler.getModItem("tectech", "gt.stabilisation_field_generator", 64, 8),
-                GT_ModHandler.getModItem("tectech", "gt.stabilisation_field_generator", 32, 8),
+                setStackSize(coil, 6 * 64),
+                setStackSize(GT_ModHandler.getModItem("tectech", "gt.stabilisation_field_generator", 1, 8), 96),
                 GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 4141),
-                GT_ModHandler.getModItem("123Technology", "singularity1", 64),
-                GT_ModHandler.getModItem("123Technology", "singularity1", 64),
-                GT_ModHandler.getModItem("123Technology", "singularity1", 64),
+                setStackSize(GT_ModHandler.getModItem("123Technology", "singularity1", 1), 192),
                 GT_Utility.getIntegratedCircuit(7))
             .itemOutputs(ItemList.Sensor_MAX.get(64))
             .fluidInputs(
@@ -201,9 +169,8 @@ public class Comass implements IRecipePool {
             .addTo(comass);
         GT_Values.RA.stdBuilder()
             .itemInputs(
-                ItemList.Electric_Motor_MAX.get(96),
-                ItemList.Electric_Motor_MAX.get(32),
-                ItemList.Electric_Piston_MAX.get(48),
+                setStackSize(ItemList.Electric_Motor_MAX.get(1), 96),
+                setStackSize(ItemList.Electric_Piston_MAX.get(1), 48),
                 GT_ModHandler.getModItem("GoodGenerator", "circuitWrap", 6, 14),
                 GT_ModHandler.getModItem("GoodGenerator", "circuitWrap", 12, 13),
                 GT_ModHandler.getModItem("GoodGenerator", "circuitWrap", 24, 12),
@@ -223,19 +190,13 @@ public class Comass implements IRecipePool {
             .addTo(comass);
         GT_Values.RA.stdBuilder()
             .itemInputs(
-                ItemList.Emitter_MAX.get(64),
-                ItemList.Emitter_MAX.get(64),
-                ItemList.Emitter_MAX.get(64),
+                setStackSize(ItemList.Emitter_MAX.get(1), 64 * 3),
                 GT_ModHandler.getModItem("tectech", "item.tm.itemAstralArrayFabricator", 50),
                 GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 48, 4239),
                 GT_ModHandler.getModItem("GoodGenerator", "circuitWrap", 24, 14),
                 GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 4141),
-                GT_ModHandler.getModItem("123Technology", "singularity1", 64),
-                GT_ModHandler.getModItem("123Technology", "singularity1", 64),
-                GT_ModHandler.getModItem("123Technology", "singularity1", 64),
-                GT_ModHandler.getModItem("123Technology", "singularity2", 64),
-                GT_ModHandler.getModItem("123Technology", "singularity2", 64),
-                GT_ModHandler.getModItem("123Technology", "singularity2", 64),
+                setStackSize(GT_ModHandler.getModItem("123Technology", "singularity1", 1), 192),
+                setStackSize(GT_ModHandler.getModItem("123Technology", "singularity2", 1), 192),
                 GT_Utility.getIntegratedCircuit(7))
             .itemOutputs(ItemList.Field_Generator_MAX.get(64))
             .fluidInputs(

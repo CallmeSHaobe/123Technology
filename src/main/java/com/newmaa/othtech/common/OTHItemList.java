@@ -21,10 +21,9 @@ public enum OTHItemList {
     HatchME,
     BusME,
     SINOPECd,
-    ChemCasing,
-    ProcessingCasing,
-    BoilerCasing,
+    SF,
     Chem,
+    MegaEEC,
 
     legendary_WirelessHatch,
 

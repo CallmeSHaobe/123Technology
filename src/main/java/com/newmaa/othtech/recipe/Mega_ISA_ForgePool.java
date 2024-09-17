@@ -118,23 +118,23 @@ public class Mega_ISA_ForgePool implements IRecipePool {
             .eut(2000000000)
             .specialValue(1)
             .addTo(ISA);
-        GT_Values.RA.stdBuilder()
-            .itemInputs(ItemList.Field_Generator_UEV.get(4))
-            .fluidInputs(new FluidStack(FluidRegistry.getFluidID("water"), 123123))
-            .fluidOutputs(
-                new FluidStack(FluidRegistry.getFluidID("grade1purifiedwater"), 100000),
-                new FluidStack(FluidRegistry.getFluidID("grade2purifiedwater"), 100000),
-                new FluidStack(FluidRegistry.getFluidID("grade3purifiedwater"), 100000),
-                new FluidStack(FluidRegistry.getFluidID("grade4purifiedwater"), 100000),
-                new FluidStack(FluidRegistry.getFluidID("grade5purifiedwater"), 100000),
-                new FluidStack(FluidRegistry.getFluidID("grade6purifiedwater"), 100000),
-                new FluidStack(FluidRegistry.getFluidID("grade7purifiedwater"), 100000),
-                new FluidStack(FluidRegistry.getFluidID("grade8purifiedwater"), 100000))
-            .noOptimize()
-            .duration(3600 * 20)
-            .eut(TierEU.RECIPE_UEV)
-            .specialValue(1)
-            .addTo(ISA);
+        // GT_Values.RA.stdBuilder()
+        // .itemInputs(ItemList.Field_Generator_UEV.get(4))
+        // .fluidInputs(new FluidStack(FluidRegistry.getFluidID("water"), 123123))
+        // .fluidOutputs(
+        // new FluidStack(FluidRegistry.getFluidID("grade1purifiedwater"), 100000),
+        // new FluidStack(FluidRegistry.getFluidID("grade2purifiedwater"), 100000),
+        // new FluidStack(FluidRegistry.getFluidID("grade3purifiedwater"), 100000),
+        // new FluidStack(FluidRegistry.getFluidID("grade4purifiedwater"), 100000),
+        // new FluidStack(FluidRegistry.getFluidID("grade5purifiedwater"), 100000),
+        // new FluidStack(FluidRegistry.getFluidID("grade6purifiedwater"), 100000),
+        // new FluidStack(FluidRegistry.getFluidID("grade7purifiedwater"), 100000),
+        // new FluidStack(FluidRegistry.getFluidID("grade8purifiedwater"), 100000))
+        // .noOptimize()
+        // .duration(3600 * 20)
+        // .eut(TierEU.RECIPE_UEV)
+        // .specialValue(1)
+        // .addTo(ISA);
         GT_Values.RA.stdBuilder()
             .itemInputs(
                 GT_ModHandler.getModItem("123Technology", "IsaBee", 0),

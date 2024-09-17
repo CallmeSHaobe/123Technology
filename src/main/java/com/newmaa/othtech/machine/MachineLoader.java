@@ -25,8 +25,9 @@ public class MachineLoader {
     public static ItemStack HatchME;
     public static ItemStack BusME;
     public static ItemStack SINOPECd;
-
     public static ItemStack Chem;
+    public static ItemStack SF;
+    public static ItemStack EEC;
 
     public static void loadMachines() {
         final int IDs = 23520;
@@ -62,10 +63,10 @@ public class MachineLoader {
         EVACannon = new GT_TE_EVACannon(IDs + 9, "EVACannon", "§l§6EVA专用改造阳电子炮GT").getStackForm(1);
         OTHItemList.EVACannon.set(EVACannon);
 
-        HatchME = new GT_MetaTileEntity_Hatch_Output_ME_B(IDs + 11, "OutputHatchME", "存储输出仓(ME)").getStackForm(1);
+        HatchME = new GT_MetaTileEntity_Hatch_Output_ME_B(IDs + 11, "OutputHatchME", "输出仓(ME)").getStackForm(1);
         OTHItemList.HatchME.set(HatchME);
 
-        BusME = new GT_MetaTileEntity_Hatch_OutputBus_ME_B(IDs + 12, "OutputBusME", "存储输出总线(ME)").getStackForm(1);
+        BusME = new GT_MetaTileEntity_Hatch_OutputBus_ME_B(IDs + 12, "OutputBusME", "输出总线(ME)").getStackForm(1);
         OTHItemList.BusME.set(BusME);
 
         SINOPECd = new GT_TE_SINOPEC(IDs + 13, "SINOPEC", "中国石化集成工厂").getStackForm(1);
@@ -73,6 +74,12 @@ public class MachineLoader {
 
         Chem = new GT_TE_CHEM(IDs + 14, "CHEMOTH", "铑钯蜜汁化工厂").getStackForm(1);
         OTHItemList.Chem.set(Chem);
+
+        SF = new GT_TE_TangShanSteelFactory(IDs + 15, "TangshanSteelFactory", "唐山钢铁厂").getStackForm(1);
+        OTHItemList.SF.set(SF);
+
+        EEC = new GT_TE_MegaEEC(IDs + 16, "MegaEEC", "§l§c噬魂监狱").getStackForm(1);
+        OTHItemList.MegaEEC.set(EEC);
 
     }
 }

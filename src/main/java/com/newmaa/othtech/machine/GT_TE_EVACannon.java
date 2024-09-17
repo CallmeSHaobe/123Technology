@@ -974,7 +974,7 @@ public class GT_TE_EVACannon extends OTH_MultiMachineBase<GT_TE_EVACannon> imple
             "                                                                                                                                                                                                           JJJJJJJJJJJJJJJ            ",
             "                                  EEEEEDEEEEEEEEDEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEDLLLDEEEEEEEEEEEEEEE                                                                                        JJJJJJJJJJJJJJJJJJJJJJJJJJ            ",
             "                                 EEEEEEDEEEEEEEEDEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEDLLLDEEEEEEEEEEEEEEE                                                                                       JJJJJJJJJJJJJJJJJJJJJJJJJJ             ",
-            "   C                              EEEEEDEEEEEEEEDEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEDLLLDEEEEEEEEEEEEEEE                                                                                      JJJJJJJJJJJJJJJJJJJJJJJJJJJ             ",
+            "                                  EEEEEDEEEEEEEEDEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEDLLLDEEEEEEEEEEEEEEE                                                                                      JJJJJJJJJJJJJJJJJJJJJJJJJJJ             ",
             "   CCCCC                                                                                                                                                                                     JJJJJJJJJJJJJJJJJJJJJJJJJJJ              ",
             "   CCCCC                                                                                                                                                                                    JJJJJJJJJJJJJJJJJJJJJJJJJJJJ              ",
             " CCCCCCC                                                                                                  CCCCCCC                                                                          JJJJJJJJJJJJJJJJJJJJJJJJJJJJ               ",
@@ -986,7 +986,7 @@ public class GT_TE_EVACannon extends OTH_MultiMachineBase<GT_TE_EVACannon> imple
             " CCCCCCC                                CCCC                                                               GCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ                  ",
             "   CCCCC                                                                                                   GCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ                  ",
             "   CCCCC                                                                                                   GCCCCCCCCCCCCCCCCCKCKKKCKKKCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ                   ",
-            "   C                                    CCCC                                                                CCCCCCCCCCCCCCCCCKCCCKCCCKCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC        CCCJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ                   ",
+            "                                        CCCC                                                                CCCCCCCCCCCCCCCCCKCCCKCCCKCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC        CCCJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ                   ",
             "                                        CCCC                                                                   CCCCCCCCCCCCCCKCCKCCCKCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC                 JJJJJJJJJJJJJJJJJJJJJJJJJJJJ                    ",
             "                                        CCCC                                                                      CCCCCCCCCCCKCKCCCCCKCCCCCCCCCCCCCCCCCCCCC     CCCCC                   JJJJJJJJJJJJJJJJJJJJJJJJJ                     ",
             "                                                                                                                     CCCCCCCCKCKKKCKKKCCCCCCEECCECCCCCCCCCC      CCCCC                    JJJJJJJJJJJJJJJJJJJJJJJ                     ",
@@ -1691,6 +1691,7 @@ public class GT_TE_EVACannon extends OTH_MultiMachineBase<GT_TE_EVACannon> imple
             .addInfo("§4最好保持炮口前方为空...")
             .addInfo("§q耗时固定10s")
             .addInfo("§q只支持无线电网直接供给EU")
+            .addInfo("! WIP -- 可能在将来会完工")
             .addSeparator()
             .addController("EVA专用阳电子炮")
             .beginStructureBlock(23, 52, 230, false)

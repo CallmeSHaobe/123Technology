@@ -7,6 +7,7 @@ import gregtech.api.gui.modularui.GT_UITextures;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.RecipeMapBuilder;
 import gregtech.api.util.GT_ModHandler;
+import gregtech.nei.formatter.HeatingCoilSpecialValueFormatter;
 
 public class Recipemaps {
 
@@ -48,6 +49,18 @@ public class Recipemaps {
         .frontend(OTH_GeneralFrontend::new)
         .neiHandlerInfo(
             builder -> builder.setDisplayStack(GT_ModHandler.getModItem("123Technology", "itemZhangww", 1))
+                .setMaxRecipesPerPage(1))
+        .disableOptimize()
+        .build();
+
+    public static final RecipeMap<OTH_RecipeMapBackend> TSSF = RecipeMapBuilder
+        .of("otht.recipe.TSSF", OTH_RecipeMapBackend::new)
+        .maxIO(24, 24, 4, 4)
+        .progressBar(GT_UITextures.PROGRESSBAR_ARROW_MULTIPLE)
+        .neiSpecialInfoFormatter(HeatingCoilSpecialValueFormatter.INSTANCE)
+        .frontend(OTH_GeneralFrontend::new)
+        .neiHandlerInfo(
+            builder -> builder.setDisplayStack(GT_ModHandler.getModItem("123Technology", "Dasima", 1))
                 .setMaxRecipesPerPage(1))
         .disableOptimize()
         .build();

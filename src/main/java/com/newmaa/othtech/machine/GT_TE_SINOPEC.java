@@ -134,7 +134,7 @@ public class GT_TE_SINOPEC extends OTH_MultiMachineBase<GT_TE_SINOPEC> {
 
     protected float getSpeedBonus() {
         if (getCoilTier() >= 10) {
-            return 0.01F;
+            return 0.1F;
         }
         return 1 - getCoilTier() * 0.1F;
     }
@@ -1111,10 +1111,10 @@ public class GT_TE_SINOPEC extends OTH_MultiMachineBase<GT_TE_SINOPEC> {
     @Override
     protected GT_Multiblock_Tooltip_Builder createTooltip() {
         final GT_Multiblock_Tooltip_Builder tt = new GT_Multiblock_Tooltip_Builder();
-        tt.addMachineType("§q§l老登的终极造物 - 中国石化集成工厂")
+        tt.addMachineType("§q§l重工业计划 - 中国石化集成工厂")
             .addInfo("§l§a黑金的最终流处...")
             .addInfo("§l一步到位.")
-            .addInfo("线圈等级<10时 耗时倍率 = 1 - 线圈等级 * 0.1, ≥10时耗时倍率固定为0.01")
+            .addInfo("线圈等级<10时 耗时倍率 = 1 - 线圈等级 * 0.1, ≥10时耗时倍率固定为0.1")
             .addInfo("主机放入铱锇钐合金粉解锁无损超频以及256并行, 并行默认为64")
             .addInfo("§q支持§bTecTech§q能源仓及激光仓，但不支持无线电网直接供给EU")
             .addPollutionAmount(64000)
@@ -1127,7 +1127,7 @@ public class GT_TE_SINOPEC extends OTH_MultiMachineBase<GT_TE_SINOPEC> {
             .addOutputHatch("AnyOutputHatch", 1)
             .addEnergyHatch("AnyEnergyHatch", 1)
             .addMufflerHatch("AnyMufflerHatch", 1)
-            .toolTipFinisher("§a123Technology - SINOPEC");
+            .toolTipFinisher("§a123Technology - Heavy industry - SINOPEC");
         return tt;
     }
 

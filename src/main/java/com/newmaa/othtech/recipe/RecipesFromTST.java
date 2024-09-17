@@ -45,7 +45,7 @@ public class RecipesFromTST implements IRecipePool {
             (int) 2097152,
             64,
             new ItemStack[] { GT_ModHandler.getModItem("tectech", "gt.blockcasingsTT", 4, 8),
-                ItemList.Field_Generator_UMV.get(1), GT_ModHandler.getModItem("tectech", "gt.blockcasingsTT", 8, 7),
+                ItemList.Field_Generator_UEV.get(64), GT_ModHandler.getModItem("tectech", "gt.blockcasingsTT", 8, 7),
                 GT_ModHandler.getModItem("dreamcraft", "item.HighEnergyFlowCircuit", 4),
                 ItemList.Field_Generator_UEV.get(24), GT_ModHandler.getModItem("gregtech", "gt.blockcasings2", 24, 9),
                 GT_ModHandler.getModItem("gregtech", "gt.blockcasings2", 24, 5),

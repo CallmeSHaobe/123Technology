@@ -32,6 +32,7 @@ public class Main implements IRecipePool {
         Fluid cuihuaji = FluidRegistry.getFluid("exciteddtsc");
         final RecipeMap<?> Nan = RecipeMaps.nanoForgeRecipes;
         final RecipeMap<?> Assem = RecipeMaps.assemblerRecipes;
+        final RecipeMap<?> Chem = RecipeMaps.multiblockChemicalReactorRecipes;
 
         // dustIrOsSm assembler
         // GT_Values.RA.stdBuilder()
@@ -224,5 +225,15 @@ public class Main implements IRecipePool {
             .duration(123 * 20)
             .eut(12300)
             .addTo(Assem);
+        // Indium Beeyonds Chem From GTNH 2.6.1
+        GT_Values.RA.stdBuilder()
+            .fluidInputs(FluidRegistry.getFluidStack("phtalicacid", 2688))
+            .itemInputs(GT_ModHandler.getModItem("gregtech", "gt.comb", 4, 159))
+            .itemOutputs(GT_ModHandler.getModItem("gregtech", "gt.metaitem.01", 4, 6056))
+            .noOptimize()
+            .duration(288)
+            .eut(98304)
+            .addTo(Chem);
+
     }
 }

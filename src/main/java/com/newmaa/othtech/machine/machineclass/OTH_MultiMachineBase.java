@@ -91,6 +91,7 @@ public abstract class OTH_MultiMachineBase<T extends OTH_MultiMachineBase<T>>
         }.setMaxParallelSupplier(this::getLimitedMaxParallel);
     }
 
+
     /**
      * Proxy Perfect Overclock Supplier.
      *

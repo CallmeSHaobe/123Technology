@@ -38,11 +38,9 @@ import gregtech.api.logic.ProcessingLogic;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
+import gregtech.api.recipe.check.SimpleCheckRecipeResult;
 import gregtech.api.render.TextureFactory;
-import gregtech.api.util.GT_HatchElementBuilder;
-import gregtech.api.util.GT_Multiblock_Tooltip_Builder;
-import gregtech.api.util.GT_Recipe;
-import gregtech.api.util.GT_Utility;
+import gregtech.api.util.*;
 
 public class GT_TE_MegaIsaForge extends OTH_MultiMachineBase<GT_TE_MegaIsaForge> {
 
@@ -55,6 +53,8 @@ public class GT_TE_MegaIsaForge extends OTH_MultiMachineBase<GT_TE_MegaIsaForge>
     }
 
     private byte mode = 0;
+
+    boolean $123 = false;
 
     private HeatingCoilLevel coilLevel;
 
@@ -73,7 +73,7 @@ public class GT_TE_MegaIsaForge extends OTH_MultiMachineBase<GT_TE_MegaIsaForge>
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
         super.saveNBTData(aNBT);
-
+        aNBT.setBoolean("$123", $123);
         aNBT.setInteger("mode", mode);
 
     }
@@ -81,7 +81,7 @@ public class GT_TE_MegaIsaForge extends OTH_MultiMachineBase<GT_TE_MegaIsaForge>
     @Override
     public void loadNBTData(final NBTTagCompound aNBT) {
         super.loadNBTData(aNBT);
-
+        $123 = aNBT.getBoolean("123");
         mode = aNBT.getByte("mode");
 
     }
@@ -115,6 +115,21 @@ public class GT_TE_MegaIsaForge extends OTH_MultiMachineBase<GT_TE_MegaIsaForge>
     }
 
     @Override
+    public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
+        super.onPostTick(aBaseMetaTileEntity, aTick);
+        if (aTick % 20 == 0 && !$123) {
+            ItemStack aGuiStack = this.getControllerSlot();
+            if (aGuiStack != null) {
+                if (GT_Utility.areStacksEqual(
+                    aGuiStack,
+                    GT_ModHandler.getModItem("tectech", "item.tm.itemAstralArrayFabricator", 1))) {
+                    this.$123 = true;
+                }
+            }
+        }
+    }
+
+    @Override
     protected ProcessingLogic createProcessingLogic() {
         return new OTH_ProcessingLogic() {
 
@@ -129,9 +144,9 @@ public class GT_TE_MegaIsaForge extends OTH_MultiMachineBase<GT_TE_MegaIsaForge>
             }
 
             @Override
-            protected @NotNull CheckRecipeResult validateRecipe(GT_Recipe recipe) {
-                return recipe.mSpecialValue <= coilLevel.getHeat() ? CheckRecipeResultRegistry.SUCCESSFUL
-                    : CheckRecipeResultRegistry.insufficientHeat(recipe.mSpecialValue);
+            protected @NotNull CheckRecipeResult validateRecipe(@NotNull GT_Recipe recipe) {
+                return $123 == false && mode == 1 ? SimpleCheckRecipeResult.ofFailure("nofb")
+                    : CheckRecipeResultRegistry.SUCCESSFUL;
             }
 
         }.enablePerfectOverclock()
@@ -142,7 +157,7 @@ public class GT_TE_MegaIsaForge extends OTH_MultiMachineBase<GT_TE_MegaIsaForge>
     @Override
     public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ) {
         if (getBaseMetaTileEntity().isServerSide()) {
-            if (mode < 1) {
+            if (mode < 1 & $123) {
                 mode++;
             } else {
                 mode = 0;
@@ -2148,6 +2163,9 @@ public class GT_TE_MegaIsaForge extends OTH_MultiMachineBase<GT_TE_MegaIsaForge>
             .addInfo("§c§l'我拒绝了§4血魔法的恩赐§c和§e蜜蜂的甜蜜'")
             .addInfo("§d艾萨领主认证")
             .addInfo("§7无法想象的速度与并行")
+            .addInfo("耗时 = NEI耗时 * { 1 / {电压等级^[(线圈等级 / 2)+1]}^(1/3)}")
+            .addInfo("§q支持§bTecTech§q能源仓及激光仓，但不支持无线电网直接供给EU")
+            .addInfo("§q主机放入星阵解锁太空组装模式")
             .addSeparator()
             .addController("巨艾萨控制器")
             .beginStructureBlock(49, 76, 49, false)
