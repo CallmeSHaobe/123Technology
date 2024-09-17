@@ -1,5 +1,6 @@
 package com.newmaa.othtech;
 
+import com.newmaa.othtech.machine.machineclass.IMCForNEI;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -58,6 +59,7 @@ public class OTHTechnology {
     public void init(FMLInitializationEvent event) {
         proxy.init(event);
         MachineLoader.loadMachines();
+        IMCForNEI.IMCSender();
 
     }
 

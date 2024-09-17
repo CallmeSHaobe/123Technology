@@ -1,6 +1,5 @@
 package com.newmaa.othtech.machine;
 
-import static cofh.core.particles.ParticleBase.rand;
 import static com.github.technus.tectech.thing.casing.TT_Container_Casings.sBlockCasingsTT;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.withChannel;
@@ -9,35 +8,28 @@ import static gregtech.api.enums.GT_HatchElement.*;
 import static gregtech.api.enums.Textures.BlockIcons.*;
 import static gregtech.api.util.GT_StructureUtility.ofFrame;
 
-import com.google.common.collect.Multimap;
-import com.gtnewhorizons.modularui.api.forge.ItemStackHandler;
-import com.kuba6000.mobsinfo.MobsInfo;
+import com.kuba6000.mobsinfo.api.IChanceModifier;
+import com.kuba6000.mobsinfo.api.MobDrop;
+import com.kuba6000.mobsinfo.api.MobRecipe;
+import com.kuba6000.mobsinfo.api.event.MobNEIRegistrationEvent;
+import com.kuba6000.mobsinfo.api.utils.FastRandom;
 import com.mojang.authlib.GameProfile;
-import com.newmaa.othtech.common.recipemap.Recipemaps;
-import com.newmaa.othtech.machine.machineclass.MobHandlerLoader;
-import gregtech.api.interfaces.tileentity.RecipeMapWorkable;
-import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_InputBus;
-import gregtech.api.recipe.RecipeMap;
-import gregtech.api.recipe.RecipeMaps;
+import com.newmaa.othtech.machine.machineclass.OTH_processingLogics.OTH_ProcessingLogic;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import gregtech.api.logic.ProcessingLogic;
 import gregtech.api.util.GT_HatchElementBuilder;
 import gregtech.api.util.GT_Multiblock_Tooltip_Builder;
 import gregtech.api.util.GT_Recipe;
 import gregtech.api.util.GT_Utility;
 import gregtech.common.blocks.GT_Block_Casings1;
-import kubatech.api.implementations.KubaTechGTMultiBlockBase;
-import kubatech.api.utils.ModUtils;
-import kubatech.network.CustomTileEntityPacket;
-import net.minecraft.enchantment.Enchantment;
+import kubatech.loaders.MobHandlerLoader;
+import kubatech.tileentity.gregtech.multiblock.GT_MetaTileEntity_ExtremeEntityCrusher;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.EnumCreatureAttribute;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.WorldProviderHell;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
@@ -54,7 +46,6 @@ import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.gtnewhorizons.gtnhintergalactic.block.IGBlocks;
 import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
-import com.newmaa.othtech.machine.machineclass.OTH_processingLogics.OTH_ProcessingLogic;
 
 import crazypants.enderio.EnderIO;
 import gregtech.api.GregTech_API;
@@ -62,15 +53,15 @@ import gregtech.api.enums.*;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
-import gregtech.api.logic.ProcessingLogic;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.recipe.check.SimpleCheckRecipeResult;
 import gregtech.api.render.TextureFactory;
 import gtPlusPlus.core.material.ALLOY;
 
+import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
-import java.util.UUID;
+import java.util.*;
 
 public class GT_TE_MegaEEC extends OTH_MultiMachineBase<GT_TE_MegaEEC> {
 
@@ -85,6 +76,7 @@ public class GT_TE_MegaEEC extends OTH_MultiMachineBase<GT_TE_MegaEEC> {
     private byte glassTier = 0;
     public static final double DIAMOND_SPIKES_DAMAGE = 9d;
     public static final int MOB_SPAWN_INTERVAL = 55;
+    public final Random rand = new FastRandom();
 
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
@@ -117,13 +109,7 @@ public class GT_TE_MegaEEC extends OTH_MultiMachineBase<GT_TE_MegaEEC> {
 
 
     private static final Item poweredSpawnerItem = Item.getItemFromBlock(EnderIO.blockPoweredSpawner);
-    private boolean mIsProducingInfernalDrops = true;
-    private boolean voidAllDamagedAndEnchantedItems = true;
-    public EECFakePlayer EECPlayer = null;
-    private boolean isInRitualMode = false;
-    private boolean isRitualValid = false;
-    private CustomTileEntityPacket mobPacket = null;
-
+private boolean isInRitualMode =false;
 
 
 
@@ -143,79 +129,161 @@ public class GT_TE_MegaEEC extends OTH_MultiMachineBase<GT_TE_MegaEEC> {
 
         if (mobType.equals("Skeleton") && getBaseMetaTileEntity().getWorld().provider instanceof WorldProviderHell
             && rand.nextInt(5) > 0) mobType = "witherSkeleton";
-
-        MobHandlerLoader.MobEECRecipe recipe = MobHandlerLoader.recipeMap.get(mobType);
-
-        if (recipe == null) return CheckRecipeResultRegistry.NO_RECIPE;
-        if (!recipe.recipe.isPeacefulAllowed && this.getBaseMetaTileEntity()
-            .getWorld().difficultySetting == EnumDifficulty.PEACEFUL)
-            return SimpleCheckRecipeResult.ofFailure("EEC_peaceful");
-        if (isInRitualMode && isRitualValid()) {
-            if (getMaxInputEu() < recipe.mEUt / 4) return CheckRecipeResultRegistry.insufficientPower(recipe.mEUt / 4);
+        MobEECRecipe recipeA = recipeMap.get(mobType);
+        if (isInRitualMode) {
+            if (getMaxInputEu() < recipeA.mEUt / 4) return CheckRecipeResultRegistry.insufficientPower(recipeA.mEUt / 4);
             this.mOutputFluids = new FluidStack[] { FluidRegistry.getFluidStack("xpjuice", 5000) };
-            this.mOutputItems = recipe
-                .generateOutputs(rand, this, 3, 0, mIsProducingInfernalDrops, voidAllDamagedAndEnchantedItems);
+            this.mOutputItems = recipeA
+                .generateOutputs(rand, this, 3, 0, false, false);
             this.lEUt /= 4L;
             this.mMaxProgresstime = 400;
         } else {
-            if (getMaxInputEu() < recipe.mEUt) return CheckRecipeResultRegistry.insufficientPower(recipe.mEUt);
-            if (recipe.recipe.alwaysinfernal && getMaxInputEu() < recipe.mEUt * 8)
-                return CheckRecipeResultRegistry.insufficientPower(recipe.mEUt * 8);
-        }
-
-
-        double attackDamage = DIAMOND_SPIKES_DAMAGE * DIAMOND_SPIKES_DAMAGE; // damage from spikes
-        weaponCheck:
-        {
-            GT_MetaTileEntity_Hatch_InputBus inputbus = this.mInputBusses.size() == 0 ? null
-                : this.mInputBusses.get(0);
-            if (inputbus != null && !inputbus.isValid()) inputbus = null;
-            ItemStack lootingHolder = inputbus == null ? null : inputbus.getStackInSlot(0);
-            if (lootingHolder == null) break weaponCheck;
-        }
-
+            if (getMaxInputEu() < recipeA.mEUt)
+                return CheckRecipeResultRegistry.insufficientPower(recipeA.mEUt);
+            if (recipeA.recipeA.alwaysinfernal && getMaxInputEu() < recipeA.mEUt * 8)
+                return CheckRecipeResultRegistry.insufficientPower(recipeA.mEUt * 8);}
         if (EECPlayer == null) EECPlayer = new GT_TE_MegaEEC.EECFakePlayer(this);
-
-        this.mOutputItems = recipe.generateOutputs(
+        EECPlayer.currentWeapon = null;
+        if (recipeA == null) {return CheckRecipeResultRegistry.NO_RECIPE;}
+        this.mOutputItems = recipeA.generateOutputs(
             rand,
             this,
-            attackDamage,
-            0,
-            mIsProducingInfernalDrops,
-            voidAllDamagedAndEnchantedItems);
-
-
+            4096d,
+            1,
+            false,
+            false
+        );
         this.mOutputFluids = new FluidStack[]{FluidRegistry.getFluidStack("xpjuice", 120)};
+        int times = 40;
         if (this.lEUt > 0) this.lEUt = -this.lEUt;
         this.mEfficiency = (10000 - (getIdealStatus() - getRepairStatus()) * 1000);
         this.mEfficiencyIncrease = 10000;
         this.updateSlots();
-        if (mobPacket == null) mobPacket = new CustomTileEntityPacket((TileEntity) this.getBaseMetaTileEntity(), null);
-        mobPacket.resetHelperData();
-        mobPacket.sendToAllAround(16);
         this.updateSlots();
         return CheckRecipeResultRegistry.SUCCESSFUL;
     }
 
-    private boolean isRitualValid() {
-        return false;
+    @Override
+    protected ProcessingLogic createProcessingLogic() {
+
+        return new OTH_ProcessingLogic() {
+
+            @NotNull
+            @Override
+            public CheckRecipeResult process() {
+                setSpeedBonus(getSpeedBonus());
+                setOverclock(isEnablePerfectOverclock() ? 2 : 1, 2);
+                return super.process();
+            }
+
+            @NotNull
+            @Override
+            protected CheckRecipeResult validateRecipe(@NotNull GT_Recipe recipe) {
+                return CheckRecipeResultRegistry.SUCCESSFUL;
+            }
+
+        }.setMaxParallelSupplier(this::getMaxParallelRecipes);
     }
-
-    private static class EECFakePlayer extends FakePlayer {
-
-        GT_TE_MegaEEC mte;
-        ItemStack currentWeapon;
-
-        public EECFakePlayer(GT_TE_MegaEEC mte) {
-            super(
-                (WorldServer) mte.getBaseMetaTileEntity()
-                    .getWorld(),
-                new GameProfile(
-                    UUID.nameUUIDFromBytes("[EEC Fake Player]".getBytes(StandardCharsets.UTF_8)),
-                    "[EEC Fake Player]"));
-            this.mte = mte;
+    @SubscribeEvent
+    public void onMobNEIRegistration(MobNEIRegistrationEvent event) {
+        MobEECRecipe recipeA = recipeMap.get(event.mobName);
+        if (recipeA != null) {
+            event.additionalInformation.addAll(
+                Arrays.asList(
+                    GT_Utility.trans("154", "Usage: ") + GT_Utility.formatNumbers(recipeA.mEUt) + " EU/t",
+                    GT_Utility.trans("159", "Time: ") + GT_Utility.formatNumbers(recipeA.mDuration / 20d) + " secs"));
         }
     }
+
+
+    public static Map<String, MobEECRecipe> recipeMap = new HashMap<>();
+    public static class MobEECRecipe {
+
+        public final List<MobDrop> mOutputs;
+
+        public final MobRecipe recipeA;
+
+        public final int mEUt = 2000;
+        public final int mDuration;
+        public final EntityLiving entityCopy;
+
+        public MobEECRecipe(List<MobDrop> transformedDrops, MobRecipe recipeA) {
+            this.mOutputs = transformedDrops;
+            this.recipeA = recipeA;
+            try {
+                this.entityCopy = this.recipeA.createEntityCopy();
+            } catch (NoSuchMethodException | InvocationTargetException | InstantiationException
+                     | IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+            mDuration = Math.max(MOB_SPAWN_INTERVAL, (int) ((recipeA.maxEntityHealth / DIAMOND_SPIKES_DAMAGE) * 10d));
+        }
+
+        public ItemStack[] generateOutputs(Random rnd, GT_TE_MegaEEC MTE, double attackDamage,
+                                           int lootinglevel, boolean preferInfernalDrops, boolean voidAllDamagedAndEnchantedItems) {
+            MTE.lEUt = mEUt;
+            MTE.mMaxProgresstime = Math.max(MOB_SPAWN_INTERVAL, (int) ((recipeA.maxEntityHealth / attackDamage) * 10d));
+            ArrayList<ItemStack> stacks = new ArrayList<>(this.mOutputs.size());
+            this.entityCopy.setPosition(
+                MTE.getBaseMetaTileEntity()
+                    .getXCoord(),
+                MTE.getBaseMetaTileEntity()
+                    .getYCoord(),
+                MTE.getBaseMetaTileEntity()
+                    .getZCoord());
+            for (MobDrop o : this.mOutputs) {
+                int chance = o.chance;
+
+                double dChance = (double) chance / 100d;
+                for (IChanceModifier chanceModifier : o.chanceModifiers) {
+                    dChance = chanceModifier.apply(
+                        dChance,
+                        MTE.getBaseMetaTileEntity()
+                            .getWorld(),
+                        stacks,
+                        null,
+                        this.entityCopy);
+                }
+
+                chance = (int) (dChance * 100d);
+                if (chance == 0) continue;
+
+                if (o.playerOnly) {
+                    chance = (int) ((double) chance);
+                    if (chance < 1) chance = 1;
+                }
+                int amount = o.stack.stackSize;
+                if (o.lootable && lootinglevel > 0) {
+                    chance += lootinglevel * 5000;
+                    if (chance > 10000) {
+                        int div = (int) Math.ceil(chance / 10000d);
+                        amount *= div;
+                        chance /= div;
+                    }
+                }
+                if (chance == 10000 || rnd.nextInt(10000) < chance) {
+                    ItemStack s = o.stack.copy();
+                    s.stackSize = amount;
+                    if (o.enchantable != null) EnchantmentHelper.addRandomEnchantment(rnd, s, o.enchantable);
+                    if (o.damages != null) {
+                        int rChance = rnd.nextInt(recipeA.mMaxDamageChance);
+                        int cChance = 0;
+                        for (Map.Entry<Integer, Integer> damage : o.damages.entrySet()) {
+                            cChance += damage.getValue();
+                            if (rChance <= cChance) {
+                                s.setItemDamage(damage.getKey());
+                                break;
+                            }
+                        }
+                    }
+                    stacks.add(s);
+                }
+            }
+            return stacks.toArray(new ItemStack[0]);
+        }
+    }
+
+
 
 
         @Override
@@ -225,37 +293,7 @@ public class GT_TE_MegaEEC extends OTH_MultiMachineBase<GT_TE_MegaEEC> {
 
         }
 
-    private static class WeaponCache extends ItemStackHandler {
 
-        boolean isValid = false;
-        int looting = 0;
-        double attackDamage = 0;
-
-        public WeaponCache(ItemStack[] inventory) {
-            super(inventory);
-        }
-
-        @Override
-        protected void onContentsChanged(int slot) {
-            if (slot != 0) return;
-            if (ModUtils.isClientThreaded()) return;
-            ItemStack stack = getStackInSlot(0);
-            if (stack == null) {
-                isValid = false;
-                return;
-            }
-            // noinspection unchecked
-            attackDamage = ((Multimap<String, AttributeModifier>) stack.getAttributeModifiers())
-                .get(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName())
-                .stream()
-                .mapToDouble(
-                    attr -> attr.getAmount()
-                        + (double) EnchantmentHelper.func_152377_a(stack, EnumCreatureAttribute.UNDEFINED))
-                .sum();
-            looting = Math.min(4, EnchantmentHelper.getEnchantmentLevel(Enchantment.looting.effectId, stack));
-            isValid = true;
-        }
-        }
 
         @Override
         public void construct(ItemStack stackSize, boolean hintsOnly) {
@@ -8506,5 +8544,42 @@ public class GT_TE_MegaEEC extends OTH_MultiMachineBase<GT_TE_MegaEEC> {
         protected SoundResource getProcessStartSound() {
             return SoundResource.GT_MACHINES_DISTILLERY_LOOP;
         }
+    public GT_TE_MegaEEC.EECFakePlayer EECPlayer = null;
+    private static class EECFakePlayer extends FakePlayer {
+
+        GT_TE_MegaEEC mte;
+        ItemStack currentWeapon;
+
+        public EECFakePlayer(GT_TE_MegaEEC mte) {
+            super(
+                (WorldServer) mte.getBaseMetaTileEntity()
+                    .getWorld(),
+                new GameProfile(
+                    UUID.nameUUIDFromBytes("[EEC Fake Player]".getBytes(StandardCharsets.UTF_8)),
+                    "[EEC Fake Player]"));
+            this.mte = mte;
+        }
+
+        @Override
+        public void renderBrokenItemStack(ItemStack p_70669_1_) {}
+
+        @Override
+        public Random getRNG() {
+            return mte.rand;
+        }
+
+        @Override
+        public void destroyCurrentEquippedItem() {}
+
+        @Override
+        public ItemStack getCurrentEquippedItem() {
+            return currentWeapon;
+        }
+
+        @Override
+        public ItemStack getHeldItem() {
+            return currentWeapon;
+        }
+    }
     }
 
