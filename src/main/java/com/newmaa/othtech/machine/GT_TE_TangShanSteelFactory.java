@@ -1,12 +1,10 @@
 package com.newmaa.othtech.machine;
 
-import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.withChannel;
 import static gregtech.api.GregTech_API.*;
 import static gregtech.api.enums.GT_HatchElement.*;
 import static gregtech.api.enums.Textures.BlockIcons.*;
 import static gregtech.api.util.GT_StructureUtility.ofCoil;
-import static gregtech.api.util.GT_StructureUtility.ofFrame;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -24,7 +22,10 @@ import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTH_processingLogics.OTH_ProcessingLogic;
 
 import gregtech.api.GregTech_API;
-import gregtech.api.enums.*;
+import gregtech.api.enums.HeatingCoilLevel;
+import gregtech.api.enums.ItemList;
+import gregtech.api.enums.SoundResource;
+import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
@@ -34,7 +35,10 @@ import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.recipe.check.SimpleCheckRecipeResult;
 import gregtech.api.render.TextureFactory;
-import gregtech.api.util.*;
+import gregtech.api.util.GT_HatchElementBuilder;
+import gregtech.api.util.GT_Multiblock_Tooltip_Builder;
+import gregtech.api.util.GT_Recipe;
+import gregtech.api.util.GT_Utility;
 import gregtech.common.blocks.GT_Block_Casings8;
 
 public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangShanSteelFactory> {
@@ -192,17 +196,13 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
                             Byte.MAX_VALUE,
                             (te, t) -> te.glassTier = t,
                             te -> te.glassTier)))
-                .addElement('B', ofBlock(sBlockCasings1, 6))
-                .addElement('C', ofBlock(sBlockCasings4, 12))
-                .addElement('E', ofBlock(sBlockCasings8, 1))
-                .addElement('G', ofFrame(Materials.Iridium))
                 .addElement(
-                    'D',
+                    'B',
                     withChannel(
                         "coil",
                         ofCoil(GT_TE_TangShanSteelFactory::setCoilLevel, GT_TE_TangShanSteelFactory::getCoilLevel)))
                 .addElement(
-                    'F',
+                    'C',
                     GT_HatchElementBuilder.<GT_TE_TangShanSteelFactory>builder()
                         .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch)
                         .adder(GT_TE_TangShanSteelFactory::addToMachineList)
@@ -215,27 +215,14 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
     }
 
     // Structure by LyeeR
-    private final String[][] shapeMain = new String[][] {
-        { "FFFFFFF", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G",
-            "G     G", "G     G", "FFF~FFF" },
-        { "FFFFFFF", " BBBBB ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ",
-            " AAAAA ", " BBBBB ", "FFFFFFF" },
-        { "FFFFFFF", " BDDDB ", " A G A ", " A E A ", " A E A ", " A G A ", " ADDDA ", " A G A ", " A E A ", " A E A ",
-            " A G A ", " BDDDB ", "FFFFFFF" },
-        { "FFFFFFF", " BDCDB ", " AGCGA ", " AECEA ", " AECEA ", " AGCGA ", " ADCDA ", " AGCGA ", " AECEA ", " AECEA ",
-            " AGCGA ", " BDCDB ", "FFFFFFF" },
-        { "FFFFFFF", " BDDDB ", " A G A ", " A E A ", " A E A ", " A G A ", " ADDDA ", " A G A ", " A E A ", " A E A ",
-            " A G A ", " BDDDB ", "FFFFFFF" },
-        { "FFFFFFF", " BBBBB ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ",
-            " AAAAA ", " BBBBB ", "FFFFFFF" },
-        { "FFFFFFF", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G",
-            "G     G", "G     G", "FFFFFFF" } };
+    private final String[][] shapeMain = new String[][] { { "A~BCCCCC" } };
 
     @Override
     public boolean addToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
         return super.addToMachineList(aTileEntity, aBaseCasingIndex)
             || addExoticEnergyInputToMachineList(aTileEntity, aBaseCasingIndex);
     }
+
     @Override
     public int getPollutionPerSecond(final ItemStack aStack) {
         return 192000;

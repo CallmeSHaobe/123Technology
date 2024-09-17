@@ -24,7 +24,6 @@ import net.minecraft.nbt.NBTTagCompound;
 
 import cpw.mods.fml.common.event.FMLInterModComms;
 
-
 public class IMCForNEI {
 
     public static void IMCSender() {

@@ -1,11 +1,11 @@
 package com.newmaa.othtech;
 
-import com.newmaa.othtech.machine.machineclass.IMCForNEI;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.newmaa.othtech.common.materials.MaterialsLoader;
 import com.newmaa.othtech.machine.MachineLoader;
+import com.newmaa.othtech.machine.machineclass.IMCForNEI;
 import com.newmaa.othtech.recipe.RecipeLoader;
 
 import cpw.mods.fml.common.Mod;

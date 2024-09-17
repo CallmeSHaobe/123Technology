@@ -75,7 +75,7 @@ public class MachineLoader {
         Chem = new GT_TE_CHEM(IDs + 14, "CHEMOTH", "铑钯蜜汁化工厂").getStackForm(1);
         OTHItemList.Chem.set(Chem);
 
-        SF = new GT_TE_TangShanSteelFactory(IDs + 15, "TangshanSteelFactory", "唐山钢铁厂").getStackForm(1);
+        SF = new GT_TE_TangShanSteelFactory(IDs + 15, "TangshanSteelFactory", "唐山炼钢厂").getStackForm(1);
         OTHItemList.SF.set(SF);
 
         EEC = new GT_TE_MegaEEC(IDs + 16, "MegaEEC", "§l§c噬魂监狱").getStackForm(1);
