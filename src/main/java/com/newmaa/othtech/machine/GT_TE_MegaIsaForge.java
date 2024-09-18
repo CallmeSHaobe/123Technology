@@ -133,7 +133,7 @@ public class GT_TE_MegaIsaForge extends OTH_MultiMachineBase<GT_TE_MegaIsaForge>
 
                 setEuModifier(getEuModifier());
                 setSpeedBonus(getSpeedBonus());
-                setOverclock(isEnablePerfectOverclock() ? 4 : 2, 4);
+                setOverclock(isEnablePerfectOverclock() ? 2 : 1, 2);
                 return super.process();
             }
 
