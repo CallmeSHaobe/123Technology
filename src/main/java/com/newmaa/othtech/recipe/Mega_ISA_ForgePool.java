@@ -63,8 +63,8 @@ public class Mega_ISA_ForgePool implements IRecipePool {
             .itemInputs(
                 GT_ModHandler.getModItem("tectech", "gt.spacetime_compression_field_generator", 0, 2),
                 ItemList.Field_Generator_UMV.get(1))
-            .fluidInputs(new FluidStack(FluidRegistry.getFluid("molten.cosmicneutronium"), 5760))
-            .fluidOutputs(new FluidStack(FluidRegistry.getFluid("molten.whitedwarfmatter"), 36))
+            .fluidInputs(new FluidStack(FluidRegistry.getFluid("molten.neutronium"), 5760))
+            .fluidOutputs(new FluidStack(FluidRegistry.getFluid("molten.whitedwarfmatter"), 3600))
             .noOptimize()
             .duration(4000)
             .eut(2000000000)
@@ -75,7 +75,7 @@ public class Mega_ISA_ForgePool implements IRecipePool {
                 GT_ModHandler.getModItem("tectech", "gt.spacetime_compression_field_generator", 0, 5),
                 ItemList.Field_Generator_UMV.get(2))
             .fluidInputs(new FluidStack(FluidRegistry.getFluid("molten.cosmicneutronium"), 5760))
-            .fluidOutputs(new FluidStack(FluidRegistry.getFluid("molten.blackdwarfmatter"), 36))
+            .fluidOutputs(new FluidStack(FluidRegistry.getFluid("molten.blackdwarfmatter"), 3600))
             .noOptimize()
             .duration(8000)
             .eut(2000000000)

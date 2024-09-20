@@ -1,5 +1,6 @@
 package com.newmaa.othtech.recipe;
 
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -234,6 +235,38 @@ public class Main implements IRecipePool {
             .duration(288)
             .eut(98304)
             .addTo(Chem);
+        //Mega EEC
+        TT_recipeAdder.addResearchableAssemblylineRecipe(
+            GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 14201),
+            5120000,
+            4096,
+            (int)TierEU.UEV,
+            64,
+            new ItemStack[] {
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 14201),
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 14201),
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 14201),
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 14201),
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 16, 4493),
+                GT_ModHandler.getModItem("miscutils","blockFrameGtHypogen", 16),
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 16, 4491),
+                GT_ModHandler.getModItem("tectech","gt.blockcasingsTT", 16, 9),
+                ItemList.Robot_Arm_UEV.get(64),
+                ItemList.Robot_Arm_UEV.get(64),
+                GT_OreDictUnificator.get(OrePrefixes.circuit, Materials.Optical, 64),
+                GT_ModHandler.getModItem("gregtech","gt.metaitem.03", 64, 4054),
+                GT_ModHandler.getModItem("gregtech","gt.metaitem.02", 24, 21397),
+                new ItemStack(Items.skull, 64, 1),
+                GT_ModHandler.getModItem("123Technology", "dustIrOsSm", 64),
+                GT_ModHandler.getModItem("eternalsingularity", "eternal_singularity", 4),},
+            new FluidStack[] {
+                new FluidStack(FluidRegistry.getFluidID("molten.infinity"), 123*144),
+                new FluidStack(FluidRegistry.getFluidID("molten.quantium"), 123*144),
+                new FluidStack(FluidRegistry.getFluidID("molten.neutronium"), 123*144),
+                new FluidStack(FluidRegistry.getFluidID("molten.mutatedlivingsolder"), 123*144) },
+            GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 23536),
+            1200 * 20,
+            (int)TierEU.UIV);
 
     }
 }
