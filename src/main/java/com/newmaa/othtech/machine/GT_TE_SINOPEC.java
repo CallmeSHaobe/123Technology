@@ -63,7 +63,6 @@ import gregtech.api.util.GT_HatchElementBuilder;
 import gregtech.api.util.GT_ModHandler;
 import gregtech.api.util.GT_Multiblock_Tooltip_Builder;
 import gregtech.api.util.GT_Utility;
-import gtPlusPlus.core.util.minecraft.ItemUtils;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 
@@ -101,7 +100,6 @@ public class GT_TE_SINOPEC extends OTH_MultiMachineBase<GT_TE_SINOPEC> {
             if (aGuiStack != null) {
                 if (GT_Utility.areStacksEqual(aGuiStack, GT_ModHandler.getModItem("123Technology", "dustIrOsSm", 1))) {
                     this.$123 = true;
-                    mInventory[1] = ItemUtils.depleteStack(aGuiStack);
                 }
             }
         }

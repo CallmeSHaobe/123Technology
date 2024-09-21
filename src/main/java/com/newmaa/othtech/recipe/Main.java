@@ -262,14 +262,10 @@ public class Main implements IRecipePool {
             GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 23536),
             1200 * 20,
             (int) TierEU.UIV);
-        //TSSF
+        // TSSF
         GT_Values.RA.stdBuilder()
-            .itemOutputs(
-                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 23535)
-            )
-            .fluidInputs(
-                FluidRegistry.getFluidStack("molten.solderingalloy", 123 * 144)
-            )
+            .itemOutputs(GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 23535))
+            .fluidInputs(FluidRegistry.getFluidStack("molten.solderingalloy", 123 * 144))
             .itemInputs(
                 GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 4, 12730),
                 GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 8, 791),
@@ -280,20 +276,15 @@ public class Main implements IRecipePool {
                 ItemList.Conveyor_Module_LuV.get(8),
                 ItemList.Robot_Arm_LuV.get(4),
                 GT_OreDictUnificator.get(OrePrefixes.circuit, Materials.Ultimate, 24),
-                GT_Utility.getIntegratedCircuit(17)
-            )
+                GT_Utility.getIntegratedCircuit(17))
             .noOptimize()
             .duration(123 * 20)
             .eut(TierEU.IV)
             .addTo(Assem);
-        //9In1
+        // 9In1
         GT_Values.RA.stdBuilder()
-            .itemOutputs(
-                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 860)
-            )
-            .fluidInputs(
-                FluidRegistry.getFluidStack("molten.staballoy", 2 * 144)
-            )
+            .itemOutputs(GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 860))
+            .fluidInputs(FluidRegistry.getFluidStack("molten.staballoy", 2 * 144))
             .itemInputs(
                 GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 245),
                 GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 295),
@@ -301,8 +292,7 @@ public class Main implements IRecipePool {
                 GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 505),
                 GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 515),
                 GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 275),
-                GT_ModHandler.getModItem("miscutils","blockProjectBench", 1)
-            )
+                GT_ModHandler.getModItem("miscutils", "blockProjectBench", 1))
             .noOptimize()
             .duration(4 * 20)
             .eut(TierEU.IV)
