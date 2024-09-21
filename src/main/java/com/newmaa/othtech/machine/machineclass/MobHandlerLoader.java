@@ -20,23 +20,11 @@
 
 package com.newmaa.othtech.machine.machineclass;
 
-import atomicstryker.infernalmobs.common.InfernalMobsCore;
-import com.kuba6000.mobsinfo.api.IChanceModifier;
-import com.kuba6000.mobsinfo.api.MobDrop;
-import com.kuba6000.mobsinfo.api.MobOverride;
-import com.kuba6000.mobsinfo.api.MobRecipe;
-import com.kuba6000.mobsinfo.api.event.MobNEIRegistrationEvent;
-import com.kuba6000.mobsinfo.api.event.PostMobRegistrationEvent;
-import com.kuba6000.mobsinfo.api.event.PostMobsOverridesLoadEvent;
-import com.kuba6000.mobsinfo.api.event.PreMobsRegistrationEvent;
-import com.newmaa.othtech.machine.GT_TE_MegaEEC;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.registry.GameRegistry;
-import gregtech.api.enums.TierEU;
-import gregtech.api.util.GT_Utility;
-import kubatech.Tags;
-import kubatech.api.helpers.ReflectionHelper;
-import kubatech.config.Config;
+import static gregtech.api.enums.Mods.NewHorizonsCoreMod;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.*;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityList;
@@ -46,14 +34,27 @@ import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.MinecraftForge;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.*;
-import static gregtech.api.enums.Mods.NewHorizonsCoreMod;
+import com.kuba6000.mobsinfo.api.IChanceModifier;
+import com.kuba6000.mobsinfo.api.MobDrop;
+import com.kuba6000.mobsinfo.api.MobOverride;
+import com.kuba6000.mobsinfo.api.MobRecipe;
+import com.kuba6000.mobsinfo.api.event.MobNEIRegistrationEvent;
+import com.kuba6000.mobsinfo.api.event.PostMobRegistrationEvent;
+import com.kuba6000.mobsinfo.api.event.PostMobsOverridesLoadEvent;
+import com.kuba6000.mobsinfo.api.event.PreMobsRegistrationEvent;
+import com.newmaa.othtech.machine.GT_TE_MegaEEC;
 
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.registry.GameRegistry;
+import gregtech.api.enums.TierEU;
+import gregtech.api.util.GT_Utility;
+import kubatech.Tags;
+import kubatech.api.helpers.ReflectionHelper;
+import kubatech.config.Config;
 
 public class MobHandlerLoader {
 
@@ -67,7 +68,6 @@ public class MobHandlerLoader {
     }
 
     public static Map<String, MobEECRecipe> recipeMap = new HashMap<>();
-
 
     public static class MobEECRecipe {
 
@@ -91,8 +91,8 @@ public class MobHandlerLoader {
             mDuration = 10;
         }
 
-        public ItemStack[] generateOutputs(Random rnd, GT_TE_MegaEEC MTE, double attackDamage,
-                                           int lootinglevel, boolean preferInfernalDrops, boolean voidAllDamagedAndEnchantedItems) {
+        public ItemStack[] generateOutputs(Random rnd, GT_TE_MegaEEC MTE, double attackDamage, int lootinglevel,
+            boolean preferInfernalDrops, boolean voidAllDamagedAndEnchantedItems) {
             MTE.lEUt = mEUt;
             MTE.mMaxProgresstime = 10;
             ArrayList<ItemStack> stacks = new ArrayList<>(this.mOutputs.size());
@@ -151,10 +151,6 @@ public class MobHandlerLoader {
                     stacks.add(s);
                 }
             }
-
-
-
-
 
             return stacks.toArray(new ItemStack[0]);
         }

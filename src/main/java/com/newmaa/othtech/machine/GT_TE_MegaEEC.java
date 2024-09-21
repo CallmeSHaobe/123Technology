@@ -3,7 +3,6 @@ package com.newmaa.othtech.machine;
 import static com.github.technus.tectech.thing.casing.TT_Container_Casings.sBlockCasingsTT;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.withChannel;
-import static com.newmaa.othtech.Utils.Utils.NEGATIVE_ONE;
 import static com.newmaa.othtech.machine.machineclass.MobHandlerLoader.recipeMap;
 import static gregtech.api.GregTech_API.sBlockCasings1;
 import static gregtech.api.GregTech_API.sBlockCasings2;
@@ -19,35 +18,14 @@ import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_DTPF_ON;
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FUSION1_GLOW;
 import static gregtech.api.util.GT_StructureUtility.ofFrame;
 
-import java.lang.reflect.InvocationTargetException;
-import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
-import com.kuba6000.mobsinfo.api.event.PostMobRegistrationEvent;
-import com.kuba6000.mobsinfo.api.event.PreMobsRegistrationEvent;
-import com.newmaa.othtech.machine.machineclass.MobHandlerLoader;
-import gregtech.api.enums.TierEU;
-import gregtech.api.interfaces.IGlobalWirelessEnergy;
-import mcp.mobius.waila.api.IWailaConfigHandler;
-import mcp.mobius.waila.api.IWailaDataAccessor;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldProviderHell;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -62,18 +40,18 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.gtnewhorizons.gtnhintergalactic.block.IGBlocks;
-
 import com.kuba6000.mobsinfo.api.utils.FastRandom;
 import com.mojang.authlib.GameProfile;
+import com.newmaa.othtech.machine.machineclass.MobHandlerLoader;
 import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTH_processingLogics.OTH_ProcessingLogic;
-
 
 import crazypants.enderio.EnderIO;
 import gregtech.api.GregTech_API;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.SoundResource;
 import gregtech.api.enums.Textures;
+import gregtech.api.interfaces.IGlobalWirelessEnergy;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
@@ -101,11 +79,7 @@ public class GT_TE_MegaEEC extends OTH_MultiMachineBase<GT_TE_MegaEEC> implement
 
     private byte glassTier = 0;
 
-
     public final Random rand = new FastRandom();
-
-
-
 
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
@@ -121,14 +95,13 @@ public class GT_TE_MegaEEC extends OTH_MultiMachineBase<GT_TE_MegaEEC> implement
 
     }
 
-
     @Override
     protected boolean isEnablePerfectOverclock() {
         return true;
     }
 
     protected int getMaxParallelRecipes() {
-        return 536870912;
+        return 134217728;
     }
 
     protected float getSpeedBonus() {
@@ -137,12 +110,11 @@ public class GT_TE_MegaEEC extends OTH_MultiMachineBase<GT_TE_MegaEEC> implement
 
     private static final Item poweredSpawnerItem = Item.getItemFromBlock(EnderIO.blockPoweredSpawner);
 
-
     @Override
     @NotNull
     public CheckRecipeResult checkProcessing() {
-        setupProcessingLogic(processingLogic);
 
+        setupProcessingLogic(processingLogic);
         ItemStack aStack = mInventory[1];
         if (aStack == null) return SimpleCheckRecipeResult.ofFailure("EEC_nospawner");
 
@@ -157,9 +129,10 @@ public class GT_TE_MegaEEC extends OTH_MultiMachineBase<GT_TE_MegaEEC> implement
         if (EECPlayer == null) EECPlayer = new GT_TE_MegaEEC.EECFakePlayer(this);
         EECPlayer.currentWeapon = null;
         if (recipeA == null) {
-            return CheckRecipeResultRegistry.NO_RECIPE;}
+            return CheckRecipeResultRegistry.NO_RECIPE;
+        }
         this.mOutputItems = (recipeA.generateOutputs(rand, this, 4096d, 64, false, true));
-        this.mOutputFluids = new FluidStack[] { FluidRegistry.getFluidStack("xpjuice", 2147483647)  };
+        this.mOutputFluids = new FluidStack[] { FluidRegistry.getFluidStack("xpjuice", 2147483647) };
         if (this.lEUt > 0) this.lEUt = -this.lEUt;
         this.mEfficiency = (10000);
         this.mEfficiencyIncrease = 10000;
@@ -188,14 +161,6 @@ public class GT_TE_MegaEEC extends OTH_MultiMachineBase<GT_TE_MegaEEC> implement
 
         }.setMaxParallelSupplier(this::getMaxParallelRecipes);
     }
-
-
-
-
-
-
-
-
 
     @Override
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
@@ -4449,8 +4414,6 @@ public class GT_TE_MegaEEC extends OTH_MultiMachineBase<GT_TE_MegaEEC> implement
 
         @Override
         public void renderBrokenItemStack(ItemStack p_70669_1_) {}
-
-
 
         @Override
         public void destroyCurrentEquippedItem() {}

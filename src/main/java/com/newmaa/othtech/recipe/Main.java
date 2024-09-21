@@ -235,38 +235,77 @@ public class Main implements IRecipePool {
             .duration(288)
             .eut(98304)
             .addTo(Chem);
-        //Mega EEC
+        // Mega EEC
         TT_recipeAdder.addResearchableAssemblylineRecipe(
             GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 14201),
             5120000,
             4096,
-            (int)TierEU.UEV,
+            (int) TierEU.UEV,
             64,
-            new ItemStack[] {
-                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 14201),
+            new ItemStack[] { GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 14201),
                 GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 14201),
                 GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 14201),
                 GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 14201),
                 GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 16, 4493),
-                GT_ModHandler.getModItem("miscutils","blockFrameGtHypogen", 16),
+                GT_ModHandler.getModItem("miscutils", "blockFrameGtHypogen", 16),
                 GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 16, 4491),
-                GT_ModHandler.getModItem("tectech","gt.blockcasingsTT", 16, 9),
-                ItemList.Robot_Arm_UEV.get(64),
-                ItemList.Robot_Arm_UEV.get(64),
-                GT_OreDictUnificator.get(OrePrefixes.circuit, Materials.Optical, 64),
-                GT_ModHandler.getModItem("gregtech","gt.metaitem.03", 64, 4054),
-                GT_ModHandler.getModItem("gregtech","gt.metaitem.02", 24, 21397),
-                new ItemStack(Items.skull, 64, 1),
+                GT_ModHandler.getModItem("tectech", "gt.blockcasingsTT", 16, 9), ItemList.Robot_Arm_UEV.get(64),
+                ItemList.Robot_Arm_UEV.get(64), GT_OreDictUnificator.get(OrePrefixes.circuit, Materials.Optical, 64),
+                GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 4054),
+                GT_ModHandler.getModItem("gregtech", "gt.metaitem.02", 24, 21397), new ItemStack(Items.skull, 64, 1),
                 GT_ModHandler.getModItem("123Technology", "dustIrOsSm", 64),
-                GT_ModHandler.getModItem("eternalsingularity", "eternal_singularity", 4),},
-            new FluidStack[] {
-                new FluidStack(FluidRegistry.getFluidID("molten.infinity"), 123*144),
-                new FluidStack(FluidRegistry.getFluidID("molten.quantium"), 123*144),
-                new FluidStack(FluidRegistry.getFluidID("molten.neutronium"), 123*144),
-                new FluidStack(FluidRegistry.getFluidID("molten.mutatedlivingsolder"), 123*144) },
+                GT_ModHandler.getModItem("eternalsingularity", "eternal_singularity", 4), },
+            new FluidStack[] { new FluidStack(FluidRegistry.getFluidID("molten.infinity"), 123 * 144),
+                new FluidStack(FluidRegistry.getFluidID("molten.quantium"), 123 * 144),
+                new FluidStack(FluidRegistry.getFluidID("molten.neutronium"), 123 * 144),
+                new FluidStack(FluidRegistry.getFluidID("molten.mutatedlivingsolder"), 123 * 144) },
             GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 23536),
             1200 * 20,
-            (int)TierEU.UIV);
-
+            (int) TierEU.UIV);
+        //TSSF
+        GT_Values.RA.stdBuilder()
+            .itemOutputs(
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 23535)
+            )
+            .fluidInputs(
+                FluidRegistry.getFluidStack("molten.solderingalloy", 123 * 144)
+            )
+            .itemInputs(
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 4, 12730),
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 8, 791),
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 16, 861),
+                ItemList.Sensor_LuV.get(8),
+                ItemList.Electric_Pump_LuV.get(8),
+                ItemList.Electric_Motor_LuV.get(16),
+                ItemList.Conveyor_Module_LuV.get(8),
+                ItemList.Robot_Arm_LuV.get(4),
+                GT_OreDictUnificator.get(OrePrefixes.circuit, Materials.Ultimate, 24),
+                GT_Utility.getIntegratedCircuit(17)
+            )
+            .noOptimize()
+            .duration(123 * 20)
+            .eut(TierEU.IV)
+            .addTo(Assem);
+        //9In1
+        GT_Values.RA.stdBuilder()
+            .itemOutputs(
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 860)
+            )
+            .fluidInputs(
+                FluidRegistry.getFluidStack("molten.staballoy", 2 * 144)
+            )
+            .itemInputs(
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 245),
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 295),
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 555),
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 505),
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 515),
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 275),
+                GT_ModHandler.getModItem("miscutils","blockProjectBench", 1)
+            )
+            .noOptimize()
+            .duration(4 * 20)
+            .eut(TierEU.IV)
+            .addTo(Assem);
     }
 }
