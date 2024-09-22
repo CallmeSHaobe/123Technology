@@ -115,7 +115,7 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
     }
 
     protected float getSpeedBonus() {
-        return Math.max(0.1F, (float) 1 / (glassTier * getCoilTier()));
+        return Math.max(0.01F, (float) 1 / (glassTier * getCoilTier()));
     }
 
     @Override
@@ -1156,7 +1156,7 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
 
     @Override
     public int getPollutionPerSecond(final ItemStack aStack) {
-        return 192000;
+        return 192000000;
     }
 
     @Override
@@ -1165,12 +1165,12 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
         tt.addMachineType("§e§l重工业计划 - 唐山钢铁厂")
             .addInfo("§l§8无数黑烟源源不断地从烟囱中冒出")
             .addInfo("§l§8工业化的必由之路......")
-            .addInfo("§l§8一步到位各种与钢铁相关之合金")
-            .addInfo("耗时 = NEI耗时 * max((1 / 玻璃等级 * 线圈等级), 0.1F)")
+            .addInfo("§l§8一步到位各种与钢铁相关之合金 : GTPP / GT5U, 以及部分BW")
+            .addInfo("耗时 = NEI耗时 * max((1 / 玻璃等级 * 线圈等级), 0.01F)")
             .addInfo("请注意炉温要求")
             .addInfo("主机放入UV立场发生器解锁无损超频")
             .addInfo("§q支持§bTecTech§q能源仓及激光仓，但不支持无线电网直接供给EU")
-            .addPollutionAmount(192000)
+            .addPollutionAmount(192000000)
             .addSeparator()
             .addController("钢铁厂")
             .beginStructureBlock(42, 41, 43, false)

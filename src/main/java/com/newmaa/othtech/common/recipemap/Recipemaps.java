@@ -76,4 +76,37 @@ public class Recipemaps {
         .disableOptimize()
         .build();
 
+    public static final RecipeMap<OTH_RecipeMapBackend> SF1 = RecipeMapBuilder
+        .of("otht.recipe.MegaPCB", OTH_RecipeMapBackend::new)
+        .maxIO(16, 16, 16, 16)
+        .progressBar(GT_UITextures.PROGRESSBAR_ARROW_MULTIPLE)
+        .frontend(OTH_GeneralFrontend::new)
+        .neiHandlerInfo(
+            builder -> builder.setDisplayStack(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32728))
+                .setMaxRecipesPerPage(1))
+        .disableOptimize()
+        .build();
+
+    public static final RecipeMap<OTH_RecipeMapBackend> SF2 = RecipeMapBuilder
+        .of("otht.recipe.MegaPCB_A", OTH_RecipeMapBackend::new)
+        .maxIO(16, 16, 16, 16)
+        .progressBar(GT_UITextures.PROGRESSBAR_ARROW_MULTIPLE)
+        .frontend(OTH_GeneralFrontend::new)
+        .neiHandlerInfo(
+            builder -> builder.setDisplayStack(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32178))
+                .setMaxRecipesPerPage(1))
+        .disableOptimize()
+        .build();
+
+    public static final RecipeMap<OTH_RecipeMapBackend> SF3 = RecipeMapBuilder
+        .of("otht.recipe.MegaPCB_B", OTH_RecipeMapBackend::new)
+        .maxIO(16, 16, 16, 16)
+        .progressBar(GT_UITextures.PROGRESSBAR_ARROW_MULTIPLE)
+        .frontend(OTH_GeneralFrontend::new)
+        .neiHandlerInfo(
+            builder -> builder.setDisplayStack(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32725))
+                .setMaxRecipesPerPage(1))
+        .disableOptimize()
+        .build();
+
 }

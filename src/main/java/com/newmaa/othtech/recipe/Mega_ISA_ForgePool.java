@@ -26,7 +26,7 @@ public class Mega_ISA_ForgePool implements IRecipePool {
         final RecipeMap<?> ISA = Recipemaps.MegaIsaForge;
 
         GT_Values.RA.stdBuilder()
-            .fluidInputs(new FluidStack(FluidRegistry.getFluid("molten.helicopter"), 123123))
+            .fluidInputs(new FluidStack(FluidRegistry.getFluid("molten.helicopter"), 514))
             .itemInputs(GT_ModHandler.getModItem("123Technology", "LookNEIdust", 1))
             .itemOutputs(
                 GT_ModHandler.getModItem("miscutils", "itemDustRhenium", 64),
@@ -36,7 +36,7 @@ public class Mega_ISA_ForgePool implements IRecipePool {
                 GT_ModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 2044),
                 GT_ModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 2073),
                 GT_ModHandler.getModItem("dreamcraft", "item.LapotronDust", 64))
-            .fluidOutputs(new FluidStack(FluidRegistry.getFluid("molten.quantum"), 177120))
+            .fluidOutputs(new FluidStack(FluidRegistry.getFluid("molten.quantum"), 114))
             .noOptimize()
             .eut(TierEU.RECIPE_MAX)
             .duration(20)
@@ -305,6 +305,18 @@ public class Mega_ISA_ForgePool implements IRecipePool {
             .noOptimize()
             .duration(123 * 20)
             .eut(TierEU.MAX / 2)
+            .addTo(ISA);
+        // byd Glass
+        GT_Values.RA.stdBuilder()
+            .fluidInputs(
+                FluidRegistry.getFluidStack("exciteddtsc", 11116 / 4),
+                FluidRegistry.getFluidStack("molten.glass", 294912 * 2))
+            .fluidOutputs(
+                FluidRegistry.getFluidStack("dimensionallytranscendentresidue", 11116 * 4),
+                FluidRegistry.getFluidStack("molten.chromaticglass", 294912 * 2))
+            .noOptimize()
+            .eut(TierEU.MAX)
+            .duration(20 * 20)
             .addTo(ISA);
     }
 }

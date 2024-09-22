@@ -297,5 +297,19 @@ public class Main implements IRecipePool {
             .duration(4 * 20)
             .eut(TierEU.IV)
             .addTo(Assem);
+        // 78water
+        GT_Values.RA.stdBuilder()
+            .itemOutputs(GT_ModHandler.getModItem("miscutils", "item.BasicGenericChemItem", 1, 30))
+            .fluidInputs(FluidRegistry.getFluidStack("molten.shirabon", 92160))
+            .itemInputs(
+                GT_Utility.getIntegratedCircuit(10),
+                GT_ModHandler.getModItem("miscutils", "item.BasicAgrichemItem", 1, 13),
+                GT_ModHandler.getModItem("bartworks", "gt.bwMetaGeneratedlens", 64, 25),
+                GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 4054),
+                GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 32722))
+            .noOptimize()
+            .duration(60 * 20)
+            .eut(TierEU.UMV)
+            .addTo(Assem);
     }
 }
