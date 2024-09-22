@@ -1103,7 +1103,7 @@ public class GT_TE_SINOPEC extends OTH_MultiMachineBase<GT_TE_SINOPEC> {
 
     @Override
     public int getPollutionPerSecond(final ItemStack aStack) {
-        return 64000000;
+        return 64000;
     }
 
     @Override
@@ -1115,7 +1115,7 @@ public class GT_TE_SINOPEC extends OTH_MultiMachineBase<GT_TE_SINOPEC> {
             .addInfo("线圈等级<10时 耗时倍率 = 1 - 线圈等级 * 0.1, ≥10时耗时倍率固定为0.1")
             .addInfo("主机放入铱锇钐合金粉解锁无损超频以及256并行, 并行默认为64")
             .addInfo("§q支持§bTecTech§q能源仓及激光仓，但不支持无线电网直接供给EU")
-            .addPollutionAmount(64000000)
+            .addPollutionAmount(64000)
             .addSeparator()
             .addController("中国石化")
             .beginStructureBlock(33, 49, 48, false)

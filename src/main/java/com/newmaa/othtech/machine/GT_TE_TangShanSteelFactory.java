@@ -1156,7 +1156,7 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
 
     @Override
     public int getPollutionPerSecond(final ItemStack aStack) {
-        return 192000000;
+        return 192000;
     }
 
     @Override
@@ -1170,7 +1170,7 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
             .addInfo("请注意炉温要求")
             .addInfo("主机放入UV立场发生器解锁无损超频")
             .addInfo("§q支持§bTecTech§q能源仓及激光仓，但不支持无线电网直接供给EU")
-            .addPollutionAmount(192000000)
+            .addPollutionAmount(192000)
             .addSeparator()
             .addController("钢铁厂")
             .beginStructureBlock(42, 41, 43, false)
