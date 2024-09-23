@@ -115,7 +115,7 @@ public class SF_Pool implements IRecipePool {
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Aluminium, 1), 64000),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Chrome, 1), 64000),
                 GT_Utility.getIntegratedCircuit(1))
-            .itemOutputs(setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Kanthal, 1), 64000 * 3))
+            .itemOutputs(setStackSize(GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Kanthal, 1), 64000 * 3))
             .noOptimize()
             .specialValue(3600)
             .eut(1920)

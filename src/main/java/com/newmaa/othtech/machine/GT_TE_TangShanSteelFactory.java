@@ -28,10 +28,10 @@ import com.newmaa.othtech.machine.machineclass.OTH_processingLogics.OTH_Processi
 import crazypants.enderio.EnderIO;
 import gregtech.api.GregTech_API;
 import gregtech.api.enums.HeatingCoilLevel;
-import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.SoundResource;
 import gregtech.api.enums.Textures;
+import gregtech.api.enums.TierEU;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
@@ -46,6 +46,7 @@ import gregtech.api.util.GT_Multiblock_Tooltip_Builder;
 import gregtech.api.util.GT_Recipe;
 import gregtech.api.util.GT_Utility;
 import gregtech.common.blocks.GT_Block_Casings2;
+import gregtech.common.items.GT_IntegratedCircuit_Item;
 import gtPlusPlus.core.block.ModBlocks;
 
 public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangShanSteelFactory> {
@@ -58,11 +59,11 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
         super(aName);
     }
 
-    private boolean $123 = false;
     private byte mode = 0;
     public byte glassTier = 0;
 
     private HeatingCoilLevel coilLevel;
+    private int overclockParameter = 1;
 
     public HeatingCoilLevel getCoilLevel() {
         return this.coilLevel;
@@ -77,22 +78,8 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
     }
 
     @Override
-    public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
-        super.onPostTick(aBaseMetaTileEntity, aTick);
-        if (aTick % 20 == 0 && !$123) {
-            ItemStack aGuiStack = this.getControllerSlot();
-            if (aGuiStack != null) {
-                if (GT_Utility.areStacksEqual(aGuiStack, ItemList.Field_Generator_UV.get(1))) {
-                    this.$123 = true;
-                }
-            }
-        }
-    }
-
-    @Override
     public void saveNBTData(NBTTagCompound aNBT) {
         super.saveNBTData(aNBT);
-        aNBT.setBoolean("$123", $123);
         aNBT.setByte("glassTier", glassTier);
         aNBT.setByte("mode", mode);
     }
@@ -100,14 +87,13 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
     @Override
     public void loadNBTData(final NBTTagCompound aNBT) {
         super.loadNBTData(aNBT);
-        $123 = aNBT.getBoolean("123");
         glassTier = aNBT.getByte("glassTier");
         mode = aNBT.getByte("mode");
     }
 
     @Override
     protected boolean isEnablePerfectOverclock() {
-        return $123;
+        return true;
     }
 
     protected int getMaxParallelRecipes() {
@@ -115,7 +101,7 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
     }
 
     protected float getSpeedBonus() {
-        return Math.max(0.01F, (float) 1 / (glassTier * getCoilTier()));
+        return 1;
     }
 
     @Override
@@ -132,7 +118,6 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
             @Override
             public CheckRecipeResult process() {
                 setSpeedBonus(getSpeedBonus());
-                setOverclock(isEnablePerfectOverclock() ? 2 : 1, 2);
                 return super.process();
             }
 
@@ -146,6 +131,45 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
             }
 
         }.setMaxParallelSupplier(this::getMaxParallelRecipes);
+    }
+
+    @NotNull
+    @Override
+    public CheckRecipeResult checkProcessing() {
+        setupProcessingLogic(processingLogic);
+
+        CheckRecipeResult result = doCheckRecipe();
+        // inputs are consumed at this point
+        updateSlots();
+        if (!result.wasSuccessful()) return result;
+
+        mEfficiency = 10000;
+        mEfficiencyIncrease = 10000;
+        flushOverclockParameter();
+
+        // set progress time a fixed value
+        mMaxProgresstime = Math.max(
+            10 * 20,
+            (3600 * 5
+                * 20
+                / (int) Math.ceil((double) getCoilTier() / 8)
+                / Math.max(1, (int) Math.pow(overclockParameter, 4))));
+        mOutputItems = processingLogic.getOutputItems();
+        mOutputFluids = processingLogic.getOutputFluids();
+        if (getControllerSlot() == null) {
+            lEUt = -TierEU.UXV;
+        } else {
+            lEUt = -(TierEU.LuV * (int) Math.pow(overclockParameter, 8));
+        }
+
+        return result;
+    }
+
+    private void flushOverclockParameter() {
+        ItemStack items = getControllerSlot();
+        if (items != null && items.getItem() instanceof GT_IntegratedCircuit_Item && items.getItemDamage() > 0) {
+            this.overclockParameter = items.getItemDamage();
+        }
     }
 
     @Override
@@ -1166,9 +1190,9 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
             .addInfo("§l§8无数黑烟源源不断地从烟囱中冒出")
             .addInfo("§l§8工业化的必由之路......")
             .addInfo("§l§8一步到位各种与钢铁相关之合金 : GTPP / GT5U, 以及部分BW")
-            .addInfo("耗时 = NEI耗时 * max((1 / 玻璃等级 * 线圈等级), 0.01F)")
+            .addInfo("耗时 = max(10s, (18000s / ceil(线圈等级 / 8) / max(1, 编程电路编号 ** 4))")
+            .addInfo("耗电 = 不放入编程电路 == 1A UXV, 放入编程电路 == 1A LuV * 编程电路编号 ** 8")
             .addInfo("请注意炉温要求")
-            .addInfo("主机放入UV立场发生器解锁无损超频")
             .addInfo("§q支持§bTecTech§q能源仓及激光仓，但不支持无线电网直接供给EU")
             .addPollutionAmount(192000)
             .addSeparator()
