@@ -334,7 +334,7 @@ public class Circuit implements IRecipePool {
         GT_Values.RA.stdBuilder()
             .itemInputs(
                 GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 16, 32102),
-                GT_ModHandler.getModItem("123Technology", "socNor", 2))
+                GT_ModHandler.getModItem("123Technology", "socNor", 1))
             .itemOutputs(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 32082))
             .fluidInputs(new FluidStack(i140, 2304))
             .noOptimize()
@@ -356,8 +356,8 @@ public class Circuit implements IRecipePool {
         GT_Values.RA.stdBuilder()
             .itemInputs(
                 GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 32, 32104),
-                GT_ModHandler.getModItem("123Technology", "socNor", 4))
-            .itemOutputs(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 32, 32089))
+                GT_ModHandler.getModItem("123Technology", "socNor", 2))
+            .itemOutputs(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 32089))
             .fluidInputs(new FluidStack(bio, 576))
             .noOptimize()
             .duration(5120 * 4)
@@ -367,8 +367,8 @@ public class Circuit implements IRecipePool {
         GT_Values.RA.stdBuilder()
             .itemInputs(
                 GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 16, 32105),
-                GT_ModHandler.getModItem("123Technology", "socNor", 8))
-            .itemOutputs(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 16, 32092))
+                GT_ModHandler.getModItem("123Technology", "socNor", 4))
+            .itemOutputs(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 32092))
             .fluidInputs(new FluidStack(bio, 576))
             .noOptimize()
             .duration(5120 * 16)
@@ -379,7 +379,7 @@ public class Circuit implements IRecipePool {
             .itemInputs(
                 GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 8, 32107),
                 GT_ModHandler.getModItem("123Technology", "socNor", 16))
-            .itemOutputs(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 8, 32097))
+            .itemOutputs(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 16, 32097))
             .fluidInputs(
                 new FluidStack(bio, 2304),
                 new FluidStack(FluidRegistry.getFluidID("molten.chromaticglass"), 16 * 72))

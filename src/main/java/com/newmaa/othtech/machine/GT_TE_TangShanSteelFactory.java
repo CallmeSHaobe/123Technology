@@ -10,9 +10,21 @@ import static gregtech.api.enums.Textures.BlockIcons.*;
 import static gregtech.api.util.GT_StructureUtility.ofCoil;
 import static gregtech.api.util.GT_StructureUtility.ofFrame;
 
+import java.math.BigInteger;
+import java.util.List;
+import java.util.UUID;
+
+import javax.annotation.Nonnull;
+
 import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.StatCollector;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import org.jetbrains.annotations.NotNull;
@@ -31,7 +43,7 @@ import gregtech.api.enums.HeatingCoilLevel;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.SoundResource;
 import gregtech.api.enums.Textures;
-import gregtech.api.enums.TierEU;
+import gregtech.api.interfaces.IGlobalWirelessEnergy;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
@@ -43,13 +55,17 @@ import gregtech.api.recipe.check.SimpleCheckRecipeResult;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GT_HatchElementBuilder;
 import gregtech.api.util.GT_Multiblock_Tooltip_Builder;
+import gregtech.api.util.GT_OverclockCalculator;
 import gregtech.api.util.GT_Recipe;
 import gregtech.api.util.GT_Utility;
 import gregtech.common.blocks.GT_Block_Casings2;
 import gregtech.common.items.GT_IntegratedCircuit_Item;
 import gtPlusPlus.core.block.ModBlocks;
+import mcp.mobius.waila.api.IWailaConfigHandler;
+import mcp.mobius.waila.api.IWailaDataAccessor;
 
-public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangShanSteelFactory> {
+public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangShanSteelFactory>
+    implements IGlobalWirelessEnergy {
 
     public GT_TE_TangShanSteelFactory(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
@@ -61,6 +77,9 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
 
     private byte mode = 0;
     public byte glassTier = 0;
+    private UUID ownerUUID;
+    private boolean isWirelessMode = false;
+    private String costingWirelessEU = "0";
 
     private HeatingCoilLevel coilLevel;
     private int overclockParameter = 1;
@@ -82,6 +101,7 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
         super.saveNBTData(aNBT);
         aNBT.setByte("glassTier", glassTier);
         aNBT.setByte("mode", mode);
+        aNBT.setBoolean("wireless", isWirelessMode);
     }
 
     @Override
@@ -89,6 +109,43 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
         super.loadNBTData(aNBT);
         glassTier = aNBT.getByte("glassTier");
         mode = aNBT.getByte("mode");
+        isWirelessMode = aNBT.getBoolean("wireless");
+    }
+
+    @Override
+    public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
+        int z) {
+        super.getWailaNBTData(player, tile, tag, world, x, y, z);
+        final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
+        if (tileEntity != null) {
+            tag.setString("costingWirelessEU", costingWirelessEU);
+        }
+    }
+
+    @Override
+    public void getWailaBody(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor,
+        IWailaConfigHandler config) {
+        super.getWailaBody(itemStack, currentTip, accessor, config);
+        final NBTTagCompound tag = accessor.getNBTData();
+        currentTip.add(
+            "当前无线EU消耗" + EnumChatFormatting.RESET
+                + ": "
+                + EnumChatFormatting.GOLD
+                + tag.getString("costingWirelessEU")
+                + EnumChatFormatting.RESET
+                + " EU");
+    }
+
+    @Override
+    protected void setProcessingLogicPower(ProcessingLogic logic) {
+        if (isWirelessMode) {
+            // wireless mode ignore voltage limit
+            logic.setAvailableVoltage(Long.MAX_VALUE);
+            logic.setAvailableAmperage(1);
+            logic.setAmperageOC(false);
+        } else {
+            super.setProcessingLogicPower(logic);
+        }
     }
 
     @Override
@@ -101,7 +158,7 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
     }
 
     protected float getSpeedBonus() {
-        return 1;
+        return (float) 1 / getCoilTier();
     }
 
     @Override
@@ -118,6 +175,7 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
             @Override
             public CheckRecipeResult process() {
                 setSpeedBonus(getSpeedBonus());
+                setEuModifier(getEuModifier());
                 return super.process();
             }
 
@@ -127,10 +185,31 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
                 if (recipe.mSpecialValue > coilLevel.getHeat()) {
                     return SimpleCheckRecipeResult.ofFailure("HeatErr");
                 }
+                setOverclock(isEnablePerfectOverclock() ? 2 : 1, 2);
                 return CheckRecipeResultRegistry.SUCCESSFUL;
             }
 
+            @Nonnull
+            @Override
+            protected GT_OverclockCalculator createOverclockCalculator(@Nonnull GT_Recipe recipe) {
+                if (isWirelessMode) {
+                    return GT_OverclockCalculator.ofNoOverclock(recipe);
+                } else {
+                    return super.createOverclockCalculator(recipe);
+                }
+            }
+
         }.setMaxParallelSupplier(this::getMaxParallelRecipes);
+    }
+
+    @Override
+    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ) {
+        if (isWirelessMode == false) {
+            isWirelessMode = true;
+        } else {
+            isWirelessMode = false;
+        }
+        GT_Utility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal(isWirelessMode ? "无线模式启动" : "无线模式关闭"));
     }
 
     @NotNull
@@ -143,32 +222,46 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
         updateSlots();
         if (!result.wasSuccessful()) return result;
 
+        flushOverclockParameter();
+        if (isWirelessMode == true) {
+            long costingWirelessEUTemp = Math
+                .min(Long.MAX_VALUE, (processingLogic.getCalculatedEut() * processingLogic.getDuration()));
+            costingWirelessEU = GT_Utility.formatNumbers(costingWirelessEUTemp);
+            if (!addEUToGlobalEnergyMap(
+                ownerUUID,
+                BigInteger.valueOf(costingWirelessEUTemp * (long) Math.pow(overclockParameter, 2) * -1))) {
+                return CheckRecipeResultRegistry
+                    .insufficientPower(costingWirelessEUTemp * (long) Math.pow(overclockParameter, 2));
+            }
+
+            // set progress time a fixed value
+            mMaxProgresstime = 240 * 20 / ((int) Math.pow(overclockParameter, 2));
+            mOutputItems = processingLogic.getOutputItems();
+            mOutputFluids = processingLogic.getOutputFluids();
+        } else {
+            mMaxProgresstime = processingLogic.getDuration();
+            mOutputItems = processingLogic.getOutputItems();
+            mOutputFluids = processingLogic.getOutputFluids();
+            lEUt = -processingLogic.getCalculatedEut();
+        }
         mEfficiency = 10000;
         mEfficiencyIncrease = 10000;
-        flushOverclockParameter();
-
-        // set progress time a fixed value
-        mMaxProgresstime = Math.max(
-            10 * 20,
-            (3600 * 5
-                * 20
-                / (int) Math.ceil((double) getCoilTier() / 8)
-                / Math.max(1, (int) Math.pow(overclockParameter, 4))));
-        mOutputItems = processingLogic.getOutputItems();
-        mOutputFluids = processingLogic.getOutputFluids();
-        if (getControllerSlot() == null) {
-            lEUt = -TierEU.UXV;
-        } else {
-            lEUt = -(TierEU.LuV * (int) Math.pow(overclockParameter, 8));
-        }
-
         return result;
+    }
+
+    @Override
+    public void onFirstTick(IGregTechTileEntity aBaseMetaTileEntity) {
+        super.onFirstTick(aBaseMetaTileEntity);
+        this.ownerUUID = aBaseMetaTileEntity.getOwnerUuid();
     }
 
     private void flushOverclockParameter() {
         ItemStack items = getControllerSlot();
         if (items != null && items.getItem() instanceof GT_IntegratedCircuit_Item && items.getItemDamage() > 0) {
             this.overclockParameter = items.getItemDamage();
+        }
+        if (items == null) {
+            this.overclockParameter = 1;
         }
     }
 
@@ -1186,14 +1279,17 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
     @Override
     protected GT_Multiblock_Tooltip_Builder createTooltip() {
         final GT_Multiblock_Tooltip_Builder tt = new GT_Multiblock_Tooltip_Builder();
-        tt.addMachineType("§e§l重工业计划 - 唐山钢铁厂")
+        tt.addMachineType("§e§l重工业计划 - 唐山炼钢厂")
             .addInfo("§l§8无数黑烟源源不断地从烟囱中冒出")
             .addInfo("§l§8工业化的必由之路......")
             .addInfo("§l§8一步到位各种与钢铁相关之合金 : GTPP / GT5U, 以及部分BW")
-            .addInfo("耗时 = max(10s, (18000s / ceil(线圈等级 / 8) / max(1, 编程电路编号 ** 4))")
-            .addInfo("耗电 = 不放入编程电路 == 1A UXV, 放入编程电路 == 1A LuV * 编程电路编号 ** 8")
+            .addInfo("正常耗时倍率 : 1 / 线圈等级")
+            .addInfo("无线耗时 = 240s / 编程电路编号 ^ 2)")
+            .addInfo("无线EU消耗 = 功率 * 耗时 * 编程电路编号 , 单次最高消耗8E EU")
             .addInfo("请注意炉温要求")
-            .addInfo("§q支持§bTecTech§q能源仓及激光仓，但不支持无线电网直接供给EU")
+            .addInfo("螺丝刀切换无线模式")
+            .addInfo("非无线模式执行无损超频")
+            .addInfo("§q支持§bTecTech§q能源仓及激光仓，同时支持无线电网直接供给EU")
             .addPollutionAmount(192000)
             .addSeparator()
             .addController("钢铁厂")

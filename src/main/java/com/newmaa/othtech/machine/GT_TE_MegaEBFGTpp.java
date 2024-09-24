@@ -52,8 +52,10 @@ public class GT_TE_MegaEBFGTpp extends OTH_MultiMachineBase<GT_TE_MegaEBFGTpp> {
 
     private HeatingCoilLevel coilLevel;
 
+    private HeatingCoilLevel mHeatingCapacity = HeatingCoilLevel.None;
+
     public HeatingCoilLevel getCoilLevel() {
-        return this.coilLevel;
+        return mHeatingCapacity;
     }
 
     public void setCoilLevel(HeatingCoilLevel coilLevel) {
@@ -65,7 +67,6 @@ public class GT_TE_MegaEBFGTpp extends OTH_MultiMachineBase<GT_TE_MegaEBFGTpp> {
     }
 
     private byte glassTier;
-    private int water = 0;
 
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
@@ -121,6 +122,7 @@ public class GT_TE_MegaEBFGTpp extends OTH_MultiMachineBase<GT_TE_MegaEBFGTpp> {
             @Override
             protected GT_OverclockCalculator createOverclockCalculator(@NotNull GT_Recipe recipe) {
                 return super.createOverclockCalculator(recipe).setHeatOC(true)
+                    .setHeatDiscount(true)
                     .setRecipeHeat(recipe.mSpecialValue)
                     .setMachineHeat((int) getCoilLevel().getHeat());
             }

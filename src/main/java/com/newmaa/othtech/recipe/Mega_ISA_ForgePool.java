@@ -199,8 +199,6 @@ public class Mega_ISA_ForgePool implements IRecipePool {
                 GT_OreDictUnificator.get(OrePrefixes.wireFine, Materials.Infinity, 64),
                 GT_ModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 29979),
                 GT_ModHandler.getModItem("eternalsingularity", "eternal_singularity", 1))
-            .fluidInputs(
-                new FluidStack(FluidRegistry.getFluidID("molten.magnetohydrodynamicallyconstrainedstarmatter"), 36))
             .itemOutputs(GT_ModHandler.getModItem("123Technology", "socCosmic", 4))
             .noOptimize()
             .duration(400 * 20)
@@ -208,7 +206,6 @@ public class Mega_ISA_ForgePool implements IRecipePool {
             .addTo(ISA);
         GT_Values.RA.stdBuilder()
             .itemInputs(
-                GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 16, 32728),
                 GT_ModHandler.getModItem("123Technology", "socCosmic", 8),
                 GT_ModHandler.getModItem("bartworks", "gt.bwMetaGeneratedwireFine", 64, 10112),
                 GT_ModHandler.getModItem("gregtech", "gt.metaitem.01", 4, 32417))
