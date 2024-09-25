@@ -52,10 +52,8 @@ public class GT_TE_MegaEBFGTpp extends OTH_MultiMachineBase<GT_TE_MegaEBFGTpp> {
 
     private HeatingCoilLevel coilLevel;
 
-    private HeatingCoilLevel mHeatingCapacity = HeatingCoilLevel.None;
-
     public HeatingCoilLevel getCoilLevel() {
-        return mHeatingCapacity;
+        return this.coilLevel;
     }
 
     public void setCoilLevel(HeatingCoilLevel coilLevel) {
@@ -172,8 +170,6 @@ public class GT_TE_MegaEBFGTpp extends OTH_MultiMachineBase<GT_TE_MegaEBFGTpp> {
         return false;
     }
 
-    private int watermol = 0;
-
     private static final String STRUCTURE_PIECE_MAIN = "main";
 
     private final int horizontalOffSet = 7;
@@ -213,7 +209,7 @@ public class GT_TE_MegaEBFGTpp extends OTH_MultiMachineBase<GT_TE_MegaEBFGTpp> {
                     GT_HatchElementBuilder.<GT_TE_MegaEBFGTpp>builder()
                         .atLeast(Muffler)
                         .adder(GT_TE_MegaEBFGTpp::addToMachineList)
-                        .dot(1)
+                        .dot(2)
                         .casingIndex(TAE.getIndexFromPage(2, 11))
                         .buildAndChain(ofBlock(ModBlocks.blockCasings3Misc, 11)))
                 .build();
@@ -309,7 +305,7 @@ public class GT_TE_MegaEBFGTpp extends OTH_MultiMachineBase<GT_TE_MegaEBFGTpp> {
             .addInputHatch("AnyInputHatch", 1)
             .addOutputHatch("AnyOutputHatch", 1)
             .addEnergyHatch("AnyEnergyHatch", 1)
-            .addMufflerHatch("AnyMufflerHatch", 1)
+            .addMufflerHatch("AnyMufflerHatch", 2)
             .toolTipFinisher("§a123Technology - EBF");
         return tt;
     }
