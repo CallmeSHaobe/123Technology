@@ -28,6 +28,7 @@ public class MachineLoader {
     public static ItemStack Chem;
     public static ItemStack SF;
     public static ItemStack EEC;
+    public static ItemStack Sun;
 
     public static void loadMachines() {
         final int IDs = 23520;
@@ -81,5 +82,7 @@ public class MachineLoader {
         EEC = new GT_TE_MegaEEC(IDs + 16, "MegaEEC", "§l§c噬魂监狱").getStackForm(1);
         OTHItemList.MegaEEC.set(EEC);
 
+        Sun = new GT_TE_SunFactory(IDs + 17, "SunFactory", "§l§4红日之将军恩情配件厂").getStackForm(1);
+        OTHItemList.Sun.set(Sun);
     }
 }

@@ -39,4 +39,6 @@ GT5U.gui.text.casingErr=§4机器因玻璃等级不够而憋憋
 GT5U.gui.text.nofb=§4机器因老登不放星阵就想用太空组装而憋憋
 otht.recipe.MegaPCB=§4§l巨型PCB工厂
 otht.recipe.MegaPCB_A=§4§l贴片工坊
-otht.recipe.MegaPCB_B=§4§l配件批发者
+otht.recipe.MegaPCB_B=§4§lNMD晶圆厂
+otht.recipe.MegaPCB_C=§4§l元件聚合者
+item.itemEnqing.name=§4恩情

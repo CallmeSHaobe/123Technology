@@ -290,7 +290,7 @@ public class GT_TE_MegaQFTFake extends OTH_MultiMachineBase<GT_TE_MegaQFTFake> {
             STRUCTURE_DEFINITION = StructureDefinition.<GT_TE_MegaQFTFake>builder()
                 .addShape(STRUCTURE_PIECE_MAIN, transpose(shapeMain))
                 .addElement('Q',
-                    withChannel("StabilisationFieldGenerators",
+                    withChannel("stabilisationfieldgenerators",
                         ofBlocksTiered(
                             GT_TE_MegaQFTFake::getBlockStabilisationFieldGeneratorTier,
                             ImmutableList.of(
@@ -307,7 +307,7 @@ public class GT_TE_MegaQFTFake extends OTH_MultiMachineBase<GT_TE_MegaQFTFake> {
                             (t, meta) -> t.stabilisationFieldMetadata = meta,
                             t -> t.stabilisationFieldMetadata)))
                 .addElement('O',
-                    withChannel("SpacetimeCompressionFieldGenerators",
+                    withChannel("spacetimecompressionfieldgenerators",
                         ofBlocksTiered(
                             GT_TE_MegaQFTFake::getBlockSpacetimeCompressionFieldGeneratorTier,
                             ImmutableList.of(
@@ -324,7 +324,7 @@ public class GT_TE_MegaQFTFake extends OTH_MultiMachineBase<GT_TE_MegaQFTFake> {
                             (t, meta) -> t.spacetimeCompressionFieldMetadata = meta,
                             t -> t.spacetimeCompressionFieldMetadata)))
                 .addElement('R',
-                    withChannel("TimeAccelerationFieldGenerators",
+                    withChannel("timeaccelerationfieldgenerators",
                         ofBlocksTiered(
                             GT_TE_MegaQFTFake::getBlockTimeAccelerationFieldGeneratorTier,
                             ImmutableList.of(

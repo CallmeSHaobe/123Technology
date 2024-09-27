@@ -109,4 +109,15 @@ public class Recipemaps {
         .disableOptimize()
         .build();
 
+    public static final RecipeMap<OTH_RecipeMapBackend> SF4 = RecipeMapBuilder
+        .of("otht.recipe.MegaPCB_C", OTH_RecipeMapBackend::new)
+        .maxIO(16, 16, 16, 16)
+        .progressBar(GT_UITextures.PROGRESSBAR_ARROW_MULTIPLE)
+        .frontend(OTH_GeneralFrontend::new)
+        .neiHandlerInfo(
+            builder -> builder.setDisplayStack(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32725))
+                .setMaxRecipesPerPage(1))
+        .disableOptimize()
+        .build();
+
 }

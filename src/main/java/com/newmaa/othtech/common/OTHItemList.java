@@ -16,6 +16,7 @@ public enum OTHItemList {
     NineInOne,
     MEBFpp,
     MFREpp,
+    Sun,
 
     EVACannon,
     HatchME,
