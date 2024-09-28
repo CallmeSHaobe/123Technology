@@ -68,7 +68,6 @@ public class GT_TE_SunFactory extends OTH_MultiMachineBase<GT_TE_SunFactory> {
     private int stabilisationFieldMetadata = 0;
 
     private byte mode = 0;
-
     private byte glassTier = 0;
 
     private double Beeyonds = 0;
