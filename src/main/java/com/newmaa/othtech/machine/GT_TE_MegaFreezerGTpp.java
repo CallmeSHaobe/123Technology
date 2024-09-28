@@ -92,6 +92,7 @@ public class GT_TE_MegaFreezerGTpp extends OTH_MultiMachineBase<GT_TE_MegaFreeze
                 return checkForLava() ? CheckRecipeResultRegistry.SUCCESSFUL
                     : SimpleCheckRecipeResult.ofFailure("nolava");
             }
+
             @NotNull
             @Override
             public CheckRecipeResult process() {
@@ -103,7 +104,6 @@ public class GT_TE_MegaFreezerGTpp extends OTH_MultiMachineBase<GT_TE_MegaFreeze
 
         }.setMaxParallelSupplier(this::getMaxParallelRecipes);
     }
-
 
     @Override
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
