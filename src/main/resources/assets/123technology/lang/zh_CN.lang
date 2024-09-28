@@ -30,6 +30,7 @@ item.energyHatchSpacetime.name=§5时空能源接收器
 GT5U.gui.text.nowater=§4机器因炽焱或者炉温而憋憋
 GT5U.gui.text.HeatErr=§4机器因炉温不足而憋憋
 GT5U.gui.text.nolava=§4机器因凛冰而憋憋
+GT5U.gui.text.noEnqing=§b机器因为恩情不足而憋憋
 otht.recipe.EVACannon=§l§6EVA专用改造阳电子炮GT
 otht.evaCannon=%s 被阳电子炮轰炸至灰
 otht.recipe.SINOPEC=§l§a中国石化

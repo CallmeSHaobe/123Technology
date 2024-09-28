@@ -3,6 +3,7 @@ package com.newmaa.othtech.machine;
 import static com.github.technus.tectech.thing.casing.TT_Container_Casings.*;
 import static com.github.technus.tectech.thing.casing.TT_Container_Casings.sBlockCasingsTT;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
+import static com.newmaa.othtech.Utils.Utils.metaItemEqual;
 import static gregtech.api.GregTech_API.*;
 import static gregtech.api.enums.GT_HatchElement.*;
 import static gregtech.api.enums.Textures.BlockIcons.*;
@@ -28,7 +29,6 @@ import org.jetbrains.annotations.NotNull;
 
 import com.github.bartimaeusnek.bartworks.API.BorosilicateGlass;
 import com.github.technus.tectech.thing.block.QuantumGlassBlock;
-import com.github.technus.tectech.thing.casing.TT_Container_Casings;
 import com.google.common.collect.ImmutableList;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
@@ -39,7 +39,6 @@ import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTH_processingLogics.OTH_ProcessingLogic;
 
 import gregtech.api.enums.Materials;
-import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
@@ -49,6 +48,7 @@ import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GT_HatchElementBuilder;
+import gregtech.api.util.GT_ModHandler;
 import gregtech.api.util.GT_Multiblock_Tooltip_Builder;
 import gregtech.api.util.GT_Utility;
 import gregtech.common.items.GT_MetaGenerated_Item_03;
@@ -107,6 +107,38 @@ public class GT_TE_SunFactory extends OTH_MultiMachineBase<GT_TE_SunFactory> {
         return Math.log(value) / Math.log(base);
     }
 
+    private boolean checkEnqing(int amount) {
+        int needAmount = amount;
+        for (ItemStack items : getStoredInputsWithoutDualInputHatch()) {
+            if (metaItemEqual(items, GT_ModHandler.getModItem("123Technology", "itemEnqing", 1))) {
+                if (items.stackSize >= needAmount) {
+                    items.stackSize -= needAmount;
+                    return true;
+                } else {
+                    needAmount -= items.stackSize;
+                    items.stackSize = 0;
+                }
+            }
+
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onRunningTick(ItemStack aStack) {
+
+        startRecipeProcessing();
+        if (checkEnqing(1)) {
+            endRecipeProcessing();
+        } else {
+            endRecipeProcessing();
+            criticalStopMachine();
+            return false;
+        }
+
+        return super.onRunningTick(aStack);
+    }
+
     @Override
     public void getWailaBody(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor,
         IWailaConfigHandler config) {
@@ -129,6 +161,7 @@ public class GT_TE_SunFactory extends OTH_MultiMachineBase<GT_TE_SunFactory> {
         if (tileEntity != null) {
             BYDS = GT_Utility.formatNumbers(getSpeedBonus());
             tag.setString("speedBonus", BYDS);
+
         }
     }
 
@@ -200,12 +233,13 @@ public class GT_TE_SunFactory extends OTH_MultiMachineBase<GT_TE_SunFactory> {
 
         CheckRecipeResult result = doCheckRecipe();
         result = postCheckRecipe(result, processingLogic);
-        // inputs are consumed at this point
         updateSlots();
         if (!result.wasSuccessful()) return result;
 
         mEfficiency = 10000;
         mEfficiencyIncrease = 10000;
+        mOutputFluids = processingLogic.getOutputFluids();
+        mOutputItems = processingLogic.getOutputItems();
         mMaxProgresstime = processingLogic.getDuration();
         setEnergyUsage(processingLogic);
 
@@ -304,15 +338,15 @@ public class GT_TE_SunFactory extends OTH_MultiMachineBase<GT_TE_SunFactory> {
                         ofBlocksTiered(
                             GT_TE_MegaQFTFake::getBlockStabilisationFieldGeneratorTier,
                             ImmutableList.of(
-                                Pair.of(TT_Container_Casings.StabilisationFieldGenerators, 0),
-                                Pair.of(TT_Container_Casings.StabilisationFieldGenerators, 1),
-                                Pair.of(TT_Container_Casings.StabilisationFieldGenerators, 2),
-                                Pair.of(TT_Container_Casings.StabilisationFieldGenerators, 3),
-                                Pair.of(TT_Container_Casings.StabilisationFieldGenerators, 4),
-                                Pair.of(TT_Container_Casings.StabilisationFieldGenerators, 5),
-                                Pair.of(TT_Container_Casings.StabilisationFieldGenerators, 6),
-                                Pair.of(TT_Container_Casings.StabilisationFieldGenerators, 7),
-                                Pair.of(TT_Container_Casings.StabilisationFieldGenerators, 8)),
+                                Pair.of(StabilisationFieldGenerators, 0),
+                                Pair.of(StabilisationFieldGenerators, 1),
+                                Pair.of(StabilisationFieldGenerators, 2),
+                                Pair.of(StabilisationFieldGenerators, 3),
+                                Pair.of(StabilisationFieldGenerators, 4),
+                                Pair.of(StabilisationFieldGenerators, 5),
+                                Pair.of(StabilisationFieldGenerators, 6),
+                                Pair.of(StabilisationFieldGenerators, 7),
+                                Pair.of(StabilisationFieldGenerators, 8)),
                             0,
                             (t, meta) -> t.stabilisationFieldMetadata = meta,
                             t -> t.stabilisationFieldMetadata)))
@@ -2364,6 +2398,7 @@ public class GT_TE_SunFactory extends OTH_MultiMachineBase<GT_TE_SunFactory> {
             .addInfo("§5从某半岛神秘北方国家引进的尖端高科技巨构")
             .addInfo("§5利用「恩情」的力量将原材料一步转化为电路板所需要的材料")
             .addInfo("§5具有令人畏惧的良品率和毫无瑕疵的精密度")
+            .addInfo("§a消耗恩情运行 : 1t/个")
             .addInfo("--------------------")
             .addInfo("§b主机放入一团蜂群, 按照堆叠数量获得相应加速(log2(蜂群数量), 舍弃小数向下取整)")
             .addInfo("§b碳纳米蜂群 -- -2%")
@@ -2436,8 +2471,7 @@ public class GT_TE_SunFactory extends OTH_MultiMachineBase<GT_TE_SunFactory> {
 
         if (sideDirection == facing) {
             if (active) return new ITexture[] {
-                Textures.BlockIcons.getCasingTextureForId(GT_Utility.getCasingTextureIndex(sBlockCasings1, 12)),
-                TextureFactory.builder()
+                getCasingTextureForId(GT_Utility.getCasingTextureIndex(sBlockCasings1, 12)), TextureFactory.builder()
                     .addIcon(OVERLAY_DTPF_ON)
                     .extFacing()
                     .build(),
@@ -2445,8 +2479,7 @@ public class GT_TE_SunFactory extends OTH_MultiMachineBase<GT_TE_SunFactory> {
                     .addIcon(OVERLAY_FUSION1_GLOW)
                     .extFacing()
                     .build() };
-            return new ITexture[] {
-                Textures.BlockIcons.getCasingTextureForId(GT_Utility.getCasingTextureIndex(sBlockCasings1, 12)),
+            return new ITexture[] { getCasingTextureForId(GT_Utility.getCasingTextureIndex(sBlockCasings1, 12)),
                 TextureFactory.builder()
                     .addIcon(OVERLAY_DTPF_OFF)
                     .extFacing()
@@ -2457,7 +2490,6 @@ public class GT_TE_SunFactory extends OTH_MultiMachineBase<GT_TE_SunFactory> {
                     .glow()
                     .build() };
         }
-        return new ITexture[] {
-            Textures.BlockIcons.getCasingTextureForId(GT_Utility.getCasingTextureIndex(sBlockCasings1, 12)) };
+        return new ITexture[] { getCasingTextureForId(GT_Utility.getCasingTextureIndex(sBlockCasings1, 12)) };
     }
 }

@@ -858,26 +858,6 @@ public class SF_Pool implements IRecipePool {
             .eut(TierEU.UV)
             .duration(512 * 79 * 20 * 2650)
             .addTo(SF);
-        // 2B
-        RecipeBuilder.builder()
-            .itemInputs(
-                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Molybdenum, 1), 64000 * 4),
-                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Steel, 1), 64000 * 88),
-                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Tungsten, 1), 64000 * 24),
-                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Aluminium, 1), 64000 * 4),
-                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Osmium, 1), 64000 * 6),
-                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Iridium, 1), 6400 * 18),
-                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Cobalt, 1), 64000 * 8),
-                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Nickel, 1), 64000 * 16),
-                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Trinium, 1), 64000 * 72),
-                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Strontium, 1), 64000 * 24),
-                GT_Utility.getIntegratedCircuit(20))
-            .itemOutputs(setStackSize(GT_ModHandler.getModItem("miscutils", "itemIngotCinobiteA243", 1), 64000 * 264))
-            .noOptimize()
-            .specialValue(9000)
-            .eut(TierEU.UV)
-            .duration(512 * 438 * 20 * 264)
-            .addTo(SF);
         // Guangsu
         RecipeBuilder.builder()
             .itemInputs(
@@ -975,6 +955,26 @@ public class SF_Pool implements IRecipePool {
             .specialValue(11000)
             .eut(TierEU.UHV)
             .duration(512 * 480 * 20 * 100)
+            .addTo(SF);
+        // 2B
+        RecipeBuilder.builder()
+            .itemInputs(
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Molybdenum, 1), 64000 * 2),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Steel, 1), 64000 * 56),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Tungsten, 1), 64000 * 24),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Aluminium, 1), 64000 * 2),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Osmium, 1), 64000 * 3),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Iridium, 1), 64000 * 9),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Cobalt, 1), 64000 * 4),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Nickel, 1), 64000 * 8),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Trinium, 1), 64000 * 36),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Strontium, 1), 64000 * 12),
+                GT_Utility.getIntegratedCircuit(8))
+            .itemOutputs(setStackSize(GT_ModHandler.getModItem("miscutils", "itemIngotArceusAlloy2B", 1), 64000 * 132))
+            .noOptimize()
+            .specialValue(9000)
+            .eut(TierEU.UV)
+            .duration(512 * 438 * 20 * 132)
             .addTo(SF);
 
     }

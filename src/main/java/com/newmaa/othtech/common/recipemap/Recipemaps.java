@@ -82,7 +82,7 @@ public class Recipemaps {
         .progressBar(GT_UITextures.PROGRESSBAR_ARROW_MULTIPLE)
         .frontend(OTH_GeneralFrontend::new)
         .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32728))
+            builder -> builder.setDisplayStack(GT_ModHandler.getModItem("123Technology", "itemEnqing", 1, 0))
                 .setMaxRecipesPerPage(1))
         .disableOptimize()
         .build();
@@ -93,7 +93,7 @@ public class Recipemaps {
         .progressBar(GT_UITextures.PROGRESSBAR_ARROW_MULTIPLE)
         .frontend(OTH_GeneralFrontend::new)
         .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32178))
+            builder -> builder.setDisplayStack(GT_ModHandler.getModItem("123Technology", "itemEnqing", 1, 0))
                 .setMaxRecipesPerPage(1))
         .disableOptimize()
         .build();
@@ -104,7 +104,7 @@ public class Recipemaps {
         .progressBar(GT_UITextures.PROGRESSBAR_ARROW_MULTIPLE)
         .frontend(OTH_GeneralFrontend::new)
         .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32725))
+            builder -> builder.setDisplayStack(GT_ModHandler.getModItem("123Technology", "itemEnqing", 1, 0))
                 .setMaxRecipesPerPage(1))
         .disableOptimize()
         .build();
@@ -115,7 +115,7 @@ public class Recipemaps {
         .progressBar(GT_UITextures.PROGRESSBAR_ARROW_MULTIPLE)
         .frontend(OTH_GeneralFrontend::new)
         .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32725))
+            builder -> builder.setDisplayStack(GT_ModHandler.getModItem("123Technology", "itemEnqing", 1, 0))
                 .setMaxRecipesPerPage(1))
         .disableOptimize()
         .build();

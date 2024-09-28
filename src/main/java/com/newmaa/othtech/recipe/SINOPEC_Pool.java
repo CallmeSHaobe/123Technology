@@ -297,6 +297,30 @@ public class SINOPEC_Pool implements IRecipePool {
             .duration(360 * 20)
             .eut(TierEU.HV)
             .addTo(SINOPEC);
+
+        RecipeBuilder.builder()
+            .fluidInputs(FluidRegistry.getFluidStack("charcoal_byproducts", 640000))
+            .fluidOutputs(
+                FluidRegistry.getFluidStack("aceticacid", 25600),
+                new FluidStack(C2H4, 19200),
+                FluidRegistry.getFluidStack("carbondioxide", 62400),
+                new FluidStack(C6H6, 64000),
+                FluidRegistry.getFluidStack("carbonmonoxide", 38400),
+                FluidRegistry.getFluidStack("hydrogen", 192000),
+                new FluidStack(C7H8, 16000),
+                FluidRegistry.getFluidStack("methanol", 76800),
+                new FluidStack(steam, 128000),
+                new FluidStack(CH4, 20800),
+                FluidRegistry.getFluidStack("phenol", 16000),
+                FluidRegistry.getFluidStack("methylacetate", 1280),
+                FluidRegistry.getFluidStack("creosote", 40000),
+                FluidRegistry.getFluidStack("dimethylbenzene", 88000),
+                FluidRegistry.getFluidStack("bioethanol", 2560),
+                FluidRegistry.getFluidStack("acetone", 12800))
+            .noOptimize()
+            .duration(720 * 20)
+            .eut(TierEU.HV)
+            .addTo(SINOPEC);
     }
 
 }

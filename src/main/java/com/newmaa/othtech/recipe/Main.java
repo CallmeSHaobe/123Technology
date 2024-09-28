@@ -311,5 +311,15 @@ public class Main implements IRecipePool {
             .duration(60 * 20)
             .eut(TierEU.UMV)
             .addTo(Assem);
+        // 二硫化碳
+        GT_Values.RA.stdBuilder()
+            .itemInputs(
+                GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Sulfur, 64),
+                GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 32))
+            .fluidOutputs(FluidRegistry.getFluidStack("carbondisulfide", 32000))
+            .noOptimize()
+            .duration(123 * 20)
+            .eut(30)
+            .addTo(RecipeMaps.multiblockChemicalReactorRecipes);
     }
 }
