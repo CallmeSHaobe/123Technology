@@ -321,46 +321,38 @@ public class Main implements IRecipePool {
             .duration(123 * 20)
             .eut(30)
             .addTo(RecipeMaps.multiblockChemicalReactorRecipes);
-        //Sun
+        // Sun
         GT_Values.RA.stdBuilder()
-            .itemInputs(
-                GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Gold, 3)
-            )
-            .itemOutputs(
-                GT_ModHandler.getModItem("123Technology", "itemEnqing", 1)
-            )
+            .itemInputs(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Gold, 3))
+            .itemOutputs(GT_ModHandler.getModItem("123Technology", "itemEnqing", 1))
             .noOptimize()
             .duration(2024 * 20)
             .eut(194899)
             .addTo(RecipeMaps.laserEngraverRecipes);
-        //SunFactory
+        // SunFactory
         TT_recipeAdder.addResearchableAssemblylineRecipe(
             GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 23520),
             64000000,
             10240,
             (int) TierEU.UMV,
             640,
-            new ItemStack[] {
-                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23520),
+            new ItemStack[] { GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23520),
                 GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23527),
                 GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23528),
                 GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 10886),
                 GT_ModHandler.getModItem("123Technology", "itemEnqing", 64),
                 GT_ModHandler.getModItem("123Technology", "itemEnqing", 64),
                 GT_ModHandler.getModItem("123Technology", "itemEnqing", 64),
-                GT_ModHandler.getModItem("123Technology", "itemEnqing", 64),
-                ItemList.Robot_Arm_UMV.get(64),
+                GT_ModHandler.getModItem("123Technology", "itemEnqing", 64), ItemList.Robot_Arm_UMV.get(64),
                 GT_OreDictUnificator.get(OrePrefixes.circuit, Materials.Quantum, 64),
                 GT_OreDictUnificator.get(OrePrefixes.circuit, Materials.Quantum, 64),
-                ItemList.Field_Generator_UMV.get(64),
-                new ItemStack(Items.bread, 64),
+                ItemList.Field_Generator_UMV.get(64), new ItemStack(Items.bread, 64),
                 new ItemStack(Items.nether_star, 64),
                 GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 15297),
                 GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 15197),
 
             },
-            new FluidStack[] {
-                new FluidStack(FluidRegistry.getFluidID("molten.gold"), 114 * 144),
+            new FluidStack[] { new FluidStack(FluidRegistry.getFluidID("molten.gold"), 114 * 144),
                 new FluidStack(FluidRegistry.getFluidID("molten.gold"), 514 * 144),
                 new FluidStack(FluidRegistry.getFluidID("molten.gold"), 1919 * 144),
                 new FluidStack(FluidRegistry.getFluidID("molten.mutatedlivingsolder"), 810 * 144) },
