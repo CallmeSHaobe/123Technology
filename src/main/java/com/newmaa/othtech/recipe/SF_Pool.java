@@ -803,7 +803,9 @@ public class SF_Pool implements IRecipePool {
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Ytterbium, 1), 64000 * 720),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Niobium, 1), 64000 * 960),
                 GT_Utility.getIntegratedCircuit(21))
-            .itemOutputs(setStackSize(GT_ModHandler.getModItem("miscutils", "itemIngotPikyonium64B", 1), 64000 * 20880))
+            .itemOutputs(
+                setStackSize(GT_ModHandler.getModItem("miscutils", "itemIngotPikyonium64B", 1), 64000 * 20880)
+            )
             .noOptimize()
             .specialValue(10000)
             .eut(TierEU.UV)
@@ -872,7 +874,8 @@ public class SF_Pool implements IRecipePool {
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Sunnarium, 1), 64000 * 20),
                 GT_Utility.getIntegratedCircuit(20))
             .itemOutputs(
-                setStackSize(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGeneratedingot", 1, 10105), 150 * 64000))
+                setStackSize(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGeneratedingot", 1, 10105), 150 * 64000)
+            )
             .noOptimize()
             .specialValue(9000)
             .eut(TierEU.ZPM)
@@ -908,7 +911,9 @@ public class SF_Pool implements IRecipePool {
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Osmium, 1), 64000 * 30),
                 setStackSize(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 64), 30 * 64000),
                 GT_Utility.getIntegratedCircuit(20))
-            .itemOutputs(setStackSize(GT_ModHandler.getModItem("miscutils", "itemIngotBotmium", 1), 64000 * 80))
+            .itemOutputs(
+                setStackSize(GT_ModHandler.getModItem("miscutils", "itemIngotBotmium", 1), 64000 * 80)
+            )
             .noOptimize()
             .specialValue(11000)
             .eut(TierEU.UHV)
