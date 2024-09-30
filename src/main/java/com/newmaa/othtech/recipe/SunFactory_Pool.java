@@ -29,7 +29,6 @@ public class SunFactory_Pool implements IRecipePool {
         Fluid sb = FluidRegistry.getFluid("molten.mutatedlivingsolder");
         Fluid water = FluidRegistry.getFluid("grade8purifiedwater");
         Fluid water2 = FluidRegistry.getFluid("water");
-        ItemStack radox = GT_ModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 22979);
         // PCB
         // T3
         RecipeBuilder.builder()
@@ -37,7 +36,7 @@ public class SunFactory_Pool implements IRecipePool {
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Copper, 1), 180),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 1), 6),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Sulfur, 1), 3),
-                setStackSize(radox, 1))
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 22979), 1))
             .fluidInputs(new FluidStack(sb, 36))
             .itemOutputs(setStackSize(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32748), 128))
             .noOptimize()
@@ -51,7 +50,7 @@ public class SunFactory_Pool implements IRecipePool {
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Electrum, 1), 120),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 1), 15),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Sulfur, 1), 15),
-                setStackSize(radox, 1))
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 22979), 1))
             .fluidInputs(new FluidStack(sb, 54))
             .itemOutputs(setStackSize(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32756), 128))
             .noOptimize()
@@ -65,7 +64,7 @@ public class SunFactory_Pool implements IRecipePool {
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.EnergeticAlloy, 1), 156),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 1), 39),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Sulfur, 1), 18),
-                setStackSize(radox, 2))
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 22979), 2))
             .fluidInputs(new FluidStack(sb, 72))
             .itemOutputs(setStackSize(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32754), 128))
             .noOptimize()
@@ -79,7 +78,7 @@ public class SunFactory_Pool implements IRecipePool {
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Platinum, 1), 194),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 1), 99),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Sulfur, 1), 24),
-                setStackSize(radox, 2))
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 22979), 2))
             .fluidInputs(new FluidStack(sb, 90))
             .itemOutputs(setStackSize(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32753), 128))
             .noOptimize()
@@ -94,7 +93,7 @@ public class SunFactory_Pool implements IRecipePool {
                 setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32073), 64),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.plateDense, Materials.Iron, 1), 35),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Sulfur, 1), 32),
-                setStackSize(radox, 3))
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 22979), 3))
             .fluidInputs(new FluidStack(sb, 108))
             .itemOutputs(setStackSize(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32750), 128))
             .noOptimize()
@@ -111,7 +110,7 @@ public class SunFactory_Pool implements IRecipePool {
                 setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32076), 64),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.plateDense, Materials.Iron, 1), 59),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Sulfur, 1), 38),
-                setStackSize(radox, 4))
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 22979), 4))
             .fluidInputs(new FluidStack(sb, 126))
             .itemOutputs(setStackSize(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32746), 128))
             .noOptimize()
@@ -127,7 +126,7 @@ public class SunFactory_Pool implements IRecipePool {
                 setStackSize(GT_ModHandler.getModItem("miscutils", "itemDustChromaticGlass", 1), 352),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.plateDense, Materials.Iron, 1), 60),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Sulfur, 1), 45),
-                setStackSize(radox, 7))
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 22979), 7))
             .fluidInputs(new FluidStack(sb, 144))
             .itemOutputs(setStackSize(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32704), 128))
             .noOptimize()
