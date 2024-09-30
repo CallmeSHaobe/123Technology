@@ -124,7 +124,7 @@ public class SunFactory_Pool implements IRecipePool {
                 setStackSize(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 10106), 352),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.InfinityCatalyst, 1), 352),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.plateDense, Materials.MysteriousCrystal, 1), 200),
-                setStackSize(GT_ModHandler.getModItem("miscutils", "itemDustChromaticGlass", 1, 32706), 352),
+                setStackSize(GT_ModHandler.getModItem("miscutils", "itemDustChromaticGlass", 1), 352),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.plateDense, Materials.Iron, 1), 60),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Sulfur, 1), 45),
                 setStackSize(radox, 7))
@@ -146,7 +146,8 @@ public class SunFactory_Pool implements IRecipePool {
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Iridium, 1), 16),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Gallium, 1), 12),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Arsenic, 1), 4),
-                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Neodymium, 1), 4))
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Neodymium, 1), 4),
+                GT_Utility.getIntegratedCircuit(23))
             .fluidInputs(new FluidStack(sb, 144))
             .itemOutputs(
                 setStackSize(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32741), 64),
@@ -169,7 +170,8 @@ public class SunFactory_Pool implements IRecipePool {
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Platinum, 1), 32),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.IndiumGalliumPhosphide, 1), 16),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.VanadiumGallium, 1), 8),
-                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.HSSS, 1), 8))
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.HSSS, 1), 8),
+                GT_Utility.getIntegratedCircuit(23))
             .fluidInputs(new FluidStack(sb, 288))
             .itemOutputs(
                 setStackSize(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32737), 64),
@@ -205,7 +207,7 @@ public class SunFactory_Pool implements IRecipePool {
                 setStackSize(GT_ModHandler.getModItem("miscutils", "itemDustArceusAlloy2B", 1), 16),
                 setStackSize(GT_ModHandler.getModItem("miscutils", "itemDustCinobiteA243", 1), 16),
                 setStackSize(GT_ModHandler.getModItem("miscutils", "itemDustLafiumCompound", 1), 8),
-                GT_Utility.getIntegratedCircuit(1))
+                GT_Utility.getIntegratedCircuit(23))
             .fluidInputs(FluidRegistry.getFluidStack("molten.spacetime", 72))
             .itemOutputs(
                 setStackSize(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32706), 64),
@@ -241,7 +243,7 @@ public class SunFactory_Pool implements IRecipePool {
                 setStackSize(GT_ModHandler.getModItem("miscutils", "itemIngotArceusAlloy2B", 1), 16),
                 setStackSize(GT_ModHandler.getModItem("miscutils", "itemIngotCinobiteA243", 1), 16),
                 setStackSize(GT_ModHandler.getModItem("miscutils", "itemIngotLafiumCompound", 1), 8),
-                GT_Utility.getIntegratedCircuit(2))
+                GT_Utility.getIntegratedCircuit(23))
             .fluidInputs(
                 FluidRegistry.getFluidStack("molten.spacetime", 72),
                 FluidRegistry.getFluidStack("molten.eternity", 72))

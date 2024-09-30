@@ -53,16 +53,7 @@ public class Recipemaps {
         .disableOptimize()
         .build();
 
-    public static final RecipeMap<OTH_RecipeMapBackend> MEEC = RecipeMapBuilder
-        .of("otht.recipe.MEEC", OTH_RecipeMapBackend::new)
-        .maxIO(8, 8, 16, 16)
-        .progressBar(GT_UITextures.PROGRESSBAR_ARROW_MULTIPLE)
-        .frontend(OTH_GeneralFrontend::new)
-        .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 23536))
-                .setMaxRecipesPerPage(1))
-        .disableOptimize()
-        .build();
+
 
     public static final RecipeMap<OTH_RecipeMapBackend> TSSF = RecipeMapBuilder
         .of("otht.recipe.TSSF", OTH_RecipeMapBackend::new)

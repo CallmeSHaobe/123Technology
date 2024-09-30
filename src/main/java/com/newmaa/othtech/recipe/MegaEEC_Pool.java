@@ -10,13 +10,5 @@ public class MegaEEC_Pool implements IRecipePool {
 
     @Override
     public void loadRecipes() {
-        final RecipeMap<?> EEC = Recipemaps.MEEC;
-        GT_Values.RA.stdBuilder()
-            .itemInputs(ItemList.Sensor_MAX.get(1))
-            .itemOutputs(ItemList.Sensor_MAX.get(1))
-            .noOptimize()
-            .eut(1)
-            .duration(1)
-            .addTo(EEC);
     }
 }
