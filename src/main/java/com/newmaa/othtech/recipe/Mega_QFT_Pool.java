@@ -1,5 +1,8 @@
 package com.newmaa.othtech.recipe;
 
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -252,6 +255,18 @@ public class Mega_QFT_Pool implements IRecipePool {
             .noOptimize()
             .duration(120 * 20)
             .eut(TierEU.UXV / 2)
+            .addTo(MQFT);
+        //test
+        GT_Values.RA.stdBuilder()
+            .itemOutputs(
+                new ItemStack(Blocks.dirt, 1)
+            )
+            .itemInputs(
+                new ItemStack(Blocks.dirt, 1)
+            )
+            .noOptimize()
+            .duration(114514)
+            .eut(1919810)
             .addTo(MQFT);
 
     }

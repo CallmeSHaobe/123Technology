@@ -11,9 +11,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import mcp.mobius.waila.api.IWailaConfigHandler;
+import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -62,6 +68,7 @@ public class GT_TE_MegaQFTFake extends OTH_MultiMachineBase<GT_TE_MegaQFTFake> {
     private int timeAccelerationFieldMetadata = 0;
     private byte mode = 0;
     private int multiplier = 1;
+    private String plier = "0";
 
 
     @Override
@@ -108,7 +115,31 @@ public class GT_TE_MegaQFTFake extends OTH_MultiMachineBase<GT_TE_MegaQFTFake> {
 
     }
 
+    @Override
+    public void getWailaBody(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor,
+                             IWailaConfigHandler config) {
+        super.getWailaBody(itemStack, currentTip, accessor, config);
+        final NBTTagCompound tag = accessor.getNBTData();
+        currentTip.add(
+            "产出倍率" + EnumChatFormatting.RESET
+                + ": "
+                + EnumChatFormatting.RED
+                + tag.getString("multiplier")
+                + EnumChatFormatting.RESET
+                + " ");
+    }
 
+    @Override
+    public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
+                                int z) {
+        super.getWailaNBTData(player, tile, tag, world, x, y, z);
+        final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
+        if (tileEntity != null) {
+            plier = GT_Utility.formatNumbers(multiplier);
+            tag.setString("multiplier", plier);
+
+        }
+    }
 
 
 
@@ -118,7 +149,7 @@ public class GT_TE_MegaQFTFake extends OTH_MultiMachineBase<GT_TE_MegaQFTFake> {
 
 
         setupProcessingLogic(processingLogic);
-
+        checkMultiplier();
         CheckRecipeResult result = doCheckRecipe();
         result = postCheckRecipe(result, processingLogic);
         // inputs are consumed at this point
@@ -140,16 +171,17 @@ public class GT_TE_MegaQFTFake extends OTH_MultiMachineBase<GT_TE_MegaQFTFake> {
         ItemStack[] outputItemStack = processingLogic.getOutputItems();
         FluidStack[] outputFluidStack = processingLogic.getOutputFluids();
 
-        if (mode != 2) {
+        if (mode != 0) {
             // compressor mode and extractor mode
             mOutputItems = outputItemStack;
             mOutputFluids = outputFluidStack;
         } else {
 
 
-
+            @NotNull
             // process Items
             List<ItemStack> extraItems = new ArrayList<>();
+            if (outputItemStack != null){
             for (ItemStack items : outputItemStack) {
                 if (items.stackSize <= Integer.MAX_VALUE / multiplier) {
                     // set amount directly if in integer area
@@ -168,9 +200,13 @@ public class GT_TE_MegaQFTFake extends OTH_MultiMachineBase<GT_TE_MegaQFTFake> {
                 extraItems.addAll(Arrays.asList(outputItemStack));
                 mOutputItems = extraItems.toArray(new ItemStack[] {});
             }
+            }else{
+                mOutputItems = processingLogic.getOutputItems();
+            }
 
             // process Fluids
             List<FluidStack> extraFluids = new ArrayList<>();
+            if (outputFluidStack != null) {
             for (FluidStack fluids : outputFluidStack) {
                 if (fluids.amount <= Integer.MAX_VALUE / multiplier) {
                     fluids.amount *= multiplier;
@@ -186,6 +222,8 @@ public class GT_TE_MegaQFTFake extends OTH_MultiMachineBase<GT_TE_MegaQFTFake> {
             } else {
                 extraFluids.addAll(Arrays.asList(outputFluidStack));
                 mOutputFluids = extraFluids.toArray(new FluidStack[] {});
+            }}else {
+                mOutputFluids = processingLogic.getOutputFluids();
             }
 
         }
@@ -210,23 +248,20 @@ public class GT_TE_MegaQFTFake extends OTH_MultiMachineBase<GT_TE_MegaQFTFake> {
 
         }.setMaxParallelSupplier(this::getMaxParallelRecipes);
     }
+    private void checkMultiplier() {
+        if (stabilisationFieldMetadata <6)
+        {multiplier = 1;
+        }else if (stabilisationFieldMetadata >= 6 && stabilisationFieldMetadata <= 8)
+        {multiplier = 2;
+        }else if (stabilisationFieldMetadata > 8 )
+        {multiplier = 3;
+        }
+    }
 
 
     @Override
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
         repairMachine();
-        if (stabilisationFieldMetadata < 6) {
-            multiplier = 0;
-        }else{
-            if (stabilisationFieldMetadata >= 6 & stabilisationFieldMetadata <= 8){
-                multiplier = 2;
-            }else{
-                if (stabilisationFieldMetadata > 9) {
-                    multiplier = 3;
-                }
-            }
-        }
-
         return checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet);
 
     }
