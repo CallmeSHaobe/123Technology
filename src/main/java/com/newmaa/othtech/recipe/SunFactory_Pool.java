@@ -33,6 +33,7 @@ public class SunFactory_Pool implements IRecipePool {
         // T3
         RecipeBuilder.builder()
             .itemInputs(
+                GT_Utility.getIntegratedCircuit(23),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Copper, 1), 180),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 1), 6),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Sulfur, 1), 3),
@@ -41,11 +42,25 @@ public class SunFactory_Pool implements IRecipePool {
             .itemOutputs(setStackSize(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32748), 128))
             .noOptimize()
             .duration(4 * 20 * 64)
-            .eut(TierEU.RECIPE_UEV)
+            .eut(TierEU.RECIPE_EV)
+            .addTo(PCB);
+        RecipeBuilder.builder()
+            .itemInputs(
+                GT_Utility.getIntegratedCircuit(24),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Copper, 1), 180),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 1), 6),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Sulfur, 1), 3),
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 22979), 1))
+            .fluidInputs(new FluidStack(sb, 36))
+            .itemOutputs(setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32106), 2048))
+            .noOptimize()
+            .duration(4 * 20 * 64)
+            .eut(TierEU.RECIPE_EV)
             .addTo(PCB);
         // T4
         RecipeBuilder.builder()
             .itemInputs(
+                GT_Utility.getIntegratedCircuit(23),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Gold, 1), 120),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Electrum, 1), 120),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 1), 15),
@@ -55,11 +70,26 @@ public class SunFactory_Pool implements IRecipePool {
             .itemOutputs(setStackSize(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32756), 128))
             .noOptimize()
             .duration(6 * 20 * 64)
-            .eut(TierEU.RECIPE_UEV)
+            .eut(TierEU.RECIPE_IV)
+            .addTo(PCB);
+        RecipeBuilder.builder()
+            .itemInputs(
+                GT_Utility.getIntegratedCircuit(24),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Gold, 1), 120),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Electrum, 1), 120),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 1), 15),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Sulfur, 1), 15),
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 22979), 1))
+            .fluidInputs(new FluidStack(sb, 54))
+            .itemOutputs(setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32102), 2048))
+            .noOptimize()
+            .duration(6 * 20 * 64)
+            .eut(TierEU.RECIPE_IV)
             .addTo(PCB);
         // T5
         RecipeBuilder.builder()
             .itemInputs(
+                GT_Utility.getIntegratedCircuit(23),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Aluminium, 1), 156),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.EnergeticAlloy, 1), 156),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 1), 39),
@@ -69,11 +99,26 @@ public class SunFactory_Pool implements IRecipePool {
             .itemOutputs(setStackSize(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32754), 128))
             .noOptimize()
             .duration(8 * 20 * 64)
-            .eut(TierEU.RECIPE_UEV)
+            .eut(TierEU.RECIPE_LuV)
+            .addTo(PCB);
+        RecipeBuilder.builder()
+            .itemInputs(
+                GT_Utility.getIntegratedCircuit(24),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Aluminium, 1), 156),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.EnergeticAlloy, 1), 156),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 1), 39),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Sulfur, 1), 18),
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 22979), 2))
+            .fluidInputs(new FluidStack(sb, 72))
+            .itemOutputs(setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32103), 2048))
+            .noOptimize()
+            .duration(8 * 20 * 64)
+            .eut(TierEU.RECIPE_LuV)
             .addTo(PCB);
         // T6
         RecipeBuilder.builder()
             .itemInputs(
+                GT_Utility.getIntegratedCircuit(23),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Palladium, 1), 194),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Platinum, 1), 194),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 1), 99),
@@ -83,11 +128,26 @@ public class SunFactory_Pool implements IRecipePool {
             .itemOutputs(setStackSize(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32753), 128))
             .noOptimize()
             .duration(10 * 20 * 64)
-            .eut(TierEU.RECIPE_UEV)
+            .eut(TierEU.RECIPE_ZPM)
+            .addTo(PCB);
+        RecipeBuilder.builder()
+            .itemInputs(
+                GT_Utility.getIntegratedCircuit(24),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Palladium, 1), 194),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Platinum, 1), 194),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 1), 99),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Sulfur, 1), 24),
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 22979), 2))
+            .fluidInputs(new FluidStack(sb, 90))
+            .itemOutputs(setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32104), 2048))
+            .noOptimize()
+            .duration(10 * 20 * 64)
+            .eut(TierEU.RECIPE_ZPM)
             .addTo(PCB);
         // T7
         RecipeBuilder.builder()
             .itemInputs(
+                GT_Utility.getIntegratedCircuit(23),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.EnrichedHolmium, 1), 204),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.NiobiumTitanium, 1), 204),
                 setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32073), 64),
@@ -98,11 +158,27 @@ public class SunFactory_Pool implements IRecipePool {
             .itemOutputs(setStackSize(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32750), 128))
             .noOptimize()
             .duration(12 * 20 * 64)
-            .eut(TierEU.RECIPE_UEV)
+            .eut(TierEU.RECIPE_UV)
+            .addTo(PCB);
+        RecipeBuilder.builder()
+            .itemInputs(
+                GT_Utility.getIntegratedCircuit(24),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.EnrichedHolmium, 1), 204),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.NiobiumTitanium, 1), 204),
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32073), 64),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.plateDense, Materials.Iron, 1), 35),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Sulfur, 1), 32),
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 22979), 3))
+            .fluidInputs(new FluidStack(sb, 108))
+            .itemOutputs(setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32105), 2048))
+            .noOptimize()
+            .duration(12 * 20 * 64)
+            .eut(TierEU.RECIPE_UV)
             .addTo(PCB);
         // T8
         RecipeBuilder.builder()
             .itemInputs(
+                GT_Utility.getIntegratedCircuit(23),
                 setStackSize(
                     GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Longasssuperconductornameforuvwire, 1),
                     300),
@@ -115,11 +191,29 @@ public class SunFactory_Pool implements IRecipePool {
             .itemOutputs(setStackSize(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32746), 128))
             .noOptimize()
             .duration(14 * 20 * 64)
-            .eut(TierEU.RECIPE_UEV)
+            .eut(TierEU.RECIPE_UHV)
+            .addTo(PCB);
+        RecipeBuilder.builder()
+            .itemInputs(
+                GT_Utility.getIntegratedCircuit(24),
+                setStackSize(
+                    GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Longasssuperconductornameforuvwire, 1),
+                    300),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Neutronium, 1), 300),
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32076), 64),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.plateDense, Materials.Iron, 1), 59),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Sulfur, 1), 38),
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 22979), 4))
+            .fluidInputs(new FluidStack(sb, 126))
+            .itemOutputs(setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32107), 2048))
+            .noOptimize()
+            .duration(14 * 20 * 64)
+            .eut(TierEU.RECIPE_UHV)
             .addTo(PCB);
         // T9
         RecipeBuilder.builder()
             .itemInputs(
+                GT_Utility.getIntegratedCircuit(23),
                 setStackSize(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 10106), 352),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.InfinityCatalyst, 1), 352),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.plateDense, Materials.MysteriousCrystal, 1), 200),
@@ -129,6 +223,22 @@ public class SunFactory_Pool implements IRecipePool {
                 setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 22979), 7))
             .fluidInputs(new FluidStack(sb, 144))
             .itemOutputs(setStackSize(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32704), 128))
+            .noOptimize()
+            .duration(16 * 20 * 64)
+            .eut(TierEU.RECIPE_UEV)
+            .addTo(PCB);
+        RecipeBuilder.builder()
+            .itemInputs(
+                GT_Utility.getIntegratedCircuit(24),
+                setStackSize(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 10106), 352),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.InfinityCatalyst, 1), 352),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.plateDense, Materials.MysteriousCrystal, 1), 200),
+                setStackSize(GT_ModHandler.getModItem("miscutils", "itemDustChromaticGlass", 1), 352),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.plateDense, Materials.Iron, 1), 60),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Sulfur, 1), 45),
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 22979), 7))
+            .fluidInputs(new FluidStack(sb, 144))
+            .itemOutputs(setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32728), 2048))
             .noOptimize()
             .duration(16 * 20 * 64)
             .eut(TierEU.RECIPE_UEV)
@@ -158,6 +268,30 @@ public class SunFactory_Pool implements IRecipePool {
             .duration(20 * 64)
             .eut(TierEU.RECIPE_ZPM)
             .addTo(SMD);
+        RecipeBuilder.builder()
+            .itemInputs(
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Plastic, 1), 217),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Tantalum, 1), 58),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 1), 32),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Platinum, 1), 32),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.PolyvinylChloride, 1), 21),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Iridium, 1), 16),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Gallium, 1), 12),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Arsenic, 1), 4),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Neodymium, 1), 4),
+                GT_Utility.getIntegratedCircuit(24))
+            .fluidInputs(new FluidStack(sb, 144))
+            .itemOutputs(
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32011), 1024),
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32016), 1024),
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32018), 1024),
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32020), 1024),
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32182), 1024)
+            )
+            .noOptimize()
+            .duration(20 * 64)
+            .eut(TierEU.RECIPE_ZPM)
+            .addTo(SMD);
         // Red
         RecipeBuilder.builder()
             .itemInputs(
@@ -178,6 +312,30 @@ public class SunFactory_Pool implements IRecipePool {
                 setStackSize(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32739), 64),
                 setStackSize(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32740), 64),
                 setStackSize(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32707), 64))
+            .noOptimize()
+            .duration(20 * 64)
+            .eut(TierEU.RECIPE_UHV)
+            .addTo(SMD);
+        RecipeBuilder.builder()
+            .itemInputs(
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Polybenzimidazole, 1), 272),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.TungstenSteel, 1), 32),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Graphene, 1), 32),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.NiobiumTitanium, 1), 32),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.HSSG, 1), 32),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Platinum, 1), 32),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.IndiumGalliumPhosphide, 1), 16),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.VanadiumGallium, 1), 8),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.HSSS, 1), 8),
+                GT_Utility.getIntegratedCircuit(24))
+            .fluidInputs(new FluidStack(sb, 288))
+            .itemOutputs(
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32024), 1024),
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32025), 1024),
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32026), 1024),
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32027), 1024),
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32183), 1024)
+            )
             .noOptimize()
             .duration(20 * 64)
             .eut(TierEU.RECIPE_UHV)
@@ -218,6 +376,42 @@ public class SunFactory_Pool implements IRecipePool {
             .duration(20 * 64)
             .eut(TierEU.RECIPE_UIV)
             .addTo(SMD);
+        RecipeBuilder.builder()
+            .itemInputs(
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 1), 83),
+                setStackSize(
+                    GT_OreDictUnificator.get(
+                        OrePrefixes.dust,
+                        Materials.Tetraindiumditindibariumtitaniumheptacoppertetrakaidekaoxid,
+                        1),
+                    72),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Draconium, 1), 32),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Naquadria, 1), 32),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.BlackPlutonium, 1), 32),
+                setStackSize(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 10105), 32),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Osmium, 1), 31),
+                setStackSize(
+                    GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Tetranaquadahdiindiumhexaplatiumosminid, 1),
+                    28),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Tritanium, 1), 16),
+                setStackSize(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 10102), 8),
+                setStackSize(GT_ModHandler.getModItem("miscutils", "itemDustPikyonium64B", 1), 16),
+                setStackSize(GT_ModHandler.getModItem("miscutils", "itemDustArceusAlloy2B", 1), 16),
+                setStackSize(GT_ModHandler.getModItem("miscutils", "itemDustCinobiteA243", 1), 16),
+                setStackSize(GT_ModHandler.getModItem("miscutils", "itemDustLafiumCompound", 1), 8),
+                GT_Utility.getIntegratedCircuit(24))
+            .fluidInputs(FluidRegistry.getFluidStack("molten.spacetime", 72))
+            .itemOutputs(
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32178), 1024),
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32179), 1024),
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32180), 1024),
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32181), 1024),
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32184), 1024)
+            )
+            .noOptimize()
+            .duration(20 * 64)
+            .eut(TierEU.RECIPE_UIV)
+            .addTo(SMD);
         // Purple -2
         RecipeBuilder.builder()
             .itemInputs(
@@ -252,6 +446,44 @@ public class SunFactory_Pool implements IRecipePool {
                 setStackSize(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32709), 64),
                 setStackSize(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32710), 64),
                 setStackSize(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32711), 64))
+            .noOptimize()
+            .duration(20 * 64)
+            .eut(TierEU.RECIPE_UIV)
+            .addTo(SMD);
+        RecipeBuilder.builder()
+            .itemInputs(
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 1), 83),
+                setStackSize(
+                    GT_OreDictUnificator.get(
+                        OrePrefixes.dust,
+                        Materials.Tetraindiumditindibariumtitaniumheptacoppertetrakaidekaoxid,
+                        1),
+                    72),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Draconium, 1), 32),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Naquadria, 1), 32),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.BlackPlutonium, 1), 32),
+                setStackSize(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGeneratedingot", 1, 10105), 32),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Osmium, 1), 31),
+                setStackSize(
+                    GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Tetranaquadahdiindiumhexaplatiumosminid, 1),
+                    28),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Tritanium, 1), 16),
+                setStackSize(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGeneratedingot", 1, 10102), 8),
+                setStackSize(GT_ModHandler.getModItem("miscutils", "itemIngotPikyonium64B", 1), 16),
+                setStackSize(GT_ModHandler.getModItem("miscutils", "itemIngotArceusAlloy2B", 1), 16),
+                setStackSize(GT_ModHandler.getModItem("miscutils", "itemIngotCinobiteA243", 1), 16),
+                setStackSize(GT_ModHandler.getModItem("miscutils", "itemIngotLafiumCompound", 1), 8),
+                GT_Utility.getIntegratedCircuit(24))
+            .fluidInputs(
+                FluidRegistry.getFluidStack("molten.spacetime", 72),
+                FluidRegistry.getFluidStack("molten.eternity", 72))
+            .itemOutputs(
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32178), 1024),
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32179), 1024),
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32180), 1024),
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32181), 1024),
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32184), 1024)
+            )
             .noOptimize()
             .duration(20 * 64)
             .eut(TierEU.RECIPE_UIV)
@@ -584,17 +816,17 @@ public class SunFactory_Pool implements IRecipePool {
                         Materials.Tetraindiumditindibariumtitaniumheptacoppertetrakaidekaoxid,
                         1),
                     12),
-                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.StainlessSteel, 1), 9),
-                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Lapis, 1), 8),
-                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Diamond, 1), 8),
-                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Gold, 1), 8),
-                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 32600), 4),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.StainlessSteel, 1), 9 * 64),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Lapis, 1), 8 * 64),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Diamond, 1), 8 * 64),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Gold, 1), 8 * 64),
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 32600), 4 * 64),
                 GT_Utility.getIntegratedCircuit(20))
-            .itemOutputs(setStackSize(GT_ModHandler.getModItem("GraviSuite", "itemSimpleItem", 1, 3), 1))
+            .itemOutputs(setStackSize(GT_ModHandler.getModItem("GraviSuite", "itemSimpleItem", 1, 3), 64))
             .fluidInputs(
-                FluidRegistry.getFluidStack("helium", 288),
-                FluidRegistry.getFluidStack("molten.solderingalloy", 288),
-                FluidRegistry.getFluidStack("molten.callistoice", 288)
+                FluidRegistry.getFluidStack("helium", 288 * 64),
+                FluidRegistry.getFluidStack("molten.solderingalloy", 288 * 64),
+                FluidRegistry.getFluidStack("molten.callistoice", 288 * 64)
 
             )
             .noOptimize()
@@ -604,18 +836,18 @@ public class SunFactory_Pool implements IRecipePool {
         // shit
         RecipeBuilder.builder()
             .itemInputs(
-                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Copper, 1), 1),
-                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.IndiumGalliumPhosphide, 1), 1),
-                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Boron, 1), 1),
-                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Bismuth, 1), 3),
-                setStackSize(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 35), 1),
-                setStackSize(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 3), 1),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Copper, 1), 64),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.IndiumGalliumPhosphide, 1), 64),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Boron, 1), 64),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Bismuth, 1), 3 * 64),
+                setStackSize(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 35), 64),
+                setStackSize(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 3), 64),
                 GT_Utility.getIntegratedCircuit(20))
-            .itemOutputs(setStackSize(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 3), 1))
+            .itemOutputs(setStackSize(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 3), 64))
             .fluidInputs(
-                FluidRegistry.getFluidStack("oxygen", 144),
-                FluidRegistry.getFluidStack("molten.solderingalloy", 144),
-                FluidRegistry.getFluidStack("hydrogen", 144)
+                FluidRegistry.getFluidStack("oxygen", 144 * 64),
+                FluidRegistry.getFluidStack("molten.solderingalloy", 144 * 64),
+                FluidRegistry.getFluidStack("hydrogen", 144 * 64)
 
             )
             .noOptimize()

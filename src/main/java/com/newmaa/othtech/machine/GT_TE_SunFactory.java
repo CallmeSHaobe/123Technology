@@ -171,10 +171,10 @@ public class GT_TE_SunFactory extends OTH_MultiMachineBase<GT_TE_SunFactory> {
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        if (mode == 0) return Recipemaps.SF1;
-        if (mode == 2) return Recipemaps.SF2;
-        if (mode == 3) return Recipemaps.SF3;
-        return Recipemaps.SF4;
+        if (mode == 1) return Recipemaps.SF2;
+        if (mode == 2) return Recipemaps.SF3;
+        if (mode == 3) return Recipemaps.SF4;
+        return Recipemaps.SF1;
     }
 
     @NotNull
