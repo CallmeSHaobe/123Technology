@@ -1,13 +1,18 @@
 package com.newmaa.othtech.recipe;
 
+import static com.newmaa.othtech.Utils.Utils.setStackSize;
+
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
+import com.newmaa.othtech.Utils.recipes.RecipeBuilder;
+
 import gregtech.api.enums.GT_Values;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
-import gregtech.api.interfaces.IRecipeMap;
+import gregtech.api.enums.TierEU;
+import gregtech.api.recipe.RecipeMap;
 import gregtech.api.util.GT_ModHandler;
 import gregtech.api.util.GT_OreDictUnificator;
 import gregtech.api.util.GT_Utility;
@@ -21,7 +26,7 @@ public class Mixer implements IRecipePool {
         Fluid I = FluidRegistry.getFluid("iodine");
         Fluid Shit = FluidRegistry.getFluid("molten.arcanite");
 
-        final IRecipeMap LMixer = GTPPRecipeMaps.mixerNonCellRecipes;
+        final RecipeMap<?> LMixer = GTPPRecipeMaps.mixerNonCellRecipes;
         GT_Values.RA.stdBuilder()
             .fluidInputs(new FluidStack(Ne, 1000), new FluidStack(I, 1000))
             .fluidOutputs(new FluidStack(Shit, 144))
@@ -55,6 +60,16 @@ public class Mixer implements IRecipePool {
             .noOptimize()
             .duration(400)
             .eut(123123)
+            .addTo(LMixer);
+        RecipeBuilder.builder()
+            .itemInputs(
+                setStackSize(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 10096), 18),
+                GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Cerium, 1))
+            .itemOutputs(setStackSize(GT_ModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 10097), 19))
+            .fluidInputs(FluidRegistry.getFluidStack("molten.lithium chloride", 144))
+            .noOptimize()
+            .duration(30 * 20)
+            .eut(TierEU.RECIPE_ZPM)
             .addTo(LMixer);
     }
 }

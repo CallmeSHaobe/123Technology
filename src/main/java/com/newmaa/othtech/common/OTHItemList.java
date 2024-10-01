@@ -17,6 +17,7 @@ public enum OTHItemList {
     MEBFpp,
     MFREpp,
     Sun,
+    LCA,
 
     EVACannon,
     HatchME,

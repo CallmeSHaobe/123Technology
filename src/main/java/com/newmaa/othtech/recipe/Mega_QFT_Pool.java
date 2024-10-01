@@ -1,7 +1,8 @@
 package com.newmaa.othtech.recipe;
 
+import static com.newmaa.othtech.Utils.Utils.setStackSize;
+
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -193,6 +194,9 @@ public class Mega_QFT_Pool implements IRecipePool {
                 new FluidStack(FluidRegistry.getFluidID("biohmediumsterilized"), 1536000),
                 new FluidStack(FluidRegistry.getFluidID("growthmediumsterilized"), 3072000),
                 new FluidStack(FluidRegistry.getFluidID("molten.mutatedlivingsolder"), 512 * 144))
+            .itemOutputs(
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32073), 256),
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32076), 512))
             .noOptimize()
             .duration(400 * 20)
             .eut(TierEU.UXV)
@@ -256,14 +260,10 @@ public class Mega_QFT_Pool implements IRecipePool {
             .duration(120 * 20)
             .eut(TierEU.UXV / 2)
             .addTo(MQFT);
-        //test
+        // test
         GT_Values.RA.stdBuilder()
-            .itemOutputs(
-                new ItemStack(Blocks.dirt, 1)
-            )
-            .itemInputs(
-                new ItemStack(Blocks.dirt, 1)
-            )
+            .itemOutputs(new ItemStack(Blocks.dirt, 1))
+            .itemInputs(new ItemStack(Blocks.dirt, 1))
             .noOptimize()
             .duration(114514)
             .eut(1919810)

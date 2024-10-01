@@ -2,7 +2,6 @@ package com.newmaa.othtech.recipe;
 
 import static com.newmaa.othtech.Utils.Utils.setStackSize;
 
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -286,8 +285,7 @@ public class SunFactory_Pool implements IRecipePool {
                 setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32016), 1024),
                 setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32018), 1024),
                 setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32020), 1024),
-                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32182), 1024)
-            )
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32182), 1024))
             .noOptimize()
             .duration(20 * 64)
             .eut(TierEU.RECIPE_ZPM)
@@ -334,8 +332,7 @@ public class SunFactory_Pool implements IRecipePool {
                 setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32025), 1024),
                 setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32026), 1024),
                 setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32027), 1024),
-                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32183), 1024)
-            )
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32183), 1024))
             .noOptimize()
             .duration(20 * 64)
             .eut(TierEU.RECIPE_UHV)
@@ -406,8 +403,7 @@ public class SunFactory_Pool implements IRecipePool {
                 setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32179), 1024),
                 setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32180), 1024),
                 setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32181), 1024),
-                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32184), 1024)
-            )
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32184), 1024))
             .noOptimize()
             .duration(20 * 64)
             .eut(TierEU.RECIPE_UIV)
@@ -482,8 +478,7 @@ public class SunFactory_Pool implements IRecipePool {
                 setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32179), 1024),
                 setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32180), 1024),
                 setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32181), 1024),
-                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32184), 1024)
-            )
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32184), 1024))
             .noOptimize()
             .duration(20 * 64)
             .eut(TierEU.RECIPE_UIV)

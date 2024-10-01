@@ -1,9 +1,14 @@
 package com.newmaa.othtech.recipe;
 
+import static com.newmaa.othtech.Utils.Utils.setStackSize;
+
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
+import com.newmaa.othtech.Utils.recipes.RecipeBuilder;
 import com.newmaa.othtech.common.materials.liquids;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 
@@ -314,6 +319,28 @@ public class Mega_ISA_ForgePool implements IRecipePool {
             .noOptimize()
             .eut(TierEU.MAX)
             .duration(20 * 20)
+            .addTo(ISA);
+        // NanoBee - GlowStone
+        RecipeBuilder.builder()
+            .itemOutputs(setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 4811), 512))
+            .fluidInputs(FluidRegistry.getFluidStack("molten.spacetime", 288))
+            .itemInputs(
+                setStackSize(new ItemStack(Blocks.glowstone, 1), 256),
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32049), 256))
+            .noOptimize()
+            .eut(TierEU.RECIPE_UMV)
+            .duration(123 * 20)
+            .addTo(ISA);
+        // NanoBee - Neut
+        RecipeBuilder.builder()
+            .itemOutputs(setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 4129), 512))
+            .fluidInputs(FluidRegistry.getFluidStack("molten.spacetime", 288 * 4))
+            .itemInputs(
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.block, Materials.Neutronium, 1), 4096),
+                setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32049), 20480))
+            .noOptimize()
+            .eut(TierEU.RECIPE_UXV)
+            .duration(114 * 20)
             .addTo(ISA);
     }
 }

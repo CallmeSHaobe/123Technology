@@ -359,5 +359,21 @@ public class Main implements IRecipePool {
             GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 23537),
             1984 * 20,
             (int) TierEU.UXV);
+        // LCA
+        GT_Values.RA.stdBuilder()
+            .itemOutputs(GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 1, 23538))
+            .fluidInputs(FluidRegistry.getFluidStack("molten.staballoy", 16 * 144))
+            .itemInputs(
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 64, 1184),
+                GT_OreDictUnificator.get(OrePrefixes.circuit, Materials.Ultimate, 64),
+                ItemList.Electric_Pump_IV.get(64),
+                GT_ModHandler.getModItem("GoodGenerator", "huiCircuit", 16),
+                GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 48, 32052),
+                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 4, 12005),
+                GT_Utility.getIntegratedCircuit(17))
+            .noOptimize()
+            .duration(4 * 20)
+            .eut(TierEU.IV)
+            .addTo(Assem);
     }
 }

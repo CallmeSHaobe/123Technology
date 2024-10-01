@@ -53,8 +53,6 @@ public class Recipemaps {
         .disableOptimize()
         .build();
 
-
-
     public static final RecipeMap<OTH_RecipeMapBackend> TSSF = RecipeMapBuilder
         .of("otht.recipe.TSSF", OTH_RecipeMapBackend::new)
         .maxIO(24, 24, 4, 4)
