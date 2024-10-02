@@ -486,7 +486,9 @@ public class SunFactory_Pool implements IRecipePool {
         // NMD
         // Power IC
         RecipeBuilder.builder()
-            .itemInputs(setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.SiliconSG, 1), 576))
+            .itemInputs(
+                GT_Utility.getIntegratedCircuit(1),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.SiliconSG, 1), 576))
             .fluidInputs(new FluidStack(water, 1440))
             .fluidOutputs(new FluidStack(water2, 1440))
             .itemOutputs(setStackSize(GT_ModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32050), 1024))
@@ -497,6 +499,7 @@ public class SunFactory_Pool implements IRecipePool {
         // Power IC Adv
         RecipeBuilder.builder()
             .itemInputs(
+                GT_Utility.getIntegratedCircuit(2),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.SiliconSG, 1), 576),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.IndiumGalliumPhosphide, 1), 2048),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.VanadiumGallium, 1), 2048))
@@ -510,6 +513,7 @@ public class SunFactory_Pool implements IRecipePool {
         // Power IC SuperHigh
         RecipeBuilder.builder()
             .itemInputs(
+                GT_Utility.getIntegratedCircuit(3),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.SiliconSG, 1), 576),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.IndiumGalliumPhosphide, 1), 10240),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.VanadiumGallium, 1), 2048),
@@ -524,6 +528,7 @@ public class SunFactory_Pool implements IRecipePool {
         // Power IC Pm
         RecipeBuilder.builder()
             .itemInputs(
+                GT_Utility.getIntegratedCircuit(4),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.SiliconSG, 1), 576),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.IndiumGalliumPhosphide, 1), 65536),
                 setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Sunnarium, 1), 10240))
@@ -893,6 +898,8 @@ public class SunFactory_Pool implements IRecipePool {
             .duration(100 * 20)
             .eut(TierEU.UHV)
             .addTo(UNI);
+        // Inf Chest
+
 
     }
 }
