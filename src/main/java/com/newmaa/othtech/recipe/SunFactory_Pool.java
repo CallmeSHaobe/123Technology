@@ -2,6 +2,8 @@ package com.newmaa.othtech.recipe;
 
 import static com.newmaa.othtech.Utils.Utils.setStackSize;
 
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -9,6 +11,7 @@ import net.minecraftforge.fluids.FluidStack;
 import com.newmaa.othtech.Utils.recipes.RecipeBuilder;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 
+import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
@@ -899,7 +902,28 @@ public class SunFactory_Pool implements IRecipePool {
             .eut(TierEU.UHV)
             .addTo(UNI);
         // Inf Chest
-
+        RecipeBuilder.builder()
+            .itemOutputs(setStackSize(GT_ModHandler.getModItem("avaritiaddons", "InfinityChest", 1), 256))
+            .itemInputs(
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Silicon, 1), 256 * 256),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Bedrockium, 1), 144 * 256),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Draconium, 1), 144 * 256),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Diamond, 1), 144 * 256),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.circuit, Materials.Bio, 1), 90 * 256),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.circuit, Materials.Superconductor, 1), 48 * 256),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Americium, 1), 54 * 256),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.CosmicNeutronium, 1), 54 * 256),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Infinity, 1), 54 * 256),
+                setStackSize(ItemList.Field_Generator_UV.get(1), 18 * 256),
+                setStackSize(ItemList.Conveyor_Module_UEV.get(1), 18 * 256),
+                setStackSize(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.StainlessSteel, 1), 18 * 256),
+                setStackSize(new ItemStack(Blocks.chest, 1), 18 * 256),
+                setStackSize(GT_ModHandler.getModItem("eternalsingularity", "eternal_singularity", 1), 256),
+                GT_ModHandler.getModItem("dreamcraft", "item.EngineeringProcessorItemAdvEmeraldCore", 1))
+            .noOptimize()
+            .duration(256 * 20 * 5)
+            .eut(TierEU.UV)
+            .addTo(UNI);
 
     }
 }

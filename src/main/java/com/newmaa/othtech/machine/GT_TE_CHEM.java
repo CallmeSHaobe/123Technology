@@ -54,7 +54,6 @@ import gregtech.api.util.GT_Recipe;
 import gregtech.api.util.GT_Utility;
 import gregtech.common.blocks.GT_Block_Casings8;
 import gtPlusPlus.api.recipe.GTPPRecipeMaps;
-import gtPlusPlus.core.util.minecraft.ItemUtils;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 
@@ -95,7 +94,6 @@ public class GT_TE_CHEM extends OTH_MultiMachineBase<GT_TE_CHEM> {
             if (aGuiStack != null) {
                 if (GT_Utility.areStacksEqual(aGuiStack, GT_ModHandler.getModItem("123Technology", "dustIrOsSm", 1))) {
                     this.$123 = true;
-                    mInventory[1] = ItemUtils.depleteStack(aGuiStack);
                 }
             }
         }
