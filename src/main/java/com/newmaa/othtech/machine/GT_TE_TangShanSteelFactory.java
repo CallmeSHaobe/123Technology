@@ -1285,7 +1285,7 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
             .addInfo("§l§8一步到位各种与钢铁相关之合金 : GTPP / GT5U, 以及部分BW")
             .addInfo("正常耗时倍率 : 1 / 线圈等级")
             .addInfo("无线耗时 = 240s / 编程电路编号 ^ 2)")
-            .addInfo("无线EU消耗 = 功率 * 耗时 * 编程电路编号 , 单次最高消耗8E EU")
+            .addInfo("无线EU消耗 = 功率 * 耗时 * 编程电路编号 ^ 2 , 单次最高消耗8E EU")
             .addInfo("请注意炉温要求.")
             .addInfo("螺丝刀切换无线模式")
             .addInfo("非无线模式执行无损超频")
