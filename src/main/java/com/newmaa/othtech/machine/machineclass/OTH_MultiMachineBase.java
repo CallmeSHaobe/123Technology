@@ -26,23 +26,17 @@ import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.logic.ProcessingLogic;
-import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_ExtendedPowerMultiBlockBase;
-import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch;
-import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Dynamo;
-import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Input;
-import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_InputBus;
-import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Muffler;
-import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_MultiInput;
+import gregtech.api.metatileentity.implementations.*;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
-import gregtech.api.util.GT_Utility;
-import gregtech.common.tileentities.machines.GT_MetaTileEntity_Hatch_InputBus_ME;
-import gregtech.common.tileentities.machines.GT_MetaTileEntity_Hatch_Input_ME;
+import gregtech.api.util.GTUtility;
 import gregtech.common.tileentities.machines.IDualInputHatch;
 import gregtech.common.tileentities.machines.IDualInputInventory;
+import gregtech.common.tileentities.machines.MTEHatchInputBusME;
+import gregtech.common.tileentities.machines.MTEHatchInputME;
 
-public abstract class OTH_MultiMachineBase<T extends OTH_MultiMachineBase<T>>
-    extends GT_MetaTileEntity_ExtendedPowerMultiBlockBase<T> implements IConstructable, ISurvivalConstructable {
+public abstract class OTH_MultiMachineBase<T extends OTH_MultiMachineBase<T>> extends MTEExtendedPowerMultiBlockBase<T>
+    implements IConstructable, ISurvivalConstructable {
 
     // region Class Constructor
     public OTH_MultiMachineBase(int aID, String aName, String aNameRegional) {
@@ -177,7 +171,7 @@ public abstract class OTH_MultiMachineBase<T extends OTH_MultiMachineBase<T>>
     public ArrayList<ItemStack> getStoredInputsWithoutDualInputHatch() {
 
         ArrayList<ItemStack> rList = new ArrayList<>();
-        for (GT_MetaTileEntity_Hatch_InputBus tHatch : filterValidMTEs(mInputBusses)) {
+        for (MTEHatchInputBus tHatch : filterValidMTEs(mInputBusses)) {
             tHatch.mRecipeMap = getRecipeMap();
             IGregTechTileEntity tileEntity = tHatch.getBaseMetaTileEntity();
             for (int i = tileEntity.getSizeInventory() - 1; i >= 0; i--) {
@@ -215,7 +209,7 @@ public abstract class OTH_MultiMachineBase<T extends OTH_MultiMachineBase<T>>
         }
 
         ArrayList<ItemStack> rList = new ArrayList<>();
-        for (GT_MetaTileEntity_Hatch_InputBus tHatch : filterValidMTEs(mInputBusses)) {
+        for (MTEHatchInputBus tHatch : filterValidMTEs(mInputBusses)) {
             tHatch.mRecipeMap = getRecipeMap();
             IGregTechTileEntity tileEntity = tHatch.getBaseMetaTileEntity();
             for (int i = tileEntity.getSizeInventory() - 1; i >= 0; i--) {
@@ -257,17 +251,17 @@ public abstract class OTH_MultiMachineBase<T extends OTH_MultiMachineBase<T>>
             }
         }
 
-        Map<GT_Utility.ItemId, ItemStack> inputsFromME = new HashMap<>();
-        for (GT_MetaTileEntity_Hatch_InputBus tHatch : GT_Utility.filterValidMTEs(mInputBusses)) {
+        Map<GTUtility.ItemId, ItemStack> inputsFromME = new HashMap<>();
+        for (MTEHatchInputBus tHatch : GTUtility.filterValidMTEs(mInputBusses)) {
             tHatch.mRecipeMap = getRecipeMap();
             IGregTechTileEntity tileEntity = tHatch.getBaseMetaTileEntity();
-            boolean isMEBus = tHatch instanceof GT_MetaTileEntity_Hatch_InputBus_ME;
+            boolean isMEBus = tHatch instanceof MTEHatchInputBusME;
             for (int i = tileEntity.getSizeInventory() - 1; i >= 0; i--) {
                 ItemStack itemStack = tileEntity.getStackInSlot(i);
                 if (itemStack != null) {
                     if (isMEBus) {
                         // Prevent the same item from different ME buses from being recognized
-                        inputsFromME.put(GT_Utility.ItemId.createNoCopy(itemStack), itemStack);
+                        inputsFromME.put(GTUtility.ItemId.createNoCopy(itemStack), itemStack);
                     } else {
                         rList.add(itemStack);
                     }
@@ -291,15 +285,15 @@ public abstract class OTH_MultiMachineBase<T extends OTH_MultiMachineBase<T>>
     public ArrayList<FluidStack> getStoredFluidsWithDualInput() {
         ArrayList<FluidStack> rList = new ArrayList<>();
         Map<Fluid, FluidStack> inputsFromME = new HashMap<>();
-        for (GT_MetaTileEntity_Hatch_Input tHatch : GT_Utility.filterValidMTEs(mInputHatches)) {
+        for (MTEHatchInput tHatch : GTUtility.filterValidMTEs(mInputHatches)) {
             setHatchRecipeMap(tHatch);
-            if (tHatch instanceof GT_MetaTileEntity_Hatch_MultiInput multiInputHatch) {
+            if (tHatch instanceof MTEHatchMultiInput multiInputHatch) {
                 for (FluidStack tFluid : multiInputHatch.getStoredFluid()) {
                     if (tFluid != null) {
                         rList.add(tFluid);
                     }
                 }
-            } else if (tHatch instanceof GT_MetaTileEntity_Hatch_Input_ME meHatch) {
+            } else if (tHatch instanceof MTEHatchInputME meHatch) {
                 for (FluidStack fluidStack : meHatch.getStoredFluids()) {
                     if (fluidStack != null) {
                         // Prevent the same fluid from different ME hatches from being recognized
@@ -390,13 +384,13 @@ public abstract class OTH_MultiMachineBase<T extends OTH_MultiMachineBase<T>>
         if (aTileEntity == null) return false;
         IMetaTileEntity aMetaTileEntity = aTileEntity.getMetaTileEntity();
         if (aMetaTileEntity == null) return false;
-        if (aMetaTileEntity instanceof GT_MetaTileEntity_Hatch_Input) {
-            ((GT_MetaTileEntity_Hatch) aMetaTileEntity).updateTexture(aBaseCasingIndex);
-            ((GT_MetaTileEntity_Hatch_Input) aMetaTileEntity).mRecipeMap = getRecipeMap();
-            return mInputHatches.add((GT_MetaTileEntity_Hatch_Input) aMetaTileEntity);
-        } else if (aMetaTileEntity instanceof GT_MetaTileEntity_Hatch_Muffler) {
-            ((GT_MetaTileEntity_Hatch) aMetaTileEntity).updateTexture(aBaseCasingIndex);
-            return mMufflerHatches.add((GT_MetaTileEntity_Hatch_Muffler) aMetaTileEntity);
+        if (aMetaTileEntity instanceof MTEHatchInput) {
+            ((MTEHatch) aMetaTileEntity).updateTexture(aBaseCasingIndex);
+            ((MTEHatchInput) aMetaTileEntity).mRecipeMap = getRecipeMap();
+            return mInputHatches.add((MTEHatchInput) aMetaTileEntity);
+        } else if (aMetaTileEntity instanceof MTEHatchMuffler) {
+            ((MTEHatch) aMetaTileEntity).updateTexture(aBaseCasingIndex);
+            return mMufflerHatches.add((MTEHatchMuffler) aMetaTileEntity);
         }
         return false;
     }
@@ -425,7 +419,7 @@ public abstract class OTH_MultiMachineBase<T extends OTH_MultiMachineBase<T>>
         long totalOutput = 0;
         long aFirstVoltageFound = -1;
         boolean aFoundMixedDynamos = false;
-        for (GT_MetaTileEntity_Hatch_Dynamo aDynamo : filterValidMTEs(mDynamoHatches)) {
+        for (MTEHatchDynamo aDynamo : filterValidMTEs(mDynamoHatches)) {
             long aVoltage = aDynamo.maxEUOutput();
             long aTotal = aDynamo.maxAmperesOut() * aVoltage;
             // Check against voltage to check when hatch mixing
@@ -459,7 +453,7 @@ public abstract class OTH_MultiMachineBase<T extends OTH_MultiMachineBase<T>>
         int aAmpsToInject;
         int aRemainder;
         int ampsOnCurrentHatch;
-        for (GT_MetaTileEntity_Hatch_Dynamo aDynamo : filterValidMTEs(mDynamoHatches)) {
+        for (MTEHatchDynamo aDynamo : filterValidMTEs(mDynamoHatches)) {
             leftToInject = actualOutputEU - injected;
             aVoltage = aDynamo.maxEUOutput();
             aAmpsToInject = (int) (leftToInject / aVoltage);

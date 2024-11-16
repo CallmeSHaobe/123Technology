@@ -1,8 +1,9 @@
 package com.newmaa.othtech.machine;
 
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
-import static gregtech.api.enums.GT_HatchElement.*;
-import static gregtech.api.util.GT_StructureUtility.ofFrame;
+import static gregtech.api.enums.HatchElement.*;
+import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
+import static gregtech.api.util.GTStructureUtility.ofFrame;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -19,14 +20,14 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 import org.jetbrains.annotations.NotNull;
 
-import com.github.bartimaeusnek.bartworks.API.BorosilicateGlass;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTH_processingLogics.OTH_ProcessingLogic;
 
-import gregtech.api.GregTech_API;
+import bartworks.API.BorosilicateGlass;
+import gregtech.api.GregTechAPI;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.TAE;
 import gregtech.api.enums.Textures;
@@ -39,10 +40,9 @@ import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.render.TextureFactory;
-import gregtech.api.util.GT_HatchElementBuilder;
-import gregtech.api.util.GT_Multiblock_Tooltip_Builder;
-import gregtech.api.util.GT_Recipe;
-import gregtech.api.util.GT_Utility;
+import gregtech.api.util.GTRecipe;
+import gregtech.api.util.GTUtility;
+import gregtech.api.util.MultiblockTooltipBuilder;
 import gtPlusPlus.api.recipe.GTPPRecipeMaps;
 import gtPlusPlus.core.block.ModBlocks;
 import gtPlusPlus.core.recipe.common.CI;
@@ -103,12 +103,12 @@ public class GT_TE_MegaNineInOne extends OTH_MultiMachineBase<GT_TE_MegaNineInOn
 
     @Override
     protected int getMaxParallelRecipes() {
-        return Math.max(9, 256 - (GT_Utility.getTier(this.getMaxInputVoltage()) * 2));
+        return Math.max(9, 256 - (GTUtility.getTier(this.getMaxInputVoltage()) * 2));
     }
 
     @Override
     protected float getSpeedBonus() {
-        return (float) (1 + (GT_Utility.getTier(this.getMaxInputVoltage()) * 0.1));
+        return (float) (1 + (GTUtility.getTier(this.getMaxInputVoltage()) * 0.1));
     }
 
     @Override
@@ -122,7 +122,7 @@ public class GT_TE_MegaNineInOne extends OTH_MultiMachineBase<GT_TE_MegaNineInOn
 
     private ItemStack getCircuit(ItemStack[] t) {
         for (ItemStack j : t) {
-            if (j.getItem() == CI.getNumberedCircuit(0)
+            if (j.getItem() == CI.getNumberedAdvancedCircuit(0)
                 .getItem()) {
                 if (j.getItemDamage() >= 20 && j.getItemDamage() <= 22) {
                     return j;
@@ -173,18 +173,18 @@ public class GT_TE_MegaNineInOne extends OTH_MultiMachineBase<GT_TE_MegaNineInOn
             }
 
             @Override
-            protected @NotNull CheckRecipeResult validateRecipe(GT_Recipe recipe) {
+            protected @NotNull CheckRecipeResult validateRecipe(GTRecipe recipe) {
                 return CheckRecipeResultRegistry.SUCCESSFUL;
             }
 
             @Nonnull
             @Override
-            protected Stream<GT_Recipe> findRecipeMatches(@Nullable RecipeMap<?> map) {
+            protected Stream<GTRecipe> findRecipeMatches(@Nullable RecipeMap<?> map) {
                 ItemStack circuit = getCircuit(inputItems);
                 if (circuit == null) {
                     return Stream.empty();
                 }
-                if (!GT_Utility.areStacksEqual(circuit, lastCircuit)) {
+                if (!GTUtility.areStacksEqual(circuit, lastCircuit)) {
                     lastRecipe = null;
                     lastCircuit = circuit;
                 }
@@ -237,7 +237,7 @@ public class GT_TE_MegaNineInOne extends OTH_MultiMachineBase<GT_TE_MegaNineInOn
         } else {
             mInternalMode = 0;
         }
-        GT_Utility.sendChatToPlayer(
+        GTUtility.sendChatToPlayer(
             aPlayer,
             StatCollector.translateToLocal(
                 mInternalMode == 0 ? "Metal"
@@ -296,15 +296,14 @@ public class GT_TE_MegaNineInOne extends OTH_MultiMachineBase<GT_TE_MegaNineInOn
                 .addElement('F', ofBlock(ModBlocks.blockCasings3Misc, 2))
                 .addElement(
                     'E',
-                    GT_HatchElementBuilder.<GT_TE_MegaNineInOne>builder()
-                        .atLeast(Energy.or(ExoticEnergy))
+                    buildHatchAdder(GT_TE_MegaNineInOne.class).atLeast(Energy.or(ExoticEnergy))
                         .adder(GT_TE_MegaNineInOne::addToMachineList)
                         .dot(2)
                         .casingIndex(getTextureIndex())
                         .buildAndChain(ModBlocks.blockCasings3Misc, 2))
                 .addElement(
                     'D',
-                    GT_HatchElementBuilder.<GT_TE_MegaNineInOne>builder()
+                    buildHatchAdder(GT_TE_MegaNineInOne.class)
                         .atLeast(InputBus, OutputBus, InputHatch, OutputHatch, Muffler, Maintenance)
                         .adder(GT_TE_MegaNineInOne::addToMachineList)
                         .dot(1)
@@ -312,7 +311,7 @@ public class GT_TE_MegaNineInOne extends OTH_MultiMachineBase<GT_TE_MegaNineInOn
                         .buildAndChain(ModBlocks.blockCasings3Misc, 2))
                 .addElement('A', BorosilicateGlass.ofBoroGlass(3))
                 .addElement('G', ofFrame(Materials.HSSS))
-                .addElement('B', ofBlock(GregTech_API.sBlockCasings5, 4))
+                .addElement('B', ofBlock(GregTechAPI.sBlockCasings5, 4))
                 .build();
 
         }
@@ -720,10 +719,10 @@ public class GT_TE_MegaNineInOne extends OTH_MultiMachineBase<GT_TE_MegaNineInOn
             || addExoticEnergyInputToMachineList(aTileEntity, aBaseCasingIndex);
     }
     @Override
-    protected GT_Multiblock_Tooltip_Builder createTooltip() {
-        final GT_Multiblock_Tooltip_Builder tt = new GT_Multiblock_Tooltip_Builder();
+    protected MultiblockTooltipBuilder createTooltip() {
+        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType("§c§l老登的终极造物 - 九合一 (巨型加工厂)")
-            .addInfo("§a共有十二种模式, 使用螺丝刀切换类模式， 使用编程电路20 21 22切换内部模式")
+            .addInfo("§a共有十二种模式, 使用螺丝刀切换类模式， 使用突破编程电路20 21 22切换内部模式")
             .addInfo("§aMetal类: 压缩机 车床 电力磁化机")
             .addInfo("§aFluid类: 发酵槽 流体提取机 提取机")
             .addInfo("§aMisc类: 激光蚀刻机 高压釜 流体固化机")

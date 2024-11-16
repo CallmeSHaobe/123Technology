@@ -7,9 +7,9 @@ import gregtech.api.enums.TierEU;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.metatileentity.MetaTileEntity;
-import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Wireless_Hatch;
+import gregtech.api.metatileentity.implementations.MTEWirelessEnergy;
 
-public class GT_TE_legendaryWireless extends GT_MetaTileEntity_Wireless_Hatch {
+public class GT_TE_legendaryWireless extends MTEWirelessEnergy {
 
     public GT_TE_legendaryWireless(int aID, String aName, String aNameRegional, int aTier) {
         super(aID, aName, aNameRegional, aTier);

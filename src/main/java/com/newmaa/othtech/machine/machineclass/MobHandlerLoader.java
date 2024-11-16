@@ -20,10 +20,11 @@
 
 package com.newmaa.othtech.machine.machineclass;
 
-import static gregtech.api.enums.Mods.NewHorizonsCoreMod;
+import static gregtech.api.enums.Mods.InfernalMobs;
+import static kubatech.tileentity.gregtech.multiblock.MTEExtremeEntityCrusher.DIAMOND_SPIKES_DAMAGE;
+import static kubatech.tileentity.gregtech.multiblock.MTEExtremeEntityCrusher.MOB_SPAWN_INTERVAL;
 
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -32,11 +33,8 @@ import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.JsonToNBT;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -45,34 +43,30 @@ import org.apache.logging.log4j.Logger;
 
 import com.kuba6000.mobsinfo.api.IChanceModifier;
 import com.kuba6000.mobsinfo.api.MobDrop;
-import com.kuba6000.mobsinfo.api.MobOverride;
 import com.kuba6000.mobsinfo.api.MobRecipe;
 import com.kuba6000.mobsinfo.api.event.MobNEIRegistrationEvent;
 import com.kuba6000.mobsinfo.api.event.PostMobRegistrationEvent;
-import com.kuba6000.mobsinfo.api.event.PostMobsOverridesLoadEvent;
 import com.kuba6000.mobsinfo.api.event.PreMobsRegistrationEvent;
 import com.newmaa.othtech.machine.GT_TE_MegaEEC;
 
+import atomicstryker.infernalmobs.common.InfernalMobsCore;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.registry.GameRegistry;
-import gregtech.api.enums.TierEU;
-import gregtech.api.util.GT_Utility;
+import gregtech.api.util.GTUtility;
 import kubatech.Tags;
-import kubatech.api.helpers.ReflectionHelper;
 import kubatech.config.Config;
 
 public class MobHandlerLoader {
 
     private static final Logger LOG = LogManager.getLogger(Tags.MODID + "[Mob Handler Loader]");
 
-    private static MobHandlerLoader instance = null;
+    private static kubatech.loaders.MobHandlerLoader instance = null;
 
     public static void init() {
-        instance = new MobHandlerLoader();
+        instance = new kubatech.loaders.MobHandlerLoader();
         MinecraftForge.EVENT_BUS.register(instance);
     }
 
-    public static Map<String, MobEECRecipe> recipeMap = new HashMap<>();
+    public static Map<String, MobHandlerLoader.MobEECRecipe> recipeMap = new HashMap<>();
 
     public static class MobEECRecipe {
 
@@ -80,7 +74,7 @@ public class MobHandlerLoader {
 
         public final MobRecipe recipe;
 
-        public final long mEUt = 64L * TierEU.MAX;
+        public final int mEUt = 2000;
         public final int mDuration;
         public final EntityLiving entityCopy;
 
@@ -93,13 +87,13 @@ public class MobHandlerLoader {
                 | IllegalAccessException e) {
                 throw new RuntimeException(e);
             }
-            mDuration = 10;
+            mDuration = Math.max(MOB_SPAWN_INTERVAL, (int) ((recipe.maxEntityHealth / DIAMOND_SPIKES_DAMAGE) * 10d));
         }
 
         public ItemStack[] generateOutputs(Random rnd, GT_TE_MegaEEC MTE, double attackDamage, int lootinglevel,
             boolean preferInfernalDrops, boolean voidAllDamagedAndEnchantedItems) {
             MTE.lEUt = mEUt;
-            MTE.mMaxProgresstime = 10;
+            MTE.mMaxProgresstime = Math.max(MOB_SPAWN_INTERVAL, (int) ((recipe.maxEntityHealth / attackDamage) * 10d));
             ArrayList<ItemStack> stacks = new ArrayList<>(this.mOutputs.size());
             this.entityCopy.setPosition(
                 MTE.getBaseMetaTileEntity()
@@ -124,6 +118,7 @@ public class MobHandlerLoader {
                 }
 
                 chance = (int) (dChance * 100d);
+                if (chance == 0) continue;
 
                 if (o.playerOnly) {
                     chance = (int) ((double) chance * Config.MobHandler.playerOnlyDropsModifier);
@@ -138,9 +133,9 @@ public class MobHandlerLoader {
                         chance /= div;
                     }
                 }
-                if (chance != 10000) {
+                if (chance == 10000 || rnd.nextInt(10000) < chance) {
                     ItemStack s = o.stack.copy();
-                    s.stackSize = 134217728;
+                    s.stackSize = amount;
                     if (o.enchantable != null) EnchantmentHelper.addRandomEnchantment(rnd, s, o.enchantable);
                     if (o.damages != null) {
                         int rChance = rnd.nextInt(recipe.mMaxDamageChance);
@@ -154,6 +149,50 @@ public class MobHandlerLoader {
                         }
                     }
                     stacks.add(s);
+                }
+            }
+
+            if (InfernalMobs.isModLoaded()) {
+                InfernalMobsCore infernalMobsCore = InfernalMobsCore.instance();
+                if (recipe.infernalityAllowed && mEUt * 8 <= MTE.getMaxInputEu()
+                    && !infernalMobsCore.getDimensionBlackList()
+                        .contains(
+                            MTE.getBaseMetaTileEntity()
+                                .getWorld().provider.dimensionId)) {
+                    int p = 0;
+                    int mods = 0;
+                    if (recipe.alwaysinfernal
+                        || (preferInfernalDrops && rnd.nextInt(infernalMobsCore.getEliteRarity()) == 0)) {
+                        p = 1;
+                        if (rnd.nextInt(infernalMobsCore.getUltraRarity()) == 0) {
+                            p = 2;
+                            if (rnd.nextInt(infernalMobsCore.getInfernoRarity()) == 0) p = 3;
+                        }
+                    }
+                    ArrayList<ItemStack> infernalstacks = null;
+                    if (p > 0) if (p == 1) {
+                        infernalstacks = infernalMobsCore.getDropIdListElite();
+                        mods = infernalMobsCore.getMinEliteModifiers();
+                    } else if (p == 2) {
+                        infernalstacks = infernalMobsCore.getDropIdListUltra();
+                        mods = infernalMobsCore.getMinUltraModifiers();
+                    } else {
+                        infernalstacks = infernalMobsCore.getDropIdListInfernal();
+                        mods = infernalMobsCore.getMinInfernoModifiers();
+                    }
+                    if (infernalstacks != null) {
+                        ItemStack infernalstack = infernalstacks.get(rnd.nextInt(infernalstacks.size()))
+                            .copy();
+                        EnchantmentHelper.addRandomEnchantment(
+                            rnd,
+                            infernalstack,
+                            infernalstack.getItem()
+                                .getItemEnchantability());
+                        stacks.add(infernalstack);
+                        MTE.lEUt *= 8L;
+                        MTE.mMaxProgresstime *= mods * InfernalMobsCore.instance()
+                            .getMobModHealthFactor();
+                    }
                 }
             }
 
@@ -172,109 +211,31 @@ public class MobHandlerLoader {
     @SuppressWarnings("unused")
     public void onPostMobRegistration(PostMobRegistrationEvent event) {
         if (!event.drops.isEmpty() && event.recipe.isUsableInVial) {
+            for (MobDrop drop : event.drops) {
+                if (drop.playerOnly) {
+                    drop.additionalInfo.add(
+                        StatCollector.translateToLocalFormatted(
+                            "kubatech.mobhandler.eec_chance",
+                            (((double) drop.chance / 100d) * Config.MobHandler.playerOnlyDropsModifier)));
+                }
+            }
             @SuppressWarnings("unchecked")
             ArrayList<MobDrop> drops = (ArrayList<MobDrop>) event.drops.clone();
             if (!drops.isEmpty()) {
-                recipeMap.put(event.currentMob, new MobEECRecipe(drops, event.recipe));
+                recipeMap.put(event.currentMob, new MobHandlerLoader.MobEECRecipe(drops, event.recipe));
             }
         }
-    }
-
-    @SubscribeEvent
-    @SuppressWarnings("unused")
-    public void onPostOverridesConfigLoad(PostMobsOverridesLoadEvent event) throws ReflectiveOperationException {
-        if (NewHorizonsCoreMod.isModLoaded()) {
-            LOG.info("Detected GTNH Core Mod, parsing custom drops from there.");
-            final Class<?> cMainRegistry = Class.forName("com.dreammaster.main.MainRegistry");
-            final Object dropsHandler = cMainRegistry.getField("Module_CustomDrops")
-                .get(null);
-            if (dropsHandler == null) return;
-            final Class<?> cDrops = Class.forName("com.dreammaster.modcustomdrops.CustomDrops");
-            final Object coredrops = ReflectionHelper.getField(dropsHandler, "_mCustomDrops", null);
-            final Method mGetCustomDrops = cDrops.getMethod("getCustomDrops");
-
-            final Class<?> cCustomDrop = Class.forName("com.dreammaster.modcustomdrops.CustomDrops$CustomDrop");
-            final Method mGetCustomDropEntityName = cCustomDrop.getMethod("getEntityName");
-            final Method mGetCustomDropDrops = cCustomDrop.getMethod("getDrops");
-
-            final Class<?> cDrop = Class.forName("com.dreammaster.modcustomdrops.CustomDrops$CustomDrop$Drop");
-            final Method mDropGetItemName = cDrop.getMethod("getItemName");
-            final Method mDropGetChance = cDrop.getMethod("getChance");
-            final Method mDropGetAmount = cDrop.getMethod("getAmount");
-            final Method mDropGetIsRandomAmount = cDrop.getMethod("getIsRandomAmount");
-
-            if (coredrops != null) {
-                final ArrayList<?> customDrops = new ArrayList<>((ArrayList<?>) mGetCustomDrops.invoke(coredrops));
-                for (final Object customDrop : customDrops) {
-                    try {
-                        final String entityName = (String) mGetCustomDropEntityName.invoke(customDrop);
-
-                        final Class<?> eclass = Class.forName(entityName);
-                        if (!EntityLiving.class.isAssignableFrom(eclass)) continue;
-                        final String ename = EntityList.classToStringMapping.get(eclass);
-                        if (ename == null) continue;
-                        final MobOverride override = event.overrides.computeIfAbsent(ename, k -> new MobOverride());
-                        final List<?> entityDrops = (List<?>) mGetCustomDropDrops.invoke(customDrop);
-
-                        for (final Object drop : entityDrops) {
-                            final String itemName = (String) mDropGetItemName.invoke(drop);
-                            String[] parts = itemName.split(":");
-                            ItemStack stack = GameRegistry.findItemStack(parts[0], parts[1], 1);
-                            if (stack == null) continue;
-                            if (parts.length > 2) stack.setItemDamage(Integer.parseInt(parts[2]));
-                            String pNBT = ReflectionHelper.getField(drop, "mTag", null);
-                            if (pNBT != null && !pNBT.isEmpty()) {
-                                try {
-                                    stack.stackTagCompound = (NBTTagCompound) JsonToNBT.func_150315_a(pNBT);
-                                } catch (Exception ignored) {}
-                            }
-                            int chance = ((int) mDropGetChance.invoke(drop)) * 100;
-                            int amount = (int) mDropGetAmount.invoke(drop);
-                            if ((boolean) mDropGetIsRandomAmount.invoke(drop)) {
-                                // average chance formula
-                                // chance *= ((((amount * (amount + 1d)) / 2d)) + 1d) / (amount + 1d);
-                                chance *= (2d + (amount * amount) + amount) / (2d * (amount + 1d));
-                                amount = 1;
-                                if (chance > 10000) {
-                                    int div = (int) Math.ceil(chance / 10000d);
-                                    amount *= div;
-                                    chance /= div;
-                                }
-                            }
-                            stack.stackSize = amount;
-                            // Drops from coremod are player only
-                            MobDrop mobDrop = new MobDrop(
-                                stack,
-                                MobDrop.DropType.Normal,
-                                chance,
-                                null,
-                                null,
-                                false,
-                                true);
-                            mobDrop.additionalInfo.add(
-                                StatCollector.translateToLocalFormatted(
-                                    "kubatech.mobhandler.eec_chance",
-                                    (((double) chance / 100d) * Config.MobHandler.playerOnlyDropsModifier)));
-                            override.additions.add(mobDrop);
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-
     }
 
     @SubscribeEvent
     @SuppressWarnings("unused")
     public void onMobNEIRegistration(MobNEIRegistrationEvent event) {
-        MobEECRecipe recipe = recipeMap.get(event.mobName);
+        MobHandlerLoader.MobEECRecipe recipe = recipeMap.get(event.mobName);
         if (recipe != null) {
             event.additionalInformation.addAll(
                 Arrays.asList(
-                    GT_Utility.trans("153", "Usage: ") + GT_Utility.formatNumbers(recipe.mEUt) + " EU/t",
-                    GT_Utility.trans("158", "Time: ") + GT_Utility.formatNumbers(recipe.mDuration / 20d) + " secs"));
+                    GTUtility.trans("153", "Usage: ") + GTUtility.formatNumbers(recipe.mEUt) + " EU/t",
+                    GTUtility.trans("158", "Time: ") + GTUtility.formatNumbers(recipe.mDuration / 20d) + " secs"));
         }
     }
 }

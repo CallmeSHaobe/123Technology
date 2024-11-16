@@ -4,9 +4,9 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
-import gregtech.api.enums.GT_Values;
+import gregtech.api.enums.GTValues;
 import gregtech.api.interfaces.IRecipeMap;
-import gregtech.api.util.GT_ModHandler;
+import gregtech.api.util.GTModHandler;
 import gtPlusPlus.api.recipe.GTPPRecipeMaps;
 import gtPlusPlus.core.item.chemistry.GenericChem;
 import gtPlusPlus.core.util.minecraft.ItemUtils;
@@ -23,19 +23,19 @@ public class QFT implements IRecipePool {
         final IRecipeMap qft = GTPPRecipeMaps.quantumForceTransformerRecipes;
 
         // ISA
-        GT_Values.RA.stdBuilder()
+        GTValues.RA.stdBuilder()
             .itemInputs(
-                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 0, 31027),
-                GT_ModHandler.getModItem("gregtech", "gt.blockmachines", 0, 31028),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, 31027),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, 31028),
                 ItemUtils.getSimpleStack(GenericChem.mPlatinumGroupCatalyst, 0))
             .fluidInputs(new FluidStack(songyou, 123), new FluidStack(laoda, 24))
             .itemOutputs(
-                GT_ModHandler.getModItem("miscutils", "itemDustRhenium", 16),
-                GT_ModHandler.getModItem("miscutils", "itemDustThallium", 16),
-                GT_ModHandler.getModItem("miscutils", "itemDustSelenium", 16),
-                GT_ModHandler.getModItem("miscutils", "itemDustGermanium", 16),
-                GT_ModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 2044),
-                GT_ModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 2073))
+                GTModHandler.getModItem("miscutils", "itemDustRhenium", 16),
+                GTModHandler.getModItem("miscutils", "itemDustThallium", 16),
+                GTModHandler.getModItem("miscutils", "itemDustSelenium", 16),
+                GTModHandler.getModItem("miscutils", "itemDustGermanium", 16),
+                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 2044),
+                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 2073))
             .fluidOutputs(new FluidStack(Water, 123123), new FluidStack(nijiang, 1919810))
             .outputChances(1667, 1667, 1667, 1667, 1667, 1667)
             .noOptimize()

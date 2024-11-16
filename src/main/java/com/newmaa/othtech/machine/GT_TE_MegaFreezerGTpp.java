@@ -1,7 +1,8 @@
 package com.newmaa.othtech.machine;
 
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
-import static gregtech.api.enums.GT_HatchElement.*;
+import static gregtech.api.enums.HatchElement.*;
+import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -27,9 +28,8 @@ import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.recipe.check.SimpleCheckRecipeResult;
 import gregtech.api.render.TextureFactory;
-import gregtech.api.util.GT_HatchElementBuilder;
-import gregtech.api.util.GT_Multiblock_Tooltip_Builder;
-import gregtech.api.util.GT_Recipe;
+import gregtech.api.util.GTRecipe;
+import gregtech.api.util.MultiblockTooltipBuilder;
 import gtPlusPlus.core.block.ModBlocks;
 import gtPlusPlus.core.util.minecraft.FluidUtils;
 import gtPlusPlus.xmod.gregtech.common.blocks.textures.TexturesGtBlock;
@@ -88,7 +88,7 @@ public class GT_TE_MegaFreezerGTpp extends OTH_MultiMachineBase<GT_TE_MegaFreeze
 
             @NotNull
             @Override
-            protected CheckRecipeResult validateRecipe(@NotNull GT_Recipe recipe) {
+            protected CheckRecipeResult validateRecipe(@NotNull GTRecipe recipe) {
                 return checkForLava() ? CheckRecipeResultRegistry.SUCCESSFUL
                     : SimpleCheckRecipeResult.ofFailure("nolava");
             }
@@ -162,7 +162,7 @@ public class GT_TE_MegaFreezerGTpp extends OTH_MultiMachineBase<GT_TE_MegaFreeze
                 .addShape(STRUCTURE_PIECE_MAIN, transpose(shapeMain))
                 .addElement(
                     'A',
-                    GT_HatchElementBuilder.<GT_TE_MegaFreezerGTpp>builder()
+                    buildHatchAdder(GT_TE_MegaFreezerGTpp.class)
                         .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch, Muffler)
                         .adder(GT_TE_MegaFreezerGTpp::addToMachineList)
                         .dot(1)
@@ -229,8 +229,8 @@ public class GT_TE_MegaFreezerGTpp extends OTH_MultiMachineBase<GT_TE_MegaFreeze
             "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA" } };
 
     @Override
-    protected GT_Multiblock_Tooltip_Builder createTooltip() {
-        final GT_Multiblock_Tooltip_Builder tt = new GT_Multiblock_Tooltip_Builder();
+    protected MultiblockTooltipBuilder createTooltip() {
+        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType("§l老登的终极造物 - 真空冷冻机")
             .addInfo("§b  EU消耗: 100%")
             .addInfo("§b  速度 + 100%")

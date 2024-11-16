@@ -9,9 +9,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.oredict.OreDictionary;
 
-import gregtech.api.util.GT_Utility;
+import gregtech.api.util.GTUtility;
 
-public class ItemID extends GT_Utility.ItemId {
+public class ItemID extends GTUtility.ItemId {
 
     // region Member Variables
     private Item item;
@@ -115,6 +115,13 @@ public class ItemID extends GT_Utility.ItemId {
     @Override
     protected NBTTagCompound nbt() {
         return nbt;
+    }
+
+    @Nullable
+    @Override
+    protected Integer stackSize() {
+        // todo
+        return null;
     }
 
     @Nullable

@@ -2,28 +2,21 @@ package com.newmaa.othtech.machine;
 
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.withChannel;
-import static gregtech.api.GregTech_API.sBlockCasings2;
-import static gregtech.api.GregTech_API.sBlockCasings3;
-import static gregtech.api.GregTech_API.sBlockCasings4;
-import static gregtech.api.GregTech_API.sBlockCasings8;
-import static gregtech.api.GregTech_API.sBlockConcretes;
-import static gregtech.api.GregTech_API.sBlockMetal1;
-import static gregtech.api.GregTech_API.sBlockMetal6;
-import static gregtech.api.GregTech_API.sBlockMetal7;
-import static gregtech.api.enums.GT_HatchElement.Energy;
-import static gregtech.api.enums.GT_HatchElement.ExoticEnergy;
-import static gregtech.api.enums.GT_HatchElement.InputBus;
-import static gregtech.api.enums.GT_HatchElement.InputHatch;
-import static gregtech.api.enums.GT_HatchElement.Muffler;
-import static gregtech.api.enums.GT_HatchElement.OutputBus;
-import static gregtech.api.enums.GT_HatchElement.OutputHatch;
+import static gregtech.api.GregTechAPI.sBlockCasings2;
+import static gregtech.api.GregTechAPI.sBlockCasings3;
+import static gregtech.api.GregTechAPI.sBlockCasings4;
+import static gregtech.api.GregTechAPI.sBlockCasings8;
+import static gregtech.api.GregTechAPI.sBlockConcretes;
+import static gregtech.api.GregTechAPI.sBlockMetal1;
+import static gregtech.api.GregTechAPI.sBlockMetal6;
+import static gregtech.api.GregTechAPI.sBlockMetal7;
+import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.enums.Mods.Chisel;
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_ASSEMBLY_LINE;
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_ASSEMBLY_LINE_ACTIVE;
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_ASSEMBLY_LINE_ACTIVE_GLOW;
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_ASSEMBLY_LINE_GLOW;
-import static gregtech.api.util.GT_StructureUtility.ofCoil;
-import static gregtech.api.util.GT_StructureUtility.ofFrame;
+import static gregtech.api.util.GTStructureUtility.*;
 
 import java.util.List;
 
@@ -38,7 +31,6 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 import org.jetbrains.annotations.NotNull;
 
-import com.github.bartimaeusnek.bartworks.API.BorosilicateGlass;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
@@ -47,7 +39,8 @@ import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTH_processingLogics.OTH_ProcessingLogic;
 
-import gregtech.api.GregTech_API;
+import bartworks.API.BorosilicateGlass;
+import gregtech.api.GregTechAPI;
 import gregtech.api.enums.HeatingCoilLevel;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.SoundResource;
@@ -59,10 +52,9 @@ import gregtech.api.logic.ProcessingLogic;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.render.TextureFactory;
-import gregtech.api.util.GT_HatchElementBuilder;
-import gregtech.api.util.GT_ModHandler;
-import gregtech.api.util.GT_Multiblock_Tooltip_Builder;
-import gregtech.api.util.GT_Utility;
+import gregtech.api.util.GTModHandler;
+import gregtech.api.util.GTUtility;
+import gregtech.api.util.MultiblockTooltipBuilder;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 
@@ -98,7 +90,7 @@ public class GT_TE_SINOPEC extends OTH_MultiMachineBase<GT_TE_SINOPEC> {
         if (aTick % 20 == 0 && !$123) {
             ItemStack aGuiStack = this.getControllerSlot();
             if (aGuiStack != null) {
-                if (GT_Utility.areStacksEqual(aGuiStack, GT_ModHandler.getModItem("123Technology", "dustIrOsSm", 1))) {
+                if (GTUtility.areStacksEqual(aGuiStack, GTModHandler.getModItem("123Technology", "dustIrOsSm", 1))) {
                     this.$123 = true;
                 }
             }
@@ -248,7 +240,7 @@ public class GT_TE_SINOPEC extends OTH_MultiMachineBase<GT_TE_SINOPEC> {
                         : ofBlock(sBlockConcretes, 0))
                 .addElement(
                     'F',
-                    GT_HatchElementBuilder.<GT_TE_SINOPEC>builder()
+                    buildHatchAdder(GT_TE_SINOPEC.class)
                         .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch)
                         .adder(GT_TE_SINOPEC::addToMachineList)
                         .dot(1)
@@ -256,8 +248,7 @@ public class GT_TE_SINOPEC extends OTH_MultiMachineBase<GT_TE_SINOPEC> {
                         .buildAndChain(sBlockCasings4, 0))
                 .addElement(
                     'O',
-                    GT_HatchElementBuilder.<GT_TE_SINOPEC>builder()
-                        .atLeast(Muffler)
+                    buildHatchAdder(GT_TE_SINOPEC.class).atLeast(Muffler)
                         .adder(GT_TE_SINOPEC::addToMachineList)
                         .dot(2)
                         .casingIndex(48)
@@ -1107,8 +1098,8 @@ public class GT_TE_SINOPEC extends OTH_MultiMachineBase<GT_TE_SINOPEC> {
     }
 
     @Override
-    protected GT_Multiblock_Tooltip_Builder createTooltip() {
-        final GT_Multiblock_Tooltip_Builder tt = new GT_Multiblock_Tooltip_Builder();
+    protected MultiblockTooltipBuilder createTooltip() {
+        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType("§q§l重工业计划 - 中国石化集成工厂")
             .addInfo("§l§a黑金的最终流处...")
             .addInfo("§l一步到位.")
@@ -1175,7 +1166,7 @@ public class GT_TE_SINOPEC extends OTH_MultiMachineBase<GT_TE_SINOPEC> {
 
         if (sideDirection == facing) {
             if (active) return new ITexture[] {
-                Textures.BlockIcons.getCasingTextureForId(GT_Utility.getCasingTextureIndex(sBlockCasings4, 0)),
+                Textures.BlockIcons.getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings4, 0)),
                 TextureFactory.builder()
                     .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_ACTIVE)
                     .extFacing()
@@ -1185,7 +1176,7 @@ public class GT_TE_SINOPEC extends OTH_MultiMachineBase<GT_TE_SINOPEC> {
                     .extFacing()
                     .build() };
             return new ITexture[] {
-                Textures.BlockIcons.getCasingTextureForId(GT_Utility.getCasingTextureIndex(sBlockCasings4, 0)),
+                Textures.BlockIcons.getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings4, 0)),
                 TextureFactory.builder()
                     .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE)
                     .extFacing()
@@ -1196,8 +1187,8 @@ public class GT_TE_SINOPEC extends OTH_MultiMachineBase<GT_TE_SINOPEC> {
                     .glow()
                     .build() };
         }
-        return new ITexture[] { Textures.BlockIcons
-            .getCasingTextureForId(GT_Utility.getCasingTextureIndex(GregTech_API.sBlockCasings4, 0)) };
+        return new ITexture[] {
+            Textures.BlockIcons.getCasingTextureForId(GTUtility.getCasingTextureIndex(GregTechAPI.sBlockCasings4, 0)) };
     }
 
     @Override

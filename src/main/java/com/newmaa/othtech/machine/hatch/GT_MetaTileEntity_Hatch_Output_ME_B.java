@@ -44,18 +44,18 @@ import appeng.me.helpers.AENetworkProxy;
 import appeng.me.helpers.IGridProxyable;
 import appeng.util.IWideReadableNumberConverter;
 import appeng.util.ReadableNumberConverter;
-import gregtech.GT_Mod;
-import gregtech.api.enums.GT_Values;
+import gregtech.GTMod;
+import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
-import gregtech.api.gui.modularui.GT_UIInfos;
+import gregtech.api.gui.modularui.GTUIInfos;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.metatileentity.MetaTileEntity;
-import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Output;
+import gregtech.api.metatileentity.implementations.MTEHatchOutput;
 import gregtech.api.render.TextureFactory;
-import gregtech.api.util.GT_Utility;
+import gregtech.api.util.GTUtility;
 
-public class GT_MetaTileEntity_Hatch_Output_ME_B extends GT_MetaTileEntity_Hatch_Output implements IPowerChannelState {
+public class GT_MetaTileEntity_Hatch_Output_ME_B extends MTEHatchOutput implements IPowerChannelState {
 
     private long baseCapacity = Long.MAX_VALUE;
 
@@ -102,7 +102,7 @@ public class GT_MetaTileEntity_Hatch_Output_ME_B extends GT_MetaTileEntity_Hatch
 
     @Override
     public byte getTierForStructure() {
-        return (byte) (GT_Values.V.length - 2);
+        return (byte) (GTValues.V.length - 2);
     }
 
     @Override
@@ -197,7 +197,7 @@ public class GT_MetaTileEntity_Hatch_Output_ME_B extends GT_MetaTileEntity_Hatch
 
     @Override
     public boolean onRightclick(IGregTechTileEntity aBaseMetaTileEntity, EntityPlayer aPlayer) {
-        GT_UIInfos.openGTTileEntityUI(aBaseMetaTileEntity, aPlayer);
+        GTUIInfos.openGTTileEntityUI(aBaseMetaTileEntity, aPlayer);
         return true;
     }
 
@@ -337,12 +337,12 @@ public class GT_MetaTileEntity_Hatch_Output_ME_B extends GT_MetaTileEntity_Hatch
                 NBTTagCompound tagFluidStack = tag.getCompoundTag("fluidStack");
                 final IAEFluidStack s = AEApi.instance()
                     .storage()
-                    .createFluidStack(GT_Utility.loadFluid(tagFluidStack));
+                    .createFluidStack(GTUtility.loadFluid(tagFluidStack));
                 if (s != null) {
                     s.setStackSize(tag.getLong("size"));
                     fluidCache.add(s);
                 } else {
-                    GT_Mod.GT_FML_LOGGER.warn(
+                    GTMod.GT_FML_LOGGER.warn(
                         "An error occurred while loading contents of ME Output Hatch. This fluid has been voided: "
                             + tagFluidStack);
                 }
@@ -433,11 +433,6 @@ public class GT_MetaTileEntity_Hatch_Output_ME_B extends GT_MetaTileEntity_Hatch
         }
 
         return input;
-    }
-
-    @Override
-    public boolean useModularUI() {
-        return true;
     }
 
     @Override

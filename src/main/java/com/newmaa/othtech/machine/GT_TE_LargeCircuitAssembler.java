@@ -1,12 +1,12 @@
 package com.newmaa.othtech.machine;
 
-import static com.github.technus.tectech.thing.casing.TT_Container_Casings.TimeAccelerationFieldGenerator;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
 import static com.newmaa.othtech.Utils.Utils.filterValidMTEs;
-import static gregtech.api.GregTech_API.*;
-import static gregtech.api.enums.GT_HatchElement.*;
-import static gregtech.api.enums.Textures.BlockIcons.*;
-import static gregtech.api.util.GT_StructureUtility.ofFrame;
+import static gregtech.api.GregTechAPI.*;
+import static gregtech.api.enums.HatchElement.*;
+import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
+import static gregtech.api.util.GTStructureUtility.ofFrame;
+import static tectech.thing.casing.TTCasingsContainer.TimeAccelerationFieldGenerator;
 
 import java.util.List;
 
@@ -22,7 +22,6 @@ import net.minecraftforge.common.util.ForgeDirection;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 
-import com.github.bartimaeusnek.bartworks.API.BorosilicateGlass;
 import com.google.common.collect.ImmutableList;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
@@ -30,8 +29,9 @@ import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTH_processingLogics.OTH_ProcessingLogic;
 
+import bartworks.API.BorosilicateGlass;
 import goodgenerator.loader.Loaders;
-import gregtech.api.enums.GT_Values;
+import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.SoundResource;
 import gregtech.api.enums.Textures;
@@ -40,18 +40,17 @@ import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.logic.ProcessingLogic;
-import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch;
-import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Energy;
+import gregtech.api.metatileentity.implementations.MTEHatch;
+import gregtech.api.metatileentity.implementations.MTEHatchEnergy;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.recipe.check.SimpleCheckRecipeResult;
 import gregtech.api.render.TextureFactory;
-import gregtech.api.util.GT_HatchElementBuilder;
-import gregtech.api.util.GT_Multiblock_Tooltip_Builder;
-import gregtech.api.util.GT_Recipe;
-import gregtech.api.util.GT_Utility;
+import gregtech.api.util.GTRecipe;
+import gregtech.api.util.GTUtility;
+import gregtech.api.util.MultiblockTooltipBuilder;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 
@@ -95,7 +94,7 @@ public class GT_TE_LargeCircuitAssembler extends OTH_MultiMachineBase<GT_TE_Larg
         super.getWailaNBTData(player, tile, tag, world, x, y, z);
         final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
         if (tileEntity != null) {
-            Par = GT_Utility.formatNumbers(getMaxParallelRecipes());
+            Par = GTUtility.formatNumbers(getMaxParallelRecipes());
             tag.setString("Parallel", Par);
         }
     }
@@ -134,7 +133,7 @@ public class GT_TE_LargeCircuitAssembler extends OTH_MultiMachineBase<GT_TE_Larg
     public long getMachineVoltageLimit() {
         checkEnergyHatchTier();
         energyHatchTier = checkEnergyHatchTier();
-        return GT_Values.V[energyHatchTier];
+        return GTValues.V[energyHatchTier];
     }
 
     @Override
@@ -160,7 +159,7 @@ public class GT_TE_LargeCircuitAssembler extends OTH_MultiMachineBase<GT_TE_Larg
 
             @NotNull
             @Override
-            protected CheckRecipeResult validateRecipe(@NotNull GT_Recipe recipe) {
+            protected CheckRecipeResult validateRecipe(@NotNull GTRecipe recipe) {
                 if (availableVoltage < recipe.mEUt) {
                     return SimpleCheckRecipeResult.ofFailure("voltage");
                 }
@@ -180,10 +179,10 @@ public class GT_TE_LargeCircuitAssembler extends OTH_MultiMachineBase<GT_TE_Larg
 
     private int checkEnergyHatchTier() {
         int tier = 0;
-        for (GT_MetaTileEntity_Hatch_Energy tHatch : filterValidMTEs(mEnergyHatches)) {
+        for (MTEHatchEnergy tHatch : filterValidMTEs(mEnergyHatches)) {
             tier = Math.max(tHatch.mTier, tier);
         }
-        for (GT_MetaTileEntity_Hatch tHatch : filterValidMTEs(mExoticEnergyHatches)) {
+        for (MTEHatch tHatch : filterValidMTEs(mExoticEnergyHatches)) {
             tier = Math.max(tHatch.mTier, tier);
         }
         return tier;
@@ -249,8 +248,7 @@ public class GT_TE_LargeCircuitAssembler extends OTH_MultiMachineBase<GT_TE_Larg
                 .addElement('I', ofFrame(Materials.Titanium))
                 .addElement(
                     'H',
-                    GT_HatchElementBuilder.<GT_TE_LargeCircuitAssembler>builder()
-                        .atLeast(Energy.or(ExoticEnergy), Muffler)
+                    buildHatchAdder(GT_TE_LargeCircuitAssembler.class).atLeast(Energy.or(ExoticEnergy), Muffler)
                         .adder(GT_TE_LargeCircuitAssembler::addToMachineList)
                         .casingIndex(1539)
                         .dot(1)
@@ -266,8 +264,7 @@ public class GT_TE_LargeCircuitAssembler extends OTH_MultiMachineBase<GT_TE_Larg
                                 t -> t.casingTier)))
                 .addElement(
                     'G',
-                    GT_HatchElementBuilder.<GT_TE_LargeCircuitAssembler>builder()
-                        .atLeast(OutputHatch, OutputBus)
+                    buildHatchAdder(GT_TE_LargeCircuitAssembler.class).atLeast(OutputHatch, OutputBus)
                         .adder(GT_TE_LargeCircuitAssembler::addToMachineList)
                         .casingIndex(1539)
                         .dot(2)
@@ -283,8 +280,7 @@ public class GT_TE_LargeCircuitAssembler extends OTH_MultiMachineBase<GT_TE_Larg
                                 t -> t.casingTier)))
                 .addElement(
                     'F',
-                    GT_HatchElementBuilder.<GT_TE_LargeCircuitAssembler>builder()
-                        .atLeast(InputBus, InputHatch)
+                    buildHatchAdder(GT_TE_LargeCircuitAssembler.class).atLeast(InputBus, InputHatch)
                         .adder(GT_TE_LargeCircuitAssembler::addToMachineList)
                         .casingIndex(1539)
                         .dot(3)
@@ -326,8 +322,8 @@ public class GT_TE_LargeCircuitAssembler extends OTH_MultiMachineBase<GT_TE_Larg
     }
 
     @Override
-    protected GT_Multiblock_Tooltip_Builder createTooltip() {
-        final GT_Multiblock_Tooltip_Builder tt = new GT_Multiblock_Tooltip_Builder();
+    protected MultiblockTooltipBuilder createTooltip() {
+        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType("§e§l轻工业计划 - 大型电路组装机")
             .addInfo("§l朴实无华...")
             .addInfo("能源仓等级限制配方等级")

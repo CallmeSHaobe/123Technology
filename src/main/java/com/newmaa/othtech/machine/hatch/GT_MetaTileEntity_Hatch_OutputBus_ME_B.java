@@ -38,18 +38,17 @@ import appeng.me.helpers.IGridProxyable;
 import appeng.util.IWideReadableNumberConverter;
 import appeng.util.Platform;
 import appeng.util.ReadableNumberConverter;
-import gregtech.GT_Mod;
+import gregtech.GTMod;
 import gregtech.api.enums.ItemList;
-import gregtech.api.gui.modularui.GT_UIInfos;
+import gregtech.api.gui.modularui.GTUIInfos;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.metatileentity.MetaTileEntity;
-import gregtech.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_OutputBus;
+import gregtech.api.metatileentity.implementations.MTEHatchOutputBus;
 import gregtech.api.render.TextureFactory;
-import gregtech.api.util.GT_Utility;
+import gregtech.api.util.GTUtility;
 
-public class GT_MetaTileEntity_Hatch_OutputBus_ME_B extends GT_MetaTileEntity_Hatch_OutputBus
-    implements IPowerChannelState {
+public class GT_MetaTileEntity_Hatch_OutputBus_ME_B extends MTEHatchOutputBus implements IPowerChannelState {
 
     private long baseCapacity = Long.MAX_VALUE;
 
@@ -176,7 +175,7 @@ public class GT_MetaTileEntity_Hatch_OutputBus_ME_B extends GT_MetaTileEntity_Ha
 
     @Override
     public boolean onRightclick(IGregTechTileEntity aBaseMetaTileEntity, EntityPlayer aPlayer) {
-        GT_UIInfos.openGTTileEntityUI(aBaseMetaTileEntity, aPlayer);
+        GTUIInfos.openGTTileEntityUI(aBaseMetaTileEntity, aPlayer);
         return true;
     }
 
@@ -283,7 +282,7 @@ public class GT_MetaTileEntity_Hatch_OutputBus_ME_B extends GT_MetaTileEntity_Ha
         for (IAEItemStack s : itemCache) {
             if (s.getStackSize() == 0) continue;
             NBTTagCompound tag = new NBTTagCompound();
-            tag.setTag("itemStack", GT_Utility.saveItem(s.getItemStack()));
+            tag.setTag("itemStack", GTUtility.saveItem(s.getItemStack()));
             tag.setLong("size", s.getStackSize());
             items.appendTag(tag);
         }
@@ -301,7 +300,7 @@ public class GT_MetaTileEntity_Hatch_OutputBus_ME_B extends GT_MetaTileEntity_Ha
         if (t instanceof NBTTagCompound) itemCache.add(
             AEApi.instance()
                 .storage()
-                .createItemStack(GT_Utility.loadItem((NBTTagCompound) t)));
+                .createItemStack(GTUtility.loadItem((NBTTagCompound) t)));
         t = aNBT.getTag("cachedItems");
         if (t instanceof NBTTagList l) {
             for (int i = 0; i < l.tagCount(); ++i) {
@@ -310,18 +309,18 @@ public class GT_MetaTileEntity_Hatch_OutputBus_ME_B extends GT_MetaTileEntity_Ha
                     itemCache.add(
                         AEApi.instance()
                             .storage()
-                            .createItemStack(GT_Utility.loadItem(l.getCompoundTagAt(i))));
+                            .createItemStack(GTUtility.loadItem(l.getCompoundTagAt(i))));
                     continue;
                 }
                 NBTTagCompound tagItemStack = tag.getCompoundTag("itemStack");
                 final IAEItemStack s = AEApi.instance()
                     .storage()
-                    .createItemStack(GT_Utility.loadItem(tagItemStack));
+                    .createItemStack(GTUtility.loadItem(tagItemStack));
                 if (s != null) {
                     s.setStackSize(tag.getLong("size"));
                     itemCache.add(s);
                 } else {
-                    GT_Mod.GT_FML_LOGGER.warn(
+                    GTMod.GT_FML_LOGGER.warn(
                         "An error occurred while loading contents of ME Output Bus. This item has been voided: "
                             + tagItemStack);
                 }
@@ -365,11 +364,6 @@ public class GT_MetaTileEntity_Hatch_OutputBus_ME_B extends GT_MetaTileEntity_Ha
             }
         }
         return ss.toArray(new String[itemCache.size() + 2]);
-    }
-
-    @Override
-    public boolean useModularUI() {
-        return true;
     }
 
     @Override

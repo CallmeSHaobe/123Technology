@@ -1,11 +1,12 @@
 package com.newmaa.othtech.machine;
 
-import static com.github.technus.tectech.thing.casing.TT_Container_Casings.*;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
-import static gregtech.api.GregTech_API.sBlockMetal9;
-import static gregtech.api.enums.GT_HatchElement.*;
+import static gregtech.api.GregTechAPI.sBlockMetal9;
+import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.enums.Textures.BlockIcons.*;
-import static gregtech.api.util.GT_StructureUtility.ofFrame;
+import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
+import static gregtech.api.util.GTStructureUtility.ofFrame;
+import static tectech.thing.casing.TTCasingsContainer.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,8 +25,6 @@ import net.minecraftforge.fluids.FluidStack;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 
-import com.github.technus.tectech.thing.block.QuantumGlassBlock;
-import com.github.technus.tectech.thing.casing.TT_Container_Casings;
 import com.google.common.collect.ImmutableList;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
@@ -35,7 +34,7 @@ import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTH_processingLogics.OTH_ProcessingLogic;
 
-import gregtech.api.GregTech_API;
+import gregtech.api.GregTechAPI;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
@@ -45,12 +44,12 @@ import gregtech.api.logic.ProcessingLogic;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.render.TextureFactory;
-import gregtech.api.util.GT_HatchElementBuilder;
-import gregtech.api.util.GT_Multiblock_Tooltip_Builder;
-import gregtech.api.util.GT_Utility;
+import gregtech.api.util.GTUtility;
+import gregtech.api.util.MultiblockTooltipBuilder;
 import gtPlusPlus.core.block.ModBlocks;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
+import tectech.thing.block.BlockQuantumGlass;
 
 // spotless:off
 public class GT_TE_MegaQFTFake extends OTH_MultiMachineBase<GT_TE_MegaQFTFake> {
@@ -135,7 +134,7 @@ public class GT_TE_MegaQFTFake extends OTH_MultiMachineBase<GT_TE_MegaQFTFake> {
         super.getWailaNBTData(player, tile, tag, world, x, y, z);
         final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
         if (tileEntity != null) {
-            plier = GT_Utility.formatNumbers(multiplier);
+            plier = GTUtility.formatNumbers(multiplier);
             tag.setString("multiplier", plier);
 
         }
@@ -329,15 +328,15 @@ public class GT_TE_MegaQFTFake extends OTH_MultiMachineBase<GT_TE_MegaQFTFake> {
                         ofBlocksTiered(
                             GT_TE_MegaQFTFake::getBlockStabilisationFieldGeneratorTier,
                             ImmutableList.of(
-                                Pair.of(TT_Container_Casings.StabilisationFieldGenerators, 0),
-                                Pair.of(TT_Container_Casings.StabilisationFieldGenerators, 1),
-                                Pair.of(TT_Container_Casings.StabilisationFieldGenerators, 2),
-                                Pair.of(TT_Container_Casings.StabilisationFieldGenerators, 3),
-                                Pair.of(TT_Container_Casings.StabilisationFieldGenerators, 4),
-                                Pair.of(TT_Container_Casings.StabilisationFieldGenerators, 5),
-                                Pair.of(TT_Container_Casings.StabilisationFieldGenerators, 6),
-                                Pair.of(TT_Container_Casings.StabilisationFieldGenerators, 7),
-                                Pair.of(TT_Container_Casings.StabilisationFieldGenerators, 8)),
+                                Pair.of(StabilisationFieldGenerators, 0),
+                                Pair.of(StabilisationFieldGenerators, 1),
+                                Pair.of(StabilisationFieldGenerators, 2),
+                                Pair.of(StabilisationFieldGenerators, 3),
+                                Pair.of(StabilisationFieldGenerators, 4),
+                                Pair.of(StabilisationFieldGenerators, 5),
+                                Pair.of(StabilisationFieldGenerators, 6),
+                                Pair.of(StabilisationFieldGenerators, 7),
+                                Pair.of(StabilisationFieldGenerators, 8)),
                             0,
                             (t, meta) -> t.stabilisationFieldMetadata = meta,
                             t -> t.stabilisationFieldMetadata)))
@@ -346,15 +345,15 @@ public class GT_TE_MegaQFTFake extends OTH_MultiMachineBase<GT_TE_MegaQFTFake> {
                         ofBlocksTiered(
                             GT_TE_MegaQFTFake::getBlockSpacetimeCompressionFieldGeneratorTier,
                             ImmutableList.of(
-                                Pair.of(TT_Container_Casings.SpacetimeCompressionFieldGenerators, 0),
-                                Pair.of(TT_Container_Casings.SpacetimeCompressionFieldGenerators, 1),
-                                Pair.of(TT_Container_Casings.SpacetimeCompressionFieldGenerators, 2),
-                                Pair.of(TT_Container_Casings.SpacetimeCompressionFieldGenerators, 3),
-                                Pair.of(TT_Container_Casings.SpacetimeCompressionFieldGenerators, 4),
-                                Pair.of(TT_Container_Casings.SpacetimeCompressionFieldGenerators, 5),
-                                Pair.of(TT_Container_Casings.SpacetimeCompressionFieldGenerators, 6),
-                                Pair.of(TT_Container_Casings.SpacetimeCompressionFieldGenerators, 7),
-                                Pair.of(TT_Container_Casings.SpacetimeCompressionFieldGenerators, 8)),
+                                Pair.of(SpacetimeCompressionFieldGenerators, 0),
+                                Pair.of(SpacetimeCompressionFieldGenerators, 1),
+                                Pair.of(SpacetimeCompressionFieldGenerators, 2),
+                                Pair.of(SpacetimeCompressionFieldGenerators, 3),
+                                Pair.of(SpacetimeCompressionFieldGenerators, 4),
+                                Pair.of(SpacetimeCompressionFieldGenerators, 5),
+                                Pair.of(SpacetimeCompressionFieldGenerators, 6),
+                                Pair.of(SpacetimeCompressionFieldGenerators, 7),
+                                Pair.of(SpacetimeCompressionFieldGenerators, 8)),
                             0,
                             (t, meta) -> t.spacetimeCompressionFieldMetadata = meta,
                             t -> t.spacetimeCompressionFieldMetadata)))
@@ -363,15 +362,15 @@ public class GT_TE_MegaQFTFake extends OTH_MultiMachineBase<GT_TE_MegaQFTFake> {
                         ofBlocksTiered(
                             GT_TE_MegaQFTFake::getBlockTimeAccelerationFieldGeneratorTier,
                             ImmutableList.of(
-                                Pair.of(TT_Container_Casings.TimeAccelerationFieldGenerator, 0),
-                                Pair.of(TT_Container_Casings.TimeAccelerationFieldGenerator, 1),
-                                Pair.of(TT_Container_Casings.TimeAccelerationFieldGenerator, 2),
-                                Pair.of(TT_Container_Casings.TimeAccelerationFieldGenerator, 3),
-                                Pair.of(TT_Container_Casings.TimeAccelerationFieldGenerator, 4),
-                                Pair.of(TT_Container_Casings.TimeAccelerationFieldGenerator, 5),
-                                Pair.of(TT_Container_Casings.TimeAccelerationFieldGenerator, 6),
-                                Pair.of(TT_Container_Casings.TimeAccelerationFieldGenerator, 7),
-                                Pair.of(TT_Container_Casings.TimeAccelerationFieldGenerator, 8)),
+                                Pair.of(TimeAccelerationFieldGenerator, 0),
+                                Pair.of(TimeAccelerationFieldGenerator, 1),
+                                Pair.of(TimeAccelerationFieldGenerator, 2),
+                                Pair.of(TimeAccelerationFieldGenerator, 3),
+                                Pair.of(TimeAccelerationFieldGenerator, 4),
+                                Pair.of(TimeAccelerationFieldGenerator, 5),
+                                Pair.of(TimeAccelerationFieldGenerator, 6),
+                                Pair.of(TimeAccelerationFieldGenerator, 7),
+                                Pair.of(TimeAccelerationFieldGenerator, 8)),
                             0,
                             (t, meta) -> t.timeAccelerationFieldMetadata = meta,
                             t -> t.timeAccelerationFieldMetadata)))
@@ -390,16 +389,16 @@ public class GT_TE_MegaQFTFake extends OTH_MultiMachineBase<GT_TE_MegaQFTFake> {
                 .addElement('A', ofFrame(Materials.Infinity))
                 .addElement(
                     'B',
-                    GT_HatchElementBuilder.<GT_TE_MegaQFTFake>builder()
+                    buildHatchAdder(GT_TE_MegaQFTFake.class)
                         .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch, Muffler)
                         .adder(GT_TE_MegaQFTFake::addToMachineList)
                         .dot(1)
                         .casingIndex(1024 + 12)
-                        .buildAndChain(GregTech_API.sBlockCasings8, 3))
+                        .buildAndChain(GregTechAPI.sBlockCasings8, 3))
                 .addElement('S', ofBlock(ModBlocks.blockCasings4Misc, 4))
                 .addElement('T', ofBlock(ModBlocks.blockCasings5Misc, 10))
                 .addElement('U', ofBlock(ModBlocks.blockCasings5Misc, 14))
-                .addElement('V', ofBlock(QuantumGlassBlock.INSTANCE, 0))
+                .addElement('V', ofBlock(BlockQuantumGlass.INSTANCE, 0))
                 .addElement('W', ofFrame(Materials.Infinity))
                 .build();
         }
@@ -471,8 +470,8 @@ public class GT_TE_MegaQFTFake extends OTH_MultiMachineBase<GT_TE_MegaQFTFake> {
     }
 
     @Override
-    protected GT_Multiblock_Tooltip_Builder createTooltip() {
-        final GT_Multiblock_Tooltip_Builder tt = new GT_Multiblock_Tooltip_Builder();
+    protected MultiblockTooltipBuilder createTooltip() {
+        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType("§e§l老登们的又一造物 - §b「狄拉克逆变器」")
             .addInfo("§b§l对虚粒子的操控在量子之海中掀起了滔天巨浪...")
             .addInfo("§d提供基础原料，可以让复杂的化学、物理过程一步到位")
@@ -544,7 +543,7 @@ public class GT_TE_MegaQFTFake extends OTH_MultiMachineBase<GT_TE_MegaQFTFake> {
         if (sideDirection == facing) {
             if (active) return new ITexture[] {
                 Textures.BlockIcons
-                    .getCasingTextureForId(GT_Utility.getCasingTextureIndex(GregTech_API.sBlockCasings1, 12)),
+                    .getCasingTextureForId(GTUtility.getCasingTextureIndex(GregTechAPI.sBlockCasings1, 12)),
                 TextureFactory.builder()
                     .addIcon(OVERLAY_DTPF_ON)
                     .extFacing()
@@ -555,7 +554,7 @@ public class GT_TE_MegaQFTFake extends OTH_MultiMachineBase<GT_TE_MegaQFTFake> {
                     .build() };
             return new ITexture[] {
                 Textures.BlockIcons
-                    .getCasingTextureForId(GT_Utility.getCasingTextureIndex(GregTech_API.sBlockCasings1, 12)),
+                    .getCasingTextureForId(GTUtility.getCasingTextureIndex(GregTechAPI.sBlockCasings1, 12)),
                 TextureFactory.builder()
                     .addIcon(OVERLAY_DTPF_OFF)
                     .extFacing()
@@ -567,7 +566,7 @@ public class GT_TE_MegaQFTFake extends OTH_MultiMachineBase<GT_TE_MegaQFTFake> {
                     .build() };
         }
         return new ITexture[] { Textures.BlockIcons
-            .getCasingTextureForId(GT_Utility.getCasingTextureIndex(GregTech_API.sBlockCasings1, 12)) };
+            .getCasingTextureForId(GTUtility.getCasingTextureIndex(GregTechAPI.sBlockCasings1, 12)) };
     }
 }
 // spotless:on

@@ -2,13 +2,13 @@ package com.newmaa.othtech.machine;
 
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.withChannel;
-import static gregtech.api.GregTech_API.*;
-import static gregtech.api.enums.GT_HatchElement.*;
+import static gregtech.api.GregTechAPI.*;
+import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.enums.Mods.Chisel;
 import static gregtech.api.enums.Mods.IndustrialCraft2;
 import static gregtech.api.enums.Textures.BlockIcons.*;
-import static gregtech.api.util.GT_StructureUtility.ofCoil;
-import static gregtech.api.util.GT_StructureUtility.ofFrame;
+import static gregtech.api.util.GTStructureUtility.*;
+import static gregtech.common.misc.WirelessNetworkManager.addEUToGlobalEnergyMap;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -38,12 +38,11 @@ import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTH_processingLogics.OTH_ProcessingLogic;
 
 import crazypants.enderio.EnderIO;
-import gregtech.api.GregTech_API;
+import gregtech.api.GregTechAPI;
 import gregtech.api.enums.HeatingCoilLevel;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.SoundResource;
 import gregtech.api.enums.Textures;
-import gregtech.api.interfaces.IGlobalWirelessEnergy;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
@@ -53,19 +52,16 @@ import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.recipe.check.SimpleCheckRecipeResult;
 import gregtech.api.render.TextureFactory;
-import gregtech.api.util.GT_HatchElementBuilder;
-import gregtech.api.util.GT_Multiblock_Tooltip_Builder;
-import gregtech.api.util.GT_OverclockCalculator;
-import gregtech.api.util.GT_Recipe;
-import gregtech.api.util.GT_Utility;
-import gregtech.common.blocks.GT_Block_Casings2;
-import gregtech.common.items.GT_IntegratedCircuit_Item;
+import gregtech.api.util.GTRecipe;
+import gregtech.api.util.GTUtility;
+import gregtech.api.util.MultiblockTooltipBuilder;
+import gregtech.api.util.OverclockCalculator;
+import gregtech.common.items.ItemIntegratedCircuit;
 import gtPlusPlus.core.block.ModBlocks;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 
-public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangShanSteelFactory>
-    implements IGlobalWirelessEnergy {
+public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangShanSteelFactory> {
 
     public GT_TE_TangShanSteelFactory(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
@@ -181,7 +177,7 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
 
             @NotNull
             @Override
-            protected CheckRecipeResult validateRecipe(@NotNull GT_Recipe recipe) {
+            protected CheckRecipeResult validateRecipe(@NotNull GTRecipe recipe) {
                 if (recipe.mSpecialValue > coilLevel.getHeat()) {
                     return SimpleCheckRecipeResult.ofFailure("HeatErr");
                 }
@@ -191,9 +187,9 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
 
             @Nonnull
             @Override
-            protected GT_OverclockCalculator createOverclockCalculator(@Nonnull GT_Recipe recipe) {
+            protected OverclockCalculator createOverclockCalculator(@Nonnull GTRecipe recipe) {
                 if (isWirelessMode) {
-                    return GT_OverclockCalculator.ofNoOverclock(recipe);
+                    return OverclockCalculator.ofNoOverclock(recipe);
                 } else {
                     return super.createOverclockCalculator(recipe);
                 }
@@ -209,7 +205,7 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
         } else {
             isWirelessMode = false;
         }
-        GT_Utility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal(isWirelessMode ? "无线模式启动" : "无线模式关闭"));
+        GTUtility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal(isWirelessMode ? "无线模式启动" : "无线模式关闭"));
     }
 
     @NotNull
@@ -226,7 +222,7 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
         if (isWirelessMode == true) {
             long costingWirelessEUTemp = Math
                 .min(Long.MAX_VALUE, (processingLogic.getCalculatedEut() * processingLogic.getDuration()));
-            costingWirelessEU = GT_Utility.formatNumbers(costingWirelessEUTemp);
+            costingWirelessEU = GTUtility.formatNumbers(costingWirelessEUTemp);
             if (!addEUToGlobalEnergyMap(
                 ownerUUID,
                 BigInteger.valueOf(costingWirelessEUTemp * (long) Math.pow(overclockParameter, 2) * -1))) {
@@ -257,7 +253,7 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
 
     private void flushOverclockParameter() {
         ItemStack items = getControllerSlot();
-        if (items != null && items.getItem() instanceof GT_IntegratedCircuit_Item && items.getItemDamage() > 0) {
+        if (items != null && items.getItem() instanceof ItemIntegratedCircuit && items.getItemDamage() > 0) {
             this.overclockParameter = items.getItemDamage();
         }
         if (items == null) {
@@ -318,11 +314,11 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
                 .addElement('B', ofBlock(sBlockCasings1, 11))
                 .addElement(
                     'C',
-                    GT_HatchElementBuilder.<GT_TE_TangShanSteelFactory>builder()
+                    buildHatchAdder(GT_TE_TangShanSteelFactory.class)
                         .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch)
                         .adder(GT_TE_TangShanSteelFactory::addToMachineList)
                         .dot(1)
-                        .casingIndex(((GT_Block_Casings2) GregTech_API.sBlockCasings2).getTextureIndex(0))
+                        .casingIndex(0)
                         .buildAndChain(sBlockCasings2, 0))
                 .addElement('D', ofBlock(sBlockCasings2, 11))
                 .addElement('E', ofBlock(sBlockCasings2, 13))
@@ -367,11 +363,10 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
                         : ofBlock(sBlockConcretes, 0))
                 .addElement(
                     'Y',
-                    GT_HatchElementBuilder.<GT_TE_TangShanSteelFactory>builder()
-                        .atLeast(Muffler)
+                    buildHatchAdder(GT_TE_TangShanSteelFactory.class).atLeast(Muffler)
                         .adder(GT_TE_TangShanSteelFactory::addToMachineList)
                         .dot(2)
-                        .casingIndex(((GT_Block_Casings2) GregTech_API.sBlockCasings2).getTextureIndex(0))
+                        .casingIndex(0)
                         .buildAndChain(sBlockCasings2, 0))
                 .addElement('Z', ofFrame(Materials.Steel))
                 .addElement('1', ofBlock(sBlockCasings8, 4))
@@ -1277,8 +1272,8 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
     }
 
     @Override
-    protected GT_Multiblock_Tooltip_Builder createTooltip() {
-        final GT_Multiblock_Tooltip_Builder tt = new GT_Multiblock_Tooltip_Builder();
+    protected MultiblockTooltipBuilder createTooltip() {
+        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType("§e§l重工业计划 - 唐山炼钢厂")
             .addInfo("§l§8无数黑烟源源不断地从烟囱中冒出")
             .addInfo("§l§8工业化的必由之路......")
@@ -1349,7 +1344,7 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
 
         if (sideDirection == facing) {
             if (active) return new ITexture[] {
-                Textures.BlockIcons.getCasingTextureForId(GT_Utility.getCasingTextureIndex(sBlockCasings2, 0)),
+                Textures.BlockIcons.getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings2, 0)),
                 TextureFactory.builder()
                     .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_ACTIVE)
                     .extFacing()
@@ -1359,7 +1354,7 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
                     .extFacing()
                     .build() };
             return new ITexture[] {
-                Textures.BlockIcons.getCasingTextureForId(GT_Utility.getCasingTextureIndex(sBlockCasings2, 0)),
+                Textures.BlockIcons.getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings2, 0)),
                 TextureFactory.builder()
                     .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE)
                     .extFacing()
@@ -1370,8 +1365,8 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
                     .glow()
                     .build() };
         }
-        return new ITexture[] { Textures.BlockIcons
-            .getCasingTextureForId(GT_Utility.getCasingTextureIndex(GregTech_API.sBlockCasings2, 0)) };
+        return new ITexture[] {
+            Textures.BlockIcons.getCasingTextureForId(GTUtility.getCasingTextureIndex(GregTechAPI.sBlockCasings2, 0)) };
     }
 
     @Override

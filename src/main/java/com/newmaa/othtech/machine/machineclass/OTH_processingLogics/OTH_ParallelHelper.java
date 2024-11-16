@@ -1,7 +1,7 @@
 package com.newmaa.othtech.machine.machineclass.OTH_processingLogics;
 
 import static com.newmaa.othtech.Utils.Utils.setStackSize;
-import static gregtech.api.util.GT_Recipe.GTppRecipeHelper;
+import static gregtech.api.util.GTRecipe.GTppRecipeHelper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,18 +27,11 @@ import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.recipe.check.SingleRecipeCheck;
-import gregtech.api.util.GT_OreDictUnificator;
-import gregtech.api.util.GT_OverclockCalculator;
-import gregtech.api.util.GT_ParallelHelper;
-import gregtech.api.util.GT_Recipe;
-import gregtech.api.util.GT_Utility;
-import gregtech.api.util.VoidProtectionHelper;
+import gregtech.api.util.*;
 import ic2.core.Ic2Items;
 
-public class OTH_ParallelHelper extends GT_ParallelHelper {
-
-    // spotless:off
-    public class GTCM_ParallelHelper extends GT_ParallelHelper {
+// spotless:off
+    public class OTH_ParallelHelper extends ParallelHelper {
 
         // region Variables
         private static final double MAX_BATCH_MODE_TICK_TIME = 128;
@@ -57,7 +50,7 @@ public class OTH_ParallelHelper extends GT_ParallelHelper {
         /**
          * Recipe used when trying to calculate parallels
          */
-        private GT_Recipe recipe;
+        private GTRecipe recipe;
         /**
          * EUt available to the multiblock (This should be the total eut available)
          */
@@ -126,17 +119,17 @@ public class OTH_ParallelHelper extends GT_ParallelHelper {
         /**
          * Method for calculating max parallel from given inputs.
          */
-        private MaxParallelCalculator maxParallelCalculator = GTCM_ParallelHelper::maxParallelCalculatedByInputs;
-//    private MaxParallelCalculator maxParallelCalculator = GT_Recipe::maxParallelCalculatedByInputs;
+        private MaxParallelCalculator maxParallelCalculator = OTH_ParallelHelper::maxParallelCalculatedByInputs;
+//    private MaxParallelCalculator maxParallelCalculator = GTRecipe::maxParallelCalculatedByInputs;
         /**
          * Method for consuming inputs after determining how many parallels it can execute.
          */
-        private InputConsumer inputConsumer = GTCM_ParallelHelper::consumeInput;
+        private InputConsumer inputConsumer = OTH_ParallelHelper::consumeInput;
 
         /**
          * Calculator to use for overclocking
          */
-        private GT_OverclockCalculator calculator;
+        private OverclockCalculator calculator;
 
         private CheckRecipeResult result = CheckRecipeResultRegistry.NONE;
 
@@ -145,7 +138,7 @@ public class OTH_ParallelHelper extends GT_ParallelHelper {
         private Function<Integer, FluidStack[]> customFluidOutputCalculation;
 
         // endregion
-        public GTCM_ParallelHelper() {
+        public OTH_ParallelHelper() {
         }
 
         // region Setters
@@ -154,14 +147,14 @@ public class OTH_ParallelHelper extends GT_ParallelHelper {
         /**
          * Sets machine, with current configuration for void protection mode.
          */
-        public GT_ParallelHelper setMachine(IVoidable machine) {
+        public ParallelHelper setMachine(IVoidable machine) {
             return setMachine(machine, machine.protectsExcessItem(), machine.protectsExcessFluid());
         }
 
         /**
          * Sets machine, with void protection mode forcibly.
          */
-        public GT_ParallelHelper setMachine(IVoidable machine, boolean protectExcessItem, boolean protectExcessFluid) {
+        public ParallelHelper setMachine(IVoidable machine, boolean protectExcessItem, boolean protectExcessFluid) {
             this.protectExcessItem = protectExcessItem;
             this.protectExcessFluid = protectExcessFluid;
             this.machine = machine;
@@ -171,12 +164,12 @@ public class OTH_ParallelHelper extends GT_ParallelHelper {
         /**
          * Sets the recipe, which will be used for the parallel calculation
          */
-        public GT_ParallelHelper setRecipe(@Nonnull GT_Recipe aRecipe) {
+        public ParallelHelper setRecipe(@Nonnull GTRecipe aRecipe) {
             recipe = Objects.requireNonNull(aRecipe);
             return this;
         }
 
-        public GT_ParallelHelper setRecipeLocked(IRecipeLockable singleRecipeMachine, boolean isRecipeLocked) {
+        public ParallelHelper setRecipeLocked(IRecipeLockable singleRecipeMachine, boolean isRecipeLocked) {
             this.singleRecipeMachine = singleRecipeMachine;
             this.isRecipeLocked = isRecipeLocked;
             return this;
@@ -185,7 +178,7 @@ public class OTH_ParallelHelper extends GT_ParallelHelper {
         /**
          * Sets the items available for the recipe check
          */
-        public GT_ParallelHelper setItemInputs(ItemStack... aItemInputs) {
+        public ParallelHelper setItemInputs(ItemStack... aItemInputs) {
             this.itemInputs = aItemInputs;
             return this;
         }
@@ -193,7 +186,7 @@ public class OTH_ParallelHelper extends GT_ParallelHelper {
         /**
          * Sets the fluid inputs available for the recipe check
          */
-        public GT_ParallelHelper setFluidInputs(FluidStack... aFluidInputs) {
+        public ParallelHelper setFluidInputs(FluidStack... aFluidInputs) {
             this.fluidInputs = aFluidInputs;
             return this;
         }
@@ -201,7 +194,7 @@ public class OTH_ParallelHelper extends GT_ParallelHelper {
         /**
          * Sets the available eut when trying for more parallels
          */
-        public GT_ParallelHelper setAvailableEUt(long aAvailableEUt) {
+        public ParallelHelper setAvailableEUt(long aAvailableEUt) {
             this.availableEUt = aAvailableEUt;
             return this;
         }
@@ -209,12 +202,12 @@ public class OTH_ParallelHelper extends GT_ParallelHelper {
         /**
          * Sets the modifier for recipe eut. 1 does nothing 0.9 is 10% less. 1.1 is 10% more
          */
-        public GT_ParallelHelper setEUtModifier(float aEUtModifier) {
+        public ParallelHelper setEUtModifier(float aEUtModifier) {
             this.eutModifier = aEUtModifier;
             return this;
         }
 
-        public GT_ParallelHelper setCalculator(GT_OverclockCalculator calculator) {
+        public ParallelHelper setCalculator(OverclockCalculator calculator) {
             this.calculator = calculator;
             return this;
         }
@@ -223,7 +216,7 @@ public class OTH_ParallelHelper extends GT_ParallelHelper {
          * Use {@link #setConsumption(boolean)}
          */
         @Deprecated
-        public GT_ParallelHelper enableConsumption() {
+        public ParallelHelper enableConsumption() {
             return setConsumption(true);
         }
 
@@ -232,7 +225,7 @@ public class OTH_ParallelHelper extends GT_ParallelHelper {
          *
          * @param consume Should we consume inputs
          */
-        public GT_ParallelHelper setConsumption(boolean consume) {
+        public ParallelHelper setConsumption(boolean consume) {
             this.consume = consume;
             return this;
         }
@@ -240,7 +233,7 @@ public class OTH_ParallelHelper extends GT_ParallelHelper {
         /**
          * Sets the MaxParallel a multi can handle
          */
-        public GT_ParallelHelper setMaxParallel(int maxParallel) {
+        public ParallelHelper setMaxParallel(int maxParallel) {
             this.maxParallel = maxParallel;
             return this;
         }
@@ -249,7 +242,7 @@ public class OTH_ParallelHelper extends GT_ParallelHelper {
          * Enables Batch mode. Can do up to an additional processed recipes of mCurrentParallel * mBatchModifier A batch
          * modifier of 1 does nothing
          */
-        public GT_ParallelHelper enableBatchMode(int batchModifier) {
+        public ParallelHelper enableBatchMode(int batchModifier) {
             this.batchMode = batchModifier > 1;
             this.batchModifier = batchModifier;
             return this;
@@ -259,7 +252,7 @@ public class OTH_ParallelHelper extends GT_ParallelHelper {
          * Use {@link #setOutputCalculation(boolean)}
          */
         @Deprecated
-        public GT_ParallelHelper enableOutputCalculation() {
+        public ParallelHelper enableOutputCalculation() {
             return setOutputCalculation(true);
         }
 
@@ -268,7 +261,7 @@ public class OTH_ParallelHelper extends GT_ParallelHelper {
          *
          * @param calculateOutputs Should we calculate outputs with the helper or not
          */
-        public GT_ParallelHelper setOutputCalculation(boolean calculateOutputs) {
+        public ParallelHelper setOutputCalculation(boolean calculateOutputs) {
             this.calculateOutputs = calculateOutputs;
             return this;
         }
@@ -277,7 +270,7 @@ public class OTH_ParallelHelper extends GT_ParallelHelper {
          * Set a custom way to calculate item outputs. You are given the amount of parallels and must return an ItemStack
          * array
          */
-        public GT_ParallelHelper setCustomItemOutputCalculation(Function<Integer, ItemStack[]> custom) {
+        public ParallelHelper setCustomItemOutputCalculation(Function<Integer, ItemStack[]> custom) {
             customItemOutputCalculation = custom;
             return this;
         }
@@ -286,7 +279,7 @@ public class OTH_ParallelHelper extends GT_ParallelHelper {
          * Set a custom way to calculate item outputs. You are given the amount of parallels and must return a FluidStack
          * array
          */
-        public GT_ParallelHelper setCustomFluidOutputCalculation(Function<Integer, FluidStack[]> custom) {
+        public ParallelHelper setCustomFluidOutputCalculation(Function<Integer, FluidStack[]> custom) {
             customFluidOutputCalculation = custom;
             return this;
         }
@@ -294,9 +287,9 @@ public class OTH_ParallelHelper extends GT_ParallelHelper {
         // endregion
 
         /**
-         * Finishes the GT_ParallelHelper. Anything changed after this will not effect anything
+         * Finishes the ParallelHelper. Anything changed after this will not effect anything
          */
-        public GT_ParallelHelper build() {
+        public ParallelHelper build() {
             if (built) {
                 throw new IllegalStateException("Tried to build twice");
             }
@@ -375,10 +368,10 @@ public class OTH_ParallelHelper extends GT_ParallelHelper {
         }
 
         /**
-         * Use {@link #tryConsumeRecipeInputs(GT_Recipe, FluidStack[], ItemStack[], int)}
+         * Use {@link #tryConsumeRecipeInputs(GTRecipe, FluidStack[], ItemStack[], int)}
          */
         @Deprecated
-        protected boolean tryConsumeRecipeInputs(GT_Recipe recipe, FluidStack[] fluids, ItemStack[] items) {
+        protected boolean tryConsumeRecipeInputs(GTRecipe recipe, FluidStack[] fluids, ItemStack[] items) {
             return tryConsumeRecipeInputs(recipe, fluids, items, 1);
         }
 
@@ -391,7 +384,7 @@ public class OTH_ParallelHelper extends GT_ParallelHelper {
          * @param minParallel minimum amount of parallels to do with this check
          * @return True if recipe was satisfied, else false
          */
-        protected boolean tryConsumeRecipeInputs(GT_Recipe recipe, FluidStack[] fluids, ItemStack[] items,
+        protected boolean tryConsumeRecipeInputs(GTRecipe recipe, FluidStack[] fluids, ItemStack[] items,
                                                  int minParallel) {
             return recipe.isRecipeInputEqual(true, false, minParallel, fluids, items);
         }
@@ -413,7 +406,7 @@ public class OTH_ParallelHelper extends GT_ParallelHelper {
             }
 
             if (calculator == null) {
-                calculator = new GT_OverclockCalculator().setEUt(availableEUt)
+                calculator = new OverclockCalculator().setEUt(availableEUt)
                     .setRecipeEUt(recipe.mEUt)
                     .setDuration(recipe.mDuration)
                     .setEUtDiscount(eutModifier);
@@ -507,12 +500,12 @@ public class OTH_ParallelHelper extends GT_ParallelHelper {
                 return;
             }
 
-            long eutUseAfterOC = calculator.calculateEUtConsumptionUnderOneTick(originalMaxParallel, currentParallel);
-            calculator.setParallel(Math.min(currentParallel, originalMaxParallel))
-                .calculate();
-            if (currentParallel > originalMaxParallel) {
-                calculator.setRecipeEUt(eutUseAfterOC);
-            }
+//            long eutUseAfterOC = calculator.calculateEUtConsumptionUnderOneTick(originalMaxParallel, currentParallel);
+//            calculator.setParallel(Math.min(currentParallel, originalMaxParallel))
+//                .calculate();
+//            if (currentParallel > originalMaxParallel) {
+//                calculator.setRecipeEUt(eutUseAfterOC);
+//            }
             // If Batch Mode is enabled determine how many extra parallels we can get
             if (batchMode && currentParallel > 0 && calculator.getDuration() < MAX_BATCH_MODE_TICK_TIME) {
                 int tExtraParallels;
@@ -629,9 +622,9 @@ public class OTH_ParallelHelper extends GT_ParallelHelper {
         }
 
         /**
-         * Rewrite from {@link GT_Recipe#consumeInput(int, FluidStack[], ItemStack...)}
+         * Rewrite from {@link GTRecipe#consumeInput(int, FluidStack[], ItemStack...)}
          */
-        public static void consumeInput(GT_Recipe recipe, int amountMultiplier, FluidStack[] aFluidInputs, ItemStack... aInputs) {
+        public static void consumeInput(GTRecipe recipe, int amountMultiplier, FluidStack[] aFluidInputs, ItemStack... aInputs) {
             if (amountMultiplier <= 0) return;
 
             long remainingCost;
@@ -659,23 +652,23 @@ public class OTH_ParallelHelper extends GT_ParallelHelper {
             if (aInputs != null) {
                 for (ItemStack recipeItemCost : recipe.mInputs) {
                     if (recipeItemCost.stackSize == 0) continue;
-                    ItemStack unifiedItemCost = GT_OreDictUnificator.get_nocopy(recipeItemCost);
+                    ItemStack unifiedItemCost = GTOreDictUnificator.get_nocopy(recipeItemCost);
                     if (unifiedItemCost != null) {
                         remainingCost = (long) recipeItemCost.stackSize * amountMultiplier;
 
                         for (ItemStack providedItem : aInputs) {
-                            if (recipe.isNBTSensitive && !GT_Utility.areStacksEqual(providedItem, unifiedItemCost, false)) {
+                            if (recipe.isNBTSensitive && !GTUtility.areStacksEqual(providedItem, unifiedItemCost, false)) {
                                 continue;
                             } else if (!recipe.isNBTSensitive
-                                && !GT_OreDictUnificator.isInputStackEqual(providedItem, unifiedItemCost)) {
+                                && !GTOreDictUnificator.isInputStackEqual(providedItem, unifiedItemCost)) {
                                 continue;
                             }
 
                             if (GTppRecipeHelper) { // Please see JavaDoc on GTppRecipeHelper for why this is here.
-                                if (GT_Utility.areStacksEqual(providedItem, Ic2Items.FluidCell.copy(), true)
-                                    || GT_Utility.areStacksEqual(providedItem, ItemList.Tool_DataStick.get(1L), true)
-                                    || GT_Utility.areStacksEqual(providedItem, ItemList.Tool_DataOrb.get(1L), true)) {
-                                    if (!GT_Utility.areStacksEqual(providedItem, recipeItemCost, false)) continue;
+                                if (GTUtility.areStacksEqual(providedItem, Ic2Items.FluidCell.copy(), true)
+                                    || GTUtility.areStacksEqual(providedItem, ItemList.Tool_DataStick.get(1L), true)
+                                    || GTUtility.areStacksEqual(providedItem, ItemList.Tool_DataOrb.get(1L), true)) {
+                                    if (!GTUtility.areStacksEqual(providedItem, recipeItemCost, false)) continue;
                                 }
                             }
 
@@ -696,7 +689,7 @@ public class OTH_ParallelHelper extends GT_ParallelHelper {
          * Returns the number of parallel recipes, or 0 if recipe is not satisfied at all. 0 < number < 1 means that inputs
          * are found but not enough. Refer to SingleRecipeCheck#checkRecipeInputs.
          */
-        public static double maxParallelCalculatedByInputs(GT_Recipe recipe, int maxParallel, FluidStack[] aFluidInputs, ItemStack... aInputs) {
+        public static double maxParallelCalculatedByInputs(GTRecipe recipe, int maxParallel, FluidStack[] aFluidInputs, ItemStack... aInputs) {
             if (recipe.mInputs.length > 0 && aInputs == null) return 0;
             if (recipe.mFluidInputs.length > 0 && aFluidInputs == null) return 0;
 
@@ -751,17 +744,17 @@ public class OTH_ParallelHelper extends GT_ParallelHelper {
                 nextRecipeItemCost: for (Map.Entry<ItemID, Long> itemID : itemCost.entrySet()) {
                     ItemStack unifiedItemCost;
                     if (isNBTSensitive) {
-                        unifiedItemCost = GT_OreDictUnificator.get_nocopy(itemID.getKey().getItemStackWithNBT());
+                        unifiedItemCost = GTOreDictUnificator.get_nocopy(itemID.getKey().getItemStackWithNBT());
                     } else {
-                        unifiedItemCost = GT_OreDictUnificator.get_nocopy(itemID.getKey().getItemStack());
+                        unifiedItemCost = GTOreDictUnificator.get_nocopy(itemID.getKey().getItemStack());
                     }
                     remainingCost = itemID.getValue() * currentParallel;
                     providedAmount = 0;
                     for (ItemStack providedItem : aInputs) {
-                        if (isNBTSensitive && !GT_Utility.areStacksEqual(providedItem, unifiedItemCost, false)) {
+                        if (isNBTSensitive && !GTUtility.areStacksEqual(providedItem, unifiedItemCost, false)) {
                             continue;
                         } else if (!isNBTSensitive
-                            && !GT_OreDictUnificator.isInputStackEqual(providedItem, unifiedItemCost)) {
+                            && !GTOreDictUnificator.isInputStackEqual(providedItem, unifiedItemCost)) {
                             continue;
                         }
 
@@ -786,24 +779,24 @@ public class OTH_ParallelHelper extends GT_ParallelHelper {
 //                // for non-consumed input
 //                if (recipeItemCost.stackSize == 0) continue;
 //
-//                ItemStack unifiedItemCost = GT_OreDictUnificator.get_nocopy(recipeItemCost);
+//                ItemStack unifiedItemCost = GTOreDictUnificator.get_nocopy(recipeItemCost);
 //                if (unifiedItemCost != null) {
 //                    remainingCost = recipeItemCost.stackSize * currentParallel;
 //                    providedAmount = 0;
 //
 //                    for (ItemStack providedItem : aInputs) {
-//                        if (isNBTSensitive && !GT_Utility.areStacksEqual(providedItem, unifiedItemCost, false)) {
+//                        if (isNBTSensitive && !GTUtility.areStacksEqual(providedItem, unifiedItemCost, false)) {
 //                            continue;
 //                        } else if (!isNBTSensitive
-//                                       && !GT_OreDictUnificator.isInputStackEqual(providedItem, unifiedItemCost)) {
+//                                       && !GTOreDictUnificator.isInputStackEqual(providedItem, unifiedItemCost)) {
 //                            continue;
 //                        }
 //
 //                        if (GTppRecipeHelper) { // Please see JavaDoc on GTppRecipeHelper for why this is here.
-//                            if (GT_Utility.areStacksEqual(providedItem, Ic2Items.FluidCell.copy(), true)
-//                                    || GT_Utility.areStacksEqual(providedItem, ItemList.Tool_DataStick.get(1L), true)
-//                                    || GT_Utility.areStacksEqual(providedItem, ItemList.Tool_DataOrb.get(1L), true)) {
-//                                if (!GT_Utility.areStacksEqual(providedItem, recipeItemCost, false)) continue;
+//                            if (GTUtility.areStacksEqual(providedItem, Ic2Items.FluidCell.copy(), true)
+//                                    || GTUtility.areStacksEqual(providedItem, ItemList.Tool_DataStick.get(1L), true)
+//                                    || GTUtility.areStacksEqual(providedItem, ItemList.Tool_DataOrb.get(1L), true)) {
+//                                if (!GTUtility.areStacksEqual(providedItem, recipeItemCost, false)) continue;
 //                            }
 //                        }
 //
@@ -824,5 +817,4 @@ public class OTH_ParallelHelper extends GT_ParallelHelper {
 
     }
 // spotless:on
-    // From TST
-}
+// From TST

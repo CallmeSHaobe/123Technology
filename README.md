@@ -1,13 +1,28 @@
 # **123Technology**
-######  可能是没活硬整罢。
-######  一些参考来自TST。
-######  千万记得更新lang文件 ， 否则tooltip会有很大错误 。
-######  材质来源 ： JulianChum  ABKQPO  LyeeR
-######  部分结构来源 ：JulianChum LyeeR 商陆
+可能是没活硬整罢。
+
+一些参考来自TST。
+
+千万记得更新lang文件 ， 否则tooltip会有很大错误 。
+
+材质来源 ： JulianChum  ABKQPO  LyeeR
+
+部分结构来源 ：JulianChum LyeeR 商陆
+
+感谢老登登们。
 ## **机器配方池**
-###### 神之艾萨锻炉 : "otht.recipe.MegaIsaForge"
-###### 狄拉克潮汐 : "otht.recipe.GT_TE_MegaQFTFake"
-###### EVA专用改造阳电子炮 : "otht.recipe.EVACannon"
-###### 中国石化 : "otht.recipe.SINOPEC"
-###### 唐山炼钢厂 : "otht.recipe.TSSF"
-###### 红日之将军恩情工厂(巨型PCB工厂, 贴片工坊, NMD晶圆厂, 元件聚合者) "otht.recipe.MegaPCB" , "otht.recipe.MegaPCB_A" , "otht.recipe.MegaPCB_B" , "otht.recipe.MegaPCB_C"
+神之艾萨锻炉 : "otht.recipe.MegaIsaForge"
+
+狄拉克潮汐 : "otht.recipe.GT_TE_MegaQFTFake"
+
+中国石化 : "otht.recipe.SINOPEC"
+
+唐山炼钢厂 : "otht.recipe.TSSF"
+
+红日之将军恩情工厂(巨型PCB工厂, 贴片工坊, NMD晶圆厂, 元件聚合者) "otht.recipe.MegaPCB" , "otht.recipe.MegaPCB_A" , "otht.recipe.MegaPCB_B" , "otht.recipe.MegaPCB_C"
+
+## **关于GTNH**
+
+1.3.0及其以下版本只支持GTNH2.6.1 , GTNH2.6.0可以运行但不保证无bug
+
+1.3.0+尝试支持GTNH2.7.0beta

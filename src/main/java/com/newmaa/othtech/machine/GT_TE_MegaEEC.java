@@ -1,22 +1,19 @@
 package com.newmaa.othtech.machine;
 
-import static com.github.technus.tectech.thing.casing.TT_Container_Casings.sBlockCasingsTT;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.withChannel;
+import static com.gtnewhorizons.gtnhintergalactic.block.IGBlocks.SpaceElevatorCasing;
 import static com.newmaa.othtech.machine.machineclass.MobHandlerLoader.recipeMap;
-import static gregtech.api.GregTech_API.sBlockCasings1;
-import static gregtech.api.GregTech_API.sBlockCasings2;
-import static gregtech.api.GregTech_API.sBlockCasings8;
-import static gregtech.api.enums.GT_HatchElement.Energy;
-import static gregtech.api.enums.GT_HatchElement.ExoticEnergy;
-import static gregtech.api.enums.GT_HatchElement.InputBus;
-import static gregtech.api.enums.GT_HatchElement.InputHatch;
-import static gregtech.api.enums.GT_HatchElement.OutputBus;
-import static gregtech.api.enums.GT_HatchElement.OutputHatch;
+import static gregtech.api.GregTechAPI.sBlockCasings1;
+import static gregtech.api.GregTechAPI.sBlockCasings2;
+import static gregtech.api.GregTechAPI.sBlockCasings8;
+import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_DTPF_OFF;
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_DTPF_ON;
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FUSION1_GLOW;
-import static gregtech.api.util.GT_StructureUtility.ofFrame;
+import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
+import static gregtech.api.util.GTStructureUtility.ofFrame;
+import static tectech.thing.casing.TTCasingsContainer.sBlockCasingsTT;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Random;
@@ -34,24 +31,21 @@ import net.minecraftforge.fluids.FluidStack;
 
 import org.jetbrains.annotations.NotNull;
 
-import com.github.bartimaeusnek.bartworks.API.BorosilicateGlass;
-import com.github.technus.tectech.thing.block.QuantumGlassBlock;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
-import com.gtnewhorizons.gtnhintergalactic.block.IGBlocks;
 import com.kuba6000.mobsinfo.api.utils.FastRandom;
 import com.mojang.authlib.GameProfile;
 import com.newmaa.othtech.machine.machineclass.MobHandlerLoader;
 import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTH_processingLogics.OTH_ProcessingLogic;
 
+import bartworks.API.BorosilicateGlass;
 import crazypants.enderio.EnderIO;
-import gregtech.api.GregTech_API;
+import gregtech.api.GregTechAPI;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.SoundResource;
 import gregtech.api.enums.Textures;
-import gregtech.api.interfaces.IGlobalWirelessEnergy;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
@@ -60,14 +54,13 @@ import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.recipe.check.SimpleCheckRecipeResult;
 import gregtech.api.render.TextureFactory;
-import gregtech.api.util.GT_HatchElementBuilder;
-import gregtech.api.util.GT_Multiblock_Tooltip_Builder;
-import gregtech.api.util.GT_Recipe;
-import gregtech.api.util.GT_Utility;
-import gregtech.common.blocks.GT_Block_Casings1;
-import gtPlusPlus.core.material.ALLOY;
+import gregtech.api.util.GTRecipe;
+import gregtech.api.util.GTUtility;
+import gregtech.api.util.MultiblockTooltipBuilder;
+import gtPlusPlus.core.material.MaterialsAlloy;
+import tectech.thing.block.BlockQuantumGlass;
 
-public class GT_TE_MegaEEC extends OTH_MultiMachineBase<GT_TE_MegaEEC> implements IGlobalWirelessEnergy {
+public class GT_TE_MegaEEC extends OTH_MultiMachineBase<GT_TE_MegaEEC> {
 
     public GT_TE_MegaEEC(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
@@ -155,7 +148,7 @@ public class GT_TE_MegaEEC extends OTH_MultiMachineBase<GT_TE_MegaEEC> implement
 
             @NotNull
             @Override
-            protected CheckRecipeResult validateRecipe(@NotNull GT_Recipe recipe) {
+            protected CheckRecipeResult validateRecipe(@NotNull GTRecipe recipe) {
                 return CheckRecipeResultRegistry.SUCCESSFUL;
             }
 
@@ -223,20 +216,20 @@ public class GT_TE_MegaEEC extends OTH_MultiMachineBase<GT_TE_MegaEEC> implement
                             Byte.MAX_VALUE,
                             (te, t) -> te.glassTier = t,
                             te -> te.glassTier)))
-                .addElement('B', ofBlock(ALLOY.BOTMIUM.getBlock(), 0))
+                .addElement('B', ofBlock(MaterialsAlloy.BOTMIUM.getBlock(), 0))
                 .addElement(
                     'C',
-                    GT_HatchElementBuilder.<GT_TE_MegaEEC>builder()
+                    buildHatchAdder(GT_TE_MegaEEC.class)
                         .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch)
                         .adder(GT_TE_MegaEEC::addToMachineList)
                         .dot(1)
-                        .casingIndex(((GT_Block_Casings1) GregTech_API.sBlockCasings1).getTextureIndex(12))
+                        .casingIndex(12)
                         .buildAndChain(sBlockCasings1, 12))
                 .addElement('D', ofBlock(sBlockCasings1, 13))
                 .addElement('E', ofBlock(sBlockCasings1, 14))
                 .addElement('F', ofBlock(sBlockCasings2, 0))
                 .addElement('G', ofBlock(sBlockCasings8, 10))
-                .addElement('H', ofBlock(IGBlocks.SpaceElevatorCasing, 1))
+                .addElement('H', ofBlock(SpaceElevatorCasing, 1))
                 .addElement('I', ofBlock(sBlockCasingsTT, 4))
                 .addElement('J', ofBlock(sBlockCasingsTT, 6))
                 .addElement('K', ofBlock(sBlockCasingsTT, 9))
@@ -246,7 +239,7 @@ public class GT_TE_MegaEEC extends OTH_MultiMachineBase<GT_TE_MegaEEC> implement
                 .addElement('O', ofBlock(Blocks.obsidian, 0))
                 .addElement('R', ofBlock(Blocks.obsidian, 0))
                 .addElement('S', ofBlock(Blocks.obsidian, 0))
-                .addElement('Q', ofBlock(QuantumGlassBlock.INSTANCE, 0))
+                .addElement('Q', ofBlock(BlockQuantumGlass.INSTANCE, 0))
                 .addElement('P', ofBlock(Blocks.obsidian, 0))
                 .addElement('T', ofFrame(Materials.Steel))
                 .build();
@@ -4296,13 +4289,13 @@ public class GT_TE_MegaEEC extends OTH_MultiMachineBase<GT_TE_MegaEEC> implement
     }
 
     @Override
-    protected GT_Multiblock_Tooltip_Builder createTooltip() {
-        final GT_Multiblock_Tooltip_Builder tt = new GT_Multiblock_Tooltip_Builder();
+    protected MultiblockTooltipBuilder createTooltip() {
+        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType("§e§l老登的终极造物 - 噬魂监狱(工业屠宰场)")
             .addInfo("§l§4“观自在菩萨, 行深般若波罗蜜多时照见五蕴皆空, 度一切苦厄.”")
             .addInfo("§l§4无法连接血魔法仪式, 自动销毁所有附魔以及有耐久损耗的装备")
             .addInfo("§n§b工业化的魅力......")
-            .addInfo("并行:134217728, 耗电固定为64A MAX, 时运等级64")
+            .addInfo("并行: 134217728, 耗电固定为64A MAX, 时运等级64")
             .addInfo("注意: 多方块结构方块数量过多 无法预览结构")
             .addInfo("统计 : 灵魂沙 * 2200 , 博特姆合金块 * 1493 , 放射硅岩合金机械方块 * 12309")
             .addInfo("黑曜石 * 611 , 钢框架 * 169 , 脱氧钢机械方块 * 100")
@@ -4369,7 +4362,7 @@ public class GT_TE_MegaEEC extends OTH_MultiMachineBase<GT_TE_MegaEEC> implement
         if (sideDirection == facing) {
             if (active) return new ITexture[] {
                 Textures.BlockIcons
-                    .getCasingTextureForId(GT_Utility.getCasingTextureIndex(GregTech_API.sBlockCasings1, 12)),
+                    .getCasingTextureForId(GTUtility.getCasingTextureIndex(GregTechAPI.sBlockCasings1, 12)),
                 TextureFactory.builder()
                     .addIcon(OVERLAY_DTPF_ON)
                     .extFacing()
@@ -4380,7 +4373,7 @@ public class GT_TE_MegaEEC extends OTH_MultiMachineBase<GT_TE_MegaEEC> implement
                     .build() };
             return new ITexture[] {
                 Textures.BlockIcons
-                    .getCasingTextureForId(GT_Utility.getCasingTextureIndex(GregTech_API.sBlockCasings1, 12)),
+                    .getCasingTextureForId(GTUtility.getCasingTextureIndex(GregTechAPI.sBlockCasings1, 12)),
                 TextureFactory.builder()
                     .addIcon(OVERLAY_DTPF_OFF)
                     .extFacing()
@@ -4392,7 +4385,7 @@ public class GT_TE_MegaEEC extends OTH_MultiMachineBase<GT_TE_MegaEEC> implement
                     .build() };
         }
         return new ITexture[] { Textures.BlockIcons
-            .getCasingTextureForId(GT_Utility.getCasingTextureIndex(GregTech_API.sBlockCasings1, 12)) };
+            .getCasingTextureForId(GTUtility.getCasingTextureIndex(GregTechAPI.sBlockCasings1, 12)) };
     }
 
     @Override

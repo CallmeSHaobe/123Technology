@@ -1,11 +1,12 @@
 package com.newmaa.othtech.machine;
 
-import static com.github.technus.tectech.thing.casing.TT_Container_Casings.*;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.withChannel;
-import static gregtech.api.enums.GT_HatchElement.*;
+import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.enums.Textures.BlockIcons.*;
-import static gregtech.api.util.GT_StructureUtility.ofFrame;
+import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
+import static gregtech.api.util.GTStructureUtility.ofFrame;
+import static tectech.thing.casing.TTCasingsContainer.*;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -18,8 +19,6 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 import org.jetbrains.annotations.NotNull;
 
-import com.github.bartimaeusnek.bartworks.API.BorosilicateGlass;
-import com.github.technus.tectech.thing.block.QuantumGlassBlock;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
@@ -28,8 +27,9 @@ import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTH_processingLogics.OTH_ProcessingLogic;
 
+import bartworks.API.BorosilicateGlass;
 import galaxyspace.core.register.GSBlocks;
-import gregtech.api.GregTech_API;
+import gregtech.api.GregTechAPI;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
@@ -41,12 +41,12 @@ import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.recipe.check.SimpleCheckRecipeResult;
 import gregtech.api.render.TextureFactory;
-import gregtech.api.util.GT_HatchElementBuilder;
-import gregtech.api.util.GT_ModHandler;
-import gregtech.api.util.GT_Multiblock_Tooltip_Builder;
-import gregtech.api.util.GT_Recipe;
-import gregtech.api.util.GT_Utility;
+import gregtech.api.util.GTModHandler;
+import gregtech.api.util.GTRecipe;
+import gregtech.api.util.GTUtility;
+import gregtech.api.util.MultiblockTooltipBuilder;
 import gtPlusPlus.core.block.ModBlocks;
+import tectech.thing.block.BlockQuantumGlass;
 
 public class GT_TE_MegaIsaForge extends OTH_MultiMachineBase<GT_TE_MegaIsaForge> {
 
@@ -93,7 +93,7 @@ public class GT_TE_MegaIsaForge extends OTH_MultiMachineBase<GT_TE_MegaIsaForge>
     // Speedbouns = 1 / {VoltageTier^[(glassTier / 2)+1]}^(1/3)
     protected float getSpeedBonus() {
         return (float) (1 / Math
-            .pow(Math.pow(GT_Utility.getTier(this.getMaxInputEu()), (((double) glassTier / 2) + 1)), ((double) 1 / 3)));
+            .pow(Math.pow(GTUtility.getTier(this.getMaxInputEu()), (((double) glassTier / 2) + 1)), ((double) 1 / 3)));
     }
 
     @Override
@@ -114,9 +114,9 @@ public class GT_TE_MegaIsaForge extends OTH_MultiMachineBase<GT_TE_MegaIsaForge>
         if (aTick % 20 == 0 && !$123) {
             ItemStack aGuiStack = this.getControllerSlot();
             if (aGuiStack != null) {
-                if (GT_Utility.areStacksEqual(
+                if (GTUtility.areStacksEqual(
                     aGuiStack,
-                    GT_ModHandler.getModItem("tectech", "item.tm.itemAstralArrayFabricator", 1))) {
+                    GTModHandler.getModItem("tectech", "item.tm.itemAstralArrayFabricator", 1))) {
                     this.$123 = true;
                 }
             }
@@ -138,7 +138,7 @@ public class GT_TE_MegaIsaForge extends OTH_MultiMachineBase<GT_TE_MegaIsaForge>
             }
 
             @Override
-            protected @NotNull CheckRecipeResult validateRecipe(@NotNull GT_Recipe recipe) {
+            protected @NotNull CheckRecipeResult validateRecipe(@NotNull GTRecipe recipe) {
                 return $123 == false && mode == 1 ? SimpleCheckRecipeResult.ofFailure("nofb")
                     : CheckRecipeResultRegistry.SUCCESSFUL;
             }
@@ -156,7 +156,7 @@ public class GT_TE_MegaIsaForge extends OTH_MultiMachineBase<GT_TE_MegaIsaForge>
             } else {
                 mode = 0;
             }
-            GT_Utility.sendChatToPlayer(
+            GTUtility.sendChatToPlayer(
                 aPlayer,
                 StatCollector.translateToLocal(mode == 1 ? "太空组装模式" : mode == 0 ? "艾萨锻炉模式" : "Null"));
         }
@@ -226,11 +226,11 @@ public class GT_TE_MegaIsaForge extends OTH_MultiMachineBase<GT_TE_MegaIsaForge>
                 .addElement('J', ofBlock(GSBlocks.DysonSwarmBlocks, 1))
                 .addElement('K', ofBlock(GSBlocks.DysonSwarmBlocks, 5))
                 .addElement('L', ofBlock(GSBlocks.DysonSwarmBlocks, 9))
-                .addElement('M', ofBlock(QuantumGlassBlock.INSTANCE, 0))
+                .addElement('M', ofBlock(BlockQuantumGlass.INSTANCE, 0))
                 .addElement('N', ofFrame(Materials.InfinityCatalyst))
                 .addElement(
                     'E',
-                    GT_HatchElementBuilder.<GT_TE_MegaIsaForge>builder()
+                    buildHatchAdder(GT_TE_MegaIsaForge.class)
                         .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch, Muffler)
                         .adder(GT_TE_MegaIsaForge::addToMachineList)
                         .dot(1)
@@ -3451,8 +3451,8 @@ public class GT_TE_MegaIsaForge extends OTH_MultiMachineBase<GT_TE_MegaIsaForge>
     }
 
     @Override
-    protected GT_Multiblock_Tooltip_Builder createTooltip() {
-        final GT_Multiblock_Tooltip_Builder tt = new GT_Multiblock_Tooltip_Builder();
+    protected MultiblockTooltipBuilder createTooltip() {
+        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType("§b§l老登的终极造物 - 神之艾萨机 (老登制造者 & 太空组装机)")
             .addInfo("§c§l'我拒绝了§4血魔法的恩赐§c和§e蜜蜂的甜蜜'")
             .addInfo("§d艾萨领主认证")
@@ -3520,7 +3520,7 @@ public class GT_TE_MegaIsaForge extends OTH_MultiMachineBase<GT_TE_MegaIsaForge>
         if (sideDirection == facing) {
             if (active) return new ITexture[] {
                 Textures.BlockIcons
-                    .getCasingTextureForId(GT_Utility.getCasingTextureIndex(GregTech_API.sBlockCasings1, 12)),
+                    .getCasingTextureForId(GTUtility.getCasingTextureIndex(GregTechAPI.sBlockCasings1, 12)),
                 TextureFactory.builder()
                     .addIcon(OVERLAY_DTPF_ON)
                     .extFacing()
@@ -3531,7 +3531,7 @@ public class GT_TE_MegaIsaForge extends OTH_MultiMachineBase<GT_TE_MegaIsaForge>
                     .build() };
             return new ITexture[] {
                 Textures.BlockIcons
-                    .getCasingTextureForId(GT_Utility.getCasingTextureIndex(GregTech_API.sBlockCasings1, 12)),
+                    .getCasingTextureForId(GTUtility.getCasingTextureIndex(GregTechAPI.sBlockCasings1, 12)),
                 TextureFactory.builder()
                     .addIcon(OVERLAY_DTPF_OFF)
                     .extFacing()
@@ -3543,6 +3543,6 @@ public class GT_TE_MegaIsaForge extends OTH_MultiMachineBase<GT_TE_MegaIsaForge>
                     .build() };
         }
         return new ITexture[] { Textures.BlockIcons
-            .getCasingTextureForId(GT_Utility.getCasingTextureIndex(GregTech_API.sBlockCasings1, 12)) };
+            .getCasingTextureForId(GTUtility.getCasingTextureIndex(GregTechAPI.sBlockCasings1, 12)) };
     }
 }

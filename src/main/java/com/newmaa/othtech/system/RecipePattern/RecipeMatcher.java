@@ -1,7 +1,7 @@
 package com.newmaa.othtech.system.RecipePattern;
 
 import static com.newmaa.othtech.system.RecipePattern.CustomCraftRecipe.areStacksEqual;
-import static gregtech.api.util.GT_Utility.areFluidsEqual;
+import static gregtech.api.util.GTUtility.areFluidsEqual;
 
 import java.util.ArrayList;
 import java.util.HashMap;

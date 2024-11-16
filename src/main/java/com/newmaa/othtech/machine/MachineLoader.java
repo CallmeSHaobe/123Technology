@@ -62,9 +62,6 @@ public class MachineLoader {
         MFREpp = new GT_TE_MegaFreezerGTpp(IDs + 8, "MegaFreezerGTPP", "巨型凛冰冷冻机").getStackForm(1);
         OTHItemList.MFREpp.set(MFREpp);
 
-        EVACannon = new GT_TE_EVACannon(IDs + 9, "EVACannon", "§l§6EVA专用改造阳电子炮GT").getStackForm(1);
-        OTHItemList.EVACannon.set(EVACannon);
-
         HatchME = new GT_MetaTileEntity_Hatch_Output_ME_B(IDs + 11, "OutputHatchME", "输出仓(ME)").getStackForm(1);
         OTHItemList.HatchME.set(HatchME);
 

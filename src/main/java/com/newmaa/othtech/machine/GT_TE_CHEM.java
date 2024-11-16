@@ -2,11 +2,11 @@ package com.newmaa.othtech.machine;
 
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.withChannel;
-import static gregtech.api.GregTech_API.*;
-import static gregtech.api.enums.GT_HatchElement.*;
+import static gregtech.api.GregTechAPI.*;
+import static gregtech.api.GregTechAPI.sBlockCasings8;
+import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.enums.Textures.BlockIcons.*;
-import static gregtech.api.util.GT_StructureUtility.ofCoil;
-import static gregtech.api.util.GT_StructureUtility.ofFrame;
+import static gregtech.api.util.GTStructureUtility.*;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -24,7 +24,6 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 import org.jetbrains.annotations.NotNull;
 
-import com.github.bartimaeusnek.bartworks.API.BorosilicateGlass;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
@@ -32,7 +31,8 @@ import com.newmaa.othtech.Utils.Utils;
 import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTH_processingLogics.OTH_ProcessingLogic;
 
-import gregtech.api.GregTech_API;
+import bartworks.API.BorosilicateGlass;
+import gregtech.api.GregTechAPI;
 import gregtech.api.enums.HeatingCoilLevel;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.SoundResource;
@@ -47,12 +47,10 @@ import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.recipe.check.SimpleCheckRecipeResult;
 import gregtech.api.render.TextureFactory;
-import gregtech.api.util.GT_HatchElementBuilder;
-import gregtech.api.util.GT_ModHandler;
-import gregtech.api.util.GT_Multiblock_Tooltip_Builder;
-import gregtech.api.util.GT_Recipe;
-import gregtech.api.util.GT_Utility;
-import gregtech.common.blocks.GT_Block_Casings8;
+import gregtech.api.util.GTModHandler;
+import gregtech.api.util.GTRecipe;
+import gregtech.api.util.GTUtility;
+import gregtech.api.util.MultiblockTooltipBuilder;
 import gtPlusPlus.api.recipe.GTPPRecipeMaps;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
@@ -92,7 +90,7 @@ public class GT_TE_CHEM extends OTH_MultiMachineBase<GT_TE_CHEM> {
         if (aTick % 20 == 0 && !$123) {
             ItemStack aGuiStack = this.getControllerSlot();
             if (aGuiStack != null) {
-                if (GT_Utility.areStacksEqual(aGuiStack, GT_ModHandler.getModItem("123Technology", "dustIrOsSm", 1))) {
+                if (GTUtility.areStacksEqual(aGuiStack, GTModHandler.getModItem("123Technology", "dustIrOsSm", 1))) {
                     this.$123 = true;
                 }
             }
@@ -180,7 +178,7 @@ public class GT_TE_CHEM extends OTH_MultiMachineBase<GT_TE_CHEM> {
             } else {
                 mode = 0;
             }
-            GT_Utility.sendChatToPlayer(
+            GTUtility.sendChatToPlayer(
                 aPlayer,
                 StatCollector.translateToLocal(mode == 1 ? "大型化学反应釜模式" : mode == 0 ? "化工厂模式" : "Null"));
         }
@@ -213,7 +211,7 @@ public class GT_TE_CHEM extends OTH_MultiMachineBase<GT_TE_CHEM> {
 
             @NotNull
             @Override
-            protected CheckRecipeResult validateRecipe(@NotNull GT_Recipe recipe) {
+            protected CheckRecipeResult validateRecipe(@NotNull GTRecipe recipe) {
                 if (recipe.mSpecialValue > glassTier - 3) {
                     return SimpleCheckRecipeResult.ofFailure("casingErr");
                 }
@@ -285,11 +283,11 @@ public class GT_TE_CHEM extends OTH_MultiMachineBase<GT_TE_CHEM> {
                 .addElement('D', withChannel("coil", ofCoil(GT_TE_CHEM::setCoilLevel, GT_TE_CHEM::getCoilLevel)))
                 .addElement(
                     'F',
-                    GT_HatchElementBuilder.<GT_TE_CHEM>builder()
+                    buildHatchAdder(GT_TE_CHEM.class)
                         .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch)
                         .adder(GT_TE_CHEM::addToMachineList)
                         .dot(1)
-                        .casingIndex(((GT_Block_Casings8) GregTech_API.sBlockCasings8).getTextureIndex(6))
+                        .casingIndex(6)
                         .buildAndChain(sBlockCasings8, 6))
                 .build();
         }
@@ -320,8 +318,8 @@ public class GT_TE_CHEM extends OTH_MultiMachineBase<GT_TE_CHEM> {
     }
 
     @Override
-    protected GT_Multiblock_Tooltip_Builder createTooltip() {
-        final GT_Multiblock_Tooltip_Builder tt = new GT_Multiblock_Tooltip_Builder();
+    protected MultiblockTooltipBuilder createTooltip() {
+        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType("§e§l老登的终极造物 - 铑钯反应釜(化学反应釜 & 化工厂)")
             .addInfo("§l§a    吃饱啦!    ")
             .addInfo("化工厂模式 ： 耗时 = NEI耗时 * (1 - 线圈等级 * 0.15),最低耗时倍率为0.1; 并行16, 无催化剂消耗, 有损超频")
@@ -387,7 +385,7 @@ public class GT_TE_CHEM extends OTH_MultiMachineBase<GT_TE_CHEM> {
 
         if (sideDirection == facing) {
             if (active) return new ITexture[] {
-                Textures.BlockIcons.getCasingTextureForId(GT_Utility.getCasingTextureIndex(sBlockCasings8, 6)),
+                Textures.BlockIcons.getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings8, 6)),
                 TextureFactory.builder()
                     .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_ACTIVE)
                     .extFacing()
@@ -397,7 +395,7 @@ public class GT_TE_CHEM extends OTH_MultiMachineBase<GT_TE_CHEM> {
                     .extFacing()
                     .build() };
             return new ITexture[] {
-                Textures.BlockIcons.getCasingTextureForId(GT_Utility.getCasingTextureIndex(sBlockCasings8, 6)),
+                Textures.BlockIcons.getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings8, 6)),
                 TextureFactory.builder()
                     .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE)
                     .extFacing()
@@ -408,8 +406,8 @@ public class GT_TE_CHEM extends OTH_MultiMachineBase<GT_TE_CHEM> {
                     .glow()
                     .build() };
         }
-        return new ITexture[] { Textures.BlockIcons
-            .getCasingTextureForId(GT_Utility.getCasingTextureIndex(GregTech_API.sBlockCasings8, 6)) };
+        return new ITexture[] {
+            Textures.BlockIcons.getCasingTextureForId(GTUtility.getCasingTextureIndex(GregTechAPI.sBlockCasings8, 6)) };
     }
 
     @Override

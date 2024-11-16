@@ -2,8 +2,9 @@ package com.newmaa.othtech.machine;
 
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
-import static gregtech.api.enums.GT_HatchElement.*;
-import static gregtech.api.util.GT_StructureUtility.*;
+import static gregtech.api.enums.HatchElement.*;
+import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
+import static gregtech.api.util.GTStructureUtility.ofCoil;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -12,13 +13,13 @@ import net.minecraftforge.fluids.FluidStack;
 
 import org.jetbrains.annotations.NotNull;
 
-import com.github.bartimaeusnek.bartworks.API.BorosilicateGlass;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.Utils.Utils;
 import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
 
+import bartworks.API.BorosilicateGlass;
 import gregtech.api.enums.HeatingCoilLevel;
 import gregtech.api.enums.TAE;
 import gregtech.api.enums.Textures;
@@ -32,10 +33,9 @@ import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.recipe.check.SimpleCheckRecipeResult;
 import gregtech.api.render.TextureFactory;
-import gregtech.api.util.GT_HatchElementBuilder;
-import gregtech.api.util.GT_Multiblock_Tooltip_Builder;
-import gregtech.api.util.GT_OverclockCalculator;
-import gregtech.api.util.GT_Recipe;
+import gregtech.api.util.GTRecipe;
+import gregtech.api.util.MultiblockTooltipBuilder;
+import gregtech.api.util.OverclockCalculator;
 import gtPlusPlus.core.block.ModBlocks;
 import gtPlusPlus.core.util.minecraft.FluidUtils;
 import gtPlusPlus.xmod.gregtech.common.blocks.textures.TexturesGtBlock;
@@ -110,7 +110,7 @@ public class GT_TE_MegaEBFGTpp extends OTH_MultiMachineBase<GT_TE_MegaEBFGTpp> {
 
             @NotNull
             @Override
-            protected CheckRecipeResult validateRecipe(@NotNull GT_Recipe recipe) {
+            protected CheckRecipeResult validateRecipe(@NotNull GTRecipe recipe) {
                 return recipe.mSpecialValue <= coilLevel.getHeat() & checkForWater()
                     ? CheckRecipeResultRegistry.SUCCESSFUL
                     : SimpleCheckRecipeResult.ofFailure("nowater");
@@ -118,7 +118,7 @@ public class GT_TE_MegaEBFGTpp extends OTH_MultiMachineBase<GT_TE_MegaEBFGTpp> {
 
             @NotNull
             @Override
-            protected GT_OverclockCalculator createOverclockCalculator(@NotNull GT_Recipe recipe) {
+            protected OverclockCalculator createOverclockCalculator(@NotNull GTRecipe recipe) {
                 return super.createOverclockCalculator(recipe).setHeatOC(true)
                     .setHeatDiscount(true)
                     .setRecipeHeat(recipe.mSpecialValue)
@@ -204,7 +204,7 @@ public class GT_TE_MegaEBFGTpp extends OTH_MultiMachineBase<GT_TE_MegaEBFGTpp> {
                             te -> te.glassTier)))
                 .addElement(
                     'B',
-                    GT_HatchElementBuilder.<GT_TE_MegaEBFGTpp>builder()
+                    buildHatchAdder(GT_TE_MegaEBFGTpp.class)
                         .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch)
                         .adder(GT_TE_MegaEBFGTpp::addToMachineList)
                         .dot(1)
@@ -215,8 +215,7 @@ public class GT_TE_MegaEBFGTpp extends OTH_MultiMachineBase<GT_TE_MegaEBFGTpp> {
                     withChannel("coil", ofCoil(GT_TE_MegaEBFGTpp::setCoilLevel, GT_TE_MegaEBFGTpp::getCoilLevel)))
                 .addElement(
                     'D',
-                    GT_HatchElementBuilder.<GT_TE_MegaEBFGTpp>builder()
-                        .atLeast(Muffler)
+                    buildHatchAdder(GT_TE_MegaEBFGTpp.class).atLeast(Muffler)
                         .adder(GT_TE_MegaEBFGTpp::addToMachineList)
                         .dot(2)
                         .casingIndex(TAE.getIndexFromPage(2, 11))
@@ -296,8 +295,8 @@ public class GT_TE_MegaEBFGTpp extends OTH_MultiMachineBase<GT_TE_MegaEBFGTpp> {
             "BBBBBBBBBBBBBBB", "BBBBBBBBBBBBBBB", "BBBBBBBBBBBBBBB", "BBBBBBBBBBBBBBB", "BBBBBBBBBBBBBBB" } };
 
     @Override
-    protected GT_Multiblock_Tooltip_Builder createTooltip() {
-        final GT_Multiblock_Tooltip_Builder tt = new GT_Multiblock_Tooltip_Builder();
+    protected MultiblockTooltipBuilder createTooltip() {
+        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType("§l老登的终极造物 - 工业高炉")
             .addInfo("§b  EU消耗: 90%")
             .addInfo("§b  速度 + 120%")

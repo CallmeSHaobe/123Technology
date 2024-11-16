@@ -5,15 +5,12 @@ import java.util.ArrayList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.util.ForgeDirection;
 
-import org.jetbrains.annotations.NotNull;
-
-import com.github.technus.tectech.thing.metaTileEntity.multi.base.GT_MetaTileEntity_MultiblockBase_EM;
+import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
 
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
-import gregtech.api.recipe.check.CheckRecipeResult;
 
-public abstract class OTH_TE_PatternRecipeBaseMachine extends GT_MetaTileEntity_MultiblockBase_EM {
+public abstract class OTH_TE_PatternRecipeBaseMachine extends OTH_MultiMachineBase {
 
     private final ArrayList<OTH_TE_Hatch_MEIO> ultimateIOHatchesList = new ArrayList<>();
 
@@ -23,11 +20,6 @@ public abstract class OTH_TE_PatternRecipeBaseMachine extends GT_MetaTileEntity_
 
     protected OTH_TE_PatternRecipeBaseMachine(String aName) {
         super(aName);
-    }
-
-    @Override
-    protected @NotNull CheckRecipeResult checkProcessing_EM() {
-        return super.checkProcessing_EM();
     }
 
     public boolean addUltimateMEIOHatchToHatchList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {

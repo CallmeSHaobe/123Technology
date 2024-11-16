@@ -1,14 +1,15 @@
 package com.newmaa.othtech.machine;
 
-import static com.github.technus.tectech.thing.casing.TT_Container_Casings.*;
-import static com.github.technus.tectech.thing.casing.TT_Container_Casings.sBlockCasingsTT;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
 import static com.newmaa.othtech.Utils.Utils.metaItemEqual;
-import static gregtech.api.GregTech_API.*;
-import static gregtech.api.enums.GT_HatchElement.*;
+import static gregtech.api.GregTechAPI.*;
+import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.enums.Textures.BlockIcons.*;
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_DTPF_OFF;
-import static gregtech.api.util.GT_StructureUtility.ofFrame;
+import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
+import static gregtech.api.util.GTStructureUtility.ofFrame;
+import static tectech.thing.casing.TTCasingsContainer.StabilisationFieldGenerators;
+import static tectech.thing.casing.TTCasingsContainer.sBlockCasingsTT;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -27,8 +28,6 @@ import net.minecraftforge.common.util.ForgeDirection;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 
-import com.github.bartimaeusnek.bartworks.API.BorosilicateGlass;
-import com.github.technus.tectech.thing.block.QuantumGlassBlock;
 import com.google.common.collect.ImmutableList;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
@@ -38,6 +37,7 @@ import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTH_processingLogics.OTH_ProcessingLogic;
 
+import bartworks.API.BorosilicateGlass;
 import gregtech.api.enums.Materials;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
@@ -47,13 +47,13 @@ import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.render.TextureFactory;
-import gregtech.api.util.GT_HatchElementBuilder;
-import gregtech.api.util.GT_ModHandler;
-import gregtech.api.util.GT_Multiblock_Tooltip_Builder;
-import gregtech.api.util.GT_Utility;
-import gregtech.common.items.GT_MetaGenerated_Item_03;
+import gregtech.api.util.GTModHandler;
+import gregtech.api.util.GTUtility;
+import gregtech.api.util.MultiblockTooltipBuilder;
+import gregtech.common.items.MetaGeneratedItem03;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
+import tectech.thing.block.BlockQuantumGlass;
 
 public class GT_TE_SunFactory extends OTH_MultiMachineBase<GT_TE_SunFactory> {
 
@@ -109,7 +109,7 @@ public class GT_TE_SunFactory extends OTH_MultiMachineBase<GT_TE_SunFactory> {
     private boolean checkEnqing(int amount) {
         int needAmount = amount;
         for (ItemStack items : getStoredInputsWithoutDualInputHatch()) {
-            if (metaItemEqual(items, GT_ModHandler.getModItem("123Technology", "itemEnqing", 1))) {
+            if (metaItemEqual(items, GTModHandler.getModItem("123Technology", "itemEnqing", 1))) {
                 if (items.stackSize >= needAmount) {
                     items.stackSize -= needAmount;
                     return true;
@@ -158,7 +158,7 @@ public class GT_TE_SunFactory extends OTH_MultiMachineBase<GT_TE_SunFactory> {
         super.getWailaNBTData(player, tile, tag, world, x, y, z);
         final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
         if (tileEntity != null) {
-            BYDS = GT_Utility.formatNumbers(getSpeedBonus());
+            BYDS = GTUtility.formatNumbers(getSpeedBonus());
             tag.setString("speedBonus", BYDS);
 
         }
@@ -197,7 +197,7 @@ public class GT_TE_SunFactory extends OTH_MultiMachineBase<GT_TE_SunFactory> {
                 modeAmount = 1;
             }
             this.mode = (byte) ((this.mode + 1) % modeAmount);
-            GT_Utility.sendChatToPlayer(
+            GTUtility.sendChatToPlayer(
                 aPlayer,
                 StatCollector.translateToLocal(
                     mode == 0 ? "巨型PCB工厂模式"
@@ -247,22 +247,22 @@ public class GT_TE_SunFactory extends OTH_MultiMachineBase<GT_TE_SunFactory> {
 
     private void getBeeyonds() {
         ItemStack items = getControllerSlot();
-        if (items != null && items.getItem() instanceof GT_MetaGenerated_Item_03
+        if (items != null && items.getItem() instanceof MetaGeneratedItem03
             && items.getItemDamage() == 4010
             && items.stackSize >= 1) {
             this.Beeyonds = -2F * Math.floor(log(items.stackSize, 2)) / 100;
         }
-        if (items != null && items.getItem() instanceof GT_MetaGenerated_Item_03
+        if (items != null && items.getItem() instanceof MetaGeneratedItem03
             && items.getItemDamage() == 4581
             && items.stackSize >= 1) {
             this.Beeyonds = 30F * Math.floor(log(items.stackSize, 2)) / 100F;
         }
-        if (items != null && items.getItem() instanceof GT_MetaGenerated_Item_03
+        if (items != null && items.getItem() instanceof MetaGeneratedItem03
             && items.getItemDamage() == 4139
             && items.stackSize >= 1) {
             this.Beeyonds = 75F * Math.floor(log(items.stackSize, 2)) / 100;
         }
-        if (items != null && items.getItem() instanceof GT_MetaGenerated_Item_03
+        if (items != null && items.getItem() instanceof MetaGeneratedItem03
             && items.getItemDamage() == 4141
             && items.stackSize >= 1) {
             this.Beeyonds = 150F * Math.floor(log(items.stackSize, 2)) / 100;
@@ -349,11 +349,11 @@ public class GT_TE_SunFactory extends OTH_MultiMachineBase<GT_TE_SunFactory> {
                             0,
                             (t, meta) -> t.stabilisationFieldMetadata = meta,
                             t -> t.stabilisationFieldMetadata)))
-                .addElement('K', ofBlock(QuantumGlassBlock.INSTANCE, 0))
+                .addElement('K', ofBlock(BlockQuantumGlass.INSTANCE, 0))
                 .addElement('L', ofFrame(Materials.InfinityCatalyst))
                 .addElement(
                     'I',
-                    GT_HatchElementBuilder.<GT_TE_SunFactory>builder()
+                    buildHatchAdder(GT_TE_SunFactory.class)
                         .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch)
                         .adder(GT_TE_SunFactory::addToMachineList)
                         .dot(1)
@@ -2390,8 +2390,8 @@ public class GT_TE_SunFactory extends OTH_MultiMachineBase<GT_TE_SunFactory> {
     }
 
     @Override
-    protected GT_Multiblock_Tooltip_Builder createTooltip() {
-        final GT_Multiblock_Tooltip_Builder tt = new GT_Multiblock_Tooltip_Builder();
+    protected MultiblockTooltipBuilder createTooltip() {
+        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType("§c§l老登的传奇造物 - 巨型PCB工厂丨贴片工坊丨NMD晶圆厂丨元件聚合者")
             .addInfo("§e§l忠!诚!南!下!")
             .addInfo("§5从某半岛神秘北方国家引进的尖端高科技巨构")
@@ -2470,7 +2470,7 @@ public class GT_TE_SunFactory extends OTH_MultiMachineBase<GT_TE_SunFactory> {
 
         if (sideDirection == facing) {
             if (active) return new ITexture[] {
-                getCasingTextureForId(GT_Utility.getCasingTextureIndex(sBlockCasings1, 12)), TextureFactory.builder()
+                getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings1, 12)), TextureFactory.builder()
                     .addIcon(OVERLAY_DTPF_ON)
                     .extFacing()
                     .build(),
@@ -2478,7 +2478,7 @@ public class GT_TE_SunFactory extends OTH_MultiMachineBase<GT_TE_SunFactory> {
                     .addIcon(OVERLAY_FUSION1_GLOW)
                     .extFacing()
                     .build() };
-            return new ITexture[] { getCasingTextureForId(GT_Utility.getCasingTextureIndex(sBlockCasings1, 12)),
+            return new ITexture[] { getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings1, 12)),
                 TextureFactory.builder()
                     .addIcon(OVERLAY_DTPF_OFF)
                     .extFacing()
@@ -2489,6 +2489,6 @@ public class GT_TE_SunFactory extends OTH_MultiMachineBase<GT_TE_SunFactory> {
                     .glow()
                     .build() };
         }
-        return new ITexture[] { getCasingTextureForId(GT_Utility.getCasingTextureIndex(sBlockCasings1, 12)) };
+        return new ITexture[] { getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings1, 12)) };
     }
 }

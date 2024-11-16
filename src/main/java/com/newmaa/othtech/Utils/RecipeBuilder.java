@@ -1,10 +1,10 @@
-package com.newmaa.othtech.Utils.recipes;
+package com.newmaa.othtech.Utils;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
 import gregtech.api.recipe.RecipeMap;
-import gregtech.api.util.GT_Recipe;
+import gregtech.api.util.GTRecipe;
 
 public class RecipeBuilder {
 
@@ -81,7 +81,7 @@ public class RecipeBuilder {
     }
 
     public RecipeBuilder addTo(RecipeMap<?> recipeMap) {
-        GT_Recipe tempRecipe = new GT_Recipe(
+        GTRecipe tempRecipe = new GTRecipe(
             false,
             inputItems,
             outputItems,

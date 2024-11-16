@@ -3,14 +3,14 @@ package com.newmaa.othtech.machine.machineclass.OTH_processingLogics;
 import javax.annotation.Nonnull;
 
 import gregtech.api.logic.ProcessingLogic;
-import gregtech.api.util.GT_ParallelHelper;
-import gregtech.api.util.GT_Recipe;
+import gregtech.api.util.GTRecipe;
+import gregtech.api.util.ParallelHelper;
 
 public class OTH_ProcessingLogic extends ProcessingLogic {
 
     @Nonnull
     @Override
-    protected GT_ParallelHelper createParallelHelper(@Nonnull GT_Recipe recipe) {
+    protected ParallelHelper createParallelHelper(@Nonnull GTRecipe recipe) {
         return new OTH_ParallelHelper().setRecipe(recipe)
             .setItemInputs(inputItems)
             .setFluidInputs(inputFluids)

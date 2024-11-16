@@ -1,7 +1,7 @@
 package com.newmaa.othtech.system.RecipePattern;
 
 import static com.newmaa.othtech.OTHTechnology.LOG;
-import static gregtech.api.enums.GT_Values.W;
+import static gregtech.api.enums.GTValues.W;
 
 import java.util.ArrayList;
 import java.util.Arrays;
