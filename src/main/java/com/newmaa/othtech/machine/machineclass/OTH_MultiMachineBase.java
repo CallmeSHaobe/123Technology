@@ -26,7 +26,13 @@ import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.logic.ProcessingLogic;
-import gregtech.api.metatileentity.implementations.*;
+import gregtech.api.metatileentity.implementations.MTEExtendedPowerMultiBlockBase;
+import gregtech.api.metatileentity.implementations.MTEHatch;
+import gregtech.api.metatileentity.implementations.MTEHatchDynamo;
+import gregtech.api.metatileentity.implementations.MTEHatchInput;
+import gregtech.api.metatileentity.implementations.MTEHatchInputBus;
+import gregtech.api.metatileentity.implementations.MTEHatchMuffler;
+import gregtech.api.metatileentity.implementations.MTEHatchMultiInput;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.util.GTUtility;
@@ -86,6 +92,24 @@ public abstract class OTH_MultiMachineBase<T extends OTH_MultiMachineBase<T>> ex
     }
 
     /**
+     * Performs additional check for {@link #processingLogic} after all the calculations are done.
+     * As many as checks should be done inside of custom {@link ProcessingLogic}, which you can specify with
+     * {@link #createProcessingLogic()}, because when this method is called, inputs might have been already consumed.
+     * However, certain checks cannot be done like that; Checking energy overflow should be suppressed for
+     * long-power machines for example.
+     *
+     * @return Modified (or not modified) result
+     */
+    @Nonnull
+    protected CheckRecipeResult postCheckRecipe(@Nonnull CheckRecipeResult result,
+        @Nonnull ProcessingLogic processingLogic) {
+        if (result.wasSuccessful() && processingLogic.getCalculatedEut() > Integer.MAX_VALUE) {
+            return CheckRecipeResultRegistry.POWER_OVERFLOW;
+        }
+        return result;
+    }
+
+    /**
      * Proxy Perfect Overclock Supplier.
      *
      * @return If true, enable Perfect Overclock.
@@ -100,6 +124,18 @@ public abstract class OTH_MultiMachineBase<T extends OTH_MultiMachineBase<T>> ex
     @ApiStatus.OverrideOnly
     protected float getEuModifier() {
         return 1.0F;
+    }
+
+    /**
+     * Called after {@link #doCheckRecipe} and {@link #postCheckRecipe} being successful.
+     * Override to set energy usage for this machine.
+     */
+    protected void setEnergyUsage(ProcessingLogic processingLogic) {
+        // getCalculatedEut() is guaranteed to not exceed int by postCheckRecipe()
+        mEUt = (int) processingLogic.getCalculatedEut();
+        if (mEUt > 0) {
+            mEUt = (-mEUt);
+        }
     }
 
     /**
