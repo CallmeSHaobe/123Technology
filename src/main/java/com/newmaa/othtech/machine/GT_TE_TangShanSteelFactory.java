@@ -2,6 +2,7 @@ package com.newmaa.othtech.machine;
 
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.withChannel;
+import static com.newmaa.othtech.Utils.Utils.NEGATIVE_ONE;
 import static gregtech.api.GregTechAPI.*;
 import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.enums.Mods.Chisel;
@@ -35,7 +36,6 @@ import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.Utils.Utils;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
-import com.newmaa.othtech.machine.machineclass.OTH_processingLogics.OTH_ProcessingLogic;
 
 import crazypants.enderio.EnderIO;
 import gregtech.api.GregTechAPI;
@@ -56,6 +56,7 @@ import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.api.util.OverclockCalculator;
+import gregtech.common.blocks.BlockCasings2;
 import gregtech.common.items.ItemIntegratedCircuit;
 import gtPlusPlus.core.block.ModBlocks;
 import mcp.mobius.waila.api.IWailaConfigHandler;
@@ -165,7 +166,7 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
     @Override
     protected ProcessingLogic createProcessingLogic() {
 
-        return new OTH_ProcessingLogic() {
+        return new ProcessingLogic() {
 
             @NotNull
             @Override
@@ -219,15 +220,14 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
         if (!result.wasSuccessful()) return result;
 
         flushOverclockParameter();
-        if (isWirelessMode == true) {
-            long costingWirelessEUTemp = Math
-                .min(Long.MAX_VALUE, (processingLogic.getCalculatedEut() * processingLogic.getDuration()));
+        if (isWirelessMode) {
+            BigInteger c = BigInteger.valueOf(overclockParameter);
+            BigInteger costingWirelessEUTemp = BigInteger.valueOf(processingLogic.getCalculatedEut())
+                .multiply(BigInteger.valueOf(processingLogic.getDuration()))
+                .multiply(c.pow(2));
             costingWirelessEU = GTUtility.formatNumbers(costingWirelessEUTemp);
-            if (!addEUToGlobalEnergyMap(
-                ownerUUID,
-                BigInteger.valueOf(costingWirelessEUTemp * (long) Math.pow(overclockParameter, 2) * -1))) {
-                return CheckRecipeResultRegistry
-                    .insufficientPower(costingWirelessEUTemp * (long) Math.pow(overclockParameter, 2));
+            if (!addEUToGlobalEnergyMap(ownerUUID, costingWirelessEUTemp.multiply(NEGATIVE_ONE))) {
+                return CheckRecipeResultRegistry.insufficientPower(costingWirelessEUTemp.longValue());
             }
 
             // set progress time a fixed value
@@ -318,7 +318,7 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
                         .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch)
                         .adder(GT_TE_TangShanSteelFactory::addToMachineList)
                         .dot(1)
-                        .casingIndex(0)
+                        .casingIndex(((BlockCasings2) GregTechAPI.sBlockCasings2).getTextureIndex(0))
                         .buildAndChain(sBlockCasings2, 0))
                 .addElement('D', ofBlock(sBlockCasings2, 11))
                 .addElement('E', ofBlock(sBlockCasings2, 13))
@@ -366,7 +366,7 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
                     buildHatchAdder(GT_TE_TangShanSteelFactory.class).atLeast(Muffler)
                         .adder(GT_TE_TangShanSteelFactory::addToMachineList)
                         .dot(2)
-                        .casingIndex(0)
+                        .casingIndex(((BlockCasings2) GregTechAPI.sBlockCasings2).getTextureIndex(0))
                         .buildAndChain(sBlockCasings2, 0))
                 .addElement('Z', ofFrame(Materials.Steel))
                 .addElement('1', ofBlock(sBlockCasings8, 4))
@@ -1280,11 +1280,11 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
             .addInfo("§l§8一步到位各种与钢铁相关之合金 : GTPP / GT5U, 以及部分BW")
             .addInfo("正常耗时倍率 : 1 / 线圈等级")
             .addInfo("无线耗时 = 240s / 编程电路编号 ^ 2)")
-            .addInfo("无线EU消耗 = 功率 * 耗时 * 编程电路编号 ^ 2 , 单次最高消耗8E EU")
+            .addInfo("无线EU消耗 = 功率 * 耗时 * 编程电路编号 ^ 2")
             .addInfo("请注意炉温要求.")
             .addInfo("螺丝刀切换无线模式")
             .addInfo("非无线模式执行无损超频")
-            .addInfo("§q支持§bTecTech§q能源仓及激光仓，同时支持无线电网直接供给EU")
+            .addTecTechHatchInfo()
             .addPollutionAmount(192000)
             .addSeparator()
             .addController("钢铁厂")

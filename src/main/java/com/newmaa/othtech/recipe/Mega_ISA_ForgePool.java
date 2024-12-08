@@ -250,7 +250,7 @@ public class Mega_ISA_ForgePool implements IRecipePool {
             .fluidOutputs(new FluidStack(FluidRegistry.getFluidID("molten.magmatter"), 64 * 144))
             .itemInputs(
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 32417),
-                GTModHandler.getModItem("dreamcraft", "item.PikoCircuit", 4))
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Exotic, 64))
             .noOptimize()
             .duration(1800 * 20)
             .eut(TierEU.MAX)

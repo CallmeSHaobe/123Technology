@@ -2,16 +2,16 @@ package com.newmaa.othtech.Utils.rewrites;
 
 import java.util.Objects;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.oredict.OreDictionary;
 
+import org.jetbrains.annotations.Nullable;
+
 import gregtech.api.util.GTUtility;
 
-public class ItemID extends GTUtility.ItemId {
+public class OTHItemID extends GTUtility.ItemId {
 
     // region Member Variables
     private Item item;
@@ -20,41 +20,41 @@ public class ItemID extends GTUtility.ItemId {
     // endregion
 
     // region Class Constructors
-    public ItemID(Item item, int metaData, NBTTagCompound nbt) {
+    public OTHItemID(Item item, int metaData, NBTTagCompound nbt) {
         this.item = item;
         this.metaData = metaData;
         this.nbt = nbt;
     }
 
-    public ItemID(Item item, int metaData) {
+    public OTHItemID(Item item, int metaData) {
         this.item = item;
         this.metaData = metaData;
     }
 
-    public ItemID(Item item) {
+    public OTHItemID(Item item) {
         this.item = item;
         this.metaData = 0;
     }
 
-    public ItemID() {}
+    public OTHItemID() {}
     // endregion
 
     // region Static Methods
-    public static final ItemID NULL = new ItemID();
+    public static final OTHItemID NULL = new OTHItemID();
 
-    public static ItemID create(ItemStack itemStack) {
+    public static OTHItemID create(ItemStack itemStack) {
         if (null == itemStack) return NULL;
-        return new ItemID(itemStack.getItem(), itemStack.getItemDamage(), itemStack.getTagCompound());
+        return new OTHItemID(itemStack.getItem(), itemStack.getItemDamage(), itemStack.getTagCompound());
     }
 
-    public static ItemID createNoNBT(ItemStack itemStack) {
+    public static OTHItemID createNoNBT(ItemStack itemStack) {
         if (null == itemStack) return NULL;
-        return new ItemID(itemStack.getItem(), itemStack.getItemDamage());
+        return new OTHItemID(itemStack.getItem(), itemStack.getItemDamage());
     }
 
-    public static ItemID createAsWildcard(ItemStack itemStack) {
+    public static OTHItemID createAsWildcard(ItemStack itemStack) {
         if (null == itemStack) return NULL;
-        return new ItemID(itemStack.getItem(), OreDictionary.WILDCARD_VALUE);
+        return new OTHItemID(itemStack.getItem(), OreDictionary.WILDCARD_VALUE);
     }
     // endregion
 
@@ -86,17 +86,17 @@ public class ItemID extends GTUtility.ItemId {
         return this.metaData == OreDictionary.WILDCARD_VALUE;
     }
 
-    public ItemID setItem(Item item) {
+    public OTHItemID setItem(Item item) {
         this.item = item;
         return this;
     }
 
-    public ItemID setMetaData(int metaData) {
+    public OTHItemID setMetaData(int metaData) {
         this.metaData = metaData;
         return this;
     }
 
-    public ItemID setNbt(NBTTagCompound nbt) {
+    public OTHItemID setNbt(NBTTagCompound nbt) {
         this.nbt = nbt;
         return this;
     }
@@ -146,12 +146,12 @@ public class ItemID extends GTUtility.ItemId {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof ItemID)) {
+        if (!(o instanceof OTHItemID)) {
             return false;
         }
-        ItemID tstItemID = (ItemID) o;
-        return metaData == tstItemID.metaData && Objects.equals(item, tstItemID.item)
-            && Objects.equals(nbt, tstItemID.nbt);
+        OTHItemID othitemid = (OTHItemID) o;
+        return metaData == othitemid.metaData && Objects.equals(item, othitemid.item)
+            && Objects.equals(nbt, othitemid.nbt);
     }
 
     @Override

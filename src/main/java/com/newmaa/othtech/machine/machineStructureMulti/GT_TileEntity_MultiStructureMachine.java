@@ -1,7 +1,11 @@
+// spotless:off
 package com.newmaa.othtech.machine.machineStructureMulti;
+
+import static com.newmaa.othtech.OTHTechnology.LOG;
 
 import java.util.HashSet;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -12,22 +16,30 @@ import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
 
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 
-public abstract class GT_TE_multiStrMachine<T extends GT_TE_multiStrMachine<T>> extends OTH_MultiMachineBase<T>
-    implements IConstructable, ISurvivalConstructable {
+public abstract class GT_TileEntity_MultiStructureMachine<T extends GT_TileEntity_MultiStructureMachine<T>>
+    extends OTH_MultiMachineBase<T> implements IConstructable, ISurvivalConstructable {
 
+    // ONLY main block can process recipe or do anything machine need to do.
+    // the sub structure actually only add functional models or additional
+    // bonus. once the sub structure registry and link to the main machine,
+    // no need to load the chunk or even dimension where substructure is.
+    // but every time sub structure reloaded, the main block will also auto reload
+    // its main structure
     public int ID = -1;
     public int Type = -1;
     public int fatherID = -1;
     protected long runningTick = 0;
     public HashSet<Integer> InConstruct = new HashSet<>();
 
-    protected GT_TE_multiStrMachine(int aID, String aName, String aNameRegional) {
+    protected GT_TileEntity_MultiStructureMachine(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
         setShape();
+
     }
 
-    public GT_TE_multiStrMachine(String mName) {
+    public GT_TileEntity_MultiStructureMachine(String mName) {
         super(mName);
+
     }
 
     @Override
@@ -44,10 +56,17 @@ public abstract class GT_TE_multiStrMachine<T extends GT_TE_multiStrMachine<T>> 
 
     public void setShape() {
         StructureLoader.load(mName, mName);
+        // var pieces = StructureLoader.getPieces(mName)
+        // .size();
+        // for (int i = 0; i < pieces; i++) {
+        // InConstruct.add(i);
+        //
+        // }
     }
 
     @Override
     public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
+
         return super.survivalConstruct(stackSize, elementBudget, env);
     }
 
@@ -67,9 +86,11 @@ public abstract class GT_TE_multiStrMachine<T extends GT_TE_multiStrMachine<T>> 
             offSet.verticalOffSet,
             offSet.depthOffSet)) {
             if (!hintsOnly) {
+                // LOG.info("build and remove piece " + mName + num + "from InConstruct set");
                 InConstruct.remove(num);
             }
         }
+
     }
 
     public void repair(int num) {
@@ -78,27 +99,38 @@ public abstract class GT_TE_multiStrMachine<T extends GT_TE_multiStrMachine<T>> 
             .buildPiece(mName + num, null, false, offSet.horizontalOffSet, offSet.verticalOffSet, offSet.depthOffSet)) {
             InConstruct.remove(num);
         }
+
     }
 
     int checkStructureCount = 0;
 
+    // need to be optimized and rewrite
     @Override
     public boolean checkStructure(boolean aForceReset, IGregTechTileEntity aBaseMetaTileEntity) {
         StructureLoader.MultiStructureDefinition.OffSet offSet = StructureLoader
             .getOffSet(mName, mName + checkStructureCount);
+        LOG.info("checking structure now: piece" + checkStructureCount);
         if (checkPiece(
             mName + checkStructureCount,
             offSet.horizontalOffSet,
             offSet.verticalOffSet,
             offSet.depthOffSet)) {
+            // LOG.info("checked and remove piece " + mName + checkStructureCount + "from InConstruct set");
             InConstruct.remove(checkStructureCount);
             checkStructureCount++;
             if (checkStructureCount == StructureLoader.readStructure(mName).pieces.size()) {
                 checkStructureCount = 0;
             }
         } else {
+            LOG.info("checked and put " + checkStructureCount + " into the InConstruct set");
             InConstruct.add(checkStructureCount);
         }
+        return InConstruct.isEmpty();
+        // return isComplete;
+    }
+
+    @Override
+    public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
         return InConstruct.isEmpty();
     }
 
@@ -108,6 +140,14 @@ public abstract class GT_TE_multiStrMachine<T extends GT_TE_multiStrMachine<T>> 
         aNBT.setInteger("TYPE", Type);
         aNBT.setInteger("fatherID", fatherID);
         super.saveNBTData(aNBT);
+    }
+
+    @Override
+    public void loadNBTData(NBTTagCompound aNBT) {
+        ID = aNBT.getInteger("ID");
+        Type = aNBT.getInteger("TYPE");
+        fatherID = aNBT.getInteger("fatherID");
+        super.loadNBTData(aNBT);
     }
 
     @Override
@@ -124,6 +164,18 @@ public abstract class GT_TE_multiStrMachine<T extends GT_TE_multiStrMachine<T>> 
             MultiStructureManager.registryMachine(this);
         }
         super.onPreTick(aBaseMetaTileEntity, aTick);
+    }
+
+    @Override
+    public boolean onRightclick(IGregTechTileEntity aBaseMetaTileEntity, EntityPlayer aPlayer) {
+        var itemInUse = aPlayer.getHeldItem();
+        return super.onRightclick(aBaseMetaTileEntity, aPlayer);
+    }
+
+    @Override
+    public void onLeftclick(IGregTechTileEntity aBaseMetaTileEntity, EntityPlayer aPlayer) {
+        var itemInUse = aPlayer.getHeldItem();
+        super.onLeftclick(aBaseMetaTileEntity, aPlayer);
     }
 
     protected void turnOffMaintenance() {

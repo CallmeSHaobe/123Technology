@@ -37,7 +37,6 @@ import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.Utils.Utils;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
-import com.newmaa.othtech.machine.machineclass.OTH_processingLogics.OTH_ProcessingLogic;
 
 import bartworks.API.BorosilicateGlass;
 import gregtech.api.GregTechAPI;
@@ -160,7 +159,7 @@ public class GT_TE_SINOPEC extends OTH_MultiMachineBase<GT_TE_SINOPEC> {
     @Override
     protected ProcessingLogic createProcessingLogic() {
 
-        return new OTH_ProcessingLogic() {
+        return new ProcessingLogic() {
 
             @NotNull
             @Override
@@ -1105,7 +1104,7 @@ public class GT_TE_SINOPEC extends OTH_MultiMachineBase<GT_TE_SINOPEC> {
             .addInfo("§l一步到位.")
             .addInfo("线圈等级<10时 耗时倍率 = 1 - 线圈等级 * 0.1, ≥10时耗时倍率固定为0.1")
             .addInfo("主机放入铱锇钐合金粉解锁无损超频以及256并行, 并行默认为64")
-            .addInfo("§q支持§bTecTech§q能源仓及激光仓，但不支持无线电网直接供给EU")
+            .addTecTechHatchInfo()
             .addPollutionAmount(64000)
             .addSeparator()
             .addController("中国石化")

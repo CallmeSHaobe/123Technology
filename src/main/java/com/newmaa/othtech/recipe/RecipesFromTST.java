@@ -80,7 +80,7 @@ public class RecipesFromTST implements IRecipePool {
                 GTModHandler.getModItem("gregtech", "gt.blockcasings", 4, 14),
                 GTModHandler.getModItem("gregtech", "gt.blockcasings", 4, 13),
                 GTModHandler.getModItem("tectech", "gt.blockcasingsTT", 16), ItemList.Field_Generator_UMV.get(8),
-                ItemList.Emitter_UMV.get(6), GTModHandler.getModItem("dreamcraft", "item.PikoCircuit", 8),
+                ItemList.Emitter_UMV.get(6), GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Exotic, 64),
                 ItemList.Field_Generator_UEV.get(24), GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 28581),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 23581),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 8, 22581),

@@ -41,7 +41,9 @@ public class StructureLoader {
         return structure.offSet.get(structure.pieces.get(piece));
     }
 
-    public static String assetRoot = "/assets/123technology/structure/";
+    // public static String assetRoot =
+    // "C:\\Users\\bcjPr\\Desktop\\gtnh-astra-migrate\\GTNH-combination\\GTNH_Community_Mod\\src\\main\\resources\\assets\\gtnhcommunitymod\\structure\\";
+    public static String assetRoot = "/assets/gtnhcommunitymod/structure/";
 
     public static String[][] getShape(String name, String piece) {
 
@@ -67,6 +69,8 @@ public class StructureLoader {
         LOG.info(
             Objects.requireNonNull(OTHTechnology.class.getResource(""))
                 .getPath());
+        // path =
+        // "C:\\Users\\bcjPr\\Desktop\\gtnh-astra-migrate\\GTNH-combination\\GTNH_Community_Mod\\src\\main\\resources\\assets\\gtnhcommunitymod\\structure\\namemegauniversalspacestation.zip";
         try (ZipInputStream zipInputStream = new ZipInputStream(
             Objects.requireNonNull(OTHTechnology.class.getResourceAsStream(assetRoot + name + ".zip"))
             // Objects.requireNonNull(LanguageUtil0.class.getResourceAsStream(zipFilePath))

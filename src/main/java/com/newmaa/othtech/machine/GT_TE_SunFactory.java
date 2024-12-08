@@ -35,7 +35,6 @@ import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.gtnewhorizons.gtnhintergalactic.block.IGBlocks;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
-import com.newmaa.othtech.machine.machineclass.OTH_processingLogics.OTH_ProcessingLogic;
 
 import bartworks.API.BorosilicateGlass;
 import gregtech.api.enums.Materials;
@@ -208,7 +207,7 @@ public class GT_TE_SunFactory extends OTH_MultiMachineBase<GT_TE_SunFactory> {
     @Override
     protected ProcessingLogic createProcessingLogic() {
 
-        return new OTH_ProcessingLogic() {
+        return new ProcessingLogic() {
 
             @NotNull
             @Override
@@ -2393,7 +2392,7 @@ public class GT_TE_SunFactory extends OTH_MultiMachineBase<GT_TE_SunFactory> {
     protected MultiblockTooltipBuilder createTooltip() {
         final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType("§c§l老登的传奇造物 - 巨型PCB工厂丨贴片工坊丨NMD晶圆厂丨元件聚合者")
-            .addInfo("§e§l忠!诚!南!下!")
+            .addInfo("§e§l主!体!南!下!")
             .addInfo("§5从某半岛神秘北方国家引进的尖端高科技巨构")
             .addInfo("§5利用「恩情」的力量将原材料一步转化为电路板所需要的材料")
             .addInfo("§5具有令人畏惧的良品率和毫无瑕疵的精密度")
@@ -2410,7 +2409,7 @@ public class GT_TE_SunFactory extends OTH_MultiMachineBase<GT_TE_SunFactory> {
             .addInfo("stabilisationfieldgenerators信道 = 5 解锁NMD晶圆厂")
             .addInfo("stabilisationfieldgenerators信道 = 8 解锁元件聚合者")
             .addInfo("更换力场后结构不成型请重放主机")
-            .addInfo("§q支持§bTecTech§q能源仓及激光仓，但不支持无线电网直接供给EU")
+            .addTecTechHatchInfo()
             .addSeparator()
             .addController("红日恩情工坊")
             .beginStructureBlock(63, 32, 63, false)

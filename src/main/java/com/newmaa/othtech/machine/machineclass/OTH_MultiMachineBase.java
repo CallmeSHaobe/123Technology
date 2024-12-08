@@ -1,6 +1,7 @@
 package com.newmaa.othtech.machine.machineclass;
 
 import static com.newmaa.othtech.Utils.Utils.filterValidMTEs;
+import static gregtech.api.enums.GTValues.VN;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,6 +11,8 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -19,10 +22,7 @@ import org.jetbrains.annotations.NotNull;
 import com.gtnewhorizon.structurelib.alignment.constructable.IConstructable;
 import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructable;
 import com.newmaa.othtech.Config;
-import com.newmaa.othtech.machine.machineclass.OTH_processingLogics.OTH_ProcessingLogic;
 
-import gregtech.api.enums.Textures;
-import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.logic.ProcessingLogic;
@@ -76,7 +76,7 @@ public abstract class OTH_MultiMachineBase<T extends OTH_MultiMachineBase<T>> ex
      */
     @ApiStatus.OverrideOnly
     protected ProcessingLogic createProcessingLogic() {
-        return new OTH_ProcessingLogic() {
+        return new ProcessingLogic() {
 
             @NotNull
             @Override
@@ -89,24 +89,6 @@ public abstract class OTH_MultiMachineBase<T extends OTH_MultiMachineBase<T>> ex
             }
 
         }.setMaxParallelSupplier(this::getLimitedMaxParallel);
-    }
-
-    /**
-     * Performs additional check for {@link #processingLogic} after all the calculations are done.
-     * As many as checks should be done inside of custom {@link ProcessingLogic}, which you can specify with
-     * {@link #createProcessingLogic()}, because when this method is called, inputs might have been already consumed.
-     * However, certain checks cannot be done like that; Checking energy overflow should be suppressed for
-     * long-power machines for example.
-     *
-     * @return Modified (or not modified) result
-     */
-    @Nonnull
-    protected CheckRecipeResult postCheckRecipe(@Nonnull CheckRecipeResult result,
-        @Nonnull ProcessingLogic processingLogic) {
-        if (result.wasSuccessful() && processingLogic.getCalculatedEut() > Integer.MAX_VALUE) {
-            return CheckRecipeResultRegistry.POWER_OVERFLOW;
-        }
-        return result;
     }
 
     /**
@@ -124,18 +106,6 @@ public abstract class OTH_MultiMachineBase<T extends OTH_MultiMachineBase<T>> ex
     @ApiStatus.OverrideOnly
     protected float getEuModifier() {
         return 1.0F;
-    }
-
-    /**
-     * Called after {@link #doCheckRecipe} and {@link #postCheckRecipe} being successful.
-     * Override to set energy usage for this machine.
-     */
-    protected void setEnergyUsage(ProcessingLogic processingLogic) {
-        // getCalculatedEut() is guaranteed to not exceed int by postCheckRecipe()
-        mEUt = (int) processingLogic.getCalculatedEut();
-        if (mEUt > 0) {
-            mEUt = (-mEUt);
-        }
     }
 
     /**
@@ -161,6 +131,16 @@ public abstract class OTH_MultiMachineBase<T extends OTH_MultiMachineBase<T>> ex
      */
     protected int getLimitedMaxParallel() {
         return getMaxParallelRecipes();
+    }
+
+    /**
+     * Prevent overflow during power consumption calculation.
+     *
+     * @return Eu consumption per tick.
+     */
+    @Override
+    protected long getActualEnergyUsage() {
+        return (long) (-this.lEUt * (10000.0 / Math.max(1000, mEfficiency)));
     }
 
     /**
@@ -372,26 +352,69 @@ public abstract class OTH_MultiMachineBase<T extends OTH_MultiMachineBase<T>> ex
     // region Overrides
     @Override
     public String[] getInfoData() {
-        String dSpeed = String.format("%.3f", this.getSpeedBonus() * 100) + "%";
-        String dEUMod = String.format("%.3f", this.getEuModifier() * 100) + "%";
+        long storedEnergy = 0;
+        long maxEnergy = 0;
+        for (MTEHatch tHatch : getExoticAndNormalEnergyHatchList()) {
+            storedEnergy += tHatch.getBaseMetaTileEntity()
+                .getStoredEU();
+            maxEnergy += tHatch.getBaseMetaTileEntity()
+                .getEUCapacity();
+        }
+        long voltage = getAverageInputVoltage();
+        long amps = getMaxInputAmps();
 
-        String[] origin = super.getInfoData();
-        String[] ret = new String[origin.length + 3];
-        System.arraycopy(origin, 0, ret, 0, origin.length);
-        // ret[origin.length] = EnumChatFormatting.AQUA + texter("Parallels", "MachineInfoData.Parallels")
-        // + ": "
-        // + EnumChatFormatting.GOLD
-        // + this.getLimitedMaxParallel();
-        // ret[origin.length + 1] = EnumChatFormatting.AQUA + texter("Speed multiplier",
-        // "MachineInfoData.SpeedMultiplier")
-        // + ": "
-        // + EnumChatFormatting.GOLD
-        // + dSpeed;
-        // ret[origin.length + 2] = EnumChatFormatting.AQUA + texter("EU Modifier", "MachineInfoData.EuModifier")
-        // + ": "
-        // + EnumChatFormatting.GOLD
-        // + dEUMod;
-        return ret;
+        return new String[] {
+            /* 1 */ StatCollector.translateToLocal("GT5U.multiblock.Progress") + ": "
+                + EnumChatFormatting.GREEN
+                + GTUtility.formatNumbers(mProgresstime / 20)
+                + EnumChatFormatting.RESET
+                + " s / "
+                + EnumChatFormatting.YELLOW
+                + GTUtility.formatNumbers(mMaxProgresstime / 20)
+                + EnumChatFormatting.RESET
+                + " s",
+            /* 2 */ StatCollector.translateToLocal("GT5U.multiblock.energy") + ": "
+                + EnumChatFormatting.GREEN
+                + GTUtility.formatNumbers(storedEnergy)
+                + EnumChatFormatting.RESET
+                + " EU / "
+                + EnumChatFormatting.YELLOW
+                + GTUtility.formatNumbers(maxEnergy)
+                + EnumChatFormatting.RESET
+                + " EU",
+            /* 3 */ StatCollector.translateToLocal("GT5U.multiblock.usage") + ": "
+                + EnumChatFormatting.RED
+                + GTUtility.formatNumbers(getActualEnergyUsage())
+                + EnumChatFormatting.RESET
+                + " EU/t",
+            /* 4 */ StatCollector.translateToLocal("GT5U.multiblock.mei") + ": "
+                + EnumChatFormatting.YELLOW
+                + GTUtility.formatNumbers(voltage)
+                + EnumChatFormatting.RESET
+                + " EU/t(*"
+                + amps
+                + " A)"
+                + StatCollector.translateToLocal("GT5U.machines.tier")
+                + ": "
+                + EnumChatFormatting.YELLOW
+                + VN[GTUtility.getTier(voltage)]
+                + EnumChatFormatting.RESET,
+            /* 5 */ StatCollector.translateToLocal("GT5U.multiblock.problems") + ": "
+                + EnumChatFormatting.RED
+                + (getIdealStatus() - getRepairStatus())
+                + EnumChatFormatting.RESET
+                + " "
+                + StatCollector.translateToLocal("GT5U.multiblock.efficiency")
+                + ": "
+                + EnumChatFormatting.YELLOW
+                + mEfficiency / 100.0F
+                + EnumChatFormatting.RESET
+                + " %",
+            /* 6 */ StatCollector.translateToLocal("GT5U.multiblock.pollution") + ": "
+                + EnumChatFormatting.GREEN
+                + getAveragePollutionPercentage()
+                + EnumChatFormatting.RESET
+                + " %" };
     }
 
     @Override
@@ -429,13 +452,6 @@ public abstract class OTH_MultiMachineBase<T extends OTH_MultiMachineBase<T>> ex
             return mMufflerHatches.add((MTEHatchMuffler) aMetaTileEntity);
         }
         return false;
-    }
-
-    public boolean isMachineRunning() {
-        boolean aRunning = this.getBaseMetaTileEntity()
-            .isActive();
-        // log("Queried Multiblock is currently running: "+aRunning);
-        return aRunning;
     }
 
     @Override
@@ -609,14 +625,6 @@ public abstract class OTH_MultiMachineBase<T extends OTH_MultiMachineBase<T>> ex
     @Override
     public int getRecipeCatalystPriority() {
         return -1;
-    }
-
-    protected int getCasingTextureId() {
-        return 0;
-    }
-
-    protected ITexture getCasingTexture() {
-        return Textures.BlockIcons.getCasingTextureForId(getCasingTextureId());
     }
 
     // endregion

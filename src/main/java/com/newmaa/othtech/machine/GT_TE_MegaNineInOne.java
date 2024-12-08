@@ -24,7 +24,6 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
-import com.newmaa.othtech.machine.machineclass.OTH_processingLogics.OTH_ProcessingLogic;
 
 import bartworks.API.BorosilicateGlass;
 import gregtech.api.GregTechAPI;
@@ -75,11 +74,6 @@ public class GT_TE_MegaNineInOne extends OTH_MultiMachineBase<GT_TE_MegaNineInOn
 
     public int getTextureIndex() {
         return TAE.getIndexFromPage(2, 2);
-    }
-
-    @Override
-    protected int getCasingTextureId() {
-        return getTextureIndex();
     }
 
     @Override
@@ -158,7 +152,7 @@ public class GT_TE_MegaNineInOne extends OTH_MultiMachineBase<GT_TE_MegaNineInOn
 
     @Override
     protected ProcessingLogic createProcessingLogic() {
-        return new OTH_ProcessingLogic() {
+        return new ProcessingLogic() {
 
             private ItemStack lastCircuit = null;
 
@@ -732,8 +726,8 @@ public class GT_TE_MegaNineInOne extends OTH_MultiMachineBase<GT_TE_MegaNineInOn
             .addInfo("§b配方耗时 = NEI耗时 * (1 + (能源仓电压等级 * 10%))")
             .addInfo("§bEU消耗 : 99%")
             .addInfo("§b执行无损超频")
-            .addInfo("§q支持§bTecTech§q能源仓及激光仓，但不支持无线电网直接供给EU")
             .addInfo("§e九合一，我们敬爱你口牙！！ ---Sukune_News")
+            .addTecTechHatchInfo()
             .addPollutionAmount(123123)
             .addSeparator()
             .addController("巨型加工厂")

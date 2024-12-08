@@ -9,10 +9,13 @@ import com.newmaa.othtech.common.recipemap.Recipemaps;
 
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
+import gregtech.api.enums.Materials;
+import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GTModHandler;
+import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTUtility;
 
 public class Circuit implements IRecipePool {
@@ -42,7 +45,7 @@ public class Circuit implements IRecipePool {
             .itemOutputs(GTModHandler.getModItem("123Technology", "capTrans", 2))
             .itemInputs(
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 22397),
-                GTModHandler.getModItem("dreamcraft", "item.PikoCircuit", 8),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Exotic, 64),
                 GTModHandler.getModItem("tectech", "gt.stabilisation_field_generator", 8))
             .fluidInputs(new FluidStack(dtsc, 2000))
             .noOptimize()
@@ -53,7 +56,7 @@ public class Circuit implements IRecipePool {
             .itemOutputs(GTModHandler.getModItem("123Technology", "transTrans", 4))
             .itemInputs(
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 22139),
-                GTModHandler.getModItem("dreamcraft", "item.QuantumCircuit", 8),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Cosmic, 64),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 4581),
                 GTModHandler.getModItem("tectech", "gt.spacetime_compression_field_generator", 8, 8),
                 ItemList.Field_Generator_UXV.get(16),
@@ -67,7 +70,7 @@ public class Circuit implements IRecipePool {
             .itemOutputs(GTModHandler.getModItem("123Technology", "induTrans", 4))
             .itemInputs(
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 22143),
-                GTModHandler.getModItem("dreamcraft", "item.QuantumCircuit", 16),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Cosmic, 64),
                 GTModHandler.getModItem("123Technology", "IsaBee", 64),
                 GTModHandler.getModItem("123Technology", "leCasimir", 16),
                 GTModHandler.getModItem("tectech", "item.tm.itemAstralArrayFabricator", 1))
@@ -80,7 +83,7 @@ public class Circuit implements IRecipePool {
             .itemOutputs(GTModHandler.getModItem("123Technology", "resTrans", 4))
             .itemInputs(
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 22588),
-                GTModHandler.getModItem("dreamcraft", "item.PikoCircuit", 8),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Exotic, 64),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 4581),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 2089),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 2089),
@@ -94,7 +97,7 @@ public class Circuit implements IRecipePool {
         GTValues.RA.stdBuilder()
             .itemOutputs(GTModHandler.getModItem("123Technology", "dioTrans", 4))
             .itemInputs(
-                GTModHandler.getModItem("dreamcraft", "item.QuantumCircuit", 16),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Cosmic, 64),
                 GTModHandler.getModItem("123Technology", "IsaBee", 16),
                 GTModHandler.getModItem("tectech", "gt.time_acceleration_field_generator", 8, 8),
                 ItemList.Field_Generator_UXV.get(16),

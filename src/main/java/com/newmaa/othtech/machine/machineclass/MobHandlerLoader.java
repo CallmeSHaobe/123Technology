@@ -74,7 +74,7 @@ public class MobHandlerLoader {
 
         public final MobRecipe recipe;
 
-        public final int mEUt = 2000;
+        public final long mEUt = Integer.MAX_VALUE * 64;
         public final int mDuration;
         public final EntityLiving entityCopy;
 

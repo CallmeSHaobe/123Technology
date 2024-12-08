@@ -36,7 +36,7 @@ public class GT_TE_infWirelessHatch extends MTEWirelessEnergy {
 
     @Override
     public long maxEUInput() {
-        return Integer.MAX_VALUE;
+        return 2147483640;
     }
 
     @Override
@@ -46,7 +46,7 @@ public class GT_TE_infWirelessHatch extends MTEWirelessEnergy {
 
     @Override
     public long maxAmperesIn() {
-        return Integer.MAX_VALUE;
+        return 2147483640;
     }
 
     // endregion

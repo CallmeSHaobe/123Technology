@@ -1,3 +1,4 @@
+// spotless:off
 package com.newmaa.othtech.machine.machineStructureMulti;
 
 import static com.newmaa.othtech.OTHTechnology.LOG;
@@ -11,7 +12,7 @@ import net.minecraft.world.WorldSavedData;
 
 public class MultiStructureManager extends WorldSavedData {
 
-    private static final HashMap<Integer, GT_TE_multiStrMachine<?>> machines = new HashMap<>();
+    private static final HashMap<Integer, GT_TileEntity_MultiStructureMachine<?>> machines = new HashMap<>();
     private static final HashMap<Integer, HashSet<Integer>> subMachines = new HashMap<>();
     private static final HashMap<Integer, ArrayList<Integer>> validSubTypeCode = new HashMap<>();
     private static Integer endID = 0;
@@ -20,7 +21,7 @@ public class MultiStructureManager extends WorldSavedData {
         super("MultiStructureManagementSavedData");
     }
 
-    public static GT_TE_multiStrMachine<?> getMachine(int ID) {
+    public static GT_TileEntity_MultiStructureMachine<?> getMachine(int ID) {
         if (ID == -1) {
             return null;
         }
@@ -30,7 +31,7 @@ public class MultiStructureManager extends WorldSavedData {
     // any Time a machine is placed in the world or reloaded when chunk or dimension is reloaded, should call these
     // function
     // to let manager manage the structure main block.
-    public static void registryMachine(GT_TE_multiStrMachine<?> machine) {
+    public static void registryMachine(GT_TileEntity_MultiStructureMachine<?> machine) {
 
         if (machine == null) {
             LOG.info("unexpected multi-structure registry");
@@ -54,7 +55,8 @@ public class MultiStructureManager extends WorldSavedData {
     }
 
     // create a link between main structure and sub structure
-    public static boolean linkMachine(GT_TE_multiStrMachine<?> mainMachine, GT_TE_multiStrMachine<?> subMachine) {
+    public static boolean linkMachine(GT_TileEntity_MultiStructureMachine<?> mainMachine,
+        GT_TileEntity_MultiStructureMachine<?> subMachine) {
         if (mainMachine == null || subMachine == null) {
             return false;
         }
@@ -75,7 +77,8 @@ public class MultiStructureManager extends WorldSavedData {
     }
 
     // remove a link between main structure and sub structure
-    public static void removeLink(GT_TE_multiStrMachine<?> mainMachine, GT_TE_multiStrMachine<?> subMachine) {
+    public static void removeLink(GT_TileEntity_MultiStructureMachine<?> mainMachine,
+        GT_TileEntity_MultiStructureMachine<?> subMachine) {
         if (mainMachine == null || subMachine == null) {
             return;
         }
@@ -87,7 +90,7 @@ public class MultiStructureManager extends WorldSavedData {
     }
 
     // when machine block is destroyed in any case, call this function.
-    public static void removeMachine(GT_TE_multiStrMachine<?> machine) {
+    public static void removeMachine(GT_TileEntity_MultiStructureMachine<?> machine) {
         if (machine == null) {
             return;
         }

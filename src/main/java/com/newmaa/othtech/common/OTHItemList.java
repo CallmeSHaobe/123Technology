@@ -30,6 +30,7 @@ public enum OTHItemList {
     legendary_WirelessHatch,
 
     WirelessMAX,
+    CHEMEEE,
 
     MegaIsaForge;
 

@@ -29,7 +29,6 @@ import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.Utils.Utils;
 import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
-import com.newmaa.othtech.machine.machineclass.OTH_processingLogics.OTH_ProcessingLogic;
 
 import bartworks.API.BorosilicateGlass;
 import gregtech.api.GregTechAPI;
@@ -199,7 +198,7 @@ public class GT_TE_CHEM extends OTH_MultiMachineBase<GT_TE_CHEM> {
     @Override
     protected ProcessingLogic createProcessingLogic() {
 
-        return new OTH_ProcessingLogic() {
+        return new ProcessingLogic() {
 
             @NotNull
             @Override
@@ -326,7 +325,7 @@ public class GT_TE_CHEM extends OTH_MultiMachineBase<GT_TE_CHEM> {
             .addInfo("大型化学反应釜模式 : 耗时 = NEI耗时 * (1 - 线圈等级 * 0.1), 最低耗时倍率为0.1; 并行64, 无损超频")
             .addInfo("glass信道值决定化工厂等级")
             .addInfo("主机放入铱锇钐合金粉解锁化工厂无损超频")
-            .addInfo("§q支持§bTecTech§q能源仓及激光仓，但不支持无线电网直接供给EU")
+            .addTecTechHatchInfo()
             .addSeparator()
             .addController("反应釜")
             .beginStructureBlock(7, 13, 7, false)

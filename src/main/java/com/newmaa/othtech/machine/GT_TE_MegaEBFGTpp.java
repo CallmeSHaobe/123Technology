@@ -20,7 +20,10 @@ import com.newmaa.othtech.Utils.Utils;
 import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
 
 import bartworks.API.BorosilicateGlass;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import gregtech.api.enums.HeatingCoilLevel;
+import gregtech.api.enums.SoundResource;
 import gregtech.api.enums.TAE;
 import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
@@ -128,13 +131,14 @@ public class GT_TE_MegaEBFGTpp extends OTH_MultiMachineBase<GT_TE_MegaEBFGTpp> {
             @NotNull
             @Override
             public CheckRecipeResult process() {
+                setEuModifier(0.9F);
                 setSpeedBonus(getSpeedBonus());
                 setOverclock(isEnablePerfectOverclock() ? 2 : 1, 2);
                 return super.process();
             }
 
-        }.setMaxParallelSupplier(this::getMaxParallelRecipes)
-            .setEuModifier(0.9F);
+        }.setMaxParallelSupplier(this::getMaxParallelRecipes);
+
     }
 
     @Override
@@ -302,8 +306,8 @@ public class GT_TE_MegaEBFGTpp extends OTH_MultiMachineBase<GT_TE_MegaEBFGTpp> {
             .addInfo("§b  速度 + 120%")
             .addInfo("§b  并行: 2048")
             .addInfo("§6  不消耗烈焰之炽焱， 但输入仓必须至少有123 * 1000L烈焰之炽焱才可运行")
-            .addInfo("§q支持§bTecTech§q能源仓及激光仓，但不支持无线电网直接供给EU")
             .addInfo("§l 「烈焰之炽焱这个东西啊, 用个几千个就淘汰了」---风哥语录·改 ")
+            .addTecTechHatchInfo()
             .addPollutionAmount(128000)
             .addSeparator()
             .addController("巨型炽焱高炉")
@@ -377,5 +381,12 @@ public class GT_TE_MegaEBFGTpp extends OTH_MultiMachineBase<GT_TE_MegaEBFGTpp> {
         }
         return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(TAE.getIndexFromPage(2, 11)) };
     }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    protected SoundResource getActivitySoundLoop() {
+        return SoundResource.GT_MACHINES_ADV_EBF_LOOP;
+    }
+
 }
 // spotless:on

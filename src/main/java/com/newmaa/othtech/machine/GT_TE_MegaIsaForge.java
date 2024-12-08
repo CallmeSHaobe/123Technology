@@ -25,7 +25,6 @@ import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.gtnewhorizons.gtnhintergalactic.recipe.IGRecipeMaps;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
-import com.newmaa.othtech.machine.machineclass.OTH_processingLogics.OTH_ProcessingLogic;
 
 import bartworks.API.BorosilicateGlass;
 import galaxyspace.core.register.GSBlocks;
@@ -125,7 +124,7 @@ public class GT_TE_MegaIsaForge extends OTH_MultiMachineBase<GT_TE_MegaIsaForge>
 
     @Override
     protected ProcessingLogic createProcessingLogic() {
-        return new OTH_ProcessingLogic() {
+        return new ProcessingLogic() {
 
             @NotNull
             @Override
@@ -3458,8 +3457,8 @@ public class GT_TE_MegaIsaForge extends OTH_MultiMachineBase<GT_TE_MegaIsaForge>
             .addInfo("§d艾萨领主认证")
             .addInfo("§7无法想象的速度与并行")
             .addInfo("耗时 = NEI耗时 * { 1 / {电压等级^[(玻璃等级 / 2)+1]}^(1/3)}")
-            .addInfo("§q支持§bTecTech§q能源仓及激光仓，但不支持无线电网直接供给EU")
             .addInfo("§q主机放入星阵解锁太空组装模式")
+            .addTecTechHatchInfo()
             .addSeparator()
             .addController("巨艾萨控制器")
             .beginStructureBlock(64, 50, 64, false)

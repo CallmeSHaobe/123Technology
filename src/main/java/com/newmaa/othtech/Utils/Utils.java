@@ -18,6 +18,7 @@ import com.newmaa.othtech.OTHTechnology;
 
 import gregtech.api.enums.HeatingCoilLevel;
 import gregtech.api.metatileentity.MetaTileEntity;
+import scala.actors.migration.pattern;
 
 public final class Utils {
 
@@ -75,6 +76,14 @@ public final class Utils {
             result[i] = array[i].copy();
         }
         return result;
+    }
+
+    public static boolean isValid(ItemStack... itemStacks) {
+        if (itemStacks == null || itemStacks.length < 1) return false;
+        for (int i = 0; i < itemStacks.length; i++) {
+            if (!isStackValid(itemStacks[i])) return false;
+        }
+        return true;
     }
 
     public static ItemStack[] mergeItemStackArray(ItemStack[] array1, ItemStack[] array2) {
@@ -351,5 +360,4 @@ public final class Utils {
     public static double calculatePowerTier(double voltage) {
         return 1 + Math.max(0, (Math.log(voltage) / LOG2) - 5) / 2;
     }
-
 }

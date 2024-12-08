@@ -38,7 +38,6 @@ import com.kuba6000.mobsinfo.api.utils.FastRandom;
 import com.mojang.authlib.GameProfile;
 import com.newmaa.othtech.machine.machineclass.MobHandlerLoader;
 import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
-import com.newmaa.othtech.machine.machineclass.OTH_processingLogics.OTH_ProcessingLogic;
 
 import bartworks.API.BorosilicateGlass;
 import crazypants.enderio.EnderIO;
@@ -49,6 +48,7 @@ import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
+import gregtech.api.interfaces.tileentity.IWirelessEnergyHatchInformation;
 import gregtech.api.logic.ProcessingLogic;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
@@ -60,7 +60,7 @@ import gregtech.api.util.MultiblockTooltipBuilder;
 import gtPlusPlus.core.material.MaterialsAlloy;
 import tectech.thing.block.BlockQuantumGlass;
 
-public class GT_TE_MegaEEC extends OTH_MultiMachineBase<GT_TE_MegaEEC> {
+public class GT_TE_MegaEEC extends OTH_MultiMachineBase<GT_TE_MegaEEC> implements IWirelessEnergyHatchInformation {
 
     public GT_TE_MegaEEC(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
@@ -136,7 +136,7 @@ public class GT_TE_MegaEEC extends OTH_MultiMachineBase<GT_TE_MegaEEC> {
     @Override
     protected ProcessingLogic createProcessingLogic() {
 
-        return new OTH_ProcessingLogic() {
+        return new ProcessingLogic() {
 
             @NotNull
             @Override
@@ -4295,6 +4295,7 @@ public class GT_TE_MegaEEC extends OTH_MultiMachineBase<GT_TE_MegaEEC> {
             .addInfo("§l§4“观自在菩萨, 行深般若波罗蜜多时照见五蕴皆空, 度一切苦厄.”")
             .addInfo("§l§4无法连接血魔法仪式, 自动销毁所有附魔以及有耐久损耗的装备")
             .addInfo("§n§b工业化的魅力......")
+            .addInfo("PS:坏掉了, 未来会修复")
             .addInfo("并行: 134217728, 耗电固定为64A MAX, 时运等级64")
             .addInfo("注意: 多方块结构方块数量过多 无法预览结构")
             .addInfo("统计 : 灵魂沙 * 2200 , 博特姆合金块 * 1493 , 放射硅岩合金机械方块 * 12309")
@@ -4302,7 +4303,7 @@ public class GT_TE_MegaEEC extends OTH_MultiMachineBase<GT_TE_MegaEEC> {
             .addInfo("硼玻璃系列方块 * 240 , 太空电梯支持结构方块 * 918 , 分子机械方块 * 2271")
             .addInfo("量子玻璃 * 1101 , 遏制场发生器 * 44 , 玄铁栅栏 * 111")
             .addInfo("维度桥接机械方块 * 233 , 维度注入机械方块 * 241 , 时空扭曲机械方块 * 32")
-            .addInfo("§q支持§bTecTech§q能源仓及激光仓，但不支持无线电网直接供给EU")
+            .addTecTechHatchInfo()
             .addSeparator()
             .addController("工业屠宰场")
             .beginStructureBlock(50, 143, 56, false)

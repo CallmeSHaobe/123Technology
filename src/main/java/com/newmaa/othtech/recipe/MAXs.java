@@ -87,7 +87,7 @@ public class MAXs implements IRecipePool {
                 GTModHandler.getModItem("tectech", "gt.blockcasingsTT", 16),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.02", 64, 19139),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 4, 22583),
-                GTModHandler.getModItem("dreamcraft", "item.QuantumCircuit", 64),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Cosmic, 64),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 32417),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 4, 4141),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 32, 32165),

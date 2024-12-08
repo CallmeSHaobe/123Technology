@@ -1,21 +1,22 @@
 {
-	"modListVersion": 2,
-	"modList": [{
-		"modid": "${modId}",
-		"name": "${modName}",
-		"description": "123Technology For GTNH",
-		"version": "${modVersion}",
-		"mcversion": "1.7.10",
-		"url": "https://github.com/CallmeSHaobe/123",
-		"updateUrl": "",
-		"authorList": ["SinTho0r4s"],
-		"credits": "",
-		"logoFile": "",
-		"screenshots": [],
-		"parent": "",
-		"requiredMods": [],
-		"dependencies": [],
-		"dependants": [],
-		"useDependencyInformation": false
-	}]
+    "modListVersion": 2,
+    "modList": [{
+	    	"modid": "${modId}",
+	    	"name": "${modName}",
+	    	"description": "123Technology for GTNH Laodengs",
+     		"version": "${modVersion}",
+    		"mcversion": "${minecraftVersion}",
+    		"url": "https://github.com/CallmeSHaobe/123Technology",
+	    	"updateUrl": "",
+	    	"authorList": ["NewMaa"],
+    		"credits": "JulianChum , LyeeR , ABKQPO , shanglu , and other laodengs",
+    		"logoFile": "",
+        "screenshots": [],
+		    "parent": "",
+		    "requiredMods": [],
+		    "dependencies": [],
+				"dependants": [],
+    		"useDependencyInformation": true
+		}]
 }
+

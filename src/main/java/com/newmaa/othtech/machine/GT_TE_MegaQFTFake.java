@@ -32,7 +32,6 @@ import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.gtnewhorizons.gtnhintergalactic.block.IGBlocks;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
-import com.newmaa.othtech.machine.machineclass.OTH_processingLogics.OTH_ProcessingLogic;
 
 import gregtech.api.GregTechAPI;
 import gregtech.api.enums.Materials;
@@ -235,7 +234,7 @@ public class GT_TE_MegaQFTFake extends OTH_MultiMachineBase<GT_TE_MegaQFTFake> {
     @Override
     protected ProcessingLogic createProcessingLogic() {
 
-        return new OTH_ProcessingLogic() {
+        return new ProcessingLogic() {
 
             @NotNull
             @Override
@@ -482,7 +481,7 @@ public class GT_TE_MegaQFTFake extends OTH_MultiMachineBase<GT_TE_MegaQFTFake> {
             .addInfo("§9稳定力场发生器等级<6时, 产量不变")
             .addInfo("§9稳定力场发生器等级≤8, ≥6时，产量为二倍")
             .addInfo("§9稳定力场发生器等级≥9时, 产量为三倍")
-            .addInfo("§q支持§bTecTech§q能源仓及激光仓，但不支持无线电网直接供给EU")
+            .addTecTechHatchInfo()
             .addSeparator()
             .addController("Mega QFT")
             .beginStructureBlock(19, 24, 19, false)

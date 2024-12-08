@@ -30,6 +30,7 @@ public class MachineLoader {
     public static ItemStack EEC;
     public static ItemStack Sun;
     public static ItemStack LCA;
+    public static ItemStack CHEME;
 
     public static void loadMachines() {
         final int IDs = 23520;
@@ -85,5 +86,6 @@ public class MachineLoader {
 
         LCA = new GT_TE_LargeCircuitAssembler(IDs + 18, "LCA", "大型电路组装机").getStackForm(1);
         OTHItemList.LCA.set(LCA);
+
     }
 }

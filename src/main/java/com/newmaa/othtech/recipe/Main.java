@@ -1,5 +1,6 @@
 package com.newmaa.othtech.recipe;
 
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
@@ -82,8 +83,8 @@ public class Main implements IRecipePool {
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 31028),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 1004),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 13532),
-                GTModHandler.getModItem("dreamcraft", "item.QuantumCircuit", 32),
-                GTModHandler.getModItem("dreamcraft", "item.QuantumCircuit", 32),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Cosmic, 64),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Cosmic, 64),
                 GTModHandler.getModItem("tectech", "gt.spacetime_compression_field_generator", 32),
                 GTModHandler.getModItem("tectech", "gt.time_acceleration_field_generator", 32),
                 GTModHandler.getModItem("tectech", "gt.stabilisation_field_generator", 32),
@@ -124,7 +125,7 @@ public class Main implements IRecipePool {
             new ItemStack[] { GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 31151),
                 GTModHandler.getModItem("miscutils", "gtplusplus.blockcasings.5", 64, 10),
                 GTModHandler.getModItem("miscutils", "gtplusplus.blockcasings.5", 64, 14),
-                GTModHandler.getModItem("dreamcraft", "item.QuantumCircuit", 64),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Cosmic, 64),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 32417),
                 GTModHandler.getModItem("dreamcraft", "item.MysteriousCrystalLens", 64),
                 GTModHandler.getModItem("123Technology", "dustIrOsSm", 64),
@@ -343,8 +344,8 @@ public class Main implements IRecipePool {
                 GTModHandler.getModItem("123Technology", "itemEnqing", 64),
                 GTModHandler.getModItem("123Technology", "itemEnqing", 64),
                 GTModHandler.getModItem("123Technology", "itemEnqing", 64), ItemList.Robot_Arm_UMV.get(64),
-                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Quantium, 64),
-                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Quantium, 64),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Cosmic, 64),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Cosmic, 64),
                 ItemList.Field_Generator_UMV.get(64), new ItemStack(Items.bread, 64),
                 new ItemStack(Items.nether_star, 64),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 15297),
@@ -374,5 +375,13 @@ public class Main implements IRecipePool {
             .duration(4 * 20)
             .eut(TierEU.IV)
             .addTo(Assem);
+        // LCR Recipes Test
+        GTValues.RA.stdBuilder()
+            .itemInputs(new ItemStack(Blocks.dirt, 1))
+            .fluidOutputs(FluidRegistry.getFluidStack("water", 1000))
+            .noOptimize()
+            .duration(1048576)
+            .eut(536870912)
+            .addTo(RecipeMaps.multiblockChemicalReactorRecipes);
     }
 }

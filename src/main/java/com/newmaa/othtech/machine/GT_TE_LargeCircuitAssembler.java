@@ -27,7 +27,6 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
-import com.newmaa.othtech.machine.machineclass.OTH_processingLogics.OTH_ProcessingLogic;
 
 import bartworks.API.BorosilicateGlass;
 import goodgenerator.loader.Loaders;
@@ -147,7 +146,7 @@ public class GT_TE_LargeCircuitAssembler extends OTH_MultiMachineBase<GT_TE_Larg
     @Override
     protected ProcessingLogic createProcessingLogic() {
 
-        return new OTH_ProcessingLogic() {
+        return new ProcessingLogic() {
 
             @NotNull
             @Override
@@ -256,9 +255,11 @@ public class GT_TE_LargeCircuitAssembler extends OTH_MultiMachineBase<GT_TE_Larg
                             ofBlocksTiered(
                                 GT_TE_LargeCircuitAssembler::getCasingTier,
                                 ImmutableList.of(
+                                    Pair.of(Loaders.impreciseUnitCasing, 0),
                                     Pair.of(Loaders.preciseUnitCasing, 0),
                                     Pair.of(Loaders.preciseUnitCasing, 1),
-                                    Pair.of(Loaders.preciseUnitCasing, 2)),
+                                    Pair.of(Loaders.preciseUnitCasing, 2),
+                                    Pair.of(Loaders.preciseUnitCasing, 3)),
                                 0,
                                 (t, meta) -> t.casingTier = meta,
                                 t -> t.casingTier)))
@@ -272,9 +273,11 @@ public class GT_TE_LargeCircuitAssembler extends OTH_MultiMachineBase<GT_TE_Larg
                             ofBlocksTiered(
                                 GT_TE_LargeCircuitAssembler::getCasingTier,
                                 ImmutableList.of(
+                                    Pair.of(Loaders.impreciseUnitCasing, 0),
                                     Pair.of(Loaders.preciseUnitCasing, 0),
                                     Pair.of(Loaders.preciseUnitCasing, 1),
-                                    Pair.of(Loaders.preciseUnitCasing, 2)),
+                                    Pair.of(Loaders.preciseUnitCasing, 2),
+                                    Pair.of(Loaders.preciseUnitCasing, 3)),
                                 0,
                                 (t, meta) -> t.casingTier = meta,
                                 t -> t.casingTier)))
@@ -288,9 +291,11 @@ public class GT_TE_LargeCircuitAssembler extends OTH_MultiMachineBase<GT_TE_Larg
                             ofBlocksTiered(
                                 GT_TE_LargeCircuitAssembler::getCasingTier,
                                 ImmutableList.of(
+                                    Pair.of(Loaders.impreciseUnitCasing, 0),
                                     Pair.of(Loaders.preciseUnitCasing, 0),
                                     Pair.of(Loaders.preciseUnitCasing, 1),
-                                    Pair.of(Loaders.preciseUnitCasing, 2)),
+                                    Pair.of(Loaders.preciseUnitCasing, 2),
+                                    Pair.of(Loaders.preciseUnitCasing, 3)),
                                 0,
                                 (t, meta) -> t.casingTier = meta,
                                 t -> t.casingTier)))
@@ -327,11 +332,11 @@ public class GT_TE_LargeCircuitAssembler extends OTH_MultiMachineBase<GT_TE_Larg
         tt.addMachineType("§e§l轻工业计划 - 大型电路组装机")
             .addInfo("§l朴实无华...")
             .addInfo("能源仓等级限制配方等级")
-            .addInfo("§q§l并行固定为256, 升级电子单元机械方块获得更加§4§l炫酷§q§l的外观(§e§l这实在是太帅太有用了吧!!!§q§l)")
+            .addInfo("§q§l并行固定为256, 升级电子单元机械方块获得更加§4§l炫酷§q§l的外观(§e§l这实在是太帅太有用了吧!§q§l)")
             .addInfo("速度 + 123%")
             .addInfo("执行无损超频")
-            .addInfo("§q支持§bTecTech§q能源仓及激光仓，但不支持无线电网直接供给EU")
             .addInfo("结构太不复杂了!")
+            .addTecTechHatchInfo()
             .addPollutionAmount(1024)
             .addSeparator()
             .addController("电路组装机")
@@ -391,17 +396,17 @@ public class GT_TE_LargeCircuitAssembler extends OTH_MultiMachineBase<GT_TE_Larg
         int colorIndex, boolean aActive, boolean aRedstone) {
         int t = casingTier;
         if (side == facing) {
-            if (aActive) return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(1539 + t),
+            if (aActive) return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(1541 + t),
                 TextureFactory.of(textureFontOn), TextureFactory.builder()
                     .addIcon(textureFontOn_Glow)
                     .glow()
                     .build() };
-            else return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(1539 + t),
+            else return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(1541 + t),
                 TextureFactory.of(textureFontOff), TextureFactory.builder()
                     .addIcon(textureFontOff_Glow)
                     .glow()
                     .build() };
-        } else return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(1539 + t) };
+        } else return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(1541 + t) };
     }
 
     private static final IIconContainer textureFontOn = new Textures.BlockIcons.CustomIcon("iconsets/OVERLAY_QTANK");
