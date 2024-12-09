@@ -117,7 +117,7 @@ public class GT_TE_LargeCircuitAssembler extends OTH_MultiMachineBase<GT_TE_Larg
     }
 
     protected int getMaxParallelRecipes() {
-        return 256;
+        return Integer.MAX_VALUE;
     }
 
     protected float getSpeedBonus() {
@@ -332,7 +332,7 @@ public class GT_TE_LargeCircuitAssembler extends OTH_MultiMachineBase<GT_TE_Larg
         tt.addMachineType("§e§l轻工业计划 - 大型电路组装机")
             .addInfo("§l朴实无华...")
             .addInfo("能源仓等级限制配方等级")
-            .addInfo("§q§l并行固定为256, 升级电子单元机械方块获得更加§4§l炫酷§q§l的外观(§e§l这实在是太帅太有用了吧!§q§l)")
+            .addInfo("§q§l升级电子单元机械方块获得更加§4§l炫酷§q§l的外观(§e§l这实在是太帅太有用了吧!§q§l)")
             .addInfo("速度 + 123%")
             .addInfo("执行无损超频")
             .addInfo("结构太不复杂了!")

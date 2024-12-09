@@ -114,8 +114,8 @@ public class GT_TE_SINOPEC extends OTH_MultiMachineBase<GT_TE_SINOPEC> {
     }
 
     protected int getMaxParallelRecipes() {
-        if ($123 == true) {
-            return 256;
+        if ($123) {
+            return Integer.MAX_VALUE;
         } else {
             return 64;
         }
@@ -1103,7 +1103,7 @@ public class GT_TE_SINOPEC extends OTH_MultiMachineBase<GT_TE_SINOPEC> {
             .addInfo("§l§a黑金的最终流处...")
             .addInfo("§l一步到位.")
             .addInfo("线圈等级<10时 耗时倍率 = 1 - 线圈等级 * 0.1, ≥10时耗时倍率固定为0.1")
-            .addInfo("主机放入铱锇钐合金粉解锁无损超频以及256并行, 并行默认为64")
+            .addInfo("主机放入铱锇钐合金粉解锁无损超频以及并行限制, 并行默认为64")
             .addTecTechHatchInfo()
             .addPollutionAmount(64000)
             .addSeparator()

@@ -146,7 +146,7 @@ public class GT_TE_CHEM extends OTH_MultiMachineBase<GT_TE_CHEM> {
 
     @Override
     protected boolean isEnablePerfectOverclock() {
-        if (mode == 0 & $123 == false) {
+        if (mode == 0 & !$123) {
             return false;
         } else {
             return true;
@@ -154,10 +154,10 @@ public class GT_TE_CHEM extends OTH_MultiMachineBase<GT_TE_CHEM> {
     }
 
     protected int getMaxParallelRecipes() {
-        if (mode == 0) {
+        if (mode == 0 && !$123) {
             return 16;
         } else {
-            return 64;
+            return Integer.MAX_VALUE;
         }
     }
 
@@ -322,9 +322,9 @@ public class GT_TE_CHEM extends OTH_MultiMachineBase<GT_TE_CHEM> {
         tt.addMachineType("§e§l老登的终极造物 - 铑钯反应釜(化学反应釜 & 化工厂)")
             .addInfo("§l§a    吃饱啦!    ")
             .addInfo("化工厂模式 ： 耗时 = NEI耗时 * (1 - 线圈等级 * 0.15),最低耗时倍率为0.1; 并行16, 无催化剂消耗, 有损超频")
-            .addInfo("大型化学反应釜模式 : 耗时 = NEI耗时 * (1 - 线圈等级 * 0.1), 最低耗时倍率为0.1; 并行64, 无损超频")
+            .addInfo("大型化学反应釜模式 : 耗时 = NEI耗时 * (1 - 线圈等级 * 0.1), 最低耗时倍率为0.1; 无限制并行, 无损超频")
             .addInfo("glass信道值决定化工厂等级")
-            .addInfo("主机放入铱锇钐合金粉解锁化工厂无损超频")
+            .addInfo("主机放入铱锇钐合金粉解锁化工厂无损超频及并行限制")
             .addTecTechHatchInfo()
             .addSeparator()
             .addController("反应釜")

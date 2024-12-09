@@ -151,7 +151,7 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
     }
 
     protected int getMaxParallelRecipes() {
-        return 2560;
+        return Integer.MAX_VALUE;
     }
 
     protected float getSpeedBonus() {
