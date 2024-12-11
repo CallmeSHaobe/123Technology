@@ -182,7 +182,7 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
                 if (recipe.mSpecialValue > coilLevel.getHeat()) {
                     return SimpleCheckRecipeResult.ofFailure("HeatErr");
                 }
-                setOverclock(isEnablePerfectOverclock() ? 2 : 1, 2);
+                setOverclock(isEnablePerfectOverclock() ? 4 : 2, 4);
                 return CheckRecipeResultRegistry.SUCCESSFUL;
             }
 

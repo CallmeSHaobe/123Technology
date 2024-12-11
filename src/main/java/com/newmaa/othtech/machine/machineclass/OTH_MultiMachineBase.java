@@ -84,7 +84,7 @@ public abstract class OTH_MultiMachineBase<T extends OTH_MultiMachineBase<T>> ex
 
                 setEuModifier(getEuModifier());
                 setSpeedBonus(getSpeedBonus());
-                setOverclock(isEnablePerfectOverclock() ? 2 : 1, 2);
+                setOverclock(isEnablePerfectOverclock() ? 4 : 2, 4);
                 return super.process();
             }
 
