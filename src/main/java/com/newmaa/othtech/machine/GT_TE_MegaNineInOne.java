@@ -97,7 +97,7 @@ public class GT_TE_MegaNineInOne extends OTH_MultiMachineBase<GT_TE_MegaNineInOn
 
     @Override
     protected int getMaxParallelRecipes() {
-        return Math.max(999, 1024000 - (GTUtility.getTier(this.getMaxInputVoltage()) * 2000));
+        return Math.max(9, 256 - (GTUtility.getTier(this.getMaxInputVoltage()) * 2));
     }
 
     @Override
@@ -722,7 +722,7 @@ public class GT_TE_MegaNineInOne extends OTH_MultiMachineBase<GT_TE_MegaNineInOn
             .addInfo("§aMisc类: 激光蚀刻机 高压釜 流体固化机")
             .addInfo("§aIsa类: 艾萨研磨机 工业浮选机 真空干燥炉")
             .addInfo("§b并行耗时公式来自某位§9冰之妖精")
-            .addInfo("§b电压等级提高一级，并行 -2000， 最低为⑨⑨⑨, 默认为1024000")
+            .addInfo("§b电压等级提高一级，并行 -2， 最低为⑨, 默认为256")
             .addInfo("§b配方耗时 = NEI耗时 * (1 + (能源仓电压等级 * 10%))")
             .addInfo("§bEU消耗 : 99%")
             .addInfo("§b执行无损超频")

@@ -130,7 +130,7 @@ public class GT_TE_SunFactory extends OTH_MultiMachineBase<GT_TE_SunFactory> {
             endRecipeProcessing();
         } else {
             endRecipeProcessing();
-            criticalStopMachine();
+            stopMachine();
             return false;
         }
 

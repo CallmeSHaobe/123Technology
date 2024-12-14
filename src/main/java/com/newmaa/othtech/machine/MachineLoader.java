@@ -30,7 +30,7 @@ public class MachineLoader {
     public static ItemStack EEC;
     public static ItemStack Sun;
     public static ItemStack LCA;
-    public static ItemStack CHEME;
+    public static ItemStack coccoven;
 
     public static void loadMachines() {
         final int IDs = 23520;
@@ -63,10 +63,10 @@ public class MachineLoader {
         MFREpp = new GT_TE_MegaFreezerGTpp(IDs + 8, "MegaFreezerGTPP", "巨型凛冰冷冻机").getStackForm(1);
         OTHItemList.MFREpp.set(MFREpp);
 
-        HatchME = new GT_MetaTileEntity_Hatch_Output_ME_B(IDs + 11, "OutputHatchME", "输出仓(ME)").getStackForm(1);
+        HatchME = new GT_MetaTileEntity_Hatch_Output_ME_B(IDs + 11, "OutputHatchME", "输出仓(ME)(123t)").getStackForm(1);
         OTHItemList.HatchME.set(HatchME);
 
-        BusME = new GT_MetaTileEntity_Hatch_OutputBus_ME_B(IDs + 12, "OutputBusME", "输出总线(ME)").getStackForm(1);
+        BusME = new GT_MetaTileEntity_Hatch_OutputBus_ME_B(IDs + 12, "OutputBusME", "输出总线(ME)(123t)").getStackForm(1);
         OTHItemList.BusME.set(BusME);
 
         SINOPECd = new GT_TE_SINOPEC(IDs + 13, "SINOPEC", "中国石化集成工厂").getStackForm(1);
@@ -86,6 +86,9 @@ public class MachineLoader {
 
         LCA = new GT_TE_LargeCircuitAssembler(IDs + 18, "LCA", "大型电路组装机").getStackForm(1);
         OTHItemList.LCA.set(LCA);
+
+        coccoven = new GT_TE_EpicCokeOven(IDs + 19, "CoccOven", "§c§l史诗焦炭终结者 T123").getStackForm(1);
+        OTHItemList.CoccOven.set(coccoven);
 
     }
 }

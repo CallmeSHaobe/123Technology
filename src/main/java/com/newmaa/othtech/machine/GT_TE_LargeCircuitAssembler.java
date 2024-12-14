@@ -224,7 +224,7 @@ public class GT_TE_LargeCircuitAssembler extends OTH_MultiMachineBase<GT_TE_Larg
     private final int verticalOffSet = 4;
     private final int depthOffSet = 2;
     private static IStructureDefinition<GT_TE_LargeCircuitAssembler> STRUCTURE_DEFINITION = null;
-
+    private static final int CASING_INDEX = 1541;
     @Override
     public IStructureDefinition<GT_TE_LargeCircuitAssembler> getStructureDefinition() {
         if (STRUCTURE_DEFINITION == null) {
@@ -249,7 +249,7 @@ public class GT_TE_LargeCircuitAssembler extends OTH_MultiMachineBase<GT_TE_Larg
                     'H',
                     buildHatchAdder(GT_TE_LargeCircuitAssembler.class).atLeast(Energy.or(ExoticEnergy), Muffler)
                         .adder(GT_TE_LargeCircuitAssembler::addToMachineList)
-                        .casingIndex(1539)
+                        .casingIndex(CASING_INDEX)
                         .dot(1)
                         .buildAndChain(
                             ofBlocksTiered(
@@ -267,7 +267,7 @@ public class GT_TE_LargeCircuitAssembler extends OTH_MultiMachineBase<GT_TE_Larg
                     'G',
                     buildHatchAdder(GT_TE_LargeCircuitAssembler.class).atLeast(OutputHatch, OutputBus)
                         .adder(GT_TE_LargeCircuitAssembler::addToMachineList)
-                        .casingIndex(1539)
+                        .casingIndex(CASING_INDEX)
                         .dot(2)
                         .buildAndChain(
                             ofBlocksTiered(
@@ -285,7 +285,7 @@ public class GT_TE_LargeCircuitAssembler extends OTH_MultiMachineBase<GT_TE_Larg
                     'F',
                     buildHatchAdder(GT_TE_LargeCircuitAssembler.class).atLeast(InputBus, InputHatch)
                         .adder(GT_TE_LargeCircuitAssembler::addToMachineList)
-                        .casingIndex(1539)
+                        .casingIndex(CASING_INDEX)
                         .dot(3)
                         .buildAndChain(
                             ofBlocksTiered(
@@ -351,6 +351,7 @@ public class GT_TE_LargeCircuitAssembler extends OTH_MultiMachineBase<GT_TE_Larg
         return tt;
     }
 
+
     @Override
     public boolean isCorrectMachinePart(ItemStack aStack) {
         return true;
@@ -396,17 +397,17 @@ public class GT_TE_LargeCircuitAssembler extends OTH_MultiMachineBase<GT_TE_Larg
         int colorIndex, boolean aActive, boolean aRedstone) {
         int t = casingTier;
         if (side == facing) {
-            if (aActive) return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(1541 + t),
+            if (aActive) return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(CASING_INDEX + t),
                 TextureFactory.of(textureFontOn), TextureFactory.builder()
                     .addIcon(textureFontOn_Glow)
                     .glow()
                     .build() };
-            else return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(1541 + t),
+            else return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(CASING_INDEX + t),
                 TextureFactory.of(textureFontOff), TextureFactory.builder()
                     .addIcon(textureFontOff_Glow)
                     .glow()
                     .build() };
-        } else return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(1541 + t) };
+        } else return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(CASING_INDEX + t) };
     }
 
     private static final IIconContainer textureFontOn = new Textures.BlockIcons.CustomIcon("iconsets/OVERLAY_QTANK");

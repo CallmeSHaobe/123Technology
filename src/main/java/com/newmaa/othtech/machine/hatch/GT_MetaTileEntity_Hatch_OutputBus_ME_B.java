@@ -69,7 +69,7 @@ public class GT_MetaTileEntity_Hatch_OutputBus_ME_B extends MTEHatchOutputBus im
             aNameRegional,
             3,
             new String[] { "为多方块机器输出物品", "直接存储到ME系统", "能够缓存无限数量的物品", "使用螺丝刀切换缓存模式", "手持剪线钳右键改变仓室与ME网络的连接方式",
-                "来自 GT5.09.48.66, GTNH2.6.1ee" },
+                "来自 GT5.09.48.66, GTNH2.6.1", "123Technology" },
             1);
     }
 

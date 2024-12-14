@@ -1,11 +1,15 @@
 package com.newmaa.othtech.recipe;
 
+import static gregtech.api.util.GTModHandler.addCraftingRecipe;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+
+import com.newmaa.othtech.common.OTHItemList;
 
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
@@ -67,10 +71,9 @@ public class Main implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Samarium, 3),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Samarium, 3),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Samarium, 3) },
-            new FluidStack[] { new FluidStack(water, 123123), new FluidStack(water, 123123),
-                new FluidStack(water, 123123), new FluidStack(water, 123123) },
+            new FluidStack[] { new FluidStack(water, 123123) },
             GTModHandler.getModItem("123Technology", "dustIrOsSm", 1),
-            114514,
+            123,
             1919810);
         // isaforgea
         TTRecipeAdder.addResearchableAssemblylineRecipe(
@@ -383,5 +386,15 @@ public class Main implements IRecipePool {
             .duration(1048576)
             .eut(536870912)
             .addTo(RecipeMaps.multiblockChemicalReactorRecipes);
+        // CoccOven
+        addCraftingRecipe(
+            OTHItemList.CoccOven.get(1),
+            new Object[] { "AAA", "ABA", "AAA", 'A', ItemList.Firebrick, 'B',
+                GTModHandler.getModItem("123Technology", "itemSunLighter", 1)});
+        // SunLighter
+        addCraftingRecipe(
+            GTModHandler.getModItem("123Technology", "itemSunLighter", 1),
+            new Object[] { "ABA", "ACA", "ADA", 'A', GTOreDictUnificator.get(OrePrefixes.itemCasing, Materials.Steel, 1), 'B',
+                new ItemStack(Items.redstone, 1), 'C', GTOreDictUnificator.get(OrePrefixes.dust, Materials.NetherQuartz, 1), 'D', GTModHandler.getModItem("Railcraft", "firestone.raw", 1)});
     }
 }

@@ -18,6 +18,7 @@ public enum OTHItemList {
     MFREpp,
     Sun,
     LCA,
+    CoccOven,
 
     EVACannon,
     HatchME,
