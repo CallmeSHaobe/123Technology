@@ -1,11 +1,13 @@
 package com.newmaa.othtech.common.beeyonds;
 
+import net.minecraft.item.ItemStack;
+
 import gregtech.api.util.GTLanguageManager;
 import gtPlusPlus.core.material.Material;
 import gtPlusPlus.core.util.Utils;
-import net.minecraft.item.ItemStack;
 
 public enum combTypes {
+
     HYPOGEN(0, "Hypogen", true, 30, Utils.rgbtoHexValue(234, 66, 0), Utils.rgbtoHexValue(20, 20, 20)),
     CHROMATICGLASS(1, "ChromaticGlass", true, 30, Utils.rgbtoHexValue(232, 227, 227), Utils.rgbtoHexValue(200, 200, 5)),
 

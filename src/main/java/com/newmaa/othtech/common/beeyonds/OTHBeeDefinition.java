@@ -8,7 +8,7 @@ import static gregtech.api.enums.Mods.*;
 import static gregtech.loaders.misc.GTBeeDefinition.MACHINIST;
 import static gregtech.loaders.misc.GTBeeDefinition.WALRUS;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.function.Consumer;
@@ -21,7 +21,13 @@ import org.jetbrains.annotations.NotNull;
 
 import com.newmaa.othtech.OTHTechnology;
 
-import forestry.api.apiculture.*;
+import forestry.api.apiculture.BeeManager;
+import forestry.api.apiculture.EnumBeeType;
+import forestry.api.apiculture.IAlleleBeeEffect;
+import forestry.api.apiculture.IAlleleBeeSpecies;
+import forestry.api.apiculture.IBee;
+import forestry.api.apiculture.IBeeGenome;
+import forestry.api.apiculture.IBeeMutationCustom;
 import forestry.api.core.EnumTemperature;
 import forestry.api.genetics.AlleleManager;
 import forestry.api.genetics.IAllele;

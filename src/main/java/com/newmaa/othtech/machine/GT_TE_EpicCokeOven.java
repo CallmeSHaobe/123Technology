@@ -17,8 +17,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 
-import org.jetbrains.annotations.NotNull;
-
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
@@ -106,8 +104,7 @@ public class GT_TE_EpicCokeOven extends OTH_MultiMachineBase<GT_TE_EpicCokeOven>
             itemStack.stackSize -= initialStackSize;
 
             mOutputItems = new ItemStack[] {
-                GTModHandler.getModItem("Railcraft", "fuel.coke", amountCoal * initialStackSize)
-            };
+                GTModHandler.getModItem("Railcraft", "fuel.coke", amountCoal * initialStackSize) };
 
             if (mOutputItems == null) {
                 return CheckRecipeResultRegistry.INTERNAL_ERROR;

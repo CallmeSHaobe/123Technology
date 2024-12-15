@@ -2,8 +2,8 @@ package com.newmaa.othtech.common.beeyonds;
 
 import static gregtech.api.enums.Mods.*;
 
-import gtPlusPlus.core.material.Material;
-import gtPlusPlus.xmod.forestry.bees.handler.GTPPCombType;
+import java.util.HashMap;
+
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -11,20 +11,24 @@ import net.minecraft.world.biome.BiomeGenBase;
 import forestry.api.apiculture.EnumBeeChromosome;
 import forestry.api.apiculture.IAlleleBeeEffect;
 import forestry.api.core.IClimateProvider;
-import forestry.api.genetics.*;
+import forestry.api.genetics.AlleleManager;
+import forestry.api.genetics.IAllele;
+import forestry.api.genetics.IAlleleArea;
+import forestry.api.genetics.IAlleleFloat;
+import forestry.api.genetics.IAlleleInteger;
+import forestry.api.genetics.IGenome;
+import forestry.api.genetics.IMutationCondition;
 import forestry.core.genetics.alleles.Allele;
 import forestry.core.utils.StringUtil;
 import gregtech.GTMod;
 import gregtech.api.metatileentity.BaseMetaTileEntity;
-import gregtech.common.items.ItemComb;
 import gregtech.common.items.ItemDrop;
 import gregtech.common.items.ItemPollen;
 import gregtech.common.items.ItemPropolis;
 import gregtech.loaders.misc.bees.GTAlleleEffect;
 import gregtech.loaders.misc.bees.GTEffectMachineBoost;
 import gregtech.loaders.misc.bees.GTEffectTreeTwister;
-
-import java.util.HashMap;
+import gtPlusPlus.core.material.Material;
 
 public class OTHBeeyonds {
 
