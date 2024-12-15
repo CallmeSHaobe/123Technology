@@ -79,15 +79,18 @@ public class GT_TE_EpicCokeOven extends OTH_MultiMachineBase<GT_TE_EpicCokeOven>
         return 1;
     }
 
-    @NotNull
     @Override
-    public CheckRecipeResult checkProcessing() {
+    public @NotNull CheckRecipeResult checkProcessing() {
         List<ItemStack> inputStacks = getStoredInputs();
-        // check no input
-        if (inputStacks.isEmpty()) return CheckRecipeResultRegistry.NO_RECIPE;
+        if (inputStacks.isEmpty()) {
+            return CheckRecipeResultRegistry.NO_RECIPE;
+        }
+
         for (ItemStack itemStack : inputStacks) {
+            int initialStackSize = itemStack.stackSize;
+
             if (metaItemEqual(itemStack, GTOreDictUnificator.get(OrePrefixes.dust, Materials.Diamond, 1))) {
-                this.amountCoal = 4096;
+                amountCoal = 4096;
             } else if (metaItemEqual(itemStack, new ItemStack(Items.diamond, 1))) {
                 amountCoal = 4096;
             } else if (metaItemEqual(itemStack, GTOreDictUnificator.get(OrePrefixes.dust, Materials.Coal, 1))) {
@@ -96,17 +99,26 @@ public class GT_TE_EpicCokeOven extends OTH_MultiMachineBase<GT_TE_EpicCokeOven>
                 amountCoal = 16;
             } else if (metaItemEqual(itemStack, new ItemStack(Blocks.dirt, 1))) {
                 amountCoal = 1;
+            } else {
+                continue;
             }
-            mEUt = 0;
-            mMaxProgresstime = Math.max(200, 1800 * 20 - (amountCoal / 100) / 10);
-            itemStack.stackSize -= itemStack.stackSize;
+
+            itemStack.stackSize -= initialStackSize;
+
             mOutputItems = new ItemStack[] {
-                GTModHandler.getModItem("Railcraft", "fuel.cock", amountCoal * itemStack.stackSize) };
+                GTModHandler.getModItem("Railcraft", "fuel.coke", amountCoal * initialStackSize)
+            };
+
             if (mOutputItems == null) {
                 return CheckRecipeResultRegistry.INTERNAL_ERROR;
             }
+
+            mEUt = 0;
+            mMaxProgresstime = Math.max(200, (1800 - amountCoal / 100) * 20);
+
             return CheckRecipeResultRegistry.SUCCESSFUL;
         }
+
         return CheckRecipeResultRegistry.NO_RECIPE;
     }
 
