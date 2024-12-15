@@ -225,6 +225,7 @@ public class GT_TE_LargeCircuitAssembler extends OTH_MultiMachineBase<GT_TE_Larg
     private final int depthOffSet = 2;
     private static IStructureDefinition<GT_TE_LargeCircuitAssembler> STRUCTURE_DEFINITION = null;
     private static final int CASING_INDEX = 1541;
+
     @Override
     public IStructureDefinition<GT_TE_LargeCircuitAssembler> getStructureDefinition() {
         if (STRUCTURE_DEFINITION == null) {
@@ -350,7 +351,6 @@ public class GT_TE_LargeCircuitAssembler extends OTH_MultiMachineBase<GT_TE_Larg
             .toolTipFinisher("§a123Technology - Light Industry - LargeCircuitAssembler");
         return tt;
     }
-
 
     @Override
     public boolean isCorrectMachinePart(ItemStack aStack) {

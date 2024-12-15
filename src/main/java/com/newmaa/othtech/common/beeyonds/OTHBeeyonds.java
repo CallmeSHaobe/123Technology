@@ -1,5 +1,11 @@
 package com.newmaa.othtech.common.beeyonds;
 
+import static gregtech.api.enums.Mods.*;
+
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
+
 import forestry.api.apiculture.EnumBeeChromosome;
 import forestry.api.apiculture.IAlleleBeeEffect;
 import forestry.api.core.IClimateProvider;
@@ -8,24 +14,16 @@ import forestry.core.genetics.alleles.Allele;
 import forestry.core.utils.StringUtil;
 import gregtech.GTMod;
 import gregtech.api.metatileentity.BaseMetaTileEntity;
-
 import gregtech.common.items.ItemComb;
 import gregtech.common.items.ItemDrop;
 import gregtech.common.items.ItemPollen;
 import gregtech.common.items.ItemPropolis;
-
-import gregtech.loaders.misc.GTBeeDefinition;
 import gregtech.loaders.misc.bees.GTAlleleEffect;
 import gregtech.loaders.misc.bees.GTEffectMachineBoost;
 import gregtech.loaders.misc.bees.GTEffectTreeTwister;
 
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
-
-import static gregtech.api.enums.Mods.*;
-
 public class OTHBeeyonds {
+
     public static IAlleleInteger noFertility;
     public static IAlleleInteger superFertility;
 
@@ -49,12 +47,11 @@ public class OTHBeeyonds {
     public static ItemPollen pollen;
     public static ItemDrop drop;
     public static ItemComb combs;
-    public OTHBeeyonds(){
+
+    public OTHBeeyonds() {
         setupOTHAlleles();
         OTHBeeDefinition.initBees();
     }
-
-
 
     private static void setupOTHAlleles() {
 
@@ -62,7 +59,11 @@ public class OTHBeeyonds {
         superFertility = new OTHBeeyonds.AlleleInteger("fertilityMultiply", 8, false, EnumBeeChromosome.FERTILITY);
 
         noFlowering = new OTHBeeyonds.AlleleInteger("floweringNonpollinating", 0, false, EnumBeeChromosome.FLOWERING);
-        superFlowering = new OTHBeeyonds.AlleleInteger("floweringNaturalistic", 240, false, EnumBeeChromosome.FLOWERING);
+        superFlowering = new OTHBeeyonds.AlleleInteger(
+            "floweringNaturalistic",
+            240,
+            false,
+            EnumBeeChromosome.FLOWERING);
 
         noTerritory = new OTHBeeyonds.AlleleArea("areaLethargic", 1, 1, false);
         superTerritory = new OTHBeeyonds.AlleleArea("areaExploratory", 32, 16, false);
@@ -147,7 +148,7 @@ public class OTHBeeyonds {
 
         @Override
         public float getChance(World world, int x, int y, int z, IAllele allele0, IAllele allele1, IGenome genome0,
-                               IGenome genome1, IClimateProvider climate) {
+            IGenome genome1, IClimateProvider climate) {
             if (world.provider.dimensionId == dimID) return 1;
             return 0;
         }
@@ -170,7 +171,7 @@ public class OTHBeeyonds {
 
         @Override
         public float getChance(World world, int x, int y, int z, IAllele allele0, IAllele allele1, IGenome genome0,
-                               IGenome genome1, IClimateProvider climate) {
+            IGenome genome1, IClimateProvider climate) {
             if (climate.getBiome().biomeID == biomeID) return 1;
             return 0;
         }
@@ -192,7 +193,7 @@ public class OTHBeeyonds {
 
         @Override
         public float getChance(World world, int x, int y, int z, IAllele allele0, IAllele allele1, IGenome genome0,
-                               IGenome genome1, IClimateProvider climate) {
+            IGenome genome1, IClimateProvider climate) {
             TileEntity tileEntity = world.getTileEntity(x, y - 1, z);
             if (tileEntity instanceof BaseMetaTileEntity machine) {
                 if (machine.isActive()) {

@@ -1,5 +1,13 @@
 package com.newmaa.othtech.common.beeyonds;
 
+import java.lang.reflect.Field;
+import java.util.List;
+
+import net.minecraft.util.ChunkCoordinates;
+import net.minecraft.world.World;
+
+import org.apache.commons.lang3.reflect.FieldUtils;
+
 import forestry.api.apiculture.*;
 import forestry.api.core.IClimateProvider;
 import forestry.api.genetics.IAllele;
@@ -7,12 +15,6 @@ import forestry.api.genetics.IGenome;
 import forestry.api.genetics.IMutationCondition;
 import forestry.apiculture.genetics.BeeMutation;
 import forestry.core.genetics.mutations.Mutation;
-import net.minecraft.util.ChunkCoordinates;
-import net.minecraft.world.World;
-import org.apache.commons.lang3.reflect.FieldUtils;
-
-import java.lang.reflect.Field;
-import java.util.List;
 
 public class OTHBeeMutation extends BeeMutation {
 

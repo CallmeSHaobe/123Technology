@@ -1,6 +1,26 @@
 package com.newmaa.othtech.common.beeyonds;
 
+import static com.newmaa.othtech.common.beeyonds.OTHBeeDefinitionReference.*;
+import static forestry.api.apiculture.EnumBeeChromosome.*;
+import static forestry.api.apiculture.EnumBeeChromosome.FLOWER_PROVIDER;
+import static forestry.api.core.EnumHumidity.DAMP;
+import static gregtech.api.enums.Mods.*;
+import static gregtech.loaders.misc.GTBeeDefinition.MACHINIST;
+import static gregtech.loaders.misc.GTBeeDefinition.WALRUS;
+
+import java.awt.*;
+import java.util.Arrays;
+import java.util.Locale;
+import java.util.function.Consumer;
+
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
+
+import org.apache.commons.lang3.text.WordUtils;
+import org.jetbrains.annotations.NotNull;
+
 import com.newmaa.othtech.OTHTechnology;
+
 import forestry.api.apiculture.*;
 import forestry.api.core.EnumTemperature;
 import forestry.api.genetics.AlleleManager;
@@ -13,24 +33,6 @@ import forestry.core.genetics.alleles.EnumAllele;
 import gregtech.api.GregTechAPI;
 import gregtech.api.util.GTLanguageManager;
 import gregtech.api.util.GTModHandler;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
-import org.apache.commons.lang3.text.WordUtils;
-import org.jetbrains.annotations.NotNull;
-
-import java.awt.*;
-import java.util.Arrays;
-import java.util.Locale;
-import java.util.function.Consumer;
-import static com.newmaa.othtech.common.beeyonds.OTHBeeDefinitionReference.*;
-import static forestry.api.apiculture.EnumBeeChromosome.*;
-import static forestry.api.apiculture.EnumBeeChromosome.FLOWER_PROVIDER;
-import static forestry.api.core.EnumHumidity.DAMP;
-import static gregtech.api.enums.Mods.*;
-import static gregtech.loaders.misc.GTBeeDefinition.MACHINIST;
-import static gregtech.loaders.misc.GTBeeDefinition.WALRUS;
-import static gtPlusPlus.xmod.forestry.bees.registry.GTPP_BeeDefinition.DRAGONBLOOD;
-
 
 @NotNull
 class OTHBeeDefinitionReference {
@@ -43,8 +45,10 @@ class OTHBeeDefinitionReference {
 
     private OTHBeeDefinitionReference() {}
 }
+
 @NotNull
 public enum OTHBeeDefinition implements IBeeDefinition {
+
     WEIWEI(OTHBranchDefinition.OTHBYDS, "Weiwei", true, new Color(0xE21818), new Color(0xE21818), beeSpecies -> {
         beeSpecies.addProduct(new ItemStack(Blocks.dirt, 1), 0.114514f);
         beeSpecies.addSpecialty(GTModHandler.getModItem(OTHTechnology.MODID, "itemZhangww", 1, 0), 0.05f);
@@ -56,15 +60,15 @@ public enum OTHBeeDefinition implements IBeeDefinition {
         AlleleHelper.instance.set(template, EFFECT, getEffect(EXTRABEES, "teleport"));
         AlleleHelper.instance.set(template, FLOWER_PROVIDER, getFlowers(EXTRABEES, "book"));
     }, dis -> {
-        IBeeMutationCustom tMutation = dis
-            .registerMutation(getSpecies(EXTRABEES, "chad"), WALRUS.getSpecies(), 2);
+        IBeeMutationCustom tMutation = dis.registerMutation(getSpecies(EXTRABEES, "chad"), WALRUS.getSpecies(), 2);
         tMutation.requireResource(GregTechAPI.sBlockMachines, 23520); // Mega 9in1
     }),
 
     GATE(OTHBranchDefinition.OTHBYDS, "Gate", true, new Color(0x3808A0), new Color(0x3808A0), beeSpecies -> {
         beeSpecies.addProduct(GTModHandler.getModItem(NewHorizonsCoreMod.ID, "item.StargateCrystalDust", 1), 0.810f);
         beeSpecies.addProduct(GTModHandler.getModItem(NewHorizonsCoreMod.ID, "item.StargateFramePart", 1), 0.810f);
-        beeSpecies.addSpecialty(GTModHandler.getModItem(NewHorizonsCoreMod.ID, "item.StargateShieldingFoil", 1, 0), 0.123f);
+        beeSpecies
+            .addSpecialty(GTModHandler.getModItem(NewHorizonsCoreMod.ID, "item.StargateShieldingFoil", 1, 0), 0.123f);
         beeSpecies.addSpecialty(GTModHandler.getModItem(NewHorizonsCoreMod.ID, "item.StargateChevron", 1), 0.123f);
         beeSpecies.setHumidity(DAMP);
         beeSpecies.setTemperature(EnumTemperature.NORMAL);
@@ -74,8 +78,7 @@ public enum OTHBeeDefinition implements IBeeDefinition {
         AlleleHelper.instance.set(template, EFFECT, getEffect(EXTRABEES, "teleport"));
         AlleleHelper.instance.set(template, FLOWER_PROVIDER, EnumAllele.Flowers.VANILLA);
     }, dis -> {
-        IBeeMutationCustom tMutation = dis
-            .registerMutation(WEIWEI, MACHINIST.getSpecies(), 1);
+        IBeeMutationCustom tMutation = dis.registerMutation(WEIWEI, MACHINIST.getSpecies(), 1);
         tMutation.requireResource(GregTechAPI.sBlockMachines, 23524); // MAX1048576
     });
 
@@ -88,8 +91,8 @@ public enum OTHBeeDefinition implements IBeeDefinition {
     private IBeeGenome genome;
 
     OTHBeeDefinition(OTHBranchDefinition branch, String binomial, boolean dominant, Color primary, Color secondary,
-                     Consumer<OTHAlleleBeeSpecies> aSpeciesProperties, Consumer<IAllele[]> aAlleles,
-                     Consumer<OTHBeeDefinition> aMutations) {
+        Consumer<OTHAlleleBeeSpecies> aSpeciesProperties, Consumer<IAllele[]> aAlleles,
+        Consumer<OTHBeeDefinition> aMutations) {
         this.mAlleles = aAlleles;
         this.mMutations = aMutations;
         this.mSpeciesProperties = aSpeciesProperties;
@@ -207,22 +210,22 @@ public enum OTHBeeDefinition implements IBeeDefinition {
      * chanceDivider
      */
     private IBeeMutationCustom registerMutation(IAlleleBeeSpecies parent1, IAlleleBeeSpecies parent2, int chance,
-                                                float chanceDivider) {
+        float chanceDivider) {
         return new OTHBeeMutation(parent1, parent2, this.getTemplate(), chance, chanceDivider);
     }
 
     private IBeeMutationCustom registerMutation(OTHBeeDefinition parent1, IAlleleBeeSpecies parent2, int chance,
-                                                float chanceDivider) {
+        float chanceDivider) {
         return registerMutation(parent1.species, parent2, chance, chanceDivider);
     }
 
     private IBeeMutationCustom registerMutation(IAlleleBeeSpecies parent1, OTHBeeDefinition parent2, int chance,
-                                                float chanceDivider) {
+        float chanceDivider) {
         return registerMutation(parent1, parent2.species, chance, chanceDivider);
     }
 
     private IBeeMutationCustom registerMutation(OTHBeeDefinition parent1, OTHBeeDefinition parent2, int chance,
-                                                float chanceDivider) {
+        float chanceDivider) {
         return registerMutation(parent1.species, parent2, chance, chanceDivider);
     }
 

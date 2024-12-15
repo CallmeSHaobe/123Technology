@@ -1,6 +1,5 @@
 package com.newmaa.othtech.machine;
 
-import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
 import static com.newmaa.othtech.Utils.Utils.metaItemEqual;
 import static gregtech.api.GregTechAPI.*;
 import static gregtech.api.GregTechAPI.sBlockCasings8;
@@ -9,9 +8,8 @@ import static gregtech.api.enums.HatchElement.OutputHatch;
 import static gregtech.api.enums.Textures.BlockIcons.*;
 import static gregtech.api.util.GTStructureUtility.*;
 
-import gregtech.api.enums.OrePrefixes;
-import gregtech.api.recipe.check.CheckRecipeResultRegistry;
-import gregtech.api.util.GTOreDictUnificator;
+import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -30,19 +28,19 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import gregtech.api.GregTechAPI;
 import gregtech.api.enums.Materials;
+import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.SoundResource;
 import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
-import gregtech.api.logic.ProcessingLogic;
 import gregtech.api.recipe.check.CheckRecipeResult;
+import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GTModHandler;
+import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
-
-import java.util.List;
 
 public class GT_TE_EpicCokeOven extends OTH_MultiMachineBase<GT_TE_EpicCokeOven> {
 
@@ -53,7 +51,6 @@ public class GT_TE_EpicCokeOven extends OTH_MultiMachineBase<GT_TE_EpicCokeOven>
     public GT_TE_EpicCokeOven(String aName) {
         super(aName);
     }
-
 
     public int amountCoal = 0;
 
@@ -81,6 +78,7 @@ public class GT_TE_EpicCokeOven extends OTH_MultiMachineBase<GT_TE_EpicCokeOven>
     protected float getSpeedBonus() {
         return 1;
     }
+
     @NotNull
     @Override
     public CheckRecipeResult checkProcessing() {
@@ -88,28 +86,23 @@ public class GT_TE_EpicCokeOven extends OTH_MultiMachineBase<GT_TE_EpicCokeOven>
         // check no input
         if (inputStacks.isEmpty()) return CheckRecipeResultRegistry.NO_RECIPE;
         for (ItemStack itemStack : inputStacks) {
-            if (metaItemEqual(itemStack, GTOreDictUnificator.get(OrePrefixes.dust, Materials.Diamond, 1)))
-            {
+            if (metaItemEqual(itemStack, GTOreDictUnificator.get(OrePrefixes.dust, Materials.Diamond, 1))) {
                 this.amountCoal = 4096;
-            } else if (metaItemEqual(itemStack, new ItemStack(Items.diamond, 1)))
-            {
+            } else if (metaItemEqual(itemStack, new ItemStack(Items.diamond, 1))) {
                 amountCoal = 4096;
-            } else if (metaItemEqual(itemStack, GTOreDictUnificator.get(OrePrefixes.dust, Materials.Coal, 1)))
-            {
+            } else if (metaItemEqual(itemStack, GTOreDictUnificator.get(OrePrefixes.dust, Materials.Coal, 1))) {
                 amountCoal = 16;
-            } else if (metaItemEqual(itemStack, new ItemStack(Items.coal, 1)))
-            {
+            } else if (metaItemEqual(itemStack, new ItemStack(Items.coal, 1))) {
                 amountCoal = 16;
-            } else if (metaItemEqual(itemStack, new ItemStack(Blocks.dirt, 1)))
-            {
+            } else if (metaItemEqual(itemStack, new ItemStack(Blocks.dirt, 1))) {
                 amountCoal = 1;
             }
             mEUt = 0;
             mMaxProgresstime = Math.max(200, 1800 * 20 - (amountCoal / 100) / 10);
             itemStack.stackSize -= itemStack.stackSize;
-            mOutputItems = new ItemStack[]{GTModHandler.getModItem("Railcraft", "fuel.cock", amountCoal * itemStack.stackSize)};
-            if (mOutputItems == null)
-            {
+            mOutputItems = new ItemStack[] {
+                GTModHandler.getModItem("Railcraft", "fuel.cock", amountCoal * itemStack.stackSize) };
+            if (mOutputItems == null) {
                 return CheckRecipeResultRegistry.INTERNAL_ERROR;
             }
             return CheckRecipeResultRegistry.SUCCESSFUL;
@@ -163,7 +156,8 @@ public class GT_TE_EpicCokeOven extends OTH_MultiMachineBase<GT_TE_EpicCokeOven>
                 .addShape(STRUCTURE_PIECE_MAIN, shapeMain)
                 .addElement(
                     'A',
-                    buildHatchAdder(GT_TE_EpicCokeOven.class).atLeast(InputBus, OutputBus, InputHatch, OutputHatch, Muffler)
+                    buildHatchAdder(GT_TE_EpicCokeOven.class)
+                        .atLeast(InputBus, OutputBus, InputHatch, OutputHatch, Muffler)
                         .adder(GT_TE_EpicCokeOven::addToMachineList)
                         .dot(1)
                         .casingIndex(6)
@@ -174,7 +168,7 @@ public class GT_TE_EpicCokeOven extends OTH_MultiMachineBase<GT_TE_EpicCokeOven>
     }
 
     // Structure by LyeeR
-    private final String[][] shapeMain = new String[][] {{"AAA"}, {"A~A"}, {"AAA"}};
+    private final String[][] shapeMain = new String[][] { { "AAA" }, { "A~A" }, { "AAA" } };
 
     @Override
     public boolean addToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {

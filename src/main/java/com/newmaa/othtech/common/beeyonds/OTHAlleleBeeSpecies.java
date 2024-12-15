@@ -1,19 +1,21 @@
 package com.newmaa.othtech.common.beeyonds;
 
+import java.awt.*;
+
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+
 import forestry.api.apiculture.EnumBeeChromosome;
 import forestry.api.apiculture.IAlleleBeeSpeciesCustom;
 import forestry.api.genetics.AlleleManager;
 import forestry.api.genetics.IClassification;
 import forestry.apiculture.genetics.alleles.AlleleBeeSpecies;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-
-import java.awt.*;
 
 public class OTHAlleleBeeSpecies extends AlleleBeeSpecies {
+
     public OTHAlleleBeeSpecies(String uid, boolean dominant, String unlocalizedName, String authority,
-                              String unlocalizedDescription, IClassification branch, String binomial, Color primaryColor,
-                              Color secondaryColor) {
+        String unlocalizedDescription, IClassification branch, String binomial, Color primaryColor,
+        Color secondaryColor) {
         super(
             uid,
             unlocalizedName,

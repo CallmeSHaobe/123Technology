@@ -390,11 +390,14 @@ public class Main implements IRecipePool {
         addCraftingRecipe(
             OTHItemList.CoccOven.get(1),
             new Object[] { "AAA", "ABA", "AAA", 'A', ItemList.Firebrick, 'B',
-                GTModHandler.getModItem("123Technology", "itemSunLighter", 1)});
+                GTModHandler.getModItem("123Technology", "itemSunLighter", 1) });
         // SunLighter
         addCraftingRecipe(
             GTModHandler.getModItem("123Technology", "itemSunLighter", 1),
-            new Object[] { "ABA", "ACA", "ADA", 'A', GTOreDictUnificator.get(OrePrefixes.itemCasing, Materials.Steel, 1), 'B',
-                new ItemStack(Items.redstone, 1), 'C', GTOreDictUnificator.get(OrePrefixes.dust, Materials.NetherQuartz, 1), 'D', GTModHandler.getModItem("Railcraft", "firestone.raw", 1)});
+            new Object[] { "ABA", "ACA", "ADA", 'A',
+                GTOreDictUnificator.get(OrePrefixes.itemCasing, Materials.Steel, 1), 'B',
+                new ItemStack(Items.redstone, 1), 'C',
+                GTOreDictUnificator.get(OrePrefixes.dust, Materials.NetherQuartz, 1), 'D',
+                GTModHandler.getModItem("Railcraft", "firestone.raw", 1) });
     }
 }

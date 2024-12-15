@@ -1,5 +1,11 @@
 package com.newmaa.othtech.common.beeyonds;
 
+import static forestry.api.apiculture.EnumBeeChromosome.*;
+import static forestry.api.apiculture.EnumBeeChromosome.SPEED;
+
+import java.util.Arrays;
+import java.util.function.Consumer;
+
 import forestry.api.apiculture.BeeManager;
 import forestry.api.apiculture.EnumBeeChromosome;
 import forestry.api.genetics.IAllele;
@@ -8,13 +14,8 @@ import forestry.apiculture.genetics.alleles.AlleleEffect;
 import forestry.core.genetics.alleles.AlleleHelper;
 import forestry.core.genetics.alleles.EnumAllele;
 
-import java.util.Arrays;
-import java.util.function.Consumer;
-
-import static forestry.api.apiculture.EnumBeeChromosome.*;
-import static forestry.api.apiculture.EnumBeeChromosome.SPEED;
-
 public enum OTHBranchDefinition {
+
     OTHBYDS("Industrialis", alleles -> {
         AlleleHelper.instance.set(alleles, TEMPERATURE_TOLERANCE, EnumAllele.Tolerance.UP_1);
         AlleleHelper.instance.set(alleles, HUMIDITY_TOLERANCE, EnumAllele.Tolerance.BOTH_1);
@@ -24,6 +25,7 @@ public enum OTHBranchDefinition {
         AlleleHelper.instance.set(alleles, LIFESPAN, EnumAllele.Lifespan.SHORT);
         AlleleHelper.instance.set(alleles, SPEED, EnumAllele.Speed.SLOW);
     });
+
     private static IAllele[] defaultTemplate;
     private final IClassification branch;
     private final Consumer<IAllele[]> mBranchProperties;

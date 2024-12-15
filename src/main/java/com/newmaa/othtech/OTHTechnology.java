@@ -1,9 +1,9 @@
 package com.newmaa.othtech;
 
-import com.newmaa.othtech.common.beeyonds.OTHBeeyonds;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.newmaa.othtech.common.beeyonds.OTHBeeyonds;
 import com.newmaa.othtech.common.materials.MaterialsLoader;
 import com.newmaa.othtech.machine.MachineLoader;
 import com.newmaa.othtech.machine.machineclass.IMCForNEI;
