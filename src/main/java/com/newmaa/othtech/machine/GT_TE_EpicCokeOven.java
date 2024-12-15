@@ -80,7 +80,7 @@ public class GT_TE_EpicCokeOven extends OTH_MultiMachineBase<GT_TE_EpicCokeOven>
     }
 
     @Override
-    public @NotNull CheckRecipeResult checkProcessing() {
+    public CheckRecipeResult checkProcessing() {
         List<ItemStack> inputStacks = getStoredInputs();
         if (inputStacks.isEmpty()) {
             return CheckRecipeResultRegistry.NO_RECIPE;

@@ -2,6 +2,8 @@ package com.newmaa.othtech.common.beeyonds;
 
 import static gregtech.api.enums.Mods.*;
 
+import gtPlusPlus.core.material.Material;
+import gtPlusPlus.xmod.forestry.bees.handler.GTPPCombType;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -21,6 +23,8 @@ import gregtech.common.items.ItemPropolis;
 import gregtech.loaders.misc.bees.GTAlleleEffect;
 import gregtech.loaders.misc.bees.GTEffectMachineBoost;
 import gregtech.loaders.misc.bees.GTEffectTreeTwister;
+
+import java.util.HashMap;
 
 public class OTHBeeyonds {
 
@@ -42,15 +46,19 @@ public class OTHBeeyonds {
 
     public static IAlleleBeeEffect treetwisterEffect;
     public static IAlleleBeeEffect machineBoostEffect;
+    public static HashMap<Integer, combTypes> sCombMappings = new HashMap<>();
+    public static HashMap<String, Material> sMaterialMappings = new HashMap<>();
 
     public static ItemPropolis propolis;
     public static ItemPollen pollen;
     public static ItemDrop drop;
-    public static ItemComb combs;
+    public static itemCombs combs;
 
     public OTHBeeyonds() {
         setupOTHAlleles();
         OTHBeeDefinition.initBees();
+        combs = new itemCombs();
+        itemCombs.initCombsRecipes();
     }
 
     private static void setupOTHAlleles() {
