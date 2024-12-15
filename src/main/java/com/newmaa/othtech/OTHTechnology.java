@@ -1,5 +1,6 @@
 package com.newmaa.othtech;
 
+import com.newmaa.othtech.common.beeyonds.OTHBeeyonds;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -60,6 +61,7 @@ public class OTHTechnology {
         proxy.init(event);
         MachineLoader.loadMachines();
         IMCForNEI.IMCSender();
+        new OTHBeeyonds();
 
     }
 

@@ -90,7 +90,7 @@ public class GT_TE_EpicCokeOven extends OTH_MultiMachineBase<GT_TE_EpicCokeOven>
         for (ItemStack itemStack : inputStacks) {
             if (metaItemEqual(itemStack, GTOreDictUnificator.get(OrePrefixes.dust, Materials.Diamond, 1)))
             {
-                amountCoal = 4096;
+                this.amountCoal = 4096;
             } else if (metaItemEqual(itemStack, new ItemStack(Items.diamond, 1)))
             {
                 amountCoal = 4096;
