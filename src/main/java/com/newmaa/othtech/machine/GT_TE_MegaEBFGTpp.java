@@ -235,7 +235,7 @@ public class GT_TE_MegaEBFGTpp extends OTH_MultiMachineBase<GT_TE_MegaEBFGTpp> {
             || addExoticEnergyInputToMachineList(aTileEntity, aBaseCasingIndex);
     }
 
-    // Structure From BW
+    // Structured By BW
     private final String[][] shapeMain = new String[][] {
         { "BBBBBBBBBBBBBBB", "BBBBBBBBBBBBBBB", "BBBBBBBBBBBBBBB", "BBBBBBBBBBBBBBB", "BBBBBBBBBBBBBBB",
             "BBBBBBBBBBBBBBB", "BBBBBBBBBBBBBBB", "BBBBBBBDBBBBBBB", "BBBBBBBBBBBBBBB", "BBBBBBBBBBBBBBB",
@@ -307,6 +307,8 @@ public class GT_TE_MegaEBFGTpp extends OTH_MultiMachineBase<GT_TE_MegaEBFGTpp> {
             .addInfo("§b  并行: 2048")
             .addInfo("§6  不消耗烈焰之炽焱， 但输入仓必须至少有123 * 1000L烈焰之炽焱才可运行")
             .addInfo("§l 「烈焰之炽焱这个东西啊, 用个几千个就淘汰了」---风哥语录·改 ")
+            .addInfo("请注意玻璃等级要求")
+            .addInfo("§c§l注意:机器污染过高:如遇跳电并报错“无法排出污染”, 请尝试放置多个消声仓")
             .addTecTechHatchInfo()
             .addPollutionAmount(128000)
             .addSeparator()

@@ -313,6 +313,7 @@ public class GT_TE_MegaNineInOne extends OTH_MultiMachineBase<GT_TE_MegaNineInOn
     }
 
     // spotless:off
+    //structured by compactFusionReactor
     private final String[][] shapeMain = new String[][]{{
             "                                                 ",
             "                      G   G                      ",
@@ -727,6 +728,7 @@ public class GT_TE_MegaNineInOne extends OTH_MultiMachineBase<GT_TE_MegaNineInOn
             .addInfo("§bEU消耗 : 99%")
             .addInfo("§b执行无损超频")
             .addInfo("§e九合一，我们敬爱你口牙！！ ---Sukune_News")
+            .addInfo("§c§l注意:机器污染过高:如遇跳电并报错“无法排出污染”, 请尝试放置多个消声仓")
             .addTecTechHatchInfo()
             .addPollutionAmount(123123)
             .addSeparator()

@@ -240,7 +240,7 @@ public class GT_TE_MegaIsaForge extends OTH_MultiMachineBase<GT_TE_MegaIsaForge>
         return STRUCTURE_DEFINITION;
     }
 
-    // Structure by JulianChum Version 1 & 2
+    // Structured by JulianChum Version 1 & 2
     private final String[][] shapeMain = new String[][] {
         { "                                                                ",
             "                                                                ",

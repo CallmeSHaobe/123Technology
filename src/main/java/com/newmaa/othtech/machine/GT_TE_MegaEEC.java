@@ -247,7 +247,7 @@ public class GT_TE_MegaEEC extends OTH_MultiMachineBase<GT_TE_MegaEEC> implement
         return STRUCTURE_DEFINITION;
     }
 
-    // Structure by JulianChum
+    // Structured by JulianChum
     private final String[][] shapeMain = new String[][] {
         { "                                                  ", "                                                  ",
             "                                                  ", "                                                  ",

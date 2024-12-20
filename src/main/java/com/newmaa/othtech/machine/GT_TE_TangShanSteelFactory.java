@@ -375,7 +375,7 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
         return STRUCTURE_DEFINITION;
     }
 
-    // Structure by LyeeR
+    // Structured by LyeeR
     private final String[][] shapeMain = new String[][] {
         { "                                           ", "                                           ",
             "                                           ", "                                           ",
@@ -1284,6 +1284,7 @@ public class GT_TE_TangShanSteelFactory extends OTH_MultiMachineBase<GT_TE_TangS
             .addInfo("请注意炉温要求.")
             .addInfo("螺丝刀切换无线模式")
             .addInfo("非无线模式执行无损超频")
+            .addInfo("§c§l注意:机器污染过高:如遇跳电并报错“无法排出污染”, 请尝试放置多个消声仓")
             .addTecTechHatchInfo()
             .addPollutionAmount(192000)
             .addSeparator()

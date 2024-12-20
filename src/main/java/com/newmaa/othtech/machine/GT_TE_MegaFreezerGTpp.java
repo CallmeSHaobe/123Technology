@@ -180,7 +180,7 @@ public class GT_TE_MegaFreezerGTpp extends OTH_MultiMachineBase<GT_TE_MegaFreeze
             || addExoticEnergyInputToMachineList(aTileEntity, aBaseCasingIndex);
     }
 
-    // Structure From BW
+    // Structured by BW
     private final String[][] shapeMain = new String[][] {
         { "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA",
             "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA",
@@ -237,6 +237,7 @@ public class GT_TE_MegaFreezerGTpp extends OTH_MultiMachineBase<GT_TE_MegaFreeze
             .addInfo("§b  并行: 1024")
             .addInfo("§6  不消耗极寒之凛冰， 但输入仓必须至少有123 * 1000L极寒之凛冰才可运行")
             .addInfo("§q§l「巨凛冰这个段位就很尴尬，往上走有TST冰箱，再往下有原版立方体，巨凛冰上不去下不来卡在这里了」 ")
+            .addInfo("§c§l注意:机器污染过高:如遇跳电并报错“无法排出污染”, 请尝试放置多个消声仓")
             .addTecTechHatchInfo()
             .addPollutionAmount(128000)
             .addSeparator()

@@ -293,7 +293,7 @@ public class GT_TE_CHEM extends OTH_MultiMachineBase<GT_TE_CHEM> {
         return STRUCTURE_DEFINITION;
     }
 
-    // Structure by LyeeR
+    // Structured by LyeeR
     private final String[][] shapeMain = new String[][] {
         { "FFFFFFF", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G",
             "G     G", "G     G", "FFF~FFF" },

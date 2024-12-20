@@ -82,4 +82,5 @@ public class OTHBeeMutation extends BeeMutation {
         }
         return mutationChance;
     }
+
 }

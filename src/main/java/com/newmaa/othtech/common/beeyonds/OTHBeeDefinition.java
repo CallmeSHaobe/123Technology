@@ -5,14 +5,14 @@ import static forestry.api.apiculture.EnumBeeChromosome.*;
 import static forestry.api.apiculture.EnumBeeChromosome.FLOWER_PROVIDER;
 import static forestry.api.core.EnumHumidity.DAMP;
 import static gregtech.api.enums.Mods.*;
-import static gregtech.loaders.misc.GTBeeDefinition.MACHINIST;
-import static gregtech.loaders.misc.GTBeeDefinition.WALRUS;
+import static gregtech.loaders.misc.GTBeeDefinition.*;
 
 import java.awt.Color;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.function.Consumer;
 
+import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
@@ -21,7 +21,9 @@ import org.jetbrains.annotations.NotNull;
 
 import com.newmaa.othtech.OTHTechnology;
 
+import binnie.extrabees.genetics.effect.ExtraBeesEffect;
 import forestry.api.apiculture.BeeManager;
+import forestry.api.apiculture.EnumBeeChromosome;
 import forestry.api.apiculture.EnumBeeType;
 import forestry.api.apiculture.IAlleleBeeEffect;
 import forestry.api.apiculture.IAlleleBeeSpecies;
@@ -71,11 +73,11 @@ public enum OTHBeeDefinition implements IBeeDefinition {
     }),
 
     GATE(OTHBranchDefinition.OTHBYDS, "Gate", true, new Color(0x3808A0), new Color(0x3808A0), beeSpecies -> {
-        beeSpecies.addProduct(GTModHandler.getModItem(NewHorizonsCoreMod.ID, "item.StargateCrystalDust", 1), 0.810f);
-        beeSpecies.addProduct(GTModHandler.getModItem(NewHorizonsCoreMod.ID, "item.StargateFramePart", 1), 0.810f);
+        beeSpecies.addProduct(GTModHandler.getModItem(NewHorizonsCoreMod.ID, "item.StargateCrystalDust", 1), 0.00810f);
+        beeSpecies.addProduct(GTModHandler.getModItem(NewHorizonsCoreMod.ID, "item.StargateFramePart", 1), 0.00810f);
         beeSpecies
-            .addSpecialty(GTModHandler.getModItem(NewHorizonsCoreMod.ID, "item.StargateShieldingFoil", 1, 0), 0.123f);
-        beeSpecies.addSpecialty(GTModHandler.getModItem(NewHorizonsCoreMod.ID, "item.StargateChevron", 1), 0.123f);
+            .addSpecialty(GTModHandler.getModItem(NewHorizonsCoreMod.ID, "item.StargateShieldingFoil", 1, 0), 0.00123f);
+        beeSpecies.addSpecialty(GTModHandler.getModItem(NewHorizonsCoreMod.ID, "item.StargateChevron", 1), 0.00123f);
         beeSpecies.setHumidity(DAMP);
         beeSpecies.setTemperature(EnumTemperature.NORMAL);
     }, template -> {
@@ -86,7 +88,73 @@ public enum OTHBeeDefinition implements IBeeDefinition {
     }, dis -> {
         IBeeMutationCustom tMutation = dis.registerMutation(WEIWEI, MACHINIST.getSpecies(), 1);
         tMutation.requireResource(GregTechAPI.sBlockMachines, 23524); // MAX1048576
-    });
+    }),
+    HYP(OTHBranchDefinition.OTHBYDS, "Hypogen", true, new Color(0xD31010), new Color(0xB01E0B), beeSpecies -> {
+        beeSpecies.addProduct(GTModHandler.getModItem(GTPlusPlus.ID, "itemDustTinyHypogen", 1), 0.00810f);
+        beeSpecies.addSpecialty(combTypes.HYPOGEN.getStackForType(1), 0.02F);
+        beeSpecies.setHumidity(DAMP);
+        beeSpecies.setTemperature(EnumTemperature.NORMAL);
+    }, template -> {
+        AlleleHelper.instance.set(template, FLOWERING, EnumAllele.Flowering.SLOWER);
+        AlleleHelper.instance.set(template, HUMIDITY_TOLERANCE, EnumAllele.Tolerance.NONE);
+        AlleleHelper.instance.set(template, EFFECT, getEffect(EXTRABEES, "teleport"));
+        AlleleHelper.instance.set(template, FLOWER_PROVIDER, EnumAllele.Flowers.VANILLA);
+    }, dis -> {
+        IBeeMutationCustom tMutation = dis.registerMutation(INFINITY.getSpecies(), DRAGONESSENCE.getSpecies(), 1);
+        tMutation.requireResource(Block.getBlockFromName(GoodGenerator.ID + ":componentAssemblylineCasing"), 10); // UIV
+                                                                                                                  // COM
+                                                                                                                  // CASING
+    }),
+    GLAS(OTHBranchDefinition.OTHBYDS, "Glass", true, new Color(0xFFFFFFFF), new Color(0xFFFFFFFF), beeSpecies -> {
+        beeSpecies.addProduct(new ItemStack(Blocks.glass, 4), 0.9F);
+        beeSpecies.addProduct(new ItemStack(Blocks.glass_pane, 12), 0.9F);
+        beeSpecies.addSpecialty(combTypes.NORMALGLASS.getStackForType(1), 0.3F);
+        beeSpecies.setHumidity(DAMP);
+        beeSpecies.setTemperature(EnumTemperature.NORMAL);
+    }, template -> {
+        AlleleHelper.instance.set(template, FLOWERING, EnumAllele.Flowering.SLOWER);
+        AlleleHelper.instance.set(template, HUMIDITY_TOLERANCE, EnumAllele.Tolerance.NONE);
+        AlleleHelper.instance.set(template, EFFECT, getEffect(EXTRABEES, "teleport"));
+        AlleleHelper.instance.set(template, FLOWER_PROVIDER, EnumAllele.Flowers.VANILLA);
+    }, dis -> {
+        IBeeMutationCustom tMutation = dis.registerMutation(CLAY.getSpecies(), getSpecies(FORESTRY, "Rural"), 90);
+        tMutation.requireResource(Block.getBlockFromName(TinkerConstruct.ID + ":GlassBlock"), 0); // Tic Glass
+    }),
+    CHG(OTHBranchDefinition.OTHBYDS, "ChromaticGlass", true, new Color(0xFFEE1414, true), new Color(0xFF1422BE, true),
+        beeSpecies -> {
+            beeSpecies.addSpecialty(combTypes.CHROMATICGLASS.getStackForType(1), 1F);
+            beeSpecies.setHumidity(DAMP);
+            beeSpecies.setTemperature(EnumTemperature.NORMAL);
+        }, template -> {
+            AlleleHelper.instance.set(template, FLOWERING, EnumAllele.Flowering.SLOWER);
+            AlleleHelper.instance.set(template, HUMIDITY_TOLERANCE, EnumAllele.Tolerance.NONE);
+            AlleleHelper.instance.set(template, EFFECT, getEffect(EXTRABEES, "teleport"));
+            AlleleHelper.instance.set(template, FLOWER_PROVIDER, EnumAllele.Flowers.VANILLA);
+        }, dis -> {
+            IBeeMutationCustom tMutation = dis.registerMutation(GLAS, INFINITY.getSpecies(), 1);
+            tMutation.requireResource(Block.getBlockFromName(GTPlusPlus.ID + ":blockBlockChromaticGlass"), 0); // block
+                                                                                                               // of
+                                                                                                               // Chromatic
+                                                                                                               // Glass
+        }),
+    SHENGXI(OTHBranchDefinition.OTHBYDS, "shengxi", true, new Color(0xFFEE14BB, true), new Color(0xFF7C18D2, true),
+        beeSpecies -> {
+            beeSpecies.addSpecialty(GTModHandler.getModItem(Forestry.ID, "royalJelly", 1, 0), 1F);
+            beeSpecies.setHumidity(DAMP);
+            beeSpecies.setTemperature(EnumTemperature.NORMAL);
+        }, template -> {
+            AlleleHelper.instance.set(template, FLOWERING, EnumAllele.Flowering.SLOWER);
+            AlleleHelper.instance.set(template, HUMIDITY_TOLERANCE, EnumAllele.Tolerance.NONE);
+            AlleleHelper.instance.set(template, EFFECT, getEffect(EXTRABEES, "teleport"));
+            AlleleHelper.instance.set(template, FLOWER_PROVIDER, EnumAllele.Flowers.VANILLA);
+            binnie.genetics.genetics.AlleleHelper.instance.set(
+                template,
+                EnumBeeChromosome.EFFECT,
+                binnie.genetics.genetics.AlleleHelper.getAllele(ExtraBeesEffect.BIRTHDAY.getUID()));
+        }, dis -> {
+            IBeeMutationCustom tMutation = dis.registerMutation(WEIWEI, GATE, 100);
+            tMutation.requireResource(Blocks.dirt, 0);// block of dirt
+        });
 
     private final OTHBranchDefinition branch;
     private final OTHAlleleBeeSpecies species;

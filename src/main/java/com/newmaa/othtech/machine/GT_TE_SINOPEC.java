@@ -19,6 +19,7 @@ import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_ASSEMBLY_LINE
 import static gregtech.api.util.GTStructureUtility.*;
 
 import java.util.List;
+import java.util.Objects;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -234,9 +235,9 @@ public class GT_TE_SINOPEC extends OTH_MultiMachineBase<GT_TE_SINOPEC> {
                 .addElement('P', ofFrame(Materials.Steel))
                 .addElement(
                     'N',
-                    (Chisel.isModLoaded() && Block.getBlockFromName(Chisel.ID + ":concrete") != null)
-                        ? ofBlock(Block.getBlockFromName(Chisel.ID + ":concrete"), HORIZONTAL_DIRT_METAID)
-                        : ofBlock(sBlockConcretes, 0))
+                    (Chisel.isModLoaded() && Block.getBlockFromName(Chisel.ID + ":concrete") != null) ? ofBlock(
+                        Objects.requireNonNull(Block.getBlockFromName(Chisel.ID + ":concrete")),
+                        HORIZONTAL_DIRT_METAID) : ofBlock(sBlockConcretes, 0))
                 .addElement(
                     'F',
                     buildHatchAdder(GT_TE_SINOPEC.class)
@@ -257,7 +258,7 @@ public class GT_TE_SINOPEC extends OTH_MultiMachineBase<GT_TE_SINOPEC> {
         return STRUCTURE_DEFINITION;
     }
 
-    // Structure by LyeeR
+    // Structured by LyeeR
     private final String[][] shapeMain = new String[][] {
         { "                                                ", "                                                ",
             "                                                ", "                                                ",
@@ -1104,6 +1105,7 @@ public class GT_TE_SINOPEC extends OTH_MultiMachineBase<GT_TE_SINOPEC> {
             .addInfo("§l一步到位.")
             .addInfo("线圈等级<10时 耗时倍率 = 1 - 线圈等级 * 0.1, ≥10时耗时倍率固定为0.1")
             .addInfo("主机放入铱锇钐合金粉解锁无损超频以及并行限制, 并行默认为64")
+            .addInfo("§c§l注意:机器污染过高:如遇跳电并报错“无法排出污染”, 请尝试放置多个消声仓")
             .addTecTechHatchInfo()
             .addPollutionAmount(64000)
             .addSeparator()

@@ -363,7 +363,7 @@ public class GT_TE_SunFactory extends OTH_MultiMachineBase<GT_TE_SunFactory> {
         return STRUCTURE_DEFINITION;
     }
 
-    // Structure by JulianChum Version 1 & 2
+    // Structured by JulianChum Version 1 & 2
     private final String[][] shapeMain = new String[][] {
         { "                                                               ",
             "                                                               ",

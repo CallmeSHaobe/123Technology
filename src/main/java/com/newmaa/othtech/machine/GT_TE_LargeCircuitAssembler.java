@@ -305,7 +305,7 @@ public class GT_TE_LargeCircuitAssembler extends OTH_MultiMachineBase<GT_TE_Larg
         return STRUCTURE_DEFINITION;
     }
 
-    // Structure by NewMaa
+    // Structured by NewMaa
     private final String[][] shapeMain = new String[][] {
         { "             ", "             ", "             ", "             ", "             ", "EEEEEEEEEEEEE" },
         { " IIIIIIIIIII ", " I         I ", " I         I ", " I         I ", " II       II ", "EEEEEEEEEEEEE" },
