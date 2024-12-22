@@ -41,11 +41,11 @@ public class itemCombs extends Item {
     }
 
     public ItemStack getStackForType(combTypes type) {
-        return new ItemStack(this, 1, type.mID);
+        return new ItemStack(this, 1, type.ordinal());
     }
 
     public ItemStack getStackForType(combTypes type, int count) {
-        return new ItemStack(this, count, type.mID);
+        return new ItemStack(this, count, type.ordinal());
     }
 
     @Override

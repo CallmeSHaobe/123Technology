@@ -11,7 +11,7 @@ public class ItemLoader {
     public static Item dustIrOsSm = new dustIrOsSm();
     public static Item itemZhangww = new itemZhangww();
     public static Item ingotHotDog = new ingotHotDog();
-
+    public static Item itemLeekBox = new itemLeekBox();
     public static Item ingotDog = new ingotDog();
     public static Item singularity1 = new singularity1();
     public static Item singularity2 = new singularity2();
@@ -66,6 +66,7 @@ public class ItemLoader {
         IRegistry(energyHatchSpacetime, "energyHatchSpacetime");
         IRegistry(itemEnqing, "itemEnqing");
         IRegistry(itemSunLighter, "itemSunLighter");
+        IRegistry(itemLeekBox, "itemLeekBox");
     }
 
     private static void IRegistry(Item item, String name) {

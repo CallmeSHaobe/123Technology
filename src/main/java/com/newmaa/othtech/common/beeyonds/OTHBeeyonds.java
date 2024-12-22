@@ -59,10 +59,10 @@ public class OTHBeeyonds {
     public static itemCombs combs;
 
     public OTHBeeyonds() {
+        combs = new itemCombs();
+        combs.initCombsRecipes();
         setupOTHAlleles();
         OTHBeeDefinition.initBees();
-        combs = new itemCombs();
-        itemCombs.initCombsRecipes();
     }
 
     private static void setupOTHAlleles() {

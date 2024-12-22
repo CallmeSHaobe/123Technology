@@ -20,6 +20,7 @@ import org.apache.commons.lang3.text.WordUtils;
 import org.jetbrains.annotations.NotNull;
 
 import com.newmaa.othtech.OTHTechnology;
+import com.newmaa.othtech.common.item.ItemLoader;
 
 import binnie.extrabees.genetics.effect.ExtraBeesEffect;
 import forestry.api.apiculture.BeeManager;
@@ -36,6 +37,7 @@ import forestry.api.genetics.IAllele;
 import forestry.api.genetics.IAlleleFlowers;
 import forestry.apiculture.genetics.Bee;
 import forestry.apiculture.genetics.IBeeDefinition;
+import forestry.apiculture.genetics.alleles.AlleleEffect;
 import forestry.core.genetics.alleles.AlleleHelper;
 import forestry.core.genetics.alleles.EnumAllele;
 import gregtech.api.GregTechAPI;
@@ -74,10 +76,10 @@ public enum OTHBeeDefinition implements IBeeDefinition {
 
     GATE(OTHBranchDefinition.OTHBYDS, "Gate", true, new Color(0x3808A0), new Color(0x3808A0), beeSpecies -> {
         beeSpecies.addProduct(GTModHandler.getModItem(NewHorizonsCoreMod.ID, "item.StargateCrystalDust", 1), 0.00810f);
-        beeSpecies.addProduct(GTModHandler.getModItem(NewHorizonsCoreMod.ID, "item.StargateFramePart", 1), 0.00810f);
-        beeSpecies
-            .addSpecialty(GTModHandler.getModItem(NewHorizonsCoreMod.ID, "item.StargateShieldingFoil", 1, 0), 0.00123f);
-        beeSpecies.addSpecialty(GTModHandler.getModItem(NewHorizonsCoreMod.ID, "item.StargateChevron", 1), 0.00123f);
+        // beeSpecies.addProduct(GTModHandler.getModItem(NewHorizonsCoreMod.ID, "item.StargateFramePart", 1), 0.00810f);
+        // beeSpecies
+        // .addSpecialty(GTModHandler.getModItem(NewHorizonsCoreMod.ID, "item.StargateShieldingFoil", 1, 0), 0.00123f);
+        // beeSpecies.addSpecialty(GTModHandler.getModItem(NewHorizonsCoreMod.ID, "item.StargateChevron", 1), 0.00123f);
         beeSpecies.setHumidity(DAMP);
         beeSpecies.setTemperature(EnumTemperature.NORMAL);
     }, template -> {
@@ -91,7 +93,7 @@ public enum OTHBeeDefinition implements IBeeDefinition {
     }),
     HYP(OTHBranchDefinition.OTHBYDS, "Hypogen", true, new Color(0xD31010), new Color(0xB01E0B), beeSpecies -> {
         beeSpecies.addProduct(GTModHandler.getModItem(GTPlusPlus.ID, "itemDustTinyHypogen", 1), 0.00810f);
-        beeSpecies.addSpecialty(combTypes.HYPOGEN.getStackForType(1), 0.02F);
+        beeSpecies.addSpecialty(OTHBeeyonds.combs.getStackForType(combTypes.HYPOGEN), 0.02F);
         beeSpecies.setHumidity(DAMP);
         beeSpecies.setTemperature(EnumTemperature.NORMAL);
     }, template -> {
@@ -108,7 +110,7 @@ public enum OTHBeeDefinition implements IBeeDefinition {
     GLAS(OTHBranchDefinition.OTHBYDS, "Glass", true, new Color(0xFFFFFFFF), new Color(0xFFFFFFFF), beeSpecies -> {
         beeSpecies.addProduct(new ItemStack(Blocks.glass, 4), 0.9F);
         beeSpecies.addProduct(new ItemStack(Blocks.glass_pane, 12), 0.9F);
-        beeSpecies.addSpecialty(combTypes.NORMALGLASS.getStackForType(1), 0.3F);
+        beeSpecies.addSpecialty(OTHBeeyonds.combs.getStackForType(combTypes.NORMALGLASS), 0.3F);
         beeSpecies.setHumidity(DAMP);
         beeSpecies.setTemperature(EnumTemperature.NORMAL);
     }, template -> {
@@ -122,7 +124,7 @@ public enum OTHBeeDefinition implements IBeeDefinition {
     }),
     CHG(OTHBranchDefinition.OTHBYDS, "ChromaticGlass", true, new Color(0xFFEE1414, true), new Color(0xFF1422BE, true),
         beeSpecies -> {
-            beeSpecies.addSpecialty(combTypes.CHROMATICGLASS.getStackForType(1), 1F);
+            beeSpecies.addSpecialty(OTHBeeyonds.combs.getStackForType(combTypes.CHROMATICGLASS), 1F);
             beeSpecies.setHumidity(DAMP);
             beeSpecies.setTemperature(EnumTemperature.NORMAL);
         }, template -> {
@@ -136,6 +138,20 @@ public enum OTHBeeDefinition implements IBeeDefinition {
                                                                                                                // of
                                                                                                                // Chromatic
                                                                                                                // Glass
+        }),
+    JIUCAI(OTHBranchDefinition.OTHBYDS, "Jiucai", true, new Color(0xFFD5742A, true), new Color(0x38FF1038, true),
+        beeSpecies -> {
+            beeSpecies.addSpecialty(new ItemStack(ItemLoader.itemLeekBox, 16), 0.3F);
+            beeSpecies.setHumidity(DAMP);
+            beeSpecies.setTemperature(EnumTemperature.NORMAL);
+        }, template -> {
+            AlleleHelper.instance.set(template, FLOWERING, EnumAllele.Flowering.FASTEST);
+            AlleleHelper.instance.set(template, HUMIDITY_TOLERANCE, EnumAllele.Tolerance.NONE);
+            AlleleHelper.instance.set(template, EFFECT, AlleleEffect.effectCreeper);
+            AlleleHelper.instance.set(template, FLOWER_PROVIDER, EnumAllele.Flowers.WHEAT);
+        }, dis -> {
+            IBeeMutationCustom tMutation = dis.registerMutation(COAL.getSpecies(), SALTY.getSpecies(), 12);
+            tMutation.requireResource(GregTechAPI.sBlockMetal6, 15); // Sterling Silver Block
         }),
     SHENGXI(OTHBranchDefinition.OTHBYDS, "shengxi", true, new Color(0xFFEE14BB, true), new Color(0xFF7C18D2, true),
         beeSpecies -> {
