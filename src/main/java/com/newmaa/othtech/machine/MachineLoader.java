@@ -31,6 +31,7 @@ public class MachineLoader {
     public static ItemStack Sun;
     public static ItemStack LCA;
     public static ItemStack coccoven;
+    public static ItemStack WoodFusion;
 
     public static void loadMachines() {
         final int IDs = 23520;
@@ -89,6 +90,9 @@ public class MachineLoader {
 
         coccoven = new GT_TE_EpicCokeOven(IDs + 19, "CoccOven", "§c§l史诗焦炭终结者 T123").getStackForm(1);
         OTHItemList.CoccOven.set(coccoven);
+
+        WoodFusion = new GT_TE_WoodFusionReactor(IDs + 20, "WoodFusionReactor", "§b§l压缩原木聚变反应堆Mk 0").getStackForm(1);
+        OTHItemList.WoodFusion.set(WoodFusion);
 
     }
 }

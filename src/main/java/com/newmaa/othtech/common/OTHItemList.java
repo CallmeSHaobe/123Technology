@@ -27,6 +27,7 @@ public enum OTHItemList {
     SF,
     Chem,
     MegaEEC,
+    WoodFusion,
 
     legendary_WirelessHatch,
 
