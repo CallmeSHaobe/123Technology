@@ -6,12 +6,9 @@ import static gregtech.api.GregTechAPI.*;
 import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static gregtech.api.util.GTStructureUtility.ofFrame;
-import static tectech.thing.casing.TTCasingsContainer.TimeAccelerationFieldGenerator;
 
 import java.util.List;
 
-import bartworks.common.blocks.BWBlocks;
-import bartworks.common.blocks.BWBlocksGlass;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -64,8 +61,6 @@ public class GT_TE_LargeCircuitAssembler extends OTH_MultiMachineBase<GT_TE_Larg
     public GT_TE_LargeCircuitAssembler(String aName) {
         super(aName);
     }
-
-
 
     protected int casingTier = 0;
     private byte mode = 0;

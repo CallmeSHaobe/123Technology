@@ -292,7 +292,14 @@ public class GT_TE_MegaNineInOne extends OTH_MultiMachineBase<GT_TE_MegaNineInOn
                 .addElement(
                     'E',
                     buildHatchAdder(GT_TE_MegaNineInOne.class)
-                        .atLeast(InputBus, OutputBus, InputHatch, OutputHatch, Muffler, Maintenance,Energy.or(ExoticEnergy))
+                        .atLeast(
+                            InputBus,
+                            OutputBus,
+                            InputHatch,
+                            OutputHatch,
+                            Muffler,
+                            Maintenance,
+                            Energy.or(ExoticEnergy))
                         .adder(GT_TE_MegaNineInOne::addToMachineList)
                         .dot(1)
                         .casingIndex(getTextureIndex())

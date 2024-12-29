@@ -1,5 +1,13 @@
 package com.newmaa.othtech.Mixins;
 
+import static gregtech.api.util.GTUtility.validMTEList;
+
+import java.util.ArrayList;
+
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.Shadow;
+
 import gregtech.GTMod;
 import gregtech.api.interfaces.modularui.IAddGregtechLogo;
 import gregtech.api.interfaces.modularui.IAddUIWidgets;
@@ -8,14 +16,6 @@ import gregtech.api.interfaces.modularui.IControllerWithOptionalFeatures;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.implementations.MTEHatchMuffler;
 import gregtech.api.metatileentity.implementations.MTEMultiBlockBase;
-import org.objectweb.asm.Opcodes;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.Shadow;
-
-import java.util.ArrayList;
-
-import static gregtech.api.util.GTUtility.validMTEList;
 
 @Mixin(value = MTEMultiBlockBase.class, remap = false)
 public abstract class MTEMultiBlockBaseMixin extends MetaTileEntity

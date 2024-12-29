@@ -1,23 +1,22 @@
 package com.newmaa.othtech.machine;
 
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
-import static com.newmaa.othtech.Utils.Utils.metaItemEqual;
 import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.enums.Textures.BlockIcons.*;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static gregtech.api.util.GTStructureUtility.ofFrame;
 
-import gregtech.api.enums.OrePrefixes;
-import gregtech.api.util.*;
-import gtPlusPlus.core.util.minecraft.FluidUtils;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
-
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+
 import org.jetbrains.annotations.NotNull;
 
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
@@ -25,25 +24,21 @@ import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
 
-import bartworks.API.BorosilicateGlass;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import gregtech.api.GregTechAPI;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.SoundResource;
 import gregtech.api.enums.TAE;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
-import gregtech.api.logic.ProcessingLogic;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.render.TextureFactory;
+import gregtech.api.util.GTUtility;
+import gregtech.api.util.MultiblockTooltipBuilder;
 import gtPlusPlus.core.block.ModBlocks;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import gtPlusPlus.core.util.minecraft.FluidUtils;
 
 public class GT_TE_WoodFusionReactor extends OTH_MultiMachineBase<GT_TE_WoodFusionReactor> {
 
@@ -58,6 +53,7 @@ public class GT_TE_WoodFusionReactor extends OTH_MultiMachineBase<GT_TE_WoodFusi
     public int getTextureIndex() {
         return TAE.getIndexFromPage(2, 2);
     }
+
     public int TierSteam = 0;
     public int amountPlasma = 1;
 
@@ -91,7 +87,6 @@ public class GT_TE_WoodFusionReactor extends OTH_MultiMachineBase<GT_TE_WoodFusi
     protected float getEuModifier() {
         return 0.99F;
     }
-
 
     @Override
     public @NotNull CheckRecipeResult checkProcessing() {
