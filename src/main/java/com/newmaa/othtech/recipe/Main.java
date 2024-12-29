@@ -2,6 +2,7 @@ package com.newmaa.othtech.recipe;
 
 import static gregtech.api.util.GTModHandler.addCraftingRecipe;
 
+import com.newmaa.othtech.common.item.ItemLoader;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -399,5 +400,71 @@ public class Main implements IRecipePool {
                 new ItemStack(Items.redstone, 1), 'C',
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.NetherQuartz, 1), 'D',
                 GTModHandler.getModItem("Railcraft", "firestone.raw", 1) });
+        //HV Hatches
+        TTRecipeAdder.addResearchableAssemblylineRecipe(
+            GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 43),
+            123123,
+            512,
+            (int) TierEU.HV,
+            1048576,
+            new ItemStack[] {
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 209),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 209),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 209),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 209),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 15300),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 4, 1445),
+                new ItemStack(ItemLoader.itemLeekBox, 64, 0),
+                GTModHandler.getModItem("GoodGenerator", "compactFusionCoil", 16, 2),
+                ItemList.Field_Generator_EV.get(64),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Elite, 64),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Elite, 64),
+                ItemList.Field_Generator_EV.get(64),
+                GTModHandler.getModItem("gregtech", "gt.1080k_Space_Coolantcell", 64),
+                GTModHandler.getModItem("gregtech", "gt.1080k_Space_Coolantcell", 64),
+                GTModHandler.getModItem("gregtech", "gt.1080k_Space_Coolantcell", 64),
+                ItemList.Electric_Pump_HV.get(64)
+
+            },
+            new FluidStack[] { new FluidStack(FluidRegistry.getFluidID("molten.solderingalloy"), 64000),
+            FluidRegistry.getFluidStack("cryotheum", 64000)},
+            OTHItemList.GTTEEnergyULV.get(1),
+            1024 * 20,
+            (int) TierEU.HV);
+        TTRecipeAdder.addResearchableAssemblylineRecipe(
+            GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 33),
+            123123,
+            512,
+            (int) TierEU.HV,
+            1048576,
+            new ItemStack[] {
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 296),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 296),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 296),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 296),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 15300),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 4, 1445),
+                new ItemStack(ItemLoader.itemLeekBox, 64, 0),
+                GTModHandler.getModItem("GoodGenerator", "compactFusionCoil", 16, 2),
+                ItemList.Field_Generator_EV.get(64),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Elite, 64),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Elite, 64),
+                ItemList.Field_Generator_EV.get(64),
+                GTModHandler.getModItem("gregtech", "gt.1080k_Space_Coolantcell", 64),
+                GTModHandler.getModItem("gregtech", "gt.1080k_Space_Coolantcell", 64),
+                GTModHandler.getModItem("gregtech", "gt.1080k_Space_Coolantcell", 64),
+                ItemList.Electric_Pump_HV.get(64)
+
+            },
+            new FluidStack[] { new FluidStack(FluidRegistry.getFluidID("molten.solderingalloy"), 64000),
+                FluidRegistry.getFluidStack("cryotheum", 64000)},
+            OTHItemList.GTTEDynamoULV.get(1),
+            1024 * 20,
+            (int) TierEU.HV);
+        //Wood Fusion
+        addCraftingRecipe(
+            OTHItemList.WoodFusion.get(1),
+            new Object[] { "AAA", "ABA", "AAA", 'A', new ItemStack(Blocks.log, 1, 0), 'B',
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 2) });
     }
 }

@@ -1,15 +1,23 @@
 package com.newmaa.othtech.machine;
 
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
+import static com.newmaa.othtech.Utils.Utils.metaItemEqual;
 import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.enums.Textures.BlockIcons.*;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static gregtech.api.util.GTStructureUtility.ofFrame;
 
+import gregtech.api.enums.OrePrefixes;
+import gregtech.api.util.*;
+import gtPlusPlus.core.util.minecraft.FluidUtils;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.NotNull;
 
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
@@ -31,10 +39,11 @@ import gregtech.api.logic.ProcessingLogic;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.render.TextureFactory;
-import gregtech.api.util.GTRecipe;
-import gregtech.api.util.GTUtility;
-import gregtech.api.util.MultiblockTooltipBuilder;
 import gtPlusPlus.core.block.ModBlocks;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class GT_TE_WoodFusionReactor extends OTH_MultiMachineBase<GT_TE_WoodFusionReactor> {
 
@@ -49,6 +58,8 @@ public class GT_TE_WoodFusionReactor extends OTH_MultiMachineBase<GT_TE_WoodFusi
     public int getTextureIndex() {
         return TAE.getIndexFromPage(2, 2);
     }
+    public int TierSteam = 0;
+    public int amountPlasma = 1;
 
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
@@ -81,28 +92,62 @@ public class GT_TE_WoodFusionReactor extends OTH_MultiMachineBase<GT_TE_WoodFusi
         return 0.99F;
     }
 
+
     @Override
-    protected ProcessingLogic createProcessingLogic() {
-        return new ProcessingLogic() {
+    public @NotNull CheckRecipeResult checkProcessing() {
 
+        List<FluidStack> inputStacks = getStoredFluids();
+        if (inputStacks.isEmpty()) {
+            return CheckRecipeResultRegistry.NO_RECIPE;
+        }
+
+        for (FluidStack fluidStack : inputStacks) {
+            int initialStackSize = fluidStack.amount;
+
+            if (fluidStack.isFluidEqual(FluidUtils.getFluidStack("steam", 1))) {
+                TierSteam = 1;
+                amountPlasma = 1;
+            } else if (fluidStack.isFluidEqual(FluidUtils.getFluidStack("ic2superheatedsteam", 1))) {
+                TierSteam = 2;
+                amountPlasma = 10;
+            } else if (fluidStack.isFluidEqual(FluidUtils.getFluidStack("densesupercriticalsteam", 1))) {
+                TierSteam = 10;
+                amountPlasma = 100;
+            } else {
+                continue;
+            }
+
+            fluidStack.amount -= initialStackSize;
+            FluidStack[] outputFluidStack = new FluidStack[] {
+                FluidRegistry.getFluidStack("plasma.hydrogen", amountPlasma) };
             @NotNull
-            @Override
-            public CheckRecipeResult process() {
-
-                setEuModifier(getEuModifier());
-                setSpeedBonus(getSpeedBonus());
-                setOverclock(isEnablePerfectOverclock() ? 4 : 2, 4);
-                return super.process();
+            List<FluidStack> extraFluids = new ArrayList<>();
+            for (FluidStack fluids : outputFluidStack) {
+                if (fluids.amount <= Integer.MAX_VALUE / amountPlasma * initialStackSize) {
+                    // set amount directly if in integer area
+                    fluids.amount *= (int) ((double) amountPlasma * initialStackSize / 1000);
+                } else {
+                    for (int i = 0; i < (amountPlasma * initialStackSize) - 1; i++) {
+                        extraFluids.add(fluids.copy());
+                    }
+                }
             }
 
-            @Override
-            protected @NotNull CheckRecipeResult validateRecipe(GTRecipe recipe) {
-                return CheckRecipeResultRegistry.SUCCESSFUL;
+            if (extraFluids.isEmpty()) {
+                // no over integer amount
+                mOutputFluids = outputFluidStack;
+            } else {
+                extraFluids.addAll(Arrays.asList(outputFluidStack));
+                mOutputFluids = extraFluids.toArray(new FluidStack[] {});
             }
 
-        }.enablePerfectOverclock()
-            .setMaxParallelSupplier(this::getMaxParallelRecipes);
+            mEUt = 0;
+            mMaxProgresstime = initialStackSize / 1000 * 400 / TierSteam;
 
+            return CheckRecipeResultRegistry.SUCCESSFUL;
+        }
+
+        return CheckRecipeResultRegistry.NO_RECIPE;
     }
 
     @Override
@@ -148,24 +193,18 @@ public class GT_TE_WoodFusionReactor extends OTH_MultiMachineBase<GT_TE_WoodFusi
         if (STRUCTURE_DEFINITION == null) {
             STRUCTURE_DEFINITION = StructureDefinition.<GT_TE_WoodFusionReactor>builder()
                 .addShape(STRUCTURE_PIECE_MAIN, shapeMain)
-                .addElement('F', ofBlock(ModBlocks.blockCasings3Misc, 2))
-                .addElement(
-                    'E',
-                    buildHatchAdder(GT_TE_WoodFusionReactor.class).atLeast(Energy.or(ExoticEnergy))
-                        .adder(GT_TE_WoodFusionReactor::addToMachineList)
-                        .dot(2)
-                        .casingIndex(getTextureIndex())
-                        .buildAndChain(ModBlocks.blockCasings3Misc, 2))
+                .addElement('F', ofBlock(Blocks.planks, 0))
+                .addElement('E', ofBlock(Blocks.planks, 0))
                 .addElement(
                     'D',
                     buildHatchAdder(GT_TE_WoodFusionReactor.class).atLeast(InputHatch, OutputHatch)
                         .adder(GT_TE_WoodFusionReactor::addToMachineList)
                         .dot(1)
                         .casingIndex(getTextureIndex())
-                        .buildAndChain(ModBlocks.blockCasings3Misc, 2))
-                .addElement('A', BorosilicateGlass.ofBoroGlass(3))
-                .addElement('G', ofFrame(Materials.HSSS))
-                .addElement('B', ofBlock(GregTechAPI.sBlockCasings5, 4))
+                        .buildAndChain(Blocks.stonebrick, 0))
+                .addElement('A', ofBlock(Blocks.glass, 0))
+                .addElement('G', ofFrame(Materials.Wood))
+                .addElement('B', ofBlock(ModBlocks.blockCasingsMisc, 2))
                 .build();
 
         }
