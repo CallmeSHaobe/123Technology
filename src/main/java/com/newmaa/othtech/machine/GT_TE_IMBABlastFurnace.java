@@ -103,10 +103,12 @@ public class GT_TE_IMBABlastFurnace extends MTEElectricBlastFurnace {
                     .setRecipe(recipe)
                     .setItemInputs(inputItems)
                     .setFluidInputs(inputFluids)
-                    .setAvailableEUt(availableVoltage * availableAmperage)
+                    .setAvailableEUt(Integer.MAX_VALUE)
                     .setMachine(machine, protectItems, protectFluids)
                     .setRecipeLocked(recipeLockableMachine, isRecipeLocked)
-                    .setMaxParallel(maxParallel)
+                    .setMaxParallel(Integer.MAX_VALUE)
+                    .setEUtModifier(0)
+                    .enableBatchMode(batchSize)
                     .setConsumption(true)
                     .setOutputCalculation(true);
             }
