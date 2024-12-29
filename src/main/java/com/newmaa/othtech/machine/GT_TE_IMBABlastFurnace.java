@@ -186,17 +186,16 @@ public class GT_TE_IMBABlastFurnace extends MTEElectricBlastFurnace {
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
         MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-        tt.addMachineType("Advanced Blast Furnace")
-            .addInfo("Supports advanced heating coils for higher temperatures.")
-            .addInfo("Each 900K over the minimum heat reduces power consumption by 5% (multiplicatively).")
-            .addInfo("Each 1800K over the minimum heat allows for a perfect overclock upgrade.")
-            .addInfo("Advanced coils provide an additional 2000K heating capacity.")
+        tt.addMachineType("超级无敌数值高炉")
+            .addInfo("我们拥有int级别的热量，所以说我们可以轻松融化任何物质，即使你使用的是白铜线圈！")
+            .addInfo("你问我为什么要写这个东西？")
+            .addInfo("极致的数值享受，有问题吗，没有！")
+            .addInfo("是的它支持int并行，10tick工作以及0耗电，我们甚至把能源仓踢了出去！")
             .addPollutionAmount(getPollutionPerSecond(null))
             .beginStructureBlock(3, 4, 3, true)
             .addController("Front bottom")
             .addCasingInfoRange("Heat Proof Machine Casing", 0, 15, false)
             .addOtherStructurePart("Heating Coils (including advanced coils)", "Two middle Layers")
-            .addEnergyHatch("Any bottom layer casing", 3)
             .addMaintenanceHatch("Any bottom layer casing", 3)
             .addMufflerHatch("Top middle", 2)
             .addInputBus("Any bottom layer casing", 3)
