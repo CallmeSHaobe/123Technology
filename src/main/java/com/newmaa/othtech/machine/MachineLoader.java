@@ -10,6 +10,9 @@ import com.newmaa.othtech.machine.hatch.GT_TE_WTFHatch;
 import com.newmaa.othtech.machine.hatch.GT_TE_infWirelessHatch;
 import com.newmaa.othtech.machine.hatch.GT_TE_legendaryWireless;
 
+import tectech.thing.metaTileEntity.hatch.MTEHatchDynamoMulti;
+import tectech.thing.metaTileEntity.hatch.MTEHatchEnergyMulti;
+
 public class MachineLoader {
 
     public static ItemStack MegaIsaForge;
@@ -93,6 +96,10 @@ public class MachineLoader {
 
         WoodFusion = new GT_TE_WoodFusionReactor(IDs + 20, "WoodFusionReactor", "§b§l压缩原木聚变反应堆Mk 0").getStackForm(1);
         OTHItemList.WoodFusion.set(WoodFusion);
+        OTHItemList.GTTEEnergyULV
+            .set(new MTEHatchEnergyMulti(IDs + 21, "HVEnergy", "HV 1073741824A 能源仓", 3, 1073741824).getStackForm(1L));
+        OTHItemList.GTTEDynamoULV
+            .set(new MTEHatchDynamoMulti(IDs + 22, "HVDynamo", "HV 2147483647A 动力仓", 3, 2147483647).getStackForm(1L));
 
     }
 }

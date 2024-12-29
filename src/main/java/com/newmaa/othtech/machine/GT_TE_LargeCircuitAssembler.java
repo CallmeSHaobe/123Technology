@@ -10,6 +10,8 @@ import static tectech.thing.casing.TTCasingsContainer.TimeAccelerationFieldGener
 
 import java.util.List;
 
+import bartworks.common.blocks.BWBlocks;
+import bartworks.common.blocks.BWBlocksGlass;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -63,7 +65,7 @@ public class GT_TE_LargeCircuitAssembler extends OTH_MultiMachineBase<GT_TE_Larg
         super(aName);
     }
 
-    public byte glassTier = 0;
+
 
     protected int casingTier = 0;
     private byte mode = 0;
@@ -74,7 +76,6 @@ public class GT_TE_LargeCircuitAssembler extends OTH_MultiMachineBase<GT_TE_Larg
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
         super.saveNBTData(aNBT);
-        aNBT.setByte("glassTier", glassTier);
         aNBT.setInteger("casingTier", casingTier);
         aNBT.setByte("mode", mode);
     }
@@ -82,7 +83,6 @@ public class GT_TE_LargeCircuitAssembler extends OTH_MultiMachineBase<GT_TE_Larg
     @Override
     public void loadNBTData(final NBTTagCompound aNBT) {
         super.loadNBTData(aNBT);
-        glassTier = aNBT.getByte("glassTier");
         casingTier = aNBT.getInteger("casingTier");
         mode = aNBT.getByte("mode");
     }
@@ -171,9 +171,7 @@ public class GT_TE_LargeCircuitAssembler extends OTH_MultiMachineBase<GT_TE_Larg
     @Override
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
         repairMachine();
-
         return checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet);
-
     }
 
     private int checkEnergyHatchTier() {
@@ -212,8 +210,10 @@ public class GT_TE_LargeCircuitAssembler extends OTH_MultiMachineBase<GT_TE_Larg
     }
 
     public static int getCasingTier(Block block, int meta) {
-        if (block == TimeAccelerationFieldGenerator && meta <= 3) {
+        if (block == Loaders.preciseUnitCasing && meta <= 3) {
             return meta + 1;
+        } else if (block == Loaders.impreciseUnitCasing) {
+            return 0;
         }
         return 0;
     }
@@ -231,16 +231,7 @@ public class GT_TE_LargeCircuitAssembler extends OTH_MultiMachineBase<GT_TE_Larg
         if (STRUCTURE_DEFINITION == null) {
             STRUCTURE_DEFINITION = StructureDefinition.<GT_TE_LargeCircuitAssembler>builder()
                 .addShape(STRUCTURE_PIECE_MAIN, shapeMain)
-                .addElement(
-                    'A',
-                    withChannel(
-                        "glass",
-                        BorosilicateGlass.ofBoroGlass(
-                            (byte) 0,
-                            (byte) 1,
-                            Byte.MAX_VALUE,
-                            (te, t) -> te.glassTier = t,
-                            te -> te.glassTier)))
+                .addElement('A', BorosilicateGlass.ofBoroGlass(6))
                 .addElement('B', ofBlock(sBlockCasings2, 5))
                 .addElement('C', ofBlock(sBlockCasings2, 9))
                 .addElement('D', ofBlock(sBlockCasings3, 11))

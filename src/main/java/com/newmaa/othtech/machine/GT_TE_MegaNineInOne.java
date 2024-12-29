@@ -13,6 +13,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
@@ -287,25 +288,19 @@ public class GT_TE_MegaNineInOne extends OTH_MultiMachineBase<GT_TE_MegaNineInOn
         if (STRUCTURE_DEFINITION == null) {
             STRUCTURE_DEFINITION = StructureDefinition.<GT_TE_MegaNineInOne>builder()
                 .addShape(STRUCTURE_PIECE_MAIN, shapeMain)
-                .addElement('F', ofBlock(ModBlocks.blockCasings3Misc, 2))
+                .addElement('D', ofBlock(ModBlocks.blockCasings3Misc, 2))
                 .addElement(
                     'E',
-                    buildHatchAdder(GT_TE_MegaNineInOne.class).atLeast(Energy.or(ExoticEnergy))
-                        .adder(GT_TE_MegaNineInOne::addToMachineList)
-                        .dot(2)
-                        .casingIndex(getTextureIndex())
-                        .buildAndChain(ModBlocks.blockCasings3Misc, 2))
-                .addElement(
-                    'D',
                     buildHatchAdder(GT_TE_MegaNineInOne.class)
-                        .atLeast(InputBus, OutputBus, InputHatch, OutputHatch, Muffler, Maintenance)
+                        .atLeast(InputBus, OutputBus, InputHatch, OutputHatch, Muffler, Maintenance,Energy.or(ExoticEnergy))
                         .adder(GT_TE_MegaNineInOne::addToMachineList)
                         .dot(1)
                         .casingIndex(getTextureIndex())
                         .buildAndChain(ModBlocks.blockCasings3Misc, 2))
                 .addElement('A', BorosilicateGlass.ofBoroGlass(3))
-                .addElement('G', ofFrame(Materials.HSSS))
+                .addElement('C', ofFrame(Materials.HSSS))
                 .addElement('B', ofBlock(GregTechAPI.sBlockCasings5, 4))
+                .addElement('F', ofBlock(Blocks.beacon, 0))
                 .build();
 
         }
@@ -315,399 +310,447 @@ public class GT_TE_MegaNineInOne extends OTH_MultiMachineBase<GT_TE_MegaNineInOn
     // spotless:off
     //structured by compactFusionReactor
     private final String[][] shapeMain = new String[][]{{
-            "                                                 ",
-            "                      G   G                      ",
-            "                      G   G                      ",
-            "                      G   G                      ",
-            "                      G   G                      ",
-            "                      G   G                      ",
-            "                                                 "
+        "                                                 ",
+        "                      C   C                      ",
+        "                      C   C                      ",
+        "                      C   C                      ",
+        "                      C   C                      ",
+        "                      C   C                      ",
+        "                                                 ",
+        "                                                 "
     },{
-            "                      G   G                      ",
-            "                     GFFFFFG                     ",
-            "                     GFAAAFG                     ",
-            "                     GFAAAFG                     ",
-            "                     GFAAAFG                     ",
-            "                     GFFFFFG                     ",
-            "                      G   G                      "
+        "                      C   C                      ",
+        "                     CDDDDDC                     ",
+        "                     CDEEEDC                     ",
+        "                     CDEEEDC                     ",
+        "                     CDEEEDC                     ",
+        "                     CDDDDDC                     ",
+        "                      C   C                      ",
+        "                                                 "
     },{
-            "                      GGGGG                      ",
-            "                     GFAAAFG                     ",
-            "                    FF     FF                    ",
-            "                    FF     FF                    ",
-            "                    FF     FF                    ",
-            "                     GFAAAFG                     ",
-            "                      GGGGG                      "
+        "                      CCCCC                      ",
+        "                     CDAAADC                     ",
+        "                    DD     DD                    ",
+        "                    DD     DD                    ",
+        "                    DD     DD                    ",
+        "                     CDAAADC                     ",
+        "                      CCCCC                      ",
+        "                                                 "
     },{
-            "                     GFFFFFG                     ",
-            "                    FF     FF                    ",
-            "                 FFFFF     FFFFF                 ",
-            "                 FFFBBBBBBBBBFFF                 ",
-            "                 FFFFF     FFFFF                 ",
-            "                    FF     FF                    ",
-            "                     GFFFFFG                     "
+        "                     CEEEEEC                     ",
+        "                    DD     DD                    ",
+        "                 DDDDD     DDDDD                 ",
+        "                 DDDBBBBBBBBBDDD                 ",
+        "                 DDDDD     DDDDD                 ",
+        "                    DD     DD                    ",
+        "                     CEEEEEC                     ",
+        "                                                 "
     },{
-            "                     GFAAAFG                     ",
-            "                 FFFFF     FFFFF                 ",
-            "               FFFFFBBBBBBBBBFFFFF               ",
-            "               FFBBBBBBBBBBBBBBBFF               ",
-            "               FFFFFBBBBBBBBBFFFFF               ",
-            "                 FFFFF     FFFFF                 ",
-            "                     GFAAAFG                     "
+        "                     CEEEEEC                     ",
+        "                 DDDDD     DDDDD                 ",
+        "               DDDDDBBBBBBBBBDDDDD               ",
+        "               DDBBBBBBBBBBBBBBBDD               ",
+        "               DDDDDBBBBBBBBBDDDDD               ",
+        "                 DDDDD     DDDDD                 ",
+        "                     CEEEEEC                     ",
+        "                                                 "
     },{
-            "                     GFFFFFG                     ",
-            "               FFFFFFF     FFFFFFF               ",
-            "             FFFFBBBFF     FFBBBFFFF             ",
-            "             FFBBBBBBBBBBBBBBBBBBBFF             ",
-            "             FFFFBBBFF     FFBBBFFFF             ",
-            "               FFFFFFF     FFFFFFF               ",
-            "                     GFFFFFG                     "
+        "                     CEEEEEC                     ",
+        "               DDDDDDD     DDDDDDD               ",
+        "             DDDDBBBDD     DDBBBDDDD             ",
+        "             DDBBBBBBBBBBBBBBBBBBBDD             ",
+        "             DDDDBBBDD     DDBBBDDDD             ",
+        "               DDDDDDD     DDDDDDD               ",
+        "                     CEEEEEC                     ",
+        "                                                 "
     },{
-            "                      GGGGG                      ",
-            "             FFFFFFF GFAAAFG FFFFFFF             ",
-            "            FFFBBFFFFF     FFFFFBBFFF            ",
-            "            FBBBBBBBFF     FFBBBBBBBF            ",
-            "            FFFBBFFFFF     FFFFFBBFFF            ",
-            "             FFFFFFF GFAAAFG FFFFFFF             ",
-            "                      GGGGG                      "
+        "                      CCCCC                      ",
+        "             DDDDDDD CDAAADC DDDDDDD             ",
+        "            DDDBBDDDDD     DDDDDBBDDD            ",
+        "            DBBBBBBBDD     DDBBBBBBBD            ",
+        "            DDDBBDDDDD     DDDDDBBDDD            ",
+        "             DDDDDDD CDAAADC DDDDDDD             ",
+        "                      CCCCC                      ",
+        "                                                 "
     },{
-            "                      G   G                      ",
-            "            FFFFF    GFFFFFG    FFFFF            ",
-            "           EFBBFFFFF GFAAAFG FFFFFBBFE           ",
-            "           FBBBBBFFF GFAAAFG FFFBBBBBF           ",
-            "           EFBBFFFFF GFAAAFG FFFFFBBFE           ",
-            "            FFFFF    GFFFFFG    FFFFF            ",
-            "                      G   G                      "
+        "                      C   C                      ",
+        "            DDDDD    CDDDDDC    DDDDD            ",
+        "           EDBBDDDDD CDAAADC DDDDDBBDE           ",
+        "           DBBBBBDDD CDAAADC DDDBBBBBD           ",
+        "           EDBBDDDDD CDAAADC DDDDDBBDE           ",
+        "            DDDDD    CDDDDDC    DDDDD            ",
+        "                      C   C                      ",
+        "                                                 "
     },{
-            "                                                 ",
-            "           FFFF       G   G       FFFF           ",
-            "          FFBFFFF     G   G     FFFFBFF          ",
-            "          FBBBBFF     G   G     FFBBBBF          ",
-            "          FFBFFFF     G   G     FFFFBFF          ",
-            "           FFFF       G   G       FFFF           ",
-            "                                                 "
+        "                                                 ",
+        "           DDDD       C   C       DDDD           ",
+        "          DDBDDDD     C   C     DDDDBDD          ",
+        "          DBBBBDD     C   C     DDBBBBD          ",
+        "          DDBDDDD     C   C     DDDDBDD          ",
+        "           DDDD       C   C       DDDD           ",
+        "                                                 ",
+        "                                                 "
     },{
-            "                                                 ",
-            "          FFF                       FFF          ",
-            "         FFBFFF                   FFFBFF         ",
-            "         FBBBFF                   FFBBBF         ",
-            "         FFBFFF                   FFFBFF         ",
-            "          FFF                       FFF          ",
-            "                                                 "
+        "                                                 ",
+        "          DDD                       DDD          ",
+        "         DDBDDD                   DDDBDD         ",
+        "         DBBBDD                   DDBBBD         ",
+        "         DDBDDD                   DDDBDD         ",
+        "          DDD                       DDD          ",
+        "                                                 ",
+        "                                                 "
     },{
-            "                                                 ",
-            "         FFF                         FFF         ",
-            "        FFBFE                       EFBFF        ",
-            "        FBBBF                       FBBBF        ",
-            "        FFBFE                       EFBFF        ",
-            "         FFF                         FFF         ",
-            "                                                 "
+        "                                                 ",
+        "         DDD                         DDD         ",
+        "        DDBDE                       EDBDD        ",
+        "        DBBBD                       DBBBD        ",
+        "        DDBDE                       EDBDD        ",
+        "         DDD                         DDD         ",
+        "                                                 ",
+        "                                                 "
     },{
-            "                                                 ",
-            "        FFF                           FFF        ",
-            "       EFBFF                         FFBFE       ",
-            "       FBBBF                         FBBBF       ",
-            "       EFBFF                         FFBFE       ",
-            "        FFF                           FFF        ",
-            "                                                 "
+        "                                                 ",
+        "        DDD                           DDD        ",
+        "       EDBDD                         DDBDE       ",
+        "       DBBBD                         DBBBD       ",
+        "       EDBDD                         DDBDE       ",
+        "        DDD                           DDD        ",
+        "                                                 ",
+        "                                                 "
     },{
-            "                                                 ",
-            "       FFF                             FFF       ",
-            "      FFBFE                           EFBFF      ",
-            "      FBBBF                           FBBBF      ",
-            "      FFBFE                           EFBFF      ",
-            "       FFF                             FFF       ",
-            "                                                 "
+        "                                                 ",
+        "       DDD                             DDD       ",
+        "      DDBDE                           EDBDD      ",
+        "      DBBBD                           DBBBD      ",
+        "      DDBDE                           EDBDD      ",
+        "       DDD                             DDD       ",
+        "                                                 ",
+        "                                                 "
     },{
-            "                                                 ",
-            "      FFF                               FFF      ",
-            "     FFBFF                             FFBFF     ",
-            "     FBBBF                             FBBBF     ",
-            "     FFBFF                             FFBFF     ",
-            "      FFF                               FFF      ",
-            "                                                 "
+        "                                                 ",
+        "      DDD                               DDD      ",
+        "     DDBDD                             DDBDD     ",
+        "     DBBBD                             DBBBD     ",
+        "     DDBDD                             DDBDD     ",
+        "      DDD                               DDD      ",
+        "                                                 ",
+        "                                                 "
     },{
-            "                                                 ",
-            "      FFF                               FFF      ",
-            "     FFBFF                             FFBFF     ",
-            "     FBBBF                             FBBBF     ",
-            "     FFBFF                             FFBFF     ",
-            "      FFF                               FFF      ",
-            "                                                 "
+        "                                                 ",
+        "      DDD                               DDD      ",
+        "     DDBDD                             DDBDD     ",
+        "     DBBBD                             DBBBD     ",
+        "     DDBDD                             DDBDD     ",
+        "      DDD                               DDD      ",
+        "                                                 ",
+        "                                                 "
     },{
-            "                                                 ",
-            "     FFF                                 FFF     ",
-            "    FFBFF                               FFBFF    ",
-            "    FBBBF                               FBBBF    ",
-            "    FFBFF                               FFBFF    ",
-            "     FFF                                 FFF     ",
-            "                                                 "
+        "                                                 ",
+        "     DDD                                 DDD     ",
+        "    DDBDD                               DDBDD    ",
+        "    DBBBD                               DBBBD    ",
+        "    DDBDD                               DDBDD    ",
+        "     DDD                                 DDD     ",
+        "                                                 ",
+        "                                                 "
     },{
-            "                                                 ",
-            "     FFF                                 FFF     ",
-            "    FFBFF                               FFBFF    ",
-            "    FBBBF                               FBBBF    ",
-            "    FFBFF                               FFBFF    ",
-            "     FFF                                 FFF     ",
-            "                                                 "
+        "                                                 ",
+        "     DDD                                 DDD     ",
+        "    DDBDD                               DDBDD    ",
+        "    DBBBD                               DBBBD    ",
+        "    DDBDD                               DDBDD    ",
+        "     DDD                                 DDD     ",
+        "                                                 ",
+        "                                                 "
     },{
-            "                                                 ",
-            "    FFF                                   FFF    ",
-            "   FFBFF                                 FFBFF   ",
-            "   FBBBF                                 FBBBF   ",
-            "   FFBFF                                 FFBFF   ",
-            "    FFF                                   FFF    ",
-            "                                                 "
+        "                                                 ",
+        "    DDD                                   DDD    ",
+        "   DDBDD              C   C              DDBDD   ",
+        "   DBBBD            DDCAAACDD            DBBBD   ",
+        "   DDBDD              C   C              DDBDD   ",
+        "    DDD                                   DDD    ",
+        "                                                 ",
+        "                                                 "
     },{
-            "                                                 ",
-            "    FFF                                   FFF    ",
-            "   FFBFF                                 FFBFF   ",
-            "   FBBBF                                 FBBBF   ",
-            "   FFBFF                                 FFBFF   ",
-            "    FFF                                   FFF    ",
-            "                                                 "
+        "                                                 ",
+        "    DDD                                   DDD    ",
+        "   DDBDD            DDCAAACDD            DDBDD   ",
+        "   DBBBD           DBBDBBBDBBD           DBBBD   ",
+        "   DDBDD            DDCAAACDD            DDBDD   ",
+        "    DDD                                   DDD    ",
+        "                                                 ",
+        "                                                 "
     },{
-            "                                                 ",
-            "    FFF                                   FFF    ",
-            "   FFBFF                                 FFBFF   ",
-            "   FBBBF                                 FBBBF   ",
-            "   FFBFF                                 FFBFF   ",
-            "    FFF                                   FFF    ",
-            "                                                 "
+        "                                                 ",
+        "    DDD                                   DDD    ",
+        "   DDBDD           DD C   C DD           DDBDD   ",
+        "   DBBBD          DBBDCAAACDBBD          DBBBD   ",
+        "   DDBDD           DD C   C DD           DDBDD   ",
+        "    DDD                                   DDD    ",
+        "                                                 ",
+        "                                                 "
     },{
-            "                                                 ",
-            "   FFF                                     FFF   ",
-            "  FFBFF                                   FFBFF  ",
-            "  FBBBF                                   FBBBF  ",
-            "  FFBFF                                   FFBFF  ",
-            "   FFF                                     FFF   ",
-            "                                                 "
+        "                                                 ",
+        "   DDD                                     DDD   ",
+        "  DDBDD           DD         DD           DDBDD  ",
+        "  DBBBD          DBBD       DBBD          DBBBD  ",
+        "  DDBDD           DD         DD           DDBDD  ",
+        "   DDD                                     DDD   ",
+        "                                                 ",
+        "                                                 "
     },{
-            "   GGG                                     GGG   ",
-            " GGFFFGG                                 GGFFFGG ",
-            " GFFBFFG                                 GFFBFFG ",
-            " GFBBBFG                                 GFBBBFG ",
-            " GFFBFFG                                 GFFBFFG ",
-            " GGFFFGG                                 GGFFFGG ",
-            "   GGG                                     GGG   "
+        "   CCC                                     CCC   ",
+        " CCDDDCC                                 CCDDDCC ",
+        " CDDBDDC          D           D          CDDBDDC ",
+        " CDBBBDC         DBD         DBD         CDBBBDC ",
+        " CDDBDDC          D           D          CDDBDDC ",
+        " CCDDDCC                                 CCDDDCC ",
+        "   CCC                                     CCC   ",
+        "                                                 "
     },{
-            " GGFFFGG                                 GGFFFGG ",
-            "GFF   FFG                               GFF   FFG",
-            "GF  B  FG                               GF  B  FG",
-            "GF BBB FG                               GF BBB FG",
-            "GF  B  FG                               GF  B  FG",
-            "GFF   FFG                               GFF   FFG",
-            " GGFFFGG                                 GGFFFGG "
+        " CCEEECC                                 CCEEECC ",
+        "CDD   DDC                               CDD   DDC",
+        "CD  B  DC        CCC         CCC        CD  B  DC",
+        "CD BBB DC        CDC         CDC        CD BBB DC",
+        "CD  B  DC        CCC         CCC        CD  B  DC",
+        "CDD   DDC                               CDD   DDC",
+        " CCEEECC                                 CCEEECC ",
+        "                                                 "
     },{
-            "  GFAFG                                   GFAFG  ",
-            " FA   AF                                 FA   AF ",
-            " A  B  A                                 A  B  A ",
-            " A BBB A                                 A BBB A ",
-            " A  B  A                                 A  B  A ",
-            " FA   AF                                 FA   AF ",
-            "  GFAFG                                   GFAFG  "
+        "  CEEEC                                   CEEEC  ",
+        " DA   AD                                 DA   AD ",
+        " E  B  A          A    EEE    A          A  B  E ",
+        " E BBB A         ABA   EEE   ABA         A BBB E ",
+        " E  B  A          A    EEE    A          A  B  E ",
+        " DA   AD                                 DA   AD ",
+        "  CEEEC                                   CEEEC  ",
+        "                                                 "
     },{
-            "  GFAFG                                   GFAFG  ",
-            " FA   AF                                 FA   AF ",
-            " A  B  A                                 A  B  A ",
-            " A BBB A                                 A BBB A ",
-            " A  B  A                                 A  B  A ",
-            " FA   AF                                 FA   AF ",
-            "  GFAFG                                   GFAFG  "
+        "  CEEEC                                   CEEEC  ",
+        " DA   AD                                 DA   AD ",
+        " E  B  A          A    EEE    A          A  B  E ",
+        " E BBB A         ABA   EFE   ABA         A BBB E ",
+        " E  B  A          A    EEE    A          A  B  E ",
+        " DA   AD                                 DA   AD ",
+        "  CEEEC                                   CEEEC  ",
+        "                                                 "
     },{
-            "  GFAFG                                   GFAFG  ",
-            " FA   AF                                 FA   AF ",
-            " A  B  A                                 A  B  A ",
-            " A BBB A                                 A BBB A ",
-            " A  B  A                                 A  B  A ",
-            " FA   AF                                 FA   AF ",
-            "  GFAFG                                   GFAFG  "
+        "  CEEEC                                   CEEEC  ",
+        " DA   AD                                 DA   AD ",
+        " E  B  A          A    EEE    A          A  B  E ",
+        " E BBB A         ABA   EEE   ABA         A BBB E ",
+        " E  B  A          A    EEE    A          A  B  E ",
+        " DA   AD                                 DA   AD ",
+        "  CEEEC                                   CEEEC  ",
+        "                                                 "
     },{
-            " GGFFFGG                                 GGFFFGG ",
-            "GFF   FFG                               GFF   FFG",
-            "GF  B  FG                               GF  B  FG",
-            "GF BBB FG                               GF BBB FG",
-            "GF  B  FG                               GF  B  FG",
-            "GFF   FFG                               GFF   FFG",
-            " GGFFFGG                                 GGFFFGG "
+        " CCEEECC                                 CCEEECC ",
+        "CDD   DDC                               CDD   DDC",
+        "CD  B  DC        CCC         CCC        CD  B  DC",
+        "CD BBB DC        CDC         CDC        CD BBB DC",
+        "CD  B  DC        CCC         CCC        CD  B  DC",
+        "CDD   DDC                               CDD   DDC",
+        " CCEEECC                                 CCEEECC ",
+        "                                                 "
     },{
-            "   GGG                                     GGG   ",
-            " GGFFFGG                                 GGFFFGG ",
-            " GFFBFFG                                 GFFBFFG ",
-            " GFBBBFG                                 GFBBBFG ",
-            " GFFBFFG                                 GFFBFFG ",
-            " GGFFFGG                                 GGFFFGG ",
-            "   GGG                                     GGG   "
+        "   CCC                                     CCC   ",
+        " CCDDDCC                                 CCDDDCC ",
+        " CDDBDDC          D           D          CDDBDDC ",
+        " CDBBBDC         DBD         DBD         CDBBBDC ",
+        " CDDBDDC          D           D          CDDBDDC ",
+        " CCDDDCC                                 CCDDDCC ",
+        "   CCC                                     CCC   ",
+        "                                                 "
     },{
-            "                                                 ",
-            "   FFF                                     FFF   ",
-            "  FFBFF                                   FFBFF  ",
-            "  FBBBF                                   FBBBF  ",
-            "  FFBFF                                   FFBFF  ",
-            "   FFF                                     FFF   ",
-            "                                                 "
+        "                                                 ",
+        "   DDD                                     DDD   ",
+        "  DDBDD           DD         DD           DDBDD  ",
+        "  DBBBD          DBBD       DBBD          DBBBD  ",
+        "  DDBDD           DD         DD           DDBDD  ",
+        "   DDD                                     DDD   ",
+        "                                                 ",
+        "                                                 "
     },{
-            "                                                 ",
-            "    FFF                                   FFF    ",
-            "   FFBFF                                 FFBFF   ",
-            "   FBBBF                                 FBBBF   ",
-            "   FFBFF                                 FFBFF   ",
-            "    FFF                                   FFF    ",
-            "                                                 "
+        "                                                 ",
+        "    DDD                                   DDD    ",
+        "   DDBDD           DD C   C DD           DDBDD   ",
+        "   DBBBD          DBBDCAAACDBBD          DBBBD   ",
+        "   DDBDD           DD C   C DD           DDBDD   ",
+        "    DDD                                   DDD    ",
+        "                                                 ",
+        "                                                 "
     },{
-            "                                                 ",
-            "    FFF                                   FFF    ",
-            "   FFBFF                                 FFBFF   ",
-            "   FBBBF                                 FBBBF   ",
-            "   FFBFF                                 FFBFF   ",
-            "    FFF                                   FFF    ",
-            "                                                 "
+        "                                                 ",
+        "    DDD                                   DDD    ",
+        "   DDBDD            DDCAAACDD            DDBDD   ",
+        "   DBBBD           DBBDBBBDBBD           DBBBD   ",
+        "   DDBDD            DDCAAACDD            DDBDD   ",
+        "    DDD                                   DDD    ",
+        "                                                 ",
+        "                                                 "
     },{
-            "                                                 ",
-            "    FFF                                   FFF    ",
-            "   FFBFF                                 FFBFF   ",
-            "   FBBBF                                 FBBBF   ",
-            "   FFBFF                                 FFBFF   ",
-            "    FFF                                   FFF    ",
-            "                                                 "
+        "                                                 ",
+        "    DDD                                   DDD    ",
+        "   DDBDD              C   C              DDBDD   ",
+        "   DBBBD            DDCAAACDD            DBBBD   ",
+        "   DDBDD              C   C              DDBDD   ",
+        "    DDD                                   DDD    ",
+        "                                                 ",
+        "                                                 "
     },{
-            "                                                 ",
-            "     FFF                                 FFF     ",
-            "    FFBFF                               FFBFF    ",
-            "    FBBBF                               FBBBF    ",
-            "    FFBFF                               FFBFF    ",
-            "     FFF                                 FFF     ",
-            "                                                 "
+        "                                                 ",
+        "     DDD                                 DDD     ",
+        "    DDBDD                               DDBDD    ",
+        "    DBBBD                               DBBBD    ",
+        "    DDBDD                               DDBDD    ",
+        "     DDD                                 DDD     ",
+        "                                                 ",
+        "                                                 "
     },{
-            "                                                 ",
-            "     FFF                                 FFF     ",
-            "    FFBFF                               FFBFF    ",
-            "    FBBBF                               FBBBF    ",
-            "    FFBFF                               FFBFF    ",
-            "     FFF                                 FFF     ",
-            "                                                 "
+        "                                                 ",
+        "     DDD                                 DDD     ",
+        "    DDBDD                               DDBDD    ",
+        "    DBBBD                               DBBBD    ",
+        "    DDBDD                               DDBDD    ",
+        "     DDD                                 DDD     ",
+        "                                                 ",
+        "                                                 "
     },{
-            "                                                 ",
-            "      FFF                               FFF      ",
-            "     FFBFF                             FFBFF     ",
-            "     FBBBF                             FBBBF     ",
-            "     FFBFF                             FFBFF     ",
-            "      FFF                               FFF      ",
-            "                                                 "
+        "                                                 ",
+        "      DDD                               DDD      ",
+        "     DDBDD                             DDBDD     ",
+        "     DBBBD                             DBBBD     ",
+        "     DDBDD                             DDBDD     ",
+        "      DDD                               DDD      ",
+        "                                                 ",
+        "                                                 "
     },{
-            "                                                 ",
-            "      FFF                               FFF      ",
-            "     FFBFF                             FFBFF     ",
-            "     FBBBF                             FBBBF     ",
-            "     FFBFF                             FFBFF     ",
-            "      FFF                               FFF      ",
-            "                                                 "
+        "                                                 ",
+        "      DDD                               DDD      ",
+        "     DDBDD                             DDBDD     ",
+        "     DBBBD                             DBBBD     ",
+        "     DDBDD                             DDBDD     ",
+        "      DDD                               DDD      ",
+        "                                                 ",
+        "                                                 "
     },{
-            "                                                 ",
-            "       FFF                             FFF       ",
-            "      FFBFE                           EFBFF      ",
-            "      FBBBF                           FBBBF      ",
-            "      FFBFE                           EFBFF      ",
-            "       FFF                             FFF       ",
-            "                                                 "
+        "                                                 ",
+        "       DDD                             DDD       ",
+        "      DDBDE                           EDBDD      ",
+        "      DBBBD                           DBBBD      ",
+        "      DDBDE                           EDBDD      ",
+        "       DDD                             DDD       ",
+        "                                                 ",
+        "                                                 "
     },{
-            "                                                 ",
-            "        FFF                           FFF        ",
-            "       EFBFF                         FFBFE       ",
-            "       FBBBF                         FBBBF       ",
-            "       EFBFF                         FFBFE       ",
-            "        FFF                           FFF        ",
-            "                                                 "
+        "                                                 ",
+        "        DDD                           DDD        ",
+        "       EDBDD                         DDBDE       ",
+        "       DBBBD                         DBBBD       ",
+        "       EDBDD                         DDBDE       ",
+        "        DDD                           DDD        ",
+        "                                                 ",
+        "                                                 "
     },{
-            "                                                 ",
-            "         FFF                         FFF         ",
-            "        FFBFE                       EFBFF        ",
-            "        FBBBF                       FBBBF        ",
-            "        FFBFE                       EFBFF        ",
-            "         FFF                         FFF         ",
-            "                                                 "
+        "                                                 ",
+        "         DDD                         DDD         ",
+        "        DDBDE                       EDBDD        ",
+        "        DBBBD                       DBBBD        ",
+        "        DDBDE                       EDBDD        ",
+        "         DDD                         DDD         ",
+        "                                                 ",
+        "                                                 "
     },{
-            "                                                 ",
-            "          FFF                       FFF          ",
-            "         FFBFFF                   FFFBFF         ",
-            "         FBBBFF                   FFBBBF         ",
-            "         FFBFFF                   FFFBFF         ",
-            "          FFF                       FFF          ",
-            "                                                 "
+        "                                                 ",
+        "          DDD                       DDD          ",
+        "         DDBDDD                   DDDBDD         ",
+        "         DBBBDD                   DDBBBD         ",
+        "         DDBDDD                   DDDBDD         ",
+        "          DDD                       DDD          ",
+        "                                                 ",
+        "                                                 "
     },{
-            "                                                 ",
-            "           FFFF       G   G       FFFF           ",
-            "          FFBFFFF     GDDDG     FFFFBFF          ",
-            "          FBBBBFF     GD~DG     FFBBBBF          ",
-            "          FFBFFFF     GDDDG     FFFFBFF          ",
-            "           FFFF       G   G       FFFF           ",
-            "                                                 "
+        "                                                 ",
+        "           DDDD       C   C       DDDD           ",
+        "          DDBDDDD     CEEEC     DDDDBDD          ",
+        "          DBBBBDD     CE~EC     DDBBBBD          ",
+        "          DDBDDDD     CEEEC     DDDDBDD          ",
+        "           DDDD       C   C       DDDD           ",
+        "                                                 ",
+        "                                                 "
     },{
-            "                      G   G                      ",
-            "            FFFFF    GFFFFFG    FFFFF            ",
-            "           EFBBFFFFF GFAAAFG FFFFFBBFE           ",
-            "           FBBBBBFFF GFAAAFG FFFBBBBBF           ",
-            "           EFBBFFFFF GFAAAFG FFFFFBBFE           ",
-            "            FFFFF    GFFFFFG    FFFFF            ",
-            "                      G   G                      "
+        "                      C   C                      ",
+        "            DDDDD    CDDDDDC    DDDDD            ",
+        "           EDBBDDDDD CDAAADC DDDDDBBDE           ",
+        "           DBBBBBDDD CDAAADC DDDBBBBBD           ",
+        "           EDBBDDDDD CDAAADC DDDDDBBDE           ",
+        "            DDDDD    CDDDDDC    DDDDD            ",
+        "                      C   C                      ",
+        "                                                 "
     },{
-            "                      GGGGG                      ",
-            "             FFFFFFF GFAAAFG FFFFFFF             ",
-            "            FFFBBFFFFF     FFFFFBBFFF            ",
-            "            FBBBBBBBFF     FFBBBBBBBF            ",
-            "            FFFBBFFFFF     FFFFFBBFFF            ",
-            "             FFFFFFF GFAAAFG FFFFFFF             ",
-            "                      GGGGG                      "
+        "                      CCCCC                      ",
+        "             DDDDDDD CDAAADC DDDDDDD             ",
+        "            DDDBBDDDDD     DDDDDBBDDD            ",
+        "            DBBBBBBBDD     DDBBBBBBBD            ",
+        "            DDDBBDDDDD     DDDDDBBDDD            ",
+        "             DDDDDDD CDAAADC DDDDDDD             ",
+        "                      CCCCC                      ",
+        "                                                 "
     },{
-            "                     GFFFFFG                     ",
-            "               FFFFFFF     FFFFFFF               ",
-            "             FFFFBBBFF     FFBBBFFFF             ",
-            "             FFBBBBBBBBBBBBBBBBBBBFF             ",
-            "             FFFFBBBFF     FFBBBFFFF             ",
-            "               FFFFFFF     FFFFFFF               ",
-            "                     GFFFFFG                     "
+        "                     CEEEEEC                     ",
+        "               DDDDDDD     DDDDDDD               ",
+        "             DDDDBBBDD     DDBBBDDDD             ",
+        "             DDBBBBBBBBBBBBBBBBBBBDD             ",
+        "             DDDDBBBDD     DDBBBDDDD             ",
+        "               DDDDDDD     DDDDDDD               ",
+        "                     CEEEEEC                     ",
+        "                                                 "
     },{
-            "                     GFAAAFG                     ",
-            "                 FFFFF     FFFFF                 ",
-            "               FFFFFBBBBBBBBBFFFFF               ",
-            "               FFBBBBBBBBBBBBBBBFF               ",
-            "               FFFFFBBBBBBBBBFFFFF               ",
-            "                 FFFFF     FFFFF                 ",
-            "                     GFAAAFG                     "
+        "                     CEEEEEC                     ",
+        "                 DDDDD     DDDDD                 ",
+        "               DDDDDBBBBBBBBBDDDDD               ",
+        "               DDBBBBBBBBBBBBBBBDD               ",
+        "               DDDDDBBBBBBBBBDDDDD               ",
+        "                 DDDDD     DDDDD                 ",
+        "                     CEEEEEC                     ",
+        "                                                 "
     },{
-            "                     GFFFFFG                     ",
-            "                    FF     FF                    ",
-            "                 FFFFF     FFFFF                 ",
-            "                 FFFBBBBBBBBBFFF                 ",
-            "                 FFFFF     FFFFF                 ",
-            "                    FF     FF                    ",
-            "                     GFFFFFG                     "
+        "                     CEEEEEC                     ",
+        "                    DD     DD                    ",
+        "                 DDDDD     DDDDD                 ",
+        "                 DDDBBBBBBBBBDDD                 ",
+        "                 DDDDD     DDDDD                 ",
+        "                    DD     DD                    ",
+        "                     CEEEEEC                     ",
+        "                                                 "
     },{
-            "                      GGGGG                      ",
-            "                     GFAAAFG                     ",
-            "                    FF     FF                    ",
-            "                    FF     FF                    ",
-            "                    FF     FF                    ",
-            "                     GFAAAFG                     ",
-            "                      GGGGG                      "
+        "                      CCCCC                      ",
+        "                     CDAAADC                     ",
+        "                    DD     DD                    ",
+        "                    DD     DD                    ",
+        "                    DD     DD                    ",
+        "                     CDAAADC                     ",
+        "                      CCCCC                      ",
+        "                                                 "
     },{
-            "                      G   G                      ",
-            "                     GFFFFFG                     ",
-            "                     GFAAAFG                     ",
-            "                     GFAAAFG                     ",
-            "                     GFAAAFG                     ",
-            "                     GFFFFFG                     ",
-            "                      G   G                      "
+        "                      C   C                      ",
+        "                     CDDDDDC                     ",
+        "                     CDEEEDC                     ",
+        "                     CDEEEDC                     ",
+        "                     CDEEEDC                     ",
+        "                     CDDDDDC                     ",
+        "                      C   C                      ",
+        "                                                 "
     },{
-            "                                                 ",
-            "                      G   G                      ",
-            "                      G   G                      ",
-            "                      G   G                      ",
-            "                      G   G                      ",
-            "                      G   G                      ",
-            "                                                 "
-    }
-    };
+        "                                                 ",
+        "                      C   C                      ",
+        "                      C   C                      ",
+        "                      C   C                      ",
+        "                      C   C                      ",
+        "                      C   C                      ",
+        "                                                 ",
+        "                                                 "
+    }};
     @Override
     public boolean addToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
         return super.addToMachineList(aTileEntity, aBaseCasingIndex)

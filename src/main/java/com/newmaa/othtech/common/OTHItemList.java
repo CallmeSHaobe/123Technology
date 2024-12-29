@@ -28,6 +28,8 @@ public enum OTHItemList {
     Chem,
     MegaEEC,
     WoodFusion,
+    GTTEDynamoULV,
+    GTTEEnergyULV,
 
     legendary_WirelessHatch,
 

@@ -12,7 +12,6 @@ import java.util.Arrays;
 import java.util.Locale;
 import java.util.function.Consumer;
 
-import ic2.core.IC2;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -45,6 +44,7 @@ import forestry.core.genetics.alleles.EnumAllele;
 import gregtech.api.GregTechAPI;
 import gregtech.api.util.GTLanguageManager;
 import gregtech.api.util.GTModHandler;
+import ic2.core.IC2;
 
 @NotNull
 class OTHBeeDefinitionReference {
@@ -157,20 +157,20 @@ public enum OTHBeeDefinition implements IBeeDefinition {
         }),
     ENQING(OTHBranchDefinition.OTHBYDS, "Enqing", true, new Color(0xFFFF0000, true), new Color(0xECFFCD07, true),
         beeSpecies -> {
-        beeSpecies.addProduct(new ItemStack(Items.bread, 1), 1F);
+            beeSpecies.addProduct(new ItemStack(Items.bread, 1), 1F);
             beeSpecies.addSpecialty(new ItemStack(ItemLoader.itemEnqing, 1), 0.1F);
             beeSpecies.addSpecialty(GTModHandler.getModItem(IC2.MODID, "blockNuke", 1, 0), 0.001F);
             beeSpecies.setHumidity(DAMP);
             beeSpecies.setTemperature(EnumTemperature.NORMAL);
         }, template -> {
-        AlleleHelper.instance.set(template, FLOWERING, EnumAllele.Flowering.MAXIMUM);
-        AlleleHelper.instance.set(template, HUMIDITY_TOLERANCE, EnumAllele.Tolerance.NONE);
-        AlleleHelper.instance.set(template, EFFECT, AlleleEffect.effectRadioactive);
-        AlleleHelper.instance.set(template, FLOWER_PROVIDER, EnumAllele.Flowers.NETHER);
-    }, dis -> {
-        IBeeMutationCustom tMutation = dis.registerMutation(JIUCAI.getSpecies(), WEIWEI.getSpecies(), 1);
-        tMutation.requireResource(GregTechAPI.sBlockMachines, 23520 + 17); // Enqing Factory
-    }),
+            AlleleHelper.instance.set(template, FLOWERING, EnumAllele.Flowering.MAXIMUM);
+            AlleleHelper.instance.set(template, HUMIDITY_TOLERANCE, EnumAllele.Tolerance.NONE);
+            AlleleHelper.instance.set(template, EFFECT, AlleleEffect.effectRadioactive);
+            AlleleHelper.instance.set(template, FLOWER_PROVIDER, EnumAllele.Flowers.NETHER);
+        }, dis -> {
+            IBeeMutationCustom tMutation = dis.registerMutation(JIUCAI.getSpecies(), WEIWEI.getSpecies(), 1);
+            tMutation.requireResource(GregTechAPI.sBlockMachines, 23520 + 17); // Enqing Factory
+        }),
     SHENGXI(OTHBranchDefinition.OTHBYDS, "shengxi", true, new Color(0xFFEE14BB, true), new Color(0xFF7C18D2, true),
         beeSpecies -> {
             beeSpecies.addSpecialty(GTModHandler.getModItem(Forestry.ID, "royalJelly", 1, 0), 1F);
