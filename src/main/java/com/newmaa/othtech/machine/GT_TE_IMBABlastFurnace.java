@@ -95,7 +95,6 @@ public class GT_TE_IMBABlastFurnace extends MTEElectricBlastFurnace {
     @Override
     protected ProcessingLogic createProcessingLogic() {
         return new ProcessingLogic() {
-
             @Nonnull
             @Override
             protected ParallelHelper createParallelHelper(@Nonnull GTRecipe recipe) {
@@ -111,6 +110,12 @@ public class GT_TE_IMBABlastFurnace extends MTEElectricBlastFurnace {
                     .enableBatchMode(batchSize)
                     .setConsumption(true)
                     .setOutputCalculation(true);
+            }
+
+            @Override
+            protected double calculateDuration(@Nonnull GTRecipe recipe, @Nonnull ParallelHelper helper,
+                                               @Nonnull OverclockCalculator calculator) {
+                return 10;
             }
         };
     }
