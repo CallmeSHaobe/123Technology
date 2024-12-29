@@ -64,9 +64,9 @@ public class GT_TE_IMBABlastFurnace extends MTEElectricBlastFurnace {
             'C', // 加热线圈
             ofCoil(MTEElectricBlastFurnace::setCoilLevel, MTEElectricBlastFurnace::getCoilLevel))
         .addElement(
-            'b', // 输入舱口、输出舱口、能量舱口
+            'b', // 输入舱口、输出舱口
             buildHatchAdder(MTEElectricBlastFurnace.class)
-                .atLeast(InputHatch, OutputHatch, InputBus, OutputBus, Maintenance, Energy)
+                .atLeast(InputHatch, OutputHatch, InputBus, OutputBus, Maintenance)
                 .casingIndex(CASING_INDEX)
                 .dot(1)
                 .buildAndChain(GregTechAPI.sBlockCasings1, CASING_INDEX))
@@ -131,7 +131,8 @@ public class GT_TE_IMBABlastFurnace extends MTEElectricBlastFurnace {
         if (!checkPiece(STRUCTURE_PIECE_MAIN, 1, 3, 0)) return false;
         if (getCoilLevel() == HeatingCoilLevel.None) return false;
         if (mMaintenanceHatches.size() != 1) return false;
-        this.mHeatingCapacity = Integer.MAX_VALUE;
+        this.mHeatingCapacity = 20001;
+
         return true;
     }
 
