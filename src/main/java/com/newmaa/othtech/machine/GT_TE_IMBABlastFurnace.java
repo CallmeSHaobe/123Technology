@@ -9,8 +9,6 @@ import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.logic.ProcessingLogic;
-import gregtech.api.recipe.check.CheckRecipeResult;
-import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.*;
 import gregtech.common.tileentities.machines.multi.MTEElectricBlastFurnace;
@@ -133,8 +131,7 @@ public class GT_TE_IMBABlastFurnace extends MTEElectricBlastFurnace {
         if (!checkPiece(STRUCTURE_PIECE_MAIN, 1, 3, 0)) return false;
         if (getCoilLevel() == HeatingCoilLevel.None) return false;
         if (mMaintenanceHatches.size() != 1) return false;
-        int voltageTier = GTUtility.getTier(getMaxInputVoltage());
-        this.mHeatingCapacity = (int) getCoilLevel().getHeat() + 100 * (voltageTier - 2);
+        this.mHeatingCapacity = Integer.MAX_VALUE;
         return true;
     }
 
@@ -209,5 +206,9 @@ public class GT_TE_IMBABlastFurnace extends MTEElectricBlastFurnace {
             .addStructureInfo("Pollution gas output amount scales with Muffler Hatch tier")
             .toolTipFinisher();
         return tt;
+    }
+
+    public int getmHeatingCapacity() {
+        return mHeatingCapacity;
     }
 }
