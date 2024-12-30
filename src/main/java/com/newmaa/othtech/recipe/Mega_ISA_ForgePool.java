@@ -342,5 +342,15 @@ public class Mega_ISA_ForgePool implements IRecipePool {
             .eut(TierEU.RECIPE_UXV)
             .duration(114 * 20)
             .addTo(ISA);
+        //IMBABlastFurnace
+        RecipeBuilder.builder()
+            .itemOutputs(setStackSize(GTModHandler.getModItem("gregtech","gt.blockmachines",1,23543),1))
+            .fluidInputs(FluidRegistry.getFluidStack("molten.solderingalloy", Integer.MAX_VALUE))
+            .itemInputs(
+                setStackSize(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 12730), Integer.MAX_VALUE))
+            .noOptimize()
+            .eut(TierEU.RECIPE_UXV)
+            .duration(114 * 20)
+            .addTo(ISA);
     }
 }

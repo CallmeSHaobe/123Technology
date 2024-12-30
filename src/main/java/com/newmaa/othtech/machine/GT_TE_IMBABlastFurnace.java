@@ -35,10 +35,10 @@ public class GT_TE_IMBABlastFurnace extends MTEElectricBlastFurnace {
             STRUCTURE_PIECE_MAIN,
             transpose(
                 new String[][]{
-                    {"ttt", "tmt", "ttt"},
-                    {"CCC", "C-C", "CCC"},
-                    {"CCC", "C-C", "CCC"},
-                    {"b~b", "bbb", "bbb"}
+                    {"ttttt","ttttt","ttmtt","ttttt","ttttt"},
+                    {"CCCCC","C---C","C---C","C---C","CCCCC"},
+                    {"CCCCC","C---C","C---C","C---C","CCCCC"},
+                    {"bb~bb","bbbbb","bbbbb","bbbbb","bbbbb"}
                 }))
         .addElement(
             't',
@@ -128,7 +128,7 @@ public class GT_TE_IMBABlastFurnace extends MTEElectricBlastFurnace {
         this.mHeatingCapacity = 0;
         setCoilLevel(HeatingCoilLevel.None);
         mPollutionOutputHatches.clear();
-        if (!checkPiece(STRUCTURE_PIECE_MAIN, 1, 3, 0)) return false;
+        if (!checkPiece(STRUCTURE_PIECE_MAIN, 2, 3, 0)) return false;
         if (getCoilLevel() == HeatingCoilLevel.None) return false;
         if (mMaintenanceHatches.size() != 1) return false;
         this.mHeatingCapacity = 20001;
@@ -138,13 +138,13 @@ public class GT_TE_IMBABlastFurnace extends MTEElectricBlastFurnace {
 
     @Override
     public void construct(ItemStack stackSize, boolean hintsOnly) {
-        buildPiece(STRUCTURE_PIECE_MAIN, stackSize, hintsOnly, 1, 3, 0);
+        buildPiece(STRUCTURE_PIECE_MAIN, stackSize, hintsOnly, 2, 3, 0);
     }
 
     @Override
     public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
         if (mMachine) return -1;
-        return survivialBuildPiece(STRUCTURE_PIECE_MAIN, stackSize, 1, 3, 0, elementBudget, env, false, true);
+        return survivialBuildPiece(STRUCTURE_PIECE_MAIN, stackSize, 2, 3, 0, elementBudget, env, false, true);
     }
 
     public int getPollutionOutputHatchCount() {
@@ -186,11 +186,17 @@ public class GT_TE_IMBABlastFurnace extends MTEElectricBlastFurnace {
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
         MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-        tt.addMachineType("超级无敌数值高炉")
-            .addInfo("我们拥有int级别的热量，所以说我们可以轻松融化任何物质，即使你使用的是白铜线圈！")
-            .addInfo("你问我为什么要写这个东西？")
-            .addInfo("极致的数值享受，有问题吗，没有！")
-            .addInfo("是的它支持int并行，10tick工作以及0耗电，我们甚至把能源仓踢了出去！")
+        tt.addMachineType("§l超级无敌数值高炉")
+            .addInfo("§6§l不耗电！")
+            .addInfo("§6§lint并行！")
+            .addInfo("§6§l任何工作都可以10tick完成！")
+            .addInfo("§6§l内置一颗中子星！炉温无上限！")
+            .addInfo("§1§o来自EOHBUF作者的眷顾")
+            .addInfo("§6“传说中，神明在喝醉后设计了一台机器，醒来后却忘了删掉它。于是，它降临到了凡人世界。”")
+            .addInfo("§4§l性能？直接拉满！成本？低到怀疑人生！")
+            .addInfo("§c甚至你会怀疑，‘我靠，这东西真的允许造出来吗？’")
+            .addInfo("§9只要有它，资源匮乏、效率低下、能量不足统统不存在。它不仅能让你在服务器里翻天覆地，§m还能让你在群聊里发出嘲讽的哈哈哈哈！！")
+            .addInfo("§6它不是工具，它是玩家的梦想，是DEV的噩梦！")
             .addPollutionAmount(getPollutionPerSecond(null))
             .beginStructureBlock(3, 4, 3, true)
             .addController("Front bottom")
