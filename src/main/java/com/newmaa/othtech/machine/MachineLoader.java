@@ -35,6 +35,7 @@ public class MachineLoader {
     public static ItemStack LCA;
     public static ItemStack coccoven;
     public static ItemStack WoodFusion;
+    public static ItemStack IMBAIMBAblastfurnace;
 
     public static void loadMachines() {
         final int IDs = 23520;
@@ -100,6 +101,9 @@ public class MachineLoader {
             .set(new MTEHatchEnergyMulti(IDs + 21, "HVEnergy", "HV 1073741824A 能源仓", 3, 1073741824).getStackForm(1L));
         OTHItemList.GTTEDynamoULV
             .set(new MTEHatchDynamoMulti(IDs + 22, "HVDynamo", "HV 2147483647A 动力仓", 3, 2147483647).getStackForm(1L));
+
+        IMBAIMBAblastfurnace = new GT_TE_IMBABlastFurnace(IDs + 23,"IMBABlastFurnace").getStackForm(1);
+        OTHItemList.ImbaBlastFurnace.set(IMBAIMBAblastfurnace);
 
     }
 }

@@ -30,6 +30,7 @@ public enum OTHItemList {
     WoodFusion,
     GTTEDynamoULV,
     GTTEEnergyULV,
+    ImbaBlastFurnace,
 
     legendary_WirelessHatch,
 
