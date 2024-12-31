@@ -102,7 +102,7 @@ public class MachineLoader {
         OTHItemList.GTTEDynamoULV
             .set(new MTEHatchDynamoMulti(IDs + 22, "HVDynamo", "HV 2147483647A 动力仓", 3, 2147483647).getStackForm(1L));
 
-        IMBAIMBAblastfurnace = new GT_TE_IMBABlastFurnace(IDs + 23,"IMBABlastFurnace").getStackForm(1);
+        IMBAIMBAblastfurnace = new GT_TE_IMBABlastFurnace(IDs + 23, "IMBABlastFurnace").getStackForm(1);
         OTHItemList.ImbaBlastFurnace.set(IMBAIMBAblastfurnace);
 
     }

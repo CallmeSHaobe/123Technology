@@ -210,7 +210,9 @@ public class GT_TE_IMBABlastFurnace extends MTEElectricBlastFurnace {
             .addOutputHatch("Fluid outputs, Any bottom layer casing")
             .addOutputHatch("Pollution gases (CO2/CO/SO2), Any top layer casing", 1)
             .addStructureInfo("Pollution gas output amount scales with Muffler Hatch tier")
-            .toolTipFinisher();
+            .addInfo("§7§lAuthor:§4§l§m勃艮第大公,疯狂的富婆§4§l---§c§lSafariXiu☆")
+            .toolTipFinisher("§4§l123Technology");
+
         return tt;
     }
 
