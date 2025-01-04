@@ -9,11 +9,11 @@ import com.newmaa.othtech.common.item.ItemLoader;
 
 import cpw.mods.fml.common.registry.EntityRegistry;
 
-public class mobDogYellow extends EntityWolf {
+public class entityDogYellow extends EntityWolf {
 
-    public mobDogYellow(World worldIn) {
+    public entityDogYellow(World worldIn) {
         super(worldIn);
-        EntityRegistry.addSpawn(mobDogYellow.class, 6, 1, 5, EnumCreatureType.creature, BiomeGenBase.savanna);
+        EntityRegistry.addSpawn(entityDogYellow.class, 6, 1, 5, EnumCreatureType.creature, BiomeGenBase.savanna);
     }
 
     @Override

@@ -458,5 +458,6 @@ public class Main implements IRecipePool {
             OTHItemList.WoodFusion.get(1),
             new Object[] { "AAA", "ABA", "AAA", 'A', new ItemStack(Blocks.log, 1, 0), 'B',
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 2) });
+
     }
 }

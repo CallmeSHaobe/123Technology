@@ -2,7 +2,11 @@ package com.newmaa.othtech.recipe;
 
 import static com.newmaa.othtech.Utils.Utils.setStackSize;
 
+import com.newmaa.othtech.common.item.ItemLoader;
+import gregtech.GTMod;
+import li.cil.oc.OpenComputers;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -347,10 +351,42 @@ public class Mega_ISA_ForgePool implements IRecipePool {
             .itemOutputs(setStackSize(GTModHandler.getModItem("gregtech","gt.blockmachines",1,23543),1))
             .fluidInputs(FluidRegistry.getFluidStack("molten.solderingalloy", Integer.MAX_VALUE))
             .itemInputs(
-                setStackSize(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 12730), Integer.MAX_VALUE))
+                setStackSize(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 12730), Integer.MAX_VALUE),
+                setStackSize(GTModHandler.getModItem("dreamcraft", "item.StargateShieldingFoil", 1), 114514),
+                setStackSize(GTModHandler.getModItem("dreamcraft", "item.StargateFramePart", 1), 114514),
+                setStackSize(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 15411), 123123123),
+                setStackSize(new ItemStack(ItemLoader.itemLeekBox, 1), Integer.MAX_VALUE),
+                setStackSize(new ItemStack(ItemLoader.itemZhangww, 1), Integer.MAX_VALUE),
+                setStackSize(new ItemStack(ItemLoader.itemNukeThrowable, 1), Integer.MAX_VALUE),
+                setStackSize(new ItemStack(ItemLoader.itemEnqing, 1), Integer.MAX_VALUE))
             .noOptimize()
             .eut(TierEU.RECIPE_UXV)
             .duration(114 * 20)
+            .addTo(ISA);
+        //GTX690
+        RecipeBuilder.builder()
+            .itemOutputs(new ItemStack(ItemLoader.itemNukeThrowable, 1, 0))
+            .itemInputs(
+                GTModHandler.getModItem(OpenComputers.ID(), "item", 1, 33),
+                GTModHandler.getModItem(OpenComputers.ID(), "item", 1, 90),
+                setStackSize(GTModHandler.getModItem(OpenComputers.ID(), "item", 1, 103), 3072),
+                setStackSize(GTModHandler.getModItem(OpenComputers.ID(), "item", 1, 39), 4096),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 15300),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.wireFine, Materials.AnnealedCopper, 1), 16384),
+                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32178), 2048),
+                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32179), 2048),
+                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32180), 2048),
+                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32181), 2048),
+                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32184), 2048),
+                setStackSize(GTModHandler.getModItem("IC2", "reactorVentDiamond", 1), 48),
+                GTOreDictUnificator.get(OrePrefixes.pipeTiny, Materials.Copper, 16)
+            )
+            .fluidInputs(
+                FluidRegistry.getFluidStack("molten.solderingalloy", 4096),
+                FluidRegistry.getFluidStack("supercoolant", 500)
+            )
+            .duration(3600 * 20)
+            .eut(220)
             .addTo(ISA);
     }
 }

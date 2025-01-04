@@ -36,6 +36,7 @@ public class ItemLoader {
     public static Item energyHatchSpacetime = new energyHatchSpacetime();
     public static Item itemEnqing = new itemEnqing();
     public static Item itemSunLighter = new itemSunLighter();
+    public static Item itemNukeThrowable = new itemNukeThrowable();
 
     public ItemLoader(FMLPreInitializationEvent event) {
         IRegistry(LookNEIdust, "LookNEIdust");
@@ -67,6 +68,7 @@ public class ItemLoader {
         IRegistry(itemEnqing, "itemEnqing");
         IRegistry(itemSunLighter, "itemSunLighter");
         IRegistry(itemLeekBox, "itemLeekBox");
+        IRegistry(itemNukeThrowable, "itemNukeThrowable");
     }
 
     private static void IRegistry(Item item, String name) {
