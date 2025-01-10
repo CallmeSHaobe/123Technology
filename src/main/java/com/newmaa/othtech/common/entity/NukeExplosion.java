@@ -1,8 +1,12 @@
 package com.newmaa.othtech.common.entity;
 
-import gregtech.api.objects.XSTR;
-import gtPlusPlus.core.entity.EntityPrimedMiningExplosive;
-import gtPlusPlus.core.util.math.MathUtils;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentProtection;
@@ -18,7 +22,9 @@ import net.minecraft.world.ChunkPosition;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
-import java.util.*;
+import gregtech.api.objects.XSTR;
+import gtPlusPlus.core.entity.EntityPrimedMiningExplosive;
+import gtPlusPlus.core.util.math.MathUtils;
 
 public class NukeExplosion extends Explosion {
 
@@ -29,7 +35,7 @@ public class NukeExplosion extends Explosion {
     private final Map<EntityPlayer, Vec3> field_77288_k = new HashMap<>();
 
     public NukeExplosion(final World worldObj, final Entity entityObj, final double x, final double y, final double z,
-                         final float size) {
+        final float size) {
         super(worldObj, entityObj, x, y, z, size);
         this.worldObj = worldObj;
         this.exploder = entityObj;

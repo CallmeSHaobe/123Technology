@@ -5,7 +5,6 @@ import net.minecraft.entity.Entity;
 import com.newmaa.othtech.OTHTechnology;
 
 import cpw.mods.fml.common.registry.EntityRegistry;
-import net.minecraft.world.biome.BiomeGenBase;
 
 public class entityLoader {
 

@@ -2,17 +2,14 @@ package com.newmaa.othtech.recipe;
 
 import static com.newmaa.othtech.Utils.Utils.setStackSize;
 
-import com.newmaa.othtech.common.item.ItemLoader;
-import gregtech.GTMod;
-import li.cil.oc.OpenComputers;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 import com.newmaa.othtech.Utils.RecipeBuilder;
+import com.newmaa.othtech.common.item.ItemLoader;
 import com.newmaa.othtech.common.materials.liquids;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 
@@ -25,6 +22,7 @@ import gregtech.api.recipe.RecipeMap;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTUtility;
+import li.cil.oc.OpenComputers;
 
 public class Mega_ISA_ForgePool implements IRecipePool {
 
@@ -346,9 +344,9 @@ public class Mega_ISA_ForgePool implements IRecipePool {
             .eut(TierEU.RECIPE_UXV)
             .duration(114 * 20)
             .addTo(ISA);
-        //IMBABlastFurnace
+        // IMBABlastFurnace
         RecipeBuilder.builder()
-            .itemOutputs(setStackSize(GTModHandler.getModItem("gregtech","gt.blockmachines",1,23543),1))
+            .itemOutputs(setStackSize(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 23543), 1))
             .fluidInputs(FluidRegistry.getFluidStack("molten.solderingalloy", Integer.MAX_VALUE))
             .itemInputs(
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 12730), Integer.MAX_VALUE),
@@ -363,7 +361,7 @@ public class Mega_ISA_ForgePool implements IRecipePool {
             .eut(TierEU.RECIPE_UXV)
             .duration(114 * 20)
             .addTo(ISA);
-        //GTX690
+        // GTX690
         RecipeBuilder.builder()
             .itemOutputs(new ItemStack(ItemLoader.itemNukeThrowable, 1, 0))
             .itemInputs(
@@ -379,12 +377,10 @@ public class Mega_ISA_ForgePool implements IRecipePool {
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32181), 2048),
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32184), 2048),
                 setStackSize(GTModHandler.getModItem("IC2", "reactorVentDiamond", 1), 48),
-                GTOreDictUnificator.get(OrePrefixes.pipeTiny, Materials.Copper, 16)
-            )
+                GTOreDictUnificator.get(OrePrefixes.pipeTiny, Materials.Copper, 16))
             .fluidInputs(
                 FluidRegistry.getFluidStack("molten.solderingalloy", 4096),
-                FluidRegistry.getFluidStack("supercoolant", 500)
-            )
+                FluidRegistry.getFluidStack("supercoolant", 500))
             .duration(3600 * 20)
             .eut(220)
             .addTo(ISA);

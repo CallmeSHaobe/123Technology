@@ -9,7 +9,7 @@ public class ExplosionHandlerNuke {
      * Creates an explosion. Args: entity, x, y, z, strength
      */
     public NukeExplosion createExplosion(final World world, final Entity entityObj, final double x, final double y,
-                                           final double z, final float size, final boolean makesFlames, final boolean makesSmoke) {
+        final double z, final float size, final boolean makesFlames, final boolean makesSmoke) {
         return this.newExplosion(world, entityObj, x, y, z, size, makesFlames, makesSmoke);
     }
 

@@ -1,8 +1,20 @@
 package com.newmaa.othtech.machine;
 
+import static com.gtnewhorizon.structurelib.structure.StructureUtility.transpose;
+import static gregtech.api.enums.HatchElement.*;
+import static gregtech.api.enums.Textures.BlockIcons.*;
+import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
+import static gregtech.api.util.GTStructureUtility.ofCoil;
+
+import javax.annotation.Nonnull;
+
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.util.ForgeDirection;
+
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
+
 import gregtech.api.GregTechAPI;
 import gregtech.api.enums.HeatingCoilLevel;
 import gregtech.api.interfaces.ITexture;
@@ -10,18 +22,11 @@ import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.logic.ProcessingLogic;
 import gregtech.api.render.TextureFactory;
-import gregtech.api.util.*;
+import gregtech.api.util.GTRecipe;
+import gregtech.api.util.MultiblockTooltipBuilder;
+import gregtech.api.util.OverclockCalculator;
+import gregtech.api.util.ParallelHelper;
 import gregtech.common.tileentities.machines.multi.MTEElectricBlastFurnace;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.util.ForgeDirection;
-
-import javax.annotation.Nonnull;
-
-import static com.gtnewhorizon.structurelib.structure.StructureUtility.transpose;
-import static gregtech.api.enums.HatchElement.*;
-import static gregtech.api.enums.Textures.BlockIcons.*;
-import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
-import static gregtech.api.util.GTStructureUtility.ofCoil;
 
 public class GT_TE_IMBABlastFurnace extends MTEElectricBlastFurnace {
 
@@ -34,26 +39,22 @@ public class GT_TE_IMBABlastFurnace extends MTEElectricBlastFurnace {
         .addShape(
             STRUCTURE_PIECE_MAIN,
             transpose(
-                new String[][]{
-                    {"ttttt","ttttt","ttmtt","ttttt","ttttt"},
-                    {"CCCCC","C---C","C---C","C---C","CCCCC"},
-                    {"CCCCC","C---C","C---C","C---C","CCCCC"},
-                    {"bb~bb","bbbbb","bbbbb","bbbbb","bbbbb"}
-                }))
+                new String[][] { { "ttttt", "ttttt", "ttmtt", "ttttt", "ttttt" },
+                    { "CCCCC", "C---C", "C---C", "C---C", "CCCCC" }, { "CCCCC", "C---C", "C---C", "C---C", "CCCCC" },
+                    { "bb~bb", "bbbbb", "bbbbb", "bbbbb", "bbbbb" } }))
         .addElement(
             't',
             buildHatchAdder(MTEElectricBlastFurnace.class)
-                .atLeast(
-                    OutputHatch.withAdder((instance, hatchTileEntity, textureIndex) -> {
-                        if (instance instanceof GT_TE_IMBABlastFurnace) {
-                            GT_TE_IMBABlastFurnace blastFurnace = (GT_TE_IMBABlastFurnace) instance;
-                            int hatchCount = blastFurnace.getPollutionOutputHatchCount();
-                            if (hatchCount > 0 && hatchTileEntity != null) {
-                                return true;
-                            }
+                .atLeast(OutputHatch.withAdder((instance, hatchTileEntity, textureIndex) -> {
+                    if (instance instanceof GT_TE_IMBABlastFurnace) {
+                        GT_TE_IMBABlastFurnace blastFurnace = (GT_TE_IMBABlastFurnace) instance;
+                        int hatchCount = blastFurnace.getPollutionOutputHatchCount();
+                        if (hatchCount > 0 && hatchTileEntity != null) {
+                            return true;
                         }
-                        return false;
-                    }))
+                    }
+                    return false;
+                }))
                 .casingIndex(CASING_INDEX)
                 .dot(1)
                 .buildAndChain(GregTechAPI.sBlockCasings1, CASING_INDEX))
@@ -93,11 +94,11 @@ public class GT_TE_IMBABlastFurnace extends MTEElectricBlastFurnace {
     @Override
     protected ProcessingLogic createProcessingLogic() {
         return new ProcessingLogic() {
+
             @Nonnull
             @Override
             protected ParallelHelper createParallelHelper(@Nonnull GTRecipe recipe) {
-                return new ParallelHelper()
-                    .setRecipe(recipe)
+                return new ParallelHelper().setRecipe(recipe)
                     .setItemInputs(inputItems)
                     .setFluidInputs(inputFluids)
                     .setAvailableEUt(Integer.MAX_VALUE)
@@ -112,7 +113,7 @@ public class GT_TE_IMBABlastFurnace extends MTEElectricBlastFurnace {
 
             @Override
             protected double calculateDuration(@Nonnull GTRecipe recipe, @Nonnull ParallelHelper helper,
-                                               @Nonnull OverclockCalculator calculator) {
+                @Nonnull OverclockCalculator calculator) {
                 return 10;
             }
         };
@@ -153,32 +154,26 @@ public class GT_TE_IMBABlastFurnace extends MTEElectricBlastFurnace {
 
     @Override
     public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection aFacing,
-                                 int colorIndex, boolean aActive, boolean redstoneLevel) {
+        int colorIndex, boolean aActive, boolean redstoneLevel) {
         if (side == aFacing) {
-            if (aActive) return new ITexture[] {
-                casingTexturePages[0][CASING_INDEX],
-                TextureFactory.builder()
-                    .addIcon(OVERLAY_FRONT_ELECTRIC_BLAST_FURNACE_ACTIVE)
-                    .extFacing()
-                    .build(),
+            if (aActive) return new ITexture[] { casingTexturePages[0][CASING_INDEX], TextureFactory.builder()
+                .addIcon(OVERLAY_FRONT_ELECTRIC_BLAST_FURNACE_ACTIVE)
+                .extFacing()
+                .build(),
                 TextureFactory.builder()
                     .addIcon(OVERLAY_FRONT_ELECTRIC_BLAST_FURNACE_ACTIVE_GLOW)
                     .extFacing()
                     .glow()
-                    .build()
-            };
-            return new ITexture[] {
-                casingTexturePages[0][CASING_INDEX],
-                TextureFactory.builder()
-                    .addIcon(OVERLAY_FRONT_ELECTRIC_BLAST_FURNACE)
-                    .extFacing()
-                    .build(),
+                    .build() };
+            return new ITexture[] { casingTexturePages[0][CASING_INDEX], TextureFactory.builder()
+                .addIcon(OVERLAY_FRONT_ELECTRIC_BLAST_FURNACE)
+                .extFacing()
+                .build(),
                 TextureFactory.builder()
                     .addIcon(OVERLAY_FRONT_ELECTRIC_BLAST_FURNACE_GLOW)
                     .extFacing()
                     .glow()
-                    .build()
-            };
+                    .build() };
         }
         return new ITexture[] { casingTexturePages[0][CASING_INDEX] };
     }
