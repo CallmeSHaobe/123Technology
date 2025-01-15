@@ -1,0 +1,20 @@
+{
+  "record.PRK_A": {
+    "category": "record",
+    "sounds": [
+      {
+        "name": "record.PRK_A",
+        "stream": "true"
+      }
+    ]
+  },
+  "record.PRK_B": {
+    "category": "record",
+    "sounds": [
+      {
+        "name": "record.PRK_B",
+        "stream": "true"
+      }
+    ]
+  }
+}

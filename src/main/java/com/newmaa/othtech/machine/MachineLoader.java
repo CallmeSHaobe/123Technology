@@ -5,20 +5,16 @@ import net.minecraft.item.ItemStack;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.machine.hatch.GT_MetaTileEntity_Hatch_OutputBus_ME_B;
 import com.newmaa.othtech.machine.hatch.GT_MetaTileEntity_Hatch_Output_ME_B;
-import com.newmaa.othtech.machine.hatch.GT_TE_MAXwireless;
 import com.newmaa.othtech.machine.hatch.GT_TE_WTFHatch;
-import com.newmaa.othtech.machine.hatch.GT_TE_infWirelessHatch;
-import com.newmaa.othtech.machine.hatch.GT_TE_legendaryWireless;
+import com.newmaa.othtech.machine.hatch.OTH_MTEHatchWirelessMulti;
 
+import gregtech.api.enums.TierEU;
 import tectech.thing.metaTileEntity.hatch.MTEHatchDynamoMulti;
 import tectech.thing.metaTileEntity.hatch.MTEHatchEnergyMulti;
 
 public class MachineLoader {
 
     public static ItemStack MegaIsaForge;
-    public static ItemStack inf_WirelessHatch;
-    public static ItemStack legendary_WirelessHatch;
-    public static ItemStack WirelessMAX;
     public static ItemStack inf_infWirelessHatch;
     public static ItemStack Mega_QFT;
     public static ItemStack NineInOne;
@@ -45,16 +41,17 @@ public class MachineLoader {
         MegaIsaForge = new GT_TE_MegaIsaForge(IDs + 1, "MegaISAForge", "§l神之艾萨锻炉").getStackForm(1);
         OTHItemList.MegaIsaForge.set(MegaIsaForge);
 
-        inf_WirelessHatch = new GT_TE_infWirelessHatch(IDs + 2, "infWirelessEnergyHatch", "神人无线能源仓", 14)
-            .getStackForm(1);
-        OTHItemList.inf_WirelessHatch.set(inf_WirelessHatch);
+        OTHItemList.inf_WirelessHatch.set(
+            new OTH_MTEHatchWirelessMulti(IDs + 2, "infWirelessEnergyHatch", "神人无线能源仓", 14, 2147483647)
+                .getStackForm(1));
 
-        legendary_WirelessHatch = new GT_TE_legendaryWireless(IDs + 3, "legendaryWirelessEnergyHatch", "传奇无线能源仓", 13)
-            .getStackForm(1);
-        OTHItemList.legendary_WirelessHatch.set(legendary_WirelessHatch);
+        OTHItemList.legendary_WirelessHatch.set(
+            new OTH_MTEHatchWirelessMulti(IDs + 3, "legendaryWirelessEnergyHatch", "传奇无线能源仓", 13, (int) TierEU.UXV)
+                .getStackForm(1));
 
-        WirelessMAX = new GT_TE_MAXwireless(IDs + 4, "MAX1048576Hatch", "MAX 1,048,576A 无线能源仓", 14).getStackForm(1);
-        OTHItemList.WirelessMAX.set(WirelessMAX);
+        OTHItemList.WirelessMAX.set(
+            new OTH_MTEHatchWirelessMulti(IDs + 4, "MAX1048576Hatch", "MAX 1,048,576A 无线能源仓", 14, 1048576)
+                .getStackForm(1));
 
         inf_infWirelessHatch = new GT_TE_WTFHatch(IDs + 5, "longlongHatch", "神威大将军毁天灭地无敌金刚炮无线能源仓", 14).getStackForm(1);
         OTHItemList.inf_infWirelessHatch.set(inf_infWirelessHatch);

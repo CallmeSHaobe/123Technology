@@ -454,10 +454,25 @@ public class Main implements IRecipePool {
             1024 * 20,
             (int) TierEU.HV);
         // Wood Fusion
-        // addCraftingRecipe(
-        // OTHItemList.WoodFusion.get(1),
-        // new Object[] { "AAA", "ABA", "AAA", 'A', new ItemStack(Blocks.log, 1, 0), 'B',
-        // GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 2) });
+        addCraftingRecipe(
+            OTHItemList.WoodFusion.get(1),
+            new Object[] { "AAA", "ABA", "AAA", 'A', new ItemStack(Blocks.log, 1, 0), 'B',
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 2) });
+        // Records
+        GTValues.RA.stdBuilder()
+            .itemInputs(new ItemStack(Items.gold_ingot, 1), GTUtility.getIntegratedCircuit(1))
+            .itemOutputs(new ItemStack(ItemLoader.RecordPRKA, 1))
+            .noOptimize()
+            .duration(1949 * 20)
+            .eut(123)
+            .addTo(RecipeMaps.laserEngraverRecipes);
+        GTValues.RA.stdBuilder()
+            .itemInputs(new ItemStack(Items.gold_ingot, 1), GTUtility.getIntegratedCircuit(2))
+            .itemOutputs(new ItemStack(ItemLoader.RecordPRKB, 1))
+            .noOptimize()
+            .duration(1949 * 20)
+            .eut(123)
+            .addTo(RecipeMaps.laserEngraverRecipes);
 
     }
 }

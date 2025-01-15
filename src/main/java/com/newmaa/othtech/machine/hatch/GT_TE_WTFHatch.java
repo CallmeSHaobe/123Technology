@@ -56,6 +56,7 @@ public class GT_TE_WTFHatch extends MTEWirelessEnergy {
     public String[] getDescription() {
         return new String[] { EnumChatFormatting.GRAY + "Stores energy globally in a network, up to 2^(2^31) EU.",
             EnumChatFormatting.GRAY + "Does not connect to wires. This block accepts EU into the network.",
+            EnumChatFormatting.GOLD + "DON'T TRY TO USE THIS HATCH , THE HATCH IS USELESS , IT JUST A JOKE",
             EnumChatFormatting.DARK_PURPLE
                 + "9,223,372,034,707,292,160 * 9,223,372,034,707,292,160 EU/t(85,070,591,690,620,534,613,323,169,079,597,465,600EU/t)",
             EnumChatFormatting.GOLD + "123Technology" };
