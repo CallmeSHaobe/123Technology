@@ -15,7 +15,7 @@
 ## **机器配方池**
 神之艾萨锻炉 : "otht.recipe.MegaIsaForge"
 
-狄拉克潮汐 : "otht.recipe.GT_TE_MegaQFTFake"
+狄拉克潮汐 : "otht.recipe.OTEMegaQFT"
 
 中国石化 : "otht.recipe.SINOPEC"
 
