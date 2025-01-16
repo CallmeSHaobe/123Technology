@@ -75,7 +75,7 @@ public class recipesMain implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Samarium, 3),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Samarium, 3) },
             new FluidStack[] { new FluidStack(water, 123123) },
-            GTModHandler.getModItem("123Technology", "MetaItem", 1, 0),
+            GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 0),
             123,
             1919810);
         // isaforgea
@@ -98,8 +98,8 @@ public class recipesMain implements IRecipePool {
                 ItemList.Field_Generator_UMV.get(64), GTModHandler.getModItem("miscutils", "milledMonazite", 64),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 2083),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 2092),
-                GTModHandler.getModItem("123Technology", "MetaItem", 64, 0),
-                GTModHandler.getModItem("123Technology", "MetaItem", 64, 1) },
+                GTModHandler.getModItem("123Technology", "MetaItemOTH", 64, 0),
+                GTModHandler.getModItem("123Technology", "MetaItemOTH", 64, 1) },
             new FluidStack[] { new FluidStack(white, 4608), new FluidStack(cuihuaji, 123123),
                 new FluidStack(Ewater, 4096000), new FluidStack(songyou, 32000000) },
             GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 23521),
@@ -114,7 +114,7 @@ public class recipesMain implements IRecipePool {
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 4, 4585),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 4, 4586),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 4, 4139))
-            .itemOutputs(GTModHandler.getModItem("123Technology", "MetaItem", 1, 13))
+            .itemOutputs(GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 13))
             .fluidInputs(new FluidStack(songyou, 256000))
             .noOptimize()
             .duration(500 * 20)
@@ -134,8 +134,8 @@ public class recipesMain implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Cosmic, 64),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 32417),
                 GTModHandler.getModItem("dreamcraft", "item.MysteriousCrystalLens", 64),
-                GTModHandler.getModItem("123Technology", "MetaItem", 64, 0),
-                GTModHandler.getModItem("123Technology", "MetaItem", 64, 1),
+                GTModHandler.getModItem("123Technology", "MetaItemOTH", 64, 0),
+                GTModHandler.getModItem("123Technology", "MetaItemOTH", 64, 1),
                 GTModHandler.getModItem("appliedenergistics2", "item.ItemExtremeStorageCell.Singularity", 1),
                 GTModHandler.getModItem("appliedenergistics2", "item.ItemExtremeStorageCell.Singularity", 1),
                 GTModHandler.getModItem("appliedenergistics2", "item.ItemExtremeStorageCell.Singularity", 1),
@@ -259,7 +259,7 @@ public class recipesMain implements IRecipePool {
                 ItemList.Robot_Arm_UEV.get(64), GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Optical, 64),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 4054),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.02", 24, 21397), new ItemStack(Items.skull, 64, 1),
-                GTModHandler.getModItem("123Technology", "MetaItem", 64, 0),
+                GTModHandler.getModItem("123Technology", "MetaItemOTH", 64, 0),
                 GTModHandler.getModItem("eternalsingularity", "eternal_singularity", 4), },
             new FluidStack[] { new FluidStack(FluidRegistry.getFluidID("molten.infinity"), 123 * 144),
                 new FluidStack(FluidRegistry.getFluidID("molten.quantium"), 123 * 144),
@@ -330,7 +330,7 @@ public class recipesMain implements IRecipePool {
         // Sun
         GTValues.RA.stdBuilder()
             .itemInputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Gold, 3))
-            .itemOutputs(GTModHandler.getModItem("123Technology", "MetaItem", 1, 15))
+            .itemOutputs(GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 15))
             .noOptimize()
             .duration(2024 * 20)
             .eut(194899)
@@ -346,10 +346,10 @@ public class recipesMain implements IRecipePool {
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23527),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23528),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 10886),
-                GTModHandler.getModItem("123Technology", "MetaItem", 64, 15),
-                GTModHandler.getModItem("123Technology", "MetaItem", 64, 15),
-                GTModHandler.getModItem("123Technology", "MetaItem", 64, 15),
-                GTModHandler.getModItem("123Technology", "MetaItem", 64, 15), ItemList.Robot_Arm_UMV.get(64),
+                GTModHandler.getModItem("123Technology", "MetaItemOTH", 64, 15),
+                GTModHandler.getModItem("123Technology", "MetaItemOTH", 64, 15),
+                GTModHandler.getModItem("123Technology", "MetaItemOTH", 64, 15),
+                GTModHandler.getModItem("123Technology", "MetaItemOTH", 64, 15), ItemList.Robot_Arm_UMV.get(64),
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Cosmic, 64),
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Cosmic, 64),
                 ItemList.Field_Generator_UMV.get(64), new ItemStack(Items.bread, 64),

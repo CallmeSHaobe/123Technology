@@ -35,7 +35,7 @@ public class recipesMegaISAForge implements IRecipePool {
 
         GTValues.RA.stdBuilder()
             .fluidInputs(new FluidStack(FluidRegistry.getFluid("molten.helicopter"), 514))
-            .itemInputs(GTModHandler.getModItem("123Technology", "MetaItem", 1, 1))
+            .itemInputs(GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 1))
             .itemOutputs(
                 GTModHandler.getModItem("miscutils", "itemDustRhenium", 64),
                 GTModHandler.getModItem("miscutils", "itemDustThallium", 64),
@@ -145,11 +145,11 @@ public class recipesMegaISAForge implements IRecipePool {
         // .addTo(ISA);
         GTValues.RA.stdBuilder()
             .itemInputs(
-                GTModHandler.getModItem("123Technology", "MetaItem", 0, 13),
+                GTModHandler.getModItem("123Technology", "MetaItemOTH", 0, 13),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, 31027),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 16, 4581),
                 ItemList.Field_Generator_UIV.get(1))
-            .itemOutputs(GTModHandler.getModItem("123Technology", "MetaItem", 1, 13))
+            .itemOutputs(GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 13))
             .fluidInputs(new FluidStack(FluidRegistry.getFluidID("ic2uumatter"), 16000))
             .noOptimize()
             .duration(1000 * 20)
@@ -158,7 +158,7 @@ public class recipesMegaISAForge implements IRecipePool {
         GTValues.RA.stdBuilder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(8),
-                GTModHandler.getModItem("123Technology", "MetaItem", 0, 13),
+                GTModHandler.getModItem("123Technology", "MetaItemOTH", 0, 13),
                 GTModHandler.getModItem("Avaritia", "Resource", 64, 5))
             .fluidInputs(new FluidStack(FluidRegistry.getFluidID("exciteddtsc"), 181968))
             .fluidOutputs(new FluidStack(FluidRegistry.getFluidID("molten.infinity"), 2359296))
@@ -169,7 +169,7 @@ public class recipesMegaISAForge implements IRecipePool {
         GTValues.RA.stdBuilder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(8),
-                GTModHandler.getModItem("123Technology", "MetaItem", 0, 13),
+                GTModHandler.getModItem("123Technology", "MetaItemOTH", 0, 13),
                 GTModHandler.getModItem("miscutils", "MU-metaitem.01", 0, 32100))
             .fluidInputs(
                 new FluidStack(FluidRegistry.getFluidID("molten.neutronium"), 115200),
@@ -184,10 +184,10 @@ public class recipesMegaISAForge implements IRecipePool {
         GTValues.RA.stdBuilder()
             .itemInputs(
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, 31028),
-                GTModHandler.getModItem("123Technology", "MetaItem", 1, 13),
+                GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 13),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 16, 4139),
                 ItemList.Field_Generator_UMV.get(4))
-            .itemOutputs(GTModHandler.getModItem("123Technology", "MetaItem", 4, 14))
+            .itemOutputs(GTModHandler.getModItem("123Technology", "MetaItemOTH", 4, 14))
             .fluidInputs(
                 new FluidStack(FluidRegistry.getFluidID("ic2uumatter"), 64000),
                 new FluidStack(
@@ -200,21 +200,21 @@ public class recipesMegaISAForge implements IRecipePool {
             .addTo(ISA);
         GTValues.RA.stdBuilder()
             .itemInputs(
-                GTModHandler.getModItem("123Technology", "MetaItem", 0, 14),
+                GTModHandler.getModItem("123Technology", "MetaItemOTH", 0, 14),
                 GTModHandler.getModItem("tectech", "item.tm.itemAstralArrayFabricator", 0),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 4, 32727),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 4, 4581),
                 GTOreDictUnificator.get(OrePrefixes.wireFine, Materials.Infinity, 64),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 29979),
                 GTModHandler.getModItem("eternalsingularity", "eternal_singularity", 1))
-            .itemOutputs(GTModHandler.getModItem("123Technology", "MetaItem", 4, 20))
+            .itemOutputs(GTModHandler.getModItem("123Technology", "MetaItemOTH", 4, 20))
             .noOptimize()
             .duration(400 * 20)
             .eut(TierEU.RECIPE_MAX)
             .addTo(ISA);
         GTValues.RA.stdBuilder()
             .itemInputs(
-                GTModHandler.getModItem("123Technology", "MetaItem", 8, 20),
+                GTModHandler.getModItem("123Technology", "MetaItemOTH", 8, 20),
                 GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedwireFine", 64, 10112),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 4, 32417))
             .itemOutputs(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 16, 32170))
@@ -228,7 +228,7 @@ public class recipesMegaISAForge implements IRecipePool {
             .fluidInputs(liquids.MagmatterA.getFluidOrGas(64 * 144))
             .fluidOutputs(liquids.MagmatterB.getFluidOrGas(48 * 144))
             .itemInputs(
-                GTModHandler.getModItem("123Technology", "MetaItem", 4, 13),
+                GTModHandler.getModItem("123Technology", "MetaItemOTH", 4, 13),
                 ItemList.Field_Generator_UEV.get(3))
             .noOptimize()
             .duration(123 * 20)
@@ -264,7 +264,7 @@ public class recipesMegaISAForge implements IRecipePool {
             .itemOutputs(GTModHandler.getModItem("GalacticraftAmunRa", "item.baseItem", 1, 26))
             .itemInputs(
                 GTModHandler.getModItem("GalacticraftAmunRa", "item.baseItem", 0, 26),
-                GTModHandler.getModItem("123Technology", "MetaItem", 0, 13))
+                GTModHandler.getModItem("123Technology", "MetaItemOTH", 0, 13))
             .fluidInputs(
                 new FluidStack(FluidRegistry.getFluidID("molten.blackdwarfmatter"), 72),
                 new FluidStack(FluidRegistry.getFluidID("molten.whitedwarfmatter"), 72))
@@ -273,7 +273,7 @@ public class recipesMegaISAForge implements IRecipePool {
             .eut(123123123)
             .addTo(ISA);
         GTValues.RA.stdBuilder()
-            .itemOutputs(GTModHandler.getModItem("123Technology", "MetaItem", 1, 18))
+            .itemOutputs(GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 18))
             .itemInputs(
                 GTUtility.getIntegratedCircuit(12),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, 15410),
@@ -295,7 +295,7 @@ public class recipesMegaISAForge implements IRecipePool {
             .eut(TierEU.MAX / 2)
             .addTo(ISA);
         GTValues.RA.stdBuilder()
-            .itemOutputs(GTModHandler.getModItem("123Technology", "MetaItem", 4, 19))
+            .itemOutputs(GTModHandler.getModItem("123Technology", "MetaItemOTH", 4, 19))
             .itemInputs(
                 GTUtility.getIntegratedCircuit(13),
                 GTModHandler.getModItem("eternalsingularity", "eternal_singularity", 0),

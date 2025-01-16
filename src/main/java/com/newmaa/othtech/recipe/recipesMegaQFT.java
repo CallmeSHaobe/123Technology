@@ -35,7 +35,7 @@ public class recipesMegaQFT implements IRecipePool {
         GTValues.RA.stdBuilder()
             .fluidOutputs(liquids.MagmatterA.getFluidOrGas(4 * 144))
             .itemInputs(
-                GTModHandler.getModItem("123Technology", "MetaItem", 1, 14),
+                GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 14),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 4, 17583))
             .fluidInputs(new FluidStack(FluidRegistry.getFluidID("molten.tengampurified"), 256 * 144))
             .noOptimize()
@@ -238,7 +238,9 @@ public class recipesMegaQFT implements IRecipePool {
             .addTo(MQFT);
         GTValues.RA.stdBuilder()
             .fluidOutputs(liquids.Void.getFluidOrGas(4000))
-            .itemInputs(GTUtility.getIntegratedCircuit(24), GTModHandler.getModItem("123Technology", "MetaItem", 0, 13))
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(24),
+                GTModHandler.getModItem("123Technology", "MetaItemOTH", 0, 13))
             .fluidInputs(
                 new FluidStack(FluidRegistry.getFluidID("lubricant"), 64000),
                 new FluidStack(FluidRegistry.getFluidID("cryotheum"), 32000),
@@ -251,7 +253,7 @@ public class recipesMegaQFT implements IRecipePool {
             .fluidOutputs(liquids.Stars.getFluidOrGas(4 * 144))
             .itemInputs(
                 GTUtility.getIntegratedCircuit(24),
-                GTModHandler.getModItem("123Technology", "MetaItem", 0, 14),
+                GTModHandler.getModItem("123Technology", "MetaItemOTH", 0, 14),
                 GTModHandler.getModItem("GalacticraftAmunRa", "item.baseItem", 4, 26))
             .fluidInputs(
                 new FluidStack(FluidRegistry.getFluidID("exciteddtsc"), 10000),

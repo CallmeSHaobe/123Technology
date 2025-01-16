@@ -19,7 +19,7 @@ public class recipesVacuumFreezerRecipes implements IRecipePool {
         final IRecipeMap VaF = RecipeMaps.vacuumFreezerRecipes;
         GTValues.RA.stdBuilder()
             .itemInputs(GTModHandler.getModItem("123Technology", "ingotHotDog", 1))
-            .itemOutputs(GTModHandler.getModItem("123Technology", "MetaItem", 1, 3))
+            .itemOutputs(GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 3))
             .fluidInputs(new FluidStack(colder, 1919))
             .fluidOutputs(new FluidStack(water, 1919))
             .noOptimize()

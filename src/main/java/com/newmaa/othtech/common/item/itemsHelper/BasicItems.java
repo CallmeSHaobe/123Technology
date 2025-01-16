@@ -6,6 +6,6 @@ import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
 
 public final class BasicItems {
 
-    public static final Item MetaItem = new ItemAdder("MetaItemBase", "MetaItem", CreativeTabsLoader.tabothtech)
+    public static final Item MetaItem = new ItemAdder("MetaItemBase", "MetaItemOTH", CreativeTabsLoader.tabothtech)
         .setTextureName("123technology:MetaItem/0");
 }
