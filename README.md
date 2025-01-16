@@ -30,3 +30,9 @@
 1.3.0及其以下版本只支持GTNH2.6.1 , GTNH2.6.0可以运行但不保证无bug
 
 1.3.0+支持GTNH2.7.0
+
+## **关于模型**
+
+绫波丽模型 : BlockBench bbmodel文件存于src\main\resources\assets\123technology\models
+
+作者 : NewMaa 2025-1-17
