@@ -1,11 +1,14 @@
 package com.newmaa.othtech.common.recipemap;
 
+import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.recipemap.recipeMapFrontends.OTH_GeneralFrontend;
 
 import gregtech.api.enums.ItemList;
 import gregtech.api.gui.modularui.GTUITextures;
 import gregtech.api.recipe.RecipeMap;
+import gregtech.api.recipe.RecipeMapBackend;
 import gregtech.api.recipe.RecipeMapBuilder;
+import gregtech.api.recipe.maps.FluidOnlyFrontend;
 import gregtech.api.util.GTModHandler;
 import gregtech.nei.formatter.HeatingCoilSpecialValueFormatter;
 
@@ -22,7 +25,7 @@ public class Recipemaps {
         .disableOptimize()
         .build();
     public static final RecipeMap<OTH_RecipeMapBackend> QFTMega = RecipeMapBuilder
-        .of("otht.recipe.GT_TE_MegaQFTFake", OTH_RecipeMapBackend::new)
+        .of("otht.recipe.OTEMegaQFT", OTH_RecipeMapBackend::new)
         .maxIO(8, 8, 8, 8)
         .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
         .frontend(OTH_GeneralFrontend::new)
@@ -37,7 +40,7 @@ public class Recipemaps {
         .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
         .frontend(OTH_GeneralFrontend::new)
         .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GTModHandler.getModItem("123Technology", "dustIrOsSm", 1))
+            builder -> builder.setDisplayStack(GTModHandler.getModItem("123Technology", "MetaItem", 1, 0))
                 .setMaxRecipesPerPage(2))
         .disableOptimize()
         .build();
@@ -71,7 +74,7 @@ public class Recipemaps {
         .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
         .frontend(OTH_GeneralFrontend::new)
         .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GTModHandler.getModItem("123Technology", "itemEnqing", 1, 0))
+            builder -> builder.setDisplayStack(GTModHandler.getModItem("123Technology", "MetaItem", 1, 15))
                 .setMaxRecipesPerPage(1))
         .disableOptimize()
         .build();
@@ -82,7 +85,7 @@ public class Recipemaps {
         .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
         .frontend(OTH_GeneralFrontend::new)
         .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GTModHandler.getModItem("123Technology", "itemEnqing", 1, 0))
+            builder -> builder.setDisplayStack(GTModHandler.getModItem("123Technology", "MetaItem", 1, 15))
                 .setMaxRecipesPerPage(1))
         .disableOptimize()
         .build();
@@ -93,7 +96,7 @@ public class Recipemaps {
         .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
         .frontend(OTH_GeneralFrontend::new)
         .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GTModHandler.getModItem("123Technology", "itemEnqing", 1, 0))
+            builder -> builder.setDisplayStack(GTModHandler.getModItem("123Technology", "MetaItem", 1, 15))
                 .setMaxRecipesPerPage(1))
         .disableOptimize()
         .build();
@@ -104,9 +107,25 @@ public class Recipemaps {
         .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
         .frontend(OTH_GeneralFrontend::new)
         .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GTModHandler.getModItem("123Technology", "itemEnqing", 1, 0))
+            builder -> builder.setDisplayStack(GTModHandler.getModItem("123Technology", "MetaItem", 1, 15))
+                .setMaxRecipesPerPage(1))
+        .disableOptimize()
+        .build();
+    public static final RecipeMap<OTH_RecipeMapBackend> COC = RecipeMapBuilder
+        .of("otht.recipe.COC", OTH_RecipeMapBackend::new)
+        .maxIO(1, 1, 0, 0)
+        .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
+        .frontend(OTH_GeneralFrontend::new)
+        .neiHandlerInfo(
+            builder -> builder.setDisplayStack(OTHItemList.CoccOven.get(1))
                 .setMaxRecipesPerPage(1))
         .disableOptimize()
         .build();
 
+    public static final RecipeMap<RecipeMapBackend> WFR = RecipeMapBuilder.of("otht.recipe.WoodenFusionReactor")
+        .maxIO(0, 0, 1, 1)
+        .disableOptimize()
+        .useCustomFilterForNEI()
+        .frontend(FluidOnlyFrontend::new)
+        .build();
 }

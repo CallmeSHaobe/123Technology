@@ -10,6 +10,33 @@ import gregtech.api.util.GTLog;
 
 public enum OTHItemList {
 
+    // items
+    boardCasimirM,
+    boardTransM,
+    capTransM,
+    dioTransM,
+    dustIrOsSmM,
+    dustSnAsM,
+    energyHatchSpacetimeM,
+    finCasimirM,
+    induTransM,
+    ingotDogM,
+    ingotSnAsM,
+    beeISAM,
+    itemEnqingM,
+    leCasimirM,
+    dustLookNEIM,
+    beeMagM,
+    resTransM,
+    glassSingularityM,
+    machineSingularityM,
+    socCosmicM,
+    socInfM,
+    socNorM,
+    transTransM,
+
+    // Machines
+
     inf_WirelessHatch,
     inf_infWirelessHatch,
     Mega_QFT,

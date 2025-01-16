@@ -1,5 +1,6 @@
 package com.newmaa.othtech.common.beeyonds;
 
+import static com.newmaa.othtech.common.OTHItemList.itemEnqingM;
 import static com.newmaa.othtech.common.beeyonds.OTHBeeDefinitionReference.*;
 import static forestry.api.apiculture.EnumBeeChromosome.*;
 import static forestry.api.apiculture.EnumBeeChromosome.FLOWER_PROVIDER;
@@ -158,7 +159,7 @@ public enum OTHBeeDefinition implements IBeeDefinition {
     ENQING(OTHBranchDefinition.OTHBYDS, "Enqing", true, new Color(0xFFFF0000, true), new Color(0xECFFCD07, true),
         beeSpecies -> {
             beeSpecies.addProduct(new ItemStack(Items.bread, 1), 1F);
-            beeSpecies.addSpecialty(new ItemStack(ItemLoader.itemEnqing, 1), 0.1F);
+            beeSpecies.addSpecialty(itemEnqingM.get(1), 0.1F);
             beeSpecies.addSpecialty(GTModHandler.getModItem(IC2.MODID, "blockNuke", 1, 0), 0.001F);
             beeSpecies.setHumidity(DAMP);
             beeSpecies.setTemperature(EnumTemperature.NORMAL);

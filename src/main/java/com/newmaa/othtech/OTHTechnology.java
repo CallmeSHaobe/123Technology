@@ -5,8 +5,8 @@ import org.apache.logging.log4j.Logger;
 
 import com.newmaa.othtech.common.beeyonds.OTHBeeyonds;
 import com.newmaa.othtech.common.materials.MaterialsLoader;
+import com.newmaa.othtech.common.recipemap.NEIRecipeMaps;
 import com.newmaa.othtech.machine.MachineLoader;
-import com.newmaa.othtech.machine.machineclass.IMCForNEI;
 import com.newmaa.othtech.recipe.RecipeLoader;
 
 import cpw.mods.fml.common.Mod;
@@ -43,6 +43,7 @@ public class OTHTechnology {
 
     public static final String modDescription = "123";
     public static final Logger LOG = LogManager.getLogger(MODID);
+    public static final boolean isInDevMode = false;
 
     @SidedProxy(clientSide = "com.newmaa.othtech.ClientProxy", serverSide = "com.newmaa.othtech.CommonProxy")
     public static CommonProxy proxy;
@@ -60,7 +61,7 @@ public class OTHTechnology {
     public void init(FMLInitializationEvent event) {
         proxy.init(event);
         MachineLoader.loadMachines();
-        IMCForNEI.IMCSender();
+        NEIRecipeMaps.IMCSender();
         new OTHBeeyonds();
 
     }

@@ -112,7 +112,7 @@ public class OTH_OverclockCalculator {
      */
     private double durationDecreasePerHeatOC = 4;
     /**
-     * Whether to enable overclocking with heat like the EBF every 1800 heat difference
+     * Whether to enable overclocking with heat like the recipesBlastFurnaceRecipes every 1800 heat difference
      */
     private boolean heatOC;
     /**
@@ -214,7 +214,7 @@ public class OTH_OverclockCalculator {
     }
 
     /**
-     * Set if we should be calculating overclocking using EBF's perfectOC
+     * Set if we should be calculating overclocking using recipesBlastFurnaceRecipes's perfectOC
      */
     @Nonnull
     public OTH_OverclockCalculator setHeatOC(boolean heatOC) {
@@ -223,7 +223,8 @@ public class OTH_OverclockCalculator {
     }
 
     /**
-     * Sets if we should add a heat discount at the end of calculating an overclock, just like the EBF
+     * Sets if we should add a heat discount at the end of calculating an overclock, just like the
+     * recipesBlastFurnaceRecipes
      */
     @Nonnull
     public OTH_OverclockCalculator setHeatDiscount(boolean heatDiscount) {

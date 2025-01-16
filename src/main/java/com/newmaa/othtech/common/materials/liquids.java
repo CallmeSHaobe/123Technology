@@ -15,7 +15,7 @@ public class liquids implements Runnable {
 
     public static final Werkstoff MagmatterA = new Werkstoff(
         new short[] { 169, 169, 169 }, // DarkGray
-        "磁流体浆液",
+        "FluidMagnetorheological",
         subscriptNumbers("M*"),
         new Werkstoff.Stats(),
         Werkstoff.Types.ELEMENT,
@@ -25,7 +25,7 @@ public class liquids implements Runnable {
         TextureSet.SET_FLUID);
     public static final Werkstoff MagmatterB = new Werkstoff(
         new short[] { 169, 169, 169 }, // DarkGray
-        "磁单极子流体",
+        "FluidMagneticmonopole",
         subscriptNumbers("M%"),
         new Werkstoff.Stats(),
         Werkstoff.Types.ELEMENT,
@@ -37,7 +37,7 @@ public class liquids implements Runnable {
         new Pair<>(Materials.Stone, 2));
     public static final Werkstoff Galaxy = new Werkstoff(
         new short[] { 18, 80, 161 },
-        "Galaxy",
+        "FluidGalaxy",
         subscriptNumbers("☆"),
         new Werkstoff.Stats(),
         Werkstoff.Types.ELEMENT,
@@ -47,7 +47,7 @@ public class liquids implements Runnable {
         TextureSet.SET_FLUID);
     public static final Werkstoff Void = new Werkstoff(
         new short[] { 166, 212, 223 },
-        "虚空熵流",
+        "FluidVoid",
         subscriptNumbers("Vi"),
         new Werkstoff.Stats(),
         Werkstoff.Types.ELEMENT,
@@ -57,13 +57,23 @@ public class liquids implements Runnable {
         TextureSet.SET_FLUID);
     public static final Werkstoff Stars = new Werkstoff(
         new short[] { 221, 226, 188 },
-        "星尘凝融",
+        "MoltenStar",
         subscriptNumbers("St"),
         new Werkstoff.Stats(),
         Werkstoff.Types.ELEMENT,
         new Werkstoff.GenerationFeatures().addCells()
             .addCells(),
         offsetID_01 + 5,
+        TextureSet.SET_FLUID);
+    public static final Werkstoff LCL = new Werkstoff(
+        new short[] { 250, 111, 42 },
+        "L.C.L",
+        subscriptNumbers(""),
+        new Werkstoff.Stats(),
+        Werkstoff.Types.ELEMENT,
+        new Werkstoff.GenerationFeatures().addCells()
+            .addCells(),
+        offsetID_01 + 6,
         TextureSet.SET_FLUID);
 
     @Override

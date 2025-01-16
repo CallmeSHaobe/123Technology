@@ -23,6 +23,8 @@
 
 红日之将军恩情工厂(巨型PCB工厂, 贴片工坊, NMD晶圆厂, 元件聚合者) "otht.recipe.MegaPCB" , "otht.recipe.MegaPCB_A" , "otht.recipe.MegaPCB_B" , "otht.recipe.MegaPCB_C"
 
+木聚变反应堆 : otht.recipe.WoodenFusionReactor
+
 ## **关于GTNH**
 
 1.3.0及其以下版本只支持GTNH2.6.1 , GTNH2.6.0可以运行但不保证无bug

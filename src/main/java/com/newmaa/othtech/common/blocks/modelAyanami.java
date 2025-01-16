@@ -1,11 +1,5 @@
 package com.newmaa.othtech.common.blocks;
 
-
-import com.newmaa.othtech.common.IRegistry;
-import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
-import com.newmaa.othtech.common.item.itemModelAyanami;
-import cpw.mods.fml.common.registry.GameRegistry;
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
@@ -13,7 +7,14 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
+import com.newmaa.othtech.common.IRegistry;
+import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
+import com.newmaa.othtech.common.item.itemBlock.itemModelAyanami;
+
+import cpw.mods.fml.common.registry.GameRegistry;
+
 public class modelAyanami extends BaseBlockContainer implements IRegistry<modelAyanami> {
+
     public modelAyanami() {
         super(Material.iron);
         this.setHardness(2.0f);
@@ -21,6 +22,7 @@ public class modelAyanami extends BaseBlockContainer implements IRegistry<modelA
 
         this.setBlockName("modelAyanami");
     }
+
     @Override
     public modelAyanami register() {
         GameRegistry.registerBlock(this, itemModelAyanami.class, "modelAyanami");
@@ -30,17 +32,17 @@ public class modelAyanami extends BaseBlockContainer implements IRegistry<modelA
     }
 
     @Override
-    public boolean renderAsNormalBlock(){
+    public boolean renderAsNormalBlock() {
         return false;
     }
 
     @Override
-    public int getRenderType(){
+    public int getRenderType() {
         return -1;
     }
 
     @Override
-    public boolean isOpaqueCube(){
+    public boolean isOpaqueCube() {
         return false;
     }
 
@@ -48,6 +50,7 @@ public class modelAyanami extends BaseBlockContainer implements IRegistry<modelA
     public TileEntity createNewTileEntity(World world, int par2) {
         return new tileEntityModelAyanami();
     }
+
     @Override
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack itemstack) {
         int l = MathHelper.floor_double(player.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;

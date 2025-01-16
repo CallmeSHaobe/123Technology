@@ -8,6 +8,42 @@
       }
     ]
   },
+  "record.EVA_A": {
+    "category": "record",
+    "sounds": [
+      {
+        "name": "record.EVA_A",
+        "stream": "true"
+      }
+    ]
+  },
+  "record.EVA_B": {
+    "category": "record",
+    "sounds": [
+      {
+        "name": "record.EVA_B",
+        "stream": "true"
+      }
+    ]
+  },
+  "record.EVA_C": {
+    "category": "record",
+    "sounds": [
+      {
+        "name": "record.EVA_C",
+        "stream": "true"
+      }
+    ]
+  },
+  "record.NGG_U": {
+    "category": "record",
+    "sounds": [
+      {
+        "name": "record.NGG_U",
+        "stream": "true"
+      }
+    ]
+  },
   "record.PRK_B": {
     "category": "record",
     "sounds": [

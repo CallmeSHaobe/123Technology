@@ -1,9 +1,9 @@
 package com.newmaa.othtech.common.creativetab;
 
+import static com.newmaa.othtech.common.OTHItemList.dustIrOsSmM;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
-
-import com.newmaa.othtech.common.item.ItemLoader;
 
 public class CreativeTabsothtech extends CreativeTabs {
 
@@ -13,6 +13,6 @@ public class CreativeTabsothtech extends CreativeTabs {
 
     @Override
     public Item getTabIconItem() {
-        return ItemLoader.dustIrOsSm;
+        return dustIrOsSmM.getItem();
     }
 }
