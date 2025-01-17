@@ -2,6 +2,8 @@ package com.newmaa.othtech.machine;
 
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
 import static com.newmaa.othtech.Utils.Utils.filterValidMTEs;
+import static goodgenerator.loader.Loaders.impreciseUnitCasing;
+import static goodgenerator.loader.Loaders.preciseUnitCasing;
 import static gregtech.api.GregTechAPI.*;
 import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
@@ -9,7 +11,6 @@ import static gregtech.api.util.GTStructureUtility.ofFrame;
 
 import java.util.List;
 
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -25,10 +26,10 @@ import com.google.common.collect.ImmutableList;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
+import com.gtnewhorizon.structurelib.structure.StructureUtility;
 import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
 
 import bartworks.API.BorosilicateGlass;
-import goodgenerator.loader.Loaders;
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.SoundResource;
@@ -62,7 +63,7 @@ public class OTELargeCircuitAssembler extends OTH_MultiMachineBase<OTELargeCircu
         super(aName);
     }
 
-    protected int casingTier = 0;
+    protected int casingTier = -1;
     private byte mode = 0;
     protected int energyHatchTier = 0;
 
@@ -166,6 +167,7 @@ public class OTELargeCircuitAssembler extends OTH_MultiMachineBase<OTELargeCircu
     @Override
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
         repairMachine();
+        this.casingTier = -1;
         return checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet);
     }
 
@@ -204,18 +206,10 @@ public class OTELargeCircuitAssembler extends OTH_MultiMachineBase<OTELargeCircu
 
     }
 
-    public static int getCasingTier(Block block, int meta) {
-        if (block == Loaders.preciseUnitCasing && meta <= 3) {
-            return meta + 1;
-        } else if (block == Loaders.impreciseUnitCasing) {
-            return 0;
-        }
-        return 0;
-    }
-
     private static final String STRUCTURE_PIECE_MAIN = "main";
 
     private final int horizontalOffSet = 6;
+
     private final int verticalOffSet = 4;
     private final int depthOffSet = 2;
     private static IStructureDefinition<OTELargeCircuitAssembler> STRUCTURE_DEFINITION = null;
@@ -224,6 +218,17 @@ public class OTELargeCircuitAssembler extends OTH_MultiMachineBase<OTELargeCircu
     @Override
     public IStructureDefinition<OTELargeCircuitAssembler> getStructureDefinition() {
         if (STRUCTURE_DEFINITION == null) {
+            var c = StructureUtility.<OTELargeCircuitAssembler, Integer>ofBlocksTiered(
+                (a, b) -> a == impreciseUnitCasing ? 0 : a == preciseUnitCasing ? b + 1 : -1,
+                ImmutableList.of(
+                    Pair.of(impreciseUnitCasing, 0),
+                    Pair.of(preciseUnitCasing, 0),
+                    Pair.of(preciseUnitCasing, 1),
+                    Pair.of(preciseUnitCasing, 2),
+                    Pair.of(preciseUnitCasing, 3)),
+                -1,
+                (t, meta) -> t.casingTier = meta,
+                t -> t.casingTier);
             STRUCTURE_DEFINITION = StructureDefinition.<OTELargeCircuitAssembler>builder()
                 .addShape(STRUCTURE_PIECE_MAIN, shapeMain)
                 .addElement('A', BorosilicateGlass.ofBoroGlass(6))
@@ -238,54 +243,21 @@ public class OTELargeCircuitAssembler extends OTH_MultiMachineBase<OTELargeCircu
                         .adder(OTELargeCircuitAssembler::addToMachineList)
                         .casingIndex(CASING_INDEX)
                         .dot(1)
-                        .buildAndChain(
-                            ofBlocksTiered(
-                                OTELargeCircuitAssembler::getCasingTier,
-                                ImmutableList.of(
-                                    Pair.of(Loaders.impreciseUnitCasing, 0),
-                                    Pair.of(Loaders.preciseUnitCasing, 0),
-                                    Pair.of(Loaders.preciseUnitCasing, 1),
-                                    Pair.of(Loaders.preciseUnitCasing, 2),
-                                    Pair.of(Loaders.preciseUnitCasing, 3)),
-                                0,
-                                (t, meta) -> t.casingTier = meta,
-                                t -> t.casingTier)))
+                        .buildAndChain(c))
                 .addElement(
                     'G',
                     buildHatchAdder(OTELargeCircuitAssembler.class).atLeast(OutputHatch, OutputBus)
                         .adder(OTELargeCircuitAssembler::addToMachineList)
                         .casingIndex(CASING_INDEX)
                         .dot(2)
-                        .buildAndChain(
-                            ofBlocksTiered(
-                                OTELargeCircuitAssembler::getCasingTier,
-                                ImmutableList.of(
-                                    Pair.of(Loaders.impreciseUnitCasing, 0),
-                                    Pair.of(Loaders.preciseUnitCasing, 0),
-                                    Pair.of(Loaders.preciseUnitCasing, 1),
-                                    Pair.of(Loaders.preciseUnitCasing, 2),
-                                    Pair.of(Loaders.preciseUnitCasing, 3)),
-                                0,
-                                (t, meta) -> t.casingTier = meta,
-                                t -> t.casingTier)))
+                        .buildAndChain(c))
                 .addElement(
                     'F',
                     buildHatchAdder(OTELargeCircuitAssembler.class).atLeast(InputBus, InputHatch)
                         .adder(OTELargeCircuitAssembler::addToMachineList)
                         .casingIndex(CASING_INDEX)
                         .dot(3)
-                        .buildAndChain(
-                            ofBlocksTiered(
-                                OTELargeCircuitAssembler::getCasingTier,
-                                ImmutableList.of(
-                                    Pair.of(Loaders.impreciseUnitCasing, 0),
-                                    Pair.of(Loaders.preciseUnitCasing, 0),
-                                    Pair.of(Loaders.preciseUnitCasing, 1),
-                                    Pair.of(Loaders.preciseUnitCasing, 2),
-                                    Pair.of(Loaders.preciseUnitCasing, 3)),
-                                0,
-                                (t, meta) -> t.casingTier = meta,
-                                t -> t.casingTier)))
+                        .buildAndChain(c))
                 .build();
         }
         return STRUCTURE_DEFINITION;
