@@ -90,7 +90,8 @@ public class OTESINOPEC extends OTH_MultiMachineBase<OTESINOPEC> {
         if (aTick % 20 == 0 && !$123) {
             ItemStack aGuiStack = this.getControllerSlot();
             if (aGuiStack != null) {
-                if (GTUtility.areStacksEqual(aGuiStack, GTModHandler.getModItem("123Technology", "MetaItem", 1, 0))) {
+                if (GTUtility
+                    .areStacksEqual(aGuiStack, GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 0))) {
                     this.$123 = true;
                 }
             }

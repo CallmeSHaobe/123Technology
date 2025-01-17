@@ -108,7 +108,7 @@ public class OTESunFactory extends OTH_MultiMachineBase<OTESunFactory> {
     private boolean checkEnqing(int amount) {
         int needAmount = amount;
         for (ItemStack items : getStoredInputsWithoutDualInputHatch()) {
-            if (metaItemEqual(items, GTModHandler.getModItem("123Technology", "MetaItem", 1, 15))) {
+            if (metaItemEqual(items, GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 15))) {
                 if (items.stackSize >= needAmount) {
                     items.stackSize -= needAmount;
                     return true;
