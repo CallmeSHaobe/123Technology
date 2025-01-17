@@ -8,7 +8,7 @@ public class RecipeLoader {
             new recipesMegaISAForge(), new recipesMixerRecipes(), new recipesQFTRecipes(), new recipesCopiedFromTST(),
             new recipesMegaQFT(), new recipesCyclotronRecipes(), new recipesCircuit(), new recipesSINOPEC(),
             new recipesTangshanSteelFactory(), new recipesMegaEEC(), new recipesSunFactoryEnqing(),
-            new recipesEpicCokeOvenFake(), new recipesWoodenFusionReactor() };
+            new recipesEpicCokeOvenFake(), new recipesWoodenFusionReactor(), new recipesMISA() };
         for (IRecipePool recipePool : recipePools) {
             recipePool.loadRecipes();
         }

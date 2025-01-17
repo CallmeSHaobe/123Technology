@@ -32,6 +32,7 @@ public class MachineLoader {
     public static ItemStack coccoven;
     public static ItemStack WoodFusion;
     public static ItemStack IMBAIMBAblastfurnace;
+    public static ItemStack MISA;
 
     public static void loadMachines() {
         final int IDs = 23520;
@@ -101,6 +102,9 @@ public class MachineLoader {
 
         IMBAIMBAblastfurnace = new OTEIMBABlastFurnace(IDs + 23, "IMBABlastFurnace").getStackForm(1);
         OTHItemList.ImbaBlastFurnace.set(IMBAIMBAblastfurnace);
+
+        MISA = new OTEMegaIsaFactory(IDs + 24, "MISA", "§a艾萨处理集成工厂OTH").getStackForm(1);
+        OTHItemList.MISA.set(MISA);
 
     }
 }

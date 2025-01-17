@@ -108,6 +108,11 @@ Galaxy.fluid=熔融星系
 Void.fluid=虚空熵流
 Star.molten=星尘熔融
 LCL=L.C.L
+otht.nei.isa.1=§a研磨需要NeI合金研磨器复合体, 配方等级1
+otht.nei.isa.2=§a研磨需要铱锇钐合金研磨器复合体, 配方等级2
+otht.nei.isa.3=§a研磨需要海珀珍研磨器复合体, 配方等级3
+otht.nei.isa.4=§a研磨需要永恒研磨器复合体, 配方等级4
 otht.recipe.COC=§c§l史诗焦炭终结者 T123
 otht.recipe.WoodenFusionReactor=§b§l压缩原木聚变反应堆Mk 0
+otht.recipe.MISA=§2§l艾萨集成工厂
 

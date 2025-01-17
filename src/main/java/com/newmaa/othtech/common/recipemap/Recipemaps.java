@@ -1,6 +1,7 @@
 package com.newmaa.othtech.common.recipemap;
 
 import com.newmaa.othtech.common.OTHItemList;
+import com.newmaa.othtech.common.recipemap.formatter.MISASpecialValueFormatter;
 import com.newmaa.othtech.common.recipemap.recipeMapFrontends.OTH_GeneralFrontend;
 
 import gregtech.api.enums.ItemList;
@@ -127,5 +128,17 @@ public class Recipemaps {
         .disableOptimize()
         .useCustomFilterForNEI()
         .frontend(FluidOnlyFrontend::new)
+        .build();
+
+    public static final RecipeMap<OTH_RecipeMapBackend> MISA = RecipeMapBuilder
+        .of("otht.recipe.MISA", OTH_RecipeMapBackend::new)
+        .maxIO(16, 16, 4, 4)
+        .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
+        .neiSpecialInfoFormatter(MISASpecialValueFormatter.INSTANCE)
+        .frontend(OTH_GeneralFrontend::new)
+        .neiHandlerInfo(
+            builder -> builder.setDisplayStack(OTHItemList.MISA.get(1))
+                .setMaxRecipesPerPage(1))
+        .disableOptimize()
         .build();
 }

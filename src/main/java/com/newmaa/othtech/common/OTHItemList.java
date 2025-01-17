@@ -36,7 +36,7 @@ public enum OTHItemList {
     transTransM,
 
     // Machines
-
+    MISA,
     inf_WirelessHatch,
     inf_infWirelessHatch,
     Mega_QFT,
