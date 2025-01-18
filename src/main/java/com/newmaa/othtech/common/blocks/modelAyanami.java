@@ -47,10 +47,9 @@ public class modelAyanami extends BaseBlockContainer implements IRegistry<modelA
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int par2) {
+    public TileEntity createNewTileEntity(World worldIn, int meta) {
         return new tileEntityModelAyanami();
     }
-
     @Override
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack itemstack) {
         int l = MathHelper.floor_double(player.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;

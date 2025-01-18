@@ -25,7 +25,7 @@ public class renderAyanami extends TileEntitySpecialRenderer {
     }
 
     @Override
-    public void renderTileEntityAt(TileEntity te, double posX, double posY, double posZ, float timeSinceLastTick) {
+    public void renderTileEntityAt(TileEntity te, double posX, double posY, double posZ, float partialTickTime) {
         tileEntityModelAyanami te2 = (tileEntityModelAyanami) te;
         bindTexture(texture);
         GL11.glPushMatrix();
