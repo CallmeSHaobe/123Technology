@@ -1,5 +1,7 @@
 package com.newmaa.othtech.common.item.itemBlock;
 
+import static com.newmaa.othtech.common.ItemAndBlockHandler.MODEL_AYANAMI;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -11,7 +13,6 @@ import net.minecraftforge.client.model.IModelCustom;
 
 import org.lwjgl.opengl.GL11;
 
-import com.newmaa.othtech.common.blocks.modelAyanami;
 import com.newmaa.othtech.common.blocks.tileEntityModelAyanami;
 import com.newmaa.othtech.common.render.renderAyanami;
 
@@ -23,7 +24,7 @@ public class itemModelAyanamiRender implements IItemRenderer {
 
     public itemModelAyanamiRender() {
         ClientRegistry.bindTileEntitySpecialRenderer(tileEntityModelAyanami.class, new renderAyanami());
-        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(new modelAyanami().register()), this);
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(MODEL_AYANAMI), this);
 
     }
 

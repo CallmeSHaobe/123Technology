@@ -3,8 +3,8 @@ package com.newmaa.othtech;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.newmaa.othtech.common.ItemAndBlockHandler;
 import com.newmaa.othtech.common.beeyonds.OTHBeeyonds;
-import com.newmaa.othtech.common.item.itemBlock.itemModelAyanamiRender;
 import com.newmaa.othtech.common.materials.MaterialsLoader;
 import com.newmaa.othtech.common.recipemap.NEIRecipeMaps;
 import com.newmaa.othtech.machine.MachineLoader;
@@ -54,7 +54,7 @@ public class OTHTechnology {
     // GameRegistry." (Remove if not needed)
     public void preInit(FMLPreInitializationEvent event) {
         proxy.preInit(event);
-        new itemModelAyanamiRender();
+        ItemAndBlockHandler.INSTANCE.run();
         MaterialsLoader.load();
     }
 
