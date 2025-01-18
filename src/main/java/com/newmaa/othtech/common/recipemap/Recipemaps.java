@@ -41,7 +41,7 @@ public class Recipemaps {
         .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
         .frontend(OTH_GeneralFrontend::new)
         .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GTModHandler.getModItem("123Technology", "MetaItem", 1, 0))
+            builder -> builder.setDisplayStack(GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 0))
                 .setMaxRecipesPerPage(2))
         .disableOptimize()
         .build();
@@ -75,7 +75,7 @@ public class Recipemaps {
         .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
         .frontend(OTH_GeneralFrontend::new)
         .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GTModHandler.getModItem("123Technology", "MetaItem", 1, 15))
+            builder -> builder.setDisplayStack(GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 15))
                 .setMaxRecipesPerPage(1))
         .disableOptimize()
         .build();
@@ -86,7 +86,7 @@ public class Recipemaps {
         .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
         .frontend(OTH_GeneralFrontend::new)
         .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GTModHandler.getModItem("123Technology", "MetaItem", 1, 15))
+            builder -> builder.setDisplayStack(GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 15))
                 .setMaxRecipesPerPage(1))
         .disableOptimize()
         .build();
@@ -97,7 +97,7 @@ public class Recipemaps {
         .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
         .frontend(OTH_GeneralFrontend::new)
         .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GTModHandler.getModItem("123Technology", "MetaItem", 1, 15))
+            builder -> builder.setDisplayStack(GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 15))
                 .setMaxRecipesPerPage(1))
         .disableOptimize()
         .build();
@@ -108,7 +108,7 @@ public class Recipemaps {
         .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
         .frontend(OTH_GeneralFrontend::new)
         .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GTModHandler.getModItem("123Technology", "MetaItem", 1, 15))
+            builder -> builder.setDisplayStack(GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 15))
                 .setMaxRecipesPerPage(1))
         .disableOptimize()
         .build();
