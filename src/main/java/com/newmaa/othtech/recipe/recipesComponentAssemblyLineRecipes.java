@@ -145,7 +145,7 @@ public class recipesComponentAssemblyLineRecipes implements IRecipePool {
             .itemInputs(
                 ItemList.Electric_Motor_MAX.get(48),
                 GTModHandler.getModItem("GoodGenerator", "circuitWrap", 12, 14),
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 48, 4239),
+                GTModHandler.getModItem("gregtech", "gt.blockframes", 48, 141),
                 setStackSize(coil, 6 * 64),
                 setStackSize(GTModHandler.getModItem("tectech", "gt.stabilisation_field_generator", 1, 8), 96),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 4141),
@@ -190,7 +190,7 @@ public class recipesComponentAssemblyLineRecipes implements IRecipePool {
             .itemInputs(
                 setStackSize(ItemList.Emitter_MAX.get(1), 64 * 3),
                 GTModHandler.getModItem("tectech", "item.tm.itemAstralArrayFabricator", 50),
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 48, 4239),
+                GTModHandler.getModItem("gregtech", "gt.blockframes", 48, 141),
                 GTModHandler.getModItem("GoodGenerator", "circuitWrap", 24, 14),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 4141),
                 setStackSize(GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 18), 192),
@@ -215,7 +215,7 @@ public class recipesComponentAssemblyLineRecipes implements IRecipePool {
             4096,
             (int) TierEU.UMV,
             123,
-            new ItemStack[] { GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 4239),
+            new ItemStack[] { GTModHandler.getModItem("gregtech", "gt.blockframes", 1, 141),
                 GTModHandler.getModItem("dreamcraft", "item.StargateShieldingFoil", 2),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 12, 22143),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 12, 22139), ItemList.Robot_Arm_MAX.get(8),

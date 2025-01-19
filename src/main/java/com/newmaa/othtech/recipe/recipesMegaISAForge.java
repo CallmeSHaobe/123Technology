@@ -278,7 +278,7 @@ public class recipesMegaISAForge implements IRecipePool {
                 GTUtility.getIntegratedCircuit(12),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, 15410),
                 GTModHandler.getModItem("eternalsingularity", "eternal_singularity", 0),
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 4, 4239),
+                GTModHandler.getModItem("gregtech", "gt.blockframes", 4, 141),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 32230),
                 GTModHandler.getModItem("miscutils", "itemPlateDenseChromaticGlass", 64),
                 GTModHandler.getModItem("miscutils", "itemPlateDenseChromaticGlass", 64),

@@ -1,5 +1,6 @@
 package com.newmaa.othtech.recipe;
 
+import com.newmaa.othtech.Utils.RecipeBuilder;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -17,6 +18,8 @@ import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTUtility;
+
+import static com.newmaa.othtech.Utils.Utils.setStackSize;
 
 public class recipesCircuit implements IRecipePool {
 
@@ -224,7 +227,7 @@ public class recipesCircuit implements IRecipePool {
         GTValues.RA.stdBuilder()
             .itemOutputs(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32177))
             .itemInputs(
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 4, 4679),
+                GTModHandler.getModItem("gregtech", "gt.blockframes", 4, 583),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 2, 32176),
                 GTModHandler.getModItem("123Technology", "MetaItemOTH", 16, 12),
                 GTModHandler.getModItem("123Technology", "MetaItemOTH", 16, 9),
@@ -301,73 +304,73 @@ public class recipesCircuit implements IRecipePool {
             .addTo(MQFT);
         // ULV - ZPM general soc recipes
         // ULV
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 4, 32106),
                 GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 22))
-            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 32081))
+            .itemOutputs(setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 32081), 4096))
             .fluidInputs(new FluidStack(i140, 72))
             .noOptimize()
             .duration(20)
             .eut(30)
             .addTo(ISA);
         // LV
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 8, 32106),
                 GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 22))
-            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 32078))
+            .itemOutputs(setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32078), 2048))
             .fluidInputs(new FluidStack(i140, 144))
             .noOptimize()
             .duration(80)
             .eut(120)
             .addTo(ISA);
         // MV
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 16, 32106),
                 GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 22))
-            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 32080))
+            .itemOutputs(setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32080), 1024))
             .fluidInputs(new FluidStack(i140, 576))
             .noOptimize()
             .duration(320)
             .eut(480)
             .addTo(ISA);
         // HV
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 16, 32102),
                 GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 22))
-            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 32082))
+            .itemOutputs(setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32082), 512))
             .fluidInputs(new FluidStack(i140, 2304))
             .noOptimize()
             .duration(1280)
             .eut(1920)
             .addTo(ISA);
         // EV
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 32, 32103),
                 GTModHandler.getModItem("123Technology", "MetaItemOTH", 2, 22))
-            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 32085))
+            .itemOutputs(setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32085), 256))
             .fluidInputs(new FluidStack(i140, 2304 * 4))
             .noOptimize()
             .duration(5120)
             .eut(7680)
             .addTo(ISA);
         // IV
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 32, 32104),
                 GTModHandler.getModItem("123Technology", "MetaItemOTH", 2, 22))
-            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 32089))
+            .itemOutputs(setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 32089), 128))
             .fluidInputs(new FluidStack(bio, 576))
             .noOptimize()
             .duration(5120 * 4)
             .eut(7680 * 4)
             .addTo(ISA);
         // LuV
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 16, 32105),
                 GTModHandler.getModItem("123Technology", "MetaItemOTH", 4, 22))
@@ -378,11 +381,11 @@ public class recipesCircuit implements IRecipePool {
             .eut(7680 * 16)
             .addTo(ISA);
         // ZPM
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 8, 32107),
                 GTModHandler.getModItem("123Technology", "MetaItemOTH", 16, 22))
-            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 16, 32097))
+            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 32, 32097))
             .fluidInputs(
                 new FluidStack(bio, 2304),
                 new FluidStack(FluidRegistry.getFluidID("molten.chromaticglass"), 16 * 72))
