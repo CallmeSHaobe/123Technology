@@ -1,10 +1,12 @@
 package com.newmaa.othtech.recipe;
 
-import com.newmaa.othtech.Utils.RecipeBuilder;
+import static com.newmaa.othtech.Utils.Utils.setStackSize;
+
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
+import com.newmaa.othtech.Utils.RecipeBuilder;
 import com.newmaa.othtech.common.materials.liquids;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 
@@ -18,8 +20,6 @@ import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTUtility;
-
-import static com.newmaa.othtech.Utils.Utils.setStackSize;
 
 public class recipesCircuit implements IRecipePool {
 

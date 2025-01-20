@@ -46,14 +46,12 @@ public class recipesMISA implements IRecipePool {
                 Materials.Sulfur.getDust(80),
                 Materials.Sodium.getDust(20))
             .fluidInputs(FluidRegistry.getFluidStack("bioethanol", 20000), Materials.Nitrogen.getPlasma(32000))
-            .fluidOutputs(
-                Materials.Nitrogen.getGas(32000),
-                FluidRegistry.getFluidStack("mud.red.slurry", 32000))
+            .fluidOutputs(Materials.Nitrogen.getGas(32000), FluidRegistry.getFluidStack("mud.red.slurry", 32000))
             .specialValue(3)
             .eut(16777216)
             .duration(500 * 20)
             .addTo(Recipemaps.MISA);
-        //Dragon Blood
+        // Dragon Blood
         RecipeBuilder.builder()
             .itemOutputs(
                 setStackSize(Materials.DraconiumAwakened.getDust(1), 16 * 110),
@@ -66,9 +64,7 @@ public class recipesMISA implements IRecipePool {
                 Materials.Sulfur.getDust(80),
                 Materials.Sodium.getDust(20))
             .fluidInputs(FluidRegistry.getFluidStack("bioethanol", 20000), Materials.Oxygen.getPlasma(32000))
-            .fluidOutputs(
-                Materials.Oxygen.getGas(32000),
-                FluidRegistry.getFluidStack("mud.red.slurry", 32000))
+            .fluidOutputs(Materials.Oxygen.getGas(32000), FluidRegistry.getFluidStack("mud.red.slurry", 32000))
             .specialValue(3)
             .eut(67108864)
             .duration(600 * 20)
