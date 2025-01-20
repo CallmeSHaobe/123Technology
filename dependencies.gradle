@@ -50,6 +50,7 @@ dependencies {
     implementation('com.github.GTNewHorizons:Eternal-Singularity:1.2.1:dev')
     implementation('com.github.GTNewHorizons:Universal-Singularities:8.8.0:dev')
     implementation('com.github.GTNewHorizons:supersolarpanels:1.1.3:dev')
+    implementation('com.github.GTNewHorizons:AppleCore:3.3.4:dev')
     implementation('com.github.GTNewHorizons:Binnie:2.4.4:dev')
     implementation('com.github.GTNewHorizons:SGCraft:1.4.4-GTNH:dev')
     implementation('com.github.GTNewHorizons:MagicBees:2.8.5-GTNH:dev')

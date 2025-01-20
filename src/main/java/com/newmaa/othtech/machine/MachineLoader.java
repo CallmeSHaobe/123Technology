@@ -33,6 +33,7 @@ public class MachineLoader {
     public static ItemStack WoodFusion;
     public static ItemStack IMBAIMBAblastfurnace;
     public static ItemStack MISA;
+    public static ItemStack FOOD;
 
     public static void loadMachines() {
         final int IDs = 23520;
@@ -106,5 +107,7 @@ public class MachineLoader {
         MISA = new OTEMegaIsaFactory(IDs + 24, "MISA", "§a艾萨处理集成工厂OTH").getStackForm(1);
         OTHItemList.MISA.set(MISA);
 
+        FOOD = new OTEFoodGenerator(IDs + 25, "FOOD", "食物发电机").getStackForm(1);
+        OTHItemList.FooD.set(FOOD);
     }
 }
