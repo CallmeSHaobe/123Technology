@@ -1,55 +1,50 @@
 package com.newmaa.othtech.machine;
 
-import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
-import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
-import com.gtnewhorizon.structurelib.structure.StructureDefinition;
-import com.newmaa.othtech.common.item.ItemLoader;
-import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import gregtech.api.GregTechAPI;
-import gregtech.api.enums.*;
-import gregtech.api.interfaces.IFoodStat;
-import gregtech.api.interfaces.ITexture;
-import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
-import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
-import gregtech.api.recipe.check.CheckRecipeResult;
-import gregtech.api.recipe.check.CheckRecipeResultRegistry;
-import gregtech.api.render.TextureFactory;
-import gregtech.api.util.GTUtility;
-import gregtech.api.util.MultiblockTooltipBuilder;
-import gregtech.common.blocks.BlockCasings2;
-import gtPlusPlus.core.block.ModBlocks;
-import mcp.mobius.waila.api.IWailaConfigHandler;
-import mcp.mobius.waila.api.IWailaDataAccessor;
-import net.minecraft.block.Block;
+import static gregtech.api.GregTechAPI.sBlockCasings2;
+import static gregtech.api.enums.HatchElement.*;
+import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
+
+import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import org.jetbrains.annotations.NotNull;
+
+import com.gtnewhorizon.structurelib.alignment.constructable.IConstructable;
+import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructable;
+import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
+import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
+import com.gtnewhorizon.structurelib.structure.StructureDefinition;
+import com.newmaa.othtech.machine.machineclass.TT_MultiMachineBase_EM;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import gregtech.api.GregTechAPI;
+import gregtech.api.enums.Textures;
+import gregtech.api.interfaces.ITexture;
+import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
+import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
+import gregtech.api.metatileentity.implementations.MTEHatchDynamo;
+import gregtech.api.recipe.check.CheckRecipeResult;
+import gregtech.api.recipe.check.CheckRecipeResultRegistry;
+import gregtech.api.render.TextureFactory;
+import gregtech.api.util.GTUtility;
+import gregtech.api.util.MultiblockTooltipBuilder;
+import gregtech.common.blocks.BlockCasings2;
+import mcp.mobius.waila.api.IWailaConfigHandler;
+import mcp.mobius.waila.api.IWailaDataAccessor;
 import squeek.applecore.api.food.FoodValues;
+import tectech.thing.metaTileEntity.hatch.MTEHatchDynamoMulti;
 
-import java.util.List;
-import java.util.Objects;
+public class OTEFoodGenerator extends TT_MultiMachineBase_EM implements IConstructable, ISurvivalConstructable {
 
-import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
-import static gregtech.api.GregTechAPI.sBlockCasings2;
-import static gregtech.api.enums.HatchElement.*;
-import static gregtech.api.enums.Mods.Chisel;
-import static gregtech.api.enums.Mods.TinkerConstruct;
-import static gregtech.api.recipe.RecipeMaps.cannerRecipes;
-import static gregtech.api.util.GTRecipeBuilder.SECONDS;
-import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
-import static gregtech.api.util.GTStructureUtility.ofFrame;
-
-public class OTEFoodGenerator extends OTH_MultiMachineBase<OTEFoodGenerator> {
     public OTEFoodGenerator(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
     }
@@ -63,6 +58,7 @@ public class OTEFoodGenerator extends OTH_MultiMachineBase<OTEFoodGenerator> {
     public int valveFood = 0;
     public int coilTier = 1;
     public int casingTier = 1;
+    private long tStored;
 
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
@@ -75,9 +71,10 @@ public class OTEFoodGenerator extends OTH_MultiMachineBase<OTEFoodGenerator> {
         valveFood = aNBT.getInteger("valveFood");
         super.loadNBTData(aNBT);
     }
+
     @Override
     public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
-                                int z) {
+        int z) {
         super.getWailaNBTData(player, tile, tag, world, x, y, z);
         final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
         if (tileEntity != null) {
@@ -88,7 +85,7 @@ public class OTEFoodGenerator extends OTH_MultiMachineBase<OTEFoodGenerator> {
 
     @Override
     public void getWailaBody(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor,
-                             IWailaConfigHandler config) {
+        IWailaConfigHandler config) {
         super.getWailaBody(itemStack, currentTip, accessor, config);
         final NBTTagCompound tag = accessor.getNBTData();
         currentTip.add(
@@ -101,11 +98,6 @@ public class OTEFoodGenerator extends OTH_MultiMachineBase<OTEFoodGenerator> {
                 + EnumChatFormatting.RESET);
     }
 
-    @Override
-    protected boolean isEnablePerfectOverclock() {
-        return false;
-    }
-
     protected int getMaxParallelRecipes() {
         return 64;
     }
@@ -113,40 +105,50 @@ public class OTEFoodGenerator extends OTH_MultiMachineBase<OTEFoodGenerator> {
     protected float getSpeedBonus() {
         return 1;
     }
+
     @Override
-    public @NotNull CheckRecipeResult checkProcessing() {
-
-
+    public @NotNull CheckRecipeResult checkProcessing_EM() {
         List<ItemStack> inputStacks = getStoredInputs();
-        if (inputStacks == null) {return CheckRecipeResultRegistry.NO_RECIPE;}
 
-        for (ItemStack itemStack : inputStacks){
-
-            int initialStackSize = itemStack.stackSize;
-            FoodValues getFoodValues = FoodValues.get(itemStack);
-            if (getFoodValues == null) {
-                break;
-            } else {
-                valveFood = getFoodValues.hunger;
-                if (initialStackSize <= 64) {
-                    mEUt = (int) Math.min(valveFood * coilTier * (Math.pow(casingTier, 4) * initialStackSize), Integer.MAX_VALUE);
-                    itemStack.stackSize -= initialStackSize;
-                    return CheckRecipeResultRegistry.GENERATING;
-                } else {
-                    itemStack.stackSize -= 64;
-                    mEUt = (int) Math.min(valveFood * coilTier * (Math.pow(casingTier, 4) * getMaxParallelRecipes()), Integer.MAX_VALUE);
-                    return CheckRecipeResultRegistry.GENERATING;
+        if (getStoredInputs() == null && mEUt == 0) {
+            return CheckRecipeResultRegistry.NO_RECIPE;
+        } else {
+            for (ItemStack itemStack : inputStacks) {
+                int initialStackSize;
+                initialStackSize = itemStack.stackSize;
+                FoodValues getFoodValues = FoodValues.get(itemStack);
+                if (getFoodValues != null) {
+                    valveFood = getFoodValues.hunger;
+                    if (getStoredInputs() == null) {
+                        break;
+                    } else if (initialStackSize <= 64 && getStoredInputs() != null) {
+                        mEUt = (int) Math.min(
+                            valveFood * coilTier * (Math.pow(casingTier, 4) * initialStackSize),
+                            Integer.MAX_VALUE);
+                        itemStack.stackSize -= initialStackSize;
+                        updateSlots();
+                    } else if (initialStackSize > 64 && getStoredInputs() != null) {
+                        mEUt = (int) Math.min(
+                            valveFood * coilTier * (Math.pow(casingTier, 4) * getMaxParallelRecipes()),
+                            Integer.MAX_VALUE);
+                        itemStack.stackSize -= 64;
+                        updateSlots();
+                    } else if (initialStackSize == 0 && getStoredInputs() == null) {
+                        mEUt = 0;
+                        updateSlots();
+                    }
                 }
             }
-
         }
-
+        tStored = mEUt;
         mEfficiency = 10000;
-        mProgresstime = 128;
-        return CheckRecipeResultRegistry.NO_RECIPE;
+        mMaxProgresstime = 1;
+        updateSlots();
+        return CheckRecipeResultRegistry.GENERATING;
     }
+
     @Override
-    public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
+    public boolean checkMachine_EM(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
         repairMachine();
         return checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet);
 
@@ -177,14 +179,51 @@ public class OTEFoodGenerator extends OTH_MultiMachineBase<OTEFoodGenerator> {
 
     }
 
+    @Override
+    public boolean onRunningTick(ItemStack stack) {
+        if (tStored > 0) {
+            // push eu to dynamo
+            for (MTEHatchDynamo eDynamo : super.mDynamoHatches) {
+                if (eDynamo == null || !eDynamo.isValid()) {
+                    continue;
+                }
+                final long power = eDynamo.maxEUStore() - eDynamo.getEUVar();
+                if (tStored >= power) {
+                    eDynamo.setEUVar(eDynamo.getEUVar() + power);
+                    tStored -= power;
+                } else {
+                    eDynamo.setEUVar(eDynamo.getEUVar() + tStored);
+                    tStored = 0L;
+                }
+            }
+
+            for (MTEHatchDynamoMulti eDynamo : eDynamoMulti) {
+                if (eDynamo == null || !eDynamo.isValid()) {
+                    continue;
+                }
+                final long power = eDynamo.maxEUStore() - eDynamo.getEUVar();
+                if (tStored >= power) {
+                    eDynamo.setEUVar(eDynamo.getEUVar() + power);
+                    tStored -= power;
+                } else {
+                    eDynamo.setEUVar(eDynamo.getEUVar() + tStored);
+                    tStored = 0L;
+                }
+            }
+        }
+
+        return true;
+    }
+
     private static final String STRUCTURE_PIECE_MAIN = "main";
 
     private final int horizontalOffSet = 0;
     private final int verticalOffSet = 1;
     private final int depthOffSet = 0;
     private static IStructureDefinition<OTEFoodGenerator> STRUCTURE_DEFINITION = null;
+
     @Override
-    public IStructureDefinition<OTEFoodGenerator> getStructureDefinition() {
+    public IStructureDefinition<OTEFoodGenerator> getStructure_EM() {
         if (STRUCTURE_DEFINITION == null) {
             STRUCTURE_DEFINITION = StructureDefinition.<OTEFoodGenerator>builder()
                 .addShape(STRUCTURE_PIECE_MAIN, shapeMain)
@@ -202,11 +241,11 @@ public class OTEFoodGenerator extends OTH_MultiMachineBase<OTEFoodGenerator> {
     }
 
     // Structured by NewMaa
-    private final String[][] shapeMain = new String[][] {{"A~A"}};
+    private final String[][] shapeMain = new String[][] { { "A~A" } };
+
     @Override
-    public boolean addToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
-        return super.addToMachineList(aTileEntity, aBaseCasingIndex)
-            || addExoticEnergyInputToMachineList(aTileEntity, aBaseCasingIndex);
+    public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
+        return new OTEFoodGenerator(this.mName);
     }
 
     @Override
@@ -220,7 +259,7 @@ public class OTEFoodGenerator extends OTH_MultiMachineBase<OTEFoodGenerator> {
         tt.addMachineType("只是一个发电机")
             .addInfo("再也不用担心吃得太饱了")
             .addInfo("丰矿地烧掉一切食物")
-            .addInfo("发电:食物饥饿值 * 线圈等级 * 机器外壳等级^4 , 最高发电1A MAX/t , 64并行")
+            .addInfo("发电:食物饥饿值 * 线圈等级 * 机器外壳等级^4 , 最高发电1A MAX/t , 64并行 , 一次最多烧毁一组食物")
             .addInfo("§c§l注意:机器污染过高:如遇跳电并报错“无法排出污染”, 请尝试放置多个消声仓")
             .addInfo("支持TecTech多安动力舱")
             .addSeparator()
@@ -271,11 +310,6 @@ public class OTEFoodGenerator extends OTH_MultiMachineBase<OTEFoodGenerator> {
         return true;
     }
 
-    @Override
-    public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-        return new OTEFoodGenerator(this.mName);
-    }
-
     private static Textures.BlockIcons.CustomIcon ScreenON;
 
     @Override
@@ -287,7 +321,7 @@ public class OTEFoodGenerator extends OTH_MultiMachineBase<OTEFoodGenerator> {
 
     @Override
     public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection facing,
-                                 int colorIndex, boolean aActive, boolean aRedstone) {
+        int colorIndex, boolean aActive, boolean aRedstone) {
         if (side == facing) {
             return new ITexture[] {
                 Textures.BlockIcons
@@ -306,9 +340,4 @@ public class OTEFoodGenerator extends OTH_MultiMachineBase<OTEFoodGenerator> {
             Textures.BlockIcons.getCasingTextureForId(GTUtility.getCasingTextureIndex(GregTechAPI.sBlockCasings2, 0)) };
     }
 
-
 }
-
-
-
-

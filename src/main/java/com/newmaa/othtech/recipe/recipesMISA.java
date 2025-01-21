@@ -2,8 +2,6 @@ package com.newmaa.othtech.recipe;
 
 import static com.newmaa.othtech.Utils.Utils.setStackSize;
 
-import gregtech.common.items.CombType;
-import gregtech.loaders.misc.GTBees;
 import net.minecraftforge.fluids.FluidRegistry;
 
 import com.newmaa.othtech.Utils.RecipeBuilder;
@@ -11,6 +9,8 @@ import com.newmaa.othtech.common.recipemap.Recipemaps;
 
 import gregtech.api.enums.Materials;
 import gregtech.api.util.GTModHandler;
+import gregtech.common.items.CombType;
+import gregtech.loaders.misc.GTBees;
 
 public class recipesMISA implements IRecipePool {
 
@@ -273,37 +273,45 @@ public class recipesMISA implements IRecipePool {
             .addTo(Recipemaps.MISA);
         // Indium Plus
         RecipeBuilder.builder()
-            .itemOutputs(
-                setStackSize(Materials.Indium.getDust(1), 16 * 256)
-            )
-            .itemInputs(
-                setStackSize(GTBees.combs.getStackForType(CombType.INDIUM, 1), 256)
-            )
-            .fluidInputs(
-                Materials.HydrochloricAcid.getFluid(32000)
-            )
+            .itemOutputs(setStackSize(Materials.Indium.getDust(1), 16 * 256))
+            .itemInputs(setStackSize(GTBees.combs.getStackForType(CombType.INDIUM, 1), 256))
+            .fluidInputs(Materials.HydrochloricAcid.getFluid(32000))
             .duration(240 * 20)
             .eut(123123)
             .specialValue(2)
             .addTo(Recipemaps.MISA);
         // Cosmic Neut
         RecipeBuilder.builder()
-            .itemInputs(
-                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5388), 16 * 256)
-            )
+            .itemInputs(setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5388), 16 * 256))
             .itemOutputs(
                 setStackSize(Materials.BlackPlutonium.getDust(1), 16 * 120),
-                setStackSize(Materials.CosmicNeutronium.getDust(1), 16 * 32)
-            )
-            .fluidInputs(
-                Materials.Helium.getPlasma(16000)
-            )
-            .fluidOutputs(
-                Materials.Helium.getGas(16000)
-            )
+                setStackSize(Materials.CosmicNeutronium.getDust(1), 16 * 32))
+            .fluidInputs(Materials.Helium.getPlasma(16000))
+            .fluidOutputs(Materials.Helium.getGas(16000))
             .duration(600 * 20)
             .eut(1919810)
             .specialValue(2)
+            .addTo(Recipemaps.MISA);
+        // Osmium
+        RecipeBuilder.builder()
+            .itemOutputs(
+                setStackSize(Materials.Iridium.getDust(1), 16 * 60),
+                setStackSize(Materials.Osmium.getDust(1), 16 * 20))
+            .itemInputs(
+                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5083), 16 * 256),
+                setStackSize(Materials.Carbon.getDust(1), 40),
+                Materials.Sulfur.getDust(80),
+                Materials.Sodium.getDust(20))
+            .fluidInputs(
+                FluidRegistry.getFluidStack("bioethanol", 20000),
+                FluidRegistry.getFluidStack("steam", 4000),
+                Materials.HydrochloricAcid.getFluid(16000))
+            .fluidOutputs(
+                FluidRegistry.getFluidStack("water", 32000),
+                FluidRegistry.getFluidStack("mud.red.slurry", 32000))
+            .specialValue(2)
+            .eut(491520)
+            .duration(400 * 20)
             .addTo(Recipemaps.MISA);
 
     }
