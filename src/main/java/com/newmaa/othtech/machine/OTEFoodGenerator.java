@@ -126,15 +126,18 @@ public class OTEFoodGenerator extends TT_MultiMachineBase_EM implements IConstru
                             valveFood * coilTier * (Math.pow(casingTier, 4) * initialStackSize),
                             Integer.MAX_VALUE);
                         itemStack.stackSize -= initialStackSize;
+                        inputStacks.clear();
                         updateSlots();
                     } else if (initialStackSize > 64 && getStoredInputs() != null) {
                         mEUt = (int) Math.min(
                             valveFood * coilTier * (Math.pow(casingTier, 4) * getMaxParallelRecipes()),
                             Integer.MAX_VALUE);
                         itemStack.stackSize -= 64;
+                        inputStacks.clear();
                         updateSlots();
                     } else if (initialStackSize == 0 && getStoredInputs() == null) {
                         mEUt = 0;
+                        inputStacks.clear();
                         updateSlots();
                     }
                 }
