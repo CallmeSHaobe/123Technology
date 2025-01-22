@@ -4,6 +4,7 @@ import static gregtech.api.GregTechAPI.sBlockCasings2;
 import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 
+import java.util.Iterator;
 import java.util.List;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -110,43 +111,46 @@ public class OTEFoodGenerator extends TT_MultiMachineBase_EM implements IConstru
     public @NotNull CheckRecipeResult checkProcessing_EM() {
         List<ItemStack> inputStacks = getStoredInputs();
 
-        if (getStoredInputs() == null && mEUt == 0) {
+        if (inputStacks == null || inputStacks.isEmpty()) {
             return CheckRecipeResultRegistry.NO_RECIPE;
-        } else {
-            for (ItemStack itemStack : inputStacks) {
-                int initialStackSize;
-                initialStackSize = itemStack.stackSize;
-                FoodValues getFoodValues = FoodValues.get(itemStack);
-                if (getFoodValues != null) {
-                    valveFood = getFoodValues.hunger;
-                    if (getStoredInputs() == null) {
-                        break;
-                    } else if (initialStackSize <= 64 && getStoredInputs() != null) {
-                        mEUt = (int) Math.min(
-                            valveFood * coilTier * (Math.pow(casingTier, 4) * initialStackSize),
-                            Integer.MAX_VALUE);
-                        itemStack.stackSize -= initialStackSize;
-                        inputStacks.clear();
-                        updateSlots();
-                    } else if (initialStackSize > 64 && getStoredInputs() != null) {
-                        mEUt = (int) Math.min(
-                            valveFood * coilTier * (Math.pow(casingTier, 4) * getMaxParallelRecipes()),
-                            Integer.MAX_VALUE);
-                        itemStack.stackSize -= 64;
-                        inputStacks.clear();
-                        updateSlots();
-                    } else if (initialStackSize == 0 && getStoredInputs() == null) {
-                        mEUt = 0;
-                        inputStacks.clear();
-                        updateSlots();
-                    }
-                }
-            }
         }
+
+        for (int i = 0; i < inputStacks.size(); i++) {
+            ItemStack itemStack = inputStacks.get(i);
+
+            if (itemStack == null || itemStack.stackSize <= 0) {
+                inputStacks.set(i, null);
+                continue;
+            }
+
+            FoodValues foodValues = FoodValues.get(itemStack);
+            if (foodValues == null) {
+                continue;
+            }
+
+            valveFood = foodValues.hunger;
+
+            long generatedEU = (long) ((long) valveFood * coilTier * Math.pow(casingTier, 4) * itemStack.stackSize);
+            mEUt = (int) Math.min(generatedEU, Integer.MAX_VALUE);
+            itemStack.stackSize = 0;
+            inputStacks.set(i, null);
+
+            updateSlots();
+
+            break;
+        }
+
+        inputStacks.removeIf(item -> item == null || item.stackSize <= 0);
+
+        if (mEUt == 0) {
+            return CheckRecipeResultRegistry.NO_RECIPE;
+        }
+
         tStored = mEUt;
         mEfficiency = 10000;
         mMaxProgresstime = 1;
         updateSlots();
+
         return CheckRecipeResultRegistry.GENERATING;
     }
 
