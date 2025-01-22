@@ -4,7 +4,6 @@ import static gregtech.api.GregTechAPI.sBlockCasings2;
 import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 
-import java.util.Iterator;
 import java.util.List;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -128,7 +127,7 @@ public class OTEFoodGenerator extends TT_MultiMachineBase_EM implements IConstru
                 continue;
             }
 
-            valveFood = foodValues.hunger;
+            valveFood = (int) Math.min(Math.pow(foodValues.hunger, 2), Integer.MAX_VALUE);
 
             long generatedEU = (long) ((long) valveFood * coilTier * Math.pow(casingTier, 4) * itemStack.stackSize);
             mEUt = (int) Math.min(generatedEU, Integer.MAX_VALUE);
@@ -266,9 +265,10 @@ public class OTEFoodGenerator extends TT_MultiMachineBase_EM implements IConstru
         tt.addMachineType("只是一个发电机")
             .addInfo("再也不用担心吃得太饱了")
             .addInfo("丰矿地烧掉一切食物")
-            .addInfo("发电:食物饥饿值 * 线圈等级 * 机器外壳等级^4 , 最高发电1A MAX/t , 64并行 , 一次最多烧毁一组食物")
+            .addInfo("发电:食物饥饿值^2 * 线圈等级 * 机械方块等级^4 , 最高发电1A MAX/t , 64并行 , 一次最多烧毁一组相同食物")
             .addInfo("§c§l注意:机器污染过高:如遇跳电并报错“无法排出污染”, 请尝试放置多个消声仓")
             .addInfo("支持TecTech多安动力舱")
+            .addInfo("赞美伟大的富婆Safari_xiu吧!没有他就没有现在的123了憋憋。")
             .addSeparator()
             .addPollutionAmount(100000)
             .addController("发电坤")
