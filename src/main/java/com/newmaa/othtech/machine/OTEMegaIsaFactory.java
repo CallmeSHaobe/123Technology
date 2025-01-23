@@ -65,13 +65,11 @@ public class OTEMegaIsaFactory extends OTH_MultiMachineBase<OTEMegaIsaFactory> {
 
     @Override
     public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
-        ItemStack aGuiStack = this.getControllerSlot();
-        if (aGuiStack != null) {
-            if (GTUtility.areStacksEqual(aGuiStack, GTModHandler.getModItem("123Technology", "IsaMillModule", 1))) {
-                this.tierMill = aGuiStack.getItemDamage();
-            }
-        }
+        if (GTUtility.areStacksEqual(getControllerSlot(), GTModHandler.getModItem("123Technology", "IsaMillModule", 1))) {
+            this.tierMill = getControllerSlot().getItemDamage();
+        }//TODO Cache the itemStack
     }
+
 
     private HeatingCoilLevel coilLevel;
 
