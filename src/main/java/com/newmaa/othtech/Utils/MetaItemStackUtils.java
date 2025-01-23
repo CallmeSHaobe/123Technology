@@ -24,6 +24,17 @@ public class MetaItemStackUtils {
         return new ItemStack(basicItem, 1, Meta);
     }
 
+    public static ItemStack initMetaItemStackISA(String i18nName, int Meta, Item basicItem,
+        Set<Integer> aContainerSet) {
+
+        // Handle the Name
+        texter(i18nName, basicItem.getUnlocalizedName() + "." + Meta + ".name");
+        // Hold the list of Meta-generated Items
+        aContainerSet.add(Meta);
+
+        return new ItemStack(basicItem, 1, Meta);
+    }
+
     // generate itemBlocked stack when init
     public static ItemStack initMetaItemStack(String i18nName, int Meta, Block baseBlock, Set<Integer> aContainerSet) {
         texter(i18nName, baseBlock.getUnlocalizedName() + "." + Meta + ".name");

@@ -8,4 +8,5 @@ public final class BasicItems {
 
     public static final Item MetaItem = new ItemAdder("MetaItemBase", "MetaItemOTH", CreativeTabsLoader.tabothtech)
         .setTextureName("123technology:MetaItem/0");
+
 }

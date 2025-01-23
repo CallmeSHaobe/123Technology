@@ -34,6 +34,10 @@ public enum OTHItemList {
     socInfM,
     socNorM,
     transTransM,
+    IsaNEI,
+    ISAIOS,
+    ISAHYP,
+    ISASPE,
 
     // Machines
     MISA,

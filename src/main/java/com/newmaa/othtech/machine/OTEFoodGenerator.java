@@ -223,9 +223,9 @@ public class OTEFoodGenerator extends TT_MultiMachineBase_EM implements IConstru
 
     private static final String STRUCTURE_PIECE_MAIN = "main";
 
-    private final int horizontalOffSet = 0;
-    private final int verticalOffSet = 1;
-    private final int depthOffSet = 0;
+    private final int horizontalOffSet = 40;
+    private final int verticalOffSet = 27;
+    private final int depthOffSet = 20;
     private static IStructureDefinition<OTEFoodGenerator> STRUCTURE_DEFINITION = null;
 
     @Override
@@ -246,7 +246,6 @@ public class OTEFoodGenerator extends TT_MultiMachineBase_EM implements IConstru
         return STRUCTURE_DEFINITION;
     }
 
-    // Structured by NewMaa
     private final String[][] shapeMain = new String[][] { { "A~A" } };
 
     @Override

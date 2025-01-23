@@ -25,6 +25,10 @@ MetaItemOTH.20.name=§7寰宇SoC
 MetaItemOTH.21.name=§5悖论无限SoC
 MetaItemOTH.22.name=§3通用SoC
 MetaItemOTH.23.name=§5超距遥感器
+IsaMillModule.1.name=§aNeI合金研磨器复合体
+IsaMillModule.2.name=§a铱锇钐合金研磨器复合体
+IsaMillModule.3.name=§c海珀珍研磨器复合体
+IsaMillModule.4.name=§7永恒研磨器复合体
 tt.boardCasimir=§a一块能够植入卡西米尔鳍片的板材，几乎不会与外界发生任何交互，时空的终点？
 tt.boardTrans=§a一块容纳过去、当下、未来，包含无穷多可能得微缩空间
 tt.capTrans=§a内置无穷大储量的芯片，可以包纳同一时空下时间带来的一切悖论
@@ -43,6 +47,10 @@ tt.socCosmic=§4§o银河系的星河纹丝不动地横过天穹，像是被§b�
 tt.socInf=§7§k//§9§l给时光以生命，给岁月以文明。§7§k//
 tt.socNor=§c§l万物归一...
 tt.transTrans=§a突破任意封装空间内距离与时间的限制，并使得超维度通信变得可能
+tt.neiISA=看NEI..
+tt.IOS=123,我们经爱你呀
+tt.HYP=坚不可摧..
+tt.SPE=研磨过去现在和未来
 
 
 
@@ -75,6 +83,8 @@ otht.recipe.SINOPEC=§l§a中国石化
 otht.recipe.TSSF=§l§c唐山炼钢厂
 otht.recipe.MEEC=§l§4噬魂监狱
 GT5U.gui.text.casingErr=§4机器因玻璃等级不够而憋憋
+GT5U.gui.text.tierMill=§4机器因研磨器不够坚硬而憋憋
+GT5U.gui.text.glassErr=§4机器因玻璃等级不够而憋憋
 GT5U.gui.text.nofb=§4机器因老登不放星阵就想用太空组装而憋憋
 otht.recipe.MegaPCB=§4§l巨型PCB工厂
 otht.recipe.MegaPCB_A=§4§l贴片工坊
