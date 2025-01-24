@@ -172,14 +172,15 @@ public class OTEMegaIsaFactory extends OTH_MultiMachineBase<OTEMegaIsaFactory> {
     @Override
     public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
         if (aTick % 20 == 0) {
-            if (getControllerSlot() != null) {
-                if (getControllerSlot().isItemEqual(OTHItemList.IsaNEI.get(1))) {
+            ItemStack controllerSlotItemStack = getControllerSlot();
+            if (controllerSlotItemStack != null) {
+                if (GTUtility.areStacksEqual(controllerSlotItemStack, OTHItemList.IsaNEI.get(1))) {
                     tierMill = 1;
-                } else if (getControllerSlot().isItemEqual(OTHItemList.ISAIOS.get(1))) {
+                } else if (GTUtility.areStacksEqual(controllerSlotItemStack, OTHItemList.ISAIOS.get(1))) {
                     tierMill = 2;
-                } else if (getControllerSlot().isItemEqual(OTHItemList.ISAHYP.get(1))) {
+                } else if (GTUtility.areStacksEqual(controllerSlotItemStack, OTHItemList.ISAHYP.get(1))) {
                     tierMill = 3;
-                } else if (getControllerSlot().isItemEqual(OTHItemList.ISASPE.get(1))) {
+                } else if (GTUtility.areStacksEqual(controllerSlotItemStack, OTHItemList.ISASPE.get(1))) {
                     tierMill = 4;
                 }
             } else {
