@@ -9,11 +9,8 @@ import static gregtech.api.enums.HatchElement.OutputHatch;
 import static gregtech.api.enums.Textures.BlockIcons.*;
 import static gregtech.api.util.GTStructureUtility.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import com.newmaa.othtech.common.OTHItemList;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -28,6 +25,7 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.Utils.Utils;
+import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
 
@@ -45,7 +43,6 @@ import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.recipe.check.SimpleCheckRecipeResult;
 import gregtech.api.render.TextureFactory;
-import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
@@ -65,10 +62,6 @@ public class OTEMegaIsaFactory extends OTH_MultiMachineBase<OTEMegaIsaFactory> {
 
     private int tierMill = 0;
     private byte glassTier = 0;
-    private final ItemStack aGuiStack = getControllerSlot();
-
-
-
 
     private HeatingCoilLevel coilLevel;
 
@@ -175,29 +168,31 @@ public class OTEMegaIsaFactory extends OTH_MultiMachineBase<OTEMegaIsaFactory> {
         return checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet);
 
     }
+
     @Override
     public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
         if (aTick % 20 == 0) {
-            if (aGuiStack != null) {
-                if (GTUtility.areStacksEqual(aGuiStack, OTHItemList.IsaNEI.get(1))) {
+            if (getControllerSlot() != null) {
+                if (getControllerSlot().isItemEqual(OTHItemList.IsaNEI.get(1))) {
                     tierMill = 1;
-                } else if (GTUtility.areStacksEqual(aGuiStack, OTHItemList.ISAIOS.get(1))) {
+                } else if (getControllerSlot().isItemEqual(OTHItemList.ISAIOS.get(1))) {
                     tierMill = 2;
-                } else if (GTUtility.areStacksEqual(aGuiStack, OTHItemList.ISAHYP.get(1))) {
+                } else if (getControllerSlot().isItemEqual(OTHItemList.ISAHYP.get(1))) {
                     tierMill = 3;
-                } else if (GTUtility.areStacksEqual(aGuiStack, OTHItemList.ISASPE.get(1))) {
+                } else if (getControllerSlot().isItemEqual(OTHItemList.ISASPE.get(1))) {
                     tierMill = 4;
                 }
+            } else {
+                tierMill = 0;
             }
-            super.onPostTick(aBaseMetaTileEntity, aTick);
         }
+        super.onPostTick(aBaseMetaTileEntity, aTick);
     }
 
     @Override
     public void construct(ItemStack stackSize, boolean hintsOnly) {
         repairMachine();
         buildPiece(STRUCTURE_PIECE_MAIN, stackSize, hintsOnly, horizontalOffSet, verticalOffSet, depthOffSet);
-
     }
 
     @Override
@@ -217,7 +212,6 @@ public class OTEMegaIsaFactory extends OTH_MultiMachineBase<OTEMegaIsaFactory> {
             true);
 
     }
-
 
     private static final String STRUCTURE_PIECE_MAIN = "main";
 
