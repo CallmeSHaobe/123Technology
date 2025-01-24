@@ -173,7 +173,7 @@ public enum OTHBeeDefinition implements IBeeDefinition {
             IBeeMutationCustom tMutation = dis.registerMutation(JIUCAI.getSpecies(), WEIWEI.getSpecies(), 1);
             tMutation.requireResource(GregTechAPI.sBlockMachines, 23520 + 17); // Enqing Factory
         }),
-    IRON(OTHBranchDefinition.OTHBYDS, "Iron", true, new Color(0xD0FFFFFF, true), new Color(0x96FFFFFF, true),
+    IRONOTH(OTHBranchDefinition.OTHBYDS, "Iron", true, new Color(0xD0FFFFFF, true), new Color(0x96FFFFFF, true),
         beeSpecies -> {
             beeSpecies.addProduct(new ItemStack(Blocks.iron_block, 16), 1F);
             beeSpecies.setHumidity(DAMP);

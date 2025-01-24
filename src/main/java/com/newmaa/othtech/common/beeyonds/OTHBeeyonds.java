@@ -60,7 +60,7 @@ public class OTHBeeyonds {
 
     public OTHBeeyonds() {
         combs = new itemCombs();
-        combs.initCombsRecipes();
+        itemCombs.initCombsRecipes();
         setupOTHAlleles();
         OTHBeeDefinition.initBees();
     }
