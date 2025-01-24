@@ -9,8 +9,11 @@ import static gregtech.api.enums.HatchElement.OutputHatch;
 import static gregtech.api.enums.Textures.BlockIcons.*;
 import static gregtech.api.util.GTStructureUtility.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import com.newmaa.othtech.common.OTHItemList;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -60,15 +63,11 @@ public class OTEMegaIsaFactory extends OTH_MultiMachineBase<OTEMegaIsaFactory> {
         super(aName);
     }
 
-    public int tierMill = 0;
-    public byte glassTier = 0;
+    private int tierMill = 0;
+    private byte glassTier = 0;
+    private final ItemStack aGuiStack = getControllerSlot();
 
-    @Override
-    public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
-        if (GTUtility.areStacksEqual(getControllerSlot(), GTModHandler.getModItem("123Technology", "IsaMillModule", 1))) {
-            this.tierMill = getControllerSlot().getItemDamage();
-        }//TODO Cache the itemStack
-    }
+
 
 
     private HeatingCoilLevel coilLevel;
@@ -89,12 +88,14 @@ public class OTEMegaIsaFactory extends OTH_MultiMachineBase<OTEMegaIsaFactory> {
     public void saveNBTData(NBTTagCompound aNBT) {
         super.saveNBTData(aNBT);
         aNBT.setByte("glassTier", glassTier);
+        aNBT.setInteger("millTier", tierMill);
     }
 
     @Override
     public void loadNBTData(final NBTTagCompound aNBT) {
         super.loadNBTData(aNBT);
         glassTier = aNBT.getByte("glassTier");
+        tierMill = aNBT.getInteger("millTier");
     }
 
     @Override
@@ -168,10 +169,28 @@ public class OTEMegaIsaFactory extends OTH_MultiMachineBase<OTEMegaIsaFactory> {
 
     @Override
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
+
         repairMachine();
 
         return checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet);
 
+    }
+    @Override
+    public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
+        if (aTick % 20 == 0) {
+            if (aGuiStack != null) {
+                if (GTUtility.areStacksEqual(aGuiStack, OTHItemList.IsaNEI.get(1))) {
+                    tierMill = 1;
+                } else if (GTUtility.areStacksEqual(aGuiStack, OTHItemList.ISAIOS.get(1))) {
+                    tierMill = 2;
+                } else if (GTUtility.areStacksEqual(aGuiStack, OTHItemList.ISAHYP.get(1))) {
+                    tierMill = 3;
+                } else if (GTUtility.areStacksEqual(aGuiStack, OTHItemList.ISASPE.get(1))) {
+                    tierMill = 4;
+                }
+            }
+            super.onPostTick(aBaseMetaTileEntity, aTick);
+        }
     }
 
     @Override
@@ -198,6 +217,7 @@ public class OTEMegaIsaFactory extends OTH_MultiMachineBase<OTEMegaIsaFactory> {
             true);
 
     }
+
 
     private static final String STRUCTURE_PIECE_MAIN = "main";
 
