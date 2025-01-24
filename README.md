@@ -9,7 +9,13 @@
 
 部分结构来源 ：JulianChum LyeeR 商陆
 
-代码支持 ： Safari_Xiu kevenzh Keriils
+代码支持 ：
+
+EOHBUFFER : Safari_Xiu
+
+NHU : Keriils TC_traveler
+
+kevenzh
 
 感谢老登登们。
 ## **机器配方池**

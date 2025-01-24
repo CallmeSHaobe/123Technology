@@ -24,6 +24,8 @@ import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTUtility;
+import gregtech.common.items.CombType;
+import gregtech.loaders.misc.GTBees;
 import tectech.recipe.TTRecipeAdder;
 
 public class recipesMain implements IRecipePool {
@@ -80,7 +82,7 @@ public class recipesMain implements IRecipePool {
             1919810);
         // isaforgea
         TTRecipeAdder.addResearchableAssemblylineRecipe(
-            GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 31027),
+            GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 23520 + 24),
             (int) 409600000,
             32000,
             (int) 123123123,
@@ -234,13 +236,24 @@ public class recipesMain implements IRecipePool {
             .addTo(Assem);
         // Indium Beeyonds Chem From GTNH 2.6.1
         GTValues.RA.stdBuilder()
-            .fluidInputs(FluidRegistry.getFluidStack("phtalicacid", 2688))
-            .itemInputs(GTModHandler.getModItem("gregtech", "gt.comb", 4, 159))
+            .fluidInputs(FluidRegistry.getFluidStack("phtalicacid", 2400))
+            .itemInputs(GTUtility.getIntegratedCircuit(17), GTBees.combs.getStackForType(CombType.INDIUM, 4))
             .itemOutputs(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 4, 6056))
             .noOptimize()
             .duration(288)
-            .eut(98304)
+            .eut(12300)
             .addTo(Chem);
+        // 232
+        RecipeBuilder.builder()
+            .itemInputs(
+                OTHItemList.dustLookNEIM.get(0),
+                Materials.Thorium.getDust(1),
+                GTUtility.getIntegratedCircuit(23),
+                GTUtility.getIntegratedCircuit(2))
+            .itemOutputs(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 30))
+            .eut(12300)
+            .duration(114)
+            .addTo(Assem);
         // Mega EEC
         TTRecipeAdder.addResearchableAssemblylineRecipe(
             GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 14201),
@@ -533,5 +546,29 @@ public class recipesMain implements IRecipePool {
             .duration(20)
             .eut(114)
             .addTo(RecipeMaps.assemblerRecipes);
+        // MISA FACTORY
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 31027),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 31028),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 995),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Infinite, 64))
+            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 23520 + 24))
+            .fluidInputs(FluidRegistry.getFluidStack("advancedglue", 114514))
+            .duration(1919810)
+            .eut(123123123)
+            .addTo(Chem);
+        // FOOD GENERATOR
+        RecipeBuilder.builder()
+            .itemOutputs(OTHItemList.FooD.get(1))
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
+                ItemList.Electric_Motor_EV.get(64),
+                ItemList.Casing_IV.get(1),
+                ItemList.LargeGasTurbine.get(1))
+            .duration(123 * 20)
+            .eut(514)
+            .addTo(Assem);
+        // TODO ISAModule Recipes
     }
 }
