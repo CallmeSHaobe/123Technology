@@ -113,6 +113,7 @@ item.record.EVA_B.desc=ARIANNE - Komm, süsser Tod (来吧，甜蜜的死亡)
 item.record.EVA_C.desc=Claire - Fly Me To The Moon
 item.record.NGG_U.desc=Rick Astley - Never Gonna Give You Up
 tile.modelAyanami.name=绫波丽
+tile.modelAsuka.name=明日香
 Materials.MagmatterA=磁流体浆液
 Materials.MagmatterB=磁单极子流体
 Galaxy.fluid=熔融星系

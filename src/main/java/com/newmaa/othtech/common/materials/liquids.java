@@ -75,6 +75,16 @@ public class liquids implements Runnable {
             .addCells(),
         offsetID_01 + 6,
         TextureSet.SET_FLUID);
+    public static final Werkstoff ALS = new Werkstoff(
+        new short[] { 0, 255, 255 },
+        "A.L.S",
+        subscriptNumbers(""),
+        new Werkstoff.Stats(),
+        Werkstoff.Types.ELEMENT,
+        new Werkstoff.GenerationFeatures().addCells()
+            .addCells(),
+        offsetID_01 + 7,
+        TextureSet.SET_FLUID);
 
     @Override
     public void run() {
