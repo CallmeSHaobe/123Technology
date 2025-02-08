@@ -501,6 +501,19 @@ public class recipesMain implements IRecipePool {
             .eut(480)
             .duration(1200 * 20)
             .addTo(RecipeMaps.multiblockChemicalReactorRecipes);
+        // ALS
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 7),
+                GTOreDictUnificator.get(OrePrefixes.dust, Materials.Phosphorus, 16))
+            .fluidInputs(
+                Materials.Hydrogen.getGas(26000),
+                Materials.Oxygen.getGas(30000),
+                Materials.Nitrogen.getGas(21000))
+            .fluidOutputs(liquids.ALS.getFluidOrGas(20000))
+            .eut(480)
+            .duration(1200 * 20)
+            .addTo(RecipeMaps.multiblockChemicalReactorRecipes);
         // Ayanami Model
         RecipeBuilder.builder()
             .fluidInputs(liquids.LCL.getFluidOrGas(50000))
@@ -510,6 +523,18 @@ public class recipesMain implements IRecipePool {
                 GTModHandler.getModItem("gregtech", "gt.metaitem.02", 8, 32420),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 17472))
             .itemOutputs(GTModHandler.getModItem("123Technology", "modelAyanami", 1))
+            .eut(320)
+            .duration(40 * 20)
+            .addTo(RecipeMaps.assemblerRecipes);
+        // Asuka Model
+        RecipeBuilder.builder()
+            .fluidInputs(liquids.ALS.getFluidOrGas(50000))
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
+                GTModHandler.getModItem("gregtech", "gt.metaitem.02", 8, 32428),
+                GTModHandler.getModItem("gregtech", "gt.metaitem.02", 8, 32420),
+                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 17472))
+            .itemOutputs(GTModHandler.getModItem("123Technology", "modelAsuka", 1))
             .eut(320)
             .duration(40 * 20)
             .addTo(RecipeMaps.assemblerRecipes);

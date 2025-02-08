@@ -42,3 +42,7 @@ kevenzh
 绫波丽模型 : BlockBench bbmodel文件存于src\main\resources\assets\123technology\models
 
 作者 : NewMaa 2025-1-17
+
+明日香模型 : BlockBench bbmodel文件存于src\main\resources\assets\123technology\models
+
+作者：HuimaoX 2025-2-4
