@@ -8,6 +8,15 @@
       }
     ]
   },
+  "machines.enqing": {
+    "category": "block",
+    "sounds": [
+      {
+        "name": "Enqing",
+        "stream": "false"
+      }
+    ]
+  },
   "record.EVA_A": {
     "category": "record",
     "sounds": [

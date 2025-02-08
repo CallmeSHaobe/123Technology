@@ -1,6 +1,7 @@
 package com.newmaa.othtech.machine.machineclass;
 
 import static com.newmaa.othtech.Utils.Utils.filterValidMTEs;
+import static gregtech.api.enums.GTValues.GT;
 import static gregtech.api.enums.GTValues.VN;
 
 import java.util.ArrayList;
@@ -10,8 +11,11 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
@@ -23,6 +27,11 @@ import com.gtnewhorizon.structurelib.alignment.constructable.IConstructable;
 import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructable;
 import com.newmaa.othtech.Config;
 
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import gregtech.api.GregTechAPI;
+import gregtech.api.enums.SoundResource;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.logic.ProcessingLogic;
@@ -35,7 +44,9 @@ import gregtech.api.metatileentity.implementations.MTEHatchMuffler;
 import gregtech.api.metatileentity.implementations.MTEHatchMultiInput;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
+import gregtech.api.threads.RunnableSound;
 import gregtech.api.util.GTUtility;
+import gregtech.client.GTSoundLoop;
 import gregtech.common.tileentities.machines.IDualInputHatch;
 import gregtech.common.tileentities.machines.IDualInputInventory;
 import gregtech.common.tileentities.machines.MTEHatchInputBusME;
@@ -625,6 +636,147 @@ public abstract class OTH_MultiMachineBase<T extends OTH_MultiMachineBase<T>> ex
     @Override
     public int getRecipeCatalystPriority() {
         return -1;
+    }
+
+    protected SoundResourceOTH getProcessStartSoundOTH() {
+        return null;
+    }
+
+    protected void sendStartMultiBlockSoundLoop() {
+        if (getProcessStartSoundOTH() != null) {
+            sendLoopStart(PROCESS_START_SOUND_INDEX);
+        }
+    }
+
+    public static boolean doSoundAtClientOTH(String aSoundName, int aTimeUntilNextSound, float aSoundStrength) {
+        if (aSoundName == null) return false;
+        return doSoundAtClientOTH(aSoundName, aTimeUntilNextSound, aSoundStrength, GT.getThePlayer());
+    }
+
+    public static boolean doSoundAtClientOTH(SoundResource sound, int aTimeUntilNextSound, float aSoundStrength) {
+        return doSoundAtClientOTH(sound.resourceLocation, aTimeUntilNextSound, aSoundStrength, GT.getThePlayer());
+    }
+
+    public static boolean doSoundAtClientOTH(ResourceLocation aSoundResourceLocation, int aTimeUntilNextSound,
+        float aSoundStrength) {
+        return doSoundAtClientOTH(aSoundResourceLocation, aTimeUntilNextSound, aSoundStrength, GT.getThePlayer());
+    }
+
+    public static boolean doSoundAtClientOTH(String aSoundName, int aTimeUntilNextSound, float aSoundStrength,
+        Entity aEntity) {
+        if (aEntity == null || aSoundName == null) return false;
+        return doSoundAtClientOTH(
+            aSoundName,
+            aTimeUntilNextSound,
+            aSoundStrength,
+            aEntity.posX,
+            aEntity.posY,
+            aEntity.posZ);
+    }
+
+    public static boolean doSoundAtClientOTH(ResourceLocation aSoundResourceLocation, int aTimeUntilNextSound,
+        float aSoundStrength, Entity aEntity) {
+        if (aEntity == null) return false;
+        return doSoundAtClientOTH(
+            aSoundResourceLocation.toString(),
+            aTimeUntilNextSound,
+            aSoundStrength,
+            aEntity.posX,
+            aEntity.posY,
+            aEntity.posZ);
+    }
+
+    public static boolean doSoundAtClientOTH(ResourceLocation aSoundResourceLocation, int aTimeUntilNextSound,
+        float aSoundStrength, double aX, double aY, double aZ) {
+        return doSoundAtClientOTH(aSoundResourceLocation, aTimeUntilNextSound, aSoundStrength, 1.01818028F, aX, aY, aZ);
+    }
+
+    @Deprecated
+    public static boolean doSoundAtClientOTH(String aSoundName, int aTimeUntilNextSound, float aSoundStrength,
+        double aX, double aY, double aZ) {
+        if (aSoundName == null) return false;
+        return doSoundAtClientOTH(
+            new ResourceLocation(aSoundName),
+            aTimeUntilNextSound,
+            aSoundStrength,
+            1.01818028F,
+            aX,
+            aY,
+            aZ);
+    }
+
+    public static boolean doSoundAtClientOTH(SoundResourceOTH aSound, int aTimeUntilNextSound, float aSoundStrength,
+        double aX, double aY, double aZ) {
+        return doSoundAtClientOTH(aSound.resourceLocation, aTimeUntilNextSound, aSoundStrength, aX, aY, aZ);
+    }
+
+    public static boolean doSoundAtClientOTH(SoundResourceOTH aSound, int aTimeUntilNextSound, float aSoundStrength,
+        float aSoundModulation, double aX, double aY, double aZ) {
+        return doSoundAtClientOTH(
+            aSound.resourceLocation,
+            aTimeUntilNextSound,
+            aSoundStrength,
+            aSoundModulation,
+            aX,
+            aY,
+            aZ);
+    }
+
+    public static boolean doSoundAtClientOTH(ResourceLocation aSoundResourceLocation, int aTimeUntilNextSound,
+        float aSoundStrength, float aSoundModulation, double aX, double aY, double aZ) {
+        if (!FMLCommonHandler.instance()
+            .getEffectiveSide()
+            .isClient() || GT.getThePlayer() == null || !GT.getThePlayer().worldObj.isRemote) return false;
+        if (GregTechAPI.sMultiThreadedSounds) new Thread(
+            new RunnableSound(
+                GT.getThePlayer().worldObj,
+                aX,
+                aY,
+                aZ,
+                aTimeUntilNextSound,
+                aSoundResourceLocation,
+                aSoundStrength,
+                aSoundModulation),
+            "Sound Effect").start();
+        else new RunnableSound(
+            GT.getThePlayer().worldObj,
+            aX,
+            aY,
+            aZ,
+            aTimeUntilNextSound,
+            aSoundResourceLocation,
+            aSoundStrength,
+            aSoundModulation).run();
+        return true;
+    }
+
+    @Override
+    public void startSoundLoop(byte aIndex, double aX, double aY, double aZ) {
+        super.startSoundLoop(aIndex, aX, aY, aZ);
+        if (aIndex == PROCESS_START_SOUND_INDEX) {
+            if (getProcessStartSoundOTH() != null)
+                doSoundAtClientOTH(getProcessStartSoundOTH(), getTimeBetweenProcessSounds(), 1.0F, aX, aY, aZ);
+        }
+    }
+
+    @SideOnly(Side.CLIENT)
+    protected void doActivitySound(SoundResource activitySound) {
+        if (getBaseMetaTileEntity().isActive() && activitySound != null) {
+            if (activitySoundLoop == null) {
+                activitySoundLoop = new GTSoundLoop(
+                    activitySound.resourceLocation,
+                    getBaseMetaTileEntity(),
+                    false,
+                    true);
+                Minecraft.getMinecraft()
+                    .getSoundHandler()
+                    .playSound(activitySoundLoop);
+            }
+        } else {
+            if (activitySoundLoop != null) {
+                activitySoundLoop = null;
+            }
+        }
     }
 
     // endregion

@@ -1,5 +1,6 @@
 package com.newmaa.othtech.recipe;
 
+import static gregtech.api.enums.TierEU.*;
 import static gregtech.api.util.GTModHandler.addCraftingRecipe;
 
 import net.minecraft.init.Blocks;
@@ -43,6 +44,7 @@ public class recipesMain implements IRecipePool {
         final RecipeMap<?> Nan = RecipeMaps.nanoForgeRecipes;
         final RecipeMap<?> Assem = RecipeMaps.assemblerRecipes;
         final RecipeMap<?> Chem = RecipeMaps.multiblockChemicalReactorRecipes;
+        final int IDs = 23520;
 
         // dustIrOsSm assembler
         // GTValues.RA.stdBuilder()
@@ -82,13 +84,13 @@ public class recipesMain implements IRecipePool {
             1919810);
         // isaforgea
         TTRecipeAdder.addResearchableAssemblylineRecipe(
-            GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 23520 + 24),
+            GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, IDs + 24),
             (int) 409600000,
             32000,
             (int) 123123123,
             514,
-            new ItemStack[] { GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 31027),
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 31028),
+            new ItemStack[] { GTModHandler.getModItem("123technology", "MetaItemOTH", 64, 13),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, IDs + 24),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 1004),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 13532),
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Cosmic, 64),
@@ -578,9 +580,9 @@ public class recipesMain implements IRecipePool {
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 31028),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 995),
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Infinite, 64))
-            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 23520 + 24))
-            .fluidInputs(FluidRegistry.getFluidStack("advancedglue", 114514))
-            .duration(1919810)
+            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, IDs + 24))
+            .fluidInputs(FluidRegistry.getFluidStack("advancedglue", 262144))
+            .duration(114514)
             .eut(123123123)
             .addTo(Chem);
         // FOOD GENERATOR
@@ -588,12 +590,382 @@ public class recipesMain implements IRecipePool {
             .itemOutputs(OTHItemList.FooD.get(1))
             .itemInputs(
                 GTUtility.getIntegratedCircuit(17),
-                ItemList.Electric_Motor_EV.get(64),
-                ItemList.Casing_IV.get(1),
-                ItemList.LargeGasTurbine.get(1))
+                ItemList.Electric_Motor_HV.get(64),
+                ItemList.Casing_HV.get(16),
+                ItemList.LargeSteamTurbine.get(1))
             .duration(123 * 20)
-            .eut(514)
+            .eut(123)
             .addTo(Assem);
         // TODO ISAModule Recipes
+        // DTPF timing
+        RecipeBuilder.builder()
+            .itemInputs(new ItemStack(Blocks.cobblestone, 1))
+            .itemOutputs(new ItemStack(Blocks.stone, 1))
+            .duration(3600 * 64 * 20)
+            .eut(7680)
+            .addTo(RecipeMaps.plasmaForgeRecipes);
+        // Lasers
+        // LV
+
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
+                ItemList.Emitter_LV.get(64),
+                ItemList.Emitter_LV.get(64),
+                ItemList.Emitter_LV.get(64),
+                ItemList.Emitter_LV.get(64),
+                ItemList.Electric_Pump_LV.get(64),
+                ItemList.Hatch_Energy_LV.get(64))
+            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, IDs + 30))
+            .fluidInputs(Materials.Hydrogen.getPlasma(32))
+            .duration(3600 * 20)
+            .eut(30)
+            .addTo(Assem);
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
+                ItemList.Sensor_LV.get(64),
+                ItemList.Sensor_LV.get(64),
+                ItemList.Sensor_LV.get(64),
+                ItemList.Sensor_LV.get(64),
+                ItemList.Electric_Pump_LV.get(64),
+                ItemList.Hatch_Energy_LV.get(64))
+            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, IDs + 31))
+            .fluidInputs(Materials.Hydrogen.getPlasma(32))
+            .duration(3600 * 20)
+            .eut(30)
+            .addTo(Assem);
+        // MV
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
+                ItemList.Emitter_MV.get(64),
+                ItemList.Emitter_MV.get(64),
+                ItemList.Emitter_MV.get(64),
+                ItemList.Emitter_MV.get(64),
+                ItemList.Electric_Pump_MV.get(64),
+                ItemList.Hatch_Energy_MV.get(64))
+            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, IDs + 32))
+            .fluidInputs(Materials.Hydrogen.getPlasma(RECIPE_MV))
+            .duration(3600 * 20)
+            .eut(RECIPE_MV)
+            .addTo(Assem);
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
+                ItemList.Sensor_MV.get(64),
+                ItemList.Sensor_MV.get(64),
+                ItemList.Sensor_MV.get(64),
+                ItemList.Sensor_MV.get(64),
+                ItemList.Electric_Pump_MV.get(64),
+                ItemList.Hatch_Energy_MV.get(64))
+            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, IDs + 33))
+            .fluidInputs(Materials.Hydrogen.getPlasma(RECIPE_MV))
+            .duration(3600 * 20)
+            .eut(RECIPE_MV)
+            .addTo(Assem);
+        // HV
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
+                ItemList.Emitter_HV.get(64),
+                ItemList.Emitter_HV.get(64),
+                ItemList.Emitter_HV.get(64),
+                ItemList.Emitter_HV.get(64),
+                ItemList.Electric_Pump_HV.get(64),
+                ItemList.Hatch_Energy_HV.get(64))
+            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, IDs + 34))
+            .fluidInputs(Materials.Hydrogen.getPlasma(RECIPE_HV))
+            .duration(3600 * 20)
+            .eut(RECIPE_HV)
+            .addTo(Assem);
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
+                ItemList.Sensor_HV.get(64),
+                ItemList.Sensor_HV.get(64),
+                ItemList.Sensor_HV.get(64),
+                ItemList.Sensor_HV.get(64),
+                ItemList.Electric_Pump_HV.get(64),
+                ItemList.Hatch_Energy_HV.get(64))
+            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, IDs + 35))
+            .fluidInputs(Materials.Hydrogen.getPlasma(RECIPE_HV))
+            .duration(3600 * 20)
+            .eut(RECIPE_HV)
+            .addTo(Assem);
+        // EV
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
+                ItemList.Emitter_EV.get(64),
+                ItemList.Emitter_EV.get(64),
+                ItemList.Emitter_EV.get(64),
+                ItemList.Emitter_EV.get(64),
+                ItemList.Electric_Pump_EV.get(64),
+                ItemList.Hatch_Energy_EV.get(64))
+            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, IDs + 36))
+            .fluidInputs(Materials.Hydrogen.getPlasma(RECIPE_EV))
+            .duration(3600 * 20)
+            .eut(RECIPE_EV)
+            .addTo(Assem);
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
+                ItemList.Sensor_EV.get(64),
+                ItemList.Sensor_EV.get(64),
+                ItemList.Sensor_EV.get(64),
+                ItemList.Sensor_EV.get(64),
+                ItemList.Electric_Pump_EV.get(64),
+                ItemList.Hatch_Energy_EV.get(64))
+            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, IDs + 37))
+            .fluidInputs(Materials.Hydrogen.getPlasma(RECIPE_EV))
+            .duration(3600 * 20)
+            .eut(RECIPE_EV)
+            .addTo(Assem);
+        // IV
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
+                ItemList.Emitter_IV.get(64),
+                ItemList.Emitter_IV.get(64),
+                ItemList.Emitter_IV.get(64),
+                ItemList.Emitter_IV.get(64),
+                ItemList.Electric_Pump_IV.get(64),
+                ItemList.Hatch_Energy_IV.get(64))
+            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, IDs + 38))
+            .fluidInputs(Materials.Hydrogen.getPlasma(RECIPE_IV))
+            .duration(3600 * 20)
+            .eut(RECIPE_IV)
+            .addTo(Assem);
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
+                ItemList.Sensor_IV.get(64),
+                ItemList.Sensor_IV.get(64),
+                ItemList.Sensor_IV.get(64),
+                ItemList.Sensor_IV.get(64),
+                ItemList.Electric_Pump_IV.get(64),
+                ItemList.Hatch_Energy_IV.get(64))
+            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, IDs + 39))
+            .fluidInputs(Materials.Hydrogen.getPlasma(RECIPE_IV))
+            .duration(3600 * 20)
+            .eut(RECIPE_IV)
+            .addTo(Assem);
+        // LuV
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
+                ItemList.Emitter_LuV.get(64),
+                ItemList.Emitter_LuV.get(64),
+                ItemList.Emitter_LuV.get(64),
+                ItemList.Emitter_LuV.get(64),
+                ItemList.Electric_Pump_LuV.get(64),
+                ItemList.Hatch_Energy_LuV.get(64))
+            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, IDs + 40))
+            .fluidInputs(Materials.Hydrogen.getPlasma(RECIPE_LuV))
+            .duration(3600 * 20)
+            .eut(RECIPE_LuV)
+            .addTo(Assem);
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
+                ItemList.Sensor_LuV.get(64),
+                ItemList.Sensor_LuV.get(64),
+                ItemList.Sensor_LuV.get(64),
+                ItemList.Sensor_LuV.get(64),
+                ItemList.Electric_Pump_LuV.get(64),
+                ItemList.Hatch_Energy_LuV.get(64))
+            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, IDs + 41))
+            .fluidInputs(Materials.Hydrogen.getPlasma(RECIPE_LuV))
+            .duration(3600 * 20)
+            .eut(RECIPE_LuV)
+            .addTo(Assem);
+        // ZPM
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
+                ItemList.Emitter_ZPM.get(64),
+                ItemList.Emitter_ZPM.get(64),
+                ItemList.Emitter_ZPM.get(64),
+                ItemList.Emitter_ZPM.get(64),
+                ItemList.Electric_Pump_ZPM.get(64),
+                ItemList.Hatch_Energy_ZPM.get(64))
+            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, IDs + 42))
+            .fluidInputs(Materials.Hydrogen.getPlasma(RECIPE_ZPM))
+            .duration(3600 * 20)
+            .eut(RECIPE_ZPM)
+            .addTo(Assem);
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
+                ItemList.Sensor_ZPM.get(64),
+                ItemList.Sensor_ZPM.get(64),
+                ItemList.Sensor_ZPM.get(64),
+                ItemList.Sensor_ZPM.get(64),
+                ItemList.Electric_Pump_ZPM.get(64),
+                ItemList.Hatch_Energy_ZPM.get(64))
+            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, IDs + 43))
+            .fluidInputs(Materials.Hydrogen.getPlasma(RECIPE_ZPM))
+            .duration(3600 * 20)
+            .eut(RECIPE_ZPM)
+            .addTo(Assem);
+        // UV
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
+                ItemList.Emitter_UV.get(64),
+                ItemList.Emitter_UV.get(64),
+                ItemList.Emitter_UV.get(64),
+                ItemList.Emitter_UV.get(64),
+                ItemList.Electric_Pump_UV.get(64),
+                ItemList.Hatch_Energy_UV.get(64))
+            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, IDs + 44))
+            .fluidInputs(Materials.Hydrogen.getPlasma(RECIPE_UV))
+            .duration(3600 * 20)
+            .eut(RECIPE_UV)
+            .addTo(Assem);
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
+                ItemList.Sensor_UV.get(64),
+                ItemList.Sensor_UV.get(64),
+                ItemList.Sensor_UV.get(64),
+                ItemList.Sensor_UV.get(64),
+                ItemList.Electric_Pump_UV.get(64),
+                ItemList.Hatch_Energy_UV.get(64))
+            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, IDs + 45))
+            .fluidInputs(Materials.Hydrogen.getPlasma(RECIPE_UV))
+            .duration(3600 * 20)
+            .eut(RECIPE_UV)
+            .addTo(Assem);
+        // UHV
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
+                ItemList.Emitter_UHV.get(64),
+                ItemList.Emitter_UHV.get(64),
+                ItemList.Emitter_UHV.get(64),
+                ItemList.Emitter_UHV.get(64),
+                ItemList.Electric_Pump_UHV.get(64),
+                ItemList.Hatch_Energy_UHV.get(64))
+            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, IDs + 46))
+            .fluidInputs(Materials.Hydrogen.getPlasma(RECIPE_UHV))
+            .duration(3600 * 20)
+            .eut(RECIPE_UHV)
+            .addTo(Assem);
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
+                ItemList.Sensor_UHV.get(64),
+                ItemList.Sensor_UHV.get(64),
+                ItemList.Sensor_UHV.get(64),
+                ItemList.Sensor_UHV.get(64),
+                ItemList.Electric_Pump_UHV.get(64),
+                ItemList.Hatch_Energy_UHV.get(64))
+            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, IDs + 47))
+            .fluidInputs(Materials.Hydrogen.getPlasma(RECIPE_UHV))
+            .duration(3600 * 20)
+            .eut(RECIPE_UHV)
+            .addTo(Assem);
+        // UEV
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
+                ItemList.Emitter_UEV.get(64),
+                ItemList.Emitter_UEV.get(64),
+                ItemList.Emitter_UEV.get(64),
+                ItemList.Emitter_UEV.get(64),
+                ItemList.Electric_Pump_UEV.get(64),
+                ItemList.Hatch_Energy_UEV.get(64))
+            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, IDs + 48))
+            .fluidInputs(Materials.Hydrogen.getPlasma(RECIPE_UHV))
+            .duration(3600 * 20)
+            .eut(RECIPE_UEV)
+            .addTo(Assem);
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
+                ItemList.Sensor_UEV.get(64),
+                ItemList.Sensor_UEV.get(64),
+                ItemList.Sensor_UEV.get(64),
+                ItemList.Sensor_UEV.get(64),
+                ItemList.Electric_Pump_UEV.get(64),
+                ItemList.Hatch_Energy_UEV.get(64))
+            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, IDs + 49))
+            .fluidInputs(Materials.Hydrogen.getPlasma(RECIPE_UHV))
+            .duration(3600 * 20)
+            .eut(RECIPE_UEV)
+            .addTo(Assem);
+        // UIV
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
+                ItemList.Emitter_UIV.get(64),
+                ItemList.Emitter_UIV.get(64),
+                ItemList.Emitter_UIV.get(64),
+                ItemList.Emitter_UIV.get(64),
+                ItemList.Electric_Pump_UIV.get(64),
+                ItemList.Hatch_Energy_UIV.get(64))
+            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, IDs + 50))
+            .fluidInputs(Materials.Hydrogen.getPlasma(RECIPE_UHV))
+            .duration(3600 * 20)
+            .eut(RECIPE_UIV)
+            .addTo(Assem);
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
+                ItemList.Sensor_UIV.get(64),
+                ItemList.Sensor_UIV.get(64),
+                ItemList.Sensor_UIV.get(64),
+                ItemList.Sensor_UIV.get(64),
+                ItemList.Electric_Pump_UIV.get(64),
+                ItemList.Hatch_Energy_UIV.get(64))
+            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, IDs + 51))
+            .fluidInputs(Materials.Hydrogen.getPlasma(RECIPE_UHV))
+            .duration(3600 * 20)
+            .eut(RECIPE_UIV)
+            .addTo(Assem);
+        // UMV
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
+                ItemList.Emitter_UMV.get(64),
+                ItemList.Emitter_UMV.get(64),
+                ItemList.Emitter_UMV.get(64),
+                ItemList.Emitter_UMV.get(64),
+                ItemList.Electric_Pump_UMV.get(64),
+                ItemList.Hatch_Energy_UMV.get(64))
+            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, IDs + 52))
+            .fluidInputs(Materials.Hydrogen.getPlasma(RECIPE_UHV))
+            .duration(3600 * 20)
+            .eut(RECIPE_UMV)
+            .addTo(Assem);
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
+                ItemList.Sensor_UMV.get(64),
+                ItemList.Sensor_UMV.get(64),
+                ItemList.Sensor_UMV.get(64),
+                ItemList.Sensor_UMV.get(64),
+                ItemList.Electric_Pump_UMV.get(64),
+                ItemList.Hatch_Energy_UMV.get(64))
+            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, IDs + 53))
+            .fluidInputs(Materials.Hydrogen.getPlasma(RECIPE_UHV))
+            .duration(3600 * 20)
+            .eut(RECIPE_UMV)
+            .addTo(Assem);
+        // UXV
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
+                ItemList.Field_Generator_UXV.get(64),
+                ItemList.Hatch_Energy_UXV.get(64))
+            .itemOutputs(
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, IDs + 54),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, IDs + 55))
+            .fluidInputs(Materials.Hydrogen.getPlasma(RECIPE_UXV))
+            .duration(36000 * 20)
+            .eut(RECIPE_UXV)
+            .addTo(Assem);
     }
 }

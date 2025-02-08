@@ -30,7 +30,6 @@ import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
 
 import bartworks.API.BorosilicateGlass;
-import galaxyspace.core.register.GSBlocks;
 import gregtech.api.enums.HeatingCoilLevel;
 import gregtech.api.enums.TAE;
 import gregtech.api.enums.Textures;
@@ -240,14 +239,14 @@ public class OTEMegaIsaFactory extends OTH_MultiMachineBase<OTEMegaIsaFactory> {
                 .addElement(
                     'C',
                     withChannel("coil", ofCoil(OTEMegaIsaFactory::setCoilLevel, OTEMegaIsaFactory::getCoilLevel)))
-                .addElement('D', ofBlock(sBlockCasings8, 2))
+                .addElement('D', ofBlock(sBlockCasings8, 10))
                 .addElement('E', ofBlock(ModBlocks.blockCasings3Misc, 1))
                 .addElement('F', ofBlock(ModBlocks.blockCasings4Misc, 10))
                 .addElement('G', ofBlock(ModBlocks.blockCasings5Misc, 0))
                 .addElement('H', ofBlock(ModBlocks.blockCasings5Misc, 1))
                 .addElement('I', ofBlock(ModBlocks.blockCasings5Misc, 2))
                 .addElement('J', ofBlock(ModBlocks.blockSpecialMultiCasings, 9))
-                .addElement('K', ofBlock(GSBlocks.DysonSwarmBlocks, 9))
+                .addElement('K', ofBlock(sBlockConcretes, 11))
                 .addElement(
                     'L',
                     buildHatchAdder(OTEMegaIsaFactory.class).atLeast(Muffler)

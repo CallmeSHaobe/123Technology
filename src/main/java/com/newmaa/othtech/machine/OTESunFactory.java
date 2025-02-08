@@ -35,6 +35,7 @@ import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.gtnewhorizons.gtnhintergalactic.block.IGBlocks;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
+import com.newmaa.othtech.machine.machineclass.SoundResourceOTH;
 
 import bartworks.API.BorosilicateGlass;
 import gregtech.api.enums.Materials;
@@ -2461,6 +2462,11 @@ public class OTESunFactory extends OTH_MultiMachineBase<OTESunFactory> {
     @Override
     public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
         return new OTESunFactory(this.mName);
+    }
+
+    @Override
+    protected SoundResourceOTH getProcessStartSoundOTH() {
+        return SoundResourceOTH.ENQING;
     }
 
     @Override

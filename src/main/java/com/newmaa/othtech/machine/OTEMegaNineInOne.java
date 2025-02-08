@@ -1,9 +1,9 @@
 package com.newmaa.othtech.machine;
 
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
+import static com.gtnewhorizon.structurelib.structure.StructureUtility.withChannel;
 import static gregtech.api.enums.HatchElement.*;
-import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
-import static gregtech.api.util.GTStructureUtility.ofFrame;
+import static gregtech.api.util.GTStructureUtility.*;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -24,10 +24,11 @@ import org.jetbrains.annotations.NotNull;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
+import com.newmaa.othtech.Utils.Utils;
 import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
 
 import bartworks.API.BorosilicateGlass;
-import gregtech.api.GregTechAPI;
+import gregtech.api.enums.HeatingCoilLevel;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.TAE;
 import gregtech.api.enums.Textures;
@@ -39,6 +40,7 @@ import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
+import gregtech.api.recipe.metadata.CompressionTierKey;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTUtility;
@@ -77,6 +79,20 @@ public class OTEMegaNineInOne extends OTH_MultiMachineBase<OTEMegaNineInOne> {
         return TAE.getIndexFromPage(2, 2);
     }
 
+    private HeatingCoilLevel coilLevel;
+
+    public HeatingCoilLevel getCoilLevel() {
+        return this.coilLevel;
+    }
+
+    public void setCoilLevel(HeatingCoilLevel coilLevel) {
+        this.coilLevel = coilLevel;
+    }
+
+    public int getCoilTier() {
+        return Utils.getCoilTier(coilLevel);
+    }
+
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
         super.saveNBTData(aNBT);
@@ -112,7 +128,7 @@ public class OTEMegaNineInOne extends OTH_MultiMachineBase<OTEMegaNineInOne> {
     }
 
     protected float getEuModifier() {
-        return 0.99F;
+        return (float) Math.max(0.01, ((double) 1 / getCoilTier()) * 0.1);
     }
 
     private ItemStack getCircuit(ItemStack[] t) {
@@ -168,7 +184,15 @@ public class OTEMegaNineInOne extends OTH_MultiMachineBase<OTEMegaNineInOne> {
             }
 
             @Override
-            protected @NotNull CheckRecipeResult validateRecipe(GTRecipe recipe) {
+            protected @NotNull CheckRecipeResult validateRecipe(@NotNull GTRecipe recipe) {
+
+                if (recipe.getMetadata(CompressionTierKey.INSTANCE) > 0) {
+                    if (getCoilTier() < 10 && recipe.getMetadata(CompressionTierKey.INSTANCE) == 1) {
+                        return CheckRecipeResultRegistry.insufficientMachineTier(1);
+                    } else if (getCoilTier() < 13 && recipe.getMetadata(CompressionTierKey.INSTANCE) == 2) {
+                        return CheckRecipeResultRegistry.insufficientMachineTier(2);
+                    } else return super.validateRecipe(recipe);
+                }
                 return CheckRecipeResultRegistry.SUCCESSFUL;
             }
 
@@ -306,7 +330,9 @@ public class OTEMegaNineInOne extends OTH_MultiMachineBase<OTEMegaNineInOne> {
                         .buildAndChain(ModBlocks.blockCasings3Misc, 2))
                 .addElement('A', BorosilicateGlass.ofBoroGlass(3))
                 .addElement('C', ofFrame(Materials.HSSS))
-                .addElement('B', ofBlock(GregTechAPI.sBlockCasings5, 4))
+                .addElement(
+                    'B',
+                    withChannel("coil", ofCoil(OTEMegaNineInOne::setCoilLevel, OTEMegaNineInOne::getCoilLevel)))
                 .addElement('F', ofBlock(Blocks.beacon, 0))
                 .build();
 
@@ -775,7 +801,8 @@ public class OTEMegaNineInOne extends OTH_MultiMachineBase<OTEMegaNineInOne> {
             .addInfo("§b并行耗时公式来自某位§9冰之妖精")
             .addInfo("§b电压等级提高一级，并行 -2， 最低为⑨, 默认为256")
             .addInfo("§b配方耗时 = NEI耗时 * (1 + (能源仓电压等级 * 10%))")
-            .addInfo("§bEU消耗 : 99%")
+            .addInfo("§bEU消耗 : (1 / 线圈等级) * 0.1, 最低为0.01")
+            .addInfo("海珀珍线圈解锁稳定的黑洞, 通流琥珀金线圈解锁HIP")
             .addInfo("§b执行无损超频")
             .addInfo("§e九合一，我们敬爱你口牙！！ ---Sukune_News")
             .addInfo("§c§l注意:机器污染过高:如遇跳电并报错“无法排出污染”, 请尝试放置多个消声仓")

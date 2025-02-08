@@ -321,7 +321,7 @@ public class OTEFoodGenerator extends TT_MultiMachineBase_EM implements IConstru
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister aBlockIconRegister) {
-        ScreenON = new Textures.BlockIcons.CustomIcon("iconsets/GODFORGE_CONTROLLER");
+        ScreenON = new Textures.BlockIcons.CustomIcon("123technology:iconSetOTH/LEEK");
         super.registerIcons(aBlockIconRegister);
     }
 
