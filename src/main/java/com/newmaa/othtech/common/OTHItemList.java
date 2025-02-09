@@ -68,6 +68,7 @@ public enum OTHItemList {
 
     // Machines
     MISA,
+    NQF,
     FooD,
     inf_WirelessHatch,
     inf_infWirelessHatch,

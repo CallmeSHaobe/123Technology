@@ -96,7 +96,6 @@ public enum OTHBeeDefinition implements IBeeDefinition {
         tMutation.requireResource(GregTechAPI.sBlockMachines, 23524); // MAX1048576
     }),
     HYP(OTHBranchDefinition.OTHBYDS, "Hypogen", true, new Color(0xD31010), new Color(0xB01E0B), beeSpecies -> {
-        beeSpecies.addProduct(GTModHandler.getModItem(GTPlusPlus.ID, "itemDustTinyHypogen", 1), 0.00810f);
         beeSpecies.addSpecialty(OTHBeeyonds.combs.getStackForType(combTypes.HYPOGEN), 0.02F);
         beeSpecies.setHumidity(DAMP);
         beeSpecies.setTemperature(EnumTemperature.NORMAL);

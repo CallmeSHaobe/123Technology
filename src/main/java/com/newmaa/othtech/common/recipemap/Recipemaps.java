@@ -1,17 +1,22 @@
 package com.newmaa.othtech.common.recipemap;
 
+import java.util.Comparator;
+
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.recipemap.formatter.MISASpecialValueFormatter;
 import com.newmaa.othtech.common.recipemap.recipeMapFrontends.OTH_GeneralFrontend;
 
+import goodgenerator.client.GUI.GGUITextures;
 import gregtech.api.enums.ItemList;
 import gregtech.api.gui.modularui.GTUITextures;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.RecipeMapBackend;
 import gregtech.api.recipe.RecipeMapBuilder;
 import gregtech.api.recipe.maps.FluidOnlyFrontend;
+import gregtech.api.recipe.maps.FuelBackend;
 import gregtech.api.util.GTModHandler;
 import gregtech.nei.formatter.HeatingCoilSpecialValueFormatter;
+import gregtech.nei.formatter.SimpleSpecialValueFormatter;
 
 public class Recipemaps {
 
@@ -141,8 +146,7 @@ public class Recipemaps {
                 .setMaxRecipesPerPage(1))
         .disableOptimize()
         .build();
-    public static final RecipeMap<RecipeMapBackend> NQF = RecipeMapBuilder
-        .of("otht.recipe.NQF", RecipeMapBackend::new)
+    public static final RecipeMap<RecipeMapBackend> NQF = RecipeMapBuilder.of("otht.recipe.NQF", RecipeMapBackend::new)
         .maxIO(10, 0, 10, 1)
         .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
         .frontend(OTH_GeneralFrontend::new)
@@ -150,5 +154,14 @@ public class Recipemaps {
             builder -> builder.setDisplayStack(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 16999))
                 .setMaxRecipesPerPage(1))
         .disableOptimize()
+        .build();
+    public static final RecipeMap<FuelBackend> NaquadahFuelFakeRecipes = RecipeMapBuilder
+        .of("otht.recipe.fuel.nq", FuelBackend::new)
+        .maxIO(0, 0, 1, 1)
+        .minInputs(0, 1)
+        .neiSpecialInfoFormatter(new SimpleSpecialValueFormatter("value.naquadah_reactor"))
+        .neiRecipeComparator(Comparator.comparing(recipe -> recipe.mSpecialValue))
+        .dontUseProgressBar()
+        .addSpecialTexture(59, 20, 58, 42, GGUITextures.PICTURE_NAQUADAH_REACTOR)
         .build();
 }

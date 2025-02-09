@@ -36,6 +36,7 @@ public class MachineLoader {
     public static ItemStack IMBAIMBAblastfurnace;
     public static ItemStack MISA;
     public static ItemStack FOOD;
+    public static ItemStack NQF;
 
     public static void loadMachines() {
         final int IDs = 23520;
@@ -111,6 +112,9 @@ public class MachineLoader {
 
         FOOD = new OTEFoodGenerator(IDs + 25, "FOOD", "食物发电机").getStackForm(1);
         OTHItemList.FooD.set(FOOD);
+
+        NQF = new OTENQFuelGeneratorUniversal(IDs + 26, "NaquadahFuelGenerator", "§4通用硅岩燃料引擎").getStackForm(1);
+        OTHItemList.NQF.set(NQF);
 
         // Lasers
 

@@ -245,6 +245,16 @@ public class OTEFoodGenerator extends TT_MultiMachineBase_EM implements IConstru
         return true;
     }
 
+    public static int getBlockCasings(Block block, int meta) {
+        if (block == sBlockCasings1 & block == sBlockCasingsNH) {
+            if (meta <= 14) {
+                return meta + 1;
+            }
+
+        }
+        return 0;
+    }
+
     private static final String STRUCTURE_PIECE_MAIN = "main";
 
     private final int horizontalOffSet = 7;
@@ -273,7 +283,7 @@ public class OTEFoodGenerator extends TT_MultiMachineBase_EM implements IConstru
                     withChannel(
                         "casing",
                         ofBlocksTiered(
-                            OTEMegaQFT::getBlockStabilisationFieldGeneratorTier,
+                            OTEFoodGenerator::getBlockCasings,
                             ImmutableList.of(
                                 Pair.of(sBlockCasings1, 1),
                                 Pair.of(sBlockCasings1, 2),

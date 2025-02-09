@@ -2,22 +2,24 @@ package com.newmaa.othtech.recipe;
 
 import static com.newmaa.othtech.Utils.Utils.setStackSize;
 import static com.newmaa.othtech.common.recipemap.Recipemaps.NQF;
-import static gregtech.api.util.GTRecipeConstants.NFR_COIL_TIER;
+import static com.newmaa.othtech.common.recipemap.Recipemaps.NaquadahFuelFakeRecipes;
+import static goodgenerator.main.GGConfigLoader.NaquadahFuelTime;
+import static goodgenerator.main.GGConfigLoader.NaquadahFuelVoltage;
+
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 
 import com.newmaa.othtech.Utils.RecipeBuilder;
-import net.minecraftforge.fluids.FluidRegistry;
 
 import bartworks.system.material.WerkstoffLoader;
-import goodgenerator.api.recipe.GoodGeneratorRecipeMaps;
 import goodgenerator.items.GGMaterial;
+import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.MaterialsUEVplus;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
-import gregtech.api.util.GTRecipeBuilder;
-import gregtech.api.util.GTUtility;
 import gtPlusPlus.core.material.MaterialsElements;
 
 public class recipesNaquadah implements IRecipePool {
@@ -113,5 +115,32 @@ public class recipesNaquadah implements IRecipePool {
             .duration(100 * 20)
             .noOptimize()
             .addTo(NQF);
+        // FuelsFakeRecipes
+        FluidStack[] inputs = new FluidStack[] { GGMaterial.uraniumBasedLiquidFuelExcited.getFluidOrGas(1),
+            GGMaterial.thoriumBasedLiquidFuelExcited.getFluidOrGas(1),
+            GGMaterial.plutoniumBasedLiquidFuelExcited.getFluidOrGas(1),
+            GGMaterial.naquadahBasedFuelMkI.getFluidOrGas(1), GGMaterial.naquadahBasedFuelMkII.getFluidOrGas(1),
+            GGMaterial.naquadahBasedFuelMkIII.getFluidOrGas(1), GGMaterial.naquadahBasedFuelMkIV.getFluidOrGas(1),
+            GGMaterial.naquadahBasedFuelMkV.getFluidOrGas(1), GGMaterial.naquadahBasedFuelMkVI.getFluidOrGas(1) };
+
+        FluidStack[] outputs = new FluidStack[] { GGMaterial.uraniumBasedLiquidFuelDepleted.getFluidOrGas(1),
+            GGMaterial.thoriumBasedLiquidFuelDepleted.getFluidOrGas(1),
+            GGMaterial.plutoniumBasedLiquidFuelDepleted.getFluidOrGas(1),
+            GGMaterial.naquadahBasedFuelMkIDepleted.getFluidOrGas(1),
+            GGMaterial.naquadahBasedFuelMkIIDepleted.getFluidOrGas(1),
+            GGMaterial.naquadahBasedFuelMkIIIDepleted.getFluidOrGas(1),
+            GGMaterial.naquadahBasedFuelMkIVDepleted.getFluidOrGas(1),
+            GGMaterial.naquadahBasedFuelMkVDepleted.getFluidOrGas(1),
+            GGMaterial.naquadahBasedFuelMkVIDepleted.getFluidOrGas(1) };
+        for (int i = 0; i < 9; i++) {
+            GTValues.RA.stdBuilder()
+                .fluidInputs(inputs[i])
+                .fluidOutputs(outputs[i])
+                .duration(NaquadahFuelTime[i])
+                .eut(0)
+                .specialValue(NaquadahFuelVoltage[i])
+                .addTo(NaquadahFuelFakeRecipes);
+
+        }
     }
 }
