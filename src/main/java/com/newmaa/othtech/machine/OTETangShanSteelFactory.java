@@ -13,6 +13,7 @@ import static gregtech.common.misc.WirelessNetworkManager.addEUToGlobalEnergyMap
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 import javax.annotation.Nonnull;
@@ -310,7 +311,9 @@ public class OTETangShanSteelFactory extends OTH_MultiMachineBase<OTETangShanSte
         if (STRUCTURE_DEFINITION == null) {
             STRUCTURE_DEFINITION = StructureDefinition.<OTETangShanSteelFactory>builder()
                 .addShape(STRUCTURE_PIECE_MAIN, shapeMain)
-                .addElement('A', ofBlock(Block.getBlockFromName(IndustrialCraft2.ID + ":blockAlloy"), 0))
+                .addElement(
+                    'A',
+                    ofBlock(Objects.requireNonNull(Block.getBlockFromName(IndustrialCraft2.ID + ":blockAlloy")), 0))
                 .addElement('B', ofBlock(sBlockCasings1, 11))
                 .addElement(
                     'C',

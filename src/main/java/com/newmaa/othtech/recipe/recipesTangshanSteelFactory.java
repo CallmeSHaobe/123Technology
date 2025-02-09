@@ -8,6 +8,7 @@ import com.newmaa.othtech.Utils.RecipeBuilder;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 
 import gregtech.api.enums.Materials;
+import gregtech.api.enums.MaterialsUEVplus;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMap;
@@ -970,6 +971,47 @@ public class recipesTangshanSteelFactory implements IRecipePool {
             .specialValue(9000)
             .eut(TierEU.UV)
             .duration(512 * 438 * 20 * 132)
+            .addTo(SF);
+        // Mellion
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(6),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Rubidium, 1), 64000 * 11),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tritanium, 1), 64000 * 11),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.FierySteel, 1), 64000 * 7),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Firestone, 1), 64000 * 13),
+                setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 10022), 64000 * 13),
+                setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 10023), 64000 * 8),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Thorium, 1), 3200),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Calcium, 1), 3200),
+                setStackSize(GTModHandler.getModItem("miscutils", "itemDustCelestialTungsten", 1), 3200))
+            .fluidInputs(
+                FluidRegistry.getFluidStack("dimensionallytranscendentresidue", 64000 * 10000),
+                FluidRegistry.getFluidStack("plasma.fermium", 448000))
+            .itemOutputs(
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.ingot, MaterialsUEVplus.Mellion, 1), 64000 * 63),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.ingot, MaterialsUEVplus.Creon, 1), 64000 * 63))
+            .specialValue(13500)
+            .eut(TierEU.MAX)
+            .duration(80 * 512 * 20 * 63)
+            .addTo(SF);
+        // Six-Phased Copper
+        RecipeBuilder.builder()
+            .itemOutputs(
+                setStackSize(
+                    GTOreDictUnificator.get(OrePrefixes.ingot, MaterialsUEVplus.SixPhasedCopper, 1),
+                    64000 * 72))
+            .itemInputs(
+                setStackSize(GTModHandler.getModItem("Avaritia", "Singularity", 1, 5), 64000 * 8),
+                setStackSize(GTModHandler.getModItem("miscutils", "itemDustCelestialTungsten", 1), 64000 * 72),
+                setStackSize(GTModHandler.getModItem("miscutils", "itemDustAstralTitanium", 1), 64000 * 288),
+                setStackSize(GTModHandler.getModItem("miscutils", "itemDustHypogen", 1), 64000 * 36),
+                setStackSize(GTModHandler.getModItem("miscutils", "itemDustChromaticGlass", 1), 64000 * 576),
+                setStackSize(GTModHandler.getModItem("miscutils", "itemDustRhugnor", 1), 64000 * 18),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, MaterialsUEVplus.Mellion, 1), 64000 * 72))
+            .eut(TierEU.RECIPE_UXV)
+            .duration(60 * 72 * 20 * 512)
+            .specialValue(13000)
             .addTo(SF);
 
     }

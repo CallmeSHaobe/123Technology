@@ -4,6 +4,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
 import gregtech.api.recipe.RecipeMap;
+import gregtech.api.recipe.RecipeMetadataKey;
+import gregtech.api.recipe.metadata.IRecipeMetadataStorage;
+import gregtech.api.recipe.metadata.RecipeMetadataStorage;
 import gregtech.api.util.GTRecipe;
 
 public class RecipeBuilder {
@@ -20,6 +23,9 @@ public class RecipeBuilder {
     private int eut = 0;
     private int duration = 0;
     private int specialValue = 0;
+    protected boolean skip = false;
+    protected boolean valid = true;
+    protected IRecipeMetadataStorage metadataStorage;
 
     public RecipeBuilder() {}
 
@@ -80,6 +86,15 @@ public class RecipeBuilder {
         return this;
     }
 
+    public <T> RecipeBuilder metadata(RecipeMetadataKey<T> key, T value) {
+        if (skip) return this;
+        if (metadataStorage == null) {
+            metadataStorage = new RecipeMetadataStorage();
+        }
+        metadataStorage.store(key, value);
+        return this;
+    }
+
     public RecipeBuilder addTo(RecipeMap<?> recipeMap) {
         GTRecipe tempRecipe = new GTRecipe(
             false,
@@ -99,4 +114,5 @@ public class RecipeBuilder {
         recipeMap.add(tempRecipe);
         return this;
     }
+
 }

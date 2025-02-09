@@ -1,13 +1,20 @@
 package com.newmaa.othtech.machine;
 
-import static gregtech.api.GregTechAPI.sBlockCasings2;
+import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
+import static gregtech.api.GregTechAPI.*;
 import static gregtech.api.enums.HatchElement.*;
+import static gregtech.api.enums.Mods.IndustrialCraft2;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
+import static gregtech.api.util.GTStructureUtility.ofCoil;
+import static tectech.thing.casing.TTCasingsContainer.sBlockCasingsNH;
 
 import java.util.List;
+import java.util.Objects;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -15,18 +22,22 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 
+import com.google.common.collect.ImmutableList;
 import com.gtnewhorizon.structurelib.alignment.constructable.IConstructable;
 import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructable;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
+import com.newmaa.othtech.Utils.Utils;
 import com.newmaa.othtech.machine.machineclass.TT_MultiMachineBase_EM;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import gregtech.api.GregTechAPI;
+import gregtech.api.enums.HeatingCoilLevel;
 import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
@@ -37,6 +48,7 @@ import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
+import gregtech.common.blocks.BlockCasings1;
 import gregtech.common.blocks.BlockCasings2;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
@@ -53,22 +65,34 @@ public class OTEFoodGenerator extends TT_MultiMachineBase_EM implements IConstru
         super(aName);
     }
 
-    public int amountCoal = 0;
-    public int multiCoal = 1;
     public int valveFood = 0;
-    public int coilTier = 1;
     public int casingTier = 1;
     private long tStored;
+    private HeatingCoilLevel coilLevel;
+
+    public HeatingCoilLevel getCoilLevel() {
+        return this.coilLevel;
+    }
+
+    public void setCoilLevel(HeatingCoilLevel coilLevel) {
+        this.coilLevel = coilLevel;
+    }
+
+    public int getCoilTier() {
+        return Utils.getCoilTier(coilLevel);
+    }
 
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
         aNBT.setInteger("valveFood", valveFood);
+
         super.saveNBTData(aNBT);
     }
 
     @Override
     public void loadNBTData(final NBTTagCompound aNBT) {
         valveFood = aNBT.getInteger("valveFood");
+
         super.loadNBTData(aNBT);
     }
 
@@ -129,7 +153,7 @@ public class OTEFoodGenerator extends TT_MultiMachineBase_EM implements IConstru
 
             valveFood = (int) Math.min(Math.pow(foodValues.hunger, 2), Integer.MAX_VALUE);
 
-            long generatedEU = (long) ((long) valveFood * coilTier * Math.pow(casingTier, 4) * itemStack.stackSize);
+            long generatedEU = (long) ((long) valveFood * getCoilTier() * itemStack.stackSize);
             mEUt = (int) Math.min(generatedEU, Integer.MAX_VALUE);
             itemStack.stackSize = 0;
             inputStacks.set(i, null);
@@ -223,8 +247,8 @@ public class OTEFoodGenerator extends TT_MultiMachineBase_EM implements IConstru
 
     private static final String STRUCTURE_PIECE_MAIN = "main";
 
-    private final int horizontalOffSet = 5;
-    private final int verticalOffSet = 5;
+    private final int horizontalOffSet = 7;
+    private final int verticalOffSet = 12;
     private final int depthOffSet = 0;
     private static IStructureDefinition<OTEFoodGenerator> STRUCTURE_DEFINITION = null;
 
@@ -234,19 +258,122 @@ public class OTEFoodGenerator extends TT_MultiMachineBase_EM implements IConstru
             STRUCTURE_DEFINITION = StructureDefinition.<OTEFoodGenerator>builder()
                 .addShape(STRUCTURE_PIECE_MAIN, shapeMain)
                 .addElement(
-                    'A',
+                    'C',
                     buildHatchAdder(OTEFoodGenerator.class)
-                        .atLeast(InputBus, OutputBus, InputHatch, OutputHatch, Muffler, Dynamo)
+                        .atLeast(InputBus, OutputBus, InputHatch, OutputHatch, Muffler)
                         .adder(OTEFoodGenerator::addToMachineList)
                         .dot(1)
                         .casingIndex(((BlockCasings2) GregTechAPI.sBlockCasings2).getTextureIndex(0))
                         .buildAndChain(sBlockCasings2, 0))
+                .addElement(
+                    'A',
+                    ofBlock(Objects.requireNonNull(Block.getBlockFromName(IndustrialCraft2.ID + ":blockFenceIron")), 0))
+                .addElement(
+                    'B',
+                    withChannel(
+                        "casing",
+                        ofBlocksTiered(
+                            OTEMegaQFT::getBlockStabilisationFieldGeneratorTier,
+                            ImmutableList.of(
+                                Pair.of(sBlockCasings1, 1),
+                                Pair.of(sBlockCasings1, 2),
+                                Pair.of(sBlockCasings1, 3),
+                                Pair.of(sBlockCasings1, 4),
+                                Pair.of(sBlockCasings1, 5),
+                                Pair.of(sBlockCasings1, 6),
+                                Pair.of(sBlockCasings1, 7),
+                                Pair.of(sBlockCasings1, 8),
+                                Pair.of(sBlockCasings1, 9),
+                                Pair.of(sBlockCasingsNH, 10),
+                                Pair.of(sBlockCasingsNH, 11),
+                                Pair.of(sBlockCasingsNH, 12),
+                                Pair.of(sBlockCasingsNH, 13),
+                                Pair.of(sBlockCasingsNH, 14)),
+                            1,
+                            (t, meta) -> t.casingTier = meta,
+                            t -> t.casingTier)))
+                .addElement('D', ofBlock(sBlockCasings3, 14))
+                .addElement(
+                    'E',
+                    withChannel("coil", ofCoil(OTEFoodGenerator::setCoilLevel, OTEFoodGenerator::getCoilLevel)))
+                .addElement(
+                    'F',
+                    buildHatchAdder(OTEFoodGenerator.class).atLeast(Dynamo)
+                        .adder(OTEFoodGenerator::addToMachineList)
+                        .dot(2)
+                        .casingIndex(((BlockCasings1) GregTechAPI.sBlockCasings1).getTextureIndex(9))
+                        .buildAndChain(sBlockCasings2, 0))
+                .addElement('G', ofBlock(Blocks.iron_block, 0))
+                .addElement('H', ofBlock(Blocks.wool, 15))
+                .addElement('I', ofBlock(Blocks.glass, 0))
+                .addElement('J', ofBlock(Blocks.obsidian, 0))
+                .addElement('K', ofBlock(sBlockMetal8, 8))
                 .build();
         }
         return STRUCTURE_DEFINITION;
     }
 
-    private final String[][] shapeMain = new String[][] { { "AAAA~AAAAA" } };
+    private final String[][] shapeMain = new String[][] {
+        { "               ", "               ", "     BBBBB     ", "   BB     BB   ", "   B       B   ",
+            "  B         B  ", "  B         B  ", "  B         B  ", "  B         B  ", "  B         B  ",
+            "   B       B   ", "   BB     BB   ", "     CC~CC     ", "               ", "               " },
+        { "               ", "    BBBBBBB    ", "   BB     BB   ", "  BB JJJJJ BB  ", " BB J A A J BB ",
+            " B JA A A AJ B ", " B J       J B ", " B J       J B ", " B JA     AJ B ", " B JA A A AJ B ",
+            " BB J A A J BB ", "  BB JJJJJ BB  ", "   BB     BB   ", "    BBBBBBB    ", "               " },
+        { "    BBBBBBB    ", " BBB       BBB ", " BB         BB ", " B           B ", "B    HJJJH    B",
+            "B   HJ   JH   B", "B   J     J   B", "B   J     J   B", "B   J     J   B", "B   HJ   JH   B",
+            "B    HJJJH    B", " B           B ", " BB         BB ", " BBB       BBB ", "    BBBBBBB    " },
+        { " BBBIIIIIIIBBB ", "B             B", "B             B", "B             B", "I     JJJ     I",
+            "I    J   J    I", "I   J     J   I", "I   J     J   I", "I   J     J   I", "I    J   J    I",
+            "I     JJJ     I", "B             B", "B             B", "B             B", " BBBIIIIIIIBBB " },
+        { " BBIIIIIIIIIBB ", "B             B", "B             B", "I             I", "I             I",
+            "I    DJJJD    I", "I    J   J    I", "I    J   J    I", "I    J   J    I", "I    DJJJD    I",
+            "I             I", "I             I", "B             B", "B             B", " BBIIIIIIIIIBB " },
+        { " BIIIIIIIIIIIB ", "B             B", "I             I", "I             I", "I             I",
+            "I    DJJJD    I", "I    J   J    I", "I    J   J    I", "I    J   J    I", "I    DJJJD    I",
+            "I             I", "I             I", "I             I", "B             B", " BIIIIIIIIIIIB " },
+        { "BIIIIIIIIIIIIIB", "I             I", "I             I", "I             I", "I             I",
+            "I    DDDDD    I", "I    DHJHD    I", "I    DJKJD    I", "I    DHJHD    I", "I    DDDDD    I",
+            "I             I", "I             I", "I             I", "I             I", "BIIIIIIIIIIIIIB" },
+        { "BIIIIIIIIIIIIIB", "I             I", "I             I", "I             I", "I             I",
+            "I             I", "I             I", "I      K      I", "I             I", "I             I",
+            "I             I", "I             I", "I             I", "I             I", "BIIIIIIIIIIIIIB" },
+        { "BIIIIIIIIIIIIIB", "I             I", "I             I", "I             I", "I             I",
+            "I     EEE     I", "I    E A E    I", "I    E K E    I", "I    E A E    I", "I     EEE     I",
+            "I             I", "I             I", "I             I", "I             I", "BIIIIIIIIIIIIIB" },
+        { "BIIIIIIIIIIIIIB", "I             I", "I             I", "I             I", "I             I",
+            "I             I", "I             I", "I      K      I", "I             I", "I             I",
+            "I             I", "I             I", "I             I", "I             I", "BIIIIIIIIIIIIIB" },
+        { "BIIIIIIIIIIIIIB", "I             I", "I             I", "I             I", "I             I",
+            "I     EEE     I", "I    E A E    I", "I    E K E    I", "I    E A E    I", "I     EEE     I",
+            "I             I", "I             I", "I             I", "I             I", "BIIIIIIIIIIIIIB" },
+        { "BIIIIIIIIIIIIIB", "I             I", "I             I", "I             I", "I             I",
+            "I             I", "I             I", "I      K      I", "I             I", "I             I",
+            "I             I", "I             I", "I             I", "I             I", "BIIIIIIIIIIIIIB" },
+        { "BIIIIIIIIIIIIIB", "I             I", "I             I", "I             I", "I             I",
+            "I     EEE     I", "I    E A E    I", "I    E K E    I", "I    E A E    I", "I     EEE     I",
+            "I             I", "I             I", "I             I", "I             I", "BIIIIIIIIIIIIIB" },
+        { " BIIIIIIIIIIIB ", "B             B", "I             I", "I             I", "I             I",
+            "I             I", "I             I", "I      K      I", "I             I", "I             I",
+            "I             I", "I             I", "I             I", "B             B", " BIIIIIIIIIIIB " },
+        { " BBIIIIIIIIIBB ", "B             B", "B             B", "I             I", "I             I",
+            "I     EEE     I", "I    E A E    I", "I    E K E    I", "I    E A E    I", "I     EEE     I",
+            "I             I", "I             I", "B             B", "B             B", " BBIIIIIIIIIBB " },
+        { " BBBIIIIIIIBBB ", "B             B", "B             B", "B             B", "I             I",
+            "I             I", "I             I", "I      K      I", "I             I", "I             I",
+            "I             I", "B             B", "B             B", "B             B", " BBBIIIIIIIBBB " },
+        { "    BBBBBBB    ", " BBB       BBB ", " BB         BB ", " B           B ", "B             B",
+            "B     EEE     B", "B    E A E    B", "B    E K E    B", "B    E A E    B", "B     EEE     B",
+            "B             B", " B           B ", " BB         BB ", " BBB       BBB ", "    BBBBBBB    " },
+        { "               ", "    BBBBBBB    ", "   BB     BB   ", "  BB       BB  ", " BB         BB ",
+            " B           B ", " B           B ", " B     K     B ", " B           B ", " B           B ",
+            " BB         BB ", "  BB       BB  ", "   BB     BB   ", "    BBBBBBB    ", "               " },
+        { "               ", "               ", "     BBBBB     ", "    BBBBBBB    ", "   BBB   BBB   ",
+            "  BBB     BBB  ", "  BB       BB  ", "  BB   K   BB  ", "  BB       BB  ", "  BBB     BBB  ",
+            "   BBB   BBB   ", "    BBBBBBB    ", "     BBBBB     ", "               ", "               " },
+        { "               ", "               ", "               ", "               ", "      BBB      ",
+            "     BBBBB     ", "    BBGGGBB    ", "    BBGFGBB    ", "    BBGGGBB    ", "     BBBBB     ",
+            "      BBB      ", "               ", "               ", "               ", "               " } };
 
     @Override
     public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
@@ -264,7 +391,7 @@ public class OTEFoodGenerator extends TT_MultiMachineBase_EM implements IConstru
         tt.addMachineType("只是一个发电机")
             .addInfo("再也不用担心吃得太饱了")
             .addInfo("丰矿地烧掉一切食物")
-            .addInfo("发电:食物饥饿值^2 * 线圈等级 * 机械方块等级^4 , 最高发电1A MAX/t , 64并行 , 一次最多烧毁一组相同食物")
+            .addInfo("发电:食物饥饿值^2 * 线圈等级 , 最高发电1A MAX/t , 64并行 , 一次最多烧毁一组相同食物")
             .addInfo("§c§l注意:机器污染过高:如遇跳电并报错“无法排出污染”, 请尝试放置多个消声仓")
             .addInfo("支持TecTech多安动力舱")
             .addInfo("赞美伟大的富婆Safari_xiu吧!没有他就没有现在的123了憋憋。")

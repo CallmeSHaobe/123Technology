@@ -141,4 +141,14 @@ public class Recipemaps {
                 .setMaxRecipesPerPage(1))
         .disableOptimize()
         .build();
+    public static final RecipeMap<RecipeMapBackend> NQF = RecipeMapBuilder
+        .of("otht.recipe.NQF", RecipeMapBackend::new)
+        .maxIO(10, 0, 10, 1)
+        .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
+        .frontend(OTH_GeneralFrontend::new)
+        .neiHandlerInfo(
+            builder -> builder.setDisplayStack(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 16999))
+                .setMaxRecipesPerPage(1))
+        .disableOptimize()
+        .build();
 }

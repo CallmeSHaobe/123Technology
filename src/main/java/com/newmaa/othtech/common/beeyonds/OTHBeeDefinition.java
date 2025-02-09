@@ -155,7 +155,7 @@ public enum OTHBeeDefinition implements IBeeDefinition {
             AlleleHelper.instance.set(template, FLOWER_PROVIDER, EnumAllele.Flowers.WHEAT);
         }, dis -> {
             IBeeMutationCustom tMutation = dis.registerMutation(COAL.getSpecies(), SALTY.getSpecies(), 12);
-            tMutation.requireResource(GregTechAPI.sBlockMetal6, 15); // Sterling Silver Block
+            tMutation.requireResource(GregTechAPI.sBlockMachines, 1174); // Lightning Rod
         }),
     ENQING(OTHBranchDefinition.OTHBYDS, "Enqing", true, new Color(0xFFFF0000, true), new Color(0xECFFCD07, true),
         beeSpecies -> {
