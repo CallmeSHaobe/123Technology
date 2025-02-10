@@ -85,6 +85,46 @@ public class liquids implements Runnable {
             .addCells(),
         offsetID_01 + 7,
         TextureSet.SET_FLUID);
+    public static final Werkstoff FUELA = new Werkstoff(
+        new short[] { 154, 249, 72 },
+        "FUELA",
+        subscriptNumbers("化学能的尽头"),
+        new Werkstoff.Stats(),
+        Werkstoff.Types.ELEMENT,
+        new Werkstoff.GenerationFeatures().addCells()
+            .addCells(),
+        offsetID_01 + 8,
+        TextureSet.SET_FLUID);
+    public static final Werkstoff FUELA_DE = new Werkstoff(
+        new short[] { 116, 182, 59 },
+        "FUELA_DE",
+        subscriptNumbers("他能干什么？"),
+        new Werkstoff.Stats(),
+        Werkstoff.Types.ELEMENT,
+        new Werkstoff.GenerationFeatures().addCells()
+            .addCells(),
+        offsetID_01 + 9,
+        TextureSet.SET_FLUID);
+    public static final Werkstoff PromoterZPM = new Werkstoff(
+        new short[] { 60, 183, 256 },
+        "PromoterZPM",
+        subscriptNumbers(""),
+        new Werkstoff.Stats(),
+        Werkstoff.Types.ELEMENT,
+        new Werkstoff.GenerationFeatures().addCells()
+            .addCells(),
+        offsetID_01 + 10,
+        TextureSet.SET_FLUID);
+    public static final Werkstoff PromoterUEV = new Werkstoff(
+        new short[] { 40, 120, 166 },
+        "PromoterUEV",
+        subscriptNumbers(""),
+        new Werkstoff.Stats(),
+        Werkstoff.Types.ELEMENT,
+        new Werkstoff.GenerationFeatures().addCells()
+            .addCells(),
+        offsetID_01 + 11,
+        TextureSet.SET_FLUID);
 
     @Override
     public void run() {

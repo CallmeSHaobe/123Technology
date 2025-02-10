@@ -4,6 +4,7 @@ import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
 import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 
+import gtPlusPlus.api.recipe.GTPPRecipeMaps;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -73,7 +74,7 @@ public class OTEMegaFreezerGTpp extends OTH_MultiMachineBase<OTEMegaFreezerGTpp>
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        return RecipeMaps.vacuumFreezerRecipes;
+        return GTPPRecipeMaps.advancedFreezerRecipes;
 
     }
 

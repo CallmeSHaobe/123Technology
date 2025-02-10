@@ -89,7 +89,7 @@ public class recipesMain implements IRecipePool {
             32000,
             (int) 123123123,
             514,
-            new ItemStack[] { GTModHandler.getModItem("123technology", "MetaItemOTH", 64, 13),
+            new ItemStack[] { GTModHandler.getModItem("123Technology", "MetaItemOTH", 64, 13),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, IDs + 24),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 1004),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 13532),

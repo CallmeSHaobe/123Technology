@@ -203,24 +203,31 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
             }
             if (isWirelessMode) {
                 this.setPowerFlow(0);
-                // FIXME addEU
                 BigInteger costingWirelessEUTemp = BigInteger.valueOf(recipe.mSpecialValue)
                     .multiply(
                         BigInteger.valueOf((long) FuelsValueBonus)
-                            .multiply(
-                                BigInteger.valueOf(FuelAmount)
-                                    .divide(BigInteger.valueOf(20L))));
+                            .multiply(BigInteger.valueOf(FuelAmount)));
                 costingWirelessEU = GTUtility.formatNumbers(costingWirelessEUTemp);
                 if (!addEUToGlobalEnergyMap(ownerUUID, costingWirelessEUTemp)) {
                     return CheckRecipeResultRegistry.INTERNAL_ERROR;
                 }
-            } else this.setPowerFlow(
-                (long) Math.min(Long.MAX_VALUE - 1, FuelAmount * recipe.mSpecialValue * FuelsValueBonus / 20));
+            } else {
+                costingWirelessEU = "0";
+                this.setPowerFlow(
+                    (long) Math.min(Long.MAX_VALUE - 1, FuelAmount * recipe.mSpecialValue * FuelsValueBonus));
+
+            }
             this.mMaxProgresstime = 20;
             this.updateSlots();
             return CheckRecipeResultRegistry.GENERATING;
         }
         return CheckRecipeResultRegistry.NO_FUEL_FOUND;
+    }
+
+    @Override
+    public void onFirstTick_EM(IGregTechTileEntity aBaseMetaTileEntity) {
+        super.onFirstTick_EM(aBaseMetaTileEntity);
+        this.ownerUUID = aBaseMetaTileEntity.getOwnerUuid();
     }
 
     public FluidStack getPromoter() {

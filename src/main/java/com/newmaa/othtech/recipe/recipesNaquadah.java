@@ -3,13 +3,12 @@ package com.newmaa.othtech.recipe;
 import static com.newmaa.othtech.Utils.Utils.setStackSize;
 import static com.newmaa.othtech.common.recipemap.Recipemaps.NQF;
 import static com.newmaa.othtech.common.recipemap.Recipemaps.NaquadahFuelFakeRecipes;
-import static goodgenerator.main.GGConfigLoader.NaquadahFuelTime;
-import static goodgenerator.main.GGConfigLoader.NaquadahFuelVoltage;
 
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 import com.newmaa.othtech.Utils.RecipeBuilder;
+import com.newmaa.othtech.common.materials.liquids;
 
 import bartworks.system.material.WerkstoffLoader;
 import goodgenerator.items.GGMaterial;
@@ -121,7 +120,8 @@ public class recipesNaquadah implements IRecipePool {
             GGMaterial.plutoniumBasedLiquidFuelExcited.getFluidOrGas(1),
             GGMaterial.naquadahBasedFuelMkI.getFluidOrGas(1), GGMaterial.naquadahBasedFuelMkII.getFluidOrGas(1),
             GGMaterial.naquadahBasedFuelMkIII.getFluidOrGas(1), GGMaterial.naquadahBasedFuelMkIV.getFluidOrGas(1),
-            GGMaterial.naquadahBasedFuelMkV.getFluidOrGas(1), GGMaterial.naquadahBasedFuelMkVI.getFluidOrGas(1) };
+            GGMaterial.naquadahBasedFuelMkV.getFluidOrGas(1), GGMaterial.naquadahBasedFuelMkVI.getFluidOrGas(1),
+            Materials.Naquadria.getMolten(1), Materials.NaquadahEnriched.getMolten(1), liquids.FUELA.getFluidOrGas(1) };
 
         FluidStack[] outputs = new FluidStack[] { GGMaterial.uraniumBasedLiquidFuelDepleted.getFluidOrGas(1),
             GGMaterial.thoriumBasedLiquidFuelDepleted.getFluidOrGas(1),
@@ -131,14 +131,17 @@ public class recipesNaquadah implements IRecipePool {
             GGMaterial.naquadahBasedFuelMkIIIDepleted.getFluidOrGas(1),
             GGMaterial.naquadahBasedFuelMkIVDepleted.getFluidOrGas(1),
             GGMaterial.naquadahBasedFuelMkVDepleted.getFluidOrGas(1),
-            GGMaterial.naquadahBasedFuelMkVIDepleted.getFluidOrGas(1) };
-        for (int i = 0; i < 9; i++) {
+            GGMaterial.naquadahBasedFuelMkVIDepleted.getFluidOrGas(1), Materials.NaquadahEnriched.getMolten(1),
+            Materials.Naquadah.getMolten(1), liquids.FUELA_DE.getFluidOrGas(1) };
+        int[] NaquadahGen = new int[] { 12960, 2200, 32400, 975000, 2300000, 9511000, 88540000, 399576000, 2077795200,
+            1388888, 277777, 1231808 };
+        for (int i = 0; i < 12; i++) {
             GTValues.RA.stdBuilder()
                 .fluidInputs(inputs[i])
                 .fluidOutputs(outputs[i])
-                .duration(NaquadahFuelTime[i])
+                .duration(20)
                 .eut(0)
-                .specialValue(NaquadahFuelVoltage[i])
+                .specialValue(NaquadahGen[i])
                 .addTo(NaquadahFuelFakeRecipes);
 
         }
