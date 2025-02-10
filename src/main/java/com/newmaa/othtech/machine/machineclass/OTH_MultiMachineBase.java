@@ -1,6 +1,6 @@
 package com.newmaa.othtech.machine.machineclass;
 
-import static com.newmaa.othtech.Utils.Utils.filterValidMTEs;
+import static com.newmaa.othtech.utils.Utils.filterValidMTEs;
 import static gregtech.api.enums.GTValues.GT;
 import static gregtech.api.enums.GTValues.VN;
 

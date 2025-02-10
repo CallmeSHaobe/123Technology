@@ -1,13 +1,13 @@
 package com.newmaa.othtech.recipe;
 
-import static com.newmaa.othtech.Utils.Utils.setStackSize;
+import static com.newmaa.othtech.utils.Utils.setStackSize;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
-import com.newmaa.othtech.Utils.RecipeBuilder;
+import com.newmaa.othtech.utils.RecipeBuilder;
 import com.newmaa.othtech.common.materials.liquids;
 
 import goodgenerator.api.recipe.GoodGeneratorRecipeMaps;

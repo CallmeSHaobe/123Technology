@@ -4,7 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-import com.newmaa.othtech.Utils.Utils;
+import com.newmaa.othtech.utils.Utils;
 
 import gregtech.api.util.GTLog;
 

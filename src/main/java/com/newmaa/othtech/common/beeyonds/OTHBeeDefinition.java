@@ -69,7 +69,7 @@ public enum OTHBeeDefinition implements IBeeDefinition {
         beeSpecies.setHumidity(DAMP);
         beeSpecies.setTemperature(EnumTemperature.NORMAL);
     }, template -> {
-        AlleleHelper.instance.set(template, FLOWERING, EnumAllele.Flowering.SLOWER);
+        AlleleHelper.instance.set(template, FLOWERING, EnumAllele.Flowering.FASTEST);
         AlleleHelper.instance.set(template, HUMIDITY_TOLERANCE, EnumAllele.Tolerance.NONE);
         AlleleHelper.instance.set(template, EFFECT, getEffect(EXTRABEES, "teleport"));
         AlleleHelper.instance.set(template, FLOWER_PROVIDER, getFlowers(EXTRABEES, "book"));
@@ -87,7 +87,7 @@ public enum OTHBeeDefinition implements IBeeDefinition {
         beeSpecies.setHumidity(DAMP);
         beeSpecies.setTemperature(EnumTemperature.NORMAL);
     }, template -> {
-        AlleleHelper.instance.set(template, FLOWERING, EnumAllele.Flowering.SLOWER);
+        AlleleHelper.instance.set(template, FLOWERING, EnumAllele.Flowering.FASTEST);
         AlleleHelper.instance.set(template, HUMIDITY_TOLERANCE, EnumAllele.Tolerance.NONE);
         AlleleHelper.instance.set(template, EFFECT, getEffect(EXTRABEES, "teleport"));
         AlleleHelper.instance.set(template, FLOWER_PROVIDER, EnumAllele.Flowers.VANILLA);
@@ -100,7 +100,7 @@ public enum OTHBeeDefinition implements IBeeDefinition {
         beeSpecies.setHumidity(DAMP);
         beeSpecies.setTemperature(EnumTemperature.NORMAL);
     }, template -> {
-        AlleleHelper.instance.set(template, FLOWERING, EnumAllele.Flowering.SLOWER);
+        AlleleHelper.instance.set(template, FLOWERING, EnumAllele.Flowering.FASTEST);
         AlleleHelper.instance.set(template, HUMIDITY_TOLERANCE, EnumAllele.Tolerance.NONE);
         AlleleHelper.instance.set(template, EFFECT, getEffect(EXTRABEES, "teleport"));
         AlleleHelper.instance.set(template, FLOWER_PROVIDER, EnumAllele.Flowers.VANILLA);
@@ -117,7 +117,7 @@ public enum OTHBeeDefinition implements IBeeDefinition {
         beeSpecies.setHumidity(DAMP);
         beeSpecies.setTemperature(EnumTemperature.NORMAL);
     }, template -> {
-        AlleleHelper.instance.set(template, FLOWERING, EnumAllele.Flowering.SLOWER);
+        AlleleHelper.instance.set(template, FLOWERING, EnumAllele.Flowering.FASTEST);
         AlleleHelper.instance.set(template, HUMIDITY_TOLERANCE, EnumAllele.Tolerance.NONE);
         AlleleHelper.instance.set(template, EFFECT, getEffect(EXTRABEES, "teleport"));
         AlleleHelper.instance.set(template, FLOWER_PROVIDER, EnumAllele.Flowers.VANILLA);
@@ -131,7 +131,7 @@ public enum OTHBeeDefinition implements IBeeDefinition {
             beeSpecies.setHumidity(DAMP);
             beeSpecies.setTemperature(EnumTemperature.NORMAL);
         }, template -> {
-            AlleleHelper.instance.set(template, FLOWERING, EnumAllele.Flowering.SLOWER);
+            AlleleHelper.instance.set(template, FLOWERING, EnumAllele.Flowering.FASTEST);
             AlleleHelper.instance.set(template, HUMIDITY_TOLERANCE, EnumAllele.Tolerance.NONE);
             AlleleHelper.instance.set(template, EFFECT, getEffect(EXTRABEES, "teleport"));
             AlleleHelper.instance.set(template, FLOWER_PROVIDER, EnumAllele.Flowers.VANILLA);

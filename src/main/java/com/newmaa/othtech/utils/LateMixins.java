@@ -1,4 +1,4 @@
-package com.newmaa.othtech.Utils;
+package com.newmaa.othtech.utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,7 +1,7 @@
 package com.newmaa.othtech.machine;
 
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
-import static com.newmaa.othtech.Utils.Utils.filterValidMTEs;
+import static com.newmaa.othtech.utils.Utils.filterValidMTEs;
 import static goodgenerator.loader.Loaders.impreciseUnitCasing;
 import static goodgenerator.loader.Loaders.preciseUnitCasing;
 import static gregtech.api.GregTechAPI.*;

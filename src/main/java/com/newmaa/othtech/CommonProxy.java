@@ -5,6 +5,7 @@ import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
 import com.newmaa.othtech.common.entity.entityLoader;
 import com.newmaa.othtech.common.item.ItemLoader;
 
+import com.newmaa.othtech.common.materials.bwMaterialsLocalization;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -15,7 +16,7 @@ public class CommonProxy {
     // preInit "Run before anything else. Read your config, create blocks, items, etc, and register them with the
     // GameRegistry." (Remove if not needed)
     public void preInit(FMLPreInitializationEvent event) {
-
+        new bwMaterialsLocalization().loader();
         new CreativeTabsLoader(event);
         new ItemLoader(event);
         new OreDictionaryLoader(event);

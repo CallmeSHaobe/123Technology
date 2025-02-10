@@ -1,4 +1,4 @@
-package com.newmaa.othtech.Utils.rewrites;
+package com.newmaa.othtech.utils.rewrites;
 
 import java.util.Objects;
 

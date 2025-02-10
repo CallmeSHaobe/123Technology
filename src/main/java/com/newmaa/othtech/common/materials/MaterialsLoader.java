@@ -9,6 +9,7 @@ public class MaterialsLoader {
 
     public static void load() {
         WerkstoffAdderRegistry.addWerkstoffAdder(new liquids());
+        WerkstoffAdderRegistry.addWerkstoffAdder(new materials());
         ItemRegister.registryItems();
         ItemRegister.registryItemContainers();
         ItemRegisterISAModule.registryItemContainersISA();

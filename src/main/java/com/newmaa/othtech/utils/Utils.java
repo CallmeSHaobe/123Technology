@@ -1,4 +1,4 @@
-package com.newmaa.othtech.Utils;
+package com.newmaa.othtech.utils;
 
 import static net.minecraft.util.StatCollector.translateToLocalFormatted;
 
@@ -18,7 +18,6 @@ import com.newmaa.othtech.OTHTechnology;
 
 import gregtech.api.enums.HeatingCoilLevel;
 import gregtech.api.metatileentity.MetaTileEntity;
-import scala.actors.migration.pattern;
 
 public final class Utils {
 

@@ -1,7 +1,7 @@
 package com.newmaa.othtech.machine;
 
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
-import static com.newmaa.othtech.Utils.Utils.metaItemEqual;
+import static com.newmaa.othtech.utils.Utils.metaItemEqual;
 import static gregtech.api.GregTechAPI.*;
 import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.enums.Textures.BlockIcons.*;

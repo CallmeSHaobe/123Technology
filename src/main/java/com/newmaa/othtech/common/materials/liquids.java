@@ -10,31 +10,8 @@ import gregtech.api.enums.TextureSet;
 
 public class liquids implements Runnable {
 
-    private static final int offsetID_01 = 123123;
+    private static final int offsetID_01 = 12300;
     public static final Werkstoff.GenerationFeatures gf = new Werkstoff.GenerationFeatures();
-
-    public static final Werkstoff MagmatterA = new Werkstoff(
-        new short[] { 169, 169, 169 }, // DarkGray
-        "FluidMagnetorheological",
-        subscriptNumbers("M*"),
-        new Werkstoff.Stats(),
-        Werkstoff.Types.ELEMENT,
-        new Werkstoff.GenerationFeatures().disable()
-            .addCells(),
-        offsetID_01 + 1,
-        TextureSet.SET_FLUID);
-    public static final Werkstoff MagmatterB = new Werkstoff(
-        new short[] { 169, 169, 169 }, // DarkGray
-        "FluidMagneticmonopole",
-        subscriptNumbers("M%"),
-        new Werkstoff.Stats(),
-        Werkstoff.Types.ELEMENT,
-        new Werkstoff.GenerationFeatures().disable()
-            .addCells(),
-        offsetID_01 + 2,
-        TextureSet.SET_FLUID,
-        new Pair<>(MagmatterA, 1),
-        new Pair<>(Materials.Stone, 2));
     public static final Werkstoff Galaxy = new Werkstoff(
         new short[] { 18, 80, 161 },
         "FluidGalaxy",

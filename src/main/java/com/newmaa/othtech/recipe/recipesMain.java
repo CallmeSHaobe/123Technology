@@ -2,7 +2,11 @@ package com.newmaa.othtech.recipe;
 
 import static gregtech.api.enums.TierEU.*;
 import static gregtech.api.util.GTModHandler.addCraftingRecipe;
+import static gregtech.api.util.GTRecipeBuilder.HOURS;
+import static gregtech.api.util.GTRecipeConstants.*;
+import static tectech.thing.CustomItemList.eM_Power;
 
+import gtnhlanth.common.register.WerkstoffMaterialPool;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -10,7 +14,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
-import com.newmaa.othtech.Utils.RecipeBuilder;
+import com.newmaa.othtech.utils.RecipeBuilder;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.item.ItemLoader;
 import com.newmaa.othtech.common.materials.liquids;
@@ -27,6 +31,7 @@ import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTUtility;
 import gregtech.common.items.CombType;
 import gregtech.loaders.misc.GTBees;
+import tectech.loader.thing.MachineLoader;
 import tectech.recipe.TTRecipeAdder;
 
 public class recipesMain implements IRecipePool {
@@ -967,5 +972,31 @@ public class recipesMain implements IRecipePool {
             .duration(36000 * 20)
             .eut(RECIPE_UXV)
             .addTo(Assem);
+        //NQF
+        GTValues.RA.stdBuilder()
+            .metadata(RESEARCH_ITEM, GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 32001))
+            .metadata(RESEARCH_TIME, HOURS * 4)
+            .itemInputs(
+                ItemList.Casing_ZPM.get(16),
+                ItemList.Electric_Motor_ZPM.get(64),
+                ItemList.Electric_Pump_ZPM.get(32),
+                ItemList.Field_Generator_ZPM.get(16),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 23562),
+                eM_Power.get(64),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 15300),
+                GTModHandler.getModItem("gregtech", "gt.blockcasings", 1, 15),
+                ItemList.Emitter_ZPM.get(64),
+                new Object[]{OrePrefixes.circuit.get(Materials.Superconductor), 64},
+                new Object[]{OrePrefixes.circuit.get(Materials.Superconductor), 64},
+                GTOreDictUnificator.get(OrePrefixes.wireGt01, Materials.SuperconductorZPM, 64),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 32001),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 12732),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 1188),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 32001))
+            .fluidInputs(Materials.Naquadria.getMolten(144000), Materials.NaquadahEnriched.getMolten(288000), Materials.Naquadah.getMolten(576000), Materials.Trinium.getMolten(1152000))
+            .itemOutputs(OTHItemList.NQF.get(1))
+            .eut(123123)
+            .duration(123 * 20)
+            .addTo(AssemblyLine);
     }
 }

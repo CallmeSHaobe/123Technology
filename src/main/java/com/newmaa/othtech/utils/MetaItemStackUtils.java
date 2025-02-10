@@ -1,6 +1,6 @@
-package com.newmaa.othtech.Utils;
+package com.newmaa.othtech.utils;
 
-import static com.newmaa.othtech.Utils.TextHandler.texter;
+import static com.newmaa.othtech.utils.TextHandler.texter;
 
 import java.util.Map;
 import java.util.Set;

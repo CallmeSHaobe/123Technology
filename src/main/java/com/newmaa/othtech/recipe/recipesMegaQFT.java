@@ -1,6 +1,6 @@
 package com.newmaa.othtech.recipe;
 
-import static com.newmaa.othtech.Utils.Utils.setStackSize;
+import static com.newmaa.othtech.utils.Utils.setStackSize;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -8,7 +8,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
-import com.newmaa.othtech.Utils.RecipeBuilder;
+import com.newmaa.othtech.utils.RecipeBuilder;
 import com.newmaa.othtech.common.materials.liquids;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 
@@ -32,16 +32,7 @@ public class recipesMegaQFT implements IRecipePool {
         Fluid N2 = FluidRegistry.getFluid("nitrogen");
 
         final RecipeMap<?> MQFT = Recipemaps.QFTMega;
-        GTValues.RA.stdBuilder()
-            .fluidOutputs(liquids.MagmatterA.getFluidOrGas(4 * 144))
-            .itemInputs(
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 14),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 4, 17583))
-            .fluidInputs(new FluidStack(FluidRegistry.getFluidID("molten.tengampurified"), 256 * 144))
-            .noOptimize()
-            .duration(160 * 20)
-            .eut(TierEU.UXV)
-            .addTo(MQFT);
+
         GTValues.RA.stdBuilder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(1),

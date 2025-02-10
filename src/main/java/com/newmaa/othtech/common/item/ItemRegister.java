@@ -1,6 +1,6 @@
 package com.newmaa.othtech.common.item;
 
-import static com.newmaa.othtech.Utils.TextHandler.texter;
+import static com.newmaa.othtech.utils.TextHandler.texter;
 import static com.newmaa.othtech.common.item.itemsHelper.BasicItems.MetaItem;
 import static com.newmaa.othtech.common.item.itemsHelper.ItemAdder.initItem;
 

@@ -31,7 +31,7 @@ import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructa
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
-import com.newmaa.othtech.Utils.Utils;
+import com.newmaa.othtech.utils.Utils;
 import com.newmaa.othtech.machine.machineclass.TT_MultiMachineBase_EM;
 
 import cpw.mods.fml.relauncher.Side;

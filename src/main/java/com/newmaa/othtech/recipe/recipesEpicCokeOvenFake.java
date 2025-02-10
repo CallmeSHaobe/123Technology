@@ -1,12 +1,12 @@
 package com.newmaa.othtech.recipe;
 
-import static com.newmaa.othtech.Utils.Utils.setStackSize;
+import static com.newmaa.othtech.utils.Utils.setStackSize;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
-import com.newmaa.othtech.Utils.RecipeBuilder;
+import com.newmaa.othtech.utils.RecipeBuilder;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 
 import gregtech.api.enums.Materials;

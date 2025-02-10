@@ -1,0 +1,37 @@
+package com.newmaa.othtech.utils;
+
+import cpw.mods.fml.common.Loader;
+import net.minecraft.util.ResourceLocation;
+
+import java.util.Locale;
+
+public enum modsEnum {
+    TwistSpaceTechnology(modsName.TST);
+    public static class modsName {
+        public static final String TST = "TwistSpaceTechnology";
+    }
+    public final String ID;
+    public final String resourceDomain;
+    private Boolean modLoaded;
+
+    modsEnum(String ID) {
+        this.ID = ID;
+        this.resourceDomain = ID.toLowerCase(Locale.ENGLISH);
+    }
+
+    public boolean isModLoaded() {
+        if (this.modLoaded == null) {
+            this.modLoaded = Loader.isModLoaded(ID);
+        }
+        return this.modLoaded;
+    }
+
+    public String getResourcePath(String... path) {
+        return this.getResourceLocation(path)
+            .toString();
+    }
+
+    public ResourceLocation getResourceLocation(String... path) {
+        return new ResourceLocation(this.resourceDomain, String.join("/", path));
+    }
+}

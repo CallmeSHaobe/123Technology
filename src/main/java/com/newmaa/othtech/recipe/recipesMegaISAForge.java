@@ -1,6 +1,6 @@
 package com.newmaa.othtech.recipe;
 
-import static com.newmaa.othtech.Utils.Utils.setStackSize;
+import static com.newmaa.othtech.utils.Utils.setStackSize;
 import static com.newmaa.othtech.common.OTHItemList.itemEnqingM;
 
 import net.minecraft.init.Blocks;
@@ -9,9 +9,8 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
-import com.newmaa.othtech.Utils.RecipeBuilder;
+import com.newmaa.othtech.utils.RecipeBuilder;
 import com.newmaa.othtech.common.item.ItemLoader;
-import com.newmaa.othtech.common.materials.liquids;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 
 import gregtech.api.enums.GTValues;
@@ -222,42 +221,6 @@ public class recipesMegaISAForge implements IRecipePool {
             .fluidOutputs(new FluidStack(FluidRegistry.getFluidID("dimensionallytranscendentresidue"), 333 * 8))
             .noOptimize()
             .duration(40 * 16 * 20)
-            .eut(TierEU.MAX)
-            .addTo(ISA);
-        GTValues.RA.stdBuilder()
-            .fluidInputs(liquids.MagmatterA.getFluidOrGas(64 * 144))
-            .fluidOutputs(liquids.MagmatterB.getFluidOrGas(48 * 144))
-            .itemInputs(
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 4, 13),
-                ItemList.Field_Generator_UEV.get(3))
-            .noOptimize()
-            .duration(123 * 20)
-            .eut(1232112321)
-            .addTo(ISA);
-        GTValues.RA.stdBuilder()
-            .fluidInputs(
-                liquids.MagmatterB.getFluidOrGas(64 * 144),
-                new FluidStack(FluidRegistry.getFluidID("exciteddtsc"), 8000),
-                new FluidStack(UIVsc, 64 * 144))
-            .fluidOutputs(new FluidStack(FluidRegistry.getFluidID("molten.magmatter"), 64 * 144))
-            .itemInputs(
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 32417),
-                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Optical, 8))
-            .noOptimize()
-            .duration(3600 * 20)
-            .eut(TierEU.MAX)
-            .addTo(ISA);
-        GTValues.RA.stdBuilder()
-            .fluidInputs(
-                liquids.MagmatterB.getFluidOrGas(64 * 144),
-                new FluidStack(FluidRegistry.getFluidID("exciteddtsc"), 6000),
-                new FluidStack(UMVsc, 32 * 144))
-            .fluidOutputs(new FluidStack(FluidRegistry.getFluidID("molten.magmatter"), 64 * 144))
-            .itemInputs(
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 32417),
-                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Exotic, 64))
-            .noOptimize()
-            .duration(1800 * 20)
             .eut(TierEU.MAX)
             .addTo(ISA);
         GTValues.RA.stdBuilder()

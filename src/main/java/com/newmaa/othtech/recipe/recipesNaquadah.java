@@ -1,22 +1,20 @@
 package com.newmaa.othtech.recipe;
 
-import static com.newmaa.othtech.Utils.Utils.setStackSize;
+import static com.newmaa.othtech.utils.Utils.setStackSize;
 import static com.newmaa.othtech.common.recipemap.Recipemaps.NQF;
 import static com.newmaa.othtech.common.recipemap.Recipemaps.NaquadahFuelFakeRecipes;
 
+import gregtech.api.enums.*;
+import gregtech.api.recipe.RecipeMaps;
+import gtPlusPlus.api.recipe.GTPPRecipeMaps;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
-import com.newmaa.othtech.Utils.RecipeBuilder;
+import com.newmaa.othtech.utils.RecipeBuilder;
 import com.newmaa.othtech.common.materials.liquids;
 
 import bartworks.system.material.WerkstoffLoader;
 import goodgenerator.items.GGMaterial;
-import gregtech.api.enums.GTValues;
-import gregtech.api.enums.Materials;
-import gregtech.api.enums.MaterialsUEVplus;
-import gregtech.api.enums.OrePrefixes;
-import gregtech.api.enums.TierEU;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
 import gtPlusPlus.core.material.MaterialsElements;
@@ -144,6 +142,56 @@ public class recipesNaquadah implements IRecipePool {
                 .specialValue(NaquadahGen[i])
                 .addTo(NaquadahFuelFakeRecipes);
 
+
+
         }
+        //CHEM FUEL
+        RecipeBuilder.builder()
+            .fluidOutputs(
+                liquids.FUELA.getFluidOrGas(1000)
+            )
+            .fluidInputs(
+                Materials.Naquadah.getMolten(864),
+                FluidRegistry.getFluidStack("highoctanegasoline", 4000),
+                FluidRegistry.getFluidStack("fluid.rocketfuelmixa", 2000)
+            )
+            .eut(TierEU.RECIPE_ZPM)
+            .duration(5)
+            .addTo(RecipeMaps.mixerRecipes);
+        RecipeBuilder.builder()
+            .fluidOutputs(
+                liquids.FUELA.getFluidOrGas(1000)
+            )
+            .fluidInputs(
+                Materials.Naquadah.getMolten(864),
+                FluidRegistry.getFluidStack("highoctanegasoline", 4000),
+                FluidRegistry.getFluidStack("fluid.rocketfuelmixa", 2000)
+            )
+            .eut(TierEU.RECIPE_ZPM)
+            .duration(5)
+            .addTo(GTPPRecipeMaps.mixerNonCellRecipes);
+        RecipeBuilder.builder()
+            .fluidInputs(
+                liquids.FUELA_DE.getFluidOrGas(500)
+            )
+            .itemOutputs(
+                Materials.Naquadah.getDust(2),
+                Materials.Carbon.getDust(48)
+            )
+            .eut(TierEU.RECIPE_MV)
+            .duration(800)
+            .addTo(RecipeMaps.centrifugeRecipes);
+        RecipeBuilder.builder()
+            .fluidInputs(
+                liquids.FUELA_DE.getFluidOrGas(500)
+            )
+            .itemOutputs(
+                Materials.Naquadah.getDust(2),
+                Materials.Carbon.getDust(48)
+            )
+            .eut(TierEU.RECIPE_MV)
+            .duration(800)
+            .addTo(GTPPRecipeMaps.centrifugeNonCellRecipes);
+        //Promoter
     }
 }

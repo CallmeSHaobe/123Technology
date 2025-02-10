@@ -1,4 +1,4 @@
-package com.newmaa.othtech.Utils;
+package com.newmaa.othtech.utils;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;

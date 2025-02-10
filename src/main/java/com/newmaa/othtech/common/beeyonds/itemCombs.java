@@ -1,6 +1,5 @@
 package com.newmaa.othtech.common.beeyonds;
 
-import static gregtech.api.enums.GTValues.*;
 import static gregtech.api.enums.Mods.*;
 
 import java.util.List;
@@ -14,7 +13,7 @@ import net.minecraft.util.IIcon;
 import net.minecraftforge.fluids.FluidRegistry;
 
 import com.newmaa.othtech.OTHTechnology;
-import com.newmaa.othtech.Utils.RecipeBuilder;
+import com.newmaa.othtech.utils.RecipeBuilder;
 import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
 
 import cpw.mods.fml.common.registry.GameRegistry;
