@@ -8,7 +8,9 @@ import static gregtech.api.GregTechAPI.*;
 import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static gregtech.api.util.GTStructureUtility.ofFrame;
+import static gregtech.api.util.GTUtility.validMTEList;
 
+import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -39,6 +41,7 @@ import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.logic.ProcessingLogic;
+import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.implementations.MTEHatch;
 import gregtech.api.metatileentity.implementations.MTEHatchEnergy;
 import gregtech.api.recipe.RecipeMap;
@@ -50,11 +53,13 @@ import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
+import gregtech.common.tileentities.machines.IDualInputHatch;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 
 public class OTELargeCircuitAssembler extends OTH_MultiMachineBase<OTELargeCircuitAssembler> {
 
+    // region Constructor
     public OTELargeCircuitAssembler(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
     }
@@ -63,50 +68,18 @@ public class OTELargeCircuitAssembler extends OTH_MultiMachineBase<OTELargeCircu
         super(aName);
     }
 
+    @Override
+    public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
+        return new OTELargeCircuitAssembler(this.mName);
+    }
+    // endregion
+
+    protected byte mode = 0;
     protected int casingTier = -1;
-    private byte mode = 0;
-    protected int energyHatchTier = 0;
+    protected long machineLimitedVoltage = -1;
+    protected static final int CASING_INDEX = 1540;
 
-    private String Par = "0";
-
-    @Override
-    public void saveNBTData(NBTTagCompound aNBT) {
-        super.saveNBTData(aNBT);
-        aNBT.setInteger("casingTier", casingTier);
-        aNBT.setByte("mode", mode);
-    }
-
-    @Override
-    public void loadNBTData(final NBTTagCompound aNBT) {
-        super.loadNBTData(aNBT);
-        casingTier = aNBT.getInteger("casingTier");
-        mode = aNBT.getByte("mode");
-    }
-
-    @Override
-    public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
-        int z) {
-        super.getWailaNBTData(player, tile, tag, world, x, y, z);
-        final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
-        if (tileEntity != null) {
-            Par = GTUtility.formatNumbers(getMaxParallelRecipes());
-            tag.setString("Parallel", Par);
-        }
-    }
-
-    @Override
-    public void getWailaBody(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor,
-        IWailaConfigHandler config) {
-        super.getWailaBody(itemStack, currentTip, accessor, config);
-        final NBTTagCompound tag = accessor.getNBTData();
-        currentTip.add(
-            "并行" + EnumChatFormatting.RESET
-                + ": "
-                + EnumChatFormatting.BLUE
-                + tag.getString("Parallel")
-                + EnumChatFormatting.RESET);
-    }
-
+    // region Logic
     @Override
     protected boolean isEnablePerfectOverclock() {
         return true;
@@ -125,16 +98,10 @@ public class OTELargeCircuitAssembler extends OTH_MultiMachineBase<OTELargeCircu
         return RecipeMaps.circuitAssemblerRecipes;
     }
 
-    public long getMachineVoltageLimit() {
-        checkEnergyHatchTier();
-        energyHatchTier = checkEnergyHatchTier();
-        return GTValues.V[energyHatchTier];
-    }
-
     @Override
     protected void setProcessingLogicPower(ProcessingLogic logic) {
         boolean useSingleAmp = mEnergyHatches.size() == 1 && mExoticEnergyHatches.isEmpty();
-        logic.setAvailableVoltage(getMachineVoltageLimit());
+        logic.setAvailableVoltage(this.machineLimitedVoltage);
         logic.setAvailableAmperage(useSingleAmp ? 1 : getMaxInputAmps());
         logic.setAmperageOC(true);
     }
@@ -163,12 +130,92 @@ public class OTELargeCircuitAssembler extends OTH_MultiMachineBase<OTELargeCircu
 
         }.setMaxParallelSupplier(this::getMaxParallelRecipes);
     }
+    // endregion
+
+    // region Texture
+    @Override
+    public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection facing,
+        int colorIndex, boolean aActive, boolean aRedStone) {
+        var id = Math.max(CASING_INDEX, CASING_INDEX + casingTier);
+        if (side == facing) {
+            if (aActive) return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(id),
+                TextureFactory.of(textureFontOn), TextureFactory.builder()
+                    .addIcon(textureFontOn_Glow)
+                    .glow()
+                    .build() };
+            else return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(id),
+                TextureFactory.of(textureFontOff), TextureFactory.builder()
+                    .addIcon(textureFontOff_Glow)
+                    .glow()
+                    .build() };
+        } else return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(id) };
+    }
+
+    private static final IIconContainer textureFontOn = new Textures.BlockIcons.CustomIcon("iconsets/OVERLAY_QTANK");
+    private static final IIconContainer textureFontOn_Glow = new Textures.BlockIcons.CustomIcon(
+        "iconsets/OVERLAY_QTANK_GLOW");
+    private static final IIconContainer textureFontOff = new Textures.BlockIcons.CustomIcon("iconsets/OVERLAY_QCHEST");
+    private static final IIconContainer textureFontOff_Glow = new Textures.BlockIcons.CustomIcon(
+        "iconsets/OVERLAY_QCHEST_GLOW");
+
+    @Override
+    public byte getUpdateData() {
+        if (casingTier <= -1) return 0;
+        return (byte) casingTier;
+    }
+
+    @Override
+    public void onValueUpdate(byte aValue) {
+        if ((byte) casingTier != aValue) {
+            casingTier = (byte) (aValue & 0x0F);
+        }
+    }
+    // endregion
+
+    // region Structure Construct
+    private final int horizontalOffSet = 6;
+    private final int verticalOffSet = 4;
+    private final int depthOffSet = 2;
+    private static final String STRUCTURE_PIECE_MAIN = "main";
+    private static IStructureDefinition<OTELargeCircuitAssembler> STRUCTURE_DEFINITION = null;
 
     @Override
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
         repairMachine();
-        this.casingTier = -1;
-        return checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet);
+        this.casingTier = -2;
+        this.machineLimitedVoltage = -1L;
+        var res = checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet);
+        if (res) {
+            this.machineLimitedVoltage = GTValues.V[checkEnergyHatchTier()];
+            if (casingTier >= 0) {
+                reUpdate(Math.max(CASING_INDEX, CASING_INDEX + casingTier));
+            }
+        }
+        return res;
+    }
+
+    private final List<List<? extends MTEHatch>> hatchList = Arrays.asList(
+        mInputHatches,
+        mInputBusses,
+        mOutputHatches,
+        mOutputBusses,
+        mEnergyHatches,
+        mMaintenanceHatches,
+        mMufflerHatches,
+        mExoticEnergyHatches);
+
+    public void reUpdate(int texture) {
+        for (IDualInputHatch hatch : mDualInputHatches) {
+            if (((MetaTileEntity) hatch).isValid()) {
+                hatch.updateTexture(texture);
+            }
+        }
+
+        for (List<? extends MTEHatch> mteHatches : hatchList) {
+            for (MTEHatch mteHatch : validMTEList(mteHatches)) {
+                mteHatch.updateTexture(texture);
+            }
+        }
     }
 
     private int checkEnergyHatchTier() {
@@ -183,39 +230,6 @@ public class OTELargeCircuitAssembler extends OTH_MultiMachineBase<OTELargeCircu
     }
 
     @Override
-    public void construct(ItemStack stackSize, boolean hintsOnly) {
-        repairMachine();
-        buildPiece(STRUCTURE_PIECE_MAIN, stackSize, hintsOnly, horizontalOffSet, verticalOffSet, depthOffSet);
-    }
-
-    @Override
-    public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
-        if (this.mMachine) return -1;
-        int realBudget = elementBudget >= 200 ? elementBudget : Math.min(200, elementBudget * 5);
-
-        return this.survivialBuildPiece(
-            STRUCTURE_PIECE_MAIN,
-            stackSize,
-            horizontalOffSet,
-            verticalOffSet,
-            depthOffSet,
-            realBudget,
-            env,
-            false,
-            true);
-
-    }
-
-    private static final String STRUCTURE_PIECE_MAIN = "main";
-
-    private final int horizontalOffSet = 6;
-
-    private final int verticalOffSet = 4;
-    private final int depthOffSet = 2;
-    private static IStructureDefinition<OTELargeCircuitAssembler> STRUCTURE_DEFINITION = null;
-    private static final int CASING_INDEX = 1541;
-
-    @Override
     public IStructureDefinition<OTELargeCircuitAssembler> getStructureDefinition() {
         if (STRUCTURE_DEFINITION == null) {
             var c = StructureUtility.<OTELargeCircuitAssembler, Integer>ofBlocksTiered(
@@ -226,7 +240,7 @@ public class OTELargeCircuitAssembler extends OTH_MultiMachineBase<OTELargeCircu
                     Pair.of(preciseUnitCasing, 1),
                     Pair.of(preciseUnitCasing, 2),
                     Pair.of(preciseUnitCasing, 3)),
-                -1,
+                -2,
                 (t, meta) -> t.casingTier = meta,
                 t -> t.casingTier);
             STRUCTURE_DEFINITION = StructureDefinition.<OTELargeCircuitAssembler>builder()
@@ -263,7 +277,13 @@ public class OTELargeCircuitAssembler extends OTH_MultiMachineBase<OTELargeCircu
         return STRUCTURE_DEFINITION;
     }
 
-    // Structured by NewMaa
+    @Override
+    public boolean addToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
+        return super.addToMachineList(aTileEntity, aBaseCasingIndex)
+            || addExoticEnergyInputToMachineList(aTileEntity, aBaseCasingIndex);
+    }
+
+    // region Structured by NewMaa
     private final String[][] shapeMain = new String[][] {
         { "             ", "             ", "             ", "             ", "             ", "EEEEEEEEEEEEE" },
         { " IIIIIIIIIII ", " I         I ", " I         I ", " I         I ", " II       II ", "EEEEEEEEEEEEE" },
@@ -273,18 +293,33 @@ public class OTELargeCircuitAssembler extends OTH_MultiMachineBase<OTELargeCircu
         { " IHHHHHHHHHI ", "  HHHHHHHHH  ", "  HHDDDDDHH  ", "  HHDDDDDHH  ", " IHHHHHHHHHI ", "EEEEEEEEEEEEE" },
         { " IIIIIIIIIII ", " I         I ", " I         I ", " I         I ", " II       II ", "EEEEEEEEEEEEE" },
         { "             ", "             ", "             ", "             ", "             ", "EEEEEEEEEEEEE" } };
+    // endregion
 
     @Override
-    public boolean addToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
-        return super.addToMachineList(aTileEntity, aBaseCasingIndex)
-            || addExoticEnergyInputToMachineList(aTileEntity, aBaseCasingIndex);
+    public void construct(ItemStack stackSize, boolean hintsOnly) {
+        repairMachine();
+        buildPiece(STRUCTURE_PIECE_MAIN, stackSize, hintsOnly, horizontalOffSet, verticalOffSet, depthOffSet);
     }
 
     @Override
-    public int getPollutionPerSecond(final ItemStack aStack) {
-        return 1024;
-    }
+    public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
+        if (this.mMachine) return -1;
+        int realBudget = elementBudget >= 200 ? elementBudget : Math.min(200, elementBudget * 5);
 
+        return this.survivialBuildPiece(
+            STRUCTURE_PIECE_MAIN,
+            stackSize,
+            horizontalOffSet,
+            verticalOffSet,
+            depthOffSet,
+            realBudget,
+            env,
+            false,
+            true);
+    }
+    // endregion
+
+    // region Misc
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
         final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
@@ -311,72 +346,53 @@ public class OTELargeCircuitAssembler extends OTH_MultiMachineBase<OTELargeCircu
     }
 
     @Override
-    public boolean isCorrectMachinePart(ItemStack aStack) {
-        return true;
+    public int getPollutionPerSecond(final ItemStack aStack) {
+        return 1024;
     }
-
-    @Override
-    public int getMaxEfficiency(ItemStack aStack) {
-        return 10000;
-    }
-
-    @Override
-    public int getDamageToComponent(ItemStack aStack) {
-        return 0;
-    }
-
-    @Override
-    public boolean explodesOnComponentBreak(ItemStack aStack) {
-        return false;
-    }
-
-    @Override
-    public boolean supportsVoidProtection() {
-        return true;
-    }
-
-    @Override
-    public boolean supportsInputSeparation() {
-        return true;
-    }
-
-    @Override
-    public boolean supportsSingleRecipeLocking() {
-        return true;
-    }
-
-    @Override
-    public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-        return new OTELargeCircuitAssembler(this.mName);
-    }
-
-    @Override
-    public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection facing,
-        int colorIndex, boolean aActive, boolean aRedstone) {
-        int t = casingTier;
-        if (side == facing) {
-            if (aActive) return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(CASING_INDEX + t),
-                TextureFactory.of(textureFontOn), TextureFactory.builder()
-                    .addIcon(textureFontOn_Glow)
-                    .glow()
-                    .build() };
-            else return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(CASING_INDEX + t),
-                TextureFactory.of(textureFontOff), TextureFactory.builder()
-                    .addIcon(textureFontOff_Glow)
-                    .glow()
-                    .build() };
-        } else return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(CASING_INDEX + t) };
-    }
-
-    private static final IIconContainer textureFontOn = new Textures.BlockIcons.CustomIcon("iconsets/OVERLAY_QTANK");
-    private static final IIconContainer textureFontOn_Glow = new Textures.BlockIcons.CustomIcon(
-        "iconsets/OVERLAY_QTANK_GLOW");
-    private static final IIconContainer textureFontOff = new Textures.BlockIcons.CustomIcon("iconsets/OVERLAY_QCHEST");
-    private static final IIconContainer textureFontOff_Glow = new Textures.BlockIcons.CustomIcon(
-        "iconsets/OVERLAY_QCHEST_GLOW");
 
     @Override
     protected SoundResource getProcessStartSound() {
         return SoundResource.IC2_MACHINES_COMPRESSOR_OP;
     }
+
+    @Override
+    public void saveNBTData(NBTTagCompound aNBT) {
+        super.saveNBTData(aNBT);
+        aNBT.setByte("mode", mode);
+        aNBT.setInteger("casingTier", casingTier);
+        aNBT.setLong("machineLimitedVoltage", machineLimitedVoltage);
+    }
+
+    @Override
+    public void loadNBTData(final NBTTagCompound aNBT) {
+        super.loadNBTData(aNBT);
+        mode = aNBT.getByte("mode");
+        casingTier = aNBT.getInteger("casingTier");
+        machineLimitedVoltage = aNBT.getLong("machineLimitedVoltage");
+    }
+
+    @Override
+    public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
+        int z) {
+        super.getWailaNBTData(player, tile, tag, world, x, y, z);
+        final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
+        if (tileEntity != null) {
+            String par = GTUtility.formatNumbers(getMaxParallelRecipes());
+            tag.setString("Parallel", par);
+        }
+    }
+
+    @Override
+    public void getWailaBody(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor,
+        IWailaConfigHandler config) {
+        super.getWailaBody(itemStack, currentTip, accessor, config);
+        final NBTTagCompound tag = accessor.getNBTData();
+        currentTip.add(
+            "并行" + EnumChatFormatting.RESET
+                + ": "
+                + EnumChatFormatting.BLUE
+                + tag.getString("Parallel")
+                + EnumChatFormatting.RESET);
+    }
+    // endregion
 }
