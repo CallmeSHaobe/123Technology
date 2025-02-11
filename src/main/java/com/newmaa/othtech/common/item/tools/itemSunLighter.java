@@ -4,6 +4,7 @@ import static net.minecraft.client.gui.GuiScreen.isShiftKeyDown;
 
 import java.util.List;
 
+import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,7 +23,7 @@ public class itemSunLighter extends Item {
         super();
         this.maxStackSize = 1;
         setMaxDamage(19208039);
-        setCreativeTab(CreativeTabs.tabTools);
+        setCreativeTab(CreativeTabsLoader.tabothtech);
         this.setTextureName("123technology:itemSunLighter");
     }
 
