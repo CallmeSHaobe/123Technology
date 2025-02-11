@@ -1,8 +1,9 @@
 package com.newmaa.othtech.common.item;
 
-import com.newmaa.othtech.common.OTHItemList;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
+import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.item.foods.ingotHotDog;
 import com.newmaa.othtech.common.item.foods.itemLeekBox;
 import com.newmaa.othtech.common.item.foods.itemZhangww;
@@ -14,7 +15,6 @@ import com.newmaa.othtech.common.item.weapons.itemNukeThrowable;
 
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
-import net.minecraft.item.ItemStack;
 
 @SuppressWarnings("SameParameterValue")
 public class ItemLoader {

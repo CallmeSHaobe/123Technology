@@ -4,9 +4,7 @@ import static net.minecraft.client.gui.GuiScreen.isShiftKeyDown;
 
 import java.util.List;
 
-import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
 import net.minecraft.block.Block;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumRarity;
@@ -14,6 +12,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
+
+import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
 
 import gtPlusPlus.core.util.Utils;
 

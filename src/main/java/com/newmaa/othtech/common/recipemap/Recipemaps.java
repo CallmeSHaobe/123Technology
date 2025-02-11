@@ -15,7 +15,6 @@ import gregtech.api.recipe.RecipeMapBackend;
 import gregtech.api.recipe.RecipeMapBuilder;
 import gregtech.api.recipe.maps.FluidOnlyFrontend;
 import gregtech.api.recipe.maps.FuelBackend;
-import gregtech.api.util.GTModHandler;
 import gregtech.nei.formatter.HeatingCoilSpecialValueFormatter;
 import gregtech.nei.formatter.SimpleSpecialValueFormatter;
 
@@ -43,16 +42,16 @@ public class Recipemaps {
         .build();
 
     // 没有使用先注释了 --keriils
-    //public static final RecipeMap<OTH_RecipeMapBackend> Cannon = RecipeMapBuilder
-    //    .of("otht.recipe.EVACannon", OTH_RecipeMapBackend::new)
-    //    .maxIO(1, 1, 0, 0)
-    //    .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
-    //    .frontend(OTH_GeneralFrontend::new)
-    //    .neiHandlerInfo(
-    //        builder -> builder.setDisplayStack(OTHItemList.dustIrOsSmM.get(1))
-    //            .setMaxRecipesPerPage(2))
-    //    .disableOptimize()
-    //    .build();
+    // public static final RecipeMap<OTH_RecipeMapBackend> Cannon = RecipeMapBuilder
+    // .of("otht.recipe.EVACannon", OTH_RecipeMapBackend::new)
+    // .maxIO(1, 1, 0, 0)
+    // .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
+    // .frontend(OTH_GeneralFrontend::new)
+    // .neiHandlerInfo(
+    // builder -> builder.setDisplayStack(OTHItemList.dustIrOsSmM.get(1))
+    // .setMaxRecipesPerPage(2))
+    // .disableOptimize()
+    // .build();
 
     public static final RecipeMap<OTH_RecipeMapBackend> SINOPEC = RecipeMapBuilder
         .of("otht.recipe.SINOPEC", OTH_RecipeMapBackend::new)

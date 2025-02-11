@@ -1,10 +1,10 @@
 package com.newmaa.othtech.common.item.weapons;
 
-import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemSword;
 import net.minecraftforge.common.util.EnumHelper;
+
+import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
 
 public class ShikanokoNoko extends ItemSword {
 
