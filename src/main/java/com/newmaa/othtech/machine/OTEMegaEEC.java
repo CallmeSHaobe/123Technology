@@ -67,7 +67,7 @@ public class OTEMegaEEC extends OTH_MultiMachineBase<OTEMegaEEC> implements IWir
 
     private byte glassTier = 0;
 
-    public final Random rand = new FastRandom();
+    //public final Random rand = new FastRandom();
 
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
