@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import com.newmaa.othtech.common.OTHItemList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -106,10 +107,18 @@ public class OTESunFactory extends OTH_MultiMachineBase<OTESunFactory> {
         return Math.log(value) / Math.log(base);
     }
 
+    private static ItemStack itemEnqingM = null;
+
+    @Override
+    public void onFirstTick(IGregTechTileEntity aBaseMetaTileEntity) {
+        super.onFirstTick(aBaseMetaTileEntity);
+        if (itemEnqingM == null) itemEnqingM = OTHItemList.itemEnqingM.get(1);
+    }
+
     private boolean checkEnqing(int amount) {
         int needAmount = amount;
         for (ItemStack items : getStoredInputsWithoutDualInputHatch()) {
-            if (metaItemEqual(items, GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 15))) {
+            if (metaItemEqual(items, itemEnqingM)) {
                 if (items.stackSize >= needAmount) {
                     items.stackSize -= needAmount;
                     return true;
