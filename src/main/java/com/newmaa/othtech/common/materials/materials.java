@@ -1,12 +1,13 @@
 package com.newmaa.othtech.common.materials;
 
+import static bartworks.util.BWUtil.subscriptNumbers;
+
 import bartworks.system.material.Werkstoff;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TextureSet;
 
-import static bartworks.util.BWUtil.subscriptNumbers;
+public class materials implements Runnable {
 
-public class materials implements Runnable{
     private static final int offsetID_01 = 12300;
     public static final Werkstoff.GenerationFeatures gf = new Werkstoff.GenerationFeatures();
     public static final Werkstoff IrOsSm = new Werkstoff(
@@ -24,10 +25,12 @@ public class materials implements Runnable{
             .addMetalCraftingSolidifierRecipes(),
         offsetID_01 + 20,
         TextureSet.SET_SHINY);
+
     @Override
     public void run() {
         for (var prefix : OrePrefixes.values()) {
             gf.addPrefix(prefix);
         }
         gf.removePrefix(OrePrefixes.ore);
-}}
+    }
+}

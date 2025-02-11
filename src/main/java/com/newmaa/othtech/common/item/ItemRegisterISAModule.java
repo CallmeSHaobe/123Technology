@@ -1,8 +1,8 @@
 package com.newmaa.othtech.common.item;
 
-import static com.newmaa.othtech.utils.TextHandler.texter;
 import static com.newmaa.othtech.common.item.itemsHelper.BasicItemsISA.MetaItemISA;
 import static com.newmaa.othtech.common.item.itemsHelper.ItemISAAdder.initItemISA;
+import static com.newmaa.othtech.utils.TextHandler.texter;
 
 import net.minecraft.item.Item;
 

@@ -3,6 +3,7 @@ package com.newmaa.othtech.machine;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
 import static com.newmaa.othtech.common.recipemap.Recipemaps.NaquadahFuelFakeRecipes;
+import static goodgenerator.main.GGConfigLoader.*;
 import static gregtech.api.GregTechAPI.*;
 import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.enums.HatchElement.OutputHatch;
@@ -38,10 +39,12 @@ import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructa
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
+import com.newmaa.othtech.common.materials.liquids;
 import com.newmaa.othtech.machine.machineclass.TT_MultiMachineBase_EM;
+import com.newmaa.othtech.utils.PairA;
 
-import gregtech.api.GregTechAPI;
-import gregtech.api.enums.Textures;
+import gregtech.api.enums.Materials;
+import gregtech.api.enums.MaterialsUEVplus;
 import gregtech.api.enums.TickTime;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
@@ -75,6 +78,8 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
         super(aName);
         super.useLongPower = true;
     }
+
+    private static final List<PairA<FluidStack, Integer>> coolant;
 
     private int pipeTier = 0;
     private UUID ownerUUID;
@@ -171,7 +176,6 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
         return CheckRecipeResultRegistry.NO_FUEL_FOUND;
     }
 
-    // TODO 大硅岩加成 add
     protected CheckRecipeResult processFuel(ArrayList<FluidStack> tFluids, RecipeMap<FuelBackend> recipeMap,
         long PromoterAmount, double efficiencyCoefficient, double FuelsValueBonus) {
         List<FluidStack> extraFluids = new ArrayList<>();
@@ -185,6 +189,8 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
             calculateEfficiency(FuelAmount, PromoterAmount, efficiencyCoefficient);
             consumeAllLiquid(tFuel, tFluids);
             consumeAllLiquid(getPromoter(), tFluids);
+            FluidStack[] input = getStoredFluids().toArray(new FluidStack[0]);
+            int eff = consumeCoolant(input);
             for (FluidStack fluids : outputFluidStack) {
                 if (fluids.amount <= Integer.MAX_VALUE / FuelAmount) {
                     fluids.amount *= (int) FuelAmount;
@@ -194,7 +200,6 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
                     }
                 }
             }
-
             if (extraFluids.isEmpty()) {
                 mOutputFluids = outputFluidStack;
             } else {
@@ -203,10 +208,12 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
             }
             if (isWirelessMode) {
                 this.setPowerFlow(0);
-                BigInteger costingWirelessEUTemp = BigInteger.valueOf(recipe.mSpecialValue)
+                BigInteger costingWirelessEUTemp = PromoterAmount != 0 ? BigInteger.valueOf(recipe.mSpecialValue)
                     .multiply(
                         BigInteger.valueOf((long) FuelsValueBonus)
-                            .multiply(BigInteger.valueOf(FuelAmount)));
+                            .multiply(BigInteger.valueOf(FuelAmount)))
+                    .multiply(BigInteger.valueOf(eff))
+                    .divide(BigInteger.valueOf(100)) : BigInteger.ZERO;
                 costingWirelessEU = GTUtility.formatNumbers(costingWirelessEUTemp);
                 if (!addEUToGlobalEnergyMap(ownerUUID, costingWirelessEUTemp)) {
                     return CheckRecipeResultRegistry.INTERNAL_ERROR;
@@ -214,7 +221,8 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
             } else {
                 costingWirelessEU = "0";
                 this.setPowerFlow(
-                    (long) Math.min(Long.MAX_VALUE - 1, FuelAmount * recipe.mSpecialValue * FuelsValueBonus));
+                    (long) Math
+                        .min(Long.MAX_VALUE - 1, FuelAmount * recipe.mSpecialValue * FuelsValueBonus * eff / 100));
 
             }
             this.mMaxProgresstime = 20;
@@ -225,13 +233,55 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
     }
 
     @Override
+    public boolean onRunningTick(ItemStack stack) {
+        if (this.getBaseMetaTileEntity()
+            .isServerSide()) {
+            if (mMaxProgresstime != 0 && mProgresstime % 20 == 0) {
+                if (heatingTicks < HEATING_TIMER) {
+                    heatingTicks++;
+                    isStoppingSafe = true;
+                } else if (isStoppingSafe) isStoppingSafe = false;
+                addAutoEnergy();
+            }
+        }
+        return true;
+    }
+
+    static {
+        coolant = Arrays.asList(
+            new PairA<>(MaterialsUEVplus.Time.getMolten(1000), 120),
+            new PairA<>(FluidRegistry.getFluidStack("cryotheum", 1000), 80),
+            new PairA<>(Materials.SuperCoolant.getFluid(1000), 60),
+            new PairA<>(FluidRegistry.getFluidStack("ic2coolant", 1000), 40));
+    }
+
+    /**
+     * Finds valid coolant from given inputs and consumes if found.
+     *
+     * @param input Fluid inputs.
+     * @return Efficiency of the coolant. 100 if not found.
+     */
+    private int consumeCoolant(FluidStack[] input) {
+        for (PairA<FluidStack, Integer> fluidPair : coolant) {
+            FluidStack tFluid = fluidPair.getKey();
+            for (FluidStack inFluid : input) {
+                if (inFluid != null && inFluid.isFluidEqual(tFluid) && inFluid.amount >= tFluid.amount) {
+                    inFluid.amount -= tFluid.amount;
+                    return fluidPair.getValue();
+                }
+            }
+        }
+        return 100;
+    }
+
+    @Override
     public void onFirstTick_EM(IGregTechTileEntity aBaseMetaTileEntity) {
         super.onFirstTick_EM(aBaseMetaTileEntity);
         this.ownerUUID = aBaseMetaTileEntity.getOwnerUuid();
     }
 
     public FluidStack getPromoter() {
-        return FluidRegistry.getFluidStack("combustionpromotor", 1);
+        return pipeTier != 0 ? liquids.PromoterUEV.getFluidOrGas(1) : liquids.PromoterZPM.getFluidOrGas(1);
     }
 
     public FluidStack findFuel(GTRecipe aFuel) {
@@ -286,20 +336,6 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
         // Reset the counter for heating, so that it works again when the machine restarts
         heatingTicks = 0;
         super.stopMachine();
-    }
-
-    @Override
-    public boolean onRunningTick(ItemStack stack) {
-        if (heatingTicks < HEATING_TIMER) {
-            heatingTicks++;
-            isStoppingSafe = true;
-        } else if (isStoppingSafe) isStoppingSafe = false;
-
-        if (this.getBaseMetaTileEntity()
-            .isServerSide()) {
-            addAutoEnergy();
-        }
-        return true;
     }
 
     private boolean isStoppingSafe;
@@ -402,27 +438,27 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
                             { "TTTTT", "SPCCI-", "SPCCI-", "SPCCI-", "SPCCI-", "SPCCI-", "SPCCI-", "SPCCI-", "TTTTT" },
                             { "TT~TT", "SPGGI-", "SPGGI-", "SPGGI-", "SPGGI-", "SPGGI-", "SPGGI-", "SPGGI-", "TTETT" },
                             { "TTTTT", "TTTTT", "TTTTT", "TTTTT", "TTTTT", "TTTTT", "TTTTT", "TTTTT", "TTTTT" } }))
-                .addElement('T', ofBlock(GregTechAPI.sBlockCasings8, 10))
+                .addElement('T', ofBlock(sBlockCasings8, 10))
                 .addElement(
                     'M',
                     buildHatchAdder(OTENQFuelGeneratorUniversal.class).atLeast(Muffler)
                         .adder(OTENQFuelGeneratorUniversal::addToMachineList)
                         .dot(2)
-                        .casingIndex(((BlockCasings8) GregTechAPI.sBlockCasings8).getTextureIndex(10))
+                        .casingIndex(((BlockCasings8) sBlockCasings8).getTextureIndex(10))
                         .buildAndChain(sBlockCasings8, 10))
                 .addElement(
                     'S',
                     buildHatchAdder(OTENQFuelGeneratorUniversal.class).atLeast(InputHatch, OutputHatch)
                         .adder(OTENQFuelGeneratorUniversal::addToMachineList)
                         .dot(3)
-                        .casingIndex(((BlockCasings8) GregTechAPI.sBlockCasings8).getTextureIndex(10))
+                        .casingIndex(((BlockCasings8) sBlockCasings8).getTextureIndex(10))
                         .buildAndChain(sBlockCasings8, 10))
                 .addElement(
                     'E',
                     buildHatchAdder(OTENQFuelGeneratorUniversal.class).atLeast(Dynamo)
                         .adder(OTENQFuelGeneratorUniversal::addToMachineList)
                         .dot(4)
-                        .casingIndex(((BlockCasings8) GregTechAPI.sBlockCasings8).getTextureIndex(10))
+                        .casingIndex(((BlockCasings8) sBlockCasings8).getTextureIndex(10))
                         .buildAndChain(sBlockCasings8, 10))
                 .addElement(
                     'P',
@@ -448,24 +484,21 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
     }
 
     @Override
-    public int getPollutionPerSecond(final ItemStack aStack) {
-        return 8000000;
-    }
-
-    @Override
     protected MultiblockTooltipBuilder createTooltip() {
         final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType("通化之梦")
             .addInfo(" §l§4“你产能不够吧? -v-” ")
-            .addInfo("通化的升级版本, 可以支持硅岩燃料, 但不能使用传统燃料喔")
+            .addInfo("通化的升级版本, 可以支持硅岩燃料, 但不能使用传统燃料喔 ~ 真正的清洁能源")
             .addInfo("和通化一样的设计, 但同时兼备了大硅岩的加成")
-            .addInfo("二级管道方块解锁无线模式, 螺丝刀开启")
+            .addInfo("一次消耗输入仓内所有燃料和助燃剂")
+            .addInfo("消耗冷却液提升效率, 默认效率为20%, 消耗速率为1000L/s")
+            .addInfo("IC2冷却液:40%, 超级冷却液:60%, 极寒之凛冰:80%, 富快子时间流体: 120%")
+            .addInfo("二级管道方块解锁无线模式, 使用螺丝刀开启")
+            .addInfo("§a更高级的结构意味着更高级的§c助燃剂, §a一级结构:原子分离助燃剂, 二级结构:超维度等离子助燃剂")
             .addInfo("你知道会发生什么。")
             .addInfo("§e警告 : 如果强行使用有线模式烧高级硅岩燃料, 将会导致电表倒转憋憋")
-            .addInfo("§c§l注意:机器污染过高:如遇跳电并报错“无法排出污染”, 请尝试放置多个消声仓")
             .addInfo("支持TecTech多安动力舱")
             .addSeparator()
-            .addPollutionAmount(8000000)
             .addController("发电坤")
             .beginStructureBlock(7, 13, 7, false)
             .addInputBus("AnyInputBus", 1)
@@ -518,8 +551,7 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
 
         if (sideDirection == facing) {
             if (active) return new ITexture[] {
-                Textures.BlockIcons.getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings8, 10)),
-                TextureFactory.builder()
+                getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings8, 10)), TextureFactory.builder()
                     .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_ACTIVE)
                     .extFacing()
                     .build(),
@@ -527,8 +559,7 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
                     .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_ACTIVE_GLOW)
                     .extFacing()
                     .build() };
-            return new ITexture[] {
-                Textures.BlockIcons.getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings8, 10)),
+            return new ITexture[] { getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings8, 10)),
                 TextureFactory.builder()
                     .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE)
                     .extFacing()
@@ -539,7 +570,6 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
                     .glow()
                     .build() };
         }
-        return new ITexture[] { Textures.BlockIcons
-            .getCasingTextureForId(GTUtility.getCasingTextureIndex(GregTechAPI.sBlockCasings8, 10)) };
+        return new ITexture[] { getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings8, 10)) };
     }
 }

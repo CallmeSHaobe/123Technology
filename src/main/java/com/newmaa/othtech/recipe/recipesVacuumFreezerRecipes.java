@@ -1,12 +1,13 @@
 package com.newmaa.othtech.recipe;
 
-import com.newmaa.othtech.common.materials.materials;
-import gregtech.api.enums.OrePrefixes;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
+import com.newmaa.othtech.common.materials.materials;
+
 import gregtech.api.enums.GTValues;
+import gregtech.api.enums.OrePrefixes;
 import gregtech.api.interfaces.IRecipeMap;
 import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GTModHandler;

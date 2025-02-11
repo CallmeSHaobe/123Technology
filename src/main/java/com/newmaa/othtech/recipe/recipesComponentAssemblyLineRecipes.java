@@ -7,8 +7,8 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
-import com.newmaa.othtech.utils.RecipeBuilder;
 import com.newmaa.othtech.common.materials.liquids;
+import com.newmaa.othtech.utils.RecipeBuilder;
 
 import goodgenerator.api.recipe.GoodGeneratorRecipeMaps;
 import gregtech.api.enums.GTValues;

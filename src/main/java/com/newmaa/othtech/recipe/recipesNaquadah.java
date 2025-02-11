@@ -1,22 +1,27 @@
 package com.newmaa.othtech.recipe;
 
-import static com.newmaa.othtech.utils.Utils.setStackSize;
 import static com.newmaa.othtech.common.recipemap.Recipemaps.NQF;
 import static com.newmaa.othtech.common.recipemap.Recipemaps.NaquadahFuelFakeRecipes;
+import static com.newmaa.othtech.utils.Utils.setStackSize;
 
-import gregtech.api.enums.*;
-import gregtech.api.recipe.RecipeMaps;
-import gtPlusPlus.api.recipe.GTPPRecipeMaps;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
-import com.newmaa.othtech.utils.RecipeBuilder;
+import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.materials.liquids;
+import com.newmaa.othtech.utils.RecipeBuilder;
 
 import bartworks.system.material.WerkstoffLoader;
 import goodgenerator.items.GGMaterial;
+import gregtech.api.enums.GTValues;
+import gregtech.api.enums.Materials;
+import gregtech.api.enums.MaterialsUEVplus;
+import gregtech.api.enums.OrePrefixes;
+import gregtech.api.enums.TierEU;
+import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
+import gtPlusPlus.api.recipe.GTPPRecipeMaps;
 import gtPlusPlus.core.material.MaterialsElements;
 
 public class recipesNaquadah implements IRecipePool {
@@ -142,56 +147,60 @@ public class recipesNaquadah implements IRecipePool {
                 .specialValue(NaquadahGen[i])
                 .addTo(NaquadahFuelFakeRecipes);
 
-
-
         }
-        //CHEM FUEL
+        // CHEM FUEL
         RecipeBuilder.builder()
-            .fluidOutputs(
-                liquids.FUELA.getFluidOrGas(1000)
-            )
+            .fluidOutputs(liquids.FUELA.getFluidOrGas(1000))
             .fluidInputs(
                 Materials.Naquadah.getMolten(864),
                 FluidRegistry.getFluidStack("highoctanegasoline", 4000),
-                FluidRegistry.getFluidStack("fluid.rocketfuelmixa", 2000)
-            )
+                FluidRegistry.getFluidStack("fluid.rocketfuelmixa", 2000))
             .eut(TierEU.RECIPE_ZPM)
             .duration(5)
             .addTo(RecipeMaps.mixerRecipes);
         RecipeBuilder.builder()
-            .fluidOutputs(
-                liquids.FUELA.getFluidOrGas(1000)
-            )
+            .fluidOutputs(liquids.FUELA.getFluidOrGas(1000))
             .fluidInputs(
                 Materials.Naquadah.getMolten(864),
                 FluidRegistry.getFluidStack("highoctanegasoline", 4000),
-                FluidRegistry.getFluidStack("fluid.rocketfuelmixa", 2000)
-            )
+                FluidRegistry.getFluidStack("fluid.rocketfuelmixa", 2000))
             .eut(TierEU.RECIPE_ZPM)
             .duration(5)
             .addTo(GTPPRecipeMaps.mixerNonCellRecipes);
         RecipeBuilder.builder()
-            .fluidInputs(
-                liquids.FUELA_DE.getFluidOrGas(500)
-            )
-            .itemOutputs(
-                Materials.Naquadah.getDust(2),
-                Materials.Carbon.getDust(48)
-            )
+            .fluidInputs(liquids.FUELA_DE.getFluidOrGas(500))
+            .itemOutputs(Materials.Naquadah.getDust(2), Materials.Carbon.getDust(48))
             .eut(TierEU.RECIPE_MV)
             .duration(800)
             .addTo(RecipeMaps.centrifugeRecipes);
         RecipeBuilder.builder()
-            .fluidInputs(
-                liquids.FUELA_DE.getFluidOrGas(500)
-            )
-            .itemOutputs(
-                Materials.Naquadah.getDust(2),
-                Materials.Carbon.getDust(48)
-            )
+            .fluidInputs(liquids.FUELA_DE.getFluidOrGas(500))
+            .itemOutputs(Materials.Naquadah.getDust(2), Materials.Carbon.getDust(48))
             .eut(TierEU.RECIPE_MV)
             .duration(800)
             .addTo(GTPPRecipeMaps.centrifugeNonCellRecipes);
-        //Promoter
+        // Promoter
+        RecipeBuilder.builder()
+            .fluidOutputs(liquids.PromoterZPM.getFluidOrGas(800))
+            .fluidInputs(
+                GGMaterial.atomicSeparationCatalyst.getMolten(144),
+                FluidRegistry.getFluidStack("combustionpromotor", 1000),
+                Materials.LiquidAir.getFluid(4000))
+            .itemInputs(OTHItemList.dustLookNEIM.get(0))
+            .eut(114514)
+            .duration(5)
+            .specialValue(2)
+            .addTo(GTPPRecipeMaps.chemicalPlantRecipes);
+        RecipeBuilder.builder()
+            .fluidOutputs(liquids.PromoterUEV.getFluidOrGas(4000))
+            .fluidInputs(
+                liquids.PromoterZPM.getFluidOrGas(1600),
+                Materials.Helium.getPlasma(288),
+                Materials.Oxygen.getPlasma(288))
+            .itemInputs(OTHItemList.dustLookNEIM.get(0))
+            .eut(2097152)
+            .duration(5)
+            .specialValue(-114)
+            .addTo(RecipeMaps.plasmaForgeRecipes);
     }
 }

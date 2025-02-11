@@ -4,8 +4,8 @@ import static com.newmaa.othtech.utils.Utils.setStackSize;
 
 import net.minecraftforge.fluids.FluidRegistry;
 
-import com.newmaa.othtech.utils.RecipeBuilder;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
+import com.newmaa.othtech.utils.RecipeBuilder;
 
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.MaterialsUEVplus;

@@ -1,7 +1,7 @@
 package com.newmaa.othtech.recipe;
 
-import static com.newmaa.othtech.utils.Utils.setStackSize;
 import static com.newmaa.othtech.common.OTHItemList.itemEnqingM;
+import static com.newmaa.othtech.utils.Utils.setStackSize;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -9,9 +9,9 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
-import com.newmaa.othtech.utils.RecipeBuilder;
 import com.newmaa.othtech.common.item.ItemLoader;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
+import com.newmaa.othtech.utils.RecipeBuilder;
 
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;

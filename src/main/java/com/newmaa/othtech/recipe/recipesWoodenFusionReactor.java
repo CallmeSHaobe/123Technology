@@ -2,8 +2,8 @@ package com.newmaa.othtech.recipe;
 
 import net.minecraftforge.fluids.FluidRegistry;
 
-import com.newmaa.othtech.utils.RecipeBuilder;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
+import com.newmaa.othtech.utils.RecipeBuilder;
 
 import gregtech.api.enums.Materials;
 

@@ -24,8 +24,8 @@ import org.jetbrains.annotations.NotNull;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
-import com.newmaa.othtech.utils.Utils;
 import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
+import com.newmaa.othtech.utils.Utils;
 
 import bartworks.API.BorosilicateGlass;
 import gregtech.api.enums.HeatingCoilLevel;

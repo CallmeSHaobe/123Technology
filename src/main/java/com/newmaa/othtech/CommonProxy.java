@@ -4,8 +4,8 @@ import com.newmaa.othtech.common.OreDictionaryLoader;
 import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
 import com.newmaa.othtech.common.entity.entityLoader;
 import com.newmaa.othtech.common.item.ItemLoader;
-
 import com.newmaa.othtech.common.materials.bwMaterialsLocalization;
+
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;

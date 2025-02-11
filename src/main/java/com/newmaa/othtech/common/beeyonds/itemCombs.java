@@ -13,8 +13,8 @@ import net.minecraft.util.IIcon;
 import net.minecraftforge.fluids.FluidRegistry;
 
 import com.newmaa.othtech.OTHTechnology;
-import com.newmaa.othtech.utils.RecipeBuilder;
 import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
+import com.newmaa.othtech.utils.RecipeBuilder;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;

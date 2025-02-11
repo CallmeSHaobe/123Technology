@@ -3,8 +3,6 @@ package com.newmaa.othtech.common.materials;
 import static bartworks.util.BWUtil.subscriptNumbers;
 
 import bartworks.system.material.Werkstoff;
-import bartworks.util.Pair;
-import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TextureSet;
 
@@ -83,7 +81,7 @@ public class liquids implements Runnable {
         offsetID_01 + 9,
         TextureSet.SET_FLUID);
     public static final Werkstoff PromoterZPM = new Werkstoff(
-        new short[] { 60, 183, 256 },
+        new short[] { 247, 22, 22 },
         "PromoterZPM",
         subscriptNumbers(""),
         new Werkstoff.Stats(),
@@ -93,7 +91,7 @@ public class liquids implements Runnable {
         offsetID_01 + 10,
         TextureSet.SET_FLUID);
     public static final Werkstoff PromoterUEV = new Werkstoff(
-        new short[] { 40, 120, 166 },
+        new short[] { 236, 242, 255 },
         "PromoterUEV",
         subscriptNumbers(""),
         new Werkstoff.Stats(),

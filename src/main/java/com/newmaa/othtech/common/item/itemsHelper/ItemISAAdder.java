@@ -91,10 +91,10 @@ public class ItemISAAdder extends ItemISA_Basic {
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconRegister) {
         super.registerIcons(iconRegister);
-        this.itemIcon = iconRegister.registerIcon("123technology:ISAMillModule/0");
+        this.itemIcon = iconRegister.registerIcon("123technology:IsaMillModule/0");
         for (int meta : MetaSet) {
             ItemStaticDataClientOnly.iconsMap02
-                .put(meta, iconRegister.registerIcon("123technology:ISAMillModule/" + meta));
+                .put(meta, iconRegister.registerIcon("123technology:IsaMillModule/" + meta));
         }
     }
 

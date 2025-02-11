@@ -1,15 +1,20 @@
 package com.newmaa.othtech.utils;
 
-import cpw.mods.fml.common.Loader;
-import net.minecraft.util.ResourceLocation;
-
 import java.util.Locale;
 
+import net.minecraft.util.ResourceLocation;
+
+import cpw.mods.fml.common.Loader;
+
 public enum modsEnum {
+
     TwistSpaceTechnology(modsName.TST);
+
     public static class modsName {
+
         public static final String TST = "TwistSpaceTechnology";
     }
+
     public final String ID;
     public final String resourceDomain;
     private Boolean modLoaded;

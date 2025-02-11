@@ -1,8 +1,8 @@
 package com.newmaa.othtech.common.item;
 
-import static com.newmaa.othtech.utils.TextHandler.texter;
 import static com.newmaa.othtech.common.item.itemsHelper.BasicItems.MetaItem;
 import static com.newmaa.othtech.common.item.itemsHelper.ItemAdder.initItem;
+import static com.newmaa.othtech.utils.TextHandler.texter;
 
 import net.minecraft.item.Item;
 
