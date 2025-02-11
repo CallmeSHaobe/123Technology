@@ -21,7 +21,7 @@ import net.minecraft.item.ItemStack;
 import org.apache.commons.lang3.text.WordUtils;
 import org.jetbrains.annotations.NotNull;
 
-import com.newmaa.othtech.OTHTechnology;
+import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.item.ItemLoader;
 
 import binnie.extrabees.genetics.effect.ExtraBeesEffect;
@@ -65,7 +65,7 @@ public enum OTHBeeDefinition implements IBeeDefinition {
 
     WEIWEI(OTHBranchDefinition.OTHBYDS, "Weiwei", true, new Color(0xE21818), new Color(0xE21818), beeSpecies -> {
         beeSpecies.addProduct(new ItemStack(Blocks.dirt, 1), 0.114514f);
-        beeSpecies.addSpecialty(GTModHandler.getModItem(OTHTechnology.MODID, "itemZhangww", 1, 0), 0.05f);
+        beeSpecies.addSpecialty(OTHItemList.Zhangww.get(1), 0.05f);
         beeSpecies.setHumidity(DAMP);
         beeSpecies.setTemperature(EnumTemperature.NORMAL);
     }, template -> {

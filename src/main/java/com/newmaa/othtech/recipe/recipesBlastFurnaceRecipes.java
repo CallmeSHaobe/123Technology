@@ -1,10 +1,11 @@
 package com.newmaa.othtech.recipe;
 
+import com.newmaa.othtech.common.OTHItemList;
+
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.TierEU;
 import gregtech.api.interfaces.IRecipeMap;
 import gregtech.api.recipe.RecipeMaps;
-import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTUtility;
 
 public class recipesBlastFurnaceRecipes implements IRecipePool {
@@ -13,10 +14,8 @@ public class recipesBlastFurnaceRecipes implements IRecipePool {
     public void loadRecipes() {
         final IRecipeMap EBF = RecipeMaps.blastFurnaceRecipes;
         GTValues.RA.stdBuilder()
-            .itemInputs(
-                GTUtility.getIntegratedCircuit(1),
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 0))
-            .itemOutputs(GTModHandler.getModItem("123Technology", "ingotHotDog", 1))
+            .itemInputs(GTUtility.getIntegratedCircuit(1), OTHItemList.dustIrOsSmM.get(1))
+            .itemOutputs(OTHItemList.ingotHotDog.get(1))
             .specialValue(-123123)
             .noOptimize()
             .duration(114514)

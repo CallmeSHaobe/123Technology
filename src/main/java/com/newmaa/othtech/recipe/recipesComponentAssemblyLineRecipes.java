@@ -7,6 +7,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
+import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.materials.liquids;
 import com.newmaa.othtech.utils.RecipeBuilder;
 
@@ -125,7 +126,7 @@ public class recipesComponentAssemblyLineRecipes implements IRecipePool {
                 setStackSize(coil, 6 * 64),
                 setStackSize(GTModHandler.getModItem("tectech", "gt.stabilisation_field_generator", 1, 8), 96),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 4141),
-                setStackSize(GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 18), 192),
+                setStackSize(OTHItemList.glassSingularityM.get(1), 192),
                 GTUtility.getIntegratedCircuit(6))
             .itemOutputs(ItemList.Emitter_MAX.get(64))
             .fluidInputs(
@@ -149,7 +150,7 @@ public class recipesComponentAssemblyLineRecipes implements IRecipePool {
                 setStackSize(coil, 6 * 64),
                 setStackSize(GTModHandler.getModItem("tectech", "gt.stabilisation_field_generator", 1, 8), 96),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 4141),
-                setStackSize(GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 18), 192),
+                setStackSize(OTHItemList.glassSingularityM.get(1), 192),
                 GTUtility.getIntegratedCircuit(7))
             .itemOutputs(ItemList.Sensor_MAX.get(64))
             .fluidInputs(
@@ -193,8 +194,8 @@ public class recipesComponentAssemblyLineRecipes implements IRecipePool {
                 GTModHandler.getModItem("gregtech", "gt.blockframes", 48, 141),
                 GTModHandler.getModItem("GoodGenerator", "circuitWrap", 24, 14),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 4141),
-                setStackSize(GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 18), 192),
-                setStackSize(GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 19), 192),
+                setStackSize(OTHItemList.glassSingularityM.get(1), 192),
+                setStackSize(OTHItemList.machineSingularityM.get(1), 192),
                 GTUtility.getIntegratedCircuit(7))
             .itemOutputs(ItemList.Field_Generator_MAX.get(64))
             .fluidInputs(
@@ -226,7 +227,7 @@ public class recipesComponentAssemblyLineRecipes implements IRecipePool {
                 GTModHandler.getModItem("gregtech", "gt.metaitem.02", 16, 20139),
                 GTModHandler.getModItem("tectech", "item.tm.itemAstralArrayFabricator", 2),
                 GTModHandler.getModItem("gregtech", "gt.blockcasings5", 64, 13),
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 12, 19),
+                OTHItemList.machineSingularityM.get(12),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 16, 4139),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 16, 4141) },
             new FluidStack[] { new FluidStack(Um, 114000),

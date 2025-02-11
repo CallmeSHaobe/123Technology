@@ -8,6 +8,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
+import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.materials.liquids;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.utils.RecipeBuilder;
@@ -229,9 +230,7 @@ public class recipesMegaQFT implements IRecipePool {
             .addTo(MQFT);
         GTValues.RA.stdBuilder()
             .fluidOutputs(liquids.Void.getFluidOrGas(4000))
-            .itemInputs(
-                GTUtility.getIntegratedCircuit(24),
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 0, 13))
+            .itemInputs(GTUtility.getIntegratedCircuit(24), OTHItemList.beeISAM.get(0))
             .fluidInputs(
                 new FluidStack(FluidRegistry.getFluidID("lubricant"), 64000),
                 new FluidStack(FluidRegistry.getFluidID("cryotheum"), 32000),
@@ -244,7 +243,7 @@ public class recipesMegaQFT implements IRecipePool {
             .fluidOutputs(liquids.Stars.getFluidOrGas(4 * 144))
             .itemInputs(
                 GTUtility.getIntegratedCircuit(24),
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 0, 14),
+                OTHItemList.beeMagM.get(0),
                 GTModHandler.getModItem("GalacticraftAmunRa", "item.baseItem", 4, 26))
             .fluidInputs(
                 new FluidStack(FluidRegistry.getFluidID("exciteddtsc"), 10000),
