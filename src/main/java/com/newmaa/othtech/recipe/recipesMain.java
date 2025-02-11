@@ -1,8 +1,14 @@
 package com.newmaa.othtech.recipe;
 
+import static gregtech.api.enums.Mods.Forestry;
+import static gregtech.api.enums.Mods.IndustrialCraft2;
 import static gregtech.api.enums.TierEU.*;
+import static gregtech.api.recipe.RecipeMaps.assemblerRecipes;
+import static gregtech.api.recipe.RecipeMaps.fluidExtractionRecipes;
 import static gregtech.api.util.GTModHandler.addCraftingRecipe;
+import static gregtech.api.util.GTModHandler.getModItem;
 import static gregtech.api.util.GTRecipeBuilder.HOURS;
+import static gregtech.api.util.GTRecipeBuilder.SECONDS;
 import static gregtech.api.util.GTRecipeConstants.*;
 import static tectech.thing.CustomItemList.eM_Power;
 
@@ -1001,5 +1007,16 @@ public class recipesMain implements IRecipePool {
             .eut(123123)
             .duration(123 * 20)
             .addTo(AssemblyLine);
+        //松油
+        GTValues.RA.stdBuilder()
+            .itemInputs(
+                getModItem(IndustrialCraft2.ID,"itemFuelPlantBall",1)
+            )
+            .fluidOutputs(
+                FluidRegistry.getFluidStack("pineoil",80)
+            )
+            .eut(RECIPE_IV)
+            .duration(10 * SECONDS)
+            .addTo(fluidExtractionRecipes);
     }
 }
