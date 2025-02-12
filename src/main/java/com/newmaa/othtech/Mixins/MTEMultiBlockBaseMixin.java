@@ -37,7 +37,7 @@ public abstract class MTEMultiBlockBaseMixin extends MetaTileEntity
      */
     @Overwrite
     public boolean polluteEnvironment(int aPollutionLevel) {
-        final int VENT_AMOUNT = 50_000;
+        final int VENT_AMOUNT = 50_000_000;
 
         if (!GTMod.gregtechproxy.mPollution) {
             return true;
