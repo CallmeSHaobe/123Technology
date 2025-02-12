@@ -37,6 +37,7 @@ public class MachineLoader {
     public static ItemStack MISA;
     public static ItemStack FOOD;
     public static ItemStack NQF;
+    public static ItemStack AF;
 
     public static void loadMachines() {
         final int IDs = 23520;
@@ -115,6 +116,9 @@ public class MachineLoader {
 
         NQF = new OTENQFuelGeneratorUniversal(IDs + 26, "NaquadahFuelGenerator", "§4通用硅岩燃料引擎").getStackForm(1);
         OTHItemList.NQF.set(NQF);
+
+        AF = new OTEMiniActiveTransformer(IDs + 27, "MiniActiveTransformer", "迷你有源变压器").getStackForm(1);
+        OTHItemList.AF.set(AF);
 
         // Lasers
 

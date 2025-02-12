@@ -1,5 +1,6 @@
 package com.newmaa.othtech.recipe;
 
+import static gregtech.api.enums.Mods.GTPlusPlus;
 import static gregtech.api.enums.Mods.IndustrialCraft2;
 import static gregtech.api.enums.TierEU.*;
 import static gregtech.api.recipe.RecipeMaps.fluidExtractionRecipes;
@@ -597,7 +598,6 @@ public class recipesMain implements IRecipePool {
             .duration(123 * 20)
             .eut(123)
             .addTo(Assem);
-        // ISAModule Recipes
 
         // DTPF timing
         RecipeBuilder.builder()
@@ -1006,5 +1006,30 @@ public class recipesMain implements IRecipePool {
             .eut(RECIPE_IV)
             .duration(10 * SECONDS)
             .addTo(fluidExtractionRecipes);
+        // ISAModule Recipes
+        // MINI NUKE
+        RecipeBuilder.builder()
+            .itemOutputs(OTHItemList.AF.get(1))
+            .itemInputs(
+                ItemList.IV_Coil.get(16),
+                ItemList.Casing_IV.get(1),
+                GTOreDictUnificator.get(OrePrefixes.wireGt01, Materials.SuperconductorIV, 64),
+                ItemList.Circuit_Chip_HPIC.get(64))
+            .duration(114 * 20)
+            .eut(4096)
+            .addTo(Assem);
+        // KOH
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
+                OTHItemList.dustLookNEIM.get(0),
+                Materials.Potassium.getDust(64))
+            .fluidInputs(Materials.Oxygen.getGas(64000), Materials.Hydrogen.getGas(64000))
+            .itemOutputs(GTModHandler.getModItem(GTPlusPlus.ID, "item.BasicGenericChemItem", 64, 12))
+            .eut(114514)
+            .duration(12)
+            .noOptimize()
+            .addTo(Chem);
+
     }
 }

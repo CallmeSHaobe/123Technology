@@ -5,6 +5,8 @@
 
 千万记得更新lang文件 ， 否则tooltip会有很大错误 。
 
+有关于123的TT机器爆炸, 可在配置文件内控制
+
 材质来源 ： JulianChum  ABKQPO  LyeeR
 
 部分结构来源 ：JulianChum LyeeR 商陆 Tmeex

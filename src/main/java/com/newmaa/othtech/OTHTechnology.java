@@ -86,4 +86,9 @@ public class OTHTechnology {
         proxy.serverStarting(event);
 
     }
+
+    @Mod.EventHandler
+    public void earlyGame(FMLPreInitializationEvent event) {
+        Config.synchronizeConfiguration(event.getSuggestedConfigurationFile());
+    }
 }

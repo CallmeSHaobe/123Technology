@@ -185,8 +185,9 @@ public class OTEMegaNineInOne extends OTH_MultiMachineBase<OTEMegaNineInOne> {
 
             @Override
             protected @NotNull CheckRecipeResult validateRecipe(@NotNull GTRecipe recipe) {
-
-                if (recipe.getMetadata(CompressionTierKey.INSTANCE) > 0) {
+                if (recipe.getMetadata(CompressionTierKey.INSTANCE) > 0 && mInternalMode == 0
+                    && CI.getNumberedAdvancedCircuit(0)
+                        .getItemDamage() == 20) {
                     if (getCoilTier() < 10 && recipe.getMetadata(CompressionTierKey.INSTANCE) == 1) {
                         return CheckRecipeResultRegistry.insufficientMachineTier(1);
                     } else if (getCoilTier() < 13 && recipe.getMetadata(CompressionTierKey.INSTANCE) == 2) {

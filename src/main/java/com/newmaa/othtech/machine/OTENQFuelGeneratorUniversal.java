@@ -236,13 +236,13 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
     public boolean onRunningTick(ItemStack stack) {
         if (this.getBaseMetaTileEntity()
             .isServerSide()) {
-            if (mMaxProgresstime != 0 && mProgresstime % 20 == 0) {
-                if (heatingTicks < HEATING_TIMER) {
-                    heatingTicks++;
-                    isStoppingSafe = true;
-                } else if (isStoppingSafe) isStoppingSafe = false;
-                addAutoEnergy();
-            }
+
+            if (heatingTicks < HEATING_TIMER) {
+                heatingTicks++;
+                isStoppingSafe = true;
+            } else if (isStoppingSafe) isStoppingSafe = false;
+            addAutoEnergy();
+
         }
         return true;
     }
@@ -271,7 +271,7 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
                 }
             }
         }
-        return 100;
+        return 20;
     }
 
     @Override
@@ -344,9 +344,6 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
 
     void addAutoEnergy() {
         long exEU = this.getPowerFlow() * tEff / 10000;
-        if (isWirelessMode) {
-            exEU = 0;
-        }
         if (!mDynamoHatches.isEmpty()) {
             MTEHatchDynamo tHatch = mDynamoHatches.get(0);
             if (tHatch.maxEUOutput() * tHatch.maxAmperesOut() >= exEU) {
@@ -497,7 +494,7 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
             .addInfo("§a更高级的结构意味着更高级的§c助燃剂, §a一级结构:原子分离助燃剂, 二级结构:超维度等离子助燃剂")
             .addInfo("你知道会发生什么。")
             .addInfo("§e警告 : 如果强行使用有线模式烧高级硅岩燃料, 将会导致电表倒转憋憋")
-            .addInfo("支持TecTech多安动力舱")
+            .addInfo("§c支持TecTech多安动力仓, 激光仓, 但尽量请使用1,073,741,824A激光仓直连电容库")
             .addSeparator()
             .addController("发电坤")
             .beginStructureBlock(7, 13, 7, false)
