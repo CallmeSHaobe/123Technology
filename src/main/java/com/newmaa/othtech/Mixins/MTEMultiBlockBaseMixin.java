@@ -1,18 +1,29 @@
 package com.newmaa.othtech.Mixins;
 
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.Constant;
-import org.spongepowered.asm.mixin.injection.ModifyConstant;
+import static gregtech.api.util.GTUtility.validMTEList;
 
+import java.util.ArrayList;
+
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.Shadow;
+
+import gregtech.GTMod;
+import gregtech.api.interfaces.modularui.IAddGregtechLogo;
+import gregtech.api.interfaces.modularui.IAddUIWidgets;
+import gregtech.api.interfaces.modularui.IBindPlayerInventoryUI;
+import gregtech.api.interfaces.modularui.IControllerWithOptionalFeatures;
+import gregtech.api.metatileentity.MetaTileEntity;
+import gregtech.api.metatileentity.implementations.MTEHatchMuffler;
 import gregtech.api.metatileentity.implementations.MTEMultiBlockBase;
 
 @SuppressWarnings("UnusedMixin")
 @Mixin(value = MTEMultiBlockBase.class, remap = false)
-public abstract class MTEMultiBlockBaseMixin {
+public abstract class MTEMultiBlockBaseMixin extends MetaTileEntity
+    implements IControllerWithOptionalFeatures, IAddGregtechLogo, IAddUIWidgets, IBindPlayerInventoryUI {
 
-    @ModifyConstant(method = "polluteEnvironment", constant = @Constant(intValue = 10_000, ordinal = 0), require = 1)
-    private int oth$modify(int constant) {
-        return 50_000;
+    public MTEMultiBlockBaseMixin(int aID, String aBasicName, String aRegionalName, int aInvSlotCount) {
+        super(aID, aBasicName, aRegionalName, aInvSlotCount);
     }
 
     @Shadow

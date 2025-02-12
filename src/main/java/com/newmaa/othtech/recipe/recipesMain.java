@@ -250,17 +250,17 @@ public class recipesMain implements IRecipePool {
             .duration(288)
             .eut(12300)
             .addTo(Chem);
-        // 232
-        RecipeBuilder.builder()
-            .itemInputs(
-                OTHItemList.dustLookNEIM.get(0),
-                Materials.Thorium.getDust(1),
-                GTUtility.getIntegratedCircuit(23),
-                GTUtility.getIntegratedCircuit(2))
-            .itemOutputs(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 30))
-            .eut(12300)
-            .duration(114)
-            .addTo(Assem);
+        // // 232
+        // RecipeBuilder.builder()
+        // .itemInputs(
+        // OTHItemList.dustLookNEIM.get(0),
+        // Materials.Thorium.getDust(1),
+        // GTUtility.getIntegratedCircuit(23),
+        // GTUtility.getIntegratedCircuit(2))
+        // .itemOutputs(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 30))
+        // .eut(12300)
+        // .duration(114)
+        // .addTo(Assem);
         // Mega EEC
         TTRecipeAdder.addResearchableAssemblylineRecipe(
             GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 14201),
@@ -999,14 +999,10 @@ public class recipesMain implements IRecipePool {
             .eut(123123)
             .duration(123 * 20)
             .addTo(AssemblyLine);
-        //松油
+        // 松油
         GTValues.RA.stdBuilder()
-            .itemInputs(
-                getModItem(IndustrialCraft2.ID,"itemFuelPlantBall",1)
-            )
-            .fluidOutputs(
-                FluidRegistry.getFluidStack("pineoil",80)
-            )
+            .itemInputs(getModItem(IndustrialCraft2.ID, "itemFuelPlantBall", 1))
+            .fluidOutputs(FluidRegistry.getFluidStack("pineoil", 80))
             .eut(RECIPE_IV)
             .duration(10 * SECONDS)
             .addTo(fluidExtractionRecipes);

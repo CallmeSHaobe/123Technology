@@ -15,7 +15,6 @@ import static gregtech.api.util.GTStructureUtility.ofFrame;
 import static tectech.thing.casing.TTCasingsContainer.sBlockCasingsTT;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Random;
 import java.util.UUID;
 
 import net.minecraft.init.Blocks;
@@ -31,7 +30,6 @@ import org.jetbrains.annotations.NotNull;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
-import com.kuba6000.mobsinfo.api.utils.FastRandom;
 import com.mojang.authlib.GameProfile;
 import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
 
@@ -67,7 +65,7 @@ public class OTEMegaEEC extends OTH_MultiMachineBase<OTEMegaEEC> implements IWir
 
     private byte glassTier = 0;
 
-    //public final Random rand = new FastRandom();
+    // public final Random rand = new FastRandom();
 
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
