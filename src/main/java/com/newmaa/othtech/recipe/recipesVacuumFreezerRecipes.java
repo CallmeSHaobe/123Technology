@@ -9,6 +9,7 @@ import com.newmaa.othtech.common.materials.materials;
 
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.OrePrefixes;
+import gregtech.api.enums.TierEU;
 import gregtech.api.interfaces.IRecipeMap;
 import gregtech.api.recipe.RecipeMaps;
 
@@ -23,11 +24,11 @@ public class recipesVacuumFreezerRecipes implements IRecipePool {
         GTValues.RA.stdBuilder()
             .itemInputs(OTHItemList.ingotHotDog.get(1))
             .itemOutputs(materials.IrOsSm.get(OrePrefixes.ingot, 1))
-            .fluidInputs(new FluidStack(colder, 1919))
-            .fluidOutputs(new FluidStack(water, 1919))
+            .fluidInputs(new FluidStack(colder, 100))
+            .fluidOutputs(new FluidStack(water, 100))
             .noOptimize()
             .duration(2000)
-            .eut(123123123)
+            .eut(TierEU.RECIPE_UEV)
             .addTo(VaF);
     }
 }

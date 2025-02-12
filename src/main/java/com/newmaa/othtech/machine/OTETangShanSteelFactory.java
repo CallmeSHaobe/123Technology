@@ -10,6 +10,7 @@ import static gregtech.api.enums.Mods.IndustrialCraft2;
 import static gregtech.api.enums.Textures.BlockIcons.*;
 import static gregtech.api.util.GTStructureUtility.*;
 import static gregtech.common.misc.WirelessNetworkManager.addEUToGlobalEnergyMap;
+import static net.minecraft.util.StatCollector.translateToLocal;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -305,6 +306,14 @@ public class OTETangShanSteelFactory extends OTH_MultiMachineBase<OTETangShanSte
     private static final int HORIZONTAL_DIRT_METAID_B = 0;
     private static final int HORIZONTAL_DIRT_METAID_C = 14;
     private static IStructureDefinition<OTETangShanSteelFactory> STRUCTURE_DEFINITION = null;
+    private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
+        translateToLocal("1 - 消声仓, 能源仓, 输入输出总线, 输入输出仓 : 替换脱氧钢机械方块, 支持TecTech能源仓") + ":",
+        translateToLocal("2 - 消声仓 : 替换脱氧钢机械方块(烟囱上, 其实放主机旁边也行)") };
+
+    @Override
+    public String[] getStructureDescription(ItemStack stackSize) {
+        return description;
+    }
 
     @Override
     public IStructureDefinition<OTETangShanSteelFactory> getStructureDefinition() {

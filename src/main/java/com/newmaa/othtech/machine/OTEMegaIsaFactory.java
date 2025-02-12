@@ -8,6 +8,7 @@ import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.enums.HatchElement.OutputHatch;
 import static gregtech.api.enums.Textures.BlockIcons.*;
 import static gregtech.api.util.GTStructureUtility.*;
+import static net.minecraft.util.StatCollector.translateToLocal;
 
 import java.util.List;
 
@@ -219,6 +220,14 @@ public class OTEMegaIsaFactory extends OTH_MultiMachineBase<OTEMegaIsaFactory> {
     private final int verticalOffSet = 27;
     private final int depthOffSet = 20;
     private static IStructureDefinition<OTEMegaIsaFactory> STRUCTURE_DEFINITION = null;
+    private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
+        translateToLocal("1 - 消声仓, 能源仓, 输入输出总线, 输入输出仓 : 替换艾萨机械方块, 支持TecTech能源仓") + ":",
+        translateToLocal("2 - 消声仓, 替换真空炉机械方块") };
+
+    @Override
+    public String[] getStructureDescription(ItemStack stackSize) {
+        return description;
+    }
 
     @Override
     public IStructureDefinition<OTEMegaIsaFactory> getStructureDefinition() {

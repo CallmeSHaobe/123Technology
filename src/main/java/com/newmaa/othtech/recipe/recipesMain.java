@@ -1,7 +1,6 @@
 package com.newmaa.othtech.recipe;
 
-import static gregtech.api.enums.Mods.GTPlusPlus;
-import static gregtech.api.enums.Mods.IndustrialCraft2;
+import static gregtech.api.enums.Mods.*;
 import static gregtech.api.enums.TierEU.*;
 import static gregtech.api.recipe.RecipeMaps.fluidExtractionRecipes;
 import static gregtech.api.util.GTModHandler.addCraftingRecipe;
@@ -21,6 +20,7 @@ import net.minecraftforge.fluids.FluidStack;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.item.ItemLoader;
 import com.newmaa.othtech.common.materials.liquids;
+import com.newmaa.othtech.common.materials.materials;
 import com.newmaa.othtech.utils.RecipeBuilder;
 
 import gregtech.api.enums.GTValues;
@@ -1007,6 +1007,81 @@ public class recipesMain implements IRecipePool {
             .duration(10 * SECONDS)
             .addTo(fluidExtractionRecipes);
         // ISAModule Recipes
+        GTValues.RA.stdBuilder()
+            .metadata(RESEARCH_ITEM, OTHItemList.dustLookNEIM.get(1))
+            .metadata(RESEARCH_TIME, HOURS * 2)
+            .itemInputs(
+                GTOreDictUnificator.get(OrePrefixes.plate, Materials.Iridium, 64),
+                GTOreDictUnificator.get(OrePrefixes.plate, Materials.Iridium, 64),
+                GTOreDictUnificator.get(OrePrefixes.plate, Materials.Iridium, 64),
+                GTOreDictUnificator.get(OrePrefixes.plate, Materials.Iridium, 64),
+                GTOreDictUnificator.get(OrePrefixes.plate, Materials.Iridium, 64),
+                OTHItemList.dustLookNEIM.get(64),
+                OTHItemList.dustLookNEIM.get(64),
+                GTOreDictUnificator.get(OrePrefixes.plate, Materials.Iridium, 64),
+                GTOreDictUnificator.get(OrePrefixes.plate, Materials.Osmium, 64),
+                GTOreDictUnificator.get(OrePrefixes.plate, Materials.Samarium, 64),
+                GTOreDictUnificator.get(OrePrefixes.plate, Materials.Samarium, 64),
+                GTOreDictUnificator.get(OrePrefixes.plate, Materials.Osmium, 64),
+                GTOreDictUnificator.get(OrePrefixes.plate, Materials.Osmium, 64),
+                GTOreDictUnificator.get(OrePrefixes.plate, Materials.Osmium, 64),
+                GTOreDictUnificator.get(OrePrefixes.plate, Materials.Osmium, 64),
+                GTOreDictUnificator.get(OrePrefixes.plate, Materials.Osmium, 64))
+            .fluidInputs(Materials.Water.getFluid(144000))
+            .itemOutputs(OTHItemList.IsaNEI.get(1))
+            .eut(RECIPE_ZPM)
+            .duration(600 * 20)
+            .addTo(AssemblyLine);
+        GTValues.RA.stdBuilder()
+            .metadata(RESEARCH_ITEM, OTHItemList.IsaNEI.get(1))
+            .metadata(RESEARCH_TIME, HOURS)
+            .itemInputs(
+                GTOreDictUnificator.get(OrePrefixes.plateSuperdense, Materials.Iridium, 64),
+                GTOreDictUnificator.get(OrePrefixes.plateSuperdense, Materials.Neutronium, 64),
+                GTOreDictUnificator.get(OrePrefixes.plateSuperdense, Materials.Neutronium, 64),
+                GTOreDictUnificator.get(OrePrefixes.plateSuperdense, Materials.Iridium, 64),
+                materials.IrOsSm.get(OrePrefixes.plateDouble, 64),
+                OTHItemList.dustLookNEIM.get(64),
+                OTHItemList.dustLookNEIM.get(64),
+                materials.IrOsSm.get(OrePrefixes.plateDouble, 64),
+                materials.IrOsSm.get(OrePrefixes.plateDouble, 64),
+                OTHItemList.dustLookNEIM.get(64),
+                OTHItemList.dustLookNEIM.get(64),
+                materials.IrOsSm.get(OrePrefixes.plateDouble, 64),
+                GTOreDictUnificator.get(OrePrefixes.plateSuperdense, Materials.Iridium, 64),
+                GTOreDictUnificator.get(OrePrefixes.plateSuperdense, Materials.Neutronium, 64),
+                GTOreDictUnificator.get(OrePrefixes.plateSuperdense, Materials.Neutronium, 64),
+                GTOreDictUnificator.get(OrePrefixes.plateSuperdense, Materials.Iridium, 64))
+            .fluidInputs(Materials.Lava.getFluid(144000))
+            .itemOutputs(OTHItemList.ISAIOS.get(1))
+            .eut(RECIPE_UV)
+            .duration(600 * 20)
+            .addTo(AssemblyLine);
+        GTValues.RA.stdBuilder()
+            .metadata(RESEARCH_ITEM, OTHItemList.ISAIOS.get(1))
+            .metadata(RESEARCH_TIME, HOURS / 2)
+            .itemInputs(
+                GTOreDictUnificator.get(OrePrefixes.plateTriple, Materials.Infinity, 64),
+                GTOreDictUnificator.get(OrePrefixes.plateTriple, Materials.CosmicNeutronium, 64),
+                GTOreDictUnificator.get(OrePrefixes.plateTriple, Materials.CosmicNeutronium, 64),
+                GTOreDictUnificator.get(OrePrefixes.plateTriple, Materials.Infinity, 64),
+                GTModHandler.getModItem(GTPlusPlus.ID, "itemPlateDoubleHypogen", 64),
+                OTHItemList.itemEnqingM.get(64),
+                OTHItemList.itemEnqingM.get(64),
+                GTModHandler.getModItem(GTPlusPlus.ID, "itemPlateDoubleHypogen", 64),
+                GTModHandler.getModItem(GTPlusPlus.ID, "itemPlateDoubleHypogen", 64),
+                OTHItemList.itemEnqingM.get(64),
+                OTHItemList.itemEnqingM.get(64),
+                GTModHandler.getModItem(GTPlusPlus.ID, "itemPlateDoubleHypogen", 64),
+                GTOreDictUnificator.get(OrePrefixes.plateTriple, Materials.Infinity, 64),
+                GTOreDictUnificator.get(OrePrefixes.plateTriple, Materials.CosmicNeutronium, 64),
+                GTOreDictUnificator.get(OrePrefixes.plateTriple, Materials.CosmicNeutronium, 64),
+                GTOreDictUnificator.get(OrePrefixes.plateTriple, Materials.Infinity, 64))
+            .fluidInputs(Materials.Iron.getMolten(144000))
+            .itemOutputs(OTHItemList.ISAHYP.get(1))
+            .eut(RECIPE_UHV)
+            .duration(600 * 20)
+            .addTo(AssemblyLine);
         // MINI NUKE
         RecipeBuilder.builder()
             .itemOutputs(OTHItemList.AF.get(1))

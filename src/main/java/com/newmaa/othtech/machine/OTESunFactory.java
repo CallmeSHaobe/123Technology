@@ -8,6 +8,7 @@ import static gregtech.api.enums.Textures.BlockIcons.*;
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_DTPF_OFF;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static gregtech.api.util.GTStructureUtility.ofFrame;
+import static net.minecraft.util.StatCollector.translateToLocal;
 import static tectech.thing.casing.TTCasingsContainer.StabilisationFieldGenerators;
 import static tectech.thing.casing.TTCasingsContainer.sBlockCasingsTT;
 
@@ -315,6 +316,13 @@ public class OTESunFactory extends OTH_MultiMachineBase<OTESunFactory> {
     private final int verticalOffSet = 27;
     private final int depthOffSet = 51;
     private static IStructureDefinition<OTESunFactory> STRUCTURE_DEFINITION = null;
+    private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
+        translateToLocal("1 - 能源仓, 输入输出总线, 输入输出仓 : 替换终极分子机械方块, 支持TecTech能源仓") };
+
+    @Override
+    public String[] getStructureDescription(ItemStack stackSize) {
+        return description;
+    }
 
     @Override
     public IStructureDefinition<OTESunFactory> getStructureDefinition() {

@@ -16,10 +16,10 @@ public class recipesBlastFurnaceRecipes implements IRecipePool {
         GTValues.RA.stdBuilder()
             .itemInputs(GTUtility.getIntegratedCircuit(1), OTHItemList.dustIrOsSmM.get(1))
             .itemOutputs(OTHItemList.ingotHotDog.get(1))
-            .specialValue(-123123)
+            .specialValue(-3600000)
             .noOptimize()
-            .duration(114514)
-            .eut(TierEU.UXV)
+            .duration(640 * 20)
+            .eut(TierEU.UMV)
             .addTo(EBF);
 
     }

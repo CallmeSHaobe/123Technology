@@ -17,6 +17,7 @@ import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_ASSEMBLY_LINE
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_ASSEMBLY_LINE_ACTIVE_GLOW;
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_ASSEMBLY_LINE_GLOW;
 import static gregtech.api.util.GTStructureUtility.*;
+import static net.minecraft.util.StatCollector.translateToLocal;
 
 import java.util.List;
 import java.util.Objects;
@@ -222,6 +223,15 @@ public class OTESINOPEC extends OTH_MultiMachineBase<OTESINOPEC> {
     private final int depthOffSet = 2;
     private static final int HORIZONTAL_DIRT_METAID = 10;
     private static IStructureDefinition<OTESINOPEC> STRUCTURE_DEFINITION = null;
+    private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
+        translateToLocal("1 - 消声仓, 能源仓, 输入输出总线, 输入输出仓 : 替换钨钢机械方块, 支持TecTech能源仓") + ":",
+        translateToLocal("2 - 消声仓 : 烟囱顶端中央机械方块, 其实放主机旁边也行") // 1 - Energy IO Hatches or High
+    };
+
+    @Override
+    public String[] getStructureDescription(ItemStack stackSize) {
+        return description;
+    }
 
     @Override
     public IStructureDefinition<OTESINOPEC> getStructureDefinition() {

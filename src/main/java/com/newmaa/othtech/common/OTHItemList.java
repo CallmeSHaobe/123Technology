@@ -82,6 +82,7 @@ public enum OTHItemList {
 
     // Machines
     AF,
+    NQFF,
     MISA,
     NQF,
     FooD,

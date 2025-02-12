@@ -5,6 +5,7 @@ import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.enums.Textures.BlockIcons.*;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static gregtech.api.util.GTStructureUtility.ofFrame;
+import static net.minecraft.util.StatCollector.translateToLocal;
 
 import java.util.List;
 
@@ -222,6 +223,13 @@ public class OTEWoodenFusionReactor extends OTH_MultiMachineBase<OTEWoodenFusion
     private final int verticalOffSet = 3;
     private final int depthOffSet = 40;
     private static IStructureDefinition<OTEWoodenFusionReactor> STRUCTURE_DEFINITION = null;
+    private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
+        translateToLocal("1 - 输入输出仓 : 替换石砖") };
+
+    @Override
+    public String[] getStructureDescription(ItemStack stackSize) {
+        return description;
+    }
 
     @Override
     public IStructureDefinition<OTEWoodenFusionReactor> getStructureDefinition() {

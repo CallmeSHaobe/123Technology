@@ -4,6 +4,7 @@ import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.withChannel;
 import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.util.GTStructureUtility.*;
+import static net.minecraft.util.StatCollector.translateToLocal;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -16,6 +17,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -307,6 +309,15 @@ public class OTEMegaNineInOne extends OTH_MultiMachineBase<OTEMegaNineInOne> {
     private final int verticalOffSet = 3;
     private final int depthOffSet = 40;
     private static IStructureDefinition<OTEMegaNineInOne> STRUCTURE_DEFINITION = null;
+    private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
+        translateToLocal("1 - 消声仓, 能源仓, 输入输出总线, 输入输出仓 : 替换多功能机械方块, 支持TecTech能源仓"),
+        EnumChatFormatting.LIGHT_PURPLE + translateToLocal("神说世间要有光, 便有了九合一."),
+        EnumChatFormatting.GOLD + translateToLocal("天无二日, 九合一便是我们心中唯一的太阳") };
+
+    @Override
+    public String[] getStructureDescription(ItemStack stackSize) {
+        return description;
+    }
 
     @Override
     public IStructureDefinition<OTEMegaNineInOne> getStructureDefinition() {

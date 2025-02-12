@@ -6,6 +6,7 @@ import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.enums.Textures.BlockIcons.*;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static gregtech.api.util.GTStructureUtility.ofFrame;
+import static net.minecraft.util.StatCollector.translateToLocal;
 import static tectech.thing.casing.TTCasingsContainer.*;
 
 import java.util.ArrayList;
@@ -315,7 +316,12 @@ public class OTEMegaQFT extends OTH_MultiMachineBase<OTEMegaQFT> {
         }
         return 0;
     }
-
+    private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
+        translateToLocal("1 - 能源仓, 输入输出总线, 输入输出仓 : 替换分子机械方块, 支持TecTech能源仓")   };
+    @Override
+    public String[] getStructureDescription(ItemStack stackSize) {
+        return description;
+    }
 
     @Override
     public IStructureDefinition<OTEMegaQFT> getStructureDefinition() {

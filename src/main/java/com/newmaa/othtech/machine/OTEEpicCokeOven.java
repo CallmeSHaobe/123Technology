@@ -8,6 +8,7 @@ import static gregtech.api.enums.HatchElement.OutputHatch;
 import static gregtech.api.enums.Mods.Chisel;
 import static gregtech.api.enums.Mods.TinkerConstruct;
 import static gregtech.api.util.GTStructureUtility.*;
+import static net.minecraft.util.StatCollector.translateToLocal;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,6 +21,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import org.jetbrains.annotations.NotNull;
@@ -190,6 +192,13 @@ public class OTEEpicCokeOven extends OTH_MultiMachineBase<OTEEpicCokeOven> {
     private final int verticalOffSet = 5;
     private final int depthOffSet = 48;
     private static IStructureDefinition<OTEEpicCokeOven> STRUCTURE_DEFINITION = null;
+    private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
+        translateToLocal("1 - 输入输出总线, 输入输出仓, 消声仓 : 替换脱氧钢机械方块") };
+
+    @Override
+    public String[] getStructureDescription(ItemStack stackSize) {
+        return description;
+    }
 
     @Override
     public IStructureDefinition<OTEEpicCokeOven> getStructureDefinition() {

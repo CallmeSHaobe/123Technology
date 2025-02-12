@@ -5,10 +5,12 @@ import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.enums.Textures.BlockIcons.*;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static gregtech.api.util.GTStructureUtility.ofCoil;
+import static net.minecraft.util.StatCollector.translateToLocal;
 
 import javax.annotation.Nonnull;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
@@ -34,6 +36,14 @@ public class OTEIMBABlastFurnace extends MTEElectricBlastFurnace {
 
     private static final String STRUCTURE_PIECE_MAIN = "main";
     private static final int CASING_INDEX = 11;
+    private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
+        EnumChatFormatting.GOLD + translateToLocal("太吊炸天了。") };
+
+    @Override
+    public String[] getStructureDescription(ItemStack stackSize) {
+        return description;
+    }
+
     private static final IStructureDefinition<MTEElectricBlastFurnace> STRUCTURE_DEFINITION = StructureDefinition
         .<MTEElectricBlastFurnace>builder()
         .addShape(

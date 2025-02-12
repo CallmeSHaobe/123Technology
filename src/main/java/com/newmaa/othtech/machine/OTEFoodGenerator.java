@@ -6,6 +6,7 @@ import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.enums.Mods.IndustrialCraft2;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static gregtech.api.util.GTStructureUtility.ofCoil;
+import static net.minecraft.util.StatCollector.translateToLocal;
 import static tectech.thing.casing.TTCasingsContainer.sBlockCasingsNH;
 
 import java.util.List;
@@ -261,6 +262,13 @@ public class OTEFoodGenerator extends TT_MultiMachineBase_EM implements IConstru
     private final int verticalOffSet = 12;
     private final int depthOffSet = 0;
     private static IStructureDefinition<OTEFoodGenerator> STRUCTURE_DEFINITION = null;
+    private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
+        translateToLocal("1 - 输入输出总线, 输入输出仓, 消声仓 : 替换脱氧钢机械方块") + ":", translateToLocal("2 - 动力仓 : 替换尾部脱氧钢机械方块") };
+
+    @Override
+    public String[] getStructureDescription(ItemStack stackSize) {
+        return description;
+    }
 
     @Override
     public IStructureDefinition<OTEFoodGenerator> getStructure_EM() {

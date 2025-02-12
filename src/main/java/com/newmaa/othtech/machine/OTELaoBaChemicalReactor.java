@@ -7,6 +7,7 @@ import static gregtech.api.GregTechAPI.sBlockCasings8;
 import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.enums.Textures.BlockIcons.*;
 import static gregtech.api.util.GTStructureUtility.*;
+import static net.minecraft.util.StatCollector.translateToLocal;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -259,6 +260,13 @@ public class OTELaoBaChemicalReactor extends OTH_MultiMachineBase<OTELaoBaChemic
     private final int verticalOffSet = 12;
     private final int depthOffSet = 0;
     private static IStructureDefinition<OTELaoBaChemicalReactor> STRUCTURE_DEFINITION = null;
+    private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
+        translateToLocal("1 - 输入输出总线, 输入输出仓, 能源仓 : 替换镀铑钯机械方块, 支持TecTech能源仓") };
+
+    @Override
+    public String[] getStructureDescription(ItemStack stackSize) {
+        return description;
+    }
 
     @Override
     public IStructureDefinition<OTELaoBaChemicalReactor> getStructureDefinition() {

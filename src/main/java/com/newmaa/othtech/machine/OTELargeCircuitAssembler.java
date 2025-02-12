@@ -9,6 +9,7 @@ import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static gregtech.api.util.GTStructureUtility.ofFrame;
 import static gregtech.api.util.GTUtility.validMTEList;
+import static net.minecraft.util.StatCollector.translateToLocal;
 
 import java.util.Arrays;
 import java.util.List;
@@ -227,6 +228,15 @@ public class OTELargeCircuitAssembler extends OTH_MultiMachineBase<OTELargeCircu
             tier = Math.max(tHatch.mTier, tier);
         }
         return tier;
+    }
+
+    private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
+        translateToLocal("1 - 消声仓, 能源仓 : 替换精密机械方块, 支持TecTech能源仓") + ":", translateToLocal("2 - 输出仓, 输出总线") + ":",
+        translateToLocal("3 - 输入仓, 输入总线") + ":", translateToLocal("细节仅供参考因为我不会写仓室位置限制憋憋") };
+
+    @Override
+    public String[] getStructureDescription(ItemStack stackSize) {
+        return description;
     }
 
     @Override

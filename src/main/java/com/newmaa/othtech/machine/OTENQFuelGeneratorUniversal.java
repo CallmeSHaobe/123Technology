@@ -10,6 +10,7 @@ import static gregtech.api.enums.HatchElement.OutputHatch;
 import static gregtech.api.enums.Textures.BlockIcons.*;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static gregtech.common.misc.WirelessNetworkManager.addEUToGlobalEnergyMap;
+import static net.minecraft.util.StatCollector.translateToLocal;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -421,6 +422,15 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
             return 0;
         }
         return 0;
+    }
+
+    private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
+        translateToLocal("4 - 动力仓或者激光仓 : 替换防辐射硅岩机械方块, 支持TecTech动力仓") + ":",
+        translateToLocal("3 - 输入仓输出仓 : 替换防辐射硅岩机械方块") + ":", translateToLocal("2 - 消声仓(装饰 : 替换防辐射硅岩机械方块)"), };
+
+    @Override
+    public String[] getStructureDescription(ItemStack stackSize) {
+        return description;
     }
 
     @Override

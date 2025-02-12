@@ -5,9 +5,11 @@ import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
 import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static gregtech.api.util.GTStructureUtility.ofCoil;
+import static net.minecraft.util.StatCollector.translateToLocal;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -30,6 +32,8 @@ import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.logic.ProcessingLogic;
+import gregtech.api.metatileentity.implementations.MTEHatch;
+import gregtech.api.metatileentity.implementations.MTEHatchEnergy;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.recipe.check.CheckRecipeResult;
@@ -71,11 +75,13 @@ public class OTEMegaEBFGTpp extends OTH_MultiMachineBase<OTEMegaEBFGTpp> {
 
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
+        aNBT.setByte("glass", glassTier);
         super.saveNBTData(aNBT);
     }
 
     @Override
     public void loadNBTData(final NBTTagCompound aNBT) {
+        glassTier = aNBT.getByte("glass");
         super.loadNBTData(aNBT);
     }
 
@@ -143,8 +149,25 @@ public class OTEMegaEBFGTpp extends OTH_MultiMachineBase<OTEMegaEBFGTpp> {
 
     @Override
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
-        repairMachine();
-        return checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet);
+        if (!this.checkPiece("main", 7, 17, 0) || this.getCoilLevel() == HeatingCoilLevel.None
+            || this.mMaintenanceHatches.size() != 1) return false;
+        if (this.glassTier < 8) {
+            for (MTEHatch hatch : this.mExoticEnergyHatches) {
+                if (hatch.getConnectionType() == MTEHatch.ConnectionType.LASER) {
+                    return false;
+                }
+                if (this.glassTier < hatch.mTier) {
+                    return false;
+                }
+            }
+            for (MTEHatchEnergy mEnergyHatch : this.mEnergyHatches) {
+                if (this.glassTier < mEnergyHatch.mTier) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     @Override
@@ -181,6 +204,14 @@ public class OTEMegaEBFGTpp extends OTH_MultiMachineBase<OTEMegaEBFGTpp> {
             }
         }
         return false;
+    }
+
+    private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
+        translateToLocal("1 - 消声仓, 能源仓, 输入输出总线, 输入输出仓 : 替换赤焱高炉机械方块, 支持TecTech能源仓, 有玻璃限制(真的!)") };
+
+    @Override
+    public String[] getStructureDescription(ItemStack stackSize) {
+        return description;
     }
 
     private static final String STRUCTURE_PIECE_MAIN = "main";

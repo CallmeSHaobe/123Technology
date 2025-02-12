@@ -3,9 +3,11 @@ package com.newmaa.othtech.machine;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
 import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
+import static net.minecraft.util.StatCollector.translateToLocal;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -154,6 +156,14 @@ public class OTEMegaFreezerGTpp extends OTH_MultiMachineBase<OTEMegaFreezerGTpp>
     private final int depthOffSet = 0;
 
     private static IStructureDefinition<OTEMegaFreezerGTpp> STRUCTURE_DEFINITION = null;
+    private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
+        translateToLocal("1 - 消声仓, 能源仓, 输入输出总线, 输入输出仓 : 替换凛冰机械方块, 支持TecTech能源仓"),
+        EnumChatFormatting.GOLD + translateToLocal("你真做啊?") };
+
+    @Override
+    public String[] getStructureDescription(ItemStack stackSize) {
+        return description;
+    }
 
     @Override
     public IStructureDefinition<OTEMegaFreezerGTpp> getStructureDefinition() {
