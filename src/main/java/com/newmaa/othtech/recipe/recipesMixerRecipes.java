@@ -6,6 +6,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
+import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.utils.RecipeBuilder;
 
 import gregtech.api.enums.GTValues;
@@ -30,7 +31,7 @@ public class recipesMixerRecipes implements IRecipePool {
         GTValues.RA.stdBuilder()
             .fluidInputs(new FluidStack(Ne, 1000), new FluidStack(I, 1000))
             .fluidOutputs(new FluidStack(Shit, 144))
-            .itemOutputs(GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 1))
+            .itemOutputs(OTHItemList.dustLookNEIM.get(1))
             .noOptimize()
             .duration(200)
             .eut(6144)

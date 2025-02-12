@@ -1,7 +1,9 @@
 package com.newmaa.othtech.common.item;
 
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
+import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.item.foods.ingotHotDog;
 import com.newmaa.othtech.common.item.foods.itemLeekBox;
 import com.newmaa.othtech.common.item.foods.itemZhangww;
@@ -14,6 +16,7 @@ import com.newmaa.othtech.common.item.weapons.itemNukeThrowable;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 
+@SuppressWarnings("SameParameterValue")
 public class ItemLoader {
 
     public static Item itemZhangww = new itemZhangww();
@@ -31,23 +34,28 @@ public class ItemLoader {
     public static Item RecordNGGU = new itemRecord("NGG_U");
 
     public ItemLoader(FMLPreInitializationEvent event) {
-        IRegistry(itemZhangww, "itemZhangww");
-        IRegistry(ingotHotDog, "ingotHotDog");
-        IRegistry(Dasima, "Dasima");
-        IRegistry(ShikanokoNoko, "ShikanokoNoko");
-        IRegistry(itemSunLighter, "itemSunLighter");
-        IRegistry(itemLeekBox, "itemLeekBox");
-        IRegistry(itemNukeThrowable, "itemNukeThrowable");
-        IRegistry(RecordPRKA, "attackingBattle");
-        IRegistry(RecordPRKB, "runningHorse");
-        IRegistry(RecordEVAA, "EVAA");
-        IRegistry(RecordEVAB, "EVAB");
-        IRegistry(RecordEVAC, "EVAC");
-        IRegistry(RecordNGGU, "NGGU");
+        OTHItemList.Zhangww.set(registryAndCallback(itemZhangww, "itemZhangww"));
+        OTHItemList.ingotHotDog.set(registryAndCallback(ingotHotDog, "ingotHotDog"));
+        OTHItemList.Dasima.set(registryAndCallback(Dasima, "Dasima"));
+        OTHItemList.ShikanokoNoko.set(registryAndCallback(ShikanokoNoko, "ShikanokoNoko"));
+        OTHItemList.SunLighter.set(registryAndCallback(itemSunLighter, "itemSunLighter"));
+        OTHItemList.LeekBox.set(registryAndCallback(itemLeekBox, "itemLeekBox"));
+        OTHItemList.NukeThrowable.set(registryAndCallback(itemNukeThrowable, "itemNukeThrowable"));
+        OTHItemList.RecordPRKA.set(registryAndCallback(RecordPRKA, "attackingBattle"));
+        OTHItemList.RecordPRKB.set(registryAndCallback(RecordPRKB, "runningHorse"));
+        OTHItemList.RecordEVAA.set(registryAndCallback(RecordEVAA, "EVAA"));
+        OTHItemList.RecordEVAB.set(registryAndCallback(RecordEVAB, "EVAB"));
+        OTHItemList.RecordEVAC.set(registryAndCallback(RecordEVAC, "EVAC"));
+        OTHItemList.RecordNGGU.set(registryAndCallback(RecordNGGU, "NGGU"));
     }
 
-    private static void IRegistry(Item item, String name) {
+    private static ItemStack registryAndCallback(Item item, String name) {
+        return registryAndCallback(item, name, 0);
+    }
+
+    private static ItemStack registryAndCallback(Item item, String name, int aMeta) {
         GameRegistry.registerItem(item, name);
+        return new ItemStack(item, 1, aMeta);
     }
 
 }

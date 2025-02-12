@@ -35,6 +35,7 @@ import org.jetbrains.annotations.NotNull;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
+import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
 import com.newmaa.othtech.utils.Utils;
@@ -52,7 +53,6 @@ import gregtech.api.logic.ProcessingLogic;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.render.TextureFactory;
-import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import mcp.mobius.waila.api.IWailaConfigHandler;
@@ -84,14 +84,21 @@ public class OTESINOPEC extends OTH_MultiMachineBase<OTESINOPEC> {
         return Utils.getCoilTier(coilLevel);
     }
 
+    private static ItemStack dustIrOsSmM = null;
+
+    @Override
+    public void onFirstTick(IGregTechTileEntity aBaseMetaTileEntity) {
+        super.onFirstTick(aBaseMetaTileEntity);
+        if (dustIrOsSmM == null) dustIrOsSmM = OTHItemList.dustIrOsSmM.get(1);
+    }
+
     @Override
     public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
         super.onPostTick(aBaseMetaTileEntity, aTick);
         if (aTick % 20 == 0 && !$123) {
             ItemStack aGuiStack = this.getControllerSlot();
             if (aGuiStack != null) {
-                if (GTUtility
-                    .areStacksEqual(aGuiStack, GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 0))) {
+                if (GTUtility.areStacksEqual(aGuiStack, dustIrOsSmM)) {
                     this.$123 = true;
                 }
             }
@@ -260,6 +267,7 @@ public class OTESINOPEC extends OTH_MultiMachineBase<OTESINOPEC> {
     }
 
     // Structured by LyeeR
+    @SuppressWarnings("SpellCheckingInspection")
     private final String[][] shapeMain = new String[][] {
         { "                                                ", "                                                ",
             "                                                ", "                                                ",
@@ -1120,41 +1128,6 @@ public class OTESINOPEC extends OTH_MultiMachineBase<OTESINOPEC> {
             .addMufflerHatch("AnyMufflerHatch", 1)
             .toolTipFinisher("§a123Technology - Heavy industry - SINOPEC");
         return tt;
-    }
-
-    @Override
-    public boolean isCorrectMachinePart(ItemStack aStack) {
-        return true;
-    }
-
-    @Override
-    public int getMaxEfficiency(ItemStack aStack) {
-        return 10000;
-    }
-
-    @Override
-    public int getDamageToComponent(ItemStack aStack) {
-        return 0;
-    }
-
-    @Override
-    public boolean explodesOnComponentBreak(ItemStack aStack) {
-        return false;
-    }
-
-    @Override
-    public boolean supportsVoidProtection() {
-        return true;
-    }
-
-    @Override
-    public boolean supportsInputSeparation() {
-        return true;
-    }
-
-    @Override
-    public boolean supportsSingleRecipeLocking() {
-        return true;
     }
 
     @Override

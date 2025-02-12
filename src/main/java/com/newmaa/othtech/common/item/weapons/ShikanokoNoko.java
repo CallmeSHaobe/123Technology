@@ -1,9 +1,10 @@
 package com.newmaa.othtech.common.item.weapons;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemSword;
 import net.minecraftforge.common.util.EnumHelper;
+
+import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
 
 public class ShikanokoNoko extends ItemSword {
 
@@ -14,6 +15,6 @@ public class ShikanokoNoko extends ItemSword {
         super(ShikanokoNoko);
         this.setUnlocalizedName("ShikanokoNoko");
         this.setTextureName("123technology:ShikanokoNoko");
-        this.setCreativeTab(CreativeTabs.tabCombat);
+        this.setCreativeTab(CreativeTabsLoader.tabothtech);
     }
 }

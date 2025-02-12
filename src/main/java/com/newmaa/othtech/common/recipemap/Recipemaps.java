@@ -7,6 +7,7 @@ import com.newmaa.othtech.common.recipemap.formatter.MISASpecialValueFormatter;
 import com.newmaa.othtech.common.recipemap.recipeMapFrontends.OTH_GeneralFrontend;
 
 import goodgenerator.client.GUI.GGUITextures;
+import goodgenerator.loader.Loaders;
 import gregtech.api.enums.ItemList;
 import gregtech.api.gui.modularui.GTUITextures;
 import gregtech.api.recipe.RecipeMap;
@@ -14,7 +15,6 @@ import gregtech.api.recipe.RecipeMapBackend;
 import gregtech.api.recipe.RecipeMapBuilder;
 import gregtech.api.recipe.maps.FluidOnlyFrontend;
 import gregtech.api.recipe.maps.FuelBackend;
-import gregtech.api.util.GTModHandler;
 import gregtech.nei.formatter.HeatingCoilSpecialValueFormatter;
 import gregtech.nei.formatter.SimpleSpecialValueFormatter;
 
@@ -40,16 +40,18 @@ public class Recipemaps {
                 .setMaxRecipesPerPage(2))
         .disableOptimize()
         .build();
-    public static final RecipeMap<OTH_RecipeMapBackend> Cannon = RecipeMapBuilder
-        .of("otht.recipe.EVACannon", OTH_RecipeMapBackend::new)
-        .maxIO(1, 1, 0, 0)
-        .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
-        .frontend(OTH_GeneralFrontend::new)
-        .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 0))
-                .setMaxRecipesPerPage(2))
-        .disableOptimize()
-        .build();
+
+    // 没有使用先注释了 --keriils
+    // public static final RecipeMap<OTH_RecipeMapBackend> Cannon = RecipeMapBuilder
+    // .of("otht.recipe.EVACannon", OTH_RecipeMapBackend::new)
+    // .maxIO(1, 1, 0, 0)
+    // .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
+    // .frontend(OTH_GeneralFrontend::new)
+    // .neiHandlerInfo(
+    // builder -> builder.setDisplayStack(OTHItemList.dustIrOsSmM.get(1))
+    // .setMaxRecipesPerPage(2))
+    // .disableOptimize()
+    // .build();
 
     public static final RecipeMap<OTH_RecipeMapBackend> SINOPEC = RecipeMapBuilder
         .of("otht.recipe.SINOPEC", OTH_RecipeMapBackend::new)
@@ -57,7 +59,7 @@ public class Recipemaps {
         .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
         .frontend(OTH_GeneralFrontend::new)
         .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GTModHandler.getModItem("123Technology", "itemZhangww", 1))
+            builder -> builder.setDisplayStack(OTHItemList.Zhangww.get(1))
                 .setMaxRecipesPerPage(1))
         .disableOptimize()
         .build();
@@ -69,7 +71,7 @@ public class Recipemaps {
         .neiSpecialInfoFormatter(HeatingCoilSpecialValueFormatter.INSTANCE)
         .frontend(OTH_GeneralFrontend::new)
         .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GTModHandler.getModItem("123Technology", "Dasima", 1))
+            builder -> builder.setDisplayStack(OTHItemList.Dasima.get(1))
                 .setMaxRecipesPerPage(1))
         .disableOptimize()
         .build();
@@ -80,7 +82,7 @@ public class Recipemaps {
         .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
         .frontend(OTH_GeneralFrontend::new)
         .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 15))
+            builder -> builder.setDisplayStack(OTHItemList.itemEnqingM.get(1))
                 .setMaxRecipesPerPage(1))
         .disableOptimize()
         .build();
@@ -91,7 +93,7 @@ public class Recipemaps {
         .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
         .frontend(OTH_GeneralFrontend::new)
         .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 15))
+            builder -> builder.setDisplayStack(OTHItemList.itemEnqingM.get(1))
                 .setMaxRecipesPerPage(1))
         .disableOptimize()
         .build();
@@ -102,7 +104,7 @@ public class Recipemaps {
         .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
         .frontend(OTH_GeneralFrontend::new)
         .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 15))
+            builder -> builder.setDisplayStack(OTHItemList.itemEnqingM.get(1))
                 .setMaxRecipesPerPage(1))
         .disableOptimize()
         .build();
@@ -113,7 +115,7 @@ public class Recipemaps {
         .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
         .frontend(OTH_GeneralFrontend::new)
         .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 15))
+            builder -> builder.setDisplayStack(OTHItemList.itemEnqingM.get(1))
                 .setMaxRecipesPerPage(1))
         .disableOptimize()
         .build();
@@ -151,7 +153,7 @@ public class Recipemaps {
         .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
         .frontend(OTH_GeneralFrontend::new)
         .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 16999))
+            builder -> builder.setDisplayStack(Loaders.FRF.copy())
                 .setMaxRecipesPerPage(1))
         .disableOptimize()
         .build();

@@ -1,9 +1,10 @@
 package com.newmaa.othtech.common.item.tools;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraftforge.common.util.EnumHelper;
+
+import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
 
 public class Dasima extends ItemPickaxe {
 
@@ -12,7 +13,7 @@ public class Dasima extends ItemPickaxe {
     public Dasima() {
         super(Dasima);
         this.setUnlocalizedName("Dasima");
-        this.setCreativeTab(CreativeTabs.tabTools);
+        this.setCreativeTab(CreativeTabsLoader.tabothtech);
         this.setTextureName("123technology:pickaxeDasima");
     }
 }

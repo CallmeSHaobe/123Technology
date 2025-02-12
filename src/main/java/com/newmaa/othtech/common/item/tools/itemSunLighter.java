@@ -5,7 +5,6 @@ import static net.minecraft.client.gui.GuiScreen.isShiftKeyDown;
 import java.util.List;
 
 import net.minecraft.block.Block;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumRarity;
@@ -13,6 +12,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
+
+import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
 
 import gtPlusPlus.core.util.Utils;
 
@@ -22,7 +23,7 @@ public class itemSunLighter extends Item {
         super();
         this.maxStackSize = 1;
         setMaxDamage(19208039);
-        setCreativeTab(CreativeTabs.tabTools);
+        setCreativeTab(CreativeTabsLoader.tabothtech);
         this.setTextureName("123technology:itemSunLighter");
     }
 

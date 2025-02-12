@@ -6,6 +6,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
+import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.materials.liquids;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.utils.RecipeBuilder;
@@ -34,7 +35,7 @@ public class recipesCircuit implements IRecipePool {
         final RecipeMap<?> Assem = RecipeMaps.assemblerRecipes;
         final int eut = 1000000000;
         GTValues.RA.stdBuilder()
-            .itemOutputs(GTModHandler.getModItem("123Technology", "MetaItemOTH", 2, 7))
+            .itemOutputs(OTHItemList.boardTransM.get(2))
             .itemInputs(
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 22588),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 4581),
@@ -45,7 +46,7 @@ public class recipesCircuit implements IRecipePool {
             .eut(eut)
             .addTo(MQFT);
         GTValues.RA.stdBuilder()
-            .itemOutputs(GTModHandler.getModItem("123Technology", "MetaItemOTH", 2, 8))
+            .itemOutputs(OTHItemList.capTransM.get(2))
             .itemInputs(
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 22397),
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Exotic, 64),
@@ -56,7 +57,7 @@ public class recipesCircuit implements IRecipePool {
             .eut(eut)
             .addTo(MQFT);
         GTValues.RA.stdBuilder()
-            .itemOutputs(GTModHandler.getModItem("123Technology", "MetaItemOTH", 4, 23))
+            .itemOutputs(OTHItemList.transTransM.get(4))
             .itemInputs(
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 22139),
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Cosmic, 64),
@@ -70,12 +71,12 @@ public class recipesCircuit implements IRecipePool {
             .eut(eut)
             .addTo(MQFT);
         GTValues.RA.stdBuilder()
-            .itemOutputs(GTModHandler.getModItem("123Technology", "MetaItemOTH", 4, 12))
+            .itemOutputs(OTHItemList.induTransM.get(4))
             .itemInputs(
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 22143),
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Cosmic, 64),
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 64, 13),
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 16, 16),
+                OTHItemList.beeISAM.get(64),
+                OTHItemList.leCasimirM.get(16),
                 GTModHandler.getModItem("tectech", "item.tm.itemAstralArrayFabricator", 1))
             .fluidInputs(new FluidStack(dtsc, 4000))
             .noOptimize()
@@ -83,7 +84,7 @@ public class recipesCircuit implements IRecipePool {
             .eut(eut)
             .addTo(MQFT);
         GTValues.RA.stdBuilder()
-            .itemOutputs(GTModHandler.getModItem("123Technology", "MetaItemOTH", 4, 17))
+            .itemOutputs(OTHItemList.resTransM.get(4))
             .itemInputs(
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 22588),
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Exotic, 64),
@@ -98,10 +99,10 @@ public class recipesCircuit implements IRecipePool {
             .eut(eut)
             .addTo(MQFT);
         GTValues.RA.stdBuilder()
-            .itemOutputs(GTModHandler.getModItem("123Technology", "MetaItemOTH", 4, 9))
+            .itemOutputs(OTHItemList.dioTransM.get(4))
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Cosmic, 64),
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 16, 13),
+                OTHItemList.beeISAM.get(16),
                 GTModHandler.getModItem("tectech", "gt.time_acceleration_field_generator", 8, 8),
                 ItemList.Field_Generator_UXV.get(16),
                 ItemList.Emitter_UXV.get(16))
@@ -111,10 +112,10 @@ public class recipesCircuit implements IRecipePool {
             .eut(eut)
             .addTo(MQFT);
         GTValues.RA.stdBuilder()
-            .itemOutputs(GTModHandler.getModItem("123Technology", "MetaItemOTH", 16, 16))
+            .itemOutputs(OTHItemList.leCasimirM.get(16))
             .itemInputs(
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 16, 11),
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 16, 13),
+                OTHItemList.finCasimirM.get(16),
+                OTHItemList.beeISAM.get(16),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 4141),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 32174))
             .fluidInputs(new FluidStack(dtsc, 256 * 144), liquids.Stars.getFluidOrGas(16 * 144))
@@ -123,11 +124,11 @@ public class recipesCircuit implements IRecipePool {
             .eut(eut)
             .addTo(ISA);
         GTValues.RA.stdBuilder()
-            .itemOutputs(GTModHandler.getModItem("123Technology", "MetaItemOTH", 16, 11))
+            .itemOutputs(OTHItemList.finCasimirM.get(16))
             .itemInputs(
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 16, 6),
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 4, 13),
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 4, 14),
+                OTHItemList.boardCasimirM.get(16),
+                OTHItemList.beeISAM.get(4),
+                OTHItemList.beeMagM.get(4),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 29583),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 29581),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 29143),
@@ -139,7 +140,7 @@ public class recipesCircuit implements IRecipePool {
             .eut(eut)
             .addTo(ISA);
         GTValues.RA.stdBuilder()
-            .itemOutputs(GTModHandler.getModItem("123Technology", "MetaItemOTH", 16, 6))
+            .itemOutputs(OTHItemList.boardCasimirM.get(16))
             .itemInputs(
                 GTModHandler.getModItem("gregtech", "gt.metaitem.02", 64, 18583),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.02", 64, 19583))
@@ -157,7 +158,7 @@ public class recipesCircuit implements IRecipePool {
             .eut(eut)
             .addTo(ISA);
         GTValues.RA.stdBuilder()
-            .itemOutputs(GTModHandler.getModItem("123Technology", "MetaItemOTH", 4, 10))
+            .itemOutputs(OTHItemList.energyHatchSpacetimeM.get(4))
             .itemInputs(
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 4, 32145),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 15091),
@@ -172,10 +173,10 @@ public class recipesCircuit implements IRecipePool {
         GTValues.RA.stdBuilder()
             .itemOutputs(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32174))
             .itemInputs(
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 2, 7),
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 10),
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 16, 8),
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 16, 17),
+                OTHItemList.boardTransM.get(2),
+                OTHItemList.energyHatchSpacetimeM.get(1),
+                OTHItemList.capTransM.get(16),
+                OTHItemList.resTransM.get(16),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 2089))
             .fluidInputs(liquids.Stars.getFluidOrGas(4 * 144))
             .noOptimize()
@@ -186,11 +187,11 @@ public class recipesCircuit implements IRecipePool {
         GTValues.RA.stdBuilder()
             .itemOutputs(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32175))
             .itemInputs(
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 4, 7),
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 4, 10),
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 4, 23),
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 32, 8),
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 32, 17),
+                OTHItemList.boardTransM.get(4),
+                OTHItemList.energyHatchSpacetimeM.get(4),
+                OTHItemList.transTransM.get(4),
+                OTHItemList.capTransM.get(32),
+                OTHItemList.resTransM.get(32),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 2090))
             .fluidInputs(liquids.Stars.getFluidOrGas(8 * 144))
             .noOptimize()
@@ -201,11 +202,11 @@ public class recipesCircuit implements IRecipePool {
         GTValues.RA.stdBuilder()
             .itemOutputs(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32176))
             .itemInputs(
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 8, 7),
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 4, 16),
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 32, 23),
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 64, 8),
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 64, 17),
+                OTHItemList.boardTransM.get(8),
+                OTHItemList.leCasimirM.get(4),
+                OTHItemList.transTransM.get(32),
+                OTHItemList.capTransM.get(64),
+                OTHItemList.resTransM.get(64),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 2091))
             .fluidInputs(liquids.Stars.getFluidOrGas(16 * 144))
             .noOptimize()
@@ -215,8 +216,8 @@ public class recipesCircuit implements IRecipePool {
         GTValues.RA.stdBuilder()
             .itemOutputs(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32176))
             .itemInputs(
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 8, 7),
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 4, 21),
+                OTHItemList.boardTransM.get(8),
+                OTHItemList.socInfM.get(4),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 16, 2091))
             .fluidInputs(liquids.Stars.getFluidOrGas(24 * 144))
             .noOptimize()
@@ -229,11 +230,11 @@ public class recipesCircuit implements IRecipePool {
             .itemInputs(
                 GTModHandler.getModItem("gregtech", "gt.blockframes", 4, 583),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 2, 32176),
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 16, 12),
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 16, 9),
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 64, 23),
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 64, 8),
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 64, 17),
+                OTHItemList.induTransM.get(16),
+                OTHItemList.dioTransM.get(16),
+                OTHItemList.transTransM.get(64),
+                OTHItemList.capTransM.get(64),
+                OTHItemList.resTransM.get(64),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 2092))
             .fluidInputs(liquids.Stars.getFluidOrGas(64 * 144))
             .noOptimize()
@@ -242,12 +243,12 @@ public class recipesCircuit implements IRecipePool {
             .addTo(ISA);
         // TransSoC
         GTValues.RA.stdBuilder()
-            .itemOutputs(GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 21))
+            .itemOutputs(OTHItemList.socInfM.get(1))
             .itemInputs(
                 ItemList.Field_Generator_MAX.get(0),
                 GTUtility.getIntegratedCircuit(17),
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 16, 8),
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 4, 10),
+                OTHItemList.capTransM.get(16),
+                OTHItemList.energyHatchSpacetimeM.get(4),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.02", 64, 19583))
             .fluidInputs(liquids.Stars.getFluidOrGas(10 * 144))
             .noOptimize()
@@ -286,7 +287,7 @@ public class recipesCircuit implements IRecipePool {
             .addTo(ISA);
         // general soc
         GTValues.RA.stdBuilder()
-            .itemOutputs(GTModHandler.getModItem("123Technology", "MetaItemOTH", 16, 22))
+            .itemOutputs(OTHItemList.socNorM.get(16))
             .itemInputs(
                 ItemList.Field_Generator_UMV.get(0),
                 GTUtility.getIntegratedCircuit(1),
@@ -305,9 +306,7 @@ public class recipesCircuit implements IRecipePool {
         // ULV - ZPM general soc recipes
         // ULV
         RecipeBuilder.builder()
-            .itemInputs(
-                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 4, 32106),
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 22))
+            .itemInputs(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 4, 32106), OTHItemList.socNorM.get(1))
             .itemOutputs(setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 32081), 4096))
             .fluidInputs(new FluidStack(i140, 72))
             .noOptimize()
@@ -316,9 +315,7 @@ public class recipesCircuit implements IRecipePool {
             .addTo(ISA);
         // LV
         RecipeBuilder.builder()
-            .itemInputs(
-                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 8, 32106),
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 22))
+            .itemInputs(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 8, 32106), OTHItemList.socNorM.get(1))
             .itemOutputs(setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32078), 2048))
             .fluidInputs(new FluidStack(i140, 144))
             .noOptimize()
@@ -327,9 +324,7 @@ public class recipesCircuit implements IRecipePool {
             .addTo(ISA);
         // MV
         RecipeBuilder.builder()
-            .itemInputs(
-                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 16, 32106),
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 22))
+            .itemInputs(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 16, 32106), OTHItemList.socNorM.get(1))
             .itemOutputs(setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32080), 1024))
             .fluidInputs(new FluidStack(i140, 576))
             .noOptimize()
@@ -338,9 +333,7 @@ public class recipesCircuit implements IRecipePool {
             .addTo(ISA);
         // HV
         RecipeBuilder.builder()
-            .itemInputs(
-                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 16, 32102),
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 22))
+            .itemInputs(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 16, 32102), OTHItemList.socNorM.get(1))
             .itemOutputs(setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32082), 512))
             .fluidInputs(new FluidStack(i140, 2304))
             .noOptimize()
@@ -349,9 +342,7 @@ public class recipesCircuit implements IRecipePool {
             .addTo(ISA);
         // EV
         RecipeBuilder.builder()
-            .itemInputs(
-                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 32, 32103),
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 2, 22))
+            .itemInputs(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 32, 32103), OTHItemList.socNorM.get(2))
             .itemOutputs(setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32085), 256))
             .fluidInputs(new FluidStack(i140, 2304 * 4))
             .noOptimize()
@@ -360,9 +351,7 @@ public class recipesCircuit implements IRecipePool {
             .addTo(ISA);
         // IV
         RecipeBuilder.builder()
-            .itemInputs(
-                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 32, 32104),
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 2, 22))
+            .itemInputs(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 32, 32104), OTHItemList.socNorM.get(2))
             .itemOutputs(setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 32089), 128))
             .fluidInputs(new FluidStack(bio, 576))
             .noOptimize()
@@ -371,9 +360,7 @@ public class recipesCircuit implements IRecipePool {
             .addTo(ISA);
         // LuV
         RecipeBuilder.builder()
-            .itemInputs(
-                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 16, 32105),
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 4, 22))
+            .itemInputs(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 16, 32105), OTHItemList.socNorM.get(4))
             .itemOutputs(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 32092))
             .fluidInputs(new FluidStack(bio, 576))
             .noOptimize()
@@ -382,9 +369,7 @@ public class recipesCircuit implements IRecipePool {
             .addTo(ISA);
         // ZPM
         RecipeBuilder.builder()
-            .itemInputs(
-                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 8, 32107),
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 16, 22))
+            .itemInputs(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 8, 32107), OTHItemList.socNorM.get(16))
             .itemOutputs(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 32, 32097))
             .fluidInputs(
                 new FluidStack(bio, 2304),

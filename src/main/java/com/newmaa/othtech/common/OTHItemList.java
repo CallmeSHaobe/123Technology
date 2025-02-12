@@ -8,6 +8,7 @@ import com.newmaa.othtech.utils.Utils;
 
 import gregtech.api.util.GTLog;
 
+@SuppressWarnings("SpellCheckingInspection")
 public enum OTHItemList {
 
     // items
@@ -65,6 +66,19 @@ public enum OTHItemList {
     UMVB,
     UXVA,
     UXVB,
+    Zhangww,
+    ingotHotDog,
+    Dasima,
+    ShikanokoNoko,
+    SunLighter,
+    LeekBox,
+    NukeThrowable,
+    RecordPRKA,
+    RecordPRKB,
+    RecordEVAA,
+    RecordEVAB,
+    RecordEVAC,
+    RecordNGGU,
 
     // Machines
     MISA,

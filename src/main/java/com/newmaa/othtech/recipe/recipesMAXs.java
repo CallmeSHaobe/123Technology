@@ -5,6 +5,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
+import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.materials.liquids;
 
 import gregtech.api.enums.GTValues;
@@ -294,8 +295,7 @@ public class recipesMAXs implements IRecipePool {
             new ItemStack[] { GTModHandler.getModItem("gregtech", "gt.blockframes", 1, 141),
                 ItemList.Electric_Motor_MAX.get(1), GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 17143),
                 GTModHandler.getModItem("tectech", "gt.stabilisation_field_generator", 2, 8),
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 4, 18),
-                GTModHandler.getModItem("dreamcraft", "item.ChromaticLens", 64),
+                OTHItemList.glassSingularityM.get(4), GTModHandler.getModItem("dreamcraft", "item.ChromaticLens", 64),
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Transcendent, 4),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 29143),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 29143),
@@ -319,8 +319,7 @@ public class recipesMAXs implements IRecipePool {
             new ItemStack[] { GTModHandler.getModItem("gregtech", "gt.blockframes", 1, 141),
                 ItemList.Electric_Motor_MAX.get(1), GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 23143),
                 GTModHandler.getModItem("tectech", "gt.stabilisation_field_generator", 2, 8),
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 4, 18),
-                GTModHandler.getModItem("dreamcraft", "item.ChromaticLens", 64),
+                OTHItemList.glassSingularityM.get(4), GTModHandler.getModItem("dreamcraft", "item.ChromaticLens", 64),
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Transcendent, 4),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 29143),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 29143),
@@ -344,8 +343,7 @@ public class recipesMAXs implements IRecipePool {
             new ItemStack[] { GTModHandler.getModItem("gregtech", "gt.blockframes", 1, 141),
                 GTModHandler.getModItem("tectech", "item.tm.itemAstralArrayFabricator", 1),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 12, 17143),
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 4, 19),
-                GTModHandler.getModItem("123Technology", "MetaItemOTH", 4, 18),
+                OTHItemList.machineSingularityM.get(4), OTHItemList.glassSingularityM.get(4),
                 GTModHandler.getModItem("eternalsingularity", "eternal_singularity", 4), ItemList.Emitter_MAX.get(4),
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Transcendent, 8),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.02", 64, 19143),

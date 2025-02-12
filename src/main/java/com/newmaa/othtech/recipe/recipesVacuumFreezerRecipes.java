@@ -4,13 +4,13 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
+import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.materials.materials;
 
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.interfaces.IRecipeMap;
 import gregtech.api.recipe.RecipeMaps;
-import gregtech.api.util.GTModHandler;
 
 public class recipesVacuumFreezerRecipes implements IRecipePool {
 
@@ -21,7 +21,7 @@ public class recipesVacuumFreezerRecipes implements IRecipePool {
 
         final IRecipeMap VaF = RecipeMaps.vacuumFreezerRecipes;
         GTValues.RA.stdBuilder()
-            .itemInputs(GTModHandler.getModItem("123Technology", "ingotHotDog", 1))
+            .itemInputs(OTHItemList.ingotHotDog.get(1))
             .itemOutputs(materials.IrOsSm.get(OrePrefixes.ingot, 1))
             .fluidInputs(new FluidStack(colder, 1919))
             .fluidOutputs(new FluidStack(water, 1919))

@@ -33,6 +33,7 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.gtnewhorizons.gtnhintergalactic.block.IGBlocks;
+import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.SoundResourceOTH;
@@ -47,7 +48,6 @@ import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.render.TextureFactory;
-import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.common.items.MetaGeneratedItem03;
@@ -106,10 +106,18 @@ public class OTESunFactory extends OTH_MultiMachineBase<OTESunFactory> {
         return Math.log(value) / Math.log(base);
     }
 
+    private static ItemStack itemEnqingM = null;
+
+    @Override
+    public void onFirstTick(IGregTechTileEntity aBaseMetaTileEntity) {
+        super.onFirstTick(aBaseMetaTileEntity);
+        if (itemEnqingM == null) itemEnqingM = OTHItemList.itemEnqingM.get(1);
+    }
+
     private boolean checkEnqing(int amount) {
         int needAmount = amount;
         for (ItemStack items : getStoredInputsWithoutDualInputHatch()) {
-            if (metaItemEqual(items, GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 15))) {
+            if (metaItemEqual(items, itemEnqingM)) {
                 if (items.stackSize >= needAmount) {
                     items.stackSize -= needAmount;
                     return true;

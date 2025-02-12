@@ -31,7 +31,6 @@ import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
 import com.newmaa.othtech.utils.Utils;
 
 import bartworks.API.BorosilicateGlass;
-import gregtech.api.GregTechAPI;
 import gregtech.api.enums.HeatingCoilLevel;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.SoundResource;
@@ -291,7 +290,7 @@ public class OTELaoBaChemicalReactor extends OTH_MultiMachineBase<OTELaoBaChemic
                         .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch)
                         .adder(OTELaoBaChemicalReactor::addToMachineList)
                         .dot(1)
-                        .casingIndex(6)
+                        .casingIndex(CASING_TEXTURE_ID)
                         .buildAndChain(sBlockCasings8, 6))
                 .build();
         }
@@ -346,74 +345,41 @@ public class OTELaoBaChemicalReactor extends OTH_MultiMachineBase<OTELaoBaChemic
     }
 
     @Override
-    public boolean isCorrectMachinePart(ItemStack aStack) {
-        return true;
-    }
-
-    @Override
-    public int getMaxEfficiency(ItemStack aStack) {
-        return 10000;
-    }
-
-    @Override
-    public int getDamageToComponent(ItemStack aStack) {
-        return 0;
-    }
-
-    @Override
-    public boolean explodesOnComponentBreak(ItemStack aStack) {
-        return false;
-    }
-
-    @Override
-    public boolean supportsVoidProtection() {
-        return true;
-    }
-
-    @Override
-    public boolean supportsInputSeparation() {
-        return true;
-    }
-
-    @Override
-    public boolean supportsSingleRecipeLocking() {
-        return true;
-    }
-
-    @Override
     public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
         return new OTELaoBaChemicalReactor(this.mName);
     }
+
+    private static ITexture CASING_TEXTURE = null;
+    private static final int CASING_TEXTURE_ID = 182;
 
     @Override
     public ITexture[] getTexture(final IGregTechTileEntity baseMetaTileEntity, final ForgeDirection sideDirection,
         final ForgeDirection facing, final int aColorIndex, final boolean active, final boolean aRedstone) {
 
+        if (CASING_TEXTURE == null) {
+            CASING_TEXTURE = Textures.BlockIcons
+                .getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings8, 6));
+        }
         if (sideDirection == facing) {
-            if (active) return new ITexture[] {
-                Textures.BlockIcons.getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings8, 6)),
-                TextureFactory.builder()
-                    .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_ACTIVE)
-                    .extFacing()
-                    .build(),
+            if (active) return new ITexture[] { CASING_TEXTURE, TextureFactory.builder()
+                .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_ACTIVE)
+                .extFacing()
+                .build(),
                 TextureFactory.builder()
                     .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_ACTIVE_GLOW)
                     .extFacing()
                     .build() };
-            return new ITexture[] {
-                Textures.BlockIcons.getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings8, 6)),
-                TextureFactory.builder()
-                    .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE)
-                    .extFacing()
-                    .build(),
+            return new ITexture[] { CASING_TEXTURE, TextureFactory.builder()
+                .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE)
+                .extFacing()
+                .build(),
                 TextureFactory.builder()
                     .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_GLOW)
                     .extFacing()
                     .glow()
                     .build() };
         }
-        return new ITexture[] {
-            Textures.BlockIcons.getCasingTextureForId(GTUtility.getCasingTextureIndex(GregTechAPI.sBlockCasings8, 6)) };
+        return new ITexture[] { CASING_TEXTURE };
     }
 
     @Override
