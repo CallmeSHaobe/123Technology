@@ -1,6 +1,7 @@
 package com.newmaa.othtech.machine;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
 
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.machine.hatch.OTEMetaTileEntity_Hatch_OutputBus_ME;
@@ -9,7 +10,6 @@ import com.newmaa.othtech.machine.hatch.OTEWTFHatch;
 import com.newmaa.othtech.machine.hatch.OTH_MTEHatchWirelessMulti;
 
 import gregtech.api.enums.TierEU;
-import net.minecraft.util.EnumChatFormatting;
 import tectech.thing.metaTileEntity.hatch.MTEHatchDynamoMulti;
 import tectech.thing.metaTileEntity.hatch.MTEHatchDynamoTunnel;
 import tectech.thing.metaTileEntity.hatch.MTEHatchEnergyMulti;
@@ -122,7 +122,8 @@ public class MachineLoader {
         AF = new OTEMiniActiveTransformer(IDs + 27, "MiniActiveTransformer", "迷你有源变压器").getStackForm(1);
         OTHItemList.AF.set(AF);
 
-        NQFF = new OTEMegaNQFuelFactory(IDs + 28, "MegaNQFuelFactory", EnumChatFormatting.DARK_AQUA + "压缩硅岩燃料精炼厂").getStackForm(1);
+        NQFF = new OTEMegaNQFuelFactory(IDs + 28, "MegaNQFuelFactory", EnumChatFormatting.DARK_AQUA + "压缩硅岩燃料精炼厂")
+            .getStackForm(1);
         OTHItemList.NQFF.set(NQFF);
 
         // Lasers

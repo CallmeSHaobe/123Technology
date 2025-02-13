@@ -16,7 +16,8 @@ public class liquids implements Runnable {
         subscriptNumbers("☆"),
         new Werkstoff.Stats(),
         Werkstoff.Types.MIXTURE,
-        new Werkstoff.GenerationFeatures().disable().addCells(),
+        new Werkstoff.GenerationFeatures().disable()
+            .addCells(),
         offsetID_01 + 3,
         TextureSet.SET_FLUID);
     public static final Werkstoff Void = new Werkstoff(
@@ -25,7 +26,8 @@ public class liquids implements Runnable {
         subscriptNumbers("Vi"),
         new Werkstoff.Stats(),
         Werkstoff.Types.MIXTURE,
-        new Werkstoff.GenerationFeatures().disable().addCells(),
+        new Werkstoff.GenerationFeatures().disable()
+            .addCells(),
         offsetID_01 + 4,
         TextureSet.SET_FLUID);
     public static final Werkstoff Stars = new Werkstoff(
@@ -34,7 +36,8 @@ public class liquids implements Runnable {
         subscriptNumbers("St"),
         new Werkstoff.Stats(),
         Werkstoff.Types.MIXTURE,
-        new Werkstoff.GenerationFeatures().disable().addCells(),
+        new Werkstoff.GenerationFeatures().disable()
+            .addCells(),
         offsetID_01 + 5,
         TextureSet.SET_FLUID);
     public static final Werkstoff LCL = new Werkstoff(
@@ -43,7 +46,8 @@ public class liquids implements Runnable {
         subscriptNumbers(""),
         new Werkstoff.Stats(),
         Werkstoff.Types.MIXTURE,
-        new Werkstoff.GenerationFeatures().disable().addCells(),
+        new Werkstoff.GenerationFeatures().disable()
+            .addCells(),
         offsetID_01 + 6,
         TextureSet.SET_FLUID);
     public static final Werkstoff ALS = new Werkstoff(
@@ -52,7 +56,8 @@ public class liquids implements Runnable {
         subscriptNumbers(""),
         new Werkstoff.Stats(),
         Werkstoff.Types.MIXTURE,
-        new Werkstoff.GenerationFeatures().disable().addCells(),
+        new Werkstoff.GenerationFeatures().disable()
+            .addCells(),
         offsetID_01 + 7,
         TextureSet.SET_FLUID);
     public static final Werkstoff FUELA = new Werkstoff(
@@ -61,7 +66,8 @@ public class liquids implements Runnable {
         subscriptNumbers("化学能的尽头"),
         new Werkstoff.Stats(),
         Werkstoff.Types.MIXTURE,
-        new Werkstoff.GenerationFeatures().disable().addCells(),
+        new Werkstoff.GenerationFeatures().disable()
+            .addCells(),
         offsetID_01 + 8,
         TextureSet.SET_FLUID);
     public static final Werkstoff FUELA_DE = new Werkstoff(
@@ -70,7 +76,8 @@ public class liquids implements Runnable {
         subscriptNumbers("他能干什么？"),
         new Werkstoff.Stats(),
         Werkstoff.Types.MIXTURE,
-        new Werkstoff.GenerationFeatures().disable().addCells(),
+        new Werkstoff.GenerationFeatures().disable()
+            .addCells(),
         offsetID_01 + 9,
         TextureSet.SET_FLUID);
     public static final Werkstoff PromoterZPM = new Werkstoff(
@@ -79,7 +86,8 @@ public class liquids implements Runnable {
         subscriptNumbers(""),
         new Werkstoff.Stats(),
         Werkstoff.Types.MIXTURE,
-        new Werkstoff.GenerationFeatures().disable().addCells(),
+        new Werkstoff.GenerationFeatures().disable()
+            .addCells(),
         offsetID_01 + 10,
         TextureSet.SET_FLUID);
     public static final Werkstoff PromoterUEV = new Werkstoff(
@@ -88,7 +96,8 @@ public class liquids implements Runnable {
         subscriptNumbers(""),
         new Werkstoff.Stats(),
         Werkstoff.Types.MIXTURE,
-        new Werkstoff.GenerationFeatures().disable().addCells(),
+        new Werkstoff.GenerationFeatures().disable()
+            .addCells(),
         offsetID_01 + 11,
         TextureSet.SET_FLUID);
 

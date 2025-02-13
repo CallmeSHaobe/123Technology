@@ -47,7 +47,6 @@ import com.newmaa.othtech.utils.PairA;
 
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.MaterialsUEVplus;
-import gregtech.api.enums.TickTime;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
@@ -214,7 +213,8 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
                         BigInteger.valueOf((long) FuelsValueBonus)
                             .multiply(BigInteger.valueOf(FuelAmount)))
                     .multiply(BigInteger.valueOf(eff))
-                    .divide(BigInteger.valueOf(100 * SECOND)).multiply(BigInteger.valueOf(recipe.mDuration)) : BigInteger.ZERO;
+                    .divide(BigInteger.valueOf(100 * SECOND))
+                    .multiply(BigInteger.valueOf(recipe.mDuration)) : BigInteger.ZERO;
                 costingWirelessEU = GTUtility.formatNumbers(costingWirelessEUTemp);
                 if (!addEUToGlobalEnergyMap(ownerUUID, costingWirelessEUTemp)) {
                     return CheckRecipeResultRegistry.INTERNAL_ERROR;
@@ -222,8 +222,9 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
             } else {
                 costingWirelessEU = "0";
                 this.setPowerFlow(
-                    (long) Math
-                        .min(Long.MAX_VALUE - 1, FuelAmount * recipe.mSpecialValue * FuelsValueBonus * eff / 100 * recipe.mDuration / SECOND));
+                    (long) Math.min(
+                        Long.MAX_VALUE - 1,
+                        FuelAmount * recipe.mSpecialValue * FuelsValueBonus * eff / 100 * recipe.mDuration / SECOND));
 
             }
             this.mMaxProgresstime = 20;
