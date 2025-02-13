@@ -155,6 +155,7 @@ public class Recipemaps {
         .neiHandlerInfo(
             builder -> builder.setDisplayStack(Loaders.FRF.copy())
                 .setMaxRecipesPerPage(1))
+        .neiSpecialInfoFormatter(new SimpleSpecialValueFormatter("value.naquadah_fuel_refine_factory"))
         .disableOptimize()
         .build();
     public static final RecipeMap<FuelBackend> NaquadahFuelFakeRecipes = RecipeMapBuilder

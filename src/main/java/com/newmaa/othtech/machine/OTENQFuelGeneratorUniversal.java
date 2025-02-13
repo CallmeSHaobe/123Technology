@@ -8,6 +8,7 @@ import static gregtech.api.GregTechAPI.*;
 import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.enums.HatchElement.OutputHatch;
 import static gregtech.api.enums.Textures.BlockIcons.*;
+import static gregtech.api.enums.TickTime.SECOND;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static gregtech.common.misc.WirelessNetworkManager.addEUToGlobalEnergyMap;
 import static net.minecraft.util.StatCollector.translateToLocal;
@@ -169,7 +170,6 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
         long PromoterAmount = findLiquidAmount(getPromoter(), tFluids);
 
         CheckRecipeResult result;
-
         result = processFuel(tFluids, NaquadahFuelFakeRecipes, PromoterAmount, 0.006D, 3);
         if (result.wasSuccessful()) {
             return result;
@@ -214,7 +214,7 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
                         BigInteger.valueOf((long) FuelsValueBonus)
                             .multiply(BigInteger.valueOf(FuelAmount)))
                     .multiply(BigInteger.valueOf(eff))
-                    .divide(BigInteger.valueOf(100)) : BigInteger.ZERO;
+                    .divide(BigInteger.valueOf(100 * SECOND)).multiply(BigInteger.valueOf(recipe.mDuration)) : BigInteger.ZERO;
                 costingWirelessEU = GTUtility.formatNumbers(costingWirelessEUTemp);
                 if (!addEUToGlobalEnergyMap(ownerUUID, costingWirelessEUTemp)) {
                     return CheckRecipeResultRegistry.INTERNAL_ERROR;
@@ -223,7 +223,7 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
                 costingWirelessEU = "0";
                 this.setPowerFlow(
                     (long) Math
-                        .min(Long.MAX_VALUE - 1, FuelAmount * recipe.mSpecialValue * FuelsValueBonus * eff / 100));
+                        .min(Long.MAX_VALUE - 1, FuelAmount * recipe.mSpecialValue * FuelsValueBonus * eff / 100 * recipe.mDuration / SECOND));
 
             }
             this.mMaxProgresstime = 20;
@@ -235,6 +235,7 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
 
     @Override
     public boolean onRunningTick(ItemStack stack) {
+        startRecipeProcessing();
         if (this.getBaseMetaTileEntity()
             .isServerSide()) {
 
@@ -242,9 +243,10 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
                 heatingTicks++;
                 isStoppingSafe = true;
             } else if (isStoppingSafe) isStoppingSafe = false;
+            endRecipeProcessing();
             addAutoEnergy();
-
         }
+        endRecipeProcessing();
         return true;
     }
 
@@ -341,7 +343,7 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
 
     private boolean isStoppingSafe;
     private int heatingTicks;
-    protected final int HEATING_TIMER = TickTime.SECOND * 10;
+    protected final int HEATING_TIMER = SECOND * 10;
 
     void addAutoEnergy() {
         long exEU = this.getPowerFlow() * tEff / 10000;
@@ -497,7 +499,7 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
             .addInfo(" §l§4“你产能不够吧? -v-” ")
             .addInfo("通化的升级版本, 可以支持硅岩燃料, 但不能使用传统燃料喔 ~ 真正的清洁能源")
             .addInfo("和通化一样的设计, 但同时兼备了大硅岩的加成")
-            .addInfo("一次消耗输入仓内所有燃料和助燃剂")
+            .addInfo("一次消耗输入仓内所有燃料和助燃剂, 实际发电需乘上 配方耗时 (秒)")
             .addInfo("消耗冷却液提升效率, 默认效率为20%, 消耗速率为1000L/s")
             .addInfo("IC2冷却液:40%, 超级冷却液:60%, 极寒之凛冰:80%, 富快子时间流体: 120%")
             .addInfo("二级管道方块解锁无线模式, 使用螺丝刀开启")

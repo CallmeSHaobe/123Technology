@@ -15,9 +15,8 @@ public class liquids implements Runnable {
         "FluidGalaxy",
         subscriptNumbers("☆"),
         new Werkstoff.Stats(),
-        Werkstoff.Types.ELEMENT,
-        new Werkstoff.GenerationFeatures().disable()
-            .addCells(),
+        Werkstoff.Types.MIXTURE,
+        new Werkstoff.GenerationFeatures().disable().addCells(),
         offsetID_01 + 3,
         TextureSet.SET_FLUID);
     public static final Werkstoff Void = new Werkstoff(
@@ -25,9 +24,8 @@ public class liquids implements Runnable {
         "FluidVoid",
         subscriptNumbers("Vi"),
         new Werkstoff.Stats(),
-        Werkstoff.Types.ELEMENT,
-        new Werkstoff.GenerationFeatures().addCells()
-            .addCells(),
+        Werkstoff.Types.MIXTURE,
+        new Werkstoff.GenerationFeatures().disable().addCells(),
         offsetID_01 + 4,
         TextureSet.SET_FLUID);
     public static final Werkstoff Stars = new Werkstoff(
@@ -35,9 +33,8 @@ public class liquids implements Runnable {
         "MoltenStar",
         subscriptNumbers("St"),
         new Werkstoff.Stats(),
-        Werkstoff.Types.ELEMENT,
-        new Werkstoff.GenerationFeatures().addCells()
-            .addCells(),
+        Werkstoff.Types.MIXTURE,
+        new Werkstoff.GenerationFeatures().disable().addCells(),
         offsetID_01 + 5,
         TextureSet.SET_FLUID);
     public static final Werkstoff LCL = new Werkstoff(
@@ -45,9 +42,8 @@ public class liquids implements Runnable {
         "L.C.L",
         subscriptNumbers(""),
         new Werkstoff.Stats(),
-        Werkstoff.Types.ELEMENT,
-        new Werkstoff.GenerationFeatures().addCells()
-            .addCells(),
+        Werkstoff.Types.MIXTURE,
+        new Werkstoff.GenerationFeatures().disable().addCells(),
         offsetID_01 + 6,
         TextureSet.SET_FLUID);
     public static final Werkstoff ALS = new Werkstoff(
@@ -55,9 +51,8 @@ public class liquids implements Runnable {
         "A.L.S",
         subscriptNumbers(""),
         new Werkstoff.Stats(),
-        Werkstoff.Types.ELEMENT,
-        new Werkstoff.GenerationFeatures().addCells()
-            .addCells(),
+        Werkstoff.Types.MIXTURE,
+        new Werkstoff.GenerationFeatures().disable().addCells(),
         offsetID_01 + 7,
         TextureSet.SET_FLUID);
     public static final Werkstoff FUELA = new Werkstoff(
@@ -65,9 +60,8 @@ public class liquids implements Runnable {
         "FUELA",
         subscriptNumbers("化学能的尽头"),
         new Werkstoff.Stats(),
-        Werkstoff.Types.ELEMENT,
-        new Werkstoff.GenerationFeatures().addCells()
-            .addCells(),
+        Werkstoff.Types.MIXTURE,
+        new Werkstoff.GenerationFeatures().disable().addCells(),
         offsetID_01 + 8,
         TextureSet.SET_FLUID);
     public static final Werkstoff FUELA_DE = new Werkstoff(
@@ -75,9 +69,8 @@ public class liquids implements Runnable {
         "FUELA_DE",
         subscriptNumbers("他能干什么？"),
         new Werkstoff.Stats(),
-        Werkstoff.Types.ELEMENT,
-        new Werkstoff.GenerationFeatures().addCells()
-            .addCells(),
+        Werkstoff.Types.MIXTURE,
+        new Werkstoff.GenerationFeatures().disable().addCells(),
         offsetID_01 + 9,
         TextureSet.SET_FLUID);
     public static final Werkstoff PromoterZPM = new Werkstoff(
@@ -85,9 +78,8 @@ public class liquids implements Runnable {
         "PromoterZPM",
         subscriptNumbers(""),
         new Werkstoff.Stats(),
-        Werkstoff.Types.ELEMENT,
-        new Werkstoff.GenerationFeatures().addCells()
-            .addCells(),
+        Werkstoff.Types.MIXTURE,
+        new Werkstoff.GenerationFeatures().disable().addCells(),
         offsetID_01 + 10,
         TextureSet.SET_FLUID);
     public static final Werkstoff PromoterUEV = new Werkstoff(
@@ -95,9 +87,8 @@ public class liquids implements Runnable {
         "PromoterUEV",
         subscriptNumbers(""),
         new Werkstoff.Stats(),
-        Werkstoff.Types.ELEMENT,
-        new Werkstoff.GenerationFeatures().addCells()
-            .addCells(),
+        Werkstoff.Types.MIXTURE,
+        new Werkstoff.GenerationFeatures().disable().addCells(),
         offsetID_01 + 11,
         TextureSet.SET_FLUID);
 

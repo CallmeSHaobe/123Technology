@@ -1,23 +1,38 @@
 package com.newmaa.othtech.machine;
 
-import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
+import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
+import static com.gtnewhorizon.structurelib.structure.StructureUtility.onElementPass;
 import static com.newmaa.othtech.common.recipemap.Recipemaps.NQF;
 import static goodgenerator.api.recipe.GoodGeneratorRecipeMaps.naquadahFuelRefineFactoryRecipes;
+import static gregtech.api.GregTechAPI.sBlockCasings1;
 import static gregtech.api.enums.HatchElement.InputHatch;
 import static gregtech.api.enums.HatchElement.OutputHatch;
-import static gregtech.api.enums.Textures.BlockIcons.*;
-import static gregtech.api.enums.Textures.BlockIcons.MACHINE_BRONZE_SIDE;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static gregtech.api.util.GTStructureUtility.ofFrame;
 import static net.minecraft.util.StatCollector.translateToLocal;
+import static tectech.thing.casing.TTCasingsContainer.sBlockCasingsNH;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import com.google.common.collect.ImmutableList;
+import com.gtnewhorizon.structurelib.StructureLibAPI;
+import com.gtnewhorizon.structurelib.structure.*;
+import com.newmaa.othtech.common.recipemap.Recipemaps;
+import goodgenerator.api.recipe.GoodGeneratorRecipeMaps;
+import goodgenerator.loader.Loaders;
+import gregtech.api.enums.*;
+import gregtech.api.logic.ProcessingLogic;
+import gregtech.api.objects.GTRenderedTexture;
+import gregtech.api.recipe.RecipeMapBackend;
+import gregtech.api.recipe.check.CheckRecipeResult;
+import gregtech.api.recipe.check.CheckRecipeResultRegistry;
+import gregtech.api.recipe.maps.FuelBackend;
+import gregtech.api.util.*;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -26,28 +41,20 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 
 import com.gtnewhorizon.structurelib.alignment.constructable.IConstructable;
 import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructable;
-import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
-import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
-import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.machine.machineclass.TT_MultiMachineBase_EM;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import gregtech.api.enums.Materials;
-import gregtech.api.enums.SoundResource;
-import gregtech.api.enums.TAE;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.render.TextureFactory;
-import gregtech.api.util.GTUtility;
-import gregtech.api.util.MultiblockTooltipBuilder;
-import gtPlusPlus.core.block.ModBlocks;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 
@@ -61,26 +68,18 @@ public class OTEMegaNQFuelFactory extends TT_MultiMachineBase_EM implements ICon
         super(aName);
     }
 
-    public int getTextureIndex() {
-        return TAE.getIndexFromPage(2, 2);
-    }
-
     public int mode = 0;
-    public int amountPlasma = 1;
-    public byte tier = 0;
+    public int tier = -1;
 
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
-        aNBT.setInteger("mode", mode);
-        aNBT.setInteger("amountPlasma", amountPlasma);
+        aNBT.setInteger("mTier", this.tier);
         super.saveNBTData(aNBT);
-
     }
 
     @Override
     public void loadNBTData(final NBTTagCompound aNBT) {
-        mode = aNBT.getInteger("mode");
-        amountPlasma = aNBT.getInteger("amountPlasma");
+        this.tier = aNBT.getInteger("mTier");
         super.loadNBTData(aNBT);
 
     }
@@ -91,10 +90,12 @@ public class OTEMegaNQFuelFactory extends TT_MultiMachineBase_EM implements ICon
         super.getWailaNBTData(player, tile, tag, world, x, y, z);
         final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
         if (tileEntity != null) {
-            String tier = GTUtility.formatNumbers(mode);
-            String pla = GTUtility.formatNumbers(amountPlasma);
-            tag.setString("Tier", tier);
-            tag.setString("PlasmaAmount", pla);
+            String Mode = GTUtility.formatNumbers(mode);
+            String OC = GTUtility.formatNumbers(tier);
+            String pa = GTUtility.formatNumbers(getParallel());
+            tag.setString("Tier", Mode);
+            tag.setString("OC", OC);
+            tag.setString("pa", pa);
         }
     }
 
@@ -110,17 +111,23 @@ public class OTEMegaNQFuelFactory extends TT_MultiMachineBase_EM implements ICon
                 + tag.getString("Tier")
                 + EnumChatFormatting.RESET);
         currentTip.add(
-            "千升蒸汽等离子产出" + EnumChatFormatting.RESET
+            "并行" + EnumChatFormatting.RESET
                 + ": "
                 + EnumChatFormatting.GOLD
-                + tag.getString("PlasmaAmount")
+                + tag.getString("pa")
+                + EnumChatFormatting.RESET);
+        currentTip.add(
+            "超频次数" + EnumChatFormatting.RESET
+                + ": "
+                + EnumChatFormatting.GOLD
+                + tag.getString("OC")
                 + EnumChatFormatting.RESET);
     }
 
     @Override
     public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ) {
         if (getBaseMetaTileEntity().isServerSide()) {
-            if (mode < 1) {
+            if (mode < 1 && tier == 4) {
                 mode++;
             } else {
                 mode = 0;
@@ -144,33 +151,65 @@ public class OTEMegaNQFuelFactory extends TT_MultiMachineBase_EM implements ICon
 
     @Override
     public boolean checkMachine_EM(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
-        repairMachine();
-        return checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet);
+        cnt[0] = 0;
+        cnt[1] = 0;
+        cnt[2] = 0;
+        cnt[3] = 0;
+        return structureCheck_EM(mName, horizontalOffSet, verticalOffSet, depthOffSet) && getTier() != -1;
+    }
 
+    public int getParallel(){
+        int pa;
+        switch (tier) {
+            case 4 -> pa = 256;
+            case 3 -> pa = 64;
+            case 2 -> pa = 32;
+            case 1 -> pa = 16;
+            default -> pa = 0;}
+        return pa;
     }
 
     @Override
-    public void construct(ItemStack stackSize, boolean hintsOnly) {
-        repairMachine();
-        buildPiece(STRUCTURE_PIECE_MAIN, stackSize, hintsOnly, horizontalOffSet, verticalOffSet, depthOffSet);
+    protected ProcessingLogic createProcessingLogic() {
+        return new ProcessingLogic() {
+
+            @NotNull
+            @Override
+            protected ParallelHelper createParallelHelper(@NotNull GTRecipe recipe) {
+                return super.createParallelHelper(recipe).setConsumption(!mRunningOnLoad);
+            }
+
+            @NotNull
+            @Override
+            protected OverclockCalculator createOverclockCalculator(@NotNull GTRecipe recipe) {
+                int overclockAmount = tier;
+                return super.createOverclockCalculator(recipe).limitOverclockCount(overclockAmount);
+            }
+
+            @NotNull
+            @Override
+            protected CheckRecipeResult validateRecipe(@NotNull GTRecipe recipe) {
+                if (recipe.mSpecialValue > tier) {
+                    return CheckRecipeResultRegistry.insufficientMachineTier(recipe.mSpecialValue);
+                }
+                maxParallel = getParallel();
+                lEUt = processingLogic.getCalculatedEut() * processingLogic.getCurrentParallels();
+                return CheckRecipeResultRegistry.SUCCESSFUL;
+            }
+
+
+        }.setOverclock(4.0, 4.0);
+    }
+
+    @Override
+    public void construct(ItemStack itemStack, boolean hintsOnly) {
+        structureBuild_EM(mName, horizontalOffSet, verticalOffSet, depthOffSet, itemStack, hintsOnly);
     }
 
     @Override
     public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
-        if (this.mMachine) return -1;
-        int realBudget = elementBudget >= 200 ? elementBudget : Math.min(200, elementBudget * 5);
-
-        return this.survivialBuildPiece(
-            STRUCTURE_PIECE_MAIN,
-            stackSize,
-            horizontalOffSet,
-            verticalOffSet,
-            depthOffSet,
-            realBudget,
-            env,
-            false,
-            true);
-
+        if (mMachine) return -1;
+        return survivialBuildPiece(mName, stackSize, horizontalOffSet, verticalOffSet, depthOffSet, elementBudget, env, false, true);
     }
 
     private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
@@ -181,7 +220,7 @@ public class OTEMegaNQFuelFactory extends TT_MultiMachineBase_EM implements ICon
         return description;
     }
 
-    private static final String STRUCTURE_PIECE_MAIN = "main";
+
 
     private final int horizontalOffSet = 24;
     private final int verticalOffSet = 3;
@@ -192,235 +231,303 @@ public class OTEMegaNQFuelFactory extends TT_MultiMachineBase_EM implements ICon
     public IStructureDefinition<OTEMegaNQFuelFactory> getStructure_EM() {
         if (STRUCTURE_DEFINITION == null) {
             STRUCTURE_DEFINITION = StructureDefinition.<OTEMegaNQFuelFactory>builder()
-                .addShape(STRUCTURE_PIECE_MAIN, shapeMain)
-                .addElement('F', ofBlock(Blocks.planks, 0))
-                .addElement('E', ofBlock(Blocks.planks, 0))
+                .addShape(mName, new String[][] {
+                    { "                                                 ", "                      G   G                      ",
+                        "                      G   G                      ", "                      G   G                      ",
+                        "                      G   G                      ", "                      G   G                      ",
+                        "                                                 " },
+                    { "                      G   G                      ", "                     GFFFFFG                     ",
+                        "                     GFAAAFG                     ", "                     GFAAAFG                     ",
+                        "                     GFAAAFG                     ", "                     GFFFFFG                     ",
+                        "                      G   G                      " },
+                    { "                      GGGGG                      ", "                     GFAAAFG                     ",
+                        "                    FF     FF                    ", "                    FF     FF                    ",
+                        "                    FF     FF                    ", "                     GFAAAFG                     ",
+                        "                      GGGGG                      " },
+                    { "                     GFFFFFG                     ", "                    FF     FF                    ",
+                        "                 FFFFF     FFFFF                 ", "                 FFFBBBBBBBBBFFF                 ",
+                        "                 FFFFF     FFFFF                 ", "                    FF     FF                    ",
+                        "                     GFFFFFG                     " },
+                    { "                     GFAAAFG                     ", "                 FFFFF     FFFFF                 ",
+                        "               FFFFFBBBBBBBBBFFFFF               ", "               FFBBBBBBBBBBBBBBBFF               ",
+                        "               FFFFFBBBBBBBBBFFFFF               ", "                 FFFFF     FFFFF                 ",
+                        "                     GFAAAFG                     " },
+                    { "                     GFFFFFG                     ", "               FFFFFFF     FFFFFFF               ",
+                        "             FFFFBBBFF     FFBBBFFFF             ", "             FFBBBBBBBBBBBBBBBBBBBFF             ",
+                        "             FFFFBBBFF     FFBBBFFFF             ", "               FFFFFFF     FFFFFFF               ",
+                        "                     GFFFFFG                     " },
+                    { "                      GGGGG                      ", "             FFFFFFF GFAAAFG FFFFFFF             ",
+                        "            FFFBBFFFFF     FFFFFBBFFF            ", "            FBBBBBBBFF     FFBBBBBBBF            ",
+                        "            FFFBBFFFFF     FFFFFBBFFF            ", "             FFFFFFF GFAAAFG FFFFFFF             ",
+                        "                      GGGGG                      " },
+                    { "                      G   G                      ", "            FFFFF    GFFFFFG    FFFFF            ",
+                        "           EFBBFFFFF GFAAAFG FFFFFBBFE           ", "           FBBBBBFFF GFAAAFG FFFBBBBBF           ",
+                        "           EFBBFFFFF GFAAAFG FFFFFBBFE           ", "            FFFFF    GFFFFFG    FFFFF            ",
+                        "                      G   G                      " },
+                    { "                                                 ", "           FFFF       G   G       FFFF           ",
+                        "          FFBFFFF     G   G     FFFFBFF          ", "          FBBBBFF     G   G     FFBBBBF          ",
+                        "          FFBFFFF     G   G     FFFFBFF          ", "           FFFF       G   G       FFFF           ",
+                        "                                                 " },
+                    { "                                                 ", "          FFF                       FFF          ",
+                        "         FFBFFF                   FFFBFF         ", "         FBBBFF                   FFBBBF         ",
+                        "         FFBFFF                   FFFBFF         ", "          FFF                       FFF          ",
+                        "                                                 " },
+                    { "                                                 ", "         FFF                         FFF         ",
+                        "        FFBFE                       EFBFF        ", "        FBBBF                       FBBBF        ",
+                        "        FFBFE                       EFBFF        ", "         FFF                         FFF         ",
+                        "                                                 " },
+                    { "                                                 ", "        FFF                           FFF        ",
+                        "       EFBFF                         FFBFE       ", "       FBBBF                         FBBBF       ",
+                        "       EFBFF                         FFBFE       ", "        FFF                           FFF        ",
+                        "                                                 " },
+                    { "                                                 ", "       FFF                             FFF       ",
+                        "      FFBFE                           EFBFF      ", "      FBBBF                           FBBBF      ",
+                        "      FFBFE                           EFBFF      ", "       FFF                             FFF       ",
+                        "                                                 " },
+                    { "                                                 ", "      FFF                               FFF      ",
+                        "     FFBFF                             FFBFF     ", "     FBBBF                             FBBBF     ",
+                        "     FFBFF                             FFBFF     ", "      FFF                               FFF      ",
+                        "                                                 " },
+                    { "                                                 ", "      FFF                               FFF      ",
+                        "     FFBFF                             FFBFF     ", "     FBBBF                             FBBBF     ",
+                        "     FFBFF                             FFBFF     ", "      FFF                               FFF      ",
+                        "                                                 " },
+                    { "                                                 ", "     FFF                                 FFF     ",
+                        "    FFBFF                               FFBFF    ", "    FBBBF                               FBBBF    ",
+                        "    FFBFF                               FFBFF    ", "     FFF                                 FFF     ",
+                        "                                                 " },
+                    { "                                                 ", "     FFF                                 FFF     ",
+                        "    FFBFF                               FFBFF    ", "    FBBBF                               FBBBF    ",
+                        "    FFBFF                               FFBFF    ", "     FFF                                 FFF     ",
+                        "                                                 " },
+                    { "                                                 ", "    FFF                                   FFF    ",
+                        "   FFBFF                                 FFBFF   ", "   FBBBF                                 FBBBF   ",
+                        "   FFBFF                                 FFBFF   ", "    FFF                                   FFF    ",
+                        "                                                 " },
+                    { "                                                 ", "    FFF                                   FFF    ",
+                        "   FFBFF                                 FFBFF   ", "   FBBBF                                 FBBBF   ",
+                        "   FFBFF                                 FFBFF   ", "    FFF                                   FFF    ",
+                        "                                                 " },
+                    { "                                                 ", "    FFF                                   FFF    ",
+                        "   FFBFF                                 FFBFF   ", "   FBBBF                                 FBBBF   ",
+                        "   FFBFF                                 FFBFF   ", "    FFF                                   FFF    ",
+                        "                                                 " },
+                    { "                                                 ", "   FFF                                     FFF   ",
+                        "  FFBFF                                   FFBFF  ", "  FBBBF                                   FBBBF  ",
+                        "  FFBFF                                   FFBFF  ", "   FFF                                     FFF   ",
+                        "                                                 " },
+                    { "   GGG                                     GGG   ", " GGFFFGG                                 GGFFFGG ",
+                        " GFFBFFG                                 GFFBFFG ", " GFBBBFG                                 GFBBBFG ",
+                        " GFFBFFG                                 GFFBFFG ", " GGFFFGG                                 GGFFFGG ",
+                        "   GGG                                     GGG   " },
+                    { " GGFFFGG                                 GGFFFGG ", "GFF   FFG                               GFF   FFG",
+                        "GF  B  FG                               GF  B  FG", "GF BBB FG                               GF BBB FG",
+                        "GF  B  FG                               GF  B  FG", "GFF   FFG                               GFF   FFG",
+                        " GGFFFGG                                 GGFFFGG " },
+                    { "  GFAFG                                   GFAFG  ", " FA   AF                                 FA   AF ",
+                        " A  B  A                                 A  B  A ", " A BBB A                                 A BBB A ",
+                        " A  B  A                                 A  B  A ", " FA   AF                                 FA   AF ",
+                        "  GFAFG                                   GFAFG  " },
+                    { "  GFAFG                                   GFAFG  ", " FA   AF                                 FA   AF ",
+                        " A  B  A                                 A  B  A ", " A BBB A                                 A BBB A ",
+                        " A  B  A                                 A  B  A ", " FA   AF                                 FA   AF ",
+                        "  GFAFG                                   GFAFG  " },
+                    { "  GFAFG                                   GFAFG  ", " FA   AF                                 FA   AF ",
+                        " A  B  A                                 A  B  A ", " A BBB A                                 A BBB A ",
+                        " A  B  A                                 A  B  A ", " FA   AF                                 FA   AF ",
+                        "  GFAFG                                   GFAFG  " },
+                    { " GGFFFGG                                 GGFFFGG ", "GFF   FFG                               GFF   FFG",
+                        "GF  B  FG                               GF  B  FG", "GF BBB FG                               GF BBB FG",
+                        "GF  B  FG                               GF  B  FG", "GFF   FFG                               GFF   FFG",
+                        " GGFFFGG                                 GGFFFGG " },
+                    { "   GGG                                     GGG   ", " GGFFFGG                                 GGFFFGG ",
+                        " GFFBFFG                                 GFFBFFG ", " GFBBBFG                                 GFBBBFG ",
+                        " GFFBFFG                                 GFFBFFG ", " GGFFFGG                                 GGFFFGG ",
+                        "   GGG                                     GGG   " },
+                    { "                                                 ", "   FFF                                     FFF   ",
+                        "  FFBFF                                   FFBFF  ", "  FBBBF                                   FBBBF  ",
+                        "  FFBFF                                   FFBFF  ", "   FFF                                     FFF   ",
+                        "                                                 " },
+                    { "                                                 ", "    FFF                                   FFF    ",
+                        "   FFBFF                                 FFBFF   ", "   FBBBF                                 FBBBF   ",
+                        "   FFBFF                                 FFBFF   ", "    FFF                                   FFF    ",
+                        "                                                 " },
+                    { "                                                 ", "    FFF                                   FFF    ",
+                        "   FFBFF                                 FFBFF   ", "   FBBBF                                 FBBBF   ",
+                        "   FFBFF                                 FFBFF   ", "    FFF                                   FFF    ",
+                        "                                                 " },
+                    { "                                                 ", "    FFF                                   FFF    ",
+                        "   FFBFF                                 FFBFF   ", "   FBBBF                                 FBBBF   ",
+                        "   FFBFF                                 FFBFF   ", "    FFF                                   FFF    ",
+                        "                                                 " },
+                    { "                                                 ", "     FFF                                 FFF     ",
+                        "    FFBFF                               FFBFF    ", "    FBBBF                               FBBBF    ",
+                        "    FFBFF                               FFBFF    ", "     FFF                                 FFF     ",
+                        "                                                 " },
+                    { "                                                 ", "     FFF                                 FFF     ",
+                        "    FFBFF                               FFBFF    ", "    FBBBF                               FBBBF    ",
+                        "    FFBFF                               FFBFF    ", "     FFF                                 FFF     ",
+                        "                                                 " },
+                    { "                                                 ", "      FFF                               FFF      ",
+                        "     FFBFF                             FFBFF     ", "     FBBBF                             FBBBF     ",
+                        "     FFBFF                             FFBFF     ", "      FFF                               FFF      ",
+                        "                                                 " },
+                    { "                                                 ", "      FFF                               FFF      ",
+                        "     FFBFF                             FFBFF     ", "     FBBBF                             FBBBF     ",
+                        "     FFBFF                             FFBFF     ", "      FFF                               FFF      ",
+                        "                                                 " },
+                    { "                                                 ", "       FFF                             FFF       ",
+                        "      FFBFE                           EFBFF      ", "      FBBBF                           FBBBF      ",
+                        "      FFBFE                           EFBFF      ", "       FFF                             FFF       ",
+                        "                                                 " },
+                    { "                                                 ", "        FFF                           FFF        ",
+                        "       EFBFF                         FFBFE       ", "       FBBBF                         FBBBF       ",
+                        "       EFBFF                         FFBFE       ", "        FFF                           FFF        ",
+                        "                                                 " },
+                    { "                                                 ", "         FFF                         FFF         ",
+                        "        FFBFE                       EFBFF        ", "        FBBBF                       FBBBF        ",
+                        "        FFBFE                       EFBFF        ", "         FFF                         FFF         ",
+                        "                                                 " },
+                    { "                                                 ", "          FFF                       FFF          ",
+                        "         FFBFFF                   FFFBFF         ", "         FBBBFF                   FFBBBF         ",
+                        "         FFBFFF                   FFFBFF         ", "          FFF                       FFF          ",
+                        "                                                 " },
+                    { "                                                 ", "           FFFF       G   G       FFFF           ",
+                        "          FFBFFFF     GDDDG     FFFFBFF          ", "          FBBBBFF     GD~DG     FFBBBBF          ",
+                        "          FFBFFFF     GDDDG     FFFFBFF          ", "           FFFF       G   G       FFFF           ",
+                        "                                                 " },
+                    { "                      G   G                      ", "            FFFFF    GFFFFFG    FFFFF            ",
+                        "           EFBBFFFFF GFAAAFG FFFFFBBFE           ", "           FBBBBBFFF GFAAAFG FFFBBBBBF           ",
+                        "           EFBBFFFFF GFAAAFG FFFFFBBFE           ", "            FFFFF    GFFFFFG    FFFFF            ",
+                        "                      G   G                      " },
+                    { "                      GGGGG                      ", "             FFFFFFF GFAAAFG FFFFFFF             ",
+                        "            FFFBBFFFFF     FFFFFBBFFF            ", "            FBBBBBBBFF     FFBBBBBBBF            ",
+                        "            FFFBBFFFFF     FFFFFBBFFF            ", "             FFFFFFF GFAAAFG FFFFFFF             ",
+                        "                      GGGGG                      " },
+                    { "                     GFFFFFG                     ", "               FFFFFFF     FFFFFFF               ",
+                        "             FFFFBBBFF     FFBBBFFFF             ", "             FFBBBBBBBBBBBBBBBBBBBFF             ",
+                        "             FFFFBBBFF     FFBBBFFFF             ", "               FFFFFFF     FFFFFFF               ",
+                        "                     GFFFFFG                     " },
+                    { "                     GFAAAFG                     ", "                 FFFFF     FFFFF                 ",
+                        "               FFFFFBBBBBBBBBFFFFF               ", "               FFBBBBBBBBBBBBBBBFF               ",
+                        "               FFFFFBBBBBBBBBFFFFF               ", "                 FFFFF     FFFFF                 ",
+                        "                     GFAAAFG                     " },
+                    { "                     GFFFFFG                     ", "                    FF     FF                    ",
+                        "                 FFFFF     FFFFF                 ", "                 FFFBBBBBBBBBFFF                 ",
+                        "                 FFFFF     FFFFF                 ", "                    FF     FF                    ",
+                        "                     GFFFFFG                     " },
+                    { "                      GGGGG                      ", "                     GFAAAFG                     ",
+                        "                    FF     FF                    ", "                    FF     FF                    ",
+                        "                    FF     FF                    ", "                     GFAAAFG                     ",
+                        "                      GGGGG                      " },
+                    { "                      G   G                      ", "                     GFFFFFG                     ",
+                        "                     GFAAAFG                     ", "                     GFAAAFG                     ",
+                        "                     GFAAAFG                     ", "                     GFFFFFG                     ",
+                        "                      G   G                      " },
+                    { "                                                 ", "                      G   G                      ",
+                        "                      G   G                      ", "                      G   G                      ",
+                        "                      G   G                      ", "                      G   G                      ",
+                        "                                                 " } })
+                .addElement('F', ofBlock(Loaders.FRF_Casings, 0))
+                .addElement('E', ofBlock(Loaders.FRF_Casings, 0))
                 .addElement(
                     'D',
                     buildHatchAdder(OTEMegaNQFuelFactory.class).atLeast(InputHatch, OutputHatch)
                         .adder(OTEMegaNQFuelFactory::addToMachineList)
+                        .casingIndex(179)
                         .dot(1)
-                        .casingIndex(getTextureIndex())
-                        .buildAndChain(Blocks.stonebrick, 0))
-                .addElement('A', ofBlock(Blocks.glass, 0))
-                .addElement('G', ofFrame(Materials.Wood))
-                .addElement('B', ofBlock(ModBlocks.blockCasingsMisc, 2))
+                        .buildAndChain(ofBlock(Loaders.FRF_Casings, 0)))
+                .addElement('A', ofBlock(Loaders.fieldRestrictingGlass, 0))
+                .addElement('G', ofFrame(Materials.NaquadahAlloy))
+                .addElement('B',
+                    ofChain(
+                        onElementPass(x -> ++x.cnt[0], ofFieldCoil(0)),
+                        onElementPass(x -> ++x.cnt[1], ofFieldCoil(1)),
+                        onElementPass(x -> ++x.cnt[2], ofFieldCoil(2)),
+                        onElementPass(x -> ++x.cnt[3], ofFieldCoil(3))))
                 .build();
 
         }
         return STRUCTURE_DEFINITION;
     }
+    private final int[] cnt = new int[] { 0, 0, 0, 0 };
+    private static final Block[] coils = new Block[] { Loaders.FRF_Coil_1, Loaders.FRF_Coil_2, Loaders.FRF_Coil_3,Loaders.FRF_Coil_4 };
+    public int getTier() {
+        for (int i = 0; i < 4; i++) {
+            if (cnt[i] == 560) {
+                tier = i + 1;
+                return i;
+            }
+        }
+        tier = -1;
+        return -1;
+    }
+    public static <T> IStructureElement<T> ofFieldCoil(int aIndex) {
+        return new IStructureElement<>() {
+
+            @Override
+            public boolean check(T t, World world, int x, int y, int z) {
+                Block block = world.getBlock(x, y, z);
+                return block.equals(coils[aIndex]);
+            }
+
+            @Override
+            public boolean spawnHint(T t, World world, int x, int y, int z, ItemStack trigger) {
+                StructureLibAPI.hintParticle(world, x, y, z, coils[getIndex(trigger)], 0);
+                return true;
+            }
+
+            private int getIndex(ItemStack trigger) {
+                int s = trigger.stackSize;
+                if (s > 4 || s <= 0) s = 4;
+                return s - 1;
+            }
+
+            @Override
+            public boolean placeBlock(T t, World world, int x, int y, int z, ItemStack trigger) {
+                return world.setBlock(x, y, z, coils[getIndex(trigger)], 0, 3);
+            }
+
+            @Override
+            public BlocksToPlace getBlocksToPlace(T t, World world, int x, int y, int z, ItemStack trigger,
+                                                  AutoPlaceEnvironment env) {
+                return BlocksToPlace.create(coils[getIndex(trigger)], 0);
+            }
+
+            @Override
+            public PlaceResult survivalPlaceBlock(T t, World world, int x, int y, int z, ItemStack trigger,
+                                                  AutoPlaceEnvironment env) {
+                if (check(t, world, x, y, z)) return PlaceResult.SKIP;
+                return StructureUtility.survivalPlaceBlock(
+                    coils[getIndex(trigger)],
+                    0,
+                    world,
+                    x,
+                    y,
+                    z,
+                    env.getSource(),
+                    env.getActor(),
+                    env.getChatter());
+            }
+        };
+    }
 
     // spotless:off
     // structured from compactFusionReactor
-    private final String[][] shapeMain = new String[][] {
-        { "                                                 ", "                      G   G                      ",
-            "                      G   G                      ", "                      G   G                      ",
-            "                      G   G                      ", "                      G   G                      ",
-            "                                                 " },
-        { "                      G   G                      ", "                     GFFFFFG                     ",
-            "                     GFAAAFG                     ", "                     GFAAAFG                     ",
-            "                     GFAAAFG                     ", "                     GFFFFFG                     ",
-            "                      G   G                      " },
-        { "                      GGGGG                      ", "                     GFAAAFG                     ",
-            "                    FF     FF                    ", "                    FF     FF                    ",
-            "                    FF     FF                    ", "                     GFAAAFG                     ",
-            "                      GGGGG                      " },
-        { "                     GFFFFFG                     ", "                    FF     FF                    ",
-            "                 FFFFF     FFFFF                 ", "                 FFFBBBBBBBBBFFF                 ",
-            "                 FFFFF     FFFFF                 ", "                    FF     FF                    ",
-            "                     GFFFFFG                     " },
-        { "                     GFAAAFG                     ", "                 FFFFF     FFFFF                 ",
-            "               FFFFFBBBBBBBBBFFFFF               ", "               FFBBBBBBBBBBBBBBBFF               ",
-            "               FFFFFBBBBBBBBBFFFFF               ", "                 FFFFF     FFFFF                 ",
-            "                     GFAAAFG                     " },
-        { "                     GFFFFFG                     ", "               FFFFFFF     FFFFFFF               ",
-            "             FFFFBBBFF     FFBBBFFFF             ", "             FFBBBBBBBBBBBBBBBBBBBFF             ",
-            "             FFFFBBBFF     FFBBBFFFF             ", "               FFFFFFF     FFFFFFF               ",
-            "                     GFFFFFG                     " },
-        { "                      GGGGG                      ", "             FFFFFFF GFAAAFG FFFFFFF             ",
-            "            FFFBBFFFFF     FFFFFBBFFF            ", "            FBBBBBBBFF     FFBBBBBBBF            ",
-            "            FFFBBFFFFF     FFFFFBBFFF            ", "             FFFFFFF GFAAAFG FFFFFFF             ",
-            "                      GGGGG                      " },
-        { "                      G   G                      ", "            FFFFF    GFFFFFG    FFFFF            ",
-            "           EFBBFFFFF GFAAAFG FFFFFBBFE           ", "           FBBBBBFFF GFAAAFG FFFBBBBBF           ",
-            "           EFBBFFFFF GFAAAFG FFFFFBBFE           ", "            FFFFF    GFFFFFG    FFFFF            ",
-            "                      G   G                      " },
-        { "                                                 ", "           FFFF       G   G       FFFF           ",
-            "          FFBFFFF     G   G     FFFFBFF          ", "          FBBBBFF     G   G     FFBBBBF          ",
-            "          FFBFFFF     G   G     FFFFBFF          ", "           FFFF       G   G       FFFF           ",
-            "                                                 " },
-        { "                                                 ", "          FFF                       FFF          ",
-            "         FFBFFF                   FFFBFF         ", "         FBBBFF                   FFBBBF         ",
-            "         FFBFFF                   FFFBFF         ", "          FFF                       FFF          ",
-            "                                                 " },
-        { "                                                 ", "         FFF                         FFF         ",
-            "        FFBFE                       EFBFF        ", "        FBBBF                       FBBBF        ",
-            "        FFBFE                       EFBFF        ", "         FFF                         FFF         ",
-            "                                                 " },
-        { "                                                 ", "        FFF                           FFF        ",
-            "       EFBFF                         FFBFE       ", "       FBBBF                         FBBBF       ",
-            "       EFBFF                         FFBFE       ", "        FFF                           FFF        ",
-            "                                                 " },
-        { "                                                 ", "       FFF                             FFF       ",
-            "      FFBFE                           EFBFF      ", "      FBBBF                           FBBBF      ",
-            "      FFBFE                           EFBFF      ", "       FFF                             FFF       ",
-            "                                                 " },
-        { "                                                 ", "      FFF                               FFF      ",
-            "     FFBFF                             FFBFF     ", "     FBBBF                             FBBBF     ",
-            "     FFBFF                             FFBFF     ", "      FFF                               FFF      ",
-            "                                                 " },
-        { "                                                 ", "      FFF                               FFF      ",
-            "     FFBFF                             FFBFF     ", "     FBBBF                             FBBBF     ",
-            "     FFBFF                             FFBFF     ", "      FFF                               FFF      ",
-            "                                                 " },
-        { "                                                 ", "     FFF                                 FFF     ",
-            "    FFBFF                               FFBFF    ", "    FBBBF                               FBBBF    ",
-            "    FFBFF                               FFBFF    ", "     FFF                                 FFF     ",
-            "                                                 " },
-        { "                                                 ", "     FFF                                 FFF     ",
-            "    FFBFF                               FFBFF    ", "    FBBBF                               FBBBF    ",
-            "    FFBFF                               FFBFF    ", "     FFF                                 FFF     ",
-            "                                                 " },
-        { "                                                 ", "    FFF                                   FFF    ",
-            "   FFBFF                                 FFBFF   ", "   FBBBF                                 FBBBF   ",
-            "   FFBFF                                 FFBFF   ", "    FFF                                   FFF    ",
-            "                                                 " },
-        { "                                                 ", "    FFF                                   FFF    ",
-            "   FFBFF                                 FFBFF   ", "   FBBBF                                 FBBBF   ",
-            "   FFBFF                                 FFBFF   ", "    FFF                                   FFF    ",
-            "                                                 " },
-        { "                                                 ", "    FFF                                   FFF    ",
-            "   FFBFF                                 FFBFF   ", "   FBBBF                                 FBBBF   ",
-            "   FFBFF                                 FFBFF   ", "    FFF                                   FFF    ",
-            "                                                 " },
-        { "                                                 ", "   FFF                                     FFF   ",
-            "  FFBFF                                   FFBFF  ", "  FBBBF                                   FBBBF  ",
-            "  FFBFF                                   FFBFF  ", "   FFF                                     FFF   ",
-            "                                                 " },
-        { "   GGG                                     GGG   ", " GGFFFGG                                 GGFFFGG ",
-            " GFFBFFG                                 GFFBFFG ", " GFBBBFG                                 GFBBBFG ",
-            " GFFBFFG                                 GFFBFFG ", " GGFFFGG                                 GGFFFGG ",
-            "   GGG                                     GGG   " },
-        { " GGFFFGG                                 GGFFFGG ", "GFF   FFG                               GFF   FFG",
-            "GF  B  FG                               GF  B  FG", "GF BBB FG                               GF BBB FG",
-            "GF  B  FG                               GF  B  FG", "GFF   FFG                               GFF   FFG",
-            " GGFFFGG                                 GGFFFGG " },
-        { "  GFAFG                                   GFAFG  ", " FA   AF                                 FA   AF ",
-            " A  B  A                                 A  B  A ", " A BBB A                                 A BBB A ",
-            " A  B  A                                 A  B  A ", " FA   AF                                 FA   AF ",
-            "  GFAFG                                   GFAFG  " },
-        { "  GFAFG                                   GFAFG  ", " FA   AF                                 FA   AF ",
-            " A  B  A                                 A  B  A ", " A BBB A                                 A BBB A ",
-            " A  B  A                                 A  B  A ", " FA   AF                                 FA   AF ",
-            "  GFAFG                                   GFAFG  " },
-        { "  GFAFG                                   GFAFG  ", " FA   AF                                 FA   AF ",
-            " A  B  A                                 A  B  A ", " A BBB A                                 A BBB A ",
-            " A  B  A                                 A  B  A ", " FA   AF                                 FA   AF ",
-            "  GFAFG                                   GFAFG  " },
-        { " GGFFFGG                                 GGFFFGG ", "GFF   FFG                               GFF   FFG",
-            "GF  B  FG                               GF  B  FG", "GF BBB FG                               GF BBB FG",
-            "GF  B  FG                               GF  B  FG", "GFF   FFG                               GFF   FFG",
-            " GGFFFGG                                 GGFFFGG " },
-        { "   GGG                                     GGG   ", " GGFFFGG                                 GGFFFGG ",
-            " GFFBFFG                                 GFFBFFG ", " GFBBBFG                                 GFBBBFG ",
-            " GFFBFFG                                 GFFBFFG ", " GGFFFGG                                 GGFFFGG ",
-            "   GGG                                     GGG   " },
-        { "                                                 ", "   FFF                                     FFF   ",
-            "  FFBFF                                   FFBFF  ", "  FBBBF                                   FBBBF  ",
-            "  FFBFF                                   FFBFF  ", "   FFF                                     FFF   ",
-            "                                                 " },
-        { "                                                 ", "    FFF                                   FFF    ",
-            "   FFBFF                                 FFBFF   ", "   FBBBF                                 FBBBF   ",
-            "   FFBFF                                 FFBFF   ", "    FFF                                   FFF    ",
-            "                                                 " },
-        { "                                                 ", "    FFF                                   FFF    ",
-            "   FFBFF                                 FFBFF   ", "   FBBBF                                 FBBBF   ",
-            "   FFBFF                                 FFBFF   ", "    FFF                                   FFF    ",
-            "                                                 " },
-        { "                                                 ", "    FFF                                   FFF    ",
-            "   FFBFF                                 FFBFF   ", "   FBBBF                                 FBBBF   ",
-            "   FFBFF                                 FFBFF   ", "    FFF                                   FFF    ",
-            "                                                 " },
-        { "                                                 ", "     FFF                                 FFF     ",
-            "    FFBFF                               FFBFF    ", "    FBBBF                               FBBBF    ",
-            "    FFBFF                               FFBFF    ", "     FFF                                 FFF     ",
-            "                                                 " },
-        { "                                                 ", "     FFF                                 FFF     ",
-            "    FFBFF                               FFBFF    ", "    FBBBF                               FBBBF    ",
-            "    FFBFF                               FFBFF    ", "     FFF                                 FFF     ",
-            "                                                 " },
-        { "                                                 ", "      FFF                               FFF      ",
-            "     FFBFF                             FFBFF     ", "     FBBBF                             FBBBF     ",
-            "     FFBFF                             FFBFF     ", "      FFF                               FFF      ",
-            "                                                 " },
-        { "                                                 ", "      FFF                               FFF      ",
-            "     FFBFF                             FFBFF     ", "     FBBBF                             FBBBF     ",
-            "     FFBFF                             FFBFF     ", "      FFF                               FFF      ",
-            "                                                 " },
-        { "                                                 ", "       FFF                             FFF       ",
-            "      FFBFE                           EFBFF      ", "      FBBBF                           FBBBF      ",
-            "      FFBFE                           EFBFF      ", "       FFF                             FFF       ",
-            "                                                 " },
-        { "                                                 ", "        FFF                           FFF        ",
-            "       EFBFF                         FFBFE       ", "       FBBBF                         FBBBF       ",
-            "       EFBFF                         FFBFE       ", "        FFF                           FFF        ",
-            "                                                 " },
-        { "                                                 ", "         FFF                         FFF         ",
-            "        FFBFE                       EFBFF        ", "        FBBBF                       FBBBF        ",
-            "        FFBFE                       EFBFF        ", "         FFF                         FFF         ",
-            "                                                 " },
-        { "                                                 ", "          FFF                       FFF          ",
-            "         FFBFFF                   FFFBFF         ", "         FBBBFF                   FFBBBF         ",
-            "         FFBFFF                   FFFBFF         ", "          FFF                       FFF          ",
-            "                                                 " },
-        { "                                                 ", "           FFFF       G   G       FFFF           ",
-            "          FFBFFFF     GDDDG     FFFFBFF          ", "          FBBBBFF     GD~DG     FFBBBBF          ",
-            "          FFBFFFF     GDDDG     FFFFBFF          ", "           FFFF       G   G       FFFF           ",
-            "                                                 " },
-        { "                      G   G                      ", "            FFFFF    GFFFFFG    FFFFF            ",
-            "           EFBBFFFFF GFAAAFG FFFFFBBFE           ", "           FBBBBBFFF GFAAAFG FFFBBBBBF           ",
-            "           EFBBFFFFF GFAAAFG FFFFFBBFE           ", "            FFFFF    GFFFFFG    FFFFF            ",
-            "                      G   G                      " },
-        { "                      GGGGG                      ", "             FFFFFFF GFAAAFG FFFFFFF             ",
-            "            FFFBBFFFFF     FFFFFBBFFF            ", "            FBBBBBBBFF     FFBBBBBBBF            ",
-            "            FFFBBFFFFF     FFFFFBBFFF            ", "             FFFFFFF GFAAAFG FFFFFFF             ",
-            "                      GGGGG                      " },
-        { "                     GFFFFFG                     ", "               FFFFFFF     FFFFFFF               ",
-            "             FFFFBBBFF     FFBBBFFFF             ", "             FFBBBBBBBBBBBBBBBBBBBFF             ",
-            "             FFFFBBBFF     FFBBBFFFF             ", "               FFFFFFF     FFFFFFF               ",
-            "                     GFFFFFG                     " },
-        { "                     GFAAAFG                     ", "                 FFFFF     FFFFF                 ",
-            "               FFFFFBBBBBBBBBFFFFF               ", "               FFBBBBBBBBBBBBBBBFF               ",
-            "               FFFFFBBBBBBBBBFFFFF               ", "                 FFFFF     FFFFF                 ",
-            "                     GFAAAFG                     " },
-        { "                     GFFFFFG                     ", "                    FF     FF                    ",
-            "                 FFFFF     FFFFF                 ", "                 FFFBBBBBBBBBFFF                 ",
-            "                 FFFFF     FFFFF                 ", "                    FF     FF                    ",
-            "                     GFFFFFG                     " },
-        { "                      GGGGG                      ", "                     GFAAAFG                     ",
-            "                    FF     FF                    ", "                    FF     FF                    ",
-            "                    FF     FF                    ", "                     GFAAAFG                     ",
-            "                      GGGGG                      " },
-        { "                      G   G                      ", "                     GFFFFFG                     ",
-            "                     GFAAAFG                     ", "                     GFAAAFG                     ",
-            "                     GFAAAFG                     ", "                     GFFFFFG                     ",
-            "                      G   G                      " },
-        { "                                                 ", "                      G   G                      ",
-            "                      G   G                      ", "                      G   G                      ",
-            "                      G   G                      ", "                      G   G                      ",
-            "                                                 " } };
+
 
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
         final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-        tt.addMachineType("§c§l蒸汽时代的最终幻想 - 蒸汽聚变反应堆")
-            .addInfo("§b§o他所能做的, 仅仅只是通过一些无法猜测的手段, 将蒸汽化为氢等离子体")
-            .addInfo("EU消耗 : 0, 耗时 : (输入蒸汽数量(L) / 1000) * 20sec , 更高级的蒸汽减少运行时间")
-            .addInfo("耗时 : 普通蒸汽 - 100% , 过热蒸汽 : 50% , 超临界蒸汽 : 10%")
-            .addInfo("产出 : 普通蒸汽 - 1000L / 1L氢等离子体 , 过热蒸汽 : 1000L / 10L氢等离子体 , 超临界蒸汽 : 1000L / 100L氢等离子体")
+        tt.addMachineType("§z§l秒杀八台巨蒸的史诗级机器 - 压缩硅岩燃料精炼厂")
+            .addInfo("§l§o甜甜圈喜加一系列")
+            .addInfo("更高级的线圈允许并行与加速 :")
+            .addInfo("一级线圈 : 16并行, 超频一次; 二级线圈 : 32并行, 超频二次;")
+            .addInfo("三级线圈 : 64并行, 超频三次; 四级线圈 : 256并行, 超频四次")
+            .addInfo("四级线圈解锁§c独有配方池")
+            .addInfo("§b螺丝刀切换模式, §c独有配方池§b允许更高级的单步配方")
             .addSeparator()
-            .addController("压缩木头聚变堆")
+            .addController("压缩硅岩燃料精炼厂")
             .beginStructureBlock(49, 7, 49, false)
             .addInputBus("AnyInputBus", 1)
             .addOutputBus("AnyOutputBus", 1)
@@ -428,7 +535,7 @@ public class OTEMegaNQFuelFactory extends TT_MultiMachineBase_EM implements ICon
             .addOutputHatch("AnyOutputHatch", 1)
             .addEnergyHatch("AnyEnergyHatch", 1)
             .addMufflerHatch("AnyMufflerHatch", 1)
-            .toolTipFinisher("§7123Technology - Steam age");
+            .toolTipFinisher("§7123Technology - Naquadah's Dream");
         return tt;
     }
 
@@ -469,25 +576,26 @@ public class OTEMegaNQFuelFactory extends TT_MultiMachineBase_EM implements ICon
 
     @Override
     public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-        return new OTEWoodenFusionReactor(this.mName);
+        return new OTEMegaNQFuelFactory(this.mName);
     }
 
     @Override
-    public ITexture[] getTexture(final IGregTechTileEntity baseMetaTileEntity, final ForgeDirection sideDirection,
-        final ForgeDirection facing, final int aColorIndex, final boolean active, final boolean aRedstone) {
-
-        if (sideDirection == facing) {
-            if (active) return new ITexture[] { TextureFactory.of(MACHINE_BRONZE_SIDE), TextureFactory.builder()
-                .addIcon(OVERLAY_FRONT_STEAM_FURNACE_ACTIVE)
-                .extFacing()
+    @SuppressWarnings("ALL")
+    public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection facing,
+                                 int colorIndex, boolean aActive, boolean aRedstone) {
+        if (side == facing) {
+            if (aActive) return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(179),
+                new GTRenderedTexture(Textures.BlockIcons.OVERLAY_FRONT_ASSEMBLY_LINE_ACTIVE), TextureFactory.builder()
+                .addIcon(Textures.BlockIcons.OVERLAY_FRONT_ASSEMBLY_LINE_ACTIVE_GLOW)
+                .glow()
                 .build() };
-            return new ITexture[] { TextureFactory.of(MACHINE_BRONZE_SIDE), TextureFactory.builder()
-                .addIcon(OVERLAY_FRONT_STEAM_FURNACE_ACTIVE_GLOW)
-                .extFacing()
+            return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(179),
+                new GTRenderedTexture(Textures.BlockIcons.OVERLAY_FRONT_ASSEMBLY_LINE), TextureFactory.builder()
+                .addIcon(Textures.BlockIcons.OVERLAY_FRONT_ASSEMBLY_LINE_GLOW)
                 .glow()
                 .build() };
         }
-        return new ITexture[] { TextureFactory.of(MACHINE_BRONZE_SIDE) };
+        return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(179) };
     }
 
     @SideOnly(Side.CLIENT)

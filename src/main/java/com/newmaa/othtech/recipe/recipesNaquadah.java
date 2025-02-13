@@ -3,6 +3,7 @@ package com.newmaa.othtech.recipe;
 import static com.newmaa.othtech.common.recipemap.Recipemaps.NQF;
 import static com.newmaa.othtech.common.recipemap.Recipemaps.NaquadahFuelFakeRecipes;
 import static com.newmaa.othtech.utils.Utils.setStackSize;
+import static gregtech.api.enums.TickTime.SECOND;
 
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -138,11 +139,13 @@ public class recipesNaquadah implements IRecipePool {
             Materials.Naquadah.getMolten(1), liquids.FUELA_DE.getFluidOrGas(1) };
         int[] NaquadahGen = new int[] { 12960, 2200, 32400, 975000, 2300000, 9511000, 88540000, 399576000, 2077795200,
             1388888, 277777, 1231808 };
+        int[] TimeFuel = new int[] { 4 * SECOND, 18 * SECOND, 5 * SECOND, 2 * SECOND, 2 * SECOND, 3 * SECOND, 3 * SECOND, 6 * SECOND, 9 * SECOND,
+            SECOND, SECOND, 4 * SECOND };
         for (int i = 0; i < 12; i++) {
             GTValues.RA.stdBuilder()
                 .fluidInputs(inputs[i])
                 .fluidOutputs(outputs[i])
-                .duration(20)
+                .duration(TimeFuel[i])
                 .eut(0)
                 .specialValue(NaquadahGen[i])
                 .addTo(NaquadahFuelFakeRecipes);

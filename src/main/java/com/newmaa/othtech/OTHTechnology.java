@@ -54,8 +54,8 @@ public class OTHTechnology {
     // GameRegistry." (Remove if not needed)
     public void preInit(FMLPreInitializationEvent event) {
         proxy.preInit(event);
-        ItemAndBlockHandler.INSTANCE.run();
         MaterialsLoader.load();
+        ItemAndBlockHandler.INSTANCE.run();
     }
 
     @Mod.EventHandler
@@ -64,8 +64,6 @@ public class OTHTechnology {
         proxy.init(event);
         MachineLoader.loadMachines();
         NEIRecipeMaps.IMCSender();
-        new OTHBeeyonds();
-
     }
 
     @Mod.EventHandler
@@ -78,6 +76,7 @@ public class OTHTechnology {
     @Mod.EventHandler
     public void completeInit(FMLLoadCompleteEvent event) {
         RecipeLoader.loadRecipes();
+        new OTHBeeyonds();
     }
 
     @Mod.EventHandler

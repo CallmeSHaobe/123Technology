@@ -6,11 +6,12 @@ import com.brandon3055.brandonscore.common.handlers.ProcessHandler;
 import com.brandon3055.draconicevolution.common.tileentities.multiblocktiles.reactor.ReactorExplosion;
 import com.newmaa.othtech.Config;
 
+import gregtech.api.interfaces.ISecondaryDescribable;
 import gregtech.common.pollution.Pollution;
 import tectech.TecTech;
 import tectech.thing.metaTileEntity.multi.base.TTMultiblockBase;
 
-public abstract class TT_MultiMachineBase_EM extends TTMultiblockBase {
+public abstract class TT_MultiMachineBase_EM extends TTMultiblockBase implements ISecondaryDescribable {
 
     public TT_MultiMachineBase_EM(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
