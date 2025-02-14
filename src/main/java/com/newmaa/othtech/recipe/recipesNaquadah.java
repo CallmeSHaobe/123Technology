@@ -138,7 +138,7 @@ public class recipesNaquadah implements IRecipePool {
             GGMaterial.naquadahBasedFuelMkVIDepleted.getFluidOrGas(1), Materials.NaquadahEnriched.getMolten(1),
             Materials.Naquadah.getMolten(1), liquids.FUELA_DE.getFluidOrGas(1) };
         int[] NaquadahGen = new int[] { 12960, 2200, 32400, 975000, 2300000, 9511000, 88540000, 399576000, 2077795200,
-            1388888, 277777, 1231808 };
+            128000, 102400, 123123 };
         int[] TimeFuel = new int[] { 4 * SECOND, 18 * SECOND, 5 * SECOND, 2 * SECOND, 2 * SECOND, 3 * SECOND,
             3 * SECOND, 6 * SECOND, 9 * SECOND, SECOND, SECOND, 4 * SECOND };
         for (int i = 0; i < 12; i++) {

@@ -22,6 +22,8 @@ kevenzh HuimaoX
 
 感谢老登登们。
 ## **机器配方池**
+zs配方脚本编写请查阅GTTweaker in Github与MineTweaker3 or CraftTweaker教程
+
 神之艾萨锻炉 : "otht.recipe.MegaIsaForge"
 
 狄拉克潮汐 : "otht.recipe.OTEMegaQFT"
@@ -34,11 +36,17 @@ kevenzh HuimaoX
 
 木聚变反应堆 : otht.recipe.WoodenFusionReactor
 
+艾萨集成工厂 : otht.recipe.MISA
+
+压缩精炼厂独有配方池 : otht.recipe.NQF
+
+硅岩通化配方池 : otht.recipe.fuel.nq (谨慎添加)
+
 ## **关于GTNH**
 
 1.3.0及其以下版本只支持GTNH2.6.1 , GTNH2.6.0可以运行但不保证无bug
 
-1.3.0+支持GTNH2.7.0
+1.3.0+支持GTNH2.7.0 or GTNH2.7.2
 
 ## **关于模型**
 

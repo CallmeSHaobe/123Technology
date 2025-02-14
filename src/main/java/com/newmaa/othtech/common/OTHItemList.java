@@ -72,6 +72,7 @@ public enum OTHItemList {
     ShikanokoNoko,
     SunLighter,
     LeekBox,
+    itemTST,
     NukeThrowable,
     RecordPRKA,
     RecordPRKB,
@@ -82,6 +83,7 @@ public enum OTHItemList {
 
     // Machines
     AF,
+    MCA,
     NQFF,
     MISA,
     NQF,

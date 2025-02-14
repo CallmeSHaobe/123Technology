@@ -8,6 +8,7 @@ public class NEIRecipeMaps {
 
     public static void IMCSender() {
         sendCatalyst("otht.recipe.COC", "gregtech:gt.blockmachines:23539");
+        sendCatalyst("otht.recipe.MCA", "gregtech:gt.blockmachines:23549");
     }
 
     private static void sendCatalyst(String aName, String aStack, int aPriority) {

@@ -7,9 +7,11 @@ import com.newmaa.othtech.common.ItemAndBlockHandler;
 import com.newmaa.othtech.common.beeyonds.OTHBeeyonds;
 import com.newmaa.othtech.common.materials.MaterialsLoader;
 import com.newmaa.othtech.common.recipemap.NEIRecipeMaps;
+import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.MachineLoader;
 import com.newmaa.othtech.recipe.RecipeLoader;
 
+import bartworks.API.recipe.BartWorksRecipeMaps;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -17,6 +19,7 @@ import cpw.mods.fml.common.event.FMLLoadCompleteEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import gtPlusPlus.xmod.gregtech.loaders.RecipeGenMultisUsingFluidInsteadOfCells;
 
 @Mod(
     modid = OTHTechnology.MODID,
@@ -89,5 +92,13 @@ public class OTHTechnology {
     @Mod.EventHandler
     public void earlyGame(FMLPreInitializationEvent event) {
         Config.synchronizeConfiguration(event.getSuggestedConfigurationFile());
+        RecipeGenMultisUsingFluidInsteadOfCells
+            .generateRecipesNotUsingCells(BartWorksRecipeMaps.circuitAssemblyLineRecipes, Recipemaps.MCA);
+    }
+
+    @Mod.EventHandler
+    public void onLoadComplete(FMLLoadCompleteEvent event) {
+        proxy.onLoadComplete(event);
+
     }
 }

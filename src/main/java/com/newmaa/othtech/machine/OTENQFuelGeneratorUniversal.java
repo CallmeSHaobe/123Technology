@@ -10,6 +10,7 @@ import static gregtech.api.enums.HatchElement.OutputHatch;
 import static gregtech.api.enums.Textures.BlockIcons.*;
 import static gregtech.api.enums.TickTime.SECOND;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
+import static gregtech.api.util.GTUtility.validMTEList;
 import static gregtech.common.misc.WirelessNetworkManager.addEUToGlobalEnergyMap;
 import static net.minecraft.util.StatCollector.translateToLocal;
 
@@ -63,6 +64,8 @@ import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.common.blocks.BlockCasings8;
+import gregtech.common.tileentities.machines.IRecipeProcessingAwareHatch;
+import gregtech.common.tileentities.machines.MTEHatchInputME;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import tectech.thing.metaTileEntity.hatch.MTEHatchDynamoMulti;
@@ -236,18 +239,14 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
 
     @Override
     public boolean onRunningTick(ItemStack stack) {
-        startRecipeProcessing();
         if (this.getBaseMetaTileEntity()
             .isServerSide()) {
-
             if (heatingTicks < HEATING_TIMER) {
                 heatingTicks++;
                 isStoppingSafe = true;
             } else if (isStoppingSafe) isStoppingSafe = false;
-            endRecipeProcessing();
             addAutoEnergy();
         }
-        endRecipeProcessing();
         return true;
     }
 
@@ -314,14 +313,43 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
     }
 
     public void consumeAllLiquid(FluidStack liquid, List<FluidStack> input) {
+        startRecipeProcessing();
         for (FluidStack fluid : input) {
             if (fluid.isFluidEqual(liquid)) fluid.amount = 0;
+            endRecipeProcessing();
         }
     }
 
     @Override
     public boolean checkMachine_EM(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
+        for (final MTEHatchInput tHatch : validMTEList(mInputHatches)) {
+            if (tHatch instanceof MTEHatchInputME) {
+                return false;
+            }
+        }
         return structureCheck_EM(mName, 2, 2, 0);
+    }
+
+    protected final List<MTEHatchInput> mMiddleInputHatches = new ArrayList<>();
+
+    @Override
+    protected void startRecipeProcessing() {
+        for (MTEHatchInput hatch : validMTEList(mMiddleInputHatches)) {
+            if (hatch instanceof IRecipeProcessingAwareHatch aware) {
+                aware.startRecipeProcessing();
+            }
+        }
+        super.startRecipeProcessing();
+    }
+
+    @Override
+    protected void endRecipeProcessing() {
+        super.endRecipeProcessing();
+        for (MTEHatchInput hatch : validMTEList(mMiddleInputHatches)) {
+            if (hatch instanceof IRecipeProcessingAwareHatch aware) {
+                setResultIfFailure(aware.endRecipeProcessing(this));
+            }
+        }
     }
 
     @Override

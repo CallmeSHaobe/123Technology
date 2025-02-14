@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.item.foods.ingotHotDog;
 import com.newmaa.othtech.common.item.foods.itemLeekBox;
+import com.newmaa.othtech.common.item.foods.itemTST;
 import com.newmaa.othtech.common.item.foods.itemZhangww;
 import com.newmaa.othtech.common.item.tools.Dasima;
 import com.newmaa.othtech.common.item.tools.itemRecord;
@@ -26,6 +27,7 @@ public class ItemLoader {
     public static Item ShikanokoNoko = new ShikanokoNoko();
     public static Item itemSunLighter = new itemSunLighter();
     public static Item itemNukeThrowable = new itemNukeThrowable();
+    public static Item itemTST = new itemTST();
     public static Item RecordPRKA = new itemRecord("PRK_A");
     public static Item RecordPRKB = new itemRecord("PRK_B");
     public static Item RecordEVAA = new itemRecord("EVA_A");
@@ -47,6 +49,7 @@ public class ItemLoader {
         OTHItemList.RecordEVAB.set(registryAndCallback(RecordEVAB, "EVAB"));
         OTHItemList.RecordEVAC.set(registryAndCallback(RecordEVAC, "EVAC"));
         OTHItemList.RecordNGGU.set(registryAndCallback(RecordNGGU, "NGGU"));
+        OTHItemList.itemTST.set(registryAndCallback(itemTST, "itemTST"));
     }
 
     private static ItemStack registryAndCallback(Item item, String name) {

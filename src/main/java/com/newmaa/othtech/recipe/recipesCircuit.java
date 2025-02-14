@@ -306,7 +306,10 @@ public class recipesCircuit implements IRecipePool {
         // ULV - ZPM general soc recipes
         // ULV
         RecipeBuilder.builder()
-            .itemInputs(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 4, 32106), OTHItemList.socNorM.get(1))
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(1),
+                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 4, 32106),
+                OTHItemList.socNorM.get(1))
             .itemOutputs(setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 32081), 4096))
             .fluidInputs(new FluidStack(i140, 72))
             .noOptimize()
@@ -315,7 +318,10 @@ public class recipesCircuit implements IRecipePool {
             .addTo(ISA);
         // LV
         RecipeBuilder.builder()
-            .itemInputs(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 8, 32106), OTHItemList.socNorM.get(1))
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(2),
+                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 8, 32106),
+                OTHItemList.socNorM.get(1))
             .itemOutputs(setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32078), 2048))
             .fluidInputs(new FluidStack(i140, 144))
             .noOptimize()
@@ -324,7 +330,10 @@ public class recipesCircuit implements IRecipePool {
             .addTo(ISA);
         // MV
         RecipeBuilder.builder()
-            .itemInputs(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 16, 32106), OTHItemList.socNorM.get(1))
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(3),
+                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 16, 32106),
+                OTHItemList.socNorM.get(1))
             .itemOutputs(setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32080), 1024))
             .fluidInputs(new FluidStack(i140, 576))
             .noOptimize()

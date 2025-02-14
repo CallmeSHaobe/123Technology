@@ -149,8 +149,7 @@ public class OTEMegaEBFGTpp extends OTH_MultiMachineBase<OTEMegaEBFGTpp> {
 
     @Override
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
-        if (!this.checkPiece("main", 7, 17, 0) || this.getCoilLevel() == HeatingCoilLevel.None
-            || this.mMaintenanceHatches.size() != 1) return false;
+        if (!this.checkPiece("main", 7, 17, 0) || this.getCoilLevel() == HeatingCoilLevel.None) return false;
         if (this.glassTier < 8) {
             for (MTEHatch hatch : this.mExoticEnergyHatches) {
                 if (hatch.getConnectionType() == MTEHatch.ConnectionType.LASER) {

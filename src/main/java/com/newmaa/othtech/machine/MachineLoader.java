@@ -40,6 +40,7 @@ public class MachineLoader {
     public static ItemStack NQF;
     public static ItemStack AF;
     public static ItemStack NQFF;
+    public static ItemStack MCA;
 
     public static void loadMachines() {
         final int IDs = 23520;
@@ -125,6 +126,10 @@ public class MachineLoader {
         NQFF = new OTEMegaNQFuelFactory(IDs + 28, "MegaNQFuelFactory", EnumChatFormatting.DARK_AQUA + "压缩硅岩燃料精炼厂")
             .getStackForm(1);
         OTHItemList.NQFF.set(NQFF);
+
+        MCA = new OTEMegaCircuitAssLine(IDs + 29, "LargeCircuitAssLine", EnumChatFormatting.BOLD + "进阶高能电路装配线")
+            .getStackForm(1);
+        OTHItemList.MCA.set(MCA);
 
         // Lasers
 

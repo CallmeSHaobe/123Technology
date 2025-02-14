@@ -355,24 +355,24 @@ public class OTETangShanSteelFactory extends OTH_MultiMachineBase<OTETangShanSte
                 .addElement('T', ofFrame(Materials.StainlessSteel))
                 .addElement(
                     'U',
-                    (Chisel.isModLoaded() && Block.getBlockFromName(Chisel.ID + ":concrete") != null)
-                        ? ofBlock(Block.getBlockFromName(Chisel.ID + ":concrete"), HORIZONTAL_DIRT_METAID_A)
-                        : ofBlock(sBlockConcretes, 0))
+                    (Chisel.isModLoaded() && Block.getBlockFromName(Chisel.ID + ":concrete") != null) ? ofBlock(
+                        Objects.requireNonNull(Block.getBlockFromName(Chisel.ID + ":concrete")),
+                        HORIZONTAL_DIRT_METAID_A) : ofBlock(sBlockConcretes, 0))
                 .addElement(
                     'V',
-                    (Chisel.isModLoaded() && Block.getBlockFromName(Chisel.ID + ":concrete") != null)
-                        ? ofBlock(Block.getBlockFromName(Chisel.ID + ":concrete"), HORIZONTAL_DIRT_METAID)
-                        : ofBlock(sBlockConcretes, 0))
+                    (Chisel.isModLoaded() && Block.getBlockFromName(Chisel.ID + ":concrete") != null) ? ofBlock(
+                        Objects.requireNonNull(Block.getBlockFromName(Chisel.ID + ":concrete")),
+                        HORIZONTAL_DIRT_METAID) : ofBlock(sBlockConcretes, 0))
                 .addElement(
                     'W',
-                    (Chisel.isModLoaded() && Block.getBlockFromName(Chisel.ID + ":concrete") != null)
-                        ? ofBlock(Block.getBlockFromName(Chisel.ID + ":hempcrete"), HORIZONTAL_DIRT_METAID_B)
-                        : ofBlock(sBlockConcretes, 0))
+                    (Chisel.isModLoaded() && Block.getBlockFromName(Chisel.ID + ":concrete") != null) ? ofBlock(
+                        Objects.requireNonNull(Block.getBlockFromName(Chisel.ID + ":hempcrete")),
+                        HORIZONTAL_DIRT_METAID_B) : ofBlock(sBlockConcretes, 0))
                 .addElement(
                     'X',
-                    (Chisel.isModLoaded() && Block.getBlockFromName(Chisel.ID + ":concrete") != null)
-                        ? ofBlock(Block.getBlockFromName(Chisel.ID + ":hempcrete"), HORIZONTAL_DIRT_METAID_C)
-                        : ofBlock(sBlockConcretes, 0))
+                    (Chisel.isModLoaded() && Block.getBlockFromName(Chisel.ID + ":concrete") != null) ? ofBlock(
+                        Objects.requireNonNull(Block.getBlockFromName(Chisel.ID + ":hempcrete")),
+                        HORIZONTAL_DIRT_METAID_C) : ofBlock(sBlockConcretes, 0))
                 .addElement(
                     'Y',
                     buildHatchAdder(OTETangShanSteelFactory.class).atLeast(Muffler)

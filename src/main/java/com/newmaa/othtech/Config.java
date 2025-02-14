@@ -14,7 +14,8 @@ public class Config {
 
         greeting = configuration.getString("greeting", Configuration.CATEGORY_GENERAL, greeting, "How shall I greet?");
         BOOM_SWITCH = configuration.getBoolean("OTHTechnology : 控制TT模版机器爆炸", "憋憋", BOOM_SWITCH, "憋憋");
-
+        ENQING_MULTI = configuration
+            .getFloat("OTHTechnology : 恩情工厂配方产物倍率(float) , 倍率四舍五入", "不憋憋", 1.5f, 1.0f, 114514f, "不憋憋");
         if (configuration.hasChanged()) {
             configuration.save();
         }
@@ -28,4 +29,5 @@ public class Config {
     public static float SpeedMultiplier_ISA_Forge = 1F;
     public static float Piece_EnablePO_ISA = 1;
     public static boolean BOOM_SWITCH = true;
+    public static float ENQING_MULTI = 1.5f;
 }

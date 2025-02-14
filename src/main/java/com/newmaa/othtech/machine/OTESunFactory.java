@@ -80,7 +80,7 @@ public class OTESunFactory extends OTH_MultiMachineBase<OTESunFactory> {
         aNBT.setInteger("mode", mode);
         aNBT.setByte("glassTier", glassTier);
         aNBT.setDouble("speedBonus", Beeyonds);
-        aNBT.setInteger("stabilisationfieldgenerators", stabilisationFieldMetadata);
+        aNBT.setInteger("sfg", stabilisationFieldMetadata);
 
     }
 
@@ -90,7 +90,7 @@ public class OTESunFactory extends OTH_MultiMachineBase<OTESunFactory> {
         mode = aNBT.getByte("mode");
         glassTier = aNBT.getByte("glassTier");
         Beeyonds = aNBT.getDouble("speedBonus");
-        stabilisationFieldMetadata = aNBT.getInteger("stabilisationfieldgenerators");
+        stabilisationFieldMetadata = aNBT.getInteger("sfg");
 
     }
 
@@ -349,7 +349,7 @@ public class OTESunFactory extends OTH_MultiMachineBase<OTESunFactory> {
                 .addElement(
                     'J',
                     withChannel(
-                        "stabilisationfieldgenerators",
+                        "sfg",
                         ofBlocksTiered(
                             OTEMegaQFT::getBlockStabilisationFieldGeneratorTier,
                             ImmutableList.of(
@@ -2414,6 +2414,7 @@ public class OTESunFactory extends OTH_MultiMachineBase<OTESunFactory> {
             .addInfo("§5利用「恩情」的力量将原材料一步转化为电路板所需要的材料")
             .addInfo("§5具有令人畏惧的良品率和毫无瑕疵的精密度")
             .addInfo("§a消耗恩情运行 : 1t/个")
+            .addInfo("在配置文件设置配方NEI产出倍率, 默认为1.5, 四舍五入")
             .addInfo("--------------------")
             .addInfo("§b主机放入一团蜂群, 按照堆叠数量获得相应加速(log2(蜂群数量), 舍弃小数向下取整)")
             .addInfo("§b碳纳米蜂群 -- -2%")
@@ -2421,10 +2422,10 @@ public class OTESunFactory extends OTH_MultiMachineBase<OTESunFactory> {
             .addInfo("§b永恒蜂群 -- 75%")
             .addInfo("§b宇宙素蜂群 -- 150%")
             .addInfo("--------------------")
-            .addInfo("stabilisationfieldgenerators信道 = 0 解锁PCB工厂")
-            .addInfo("stabilisationfieldgenerators信道 = 2 解锁贴片工坊")
-            .addInfo("stabilisationfieldgenerators信道 = 5 解锁NMD晶圆厂")
-            .addInfo("stabilisationfieldgenerators信道 = 8 解锁元件聚合者")
+            .addInfo("sfg信道 = 0 解锁PCB工厂")
+            .addInfo("sfg信道 = 2 解锁贴片工坊")
+            .addInfo("sdf信道 = 5 解锁NMD晶圆厂")
+            .addInfo("sfg信道 = 8 解锁元件聚合者")
             .addInfo("更换力场后结构不成型请重放主机")
             .addTecTechHatchInfo()
             .addSeparator()

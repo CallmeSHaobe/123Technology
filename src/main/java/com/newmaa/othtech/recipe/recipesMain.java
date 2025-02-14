@@ -1133,5 +1133,30 @@ public class recipesMain implements IRecipePool {
             .eut(RECIPE_UEV)
             .duration(3600 * 20)
             .addTo(AssemblyLine);
+        // MCA
+        GTValues.RA.stdBuilder()
+            .metadata(RESEARCH_ITEM, OTHItemList.LCA.get(1))
+            .metadata(RESEARCH_TIME, 4 * HOURS)
+            .itemInputs(
+                GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 64, 12735),
+                OTHItemList.LCA.get(64),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Infinite, 64),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Infinite, 64),
+                ItemList.Robot_Arm_UV.get(16),
+                ItemList.Electric_Motor_UV.get(64),
+                ItemList.Electric_Pump_UV.get(32),
+                ItemList.Field_Generator_UV.get(16),
+                ItemList.Emitter_UV.get(48),
+                ItemList.Sensor_UV.get(48),
+                ItemList.Circuit_Chip_QPIC.get(48),
+                GTOreDictUnificator.get(OrePrefixes.gear, Materials.Neutronium, 16),
+                GTOreDictUnificator.get(OrePrefixes.wireGt02, Materials.SuperconductorUV, 64))
+            .fluidInputs(
+                Materials.Neutronium.getMolten(92160),
+                FluidRegistry.getFluidStack("molten.indalloy140", 288000))
+            .itemOutputs(OTHItemList.MCA.get(1))
+            .eut(RECIPE_UHV)
+            .duration(480 * 20)
+            .addTo(AssemblyLine);
     }
 }

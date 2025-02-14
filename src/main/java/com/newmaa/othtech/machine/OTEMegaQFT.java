@@ -497,7 +497,7 @@ public class OTEMegaQFT extends OTH_MultiMachineBase<OTEMegaQFT> {
             .addOutputHatch("AnyOutputHatch", 1)
             .addEnergyHatch("AnyEnergyHatch", 1)
             .addMufflerHatch("AnyMufflerHatch", 1)
-            .toolTipFinisher("§b123Technology - Make recipesQFTRecipes great again!");
+            .toolTipFinisher("§b123Technology - Make QFT great again!");
         return tt;
     }
 

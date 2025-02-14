@@ -167,4 +167,8 @@ public class Recipemaps {
         .dontUseProgressBar()
         .addSpecialTexture(59, 20, 58, 42, GGUITextures.PICTURE_NAQUADAH_REACTOR)
         .build();
+    public static final RecipeMap<RecipeMapBackend> MCA = RecipeMapBuilder.of("otht.recipe.MCA")
+        .maxIO(6, 1, 1, 0)
+        .progressBar(GTUITextures.PROGRESSBAR_CIRCUIT_ASSEMBLER)
+        .build();
 }
