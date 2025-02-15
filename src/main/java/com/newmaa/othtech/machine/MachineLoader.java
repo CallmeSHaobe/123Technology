@@ -4,8 +4,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 
 import com.newmaa.othtech.common.OTHItemList;
-import com.newmaa.othtech.machine.hatch.OTEMetaTileEntity_Hatch_OutputBus_ME;
-import com.newmaa.othtech.machine.hatch.OTEMetaTileEntity_Hatch_Output_ME;
 import com.newmaa.othtech.machine.hatch.OTEWTFHatch;
 import com.newmaa.othtech.machine.hatch.OTH_MTEHatchWirelessMulti;
 
@@ -74,11 +72,7 @@ public class MachineLoader {
         MFREpp = new OTEMegaFreezerGTpp(IDs + 8, "MegaFreezerGTPP", "巨型凛冰冷冻机").getStackForm(1);
         OTHItemList.MFREpp.set(MFREpp);
 
-        HatchME = new OTEMetaTileEntity_Hatch_Output_ME(IDs + 11, "OutputHatchME", "输出仓(ME)(123t)").getStackForm(1);
-        OTHItemList.HatchME.set(HatchME);
 
-        BusME = new OTEMetaTileEntity_Hatch_OutputBus_ME(IDs + 12, "OutputBusME", "输出总线(ME)(123t)").getStackForm(1);
-        OTHItemList.BusME.set(BusME);
 
         SINOPECd = new OTESINOPEC(IDs + 13, "SINOPEC", "中国石化集成工厂").getStackForm(1);
         OTHItemList.SINOPECd.set(SINOPECd);

@@ -75,7 +75,10 @@ public class OTEMegaNineInOne extends OTH_MultiMachineBase<OTEMegaNineInOne> {
     private static final int MODE_ISA = 9;
     private static final int MODE_FLOAT = 10;
     private static final int MODE_VACUUM = 11;
-    private static final int[][] MODE_MAP = new int[][] { { 0, 1, 2 }, { 3, 4, 5 }, { 6, 7, 8 }, { 9, 10, 11 } };
+    private static final int MODE_MOLE = 12;
+    private static final int MODE_BREW = 13;
+    private static final int MODE_HEAT = 14;
+    private static final int[][] MODE_MAP = new int[][] { { 0, 1, 2 }, { 3, 4, 5 }, { 6, 7, 8 }, { 9, 10, 11 }, { 12, 13, 14} };
 
     public int getTextureIndex() {
         return TAE.getIndexFromPage(2, 2);
@@ -166,7 +169,10 @@ public class OTEMegaNineInOne extends OTH_MultiMachineBase<OTEMegaNineInOne> {
             RecipeMaps.fluidSolidifierRecipes,
             GTPPRecipeMaps.millingRecipes,
             GTPPRecipeMaps.flotationCellRecipes,
-            GTPPRecipeMaps.vacuumFurnaceRecipes);
+            GTPPRecipeMaps.vacuumFurnaceRecipes,
+            GTPPRecipeMaps.molecularTransformerRecipes,
+            RecipeMaps.brewingRecipes,
+            RecipeMaps.fluidHeaterRecipes);
     }
 
     @Override
@@ -187,9 +193,7 @@ public class OTEMegaNineInOne extends OTH_MultiMachineBase<OTEMegaNineInOne> {
 
             @Override
             protected @NotNull CheckRecipeResult validateRecipe(@NotNull GTRecipe recipe) {
-                if (recipe.getMetadata(CompressionTierKey.INSTANCE) > 0 && mInternalMode == 0
-                    && CI.getNumberedAdvancedCircuit(0)
-                        .getItemDamage() == 20) {
+                if (recipe.getMetadata(CompressionTierKey.INSTANCE) != null) {
                     if (getCoilTier() < 10 && recipe.getMetadata(CompressionTierKey.INSTANCE) == 1) {
                         return CheckRecipeResultRegistry.insufficientMachineTier(1);
                     } else if (getCoilTier() < 13 && recipe.getMetadata(CompressionTierKey.INSTANCE) == 2) {
@@ -247,14 +251,18 @@ public class OTEMegaNineInOne extends OTH_MultiMachineBase<OTEMegaNineInOne> {
             return GTPPRecipeMaps.flotationCellRecipes;
         } else if (aMode == MODE_VACUUM) {
             return GTPPRecipeMaps.vacuumFurnaceRecipes;
-        } else {
-            return null;
-        }
+        } else if (aMode == MODE_MOLE) {
+            return GTPPRecipeMaps.molecularTransformerRecipes;
+        } else if (aMode == MODE_BREW) {
+            return RecipeMaps.brewingRecipes;
+        } else if (aMode == MODE_HEAT) {
+            return RecipeMaps.fluidHeaterRecipes;
+        } else return null;
     }
 
     @Override
     public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ) {
-        if (mInternalMode < 3) {
+        if (mInternalMode < 4) {
             mInternalMode++;
         } else {
             mInternalMode = 0;
@@ -264,7 +272,7 @@ public class OTEMegaNineInOne extends OTH_MultiMachineBase<OTEMegaNineInOne> {
             StatCollector.translateToLocal(
                 mInternalMode == 0 ? "Metal"
                     : mInternalMode == 1 ? "Fluid"
-                        : mInternalMode == 2 ? "Misc" : mInternalMode == 3 ? "Isa" : "Null"));
+                        : mInternalMode == 2 ? "Misc" : mInternalMode == 3 ? "Isa" : mInternalMode == 4 ? "Col" : "Null"));
     }
 
     @Override
@@ -805,11 +813,12 @@ public class OTEMegaNineInOne extends OTH_MultiMachineBase<OTEMegaNineInOne> {
     protected MultiblockTooltipBuilder createTooltip() {
         final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType("§c§l老登的终极造物 - 九合一 (巨型加工厂)")
-            .addInfo("§a共有十二种模式, 使用螺丝刀切换类模式， 使用突破编程电路20 21 22切换内部模式")
+            .addInfo("§a共有十五种模式, 使用螺丝刀切换类模式， 使用突破编程电路20 21 22切换内部模式")
             .addInfo("§aMetal类: 压缩机 车床 电力磁化机")
             .addInfo("§aFluid类: 发酵槽 流体提取机 提取机")
             .addInfo("§aMisc类: 激光蚀刻机 高压釜 流体固化机")
             .addInfo("§aIsa类: 艾萨研磨机 工业浮选机 真空干燥炉")
+            .addInfo("§aCol类: 分子重组仪 酿造室 流体加热机")
             .addInfo("§b并行耗时公式来自某位§9冰之妖精")
             .addInfo("§b电压等级提高一级，并行 -2， 最低为⑨, 默认为256")
             .addInfo("§b配方耗时 = NEI耗时 * (1 + (能源仓电压等级 * 10%))")

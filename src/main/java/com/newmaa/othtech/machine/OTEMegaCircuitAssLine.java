@@ -2,6 +2,7 @@ package com.newmaa.othtech.machine;
 
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.withChannel;
+import static com.newmaa.othtech.common.recipemap.Recipemaps.MCA;
 import static gregtech.api.GregTechAPI.*;
 import static gregtech.api.GregTechAPI.sBlockCasings8;
 import static gregtech.api.enums.HatchElement.*;
@@ -176,7 +177,7 @@ public class OTEMegaCircuitAssLine extends OTH_MultiMachineBase<OTEMegaCircuitAs
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        return BartWorksRecipeMaps.circuitAssemblyLineRecipes;
+        return MCA;
     }
 
     private NBTTagCompound type = new NBTTagCompound();
