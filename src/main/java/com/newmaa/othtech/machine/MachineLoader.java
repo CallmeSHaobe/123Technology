@@ -72,8 +72,6 @@ public class MachineLoader {
         MFREpp = new OTEMegaFreezerGTpp(IDs + 8, "MegaFreezerGTPP", "巨型凛冰冷冻机").getStackForm(1);
         OTHItemList.MFREpp.set(MFREpp);
 
-
-
         SINOPECd = new OTESINOPEC(IDs + 13, "SINOPEC", "中国石化集成工厂").getStackForm(1);
         OTHItemList.SINOPECd.set(SINOPECd);
 

@@ -10,8 +10,8 @@ public class RecipeLoader {
             new recipesMegaISAForge(), new recipesMixerRecipes(), new recipesQFTRecipes(), new recipesMegaQFT(),
             new recipesCyclotronRecipes(), new recipesCircuit(), new recipesSINOPEC(),
             new recipesTangshanSteelFactory(), new recipesMegaEEC(), new recipesSunFactoryEnqing(),
-            new recipesEpicCokeOvenFake(), new recipesWoodenFusionReactor(), new recipesMISA(), new recipesNaquadah(),
-            };
+            new recipesEpicCokeOvenFake(), new recipesWoodenFusionReactor(), new recipesMISA(),
+            new recipesNaquadah(), };
         if (!modsEnum.TwistSpaceTechnology.isModLoaded()) {
             new recipesCopiedFromTST().loadRecipes();
         }

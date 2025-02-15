@@ -78,7 +78,8 @@ public class OTEMegaNineInOne extends OTH_MultiMachineBase<OTEMegaNineInOne> {
     private static final int MODE_MOLE = 12;
     private static final int MODE_BREW = 13;
     private static final int MODE_HEAT = 14;
-    private static final int[][] MODE_MAP = new int[][] { { 0, 1, 2 }, { 3, 4, 5 }, { 6, 7, 8 }, { 9, 10, 11 }, { 12, 13, 14} };
+    private static final int[][] MODE_MAP = new int[][] { { 0, 1, 2 }, { 3, 4, 5 }, { 6, 7, 8 }, { 9, 10, 11 },
+        { 12, 13, 14 } };
 
     public int getTextureIndex() {
         return TAE.getIndexFromPage(2, 2);
@@ -272,7 +273,8 @@ public class OTEMegaNineInOne extends OTH_MultiMachineBase<OTEMegaNineInOne> {
             StatCollector.translateToLocal(
                 mInternalMode == 0 ? "Metal"
                     : mInternalMode == 1 ? "Fluid"
-                        : mInternalMode == 2 ? "Misc" : mInternalMode == 3 ? "Isa" : mInternalMode == 4 ? "Col" : "Null"));
+                        : mInternalMode == 2 ? "Misc"
+                            : mInternalMode == 3 ? "Isa" : mInternalMode == 4 ? "Col" : "Null"));
     }
 
     @Override

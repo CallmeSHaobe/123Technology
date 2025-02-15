@@ -3,24 +3,30 @@ package com.newmaa.othtech.machine;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.withChannel;
 import static com.newmaa.othtech.common.recipemap.Recipemaps.MCA;
-import static gregtech.api.GregTechAPI.*;
+import static gregtech.api.GregTechAPI.sBlockCasings2;
 import static gregtech.api.GregTechAPI.sBlockCasings8;
-import static gregtech.api.enums.HatchElement.*;
+import static gregtech.api.GregTechAPI.sBlockCasings9;
+import static gregtech.api.enums.HatchElement.Energy;
+import static gregtech.api.enums.HatchElement.ExoticEnergy;
+import static gregtech.api.enums.HatchElement.InputBus;
+import static gregtech.api.enums.HatchElement.InputHatch;
+import static gregtech.api.enums.HatchElement.OutputBus;
 import static gregtech.api.enums.HatchElement.OutputHatch;
-import static gregtech.api.enums.Textures.BlockIcons.*;
+import static gregtech.api.enums.SoundResource.IC2_MACHINES_MAGNETIZER_LOOP;
+import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_ASSEMBLY_LINE;
+import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_ASSEMBLY_LINE_ACTIVE;
+import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_ASSEMBLY_LINE_ACTIVE_GLOW;
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_ASSEMBLY_LINE_GLOW;
 import static gregtech.api.util.GTStructureUtility.*;
 import static net.minecraft.util.StatCollector.translateToLocal;
 
 import java.util.List;
 
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -30,17 +36,12 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
-import com.newmaa.othtech.utils.Utils;
+import com.newmaa.othtech.recipe.recipesMCA;
 
 import bartworks.API.BorosilicateGlass;
-import bartworks.API.recipe.BartWorksRecipeMaps;
-import bartworks.system.material.CircuitGeneration.BWMetaItems;
-import bartworks.system.material.CircuitGeneration.CircuitImprintLoader;
+import goodgenerator.loader.Loaders;
 import gregtech.api.GregTechAPI;
-import gregtech.api.enums.HeatingCoilLevel;
 import gregtech.api.enums.ItemList;
-import gregtech.api.enums.Materials;
-import gregtech.api.enums.SoundResource;
 import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
@@ -50,11 +51,11 @@ import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.render.TextureFactory;
-import gregtech.api.util.GTLanguageManager;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.common.blocks.BlockCasings2;
+import gtPlusPlus.core.block.ModBlocks;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 
@@ -71,22 +72,6 @@ public class OTEMegaCircuitAssLine extends OTH_MultiMachineBase<OTEMegaCircuitAs
     private boolean $123 = false;
 
     public byte glassTier = 0;
-    private String imprintedItemName;
-    private ItemStack imprintedStack;
-
-    private HeatingCoilLevel coilLevel;
-
-    public HeatingCoilLevel getCoilLevel() {
-        return this.coilLevel;
-    }
-
-    public void setCoilLevel(HeatingCoilLevel coilLevel) {
-        this.coilLevel = coilLevel;
-    }
-
-    public int getCoilTier() {
-        return Utils.getCoilTier(coilLevel);
-    }
 
     @Override
     public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
@@ -113,17 +98,6 @@ public class OTEMegaCircuitAssLine extends OTH_MultiMachineBase<OTEMegaCircuitAs
         super.loadNBTData(aNBT);
         $123 = aNBT.getBoolean("123");
         glassTier = aNBT.getByte("glassTier");
-    }
-
-    public String getTypeForDisplay() {
-
-        if (!isImprinted()) return "";
-        return GTLanguageManager.getTranslation(
-            GTLanguageManager.getTranslateableItemStackName(CircuitImprintLoader.getStackFromTag(this.type)));
-    }
-
-    public boolean isImprinted() {
-        return !this.type.hasNoTags();
     }
 
     @Override
@@ -156,10 +130,6 @@ public class OTEMegaCircuitAssLine extends OTH_MultiMachineBase<OTEMegaCircuitAs
                 + EnumChatFormatting.GOLD
                 + tag.getString("parallel")
                 + EnumChatFormatting.RESET);
-        if (tag.hasKey("ImprintedWith")) currentTip.add(
-            StatCollector.translateToLocal("tooltip.cal.imprintedWith") + " "
-                + EnumChatFormatting.YELLOW
-                + tag.getString("ImprintedWith"));
     }
 
     @Override
@@ -180,64 +150,9 @@ public class OTEMegaCircuitAssLine extends OTH_MultiMachineBase<OTEMegaCircuitAs
         return MCA;
     }
 
-    private NBTTagCompound type = new NBTTagCompound();
-
     @Override
     public @NotNull CheckRecipeResult checkProcessing() {
-        if (this.imprintedItemName == null || this.imprintedStack == null) {
-            this.imprintedStack = new ItemStack(BWMetaItems.getCircuitParts(), 1, 0);
-            this.imprintedStack.setTagCompound(this.type);
-            this.imprintedItemName = GTLanguageManager.getTranslateableItemStackName(this.imprintedStack);
-        }
-        for (ItemStack input : getStoredInputs()) {
-            if (input.getItem() instanceof BWMetaItems.BW_GT_MetaGenCircuits) imprintMachine(input);
-        }
         return super.checkProcessing();
-    }
-
-    private boolean imprintMachine(ItemStack itemStack) {
-        if (!GTUtility.isStackValid(itemStack)) return false;
-        if (itemStack.getItem() instanceof BWMetaItems.BW_GT_MetaGenCircuits && itemStack.getItemDamage() == 0
-            && itemStack.getTagCompound() != null) {
-            this.type = itemStack.getTagCompound();
-            itemStack.stackSize -= 1;
-            if (itemStack == getControllerSlot() && itemStack.stackSize <= 0) {
-                mInventory[getControllerSlotIndex()] = null;
-            }
-            this.getBaseMetaTileEntity()
-                .issueBlockUpdate();
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public void onLeftclick(IGregTechTileEntity aBaseMetaTileEntity, EntityPlayer aPlayer) {
-        if (!isImprinted() && getBaseMetaTileEntity().isServerSide()) {
-            ItemStack heldItem = aPlayer.getHeldItem();
-            if (imprintMachine(heldItem)) {
-                if (heldItem.stackSize <= 0) {
-                    aPlayer.inventory.setInventorySlotContents(aPlayer.inventory.currentItem, null);
-                }
-                return;
-            }
-        }
-        super.onLeftclick(aBaseMetaTileEntity, aPlayer);
-    }
-
-    private String[] infoDataBuffer;
-
-    @Override
-    public String[] getInfoData() {
-        if (this.infoDataBuffer != null) return this.infoDataBuffer;
-
-        String[] oldInfo = super.getInfoData();
-        this.infoDataBuffer = new String[oldInfo.length + 1];
-        System.arraycopy(oldInfo, 0, this.infoDataBuffer, 0, oldInfo.length);
-        this.infoDataBuffer[oldInfo.length] = StatCollector.translateToLocal("tooltip.cal.imprintedWith") + " "
-            + EnumChatFormatting.YELLOW
-            + this.getTypeForDisplay();
-        return this.infoDataBuffer;
     }
 
     @Override
@@ -265,6 +180,7 @@ public class OTEMegaCircuitAssLine extends OTH_MultiMachineBase<OTEMegaCircuitAs
     @Override
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
         repairMachine();
+        new recipesMCA().loadRecipes();
         return checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet);
 
     }
@@ -297,8 +213,8 @@ public class OTEMegaCircuitAssLine extends OTH_MultiMachineBase<OTEMegaCircuitAs
     private static final String STRUCTURE_PIECE_MAIN = "main";
 
     private final int horizontalOffSet = 3;
-    private final int verticalOffSet = 12;
-    private final int depthOffSet = 0;
+    private final int verticalOffSet = 6;
+    private final int depthOffSet = 3;
     private static IStructureDefinition<OTEMegaCircuitAssLine> STRUCTURE_DEFINITION = null;
     private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
         translateToLocal("1 - 输入输出总线, 输入输出仓, 能源仓 : 替换脱氧钢机械方块, 支持TecTech能源仓") };
@@ -323,19 +239,26 @@ public class OTEMegaCircuitAssLine extends OTH_MultiMachineBase<OTEMegaCircuitAs
                             Byte.MAX_VALUE,
                             (te, t) -> te.glassTier = t,
                             te -> te.glassTier)))
-                .addElement('B', ofBlock(sBlockCasings1, 6))
-                .addElement('C', ofBlock(sBlockCasings4, 12))
-                .addElement('E', ofBlock(sBlockCasings8, 1))
-                .addElement('G', ofFrame(Materials.Iridium))
+                .addElement('B', ofBlock(Loaders.componentAssemblylineCasing, 7))
+                .addElement('C', ofBlock(sBlockCasings2, 0))
+                .addElement('E', ofBlock(sBlockCasings2, 5))
+                .addElement('F', ofBlock(sBlockCasings2, 9))
+                .addElement('H', ofBlock(sBlockCasings8, 2))
+                .addElement('I', ofBlock(sBlockCasings8, 3))
+                .addElement('J', ofBlock(sBlockCasings9, 1))
+                .addElement('K', ofBlock(ModBlocks.blockCasings2Misc, 12))
+                .addElement('L', ofBlock(Loaders.preciseUnitCasing, 2))
                 .addElement(
                     'D',
-                    withChannel(
-                        "coil",
-                        ofCoil(OTEMegaCircuitAssLine::setCoilLevel, OTEMegaCircuitAssLine::getCoilLevel)))
+                    buildHatchAdder(OTEMegaCircuitAssLine.class).atLeast(OutputBus)
+                        .adder(OTEMegaCircuitAssLine::addToMachineList)
+                        .dot(2)
+                        .casingIndex(((BlockCasings2) GregTechAPI.sBlockCasings2).getTextureIndex(0))
+                        .buildAndChain(sBlockCasings2, 0))
                 .addElement(
-                    'F',
+                    'G',
                     buildHatchAdder(OTEMegaCircuitAssLine.class)
-                        .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch)
+                        .atLeast(Energy.or(ExoticEnergy), InputBus, InputHatch, OutputHatch)
                         .adder(OTEMegaCircuitAssLine::addToMachineList)
                         .dot(1)
                         .casingIndex(((BlockCasings2) GregTechAPI.sBlockCasings2).getTextureIndex(0))
@@ -345,33 +268,52 @@ public class OTEMegaCircuitAssLine extends OTH_MultiMachineBase<OTEMegaCircuitAs
         return STRUCTURE_DEFINITION;
     }
 
-    // Structured by LyeeR
+    // Structured by NewMaa
     private final String[][] shapeMain = new String[][] {
-        { "FFFFFFF", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G",
-            "G     G", "G     G", "FFF~FFF" },
-        { "FFFFFFF", " BBBBB ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ",
-            " AAAAA ", " BBBBB ", "FFFFFFF" },
-        { "FFFFFFF", " BDDDB ", " A G A ", " A E A ", " A E A ", " A G A ", " ADDDA ", " A G A ", " A E A ", " A E A ",
-            " A G A ", " BDDDB ", "FFFFFFF" },
-        { "FFFFFFF", " BDCDB ", " AGCGA ", " AECEA ", " AECEA ", " AGCGA ", " ADCDA ", " AGCGA ", " AECEA ", " AECEA ",
-            " AGCGA ", " BDCDB ", "FFFFFFF" },
-        { "FFFFFFF", " BDDDB ", " A G A ", " A E A ", " A E A ", " A G A ", " ADDDA ", " A G A ", " A E A ", " A E A ",
-            " A G A ", " BDDDB ", "FFFFFFF" },
-        { "FFFFFFF", " BBBBB ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ",
-            " AAAAA ", " BBBBB ", "FFFFFFF" },
-        { "FFFFFFF", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G",
-            "G     G", "G     G", "FFFFFFF" } };
+        { "                             ", "                             ", "                             ",
+            "                             ", "                             ", "                             ",
+            "                             ", "                             ", " HHHHHHHHHHHHHHHHHHHHHHHHHHH " },
+        { "                             ", "                             ", "                             ",
+            "                             ", "                             ", "                             ",
+            "                             ", "                             ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
+        { "                             ", "                             ", "                             ",
+            "                             ", "                             ", "                             ",
+            "                             ", "  I                       I  ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
+        { "                             ", "                             ", "                             ",
+            "                             ", "                             ", "                             ",
+            "  I~CCCCCCCCCCCCCCCCCCCCCCI  ", "  IGGGGGGGGGGGGGGGGGGGGGGGI  ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
+        { "                             ", "                             ", "  IIIIIIIIIIIIIIIIIIIIIIIII  ",
+            "  IAAAAAAAAAAAAAAAAAAAAAAAI  ", "  IAAAAAAAAAAAAAAAAAAAAAAAI  ", "  IAAAAAAAAAAAAAAAAAAAAAAAI  ",
+            "  IAAAAAAAAAAAAAAAAAAAAAAAI  ", " IICCCCCCCCCCCCCCCCCCCCCCCII ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
+        { "  I                       I  ", "  IJJJJJJJJJJJJJJJJJJJJJJJI  ", "  IJJJJJJJJJJJJJJJJJJJJJJJI  ",
+            "  I                       I  ", "  C                       C  ", "  C                       C  ",
+            "  CKLLLLLLLLLLLLLLLLLLLLLKC  ", " IIFFFFFFFFFFFFFFFFFFFFFFFII ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
+        { "  I                       I  ", "  IJJJJJJJJJJJJJJJJJJJJJJJI  ", "  CJBBBBBBBBBBBBBBBBBBBBBJC  ",
+            "  C                       C  ", "  C                       C  ", "  C                       D  ",
+            "  CK                     KC  ", " IIFEEEEEEEEEEEEEEEEEEEEEFII ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
+        { "  I                       I  ", "  IJJJJJJJJJJJJJJJJJJJJJJJI  ", "  IJJJJJJJJJJJJJJJJJJJJJJJI  ",
+            "  I                       I  ", "  C                       C  ", "  C                       C  ",
+            "  CKLLLLLLLLLLLLLLLLLLLLLKC  ", " IIFFFFFFFFFFFFFFFFFFFFFFFII ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
+        { "                             ", "                             ", "  IIIIIIIIIIIIIIIIIIIIIIIII  ",
+            "  IAAAAAAAAAAAAAAAAAAAAAAAI  ", "  IAAAAAAAAAAAAAAAAAAAAAAAI  ", "  IAAAAAAAAAAAAAAAAAAAAAAAI  ",
+            "  IAAAAAAAAAAAAAAAAAAAAAAAI  ", " IICCCCCCCCCCCCCCCCCCCCCCCII ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
+        { "                             ", "                             ", "                             ",
+            "                             ", "                             ", "                             ",
+            "  ICCCCCCCCCCCCCCCCCCCCCCCI  ", "  ICCCCCCCCCCCCCCCCCCCCCCCI  ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
+        { "                             ", "                             ", "                             ",
+            "                             ", "                             ", "                             ",
+            "                             ", "  I                       I  ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
+        { "                             ", "                             ", "                             ",
+            "                             ", "                             ", "                             ",
+            "                             ", "                             ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
+        { "                             ", "                             ", "                             ",
+            "                             ", "                             ", "                             ",
+            "                             ", "                             ", " HHHHHHHHHHHHHHHHHHHHHHHHHHH " } };
 
     @Override
     public boolean addToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
         return super.addToMachineList(aTileEntity, aBaseCasingIndex)
             || addExoticEnergyInputToMachineList(aTileEntity, aBaseCasingIndex);
-    }
-
-    @Override
-    protected void setupProcessingLogic(ProcessingLogic logic) {
-        super.setupProcessingLogic(logic);
-        logic.setSpecialSlotItem(this.imprintedStack);
     }
 
     @Override
@@ -383,9 +325,12 @@ public class OTEMegaCircuitAssLine extends OTH_MultiMachineBase<OTEMegaCircuitAs
             .addInfo("§b玻璃等级决定他的外观, 不成型请重放主机")
             .addInfo("默认为128并行. 电压等级每提高一级, 并行 + 16")
             .addInfo("主机放入UEV力场以解锁无损超频")
+            .addInfo("由于BW神人的配方加载时间, 该机器放下后才会加载专属配方池, 配方与电装一样, 只是没有刻印电路")
+            .addInfo("如果机器放下后, 依然没有配方池, 请尝试重进游戏.")
             .addTecTechHatchInfo()
             .addSeparator()
             .addController("电装")
+            .beginStructureBlock(13, 9, 29, false)
             .addInputBus("AnyInputBus", 1)
             .addOutputBus("AnyOutputBus", 1)
             .addInputHatch("AnyInputHatch", 1)
@@ -432,7 +377,10 @@ public class OTEMegaCircuitAssLine extends OTH_MultiMachineBase<OTEMegaCircuitAs
     }
 
     @Override
-    protected SoundResource getProcessStartSound() {
-        return SoundResource.GT_MACHINES_CUTTING_MACHINE_LOOP;
+    public void startSoundLoop(byte aIndex, double aX, double aY, double aZ) {
+        super.startSoundLoop(aIndex, aX, aY, aZ);
+        if (aIndex == 20) {
+            GTUtility.doSoundAtClient(IC2_MACHINES_MAGNETIZER_LOOP, 10, 1.0F, aX, aY, aZ);
+        }
     }
 }

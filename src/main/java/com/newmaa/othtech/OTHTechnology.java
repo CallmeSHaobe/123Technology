@@ -1,8 +1,11 @@
 package com.newmaa.othtech;
 
-import bartworks.MainMod;
-import com.newmaa.othtech.recipe.recipesMCA;
-import cpw.mods.fml.common.event.*;
+import java.util.HashMap;
+import java.util.Map;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.common.MinecraftForge;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -10,14 +13,18 @@ import com.newmaa.othtech.common.ItemAndBlockHandler;
 import com.newmaa.othtech.common.beeyonds.OTHBeeyonds;
 import com.newmaa.othtech.common.materials.MaterialsLoader;
 import com.newmaa.othtech.common.recipemap.NEIRecipeMaps;
-import com.newmaa.othtech.common.recipemap.Recipemaps;
+import com.newmaa.othtech.event.EventLogin;
 import com.newmaa.othtech.machine.MachineLoader;
 import com.newmaa.othtech.recipe.RecipeLoader;
 
-import bartworks.API.recipe.BartWorksRecipeMaps;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
-import gtPlusPlus.xmod.gregtech.loaders.RecipeGenMultisUsingFluidInsteadOfCells;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLLoadCompleteEvent;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartedEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
 
 @Mod(
     modid = OTHTechnology.MODID,
@@ -62,6 +69,7 @@ public class OTHTechnology {
     @Mod.EventHandler
     // load "Do your mod setup. Build whatever data structures you care about. Register recipes." (Remove if not needed)
     public void init(FMLInitializationEvent event) {
+        MinecraftForge.EVENT_BUS.register(new EventLogin());
         proxy.init(event);
         MachineLoader.loadMachines();
         NEIRecipeMaps.IMCSender();
@@ -83,24 +91,26 @@ public class OTHTechnology {
     @Mod.EventHandler
     // register server commands in this event handler (Remove if not needed)
     public void serverStarting(FMLServerStartingEvent event) {
-        new recipesMCA().loadRecipes();
         proxy.serverStarting(event);
 
     }
+
     @Mod.EventHandler
     public void onServerStarted(FMLServerStartedEvent event) {
+
     }
 
     @Mod.EventHandler
     public void earlyGame(FMLPreInitializationEvent event) {
         Config.synchronizeConfiguration(event.getSuggestedConfigurationFile());
-        RecipeGenMultisUsingFluidInsteadOfCells
-            .generateRecipesNotUsingCells(BartWorksRecipeMaps.circuitAssemblyLineRecipes, Recipemaps.MCA);
     }
 
     @Mod.EventHandler
     public void onLoadComplete(FMLLoadCompleteEvent event) {
+
         proxy.onLoadComplete(event);
 
     }
+
+    private final Map<EntityPlayer, Integer> playerTimerMap = new HashMap<>();
 }
