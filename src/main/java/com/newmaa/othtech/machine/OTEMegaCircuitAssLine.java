@@ -2,7 +2,7 @@ package com.newmaa.othtech.machine;
 
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.withChannel;
-import static com.newmaa.othtech.common.recipemap.Recipemaps.MCA;
+import static com.newmaa.othtech.common.recipemap.Recipemaps.MegaCAL;
 import static gregtech.api.GregTechAPI.sBlockCasings2;
 import static gregtech.api.GregTechAPI.sBlockCasings8;
 import static gregtech.api.GregTechAPI.sBlockCasings9;
@@ -36,7 +36,6 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
-import com.newmaa.othtech.recipe.recipesMCA;
 
 import bartworks.API.BorosilicateGlass;
 import goodgenerator.loader.Loaders;
@@ -73,13 +72,21 @@ public class OTEMegaCircuitAssLine extends OTH_MultiMachineBase<OTEMegaCircuitAs
 
     public byte glassTier = 0;
 
+    private static ItemStack Field_Generator_UEV = null;
+
+    @Override
+    public void onFirstTick(IGregTechTileEntity aBaseMetaTileEntity) {
+        super.onFirstTick(aBaseMetaTileEntity);
+        if (Field_Generator_UEV == null) Field_Generator_UEV = ItemList.Field_Generator_UEV.get(1);
+    }
+
     @Override
     public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
         super.onPostTick(aBaseMetaTileEntity, aTick);
         if (aTick % 20 == 0 && !$123) {
             ItemStack aGuiStack = this.getControllerSlot();
             if (aGuiStack != null) {
-                if (GTUtility.areStacksEqual(aGuiStack, ItemList.Field_Generator_UEV.get(1))) {
+                if (GTUtility.areStacksEqual(aGuiStack, Field_Generator_UEV)) {
                     this.$123 = true;
                 }
             }
@@ -147,7 +154,7 @@ public class OTEMegaCircuitAssLine extends OTH_MultiMachineBase<OTEMegaCircuitAs
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        return MCA;
+        return MegaCAL;
     }
 
     @Override
@@ -179,17 +186,13 @@ public class OTEMegaCircuitAssLine extends OTH_MultiMachineBase<OTEMegaCircuitAs
 
     @Override
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
-        repairMachine();
-        new recipesMCA().loadRecipes();
         return checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet);
 
     }
 
     @Override
     public void construct(ItemStack stackSize, boolean hintsOnly) {
-        repairMachine();
         buildPiece(STRUCTURE_PIECE_MAIN, stackSize, hintsOnly, horizontalOffSet, verticalOffSet, depthOffSet);
-
     }
 
     @Override
