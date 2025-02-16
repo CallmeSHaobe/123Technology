@@ -19,7 +19,7 @@ public class LateMixins implements ILateMixinLoader {
     @Override
     public List<String> getMixins(Set<String> loadedMods) {
         // 创建 Mixin 列表
-        List<String> mixins = new ArrayList<>(Arrays.asList("MTEMultiBlockBaseMixin"));
+        List<String> mixins = new ArrayList<>(Arrays.asList("MTEMultiBlockBaseMixin", "BWRecipeLoadMixin"));
 
         return mixins;
     }
