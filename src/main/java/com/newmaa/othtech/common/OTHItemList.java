@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 
 import com.newmaa.othtech.utils.Utils;
 
+import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.util.GTLog;
 
 @SuppressWarnings("SpellCheckingInspection")
@@ -150,6 +151,12 @@ public enum OTHItemList {
             mHasNotBeenSet = false;
             mStack = Utils.copyAmount(1, aStack);
         }
+        return this;
+    }
+
+    public OTHItemList set(IMetaTileEntity metaTileEntity) {
+        if (metaTileEntity == null) throw new IllegalArgumentException("Invalid Meta Tile Entity");
+        set(metaTileEntity.getStackForm(1L));
         return this;
     }
 
