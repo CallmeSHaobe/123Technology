@@ -94,7 +94,8 @@ public class recipesMegaQFT implements IRecipePool {
             .fluidOutputs(
                 new FluidStack(FluidRegistry.getFluidID("xenoxene"), 32 * 1000),
                 new FluidStack(FluidRegistry.getFluidID("molten.radoxpoly"), 256 * 144),
-                new FluidStack(FluidRegistry.getFluidID("molten.kevlar"), 128 * 144))
+                new FluidStack(FluidRegistry.getFluidID("molten.kevlar"), 128 * 144),
+                new FluidStack(FluidRegistry.getFluidID("heavyradox"), 64 * 1000))
             .noOptimize()
             .duration(200 * 20)
             .eut(TierEU.UXV)
@@ -173,6 +174,7 @@ public class recipesMegaQFT implements IRecipePool {
                 GTModHandler.getModItem("miscutils", "particleBase", 2, 15),
                 GTModHandler.getModItem("miscutils", "particleBase", 2, 21),
                 GTModHandler.getModItem("miscutils", "particleBase", 2, 17),
+                GTModHandler.getModItem("miscutils", "particleBase", 2, 23),
                 GTModHandler.getModItem("miscutils", "particleBase", 2, 7))
             .duration(400 * 20)
             .eut(TierEU.MAX)
