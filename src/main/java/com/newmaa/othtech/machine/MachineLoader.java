@@ -76,6 +76,7 @@ public class MachineLoader {
         OTHItemList.MCA
             .set(new OTEMegaCircuitAssLine(IDs + 29, "LargeCircuitAssLine", EnumChatFormatting.BOLD + "进阶高能电路装配线"));
 
+        OTHItemList.TP.set(new OTELargeBin(IDs - 1, "LargeBin", "垃圾桶"));
         // Lasers
 
         final int AMPS = 1073741824;

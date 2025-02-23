@@ -13,12 +13,14 @@ import gregtech.api.recipe.NEIRecipePropertiesBuilder;
 import gregtech.api.recipe.RecipeMapFrontend;
 import gregtech.common.gui.modularui.UIHelper;
 
+import static com.newmaa.othtech.Config.NEIFrontend;
+
 public class OTH_GeneralFrontend extends RecipeMapFrontend {
 
     private static final int xDirMaxCount = 4;
     private static final int yOrigin = 8;
     private final int itemRowCount;
-    public static final UITexture OTHUIT = UITexture.fullImage("123technology", "items/MetaItem/0");
+    public static final UITexture OTHUIT = NEIFrontend ? UITexture.fullImage("123technology", "items/MetaItem/0") : UITexture.fullImage("123technology", "items/MetaItem/bb");
 
     public OTH_GeneralFrontend(BasicUIPropertiesBuilder uiPropertiesBuilder,
         NEIRecipePropertiesBuilder neiPropertiesBuilder) {

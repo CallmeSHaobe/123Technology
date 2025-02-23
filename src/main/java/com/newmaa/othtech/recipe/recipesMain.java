@@ -1158,5 +1158,17 @@ public class recipesMain implements IRecipePool {
             .eut(RECIPE_UHV)
             .duration(480 * 20)
             .addTo(AssemblyLine);
+        // bin
+        RecipeBuilder.builder()
+            .itemOutputs(
+                OTHItemList.TP.get(1)
+            )
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
+                Materials.Steel.getPlates(4)
+            )
+            .eut(1)
+            .duration(1)
+            .addTo(Assem);
     }
 }

@@ -71,10 +71,13 @@ public class recipesTangshanSteelFactory implements IRecipePool {
             .itemInputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 1), 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Nickel, 1), 64000),
-                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Zinc, 1), 64000),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Zinc, 1), 64000 * 4),
                 GTUtility.getIntegratedCircuit(3))
             .itemOutputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.ingot, Materials.NickelZincFerrite, 1), 64000))
+            .fluidInputs(
+                Materials.Oxygen.getGas(8 * 64000)
+            )
             .noOptimize()
             .specialValue(3000)
             .eut(480)

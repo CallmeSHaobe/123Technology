@@ -46,7 +46,7 @@ public class OTHTechnology {
 
     public static final String modName = Tags.MODNAME;
 
-    public static final String VERSION = "2.0.3";
+    public static final String VERSION = "2.0.5";
 
     public static final String Arthur = "Laodengs";
 
