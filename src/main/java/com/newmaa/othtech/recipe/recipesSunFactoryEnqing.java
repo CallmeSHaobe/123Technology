@@ -623,14 +623,18 @@ public class recipesSunFactoryEnqing implements IRecipePool {
         // CPU
         RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Wafer_CPU.get(1), 1024 * a))
-            .itemInputs(GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.cpu", 0),GTUtility.getIntegratedCircuit(1), Circuit_Silicon_Wafer6.get(2))
+            .itemInputs(
+                GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.cpu", 0),
+                GTUtility.getIntegratedCircuit(1),
+                Circuit_Silicon_Wafer6.get(2))
             .duration(100 * 20)
             .eut(1920)
             .addTo(NMD);
 
         RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Chip_CPU.get(1), 1024 * 8 * a))
-            .itemInputs(GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.cpu", 0),
+            .itemInputs(
+                GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.cpu", 0),
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.01", 0, 32398),
                 GTUtility.getIntegratedCircuit(24),
                 Circuit_Silicon_Wafer6.get(2))
@@ -640,14 +644,18 @@ public class recipesSunFactoryEnqing implements IRecipePool {
         // NAND
         RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Wafer_NAND.get(1), 1024 * a))
-            .itemInputs(GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.nand", 0),GTUtility.getIntegratedCircuit(1), Circuit_Silicon_Wafer6.get(4))
+            .itemInputs(
+                GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.nand", 0),
+                GTUtility.getIntegratedCircuit(1),
+                Circuit_Silicon_Wafer6.get(4))
             .duration(100 * 20)
             .eut(1920)
             .addTo(NMD);
 
         RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Chip_NAND.get(1), 1024 * 32 * a))
-            .itemInputs(GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.nand", 0),
+            .itemInputs(
+                GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.nand", 0),
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.01", 0, 32398),
                 GTUtility.getIntegratedCircuit(24),
                 Circuit_Silicon_Wafer6.get(4))
@@ -657,14 +665,18 @@ public class recipesSunFactoryEnqing implements IRecipePool {
         // NOR
         RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Wafer_NOR.get(1), 1024 * a))
-            .itemInputs(GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.nor", 0),GTUtility.getIntegratedCircuit(1), Circuit_Silicon_Wafer6.get(4))
+            .itemInputs(
+                GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.nor", 0),
+                GTUtility.getIntegratedCircuit(1),
+                Circuit_Silicon_Wafer6.get(4))
             .duration(100 * 20)
             .eut(1920)
             .addTo(NMD);
 
         RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Chip_NOR.get(1), 1024 * 16 * a))
-            .itemInputs(GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.nor", 0),
+            .itemInputs(
+                GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.nor", 0),
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.01", 0, 32398),
                 GTUtility.getIntegratedCircuit(24),
                 Circuit_Silicon_Wafer6.get(4))
@@ -674,14 +686,18 @@ public class recipesSunFactoryEnqing implements IRecipePool {
         // RAM
         RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Wafer_Ram.get(1), 1024 * a))
-            .itemInputs(GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.ram", 0),GTUtility.getIntegratedCircuit(1), Circuit_Silicon_Wafer6.get(4))
+            .itemInputs(
+                GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.ram", 0),
+                GTUtility.getIntegratedCircuit(1),
+                Circuit_Silicon_Wafer6.get(4))
             .duration(100 * 20)
             .eut(1920)
             .addTo(NMD);
 
         RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Chip_Ram.get(1), 1024 * 32 * a))
-            .itemInputs(GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.ram", 0),
+            .itemInputs(
+                GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.ram", 0),
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.01", 0, 32398),
                 GTUtility.getIntegratedCircuit(24),
                 Circuit_Silicon_Wafer6.get(4))
@@ -691,8 +707,10 @@ public class recipesSunFactoryEnqing implements IRecipePool {
         // Logic
         RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Wafer_ILC.get(1), 1024 * a))
-            .itemInputs(GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.ilc", 0),
-                GTUtility.getIntegratedCircuit(1), Circuit_Silicon_Wafer6.get(4))
+            .itemInputs(
+                GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.ilc", 0),
+                GTUtility.getIntegratedCircuit(1),
+                Circuit_Silicon_Wafer6.get(4))
             .duration(100 * 20)
             .eut(1920)
             .addTo(NMD);
@@ -710,14 +728,18 @@ public class recipesSunFactoryEnqing implements IRecipePool {
         // SoC
         RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Wafer_SoC.get(1), 1024 * a))
-            .itemInputs(GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.soc", 0),GTUtility.getIntegratedCircuit(1), Circuit_Silicon_Wafer6.get(4))
+            .itemInputs(
+                GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.soc", 0),
+                GTUtility.getIntegratedCircuit(1),
+                Circuit_Silicon_Wafer6.get(4))
             .duration(100 * 20)
             .eut(1920)
             .addTo(NMD);
 
         RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Chip_SoC.get(1), 1024 * 6 * a))
-            .itemInputs(GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.soc", 0),
+            .itemInputs(
+                GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.soc", 0),
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.01", 0, 32398),
                 GTUtility.getIntegratedCircuit(24),
                 Circuit_Silicon_Wafer6.get(4))
@@ -727,14 +749,18 @@ public class recipesSunFactoryEnqing implements IRecipePool {
         // SSoC
         RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Wafer_Simple_SoC.get(1), 1024 * a))
-            .itemInputs(GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.ssoc", 0),GTUtility.getIntegratedCircuit(1), Circuit_Silicon_Wafer6.get(4))
+            .itemInputs(
+                GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.ssoc", 0),
+                GTUtility.getIntegratedCircuit(1),
+                Circuit_Silicon_Wafer6.get(4))
             .duration(100 * 20)
             .eut(1920)
             .addTo(NMD);
 
         RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Chip_Simple_SoC.get(1), 1024 * 6 * a))
-            .itemInputs(GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.ssoc", 0),
+            .itemInputs(
+                GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.ssoc", 0),
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.01", 0, 32398),
                 GTUtility.getIntegratedCircuit(24),
                 Circuit_Silicon_Wafer6.get(4))
@@ -744,14 +770,18 @@ public class recipesSunFactoryEnqing implements IRecipePool {
         // ASoC
         RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Wafer_SoC2.get(1024 * 6 * a), 1024 * a))
-            .itemInputs(GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.asoc", 0),GTUtility.getIntegratedCircuit(1), Circuit_Silicon_Wafer6.get(4))
+            .itemInputs(
+                GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.asoc", 0),
+                GTUtility.getIntegratedCircuit(1),
+                Circuit_Silicon_Wafer6.get(4))
             .duration(100 * 20)
             .eut(1920)
             .addTo(NMD);
 
         RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Chip_SoC2.get(1024 * 6 * a), 1024 * 6 * a))
-            .itemInputs(GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.asoc", 0),
+            .itemInputs(
+                GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.asoc", 0),
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.01", 0, 32398),
                 GTUtility.getIntegratedCircuit(24),
                 Circuit_Silicon_Wafer6.get(4))
@@ -761,7 +791,8 @@ public class recipesSunFactoryEnqing implements IRecipePool {
         // Nano CPU
         RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Wafer_NanoCPU.get(1), 1024 * a))
-            .itemInputs(GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.ncpu", 0),
+            .itemInputs(
+                GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.ncpu", 0),
                 GTUtility.getIntegratedCircuit(1),
                 Circuit_Silicon_Wafer6.get(4))
             .duration(60 * 20)
@@ -770,7 +801,8 @@ public class recipesSunFactoryEnqing implements IRecipePool {
 
         RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Chip_NanoCPU.get(1), 1024 * 8 * a))
-            .itemInputs(GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.ncpu", 0),
+            .itemInputs(
+                GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.ncpu", 0),
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.01", 0, 32398),
                 GTUtility.getIntegratedCircuit(24),
                 Circuit_Silicon_Wafer6.get(4))
@@ -780,7 +812,8 @@ public class recipesSunFactoryEnqing implements IRecipePool {
         // Q CPU
         RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Wafer_QuantumCPU.get(1), 1024 * a))
-            .itemInputs(GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.qbit", 0),
+            .itemInputs(
+                GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.qbit", 0),
                 GTUtility.getIntegratedCircuit(1),
                 Circuit_Silicon_Wafer6.get(4))
             .duration(120 * 20)
@@ -789,7 +822,8 @@ public class recipesSunFactoryEnqing implements IRecipePool {
 
         RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Chip_QuantumCPU.get(1), 1024 * 4 * a))
-            .itemInputs(GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.qbit", 0),
+            .itemInputs(
+                GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.qbit", 0),
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.01", 0, 32398),
                 GTUtility.getIntegratedCircuit(24),
                 Circuit_Silicon_Wafer6.get(4))
@@ -1076,8 +1110,7 @@ public class recipesSunFactoryEnqing implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Europium, 1), 144),
                 GTUtility.getIntegratedCircuit(4))
             .fluidInputs(new FluidStack(sb, 576))
-            .itemOutputs(
-                setStackSize(ItemList.Circuit_Chip_CrystalSoC2.get(1), 64 * 16 * a))
+            .itemOutputs(setStackSize(ItemList.Circuit_Chip_CrystalSoC2.get(1), 64 * 16 * a))
             .noOptimize()
             .duration(60 * 64 * 20)
             .eut(TierEU.UV)
@@ -1088,8 +1121,7 @@ public class recipesSunFactoryEnqing implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Europium, 1), 144),
                 GTUtility.getIntegratedCircuit(4))
             .fluidInputs(new FluidStack(sb, 576))
-            .itemOutputs(
-                setStackSize(ItemList.Circuit_Chip_CrystalSoC2.get(1), 64 * 16 * a))
+            .itemOutputs(setStackSize(ItemList.Circuit_Chip_CrystalSoC2.get(1), 64 * 16 * a))
             .noOptimize()
             .duration(60 * 64 * 20)
             .eut(TierEU.UV)

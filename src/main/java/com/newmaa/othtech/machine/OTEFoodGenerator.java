@@ -247,7 +247,7 @@ public class OTEFoodGenerator extends TT_MultiMachineBase_EM implements IConstru
     }
 
     public static int getBlockCasings(Block block, int meta) {
-        if (block == sBlockCasingsNH){
+        if (block == sBlockCasingsNH) {
             return switch (meta) {
                 case 10 -> 10;
                 case 11 -> 11;
@@ -257,7 +257,7 @@ public class OTEFoodGenerator extends TT_MultiMachineBase_EM implements IConstru
                 default -> 15;
             };
         }
-        if (block == sBlockCasings1){
+        if (block == sBlockCasings1) {
             return meta + 1;
         }
         return 0;

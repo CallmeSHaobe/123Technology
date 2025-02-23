@@ -1160,13 +1160,8 @@ public class recipesMain implements IRecipePool {
             .addTo(AssemblyLine);
         // bin
         RecipeBuilder.builder()
-            .itemOutputs(
-                OTHItemList.TP.get(1)
-            )
-            .itemInputs(
-                GTUtility.getIntegratedCircuit(17),
-                Materials.Steel.getPlates(4)
-            )
+            .itemOutputs(OTHItemList.TP.get(1))
+            .itemInputs(GTUtility.getIntegratedCircuit(17), Materials.Steel.getPlates(4))
             .eut(1)
             .duration(1)
             .addTo(Assem);

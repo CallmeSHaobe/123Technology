@@ -75,9 +75,7 @@ public class recipesTangshanSteelFactory implements IRecipePool {
                 GTUtility.getIntegratedCircuit(3))
             .itemOutputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.ingot, Materials.NickelZincFerrite, 1), 64000))
-            .fluidInputs(
-                Materials.Oxygen.getGas(8 * 64000)
-            )
+            .fluidInputs(Materials.Oxygen.getGas(8 * 64000))
             .noOptimize()
             .specialValue(3000)
             .eut(480)

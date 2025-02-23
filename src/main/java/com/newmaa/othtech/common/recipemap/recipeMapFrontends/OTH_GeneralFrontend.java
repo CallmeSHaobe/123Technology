@@ -1,5 +1,7 @@
 package com.newmaa.othtech.common.recipemap.recipeMapFrontends;
 
+import static com.newmaa.othtech.Config.NEIFrontend;
+
 import java.util.List;
 
 import com.gtnewhorizons.modularui.api.drawable.UITexture;
@@ -13,14 +15,13 @@ import gregtech.api.recipe.NEIRecipePropertiesBuilder;
 import gregtech.api.recipe.RecipeMapFrontend;
 import gregtech.common.gui.modularui.UIHelper;
 
-import static com.newmaa.othtech.Config.NEIFrontend;
-
 public class OTH_GeneralFrontend extends RecipeMapFrontend {
 
     private static final int xDirMaxCount = 4;
     private static final int yOrigin = 8;
     private final int itemRowCount;
-    public static final UITexture OTHUIT = NEIFrontend ? UITexture.fullImage("123technology", "items/MetaItem/0") : UITexture.fullImage("123technology", "items/MetaItem/bb");
+    public static final UITexture OTHUIT = NEIFrontend ? UITexture.fullImage("123technology", "items/MetaItem/0")
+        : UITexture.fullImage("123technology", "items/MetaItem/bb");
 
     public OTH_GeneralFrontend(BasicUIPropertiesBuilder uiPropertiesBuilder,
         NEIRecipePropertiesBuilder neiPropertiesBuilder) {
