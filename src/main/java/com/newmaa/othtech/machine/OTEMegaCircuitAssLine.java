@@ -328,8 +328,6 @@ public class OTEMegaCircuitAssLine extends OTH_MultiMachineBase<OTEMegaCircuitAs
             .addInfo("§b玻璃等级决定他的外观, 不成型请重放主机")
             .addInfo("默认为128并行. 电压等级每提高一级, 并行 + 16")
             .addInfo("主机放入UEV力场以解锁无损超频")
-            .addInfo("由于BW神人的配方加载时间, 该机器放下后才会加载专属配方池, 配方与电装一样, 只是没有刻印电路")
-            .addInfo("如果机器放下后, 依然没有配方池, 请尝试重进游戏.")
             .addTecTechHatchInfo()
             .addSeparator()
             .addController("电装")

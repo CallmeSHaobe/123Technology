@@ -8,7 +8,7 @@ import static gregtech.api.GregTechAPI.*;
 import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.enums.HatchElement.OutputHatch;
 import static gregtech.api.enums.Textures.BlockIcons.*;
-import static gregtech.api.enums.TickTime.SECOND;
+import static gregtech.api.enums.TickTime.*;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static gregtech.api.util.GTUtility.validMTEList;
 import static gregtech.common.misc.WirelessNetworkManager.addEUToGlobalEnergyMap;
@@ -30,7 +30,6 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -44,10 +43,7 @@ import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.common.materials.liquids;
 import com.newmaa.othtech.machine.machineclass.TT_MultiMachineBase_EM;
-import com.newmaa.othtech.utils.PairA;
 
-import gregtech.api.enums.Materials;
-import gregtech.api.enums.MaterialsUEVplus;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
@@ -83,8 +79,6 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
         super.useLongPower = true;
     }
 
-    private static final List<PairA<FluidStack, Integer>> coolant;
-
     private int pipeTier = 0;
     private UUID ownerUUID;
     private boolean isWirelessMode = false;
@@ -95,6 +89,7 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
 
         aNBT.setBoolean("wireless", isWirelessMode);
         aNBT.setInteger("pipe", pipeTier);
+        aNBT.setLong("Time", running_time);
         super.saveNBTData(aNBT);
     }
 
@@ -102,6 +97,7 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
     public void loadNBTData(final NBTTagCompound aNBT) {
         pipeTier = aNBT.getInteger("pipe");
         isWirelessMode = aNBT.getBoolean("wireless");
+        running_time = aNBT.getLong("Time");
         super.loadNBTData(aNBT);
     }
 
@@ -116,10 +112,11 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
         super.getWailaNBTData(player, tile, tag, world, x, y, z);
         final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
         if (tileEntity != null) {
-            String bonus = GTUtility.formatNumbers(getPowerFlow() * tEff / 10000);
+            String bonus = GTUtility.formatNumbers(getPowerFlow() * tEff / 100);
             tag.setString("bonus", bonus);
             tag.setBoolean("WM", isWirelessMode);
             tag.setString("costingWirelessEU", costingWirelessEU);
+            tag.setLong("EFF", tEff);
         }
     }
 
@@ -151,6 +148,15 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
                 + EnumChatFormatting.RESET
                 + tag.getBoolean("WM")
                 + EnumChatFormatting.RESET);
+        currentTip.add(
+            EnumChatFormatting.BOLD + "效率"
+                + EnumChatFormatting.RESET
+                + ": "
+                + EnumChatFormatting.GOLD
+                + tag.getString("EFF")
+                + EnumChatFormatting.GOLD
+                + "%"
+                + EnumChatFormatting.RESET);
     }
 
     private long tEff;
@@ -165,10 +171,11 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
         GTUtility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal(isWirelessMode ? "无线模式启动" : "无线模式关闭"));
     }
 
+    public long running_time = 0;
+
     @Override
     public @NotNull CheckRecipeResult checkProcessing_EM() {
         ArrayList<FluidStack> tFluids = getStoredFluids();
-
         long PromoterAmount = findLiquidAmount(getPromoter(), tFluids);
 
         CheckRecipeResult result;
@@ -176,13 +183,13 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
         if (result.wasSuccessful()) {
             return result;
         }
+        running_time = 0;
         return CheckRecipeResultRegistry.NO_FUEL_FOUND;
     }
 
     protected CheckRecipeResult processFuel(ArrayList<FluidStack> tFluids, RecipeMap<FuelBackend> recipeMap,
         long PromoterAmount, double efficiencyCoefficient, double FuelsValueBonus) {
         List<FluidStack> extraFluids = new ArrayList<>();
-
         for (GTRecipe recipe : recipeMap.getAllRecipes()) {
             FluidStack tFuel = findFuel(recipe);
             FluidStack[] outputFluidStack = new FluidStack[] { recipe.getFluidOutput(0) };
@@ -192,8 +199,6 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
             calculateEfficiency(FuelAmount, PromoterAmount, efficiencyCoefficient);
             consumeAllLiquid(tFuel, tFluids);
             consumeAllLiquid(getPromoter(), tFluids);
-            FluidStack[] input = getStoredFluids().toArray(new FluidStack[0]);
-            int eff = consumeCoolant(input);
             for (FluidStack fluids : outputFluidStack) {
                 if (fluids.amount <= Integer.MAX_VALUE / FuelAmount) {
                     fluids.amount *= (int) FuelAmount;
@@ -211,13 +216,13 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
             }
             if (isWirelessMode) {
                 this.setPowerFlow(0);
-                BigInteger costingWirelessEUTemp = PromoterAmount != 0 ? BigInteger.valueOf(recipe.mSpecialValue)
+                BigInteger costingWirelessEUTemp = BigInteger.valueOf(recipe.mSpecialValue)
                     .multiply(
                         BigInteger.valueOf((long) FuelsValueBonus)
                             .multiply(BigInteger.valueOf(FuelAmount)))
-                    .multiply(BigInteger.valueOf(eff))
+                    .multiply(BigInteger.valueOf(tEff))
                     .divide(BigInteger.valueOf(100 * SECOND))
-                    .multiply(BigInteger.valueOf(recipe.mDuration)) : BigInteger.ZERO;
+                    .multiply(BigInteger.valueOf(recipe.mDuration));
                 costingWirelessEU = GTUtility.formatNumbers(costingWirelessEUTemp);
                 if (!addEUToGlobalEnergyMap(ownerUUID, costingWirelessEUTemp)) {
                     return CheckRecipeResultRegistry.INTERNAL_ERROR;
@@ -227,7 +232,7 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
                 this.setPowerFlow(
                     (long) Math.min(
                         Long.MAX_VALUE - 1,
-                        FuelAmount * recipe.mSpecialValue * FuelsValueBonus * eff / 100 * recipe.mDuration / SECOND));
+                        FuelAmount * recipe.mSpecialValue * FuelsValueBonus * tEff / 100 * recipe.mDuration / SECOND));
 
             }
             this.mMaxProgresstime = 20;
@@ -241,6 +246,7 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
     public boolean onRunningTick(ItemStack stack) {
         if (this.getBaseMetaTileEntity()
             .isServerSide()) {
+            running_time = running_time + mMaxProgresstime / 20;
             if (heatingTicks < HEATING_TIMER) {
                 heatingTicks++;
                 isStoppingSafe = true;
@@ -248,33 +254,6 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
             addAutoEnergy();
         }
         return true;
-    }
-
-    static {
-        coolant = Arrays.asList(
-            new PairA<>(MaterialsUEVplus.Time.getMolten(1000), 120),
-            new PairA<>(FluidRegistry.getFluidStack("cryotheum", 1000), 80),
-            new PairA<>(Materials.SuperCoolant.getFluid(1000), 60),
-            new PairA<>(FluidRegistry.getFluidStack("ic2coolant", 1000), 40));
-    }
-
-    /**
-     * Finds valid coolant from given inputs and consumes if found.
-     *
-     * @param input Fluid inputs.
-     * @return Efficiency of the coolant. 100 if not found.
-     */
-    private int consumeCoolant(FluidStack[] input) {
-        for (PairA<FluidStack, Integer> fluidPair : coolant) {
-            FluidStack tFluid = fluidPair.getKey();
-            for (FluidStack inFluid : input) {
-                if (inFluid != null && inFluid.isFluidEqual(tFluid) && inFluid.amount >= tFluid.amount) {
-                    inFluid.amount -= tFluid.amount;
-                    return fluidPair.getValue();
-                }
-            }
-        }
-        return 20;
     }
 
     @Override
@@ -295,10 +274,13 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
 
     public void calculateEfficiency(long aFuel, long aPromoter, double coefficient) {
         if (aPromoter == 0) {
-            this.tEff = 0;
+            this.tEff = -(int) (Math.exp(coefficient * (double) aFuel) * 1.5D * 100);
             return;
         }
-        this.tEff = (int) (Math.exp(-coefficient * (double) aFuel / (double) aPromoter) * 1.5D * 10000);
+        this.tEff = (int) (Math.exp(coefficient * (double) aFuel / (double) aPromoter) * 1.5D * 100) + running_time / 4;
+        if (tEff > aFuel / 1000) {
+            this.tEff = -tEff;
+        }
     }
 
     public long findLiquidAmount(FluidStack liquid, List<FluidStack> input) {
@@ -367,6 +349,7 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
     public void stopMachine() {
         // Reset the counter for heating, so that it works again when the machine restarts
         heatingTicks = 0;
+        running_time = 0;
         super.stopMachine();
     }
 
@@ -375,7 +358,7 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
     protected final int HEATING_TIMER = SECOND * 10;
 
     void addAutoEnergy() {
-        long exEU = this.getPowerFlow() * tEff / 10000;
+        long exEU = this.getPowerFlow() * tEff / 100;
         if (!mDynamoHatches.isEmpty()) {
             MTEHatchDynamo tHatch = mDynamoHatches.get(0);
             if (tHatch.maxEUOutput() * tHatch.maxAmperesOut() >= exEU) {
@@ -529,10 +512,11 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
             .addInfo("通化的升级版本, 可以支持硅岩燃料, 但不能使用传统燃料喔 ~ 真正的清洁能源")
             .addInfo("和通化一样的设计, 但同时兼备了大硅岩的加成")
             .addInfo("一次消耗输入仓内所有燃料和助燃剂, 实际发电需乘上 配方耗时 (秒)")
-            .addInfo("消耗冷却液提升效率, 默认效率为20%, 消耗速率为1000L/s")
-            .addInfo("IC2冷却液:40%, 超级冷却液:60%, 极寒之凛冰:80%, 富快子时间流体: 120%")
             .addInfo("二级管道方块解锁无线模式, 使用螺丝刀开启")
-            .addInfo("§a更高级的结构意味着更高级的§c助燃剂, §a一级结构:原子分离助燃剂, 二级结构:超维度等离子助燃剂")
+            .addInfo("§a更高级的结构意味着更高级的§c助燃剂, §a一级结构:原子分离助燃剂, 二级结构:超维度等离子助燃剂, 提供错误的助燃剂也会电表倒转")
+            .addInfo("§a效率随着运行时间提升, 每秒提升5%效率, 但效率过高会突然电表倒转, 更是意外的惊喜呀..")
+            .addInfo("§a老登们要当心电网被洗干抹净, 具体效率阈值为燃料数量 / 1000 %")
+            .addInfo("基本效率公式请参考通化效率公式, 请注意基本效率也会按照阈值来决定电表是否倒转")
             .addInfo("你知道会发生什么。")
             .addInfo("§e警告 : 如果强行使用有线模式烧高级硅岩燃料, 将会导致电表倒转憋憋")
             .addInfo("§c支持TecTech多安动力仓, 激光仓, 但尽量请使用1,073,741,824A激光仓直连电容库")

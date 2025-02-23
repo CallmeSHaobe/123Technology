@@ -825,7 +825,7 @@ public class OTEMegaNineInOne extends OTH_MultiMachineBase<OTEMegaNineInOne> {
             .addInfo("§b电压等级提高一级，并行 -2， 最低为⑨, 默认为256")
             .addInfo("§b配方耗时 = NEI耗时 * (1 + (能源仓电压等级 * 10%))")
             .addInfo("§bEU消耗 : (1 / 线圈等级) * 0.1, 最低为0.01")
-            .addInfo("海珀珍线圈解锁稳定的黑洞, 通流琥珀金线圈解锁HIP")
+            .addInfo("§b海珀珍线圈解锁稳定的黑洞, 通流琥珀金线圈解锁HIP")
             .addInfo("§b执行无损超频")
             .addInfo("§e九合一，我们敬爱你口牙！！ ---Sukune_News")
             .addInfo("§c§l注意:机器污染过高:如遇跳电并报错“无法排出污染”, 请尝试放置多个消声仓")

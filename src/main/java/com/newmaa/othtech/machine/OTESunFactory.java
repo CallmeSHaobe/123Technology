@@ -2424,7 +2424,7 @@ public class OTESunFactory extends OTH_MultiMachineBase<OTESunFactory> {
             .addInfo("--------------------")
             .addInfo("sfg信道 = 0 解锁PCB工厂")
             .addInfo("sfg信道 = 2 解锁贴片工坊")
-            .addInfo("sdf信道 = 5 解锁NMD晶圆厂")
+            .addInfo("sfg信道 = 5 解锁NMD晶圆厂")
             .addInfo("sfg信道 = 8 解锁元件聚合者")
             .addInfo("更换力场后结构不成型请重放主机")
             .addTecTechHatchInfo()
