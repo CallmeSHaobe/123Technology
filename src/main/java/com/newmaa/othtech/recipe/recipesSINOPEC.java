@@ -1,6 +1,7 @@
 package com.newmaa.othtech.recipe;
 
 import static com.newmaa.othtech.utils.Utils.setStackSize;
+import static gregtech.api.enums.TierEU.RECIPE_HV;
 
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -320,6 +321,21 @@ public class recipesSINOPEC implements IRecipePool {
             .noOptimize()
             .duration(720 * 20)
             .eut(TierEU.HV)
+            .addTo(SINOPEC);
+
+        // Octane
+        RecipeBuilder.builder()
+            .fluidOutputs(
+                new FluidStack(CH4, 64 * 125),
+                FluidRegistry.getFluidStack("butane", 64 * 150),
+                new FluidStack(C3H8, 64 * 200),
+                new FluidStack(C2H6, 64 * 125),
+                FluidRegistry.getFluidStack("octane", 64 * 100),
+                new FluidStack(nap, 64 * 800))
+            .fluidInputs(new FluidStack(lig, 64 * 1000), Materials.Hydrogen.getGas(64 * 1600))
+            .noOptimize()
+            .eut(RECIPE_HV)
+            .duration(200)
             .addTo(SINOPEC);
     }
 

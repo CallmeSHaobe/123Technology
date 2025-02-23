@@ -2,8 +2,11 @@ package com.newmaa.othtech.common.recipemap.recipeMapFrontends;
 
 import java.util.List;
 
+import com.gtnewhorizons.modularui.api.drawable.UITexture;
 import com.gtnewhorizons.modularui.api.math.Pos2d;
 import com.gtnewhorizons.modularui.api.math.Size;
+import com.gtnewhorizons.modularui.api.screen.ModularWindow;
+import com.gtnewhorizons.modularui.common.widget.DrawableWidget;
 
 import gregtech.api.recipe.BasicUIPropertiesBuilder;
 import gregtech.api.recipe.NEIRecipePropertiesBuilder;
@@ -15,12 +18,21 @@ public class OTH_GeneralFrontend extends RecipeMapFrontend {
     private static final int xDirMaxCount = 4;
     private static final int yOrigin = 8;
     private final int itemRowCount;
+    public static final UITexture OTHUIT = UITexture.fullImage("123technology", "items/MetaItem/0");
 
     public OTH_GeneralFrontend(BasicUIPropertiesBuilder uiPropertiesBuilder,
         NEIRecipePropertiesBuilder neiPropertiesBuilder) {
         super(uiPropertiesBuilder.logoPos(new Pos2d(79, 7)), neiPropertiesBuilder);
         this.itemRowCount = getItemRowCount();
         neiProperties.recipeBackgroundSize = new Size(170, 10 + (itemRowCount + getFluidRowCount()) * 18);
+    }
+
+    @Override
+    public void addGregTechLogo(ModularWindow.Builder builder, Pos2d windowOffset) {
+        builder.widget(
+            new DrawableWidget().setDrawable(OTHUIT)
+                .setSize(18, 18)
+                .setPos(uiProperties.logoPos.add(windowOffset)));
     }
 
     private int getItemRowCount() {

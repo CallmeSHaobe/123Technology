@@ -78,12 +78,14 @@ public class OTEMegaNQFuelFactory extends TT_MultiMachineBase_EM implements ICon
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
         aNBT.setInteger("mTier", this.tier);
+        aNBT.setInteger("mode", this.mode);
         super.saveNBTData(aNBT);
     }
 
     @Override
     public void loadNBTData(final NBTTagCompound aNBT) {
         this.tier = aNBT.getInteger("mTier");
+        this.mode = aNBT.getInteger("mode");
         super.loadNBTData(aNBT);
 
     }
