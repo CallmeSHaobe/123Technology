@@ -98,6 +98,7 @@ public enum OTHItemList {
     Sun,
     LCA,
     CoccOven,
+    SpaceElevatorModulePumpT4,
 
     EVACannon,
     HatchME,
