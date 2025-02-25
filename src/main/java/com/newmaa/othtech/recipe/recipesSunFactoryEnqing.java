@@ -54,6 +54,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
+import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.utils.RecipeBuilder;
 import com.newmaa.othtech.utils.modsEnum;
@@ -1519,6 +1520,31 @@ public class recipesSunFactoryEnqing implements IRecipePool {
             .noOptimize()
             .duration(256 * 20 * 5)
             .eut(TierEU.UV)
+            .addTo(UNI);
+        // Solar Panel (UV)
+        RecipeBuilder.builder()
+            .itemOutputs(setStackSize(ItemList.Cover_SolarPanel_UV.get(1), 256 * a))
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(16),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Steeleaf, 1), 4 * 256),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.FierySteel, 1), 4 * 256),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Infinity, 1), 8 * 256),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Diamond, 1), 8 * 256),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Naquadria, 1), 32 * 256),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Bio, 1), 6 * 256),
+                setStackSize(OTHItemList.dustIrOsSmM.get(64), 16 * 256),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.wireGt02, Materials.SuperconductorUHV, 1), 26 * 256),
+                setStackSize(GTModHandler.getModItem("gregtech", "Photonically Prepared Wafer", 1), 4 * 256))
+            .fluidInputs(
+                FluidRegistry.getFluidStack("molten.sunnarium", 9216 * 256),
+                FluidRegistry.getFluidStack("molten.epoxid", 1152 * 256),
+                FluidRegistry.getFluidStack("molten.polybenzimidazole", 1152 * 256),
+                FluidRegistry.getFluidStack("molten.Polytetrafluoroethylene", 1152 * 256),
+                FluidRegistry.getFluidStack("molten.solderingalloy", 128123 * 256),
+                FluidRegistry.getFluidStack("molten.neutronium", 9216 * 256))
+            .noOptimize()
+            .duration(256 * 20 * 8)
+            .eut(TierEU.UMV)
             .addTo(UNI);
 
     }
