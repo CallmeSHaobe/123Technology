@@ -77,6 +77,8 @@ public class MachineLoader {
             .set(new OTEMegaCircuitAssLine(IDs + 29, "LargeCircuitAssLine", EnumChatFormatting.BOLD + "进阶高能电路装配线"));
         OTHItemList.SpaceElevatorModulePumpT4
             .set(new OTETileEntityModulePumpT4.ModulePumpT4OTE(IDs + 56, "ModulePumpT4", "太空钻机模块MK-321"));
+
+        OTHItemList.TP.set(new OTELargeBin(IDs - 1, "LargeBin", "垃圾桶"));
         // Lasers
 
         final int AMPS = 1073741824;

@@ -7,7 +7,7 @@ import static gregtech.api.enums.Mods.IndustrialCraft2;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static gregtech.api.util.GTStructureUtility.ofCoil;
 import static net.minecraft.util.StatCollector.translateToLocal;
-import static tectech.thing.casing.TTCasingsContainer.sBlockCasingsNH;
+import static tectech.thing.casing.TTCasingsContainer.*;
 
 import java.util.List;
 import java.util.Objects;
@@ -154,7 +154,7 @@ public class OTEFoodGenerator extends TT_MultiMachineBase_EM implements IConstru
 
             valveFood = (int) Math.min(Math.pow(foodValues.hunger, 2), Integer.MAX_VALUE);
 
-            long generatedEU = (long) ((long) valveFood * getCoilTier() * itemStack.stackSize);
+            long generatedEU = (long) ((long) valveFood * getCoilTier() * itemStack.stackSize * casingTier * 2);
             mEUt = (int) Math.min(generatedEU, Integer.MAX_VALUE);
             itemStack.stackSize = 0;
             inputStacks.set(i, null);
@@ -247,11 +247,18 @@ public class OTEFoodGenerator extends TT_MultiMachineBase_EM implements IConstru
     }
 
     public static int getBlockCasings(Block block, int meta) {
-        if (block == sBlockCasings1 & block == sBlockCasingsNH) {
-            if (meta <= 14) {
-                return meta + 1;
-            }
-
+        if (block == sBlockCasingsNH) {
+            return switch (meta) {
+                case 10 -> 10;
+                case 11 -> 11;
+                case 12 -> 12;
+                case 13 -> 13;
+                case 14 -> 14;
+                default -> 15;
+            };
+        }
+        if (block == sBlockCasings1) {
+            return meta + 1;
         }
         return 0;
     }
@@ -409,7 +416,7 @@ public class OTEFoodGenerator extends TT_MultiMachineBase_EM implements IConstru
         tt.addMachineType("只是一个发电机")
             .addInfo("再也不用担心吃得太饱了")
             .addInfo("丰矿地烧掉一切食物")
-            .addInfo("发电:食物饥饿值^2 * 线圈等级 , 最高发电1A MAX/t , 64并行 , 一次最多烧毁一组相同食物")
+            .addInfo("发电:食物饥饿值^2 * 线圈等级 * 机械方块等级 * 2 , 最高发电1A MAX/t , 64并行 , 一次最多烧毁一组相同食物")
             .addInfo("§c§l注意:机器污染过高:如遇跳电并报错“无法排出污染”, 请尝试放置多个消声仓")
             .addInfo("支持TecTech多安动力舱")
             .addInfo("赞美伟大的富婆Safari_xiu吧!没有他就没有现在的123了憋憋。")

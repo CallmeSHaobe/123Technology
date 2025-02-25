@@ -1,8 +1,10 @@
 package com.newmaa.othtech.recipe;
 
+import static com.newmaa.othtech.utils.Utils.setStackSize;
 import static gregtech.api.enums.Mods.*;
 import static gregtech.api.enums.TierEU.*;
 import static gregtech.api.recipe.RecipeMaps.assemblerRecipes;
+import static gregtech.api.recipe.RecipeMaps.centrifugeRecipes;
 import static gregtech.api.recipe.RecipeMaps.fluidExtractionRecipes;
 import static gregtech.api.util.GTModHandler.addCraftingRecipe;
 import static gregtech.api.util.GTModHandler.getModItem;
@@ -38,6 +40,7 @@ import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTUtility;
 import gregtech.common.items.CombType;
 import gregtech.loaders.misc.GTBees;
+import gtPlusPlus.api.recipe.GTPPRecipeMaps;
 import tectech.recipe.TTRecipeAdder;
 import tectech.thing.CustomItemList;
 
@@ -1197,5 +1200,25 @@ public class recipesMain implements IRecipePool {
             OTHItemList.SpaceElevatorModulePumpT4.getInternalStack_unsafe(),
             123 * 20,
             (int) TierEU.RECIPE_UXV);
+        // bin
+        RecipeBuilder.builder()
+            .itemOutputs(OTHItemList.TP.get(1))
+            .itemInputs(GTUtility.getIntegratedCircuit(17), Materials.Steel.getPlates(4))
+            .eut(1)
+            .duration(1)
+            .addTo(Assem);
+        // Bedrock
+        RecipeBuilder.builder()
+            .itemInputs(Materials.Bedrockium.getDust(1))
+            .itemOutputs(setStackSize(Materials.SiliconDioxide.getDust(1), 26244), Materials.Carbon.getDust(9))
+            .eut(RECIPE_UIV)
+            .duration(40)
+            .addTo(GTPPRecipeMaps.centrifugeNonCellRecipes);
+        RecipeBuilder.builder()
+            .itemInputs(Materials.Bedrockium.getDust(1))
+            .itemOutputs(setStackSize(Materials.SiliconDioxide.getDust(1), 26244), Materials.Carbon.getDust(9))
+            .eut(RECIPE_UIV)
+            .duration(40)
+            .addTo(centrifugeRecipes);
     }
 }

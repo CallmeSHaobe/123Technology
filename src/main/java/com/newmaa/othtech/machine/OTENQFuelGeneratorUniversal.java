@@ -64,7 +64,12 @@ import gregtech.common.tileentities.machines.IRecipeProcessingAwareHatch;
 import gregtech.common.tileentities.machines.MTEHatchInputME;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
+import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import tectech.thing.metaTileEntity.hatch.MTEHatchDynamoMulti;
+import tectech.thing.metaTileEntity.multi.base.INameFunction;
+import tectech.thing.metaTileEntity.multi.base.IStatusFunction;
+import tectech.thing.metaTileEntity.multi.base.LedStatus;
+import tectech.thing.metaTileEntity.multi.base.Parameters;
 
 public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
     implements IConstructable, ISurvivalConstructable {
@@ -83,6 +88,10 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
     private UUID ownerUUID;
     private boolean isWirelessMode = false;
     private String costingWirelessEU = "0";
+    Parameters.Group.ParameterIn time;
+    private static final IStatusFunction<OTENQFuelGeneratorUniversal> timeSTATUES = (base, p) -> LedStatus
+        .fromLimitsInclusiveOuterBoundary(p.get(), 1, 2, 1000, 114514);
+    private static final INameFunction<OTENQFuelGeneratorUniversal> timeName = (base, p) -> GCCoreUtil.translate("耗时");
 
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
@@ -99,6 +108,12 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
         isWirelessMode = aNBT.getBoolean("wireless");
         running_time = aNBT.getLong("Time");
         super.loadNBTData(aNBT);
+    }
+
+    @Override
+    protected void parametersInstantiation_EM() {
+        Parameters.Group hatch_0 = parametrization.getGroup(0, false);
+        time = hatch_0.makeInParameter(0, 1, timeName, timeSTATUES);
     }
 
     @Override
@@ -135,13 +150,13 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
                 + "EU/t"
                 + EnumChatFormatting.RESET);
         currentTip.add(
-            EnumChatFormatting.BOLD + "无线发电"
+            EnumChatFormatting.BOLD + "无线总发电"
                 + EnumChatFormatting.RESET
                 + ": "
                 + EnumChatFormatting.GOLD
                 + tag.getString("costingWirelessEU")
                 + EnumChatFormatting.GOLD
-                + "EU/t"
+                + "EU"
                 + EnumChatFormatting.RESET);
         currentTip.add(
             EnumChatFormatting.BOLD + "无线模式"
@@ -221,7 +236,7 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
                         BigInteger.valueOf((long) FuelsValueBonus)
                             .multiply(BigInteger.valueOf(FuelAmount)))
                     .multiply(BigInteger.valueOf(tEff))
-                    .divide(BigInteger.valueOf(100 * SECOND))
+                    .divide(BigInteger.valueOf((100 * SECOND)))
                     .multiply(BigInteger.valueOf(recipe.mDuration));
                 costingWirelessEU = GTUtility.formatNumbers(costingWirelessEUTemp);
                 if (!addEUToGlobalEnergyMap(ownerUUID, costingWirelessEUTemp)) {
@@ -232,10 +247,17 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
                 this.setPowerFlow(
                     (long) Math.min(
                         Long.MAX_VALUE - 1,
-                        FuelAmount * recipe.mSpecialValue * FuelsValueBonus * tEff / 100 * recipe.mDuration / SECOND));
+                        FuelAmount * recipe.mSpecialValue
+                            * FuelsValueBonus
+                            * tEff
+                            / 100
+                            * recipe.mDuration
+                            / SECOND
+                            / time.get()));
 
             }
-            this.mMaxProgresstime = 20;
+            this.mMaxProgresstime = (int) time.get();
+            running_time = (running_time + (mMaxProgresstime / 20));
             this.updateSlots();
             return CheckRecipeResultRegistry.GENERATING;
         }
@@ -246,7 +268,6 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
     public boolean onRunningTick(ItemStack stack) {
         if (this.getBaseMetaTileEntity()
             .isServerSide()) {
-            running_time = running_time + mMaxProgresstime / 20;
             if (heatingTicks < HEATING_TIMER) {
                 heatingTicks++;
                 isStoppingSafe = true;
@@ -277,7 +298,8 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
             this.tEff = -(int) (Math.exp(coefficient * (double) aFuel) * 1.5D * 100);
             return;
         }
-        this.tEff = (int) (Math.exp(coefficient * (double) aFuel / (double) aPromoter) * 1.5D * 100) + running_time / 4;
+        this.tEff = (long) ((int) (Math.exp(coefficient * (double) aFuel / (double) aPromoter) * 1.5D * 100)
+            + (running_time));
         if (tEff > aFuel / 1000) {
             this.tEff = -tEff;
         }
@@ -510,14 +532,16 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
         tt.addMachineType("通化之梦")
             .addInfo(" §l§4“你产能不够吧? -v-” ")
             .addInfo("通化的升级版本, 可以支持硅岩燃料, 但不能使用传统燃料喔 ~ 真正的清洁能源")
+            .addInfo("耗时根据主机参数决定, 单位tick, 实际功率为总发电 / 耗时(tick)")
             .addInfo("和通化一样的设计, 但同时兼备了大硅岩的加成")
             .addInfo("一次消耗输入仓内所有燃料和助燃剂, 实际发电需乘上 配方耗时 (秒)")
             .addInfo("二级管道方块解锁无线模式, 使用螺丝刀开启")
-            .addInfo("§a更高级的结构意味着更高级的§c助燃剂, §a一级结构:原子分离助燃剂, 二级结构:超维度等离子助燃剂, 提供错误的助燃剂也会电表倒转")
-            .addInfo("§a效率随着运行时间提升, 每秒提升5%效率, 但效率过高会突然电表倒转, 更是意外的惊喜呀..")
-            .addInfo("§a老登们要当心电网被洗干抹净, 具体效率阈值为燃料数量 / 1000 %")
-            .addInfo("基本效率公式请参考通化效率公式, 请注意基本效率也会按照阈值来决定电表是否倒转")
-            .addInfo("你知道会发生什么。")
+            .addInfo("§a更高级的结构意味着更高级的§c助燃剂, §a一级结构:原子分离助燃剂, 二级结构:超维度等离子助燃剂, 提供错误的助燃剂会电表倒转")
+            .addInfo("§a效率随着运行时间提升, 每秒提升1%效率, 但效率过高会'突然'电表倒转, 更是意外的惊喜呀..")
+            .addInfo("§a老登们要当心电网被吸干抹净, 具体效率阈值为(燃料数量 / 1000)%")
+            .addInfo("§a基本效率公式请参考通化效率公式, 同时也会根据基本效率是否到达阈值来判断电表是否倒转")
+            .addInfo("§a注意 : 如果耗时小于20ticks, 则效率不会累加")
+            .addInfo("§4你知道会发生什么。")
             .addInfo("§e警告 : 如果强行使用有线模式烧高级硅岩燃料, 将会导致电表倒转憋憋")
             .addInfo("§c支持TecTech多安动力仓, 激光仓, 但尽量请使用1,073,741,824A激光仓直连电容库")
             .addSeparator()

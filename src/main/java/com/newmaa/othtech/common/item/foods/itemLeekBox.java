@@ -15,7 +15,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class itemLeekBox extends ItemFood {
 
     public itemLeekBox() {
-        super(1024, 8F, true);
+        super(16, 8F, true);
         this.setAlwaysEdible();
         this.setPotionEffect(Potion.hunger.id, 100, 10, 1);
         this.setUnlocalizedName("itemLeekBox");
