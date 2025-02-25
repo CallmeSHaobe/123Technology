@@ -1,5 +1,7 @@
 package com.newmaa.othtech;
 
+import static com.newmaa.othtech.common.OTHItemList.SpaceElevatorModulePumpT4;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +19,7 @@ import com.newmaa.othtech.event.EventLogin;
 import com.newmaa.othtech.machine.MachineLoader;
 import com.newmaa.othtech.recipe.RecipeLoader;
 
+import codechicken.nei.api.API;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -73,6 +76,10 @@ public class OTHTechnology {
         proxy.init(event);
         MachineLoader.loadMachines();
         NEIRecipeMaps.IMCSender();
+        // load SpacePumpingT4 to NEIRecipes
+        API.addRecipeCatalyst(
+            SpaceElevatorModulePumpT4.getInternalStack_unsafe(),
+            "com.gtnewhorizons.gtnhintergalactic.nei.SpacePumpModuleRecipeHandler");
     }
 
     @Mod.EventHandler
@@ -113,4 +120,5 @@ public class OTHTechnology {
     }
 
     private final Map<EntityPlayer, Integer> playerTimerMap = new HashMap<>();
+
 }
