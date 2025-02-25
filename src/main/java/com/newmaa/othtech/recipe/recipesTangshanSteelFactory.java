@@ -1014,6 +1014,29 @@ public class recipesTangshanSteelFactory implements IRecipePool {
             .duration(60 * 72 * 20 * 512)
             .specialValue(13000)
             .addTo(SF);
-
+        // Molten Halkonite
+        RecipeBuilder.builder()
+            .itemInputs(
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.InfusedEntropy, 1), 1000 * 180),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tungsten, 1), 1000 * 829),
+                setStackSize(Materials.Tartarite.getDust(1), 1000 * 2160),
+                setStackSize(Materials.Vanadium.getDust(1), 1000 * 240),
+                setStackSize(Materials.BlackPlutonium.getDust(1), 1000 * 80),
+                setStackSize(MaterialsUEVplus.TranscendentMetal.getDust(1), 1000 * 2160),
+                setStackSize(Materials.Naquadria.getDust(1), 1000 * 560),
+                setStackSize(Materials.Bedrockium.getDust(1), 1000 * 320),
+                setStackSize(Materials.Infinity.getDust(1), 1000 * 1080),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 1), 1000 * 509),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Titanium, 1), 1000 * 162),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.InfusedFire, 1), 1000 * 180),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.InfusedEarth, 1), 1000 * 180),
+                GTUtility.getIntegratedCircuit(11))
+            .fluidInputs(FluidRegistry.getFluidStack("dimensionallytranscendentresidue", 1000 * 1080000))
+            .fluidOutputs(MaterialsUEVplus.MoltenProtoHalkoniteBase.getFluid(1244160000))
+            .noOptimize()
+            .specialValue(10000)
+            .eut(TierEU.UEV)
+            .duration(1024 * 1000 * 20 * 60)
+            .addTo(SF);
     }
 }

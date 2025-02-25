@@ -171,4 +171,26 @@ public class Recipemaps {
         .maxIO(6, 1, 1, 0)
         .progressBar(GTUITextures.PROGRESSBAR_CIRCUIT_ASSEMBLER)
         .build();
+    public static final RecipeMap<OTH_RecipeMapBackend> AE2 = RecipeMapBuilder
+        .of("otht.recipe.AE2", OTH_RecipeMapBackend::new)
+        .maxIO(1, 1, 0, 0)
+        .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
+        .neiSpecialInfoFormatter(MISASpecialValueFormatter.INSTANCE)
+        .frontend(OTH_GeneralFrontend::new)
+        .neiHandlerInfo(
+            builder -> builder.setDisplayStack(OTHItemList.TP.get(1))
+                .setMaxRecipesPerPage(1))
+        .disableOptimize()
+        .build();
+    public static final RecipeMap<OTH_RecipeMapBackend> BIN = RecipeMapBuilder
+        .of("otht.recipe.BIN", OTH_RecipeMapBackend::new)
+        .maxIO(1, 1, 0, 0)
+        .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
+        .neiSpecialInfoFormatter(MISASpecialValueFormatter.INSTANCE)
+        .frontend(OTH_GeneralFrontend::new)
+        .neiHandlerInfo(
+            builder -> builder.setDisplayStack(OTHItemList.TP.get(1))
+                .setMaxRecipesPerPage(1))
+        .disableOptimize()
+        .build();
 }

@@ -5,6 +5,9 @@ import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static net.minecraft.util.StatCollector.translateToLocal;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
@@ -17,6 +20,7 @@ import com.gtnewhorizon.structurelib.alignment.constructable.IConstructable;
 import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructable;
 import com.gtnewhorizon.structurelib.structure.IItemSource;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
+import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.TT_MultiMachineBase_EM;
 
 import gregtech.api.GregTechAPI;
@@ -25,6 +29,8 @@ import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
+import gregtech.api.recipe.RecipeMap;
+import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.util.GTUtility;
@@ -36,6 +42,7 @@ import tectech.thing.metaTileEntity.multi.base.render.TTRenderedExtendedFacingTe
 public class OTELargeBin extends TT_MultiMachineBase_EM implements IConstructable, ISurvivalConstructable {
 
     private boolean grace = false;
+    private int mode = 0;
 
     @Override
     public boolean checkMachine_EM(IGregTechTileEntity iGregTechTileEntity, ItemStack itemStack) {
@@ -58,6 +65,21 @@ public class OTELargeBin extends TT_MultiMachineBase_EM implements IConstructabl
     }
 
     private int casingCount = 0;
+
+    @Override
+    public RecipeMap<?> getRecipeMap() {
+        if (mode == 1) return RecipeMaps.recyclerRecipes;
+        if (mode == 2) return Recipemaps.AE2;
+        if (mode == 3) return RecipeMaps.neutroniumCompressorRecipes;
+        return Recipemaps.BIN;
+    }
+
+    @NotNull
+    @Override
+    public Collection<RecipeMap<?>> getAvailableRecipeMaps() {
+        return Arrays
+            .asList(Recipemaps.BIN, RecipeMaps.recyclerRecipes, Recipemaps.AE2, RecipeMaps.neutroniumCompressorRecipes);
+    }
 
     // region structure
     private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
@@ -102,28 +124,31 @@ public class OTELargeBin extends TT_MultiMachineBase_EM implements IConstructabl
     @Override
     @NotNull
     protected CheckRecipeResult checkProcessing_EM() {
-        mEUt = 0;
-        mMaxProgresstime = 10;
-        ItemStack[] itemStack = getStoredInputs().toArray(new ItemStack[0]);
-        FluidStack[] fluidStack = getStoredFluids().toArray(new FluidStack[0]);
-        if (getStoredInputs() != null) {
-            for (ItemStack item : itemStack) {
-                item.stackSize -= item.stackSize;
+        if (mode == 0) {
+            mEUt = 0;
+            mMaxProgresstime = 10;
+            ItemStack[] itemStack = getStoredInputs().toArray(new ItemStack[0]);
+            FluidStack[] fluidStack = getStoredFluids().toArray(new FluidStack[0]);
+            if (getStoredInputs() != null) {
+                for (ItemStack item : itemStack) {
+                    item.stackSize -= item.stackSize;
+                }
             }
-        }
-        if (getStoredFluids() != null) {
-            for (FluidStack fluid : fluidStack) {
-                fluid.amount -= fluid.amount;
+            if (getStoredFluids() != null) {
+                for (FluidStack fluid : fluidStack) {
+                    fluid.amount -= fluid.amount;
+                }
             }
-        }
+
+        } else return doCheckRecipe();
         return CheckRecipeResultRegistry.NO_RECIPE;
     }
 
     @Override
     public MultiblockTooltipBuilder createTooltip() {
         final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-        tt.addMachineType(translateToLocal("垃圾桶"))
-            .addInfo(translateToLocal("销毁一切"))
+        tt.addMachineType(translateToLocal("垃圾桶丨回收机丨AE奇点制造机丨中子态素压缩机"))
+            .addInfo(translateToLocal("销毁一切, 仅此而已吗?"))
             .addTecTechHatchInfo()
             .beginStructureBlock(1, 3, 1, false)
             .addController(translateToLocal("结构正中心")) // Controller: Front center
