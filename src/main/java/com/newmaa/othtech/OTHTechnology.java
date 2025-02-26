@@ -7,10 +7,13 @@ import java.util.Map;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fluids.FluidRegistry;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.gtnewhorizons.gtnhintergalactic.recipe.SpacePumpingRecipes;
 import com.newmaa.othtech.common.ItemAndBlockHandler;
 import com.newmaa.othtech.common.beeyonds.OTHBeeyonds;
 import com.newmaa.othtech.common.materials.MaterialsLoader;
@@ -87,12 +90,19 @@ public class OTHTechnology {
     public void postInit(FMLPostInitializationEvent event) {
         proxy.postInit(event);
         // RecipeLoader.loadRecipesPostInit();
+        // 添加自定义配方
+        SpacePumpingRecipes.RECIPES.put(Pair.of(2, 2), FluidRegistry.getFluidStack("lava", 1792000));
+        SpacePumpingRecipes.RECIPES.put(Pair.of(2, 3), FluidRegistry.getFluidStack("cryotheum", 1792000));
+        SpacePumpingRecipes.RECIPES.put(Pair.of(2, 4), FluidRegistry.getFluidStack("pyrotheum", 1792000));
+        SpacePumpingRecipes.RECIPES.put(Pair.of(2, 5), FluidRegistry.getFluidStack("liquiddna", 1792000));
+
     }
 
     @Mod.EventHandler
     public void completeInit(FMLLoadCompleteEvent event) {
         RecipeLoader.loadRecipes();
         new OTHBeeyonds();
+        // 添加自定义配方
     }
 
     @Mod.EventHandler
