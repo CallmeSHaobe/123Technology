@@ -5,20 +5,27 @@ import static gregtech.api.enums.GTValues.VP;
 
 import java.util.ArrayList;
 
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 
 import com.gtnewhorizons.gtnhintergalactic.recipe.SpacePumpingRecipes;
+import com.gtnewhorizons.gtnhintergalactic.tile.multi.elevator.TileEntitySpaceElevator;
 import com.gtnewhorizons.gtnhintergalactic.tile.multi.elevatormodules.TileEntityModuleBase;
 import com.gtnewhorizons.modularui.common.widget.DynamicPositionedColumn;
 import com.gtnewhorizons.modularui.common.widget.FakeSyncWidget;
 import com.gtnewhorizons.modularui.common.widget.SlotWidget;
 import com.gtnewhorizons.modularui.common.widget.TextWidget;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import gregtech.api.enums.Textures;
+import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.metatileentity.implementations.MTEHatchOutput;
@@ -32,6 +39,8 @@ import tectech.thing.metaTileEntity.multi.base.INameFunction;
 import tectech.thing.metaTileEntity.multi.base.IStatusFunction;
 import tectech.thing.metaTileEntity.multi.base.LedStatus;
 import tectech.thing.metaTileEntity.multi.base.Parameters;
+import tectech.thing.metaTileEntity.multi.base.TTMultiblockBase;
+import tectech.thing.metaTileEntity.multi.base.render.TTRenderedExtendedFacingTexture;
 
 public abstract class OTETileEntityModulePumpT4 extends TileEntityModuleBase {
 
@@ -64,7 +73,7 @@ public abstract class OTETileEntityModulePumpT4 extends TileEntityModuleBase {
             + (p.hatchId() / 2 + 1); // Parallels
     /** Status of the parallel setting */
     private static final IStatusFunction<OTETileEntityModulePumpT4> PARALLEL_STATUS = (base, p) -> LedStatus
-        .fromLimitsInclusiveOuterBoundary(p.get(), 0, 1, 100, base.getParallels());
+        .fromLimitsInclusiveOuterBoundary(p.get(), 0, 1, 123123, base.getParallels());
     /** Name of the batch setting */
     private static final INameFunction<OTETileEntityModulePumpT4> BATCH_SETTING_NAME = (base, p) -> GCCoreUtil
         .translate("gt.blockmachines.multimachine.project.ig.pump.cfgi.3"); // Batch size
@@ -155,6 +164,30 @@ public abstract class OTETileEntityModulePumpT4 extends TileEntityModuleBase {
         return state;
     }
 
+    protected static Textures.BlockIcons.CustomIcon engraving;
+
+    @Override
+    public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection facing,
+        int colorIndex, boolean aActive, boolean aRedstone) {
+        if (side == facing) {
+            return new ITexture[] {
+                Textures.BlockIcons.getCasingTextureForId(TileEntitySpaceElevator.CASING_INDEX_BASE),
+                new TTRenderedExtendedFacingTexture(aActive ? TTMultiblockBase.ScreenON : TTMultiblockBase.ScreenOFF) };
+        } else if (facing.getRotation(ForgeDirection.UP) == side || facing.getRotation(ForgeDirection.DOWN) == side) {
+            return new ITexture[] {
+                Textures.BlockIcons.getCasingTextureForId(TileEntitySpaceElevator.CASING_INDEX_BASE),
+                new TTRenderedExtendedFacingTexture(engraving) };
+        }
+        return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(TileEntitySpaceElevator.CASING_INDEX_BASE) };
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister aBlockIconRegister) {
+        engraving = new Textures.BlockIcons.CustomIcon("iconsets/OVERLAY_SIDE_PUMP_MODULE");
+        super.registerIcons(aBlockIconRegister);
+    }
+
     @Override
     protected void drawTexts(DynamicPositionedColumn screenElements, SlotWidget inventorySlot) {
         super.drawTexts(screenElements, inventorySlot);
@@ -212,11 +245,11 @@ public abstract class OTETileEntityModulePumpT4 extends TileEntityModuleBase {
     public static class ModulePumpT4OTE extends OTETileEntityModulePumpT4 {
 
         /** Voltage tier of this module */
-        protected static final int MODULE_VOLTAGE_TIER = 15;
+        protected static final int MODULE_VOLTAGE_TIER = 16;
         /** Tier of this module */
         protected static final int MODULE_TIER = 4;
         /** Minimum motor tier that is needed for this module */
-        protected static final int MINIMUM_MOTOR_TIER = 5;
+        protected static final int MINIMUM_MOTOR_TIER = 4;
         /** Maximum amount of parallels of one recipe */
         protected static final int MAX_PARALLELS = 123123;
         /** Maximum amount of different recipes that can be done at once */
@@ -282,7 +315,7 @@ public abstract class OTETileEntityModulePumpT4 extends TileEntityModuleBase {
                 .addInfo("设定的行星和气体类型决定了输出的流体")
                 .addInfo("锁定输出仓即可防止溢出销毁")
                 .addInfo("§9运行电压：§aMAX 每个配方的最大并行：§c123123")
-                .addInfo("一次处理多达§e4§r种不同的配方")
+                .addInfo("一次处理多达§e5§r种不同的配方")
                 .addInfo("需要§6MK-V§r或更高等级的加速轨道")
                 .addSeparator()
                 .beginStructureBlock(1, 5, 2, false)
