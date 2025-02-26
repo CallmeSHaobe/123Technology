@@ -1173,7 +1173,7 @@ public class recipesMain implements IRecipePool {
                 GTUtility.copyAmount(4, IGItems.SpaceElevatorModulePumpT3),
                 GTOreDictUnificator.get(OrePrefixes.frameGt, MaterialsUEVplus.Universium, 8),
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UXV, 16),
-                ItemList.Electric_Pump_UXV.get(8),
+                ItemList.Electric_Pump_MAX.get(8),
                 GTOreDictUnificator.get(OrePrefixes.gearGt, MaterialsUEVplus.Universium, 8),
                 GTOreDictUnificator.get(OrePrefixes.screw, MaterialsUEVplus.BlackDwarfMatter, 64),
                 GTOreDictUnificator.get(OrePrefixes.plateDouble, MaterialsUEVplus.Universium, 16))
@@ -1192,7 +1192,7 @@ public class recipesMain implements IRecipePool {
             new Object[] { ItemList.OilDrillInfinite.get(64), GTUtility.copyAmount(64, IGItems.PlanetaryGasSiphon),
                 CustomItemList.enderLinkFluidCover.get(64), CustomItemList.enderLinkFluidCover.get(64),
                 GTOreDictUnificator.get(OrePrefixes.frameGt, MaterialsUEVplus.Universium, 4),
-                new Object[] { OrePrefixes.circuit.get(Materials.UXV), 16 }, ItemList.Electric_Pump_UXV.get(8),
+                new Object[] { OrePrefixes.circuit.get(Materials.UXV), 16 }, ItemList.Electric_Pump_MAX.get(8),
                 GTOreDictUnificator.get(OrePrefixes.gearGt, MaterialsUEVplus.Universium, 4),
                 GTOreDictUnificator.get(OrePrefixes.screw, MaterialsUEVplus.BlackDwarfMatter, 64) },
             new FluidStack[] { MaterialsUEVplus.DimensionallyShiftedSuperfluid.getFluid(9216),
