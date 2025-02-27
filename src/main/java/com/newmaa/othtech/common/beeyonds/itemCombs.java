@@ -25,6 +25,7 @@ import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
+import gregtech.api.util.GTUtility;
 
 public class itemCombs extends Item {
 
@@ -103,7 +104,7 @@ public class itemCombs extends Item {
     public static void initCombsRecipes() {
         // HYPOGEN COMB FOR DTPF RECIPES
         RecipeBuilder.builder()
-            .itemInputs(combTypes.HYPOGEN.getStackForType(1))
+            .itemInputs(GTUtility.getIntegratedCircuit(17), combTypes.HYPOGEN.getStackForType(1))
             .fluidInputs(
                 FluidRegistry.getFluidStack("molten.neutronium", 5760),
                 FluidRegistry.getFluidStack("molten.quantum", 5760),
@@ -118,6 +119,7 @@ public class itemCombs extends Item {
             .addTo(RecipeMaps.plasmaForgeRecipes);
         RecipeBuilder.builder()
             .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
                 combTypes.HYPOGEN.getStackForType(1),
                 GTModHandler.getModItem("miscutils", "MU-metaitem.01", 0, 32100))
             .fluidInputs(
@@ -134,6 +136,7 @@ public class itemCombs extends Item {
             .addTo(RecipeMaps.plasmaForgeRecipes);
         RecipeBuilder.builder()
             .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
                 combTypes.HYPOGEN.getStackForType(1),
                 GTModHandler.getModItem("miscutils", "MU-metaitem.01", 0, 32100))
             .fluidInputs(
@@ -151,6 +154,7 @@ public class itemCombs extends Item {
         // SHABI QUANTUM ALLOY
         RecipeBuilder.builder()
             .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
                 combTypes.HYPOGEN.getStackForType(4),
                 GTModHandler.getModItem("miscutils", "item.itemBufferCore10", 0),
                 GTModHandler.getModItem(NewHorizonsCoreMod.ID, "tile.Quantinum", 4),
@@ -171,6 +175,7 @@ public class itemCombs extends Item {
             .addTo(RecipeMaps.plasmaForgeRecipes);
         RecipeBuilder.builder()
             .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
                 combTypes.HYPOGEN.getStackForType(2),
                 GTModHandler.getModItem("miscutils", "item.itemBufferCore10", 0),
                 GTModHandler.getModItem(NewHorizonsCoreMod.ID, "tile.Quantinum", 2),
@@ -191,7 +196,7 @@ public class itemCombs extends Item {
             .addTo(RecipeMaps.plasmaForgeRecipes);
         // BYD CHROMATIC GLASS
         RecipeBuilder.builder()
-            .itemInputs(combTypes.CHROMATICGLASS.getStackForType(4))
+            .itemInputs(GTUtility.getIntegratedCircuit(17), combTypes.CHROMATICGLASS.getStackForType(4))
             .fluidInputs(
                 FluidRegistry.getFluidStack("exciteddtcc", 156040),
                 FluidRegistry.getFluidStack("molten.glass", 36864))
@@ -203,7 +208,7 @@ public class itemCombs extends Item {
             .duration(150 / 4 * 20)
             .addTo(RecipeMaps.plasmaForgeRecipes);
         RecipeBuilder.builder()
-            .itemInputs(combTypes.CHROMATICGLASS.getStackForType(4))
+            .itemInputs(GTUtility.getIntegratedCircuit(17), combTypes.CHROMATICGLASS.getStackForType(4))
             .fluidInputs(
                 FluidRegistry.getFluidStack("exciteddtpc", 61059),
                 FluidRegistry.getFluidStack("molten.glass", 73728))
@@ -215,7 +220,7 @@ public class itemCombs extends Item {
             .duration(75 * 20 / 4)
             .addTo(RecipeMaps.plasmaForgeRecipes);
         RecipeBuilder.builder()
-            .itemInputs(combTypes.CHROMATICGLASS.getStackForType(4))
+            .itemInputs(GTUtility.getIntegratedCircuit(17), combTypes.CHROMATICGLASS.getStackForType(4))
             .fluidInputs(
                 FluidRegistry.getFluidStack("exciteddtrc", 26350),
                 FluidRegistry.getFluidStack("molten.glass", 147456))
@@ -227,7 +232,7 @@ public class itemCombs extends Item {
             .duration(187)
             .addTo(RecipeMaps.plasmaForgeRecipes);
         RecipeBuilder.builder()
-            .itemInputs(combTypes.CHROMATICGLASS.getStackForType(4))
+            .itemInputs(GTUtility.getIntegratedCircuit(17), combTypes.CHROMATICGLASS.getStackForType(4))
             .fluidInputs(
                 FluidRegistry.getFluidStack("exciteddtec", 11116),
                 FluidRegistry.getFluidStack("molten.glass", 294912))
@@ -240,6 +245,7 @@ public class itemCombs extends Item {
             .addTo(RecipeMaps.plasmaForgeRecipes);
         RecipeBuilder.builder()
             .itemInputs(
+                GTUtility.getIntegratedCircuit(24),
                 combTypes.CHROMATICGLASS.getStackForType(4),
                 GTModHandler.getModItem("miscutils", "MU-metaitem.01", 0, 32105))
             .itemOutputs(GTModHandler.getModItem(GTPlusPlus.ID, "itemDustChromaticGlass", 2))
@@ -248,6 +254,7 @@ public class itemCombs extends Item {
             .addTo(RecipeMaps.laserEngraverRecipes);
         RecipeBuilder.builder()
             .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
                 combTypes.CHROMATICGLASS.getStackForType(1),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Glass, 32),
                 GTModHandler.getModItem("miscutils", "MU-metaitem.01", 0, 32105))

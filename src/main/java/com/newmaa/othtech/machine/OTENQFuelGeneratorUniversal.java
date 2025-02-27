@@ -295,7 +295,7 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
 
     public void calculateEfficiency(long aFuel, long aPromoter, double coefficient) {
         if (aPromoter == 0) {
-            this.tEff = -(int) (Math.exp(coefficient * (double) aFuel) * 1.5D * 100);
+            this.tEff = 0;
             return;
         }
         this.tEff = (long) ((int) (Math.exp(coefficient * (double) aFuel / (double) aPromoter) * 1.5D * 100)
@@ -536,7 +536,7 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
             .addInfo("和通化一样的设计, 但同时兼备了大硅岩的加成")
             .addInfo("一次消耗输入仓内所有燃料和助燃剂, 实际发电需乘上 配方耗时 (秒)")
             .addInfo("二级管道方块解锁无线模式, 使用螺丝刀开启")
-            .addInfo("§a更高级的结构意味着更高级的§c助燃剂, §a一级结构:原子分离助燃剂, 二级结构:超维度等离子助燃剂, 提供错误的助燃剂会电表倒转")
+            .addInfo("§a更高级的结构意味着更高级的§c助燃剂, §a一级结构:原子分离助燃剂, 二级结构:超维度等离子助燃剂")
             .addInfo("§a效率随着运行时间提升, 每秒提升1%效率, 但效率过高会'突然'电表倒转, 更是意外的惊喜呀..")
             .addInfo("§a老登们要当心电网被吸干抹净, 具体效率阈值为(燃料数量 / 1000)%")
             .addInfo("§a基本效率公式请参考通化效率公式, 同时也会根据基本效率是否到达阈值来判断电表是否倒转")
