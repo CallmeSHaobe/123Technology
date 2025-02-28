@@ -249,7 +249,7 @@ public abstract class OTETileEntityModulePumpT4 extends TileEntityModuleBase {
         /** Tier of this module */
         protected static final int MODULE_TIER = 4;
         /** Minimum motor tier that is needed for this module */
-        protected static final int MINIMUM_MOTOR_TIER = 4;
+        protected static final int MINIMUM_MOTOR_TIER = 5;
         /** Maximum amount of parallels of one recipe */
         protected static final int MAX_PARALLELS = 123123;
         /** Maximum amount of different recipes that can be done at once */
