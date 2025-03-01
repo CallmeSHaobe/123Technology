@@ -200,4 +200,14 @@ public class Recipemaps {
                 .setMaxRecipesPerPage(1))
         .disableOptimize()
         .build();
+    public static final RecipeMap<OTH_RecipeMapBackend> EIO = RecipeMapBuilder
+        .of("otht.recipe.EIO", OTH_RecipeMapBackend::new)
+        .maxIO(1, 1, 0, 0)
+        .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
+        .frontend(OTH_GeneralFrontend::new)
+        .neiHandlerInfo(
+            builder -> builder.setDisplayStack(OTHItemList.TP.get(1))
+                .setMaxRecipesPerPage(1))
+        .disableOptimize()
+        .build();
 }
