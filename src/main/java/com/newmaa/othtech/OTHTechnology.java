@@ -79,7 +79,7 @@ public class OTHTechnology {
         proxy.init(event);
         MachineLoader.loadMachines();
         NEIRecipeMaps.IMCSender();
-        // load SpacePumpingT4 to NEIRecipes
+        // // load SpacePumpingT4 to NEIRecipes
         API.addRecipeCatalyst(
             SpaceElevatorModulePumpT4.getInternalStack_unsafe(),
             "com.gtnewhorizons.gtnhintergalactic.nei.SpacePumpModuleRecipeHandler");

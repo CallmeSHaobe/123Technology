@@ -139,7 +139,7 @@ public class OTEMiniActiveTransformer extends TT_MultiMachineBase_EM implements 
             // High Power Casing
             .addDynamoHatch(translateToLocal("任意动力仓, 激光源仓"), 1) // Dynamo Hatch: Any
             // High Power Casing
-            .toolTipFinisher();
+            .toolTipFinisher("§a123Technology - MINI NUKE");
         return tt;
     }
 

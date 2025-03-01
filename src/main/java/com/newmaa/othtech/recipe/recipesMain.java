@@ -1,5 +1,7 @@
 package com.newmaa.othtech.recipe;
 
+import static com.newmaa.othtech.common.recipemap.Recipemaps.AE2;
+import static com.newmaa.othtech.common.recipemap.Recipemaps.RCY;
 import static com.newmaa.othtech.utils.Utils.setStackSize;
 import static gregtech.api.enums.Mods.*;
 import static gregtech.api.enums.TierEU.*;
@@ -1220,5 +1222,17 @@ public class recipesMain implements IRecipePool {
             .eut(RECIPE_UIV)
             .duration(40)
             .addTo(centrifugeRecipes);
+        // AE2singularity
+        RecipeBuilder.builder()
+            .itemOutputs(
+                GTModHandler.getModItem(AppliedEnergistics2.ID, "item.ItemMultiMaterial", 1, 47)
+                    .setStackDisplayName("任意256,000物品每个"))
+            .addTo(AE2);
+        // Scrap
+        RecipeBuilder.builder()
+            .itemOutputs(ItemList.IC2_Scrap.get(1))
+            .itemInputs(new ItemStack(Blocks.cobblestone, 1).setStackDisplayName("任何物品"))
+            .eut(30)
+            .addTo(RCY);
     }
 }

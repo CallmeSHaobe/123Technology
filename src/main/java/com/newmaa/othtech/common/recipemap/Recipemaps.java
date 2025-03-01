@@ -155,7 +155,6 @@ public class Recipemaps {
         .neiHandlerInfo(
             builder -> builder.setDisplayStack(Loaders.FRF.copy())
                 .setMaxRecipesPerPage(1))
-        .neiSpecialInfoFormatter(new SimpleSpecialValueFormatter("value.naquadah_fuel_refine_factory"))
         .disableOptimize()
         .build();
     public static final RecipeMap<FuelBackend> NaquadahFuelFakeRecipes = RecipeMapBuilder
@@ -175,7 +174,6 @@ public class Recipemaps {
         .of("otht.recipe.AE2", OTH_RecipeMapBackend::new)
         .maxIO(1, 1, 0, 0)
         .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
-        .neiSpecialInfoFormatter(MISASpecialValueFormatter.INSTANCE)
         .frontend(OTH_GeneralFrontend::new)
         .neiHandlerInfo(
             builder -> builder.setDisplayStack(OTHItemList.TP.get(1))
@@ -186,7 +184,16 @@ public class Recipemaps {
         .of("otht.recipe.BIN", OTH_RecipeMapBackend::new)
         .maxIO(1, 1, 0, 0)
         .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
-        .neiSpecialInfoFormatter(MISASpecialValueFormatter.INSTANCE)
+        .frontend(OTH_GeneralFrontend::new)
+        .neiHandlerInfo(
+            builder -> builder.setDisplayStack(OTHItemList.TP.get(1))
+                .setMaxRecipesPerPage(1))
+        .disableOptimize()
+        .build();
+    public static final RecipeMap<OTH_RecipeMapBackend> RCY = RecipeMapBuilder
+        .of("otht.recipe.RCY", OTH_RecipeMapBackend::new)
+        .maxIO(1, 1, 0, 0)
+        .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
         .frontend(OTH_GeneralFrontend::new)
         .neiHandlerInfo(
             builder -> builder.setDisplayStack(OTHItemList.TP.get(1))
