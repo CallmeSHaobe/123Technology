@@ -29,6 +29,7 @@ import com.newmaa.othtech.common.materials.liquids;
 import com.newmaa.othtech.common.materials.materials;
 import com.newmaa.othtech.utils.RecipeBuilder;
 
+import goodgenerator.loader.Loaders;
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
@@ -1234,5 +1235,48 @@ public class recipesMain implements IRecipePool {
             .itemInputs(new ItemStack(Blocks.cobblestone, 1).setStackDisplayName("任何物品"))
             .eut(30)
             .addTo(RCY);
+        // Steel leaf & IronWood
+        RecipeBuilder.builder()
+            .itemInputs(
+                Materials.Iron.getDust(64),
+                Materials.Steel.getDust(64),
+                Materials.Wood.getDust(64),
+                new ItemStack(Blocks.leaves, 64))
+            .itemOutputs(Materials.IronWood.getDust(64), Materials.Steeleaf.getDust(64))
+            .eut(123123123)
+            .specialValue(1)
+            .duration(114)
+            .addTo(GTPPRecipeMaps.quantumForceTransformerRecipes);
+        // EIOM
+        RecipeBuilder.builder()
+            .itemOutputs(OTHItemList.EIO.get(1))
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
+                ItemList.Electric_Motor_HV.get(16),
+                ItemList.Casing_HV.get(1),
+                Materials.Titanium.getPlates(16),
+                new ItemStack(crazypants.enderio.EnderIO.blockSliceAndSplice, 1),
+                new ItemStack(crazypants.enderio.EnderIO.blockSoulFuser, 1))
+            .eut(114)
+            .duration(514)
+            .addTo(Assem);
+        // EX
+        GTValues.RA.stdBuilder()
+            .metadata(RESEARCH_ITEM, Loaders.XHE)
+            .metadata(RESEARCH_TIME, HOURS)
+            .itemInputs(
+                GTUtility.copyAmount(16, Loaders.XHE),
+                ItemList.Machine_Multi_VacuumFreezer.get(16),
+                ItemList.Electric_Pump_ZPM.get(16),
+                ItemList.Electric_Motor_LuV.get(64),
+                GTOreDictUnificator.get(OrePrefixes.gearGt, Materials.NaquadahAlloy, 64),
+                GTOreDictUnificator.get(OrePrefixes.wireGt02, Materials.SuperconductorZPM, 32),
+                GTOreDictUnificator.get(OrePrefixes.wireGt02, Materials.SuperconductorZPM, 32),
+                GTOreDictUnificator.get(OrePrefixes.gearGt, Materials.NaquadahAlloy, 64))
+            .fluidInputs(Materials.Iridium.getMolten(9216))
+            .itemOutputs(OTHItemList.EXH.get(1))
+            .duration(600 * 20)
+            .eut(TierEU.RECIPE_UV)
+            .addTo(AssemblyLine);
     }
 }

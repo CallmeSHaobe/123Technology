@@ -79,6 +79,8 @@ public class MachineLoader {
             .set(new OTETileEntityModulePumpT4.ModulePumpT4OTE(IDs + 56, "ModulePumpT4", "太空钻机模块MK-321"));
 
         OTHItemList.TP.set(new OTELargeBin(IDs - 1, "LargeBin", "§b盖世神功垃圾桶"));
+        OTHItemList.EIO.set(new OTEEIO(IDs - 2, "EIOM", "末影接口综合体"));
+        OTHItemList.EXH.set(new OTEHeatExchanger(IDs - 3, "EXchanger", EnumChatFormatting.GOLD + "吊炸天热交换机"));
         // Lasers
 
         final int AMPS = 1073741824;

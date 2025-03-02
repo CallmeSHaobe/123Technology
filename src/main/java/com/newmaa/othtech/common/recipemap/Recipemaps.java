@@ -6,6 +6,7 @@ import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.recipemap.formatter.MISASpecialValueFormatter;
 import com.newmaa.othtech.common.recipemap.recipeMapFrontends.OTH_GeneralFrontend;
 
+import goodgenerator.api.recipe.ExtremeHeatExchangerFrontend;
 import goodgenerator.client.GUI.GGUITextures;
 import goodgenerator.loader.Loaders;
 import gregtech.api.enums.ItemList;
@@ -202,12 +203,19 @@ public class Recipemaps {
         .build();
     public static final RecipeMap<OTH_RecipeMapBackend> EIO = RecipeMapBuilder
         .of("otht.recipe.EIO", OTH_RecipeMapBackend::new)
-        .maxIO(1, 1, 0, 0)
+        .maxIO(8, 8, 4, 0)
         .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
         .frontend(OTH_GeneralFrontend::new)
         .neiHandlerInfo(
-            builder -> builder.setDisplayStack(OTHItemList.TP.get(1))
+            builder -> builder.setDisplayStack(OTHItemList.EIO.get(1))
                 .setMaxRecipesPerPage(1))
         .disableOptimize()
+        .build();
+    public static final RecipeMap<OTH_RecipeMapBackend> EXH = RecipeMapBuilder
+        .of("otht.recipe.EXH", OTH_RecipeMapBackend::new)
+        .maxIO(1, 1, 1, 1)
+        .dontUseProgressBar()
+        .addSpecialTexture(47, 13, 78, 59, GGUITextures.PICTURE_EXTREME_HEAT_EXCHANGER)
+        .frontend(ExtremeHeatExchangerFrontend::new)
         .build();
 }
