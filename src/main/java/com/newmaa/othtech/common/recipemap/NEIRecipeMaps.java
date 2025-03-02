@@ -11,6 +11,7 @@ public class NEIRecipeMaps {
         sendCatalyst("otht.recipe.MCA", "gregtech:gt.blockmachines:23549");
         sendCatalyst("bw.recipe.cal", "gregtech:gt.blockmachines:23549");
         sendCatalyst("otht.recipe.RCY", "gregtech:gt.blockmachines:23519");
+        sendCatalyst("mobsinfo.mobhandler", "gregtech:gt.blockmachines:23536");
     }
 
     private static void sendCatalyst(String aName, String aStack, int aPriority) {

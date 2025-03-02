@@ -5,6 +5,7 @@ import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
 import com.newmaa.othtech.common.entity.entityLoader;
 import com.newmaa.othtech.common.item.ItemLoader;
 import com.newmaa.othtech.common.materials.bwMaterialsLocalization;
+import com.newmaa.othtech.machine.machineclass.MobHandlerLoaderOTH;
 
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLLoadCompleteEvent;
@@ -24,6 +25,7 @@ public class CommonProxy {
         new ItemLoader(event);
         new OreDictionaryLoader(event);
         new entityLoader();
+        MobHandlerLoaderOTH.init();
     }
 
     // load "Do your mod setup. Build whatever data structures you care about. Register recipes." (Remove if not needed)

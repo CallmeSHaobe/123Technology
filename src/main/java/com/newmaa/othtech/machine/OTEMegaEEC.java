@@ -16,6 +16,7 @@ import static net.minecraft.util.StatCollector.translateToLocal;
 import static tectech.thing.casing.TTCasingsContainer.sBlockCasingsTT;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Random;
 import java.util.UUID;
 
 import net.minecraft.init.Blocks;
@@ -23,16 +24,22 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.EnumDifficulty;
+import net.minecraft.world.WorldProviderHell;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 
 import org.jetbrains.annotations.NotNull;
 
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
+import com.kuba6000.mobsinfo.api.utils.FastRandom;
 import com.mojang.authlib.GameProfile;
+import com.newmaa.othtech.machine.machineclass.MobHandlerLoaderOTH;
 import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
 
 import bartworks.API.BorosilicateGlass;
@@ -46,8 +53,10 @@ import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.interfaces.tileentity.IWirelessEnergyHatchInformation;
 import gregtech.api.logic.ProcessingLogic;
+import gregtech.api.metatileentity.implementations.MTEHatchInputBus;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
+import gregtech.api.recipe.check.SimpleCheckRecipeResult;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTUtility;
@@ -97,6 +106,54 @@ public class OTEMegaEEC extends OTH_MultiMachineBase<OTEMegaEEC> implements IWir
     }
 
     private static final Item poweredSpawnerItem = Item.getItemFromBlock(EnderIO.blockPoweredSpawner);
+
+    @Override
+    @NotNull
+    public CheckRecipeResult checkProcessing() {
+        if (getBaseMetaTileEntity().isClientSide()) return CheckRecipeResultRegistry.NO_RECIPE;
+        ItemStack aStack = mInventory[1];
+        if (aStack == null) return SimpleCheckRecipeResult.ofFailure("EEC_nospawner");
+
+        if (aStack.getItem() != poweredSpawnerItem) return SimpleCheckRecipeResult.ofFailure("EEC_nospawner");
+
+        if (aStack.getTagCompound() == null) return SimpleCheckRecipeResult.ofFailure("EEC_invalidspawner");
+        String mobType = aStack.getTagCompound()
+            .getString("mobType");
+        if (mobType.isEmpty()) return SimpleCheckRecipeResult.ofFailure("EEC_invalidspawner");
+
+        if (mobType.equals("Skeleton") && getBaseMetaTileEntity().getWorld().provider instanceof WorldProviderHell
+            && rand.nextInt(5) > 0) mobType = "witherSkeleton";
+
+        MobHandlerLoaderOTH.MobEECRecipe recipe = MobHandlerLoaderOTH.recipeMap.get(mobType);
+
+        if (recipe == null) return CheckRecipeResultRegistry.NO_RECIPE;
+        if (!recipe.recipe.isPeacefulAllowed && this.getBaseMetaTileEntity()
+            .getWorld().difficultySetting == EnumDifficulty.PEACEFUL)
+            return SimpleCheckRecipeResult.ofFailure("EEC_peaceful");
+        {
+            double attackDamage = 114514;
+            weaponCheck: {
+                MTEHatchInputBus inputbus = this.mInputBusses.isEmpty() ? null : this.mInputBusses.get(0);
+                if (inputbus != null && !inputbus.isValid()) inputbus = null;
+                ItemStack lootingHolder = inputbus == null ? null : inputbus.getStackInSlot(0);
+                if (lootingHolder == null) break weaponCheck;
+            }
+            if (EECPlayer == null) EECPlayer = new OTEMegaEEC.EECFakePlayer(this);
+            this.mOutputItems = recipe.generateOutputs(rand, this, attackDamage, 64, false, true);
+
+            EECPlayer.currentWeapon = null;
+
+            this.mOutputFluids = new FluidStack[] { FluidRegistry.getFluidStack("xpjuice", 2147483647) };
+            int times = 20;
+        }
+        if (this.lEUt > 0) this.lEUt = -this.lEUt;
+        this.mEfficiency = (10000 - (getIdealStatus() - getRepairStatus()) * 1000);
+        this.mEfficiencyIncrease = 10000;
+        this.updateSlots();
+        return CheckRecipeResultRegistry.SUCCESSFUL;
+    }
+
+    public final Random rand = new FastRandom();
 
     @Override
     protected ProcessingLogic createProcessingLogic() {
@@ -166,7 +223,7 @@ public class OTEMegaEEC extends OTH_MultiMachineBase<OTEMegaEEC> implements IWir
     private final int depthOffSet = 26;
     private static IStructureDefinition<OTEMegaEEC> STRUCTURE_DEFINITION = null;
     private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
-        translateToLocal("1 - 消声仓, 能源仓, 输入输出总线, 输入输出仓 : 替换黑钚采矿机械方块, 支持TecTech能源仓") };
+        translateToLocal("1 - 消声仓, 能源仓, 输入输出总线, 输入输出仓 : 替换分子机械方块, 支持TecTech能源仓") };
 
     @Override
     public String[] getStructureDescription(ItemStack stackSize) {
@@ -4267,7 +4324,6 @@ public class OTEMegaEEC extends OTH_MultiMachineBase<OTEMegaEEC> implements IWir
             .addInfo("§l§4“观自在菩萨, 行深般若波罗蜜多时照见五蕴皆空, 度一切苦厄.”")
             .addInfo("§l§4无法连接血魔法仪式, 自动销毁所有附魔以及有耐久损耗的装备")
             .addInfo("§n§b工业化的魅力......")
-            .addInfo("PS:坏掉了, 未来会修复")
             .addInfo("并行: 134217728, 耗电固定为64A MAX, 时运等级64")
             .addInfo("注意: 多方块结构方块数量过多 无法预览结构")
             .addInfo("统计 : 灵魂沙 * 2200 , 博特姆合金块 * 1493 , 放射硅岩合金机械方块 * 12309")
