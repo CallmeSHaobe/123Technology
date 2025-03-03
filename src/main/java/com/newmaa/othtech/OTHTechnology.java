@@ -1,19 +1,14 @@
 package com.newmaa.othtech;
 
-import static com.newmaa.othtech.common.OTHItemList.SpaceElevatorModulePumpT4;
-
 import java.util.HashMap;
 import java.util.Map;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fluids.FluidRegistry;
 
-import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.gtnewhorizons.gtnhintergalactic.recipe.SpacePumpingRecipes;
 import com.newmaa.othtech.common.ItemAndBlockHandler;
 import com.newmaa.othtech.common.beeyonds.OTHBeeyonds;
 import com.newmaa.othtech.common.materials.MaterialsLoader;
@@ -22,7 +17,6 @@ import com.newmaa.othtech.event.EventLogin;
 import com.newmaa.othtech.machine.MachineLoader;
 import com.newmaa.othtech.recipe.RecipeLoader;
 
-import codechicken.nei.api.API;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -80,9 +74,9 @@ public class OTHTechnology {
         MachineLoader.loadMachines();
         NEIRecipeMaps.IMCSender();
         // // load SpacePumpingT4 to NEIRecipes
-        API.addRecipeCatalyst(
-            SpaceElevatorModulePumpT4.getInternalStack_unsafe(),
-            "com.gtnewhorizons.gtnhintergalactic.nei.SpacePumpModuleRecipeHandler");
+        // API.addRecipeCatalyst(
+        // SpaceElevatorModulePumpT4.getInternalStack_unsafe(),
+        // "com.gtnewhorizons.gtnhintergalactic.nei.SpacePumpModuleRecipeHandler");
     }
 
     @Mod.EventHandler
@@ -91,10 +85,10 @@ public class OTHTechnology {
         proxy.postInit(event);
         // RecipeLoader.loadRecipesPostInit();
         // 添加自定义配方
-        SpacePumpingRecipes.RECIPES.put(Pair.of(2, 2), FluidRegistry.getFluidStack("lava", 1792000));
-        SpacePumpingRecipes.RECIPES.put(Pair.of(2, 3), FluidRegistry.getFluidStack("cryotheum", 1792000));
-        SpacePumpingRecipes.RECIPES.put(Pair.of(2, 4), FluidRegistry.getFluidStack("pyrotheum", 1792000));
-        SpacePumpingRecipes.RECIPES.put(Pair.of(2, 5), FluidRegistry.getFluidStack("liquiddna", 1792000));
+        // SpacePumpingRecipes.RECIPES.put(Pair.of(2, 2), FluidRegistry.getFluidStack("lava", 1792000));
+        // SpacePumpingRecipes.RECIPES.put(Pair.of(2, 3), FluidRegistry.getFluidStack("cryotheum", 1792000));
+        // SpacePumpingRecipes.RECIPES.put(Pair.of(2, 4), FluidRegistry.getFluidStack("pyrotheum", 1792000));
+        // SpacePumpingRecipes.RECIPES.put(Pair.of(2, 5), FluidRegistry.getFluidStack("liquiddna", 1792000));
 
     }
 
