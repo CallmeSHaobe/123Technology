@@ -168,19 +168,20 @@ public class recipesEIO implements IRecipePool {
             .duration(80 * 20)
             .addTo(EIO);
 
-        // //BlinderFakeRecipes
-        // GTRecipeBuilder.builder()
-        // .itemInputs(
-        // GTModHandler.getModItem(EnderIO.MODID, "itemSoulVessel", 1).setStackDisplayName("任意灵魂瓶"),
-        // GTModHandler.getModItem(EnderIO.MODID, "itemBrokenSpawner", 1).setStackDisplayName("任意刷怪笼")
-        // )
-        // .itemOutputs(
-        // GTModHandler.getModItem(EnderIO.MODID, "itemBrokenSpawner", 1).setStackDisplayName("绑定的刷怪笼"),
-        // GTModHandler.getModItem(EnderIO.MODID, "itemSoulVessel", 1)
-        // )
-        // .eut(480)
-        // .duration(10 * 20)
-        // .addTo(EIO);
+        // BlinderFakeRecipes
+        GTRecipeBuilder.builder()
+            .itemInputs(
+                GTModHandler.getModItem(EnderIO.MODID, "itemSoulVessel", 1)
+                    .setStackDisplayName("任意灵魂瓶"),
+                GTModHandler.getModItem(EnderIO.MODID, "itemBrokenSpawner", 1)
+                    .setStackDisplayName("任意刷怪笼"))
+            .itemOutputs(
+                GTModHandler.getModItem(EnderIO.MODID, "itemBrokenSpawner", 1)
+                    .setStackDisplayName("绑定的刷怪笼"),
+                GTModHandler.getModItem(EnderIO.MODID, "itemSoulVessel", 1))
+            .eut(480)
+            .duration(10 * 20)
+            .addTo(EIO);
 
         // SkullAssembler
         RecipeBuilder.builder()

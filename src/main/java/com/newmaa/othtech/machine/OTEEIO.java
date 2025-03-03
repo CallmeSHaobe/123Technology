@@ -1,7 +1,6 @@
 package com.newmaa.othtech.machine;
 
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
-import static gregtech.api.GregTechAPI.*;
 import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.enums.HatchElement.OutputHatch;
 import static gregtech.api.enums.Textures.BlockIcons.*;
@@ -124,23 +123,49 @@ public class OTEEIO extends OTH_MultiMachineBase<OTEEIO> {
             mOutputItems = processingLogic.getOutputItems();
             mOutputFluids = processingLogic.getOutputFluids();
             setEnergyUsage(processingLogic);
-        }
-        if (mode) {
+        } else {
             mEUt = 114;
             mMaxProgresstime = 100;
-            ItemStack a = new ItemStack(EnderIO.itemSoulVessel);
-            ItemStack b = new ItemStack(EnderIO.itemBrokenSpawner);
-            for (ItemStack item : getAllStoredInputs()) {
-                NBTTagCompound type = a.getTagCompound();
-                String tType = type.getString("id");
-                NBTTagCompound mobType = new NBTTagCompound();
-                mobType.setString("mobType", tType);
-                b.setTagCompound(mobType);
-                item.stackSize--;
-                mOutputItems = new ItemStack[] { b, new ItemStack(EnderIO.itemSoulVessel) };
-                return CheckRecipeResultRegistry.SUCCESSFUL;
+
+            ItemStack soulVessel = null;
+            ItemStack brokenSpawner = null;
+
+            for (ItemStack soul : getAllStoredInputs()) {
+                if (soul.getItem() == EnderIO.itemSoulVessel) {
+                    soulVessel = soul;
+                    break;
+                }
             }
 
+            for (ItemStack spawner : getAllStoredInputs()) {
+                if (spawner.getItem() == EnderIO.itemBrokenSpawner) {
+                    brokenSpawner = spawner;
+                    break;
+                }
+            }
+
+            if (soulVessel == null || brokenSpawner == null) {
+                return CheckRecipeResultRegistry.NO_RECIPE;
+            }
+
+            NBTTagCompound soulTag = soulVessel.getTagCompound();
+            if (soulTag == null || !soulTag.hasKey("id")) {
+                return CheckRecipeResultRegistry.NO_RECIPE;
+            }
+
+            String mobType = soulTag.getString("id");
+            ItemStack outputItem = brokenSpawner.copy();
+            NBTTagCompound spawnerTag = new NBTTagCompound();
+            spawnerTag.setString("mobType", mobType);
+            outputItem.setTagCompound(spawnerTag);
+            outputItem.stackSize = 1;
+
+            mOutputItems = new ItemStack[] { outputItem, new ItemStack(EnderIO.itemSoulVessel) };
+            soulVessel.stackSize--;
+            brokenSpawner.stackSize--;
+
+            updateSlots();
+            return CheckRecipeResultRegistry.SUCCESSFUL;
         }
         return CheckRecipeResultRegistry.NO_RECIPE;
     }
