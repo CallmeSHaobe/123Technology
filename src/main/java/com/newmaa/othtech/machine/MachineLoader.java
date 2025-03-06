@@ -75,10 +75,6 @@ public class MachineLoader {
 
         OTHItemList.MCA
             .set(new OTEMegaCircuitAssLine(IDs + 29, "LargeCircuitAssLine", EnumChatFormatting.BOLD + "进阶高能电路装配线"));
-        /*
-         * OTHItemList.SpaceElevatorModulePumpT4
-         * .set(new OTETileEntityModulePumpT4.ModulePumpT4(IDs + 56, "ModulePumpT4", "太空钻机模块MK-321"));
-         */
 
         OTHItemList.TP.set(new OTELargeBin(IDs - 1, "LargeBin", "§b盖世神功垃圾桶"));
         OTHItemList.EIO.set(new OTEEIO(IDs - 2, "EIOM", "末影接口综合体"));
@@ -140,4 +136,12 @@ public class MachineLoader {
         OTHItemList.UXVB
             .set(new MTEHatchEnergyTunnel(IDs + 55, "UXV Laser 1073EN", "UXV 1,073,741,824A 激光靶仓", 13, AMPS));
     }
+
+    public static void loadMachinePostInit() {
+        final int IDs = 23520;
+
+        OTHItemList.SpaceElevatorModulePumpT4
+            .set(new OTETileEntityModulePumpT4.ModulePumpT4(IDs + 56, "ModulePumpT4", "太空钻机模块MK-321"));
+    }
+
 }

@@ -3,8 +3,24 @@ package com.newmaa.othtech.recipe;
 import static com.newmaa.othtech.common.recipemap.Recipemaps.AE2;
 import static com.newmaa.othtech.common.recipemap.Recipemaps.RCY;
 import static com.newmaa.othtech.utils.Utils.setStackSize;
-import static gregtech.api.enums.Mods.*;
-import static gregtech.api.enums.TierEU.*;
+import static gregtech.api.enums.Mods.AppliedEnergistics2;
+import static gregtech.api.enums.Mods.GTPlusPlus;
+import static gregtech.api.enums.Mods.GoodGenerator;
+import static gregtech.api.enums.Mods.GregTech;
+import static gregtech.api.enums.Mods.IndustrialCraft2;
+import static gregtech.api.enums.Mods.NewHorizonsCoreMod;
+import static gregtech.api.enums.TierEU.RECIPE_EV;
+import static gregtech.api.enums.TierEU.RECIPE_HV;
+import static gregtech.api.enums.TierEU.RECIPE_IV;
+import static gregtech.api.enums.TierEU.RECIPE_LuV;
+import static gregtech.api.enums.TierEU.RECIPE_MV;
+import static gregtech.api.enums.TierEU.RECIPE_UEV;
+import static gregtech.api.enums.TierEU.RECIPE_UHV;
+import static gregtech.api.enums.TierEU.RECIPE_UIV;
+import static gregtech.api.enums.TierEU.RECIPE_UMV;
+import static gregtech.api.enums.TierEU.RECIPE_UV;
+import static gregtech.api.enums.TierEU.RECIPE_UXV;
+import static gregtech.api.enums.TierEU.RECIPE_ZPM;
 import static gregtech.api.recipe.RecipeMaps.assemblerRecipes;
 import static gregtech.api.recipe.RecipeMaps.centrifugeRecipes;
 import static gregtech.api.recipe.RecipeMaps.fluidExtractionRecipes;
@@ -12,7 +28,9 @@ import static gregtech.api.util.GTModHandler.addCraftingRecipe;
 import static gregtech.api.util.GTModHandler.getModItem;
 import static gregtech.api.util.GTRecipeBuilder.HOURS;
 import static gregtech.api.util.GTRecipeBuilder.SECONDS;
-import static gregtech.api.util.GTRecipeConstants.*;
+import static gregtech.api.util.GTRecipeConstants.AssemblyLine;
+import static gregtech.api.util.GTRecipeConstants.RESEARCH_ITEM;
+import static gregtech.api.util.GTRecipeConstants.RESEARCH_TIME;
 import static tectech.thing.CustomItemList.eM_Power;
 
 import net.minecraft.init.Blocks;
@@ -22,6 +40,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
+import com.gtnewhorizons.gtnhintergalactic.item.IGItems;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.item.ItemLoader;
 import com.newmaa.othtech.common.materials.liquids;
@@ -32,6 +51,7 @@ import goodgenerator.loader.Loaders;
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
+import gregtech.api.enums.MaterialsUEVplus;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMap;
@@ -43,6 +63,7 @@ import gregtech.common.items.CombType;
 import gregtech.loaders.misc.GTBees;
 import gtPlusPlus.api.recipe.GTPPRecipeMaps;
 import tectech.recipe.TTRecipeAdder;
+import tectech.thing.CustomItemList;
 
 public class recipesMain implements IRecipePool {
 
@@ -1165,43 +1186,42 @@ public class recipesMain implements IRecipePool {
             .eut(RECIPE_UHV)
             .duration(480 * 20)
             .addTo(AssemblyLine);
-        /*
-         * // 太空钻机模块MK-321 - Assembler alt
-         * GTValues.RA.stdBuilder()
-         * .metadata(RESEARCH_ITEM, OTHItemList.SpaceElevatorModulePumpT4.get(1))
-         * .metadata(RESEARCH_TIME, 4 * HOURS)
-         * .itemInputs(
-         * GTUtility.copyAmount(4, IGItems.SpaceElevatorModulePumpT3),
-         * GTOreDictUnificator.get(OrePrefixes.frameGt, MaterialsUEVplus.Universium, 8),
-         * GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UXV, 16),
-         * ItemList.Electric_Pump_MAX.get(8),
-         * GTOreDictUnificator.get(OrePrefixes.gearGt, MaterialsUEVplus.Universium, 8),
-         * GTOreDictUnificator.get(OrePrefixes.screw, MaterialsUEVplus.BlackDwarfMatter, 64),
-         * GTOreDictUnificator.get(OrePrefixes.plateDouble, MaterialsUEVplus.Universium, 16))
-         * .fluidInputs(MaterialsUEVplus.DimensionallyShiftedSuperfluid.getFluid(9216))
-         * .itemOutputs(OTHItemList.SpaceElevatorModulePumpT4.get(1))
-         * .duration(123 * 20)
-         * .eut(TierEU.RECIPE_UXV)
-         * .addTo(assemblerRecipes);
-         * // 太空钻机模块MK-321
-         * TTRecipeAdder.addResearchableAssemblylineRecipe(
-         * IGItems.SpaceElevatorModulePumpT3,
-         * 123123123,
-         * 123123,
-         * 256000000,
-         * 4,
-         * new Object[] { ItemList.OilDrillInfinite.get(64), GTUtility.copyAmount(64, IGItems.PlanetaryGasSiphon),
-         * CustomItemList.enderLinkFluidCover.get(64), CustomItemList.enderLinkFluidCover.get(64),
-         * GTOreDictUnificator.get(OrePrefixes.frameGt, MaterialsUEVplus.Universium, 4),
-         * new Object[] { OrePrefixes.circuit.get(Materials.UXV), 16 }, ItemList.Electric_Pump_MAX.get(8),
-         * GTOreDictUnificator.get(OrePrefixes.gearGt, MaterialsUEVplus.Universium, 4),
-         * GTOreDictUnificator.get(OrePrefixes.screw, MaterialsUEVplus.BlackDwarfMatter, 64) },
-         * new FluidStack[] { MaterialsUEVplus.DimensionallyShiftedSuperfluid.getFluid(9216),
-         * MaterialsUEVplus.Universium.getMolten(2304) },
-         * OTHItemList.SpaceElevatorModulePumpT4.getInternalStack_unsafe(),
-         * 123 * 20,
-         * (int) TierEU.RECIPE_UXV);
-         */
+
+        // 太空钻机模块MK-321 - Assembler alt
+        GTValues.RA.stdBuilder()
+            .metadata(RESEARCH_ITEM, OTHItemList.SpaceElevatorModulePumpT4.get(1))
+            .metadata(RESEARCH_TIME, 4 * HOURS)
+            .itemInputs(
+                GTUtility.copyAmount(4, IGItems.SpaceElevatorModulePumpT3),
+                GTOreDictUnificator.get(OrePrefixes.frameGt, MaterialsUEVplus.Universium, 8),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UXV, 16),
+                ItemList.Electric_Pump_MAX.get(8),
+                GTOreDictUnificator.get(OrePrefixes.gearGt, MaterialsUEVplus.Universium, 8),
+                GTOreDictUnificator.get(OrePrefixes.screw, MaterialsUEVplus.BlackDwarfMatter, 64),
+                GTOreDictUnificator.get(OrePrefixes.plateDouble, MaterialsUEVplus.Universium, 16))
+            .fluidInputs(MaterialsUEVplus.DimensionallyShiftedSuperfluid.getFluid(9216))
+            .itemOutputs(OTHItemList.SpaceElevatorModulePumpT4.get(1))
+            .duration(123 * 20)
+            .eut(TierEU.RECIPE_UXV)
+            .addTo(assemblerRecipes);
+        // 太空钻机模块MK-321
+        TTRecipeAdder.addResearchableAssemblylineRecipe(
+            IGItems.SpaceElevatorModulePumpT3,
+            123123123,
+            123123,
+            256000000,
+            4,
+            new Object[] { ItemList.OilDrillInfinite.get(64), GTUtility.copyAmount(64, IGItems.PlanetaryGasSiphon),
+                CustomItemList.enderLinkFluidCover.get(64), CustomItemList.enderLinkFluidCover.get(64),
+                GTOreDictUnificator.get(OrePrefixes.frameGt, MaterialsUEVplus.Universium, 4),
+                new Object[] { OrePrefixes.circuit.get(Materials.UXV), 16 }, ItemList.Electric_Pump_MAX.get(8),
+                GTOreDictUnificator.get(OrePrefixes.gearGt, MaterialsUEVplus.Universium, 4),
+                GTOreDictUnificator.get(OrePrefixes.screw, MaterialsUEVplus.BlackDwarfMatter, 64) },
+            new FluidStack[] { MaterialsUEVplus.DimensionallyShiftedSuperfluid.getFluid(9216),
+                MaterialsUEVplus.Universium.getMolten(2304) },
+            OTHItemList.SpaceElevatorModulePumpT4.getInternalStack_unsafe(),
+            123 * 20,
+            (int) TierEU.RECIPE_UXV);
         // bin
         RecipeBuilder.builder()
             .itemOutputs(OTHItemList.TP.get(1))
