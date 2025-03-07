@@ -92,6 +92,7 @@ public class OTHTechnology {
         SpacePumpingRecipes.RECIPES.put(Pair.of(2, 3), FluidRegistry.getFluidStack("cryotheum", 1792000));
         SpacePumpingRecipes.RECIPES.put(Pair.of(2, 4), FluidRegistry.getFluidStack("pyrotheum", 1792000));
         SpacePumpingRecipes.RECIPES.put(Pair.of(2, 5), FluidRegistry.getFluidStack("liquiddna", 1792000));
+        SpacePumpingRecipes.RECIPES.put(Pair.of(2, 6), FluidRegistry.getFluidStack("chlorine", 1230000));
         // // load SpacePumpingT4 to NEIRecipes
         API.addRecipeCatalyst(
             SpaceElevatorModulePumpT4.getInternalStack_unsafe(),

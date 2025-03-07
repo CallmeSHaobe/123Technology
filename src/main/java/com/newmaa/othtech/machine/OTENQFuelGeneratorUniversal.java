@@ -27,7 +27,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
@@ -127,11 +126,11 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
         super.getWailaNBTData(player, tile, tag, world, x, y, z);
         final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
         if (tileEntity != null) {
-            String bonus = GTUtility.formatNumbers(getPowerFlow() * tEff / 100);
+            String bonus = GTUtility.formatNumbers(getPowerFlow());
             tag.setString("bonus", bonus);
             tag.setBoolean("WM", isWirelessMode);
             tag.setString("costingWirelessEU", costingWirelessEU);
-            tag.setLong("EFF", tEff);
+            tag.setString("EFF", String.valueOf(tEff));
         }
     }
 
@@ -161,6 +160,8 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
         currentTip.add(
             EnumChatFormatting.BOLD + "无线模式"
                 + EnumChatFormatting.RESET
+                + ": "
+                + EnumChatFormatting.RESET
                 + tag.getBoolean("WM")
                 + EnumChatFormatting.RESET);
         currentTip.add(
@@ -183,7 +184,7 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
         } else {
             isWirelessMode = false;
         }
-        GTUtility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal(isWirelessMode ? "无线模式启动" : "无线模式关闭"));
+        GTUtility.sendChatToPlayer(aPlayer, translateToLocal(isWirelessMode ? "无线模式启动" : "无线模式关闭"));
     }
 
     public long running_time = 0;
@@ -300,9 +301,7 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
         }
         this.tEff = ((int) (Math.exp(-coefficient * (double) aFuel / (double) aPromoter) * 1.5D * 100)
             + (running_time));
-        if (tEff > aFuel / 1000) {
-            this.tEff = 0;
-        }
+        this.tEff = Math.min(this.tEff, 1230);
     }
 
     public long findLiquidAmount(FluidStack liquid, List<FluidStack> input) {
@@ -535,11 +534,14 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
             .addInfo("耗时根据主机参数决定, 单位tick, 实际功率为总发电 / 耗时(tick)")
             .addInfo("和通化一样的设计, 但同时兼备了大硅岩的加成")
             .addInfo("一次消耗输入仓内所有燃料和助燃剂, 实际发电需乘上 配方耗时 (秒)")
+            .addInfo("感谢伟大的铱锇钐大人，所有输出功率都将为原来的三倍")
             .addInfo("二级管道方块解锁无线模式, 使用螺丝刀开启")
             .addInfo("§a更高级的结构意味着更高级的§c助燃剂, §a一级结构:原子分离助燃剂, 二级结构:超维度等离子助燃剂")
             .addInfo("§a效率随着运行时间提升, 每秒提升1%效率, 但效率过高会'突然'发电归零, 更是意外的惊喜呀..")
-            .addInfo("§a老登们要当心电网被吸干抹净, 具体效率阈值为(燃料数量 / 1000)%")
+            .addInfo("§a老登们要当心电网被吸干抹净, 具体效率阈值为1230%")
             .addInfo("§a基本效率公式请参考通化效率公式, 同时也会根据基本效率是否到达阈值来判断发电是否会归零")
+            .addInfo("计算公式：总发电量=燃料数量*输出系数(3)*效率*燃料输出功率*配方时间")
+            .addInfo("PS：上述计算的发电量为一次运行的总发电")
             .addInfo("§a注意 : 如果耗时小于20ticks, 则效率不会累加")
             .addInfo("§4你知道会发生什么。")
             .addInfo("§e警告 : 如果强行使用有线模式烧高级硅岩燃料, 将会导致电表倒转憋憋")
