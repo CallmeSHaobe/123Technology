@@ -54,8 +54,8 @@ tt.IOS=123,我们经爱你呀
 tt.HYP=坚不可摧..
 tt.SPE=研磨过去现在和未来
 tt.brains=他还在跳动...
-tt.slicedBrains=我思故我在.
-tt.encapsulatedBrains=你必须想象,电路板里的大脑是幸福的.
+tt.slicedBrains=我在故我思.
+tt.wrapBrains=你必须想象,电路板里的大脑是幸福的.
 
 
 
@@ -147,7 +147,7 @@ otht.recipe.BIN=垃圾桶
 otht.recipe.RCY=回收机
 otht.recipe.EIO=§l末影接口综合体
 otht.recipe.EXH=§4吊炸天热交换
-item.BrainsHuman.name=§4人类大脑
+item.BrainsHuman.name=§n人类大脑
 
 
 
