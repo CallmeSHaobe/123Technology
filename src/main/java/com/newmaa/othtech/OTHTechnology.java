@@ -1,6 +1,7 @@
 package com.newmaa.othtech;
 
 import static com.newmaa.othtech.common.OTHItemList.SpaceElevatorModulePumpT4;
+import static com.newmaa.othtech.recipe.recipesEXH.generateEXHRecipes;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,6 +19,7 @@ import com.newmaa.othtech.common.ItemAndBlockHandler;
 import com.newmaa.othtech.common.beeyonds.OTHBeeyonds;
 import com.newmaa.othtech.common.materials.MaterialsLoader;
 import com.newmaa.othtech.common.recipemap.NEIRecipeMaps;
+import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.event.EventLogin;
 import com.newmaa.othtech.machine.MachineLoader;
 import com.newmaa.othtech.recipe.RecipeLoader;
@@ -31,6 +33,9 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartedEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import gtPlusPlus.api.recipe.GTPPRecipeMaps;
 
 @Mod(
     modid = OTHTechnology.MODID,
@@ -81,6 +86,9 @@ public class OTHTechnology {
         NEIRecipeMaps.IMCSender();
     }
 
+    @SideOnly(Side.CLIENT)
+    public static void registerRenderers() {}
+
     @Mod.EventHandler
     // postInit "Handle interaction with other mods, complete your setup based on this." (Remove if not needed)
     public void postInit(FMLPostInitializationEvent event) {
@@ -126,7 +134,7 @@ public class OTHTechnology {
 
     @Mod.EventHandler
     public void onLoadComplete(FMLLoadCompleteEvent event) {
-
+        generateEXHRecipes(GTPPRecipeMaps.advancedFreezerRecipes, Recipemaps.EXH);
         proxy.onLoadComplete(event);
 
     }

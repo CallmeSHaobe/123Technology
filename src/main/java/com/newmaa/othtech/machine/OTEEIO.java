@@ -267,7 +267,7 @@ public class OTEEIO extends OTH_MultiMachineBase<OTEEIO> {
             .addInfo(EnumChatFormatting.LIGHT_PURPLE + "使用先进的EU系机器来代替RF系机器, 真是伟大的进步.")
             .addInfo(EnumChatFormatting.LIGHT_PURPLE + "处理EIO一些机器的配方, 如头颅装配机, 灵魂绑定机等.")
             .addInfo(EnumChatFormatting.LIGHT_PURPLE + "执行无损超频, 默认并行64.")
-            .addInfo("螺丝刀右键开启刷怪笼绑定模式, 耗电固定114EU/t, 耗时100ticks(WIP)")
+            .addInfo("螺丝刀右键开启刷怪笼绑定模式, 耗电固定114EU/t, 耗时100ticks")
             .addTecTechHatchInfo()
             .addSeparator()
             .addController("EIO")

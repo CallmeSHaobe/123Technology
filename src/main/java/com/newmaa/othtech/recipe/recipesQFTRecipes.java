@@ -1,10 +1,15 @@
 package com.newmaa.othtech.recipe;
 
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
+import com.newmaa.othtech.utils.RecipeBuilder;
+
 import gregtech.api.enums.GTValues;
+import gregtech.api.enums.Materials;
 import gregtech.api.interfaces.IRecipeMap;
 import gregtech.api.util.GTModHandler;
 import gtPlusPlus.api.recipe.GTPPRecipeMaps;
@@ -43,6 +48,19 @@ public class recipesQFTRecipes implements IRecipePool {
             .eut(123123123)
             .duration(123)
             .addTo(qft);
+        // Steel leaf & IronWood
+        RecipeBuilder.builder()
+            .itemInputs(
+                Materials.Iron.getDust(64),
+                Materials.Steel.getDust(64),
+                Materials.Wood.getDust(64),
+                new ItemStack(Blocks.leaves, 64),
+                ItemUtils.getSimpleStack(GenericChem.mPlatinumGroupCatalyst, 0))
+            .itemOutputs(Materials.IronWood.getDust(64), Materials.Steeleaf.getDust(64))
+            .eut(123123123)
+            .specialValue(1)
+            .duration(114)
+            .addTo(GTPPRecipeMaps.quantumForceTransformerRecipes);
 
     }
 }

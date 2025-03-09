@@ -12,15 +12,15 @@ import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class itemTST extends ItemFood {
+public class itemBrain extends ItemFood {
 
-    public itemTST() {
-        super(4096, 10F, true);
+    public itemBrain() {
+        super(1, 8F, true);
         this.setAlwaysEdible();
-        this.setPotionEffect(Potion.damageBoost.id, 114514, 64, 1);
-        this.setUnlocalizedName("itemTST");
+        this.setPotionEffect(Potion.hunger.id, 10, 40, 1);
+        this.setUnlocalizedName("BrainsHuman");
         this.setCreativeTab(CreativeTabsLoader.tabothtech);
-        this.setTextureName("123technology:TST");
+        this.setTextureName("123technology:BrainsHuman");
     }
 
     @Override
@@ -28,7 +28,7 @@ public class itemTST extends ItemFood {
     public void addInformation(final ItemStack itemStack, final EntityPlayer player, final List toolTip,
         final boolean advancedToolTips) {
 
-        toolTip.add("§7哦塔斯汀, 哦塔斯汀, 有了你生活美好没烦恼~");
+        toolTip.add("他还在跳动...");
 
     }
 }

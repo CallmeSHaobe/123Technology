@@ -10,12 +10,9 @@ import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_ASSEMBLY_LINE
 import static gregtech.api.util.GTStructureUtility.*;
 import static net.minecraft.util.StatCollector.translateToLocal;
 
-import java.util.HashSet;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.oredict.OreDictionary;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -32,15 +29,16 @@ import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
+import gregtech.api.logic.ProcessingLogic;
 import gregtech.api.multitileentity.multiblock.casing.Glasses;
 import gregtech.api.recipe.RecipeMap;
-import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
+import gregtech.api.util.ParallelHelper;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import tectech.thing.metaTileEntity.multi.base.INameFunction;
 import tectech.thing.metaTileEntity.multi.base.IStatusFunction;
@@ -74,29 +72,51 @@ public class OTEHeatExchanger extends TT_MultiMachineBase_EM implements ISurviva
     }
 
     @Override
-    public @NotNull CheckRecipeResult checkProcessing_EM() {
-        final HashSet<String> IngotHotOreDictNames = new HashSet<>();
-        final HashSet<String> IngotOreDictNames = new HashSet<>();
-        final HashSet<GTUtility.ItemId> IngotHots = new HashSet<>();
-        final HashSet<GTUtility.ItemId> Ingots = new HashSet<>();
-        for (GTRecipe recipe : RecipeMaps.blastFurnaceRecipes.getAllRecipes()) {
-            for (String name : OreDictionary.getOreNames()) {
-                if (name.startsWith("ingotHot")) {
-                    IngotHotOreDictNames.add(name);
-                    for (ItemStack items : OreDictionary.getOres(name)) {
-                        IngotHots.add(GTUtility.ItemId.createWithoutNBT(items));
-                    }
-                }
-            }
-        }
-        return CheckRecipeResultRegistry.NO_RECIPE;
-    }
-
-    @Override
     public boolean checkMachine_EM(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
         repairMachine();
         return checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet);
 
+    }
+
+    @Override
+    protected ProcessingLogic createProcessingLogic() {
+        return new ProcessingLogic() {
+
+            @NotNull
+            @Override
+            protected ParallelHelper createParallelHelper(@NotNull GTRecipe recipe) {
+                return super.createParallelHelper(recipe).setConsumption(!mRunningOnLoad);
+            }
+
+            @NotNull
+            @Override
+            protected CheckRecipeResult validateRecipe(@NotNull GTRecipe recipe) {
+                lEUt = 0;
+                return CheckRecipeResultRegistry.SUCCESSFUL;
+            }
+
+        };
+    }
+
+    @Override
+    @NotNull
+    public CheckRecipeResult checkProcessing_EM() {
+        if (getAllStoredInputs().isEmpty()) {
+            return CheckRecipeResultRegistry.NO_RECIPE;
+        }
+        setupProcessingLogic(processingLogic);
+        CheckRecipeResult result = doCheckRecipe();
+        result = postCheckRecipe(result, processingLogic);
+        updateSlots();
+        if (!result.wasSuccessful()) return result;
+
+        mEfficiency = 10000;
+        mEfficiencyIncrease = 10000;
+        mMaxProgresstime = (int) time.get();
+        mOutputItems = processingLogic.getOutputItems();
+        mOutputFluids = processingLogic.getOutputFluids();
+        setEnergyUsage(processingLogic);
+        return result;
     }
 
     @Override
@@ -186,12 +206,13 @@ public class OTEHeatExchanger extends TT_MultiMachineBase_EM implements ISurviva
         final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType(EnumChatFormatting.BLUE + "真正的热能饕餮 - 真空冷冻热交换机")
             .addInfo(EnumChatFormatting.RED + "回收热锭冶炼的废热, 化为超临界蒸汽.")
-            .addInfo(EnumChatFormatting.RED + "理论可回收热锭高炉配方50%之EU")
+            .addInfo(EnumChatFormatting.RED + "理论可回收热锭冰箱配方50%之EU")
             .addInfo(EnumChatFormatting.RED + "物理学还存在吗?")
             .addInfo(EnumChatFormatting.YELLOW + "耗电: 0EU/t , 耗时请使用主机参数调整")
+            .addInfo("PS:如果输入总线没有物品会提示找不到配方的憋憋")
             .addTecTechHatchInfo()
             .addSeparator()
-            .addController("热交换e")
+            .addController("热交换")
             .beginStructureBlock(13, 8, 11, false)
             .addInputBus("AnyInputBus", 1)
             .addOutputBus("AnyOutputBus", 1)

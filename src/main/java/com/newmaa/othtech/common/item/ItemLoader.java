@@ -5,6 +5,7 @@ import net.minecraft.item.ItemStack;
 
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.item.foods.ingotHotDog;
+import com.newmaa.othtech.common.item.foods.itemBrain;
 import com.newmaa.othtech.common.item.foods.itemLeekBox;
 import com.newmaa.othtech.common.item.foods.itemTST;
 import com.newmaa.othtech.common.item.foods.itemZhangww;
@@ -34,6 +35,7 @@ public class ItemLoader {
     public static Item RecordEVAB = new itemRecord("EVA_B");
     public static Item RecordEVAC = new itemRecord("EVA_C");
     public static Item RecordNGGU = new itemRecord("NGG_U");
+    public static Item itemBrain = new itemBrain();
 
     public ItemLoader(FMLPreInitializationEvent event) {
         OTHItemList.Zhangww.set(registryAndCallback(itemZhangww, "itemZhangww"));
@@ -50,6 +52,7 @@ public class ItemLoader {
         OTHItemList.RecordEVAC.set(registryAndCallback(RecordEVAC, "EVAC"));
         OTHItemList.RecordNGGU.set(registryAndCallback(RecordNGGU, "NGGU"));
         OTHItemList.itemTST.set(registryAndCallback(itemTST, "itemTST"));
+        OTHItemList.Brains.set(registryAndCallback(itemBrain, "BrainsHuman"));
     }
 
     private static ItemStack registryAndCallback(Item item, String name) {

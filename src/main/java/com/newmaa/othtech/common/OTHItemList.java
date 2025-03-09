@@ -13,6 +13,9 @@ import gregtech.api.util.GTLog;
 public enum OTHItemList {
 
     // items
+    Brains,
+    slicedBrains,
+    encapsulatedBranins,
     boardCasimirM,
     boardTransM,
     capTransM,
@@ -174,7 +177,7 @@ public enum OTHItemList {
 
     public Item getItem() {
         sanityCheck();
-        if (Utils.isStackInvalid(mStack)) return null;// TODO replace a default issue item
+        if (Utils.isStackInvalid(mStack)) return null;
         return mStack.getItem();
     }
 

@@ -25,6 +25,8 @@ MetaItemOTH.20.name=§7寰宇SoC
 MetaItemOTH.21.name=§5悖论无限SoC
 MetaItemOTH.22.name=§3通用SoC
 MetaItemOTH.23.name=§5超距遥感器
+MetaItemOTH.25.name=§4切片大脑
+MetaItemOTH.26.name=§4封装切片大脑
 IsaMillModule.1.name=§aNeI合金研磨器复合体
 IsaMillModule.2.name=§a铱锇钐合金研磨器复合体
 IsaMillModule.3.name=§c海珀珍研磨器复合体
@@ -51,6 +53,9 @@ tt.neiISA=看NEI..
 tt.IOS=123,我们经爱你呀
 tt.HYP=坚不可摧..
 tt.SPE=研磨过去现在和未来
+tt.brains=他还在跳动...
+tt.slicedBrains=我思故我在.
+tt.encapsulatedBrains=你必须想象,电路板里的大脑是幸福的.
 
 
 
@@ -104,6 +109,7 @@ oth.comb.hypogen=海珀珍蜂窝
 oth.comb.chromaticglass=彩色玻璃蜂窝
 oth.comb.glass=玻璃蜂窝
 entity.123Technology.DogYellow.name=§e黄狗
+entity.123Technology.CustomPlayer.name=§4自行复制体
 item.itemNukeThrowable.name=GTX690战术核显卡
 item.itemRecord.name=§e铱锇钐唱片
 item.record.PRK_A.desc=普天堡电子乐团 - 攻击战
@@ -112,6 +118,7 @@ item.record.EVA_A.desc=高桥洋子 - 残酷な天使のテーゼ (残酷天使�
 item.record.EVA_B.desc=ARIANNE - Komm, süsser Tod (来吧，甜蜜的死亡)
 item.record.EVA_C.desc=Claire - Fly Me To The Moon
 item.record.NGG_U.desc=Rick Astley - Never Gonna Give You Up
+item.itemTST.name=塔斯汀小汉堡
 tile.modelAyanami.name=绫波丽
 tile.modelAsuka.name=明日香
 fluid.FluidGalaxy.name=熔融星系
@@ -140,6 +147,7 @@ otht.recipe.BIN=垃圾桶
 otht.recipe.RCY=回收机
 otht.recipe.EIO=§l末影接口综合体
 otht.recipe.EXH=§4吊炸天热交换
+item.BrainsHuman.name=§4人类大脑
 
 
 

@@ -58,5 +58,9 @@ public class ItemRegister {
         OTHItemList.socNorM.set(initItem("socNorM", 22, new String[] { texter("socNor", "tt.socNor") }));
         OTHItemList.transTransM
             .set(initItem("transTransM", 23, new String[] { texter("transTrans", "tt.transTrans") }));
+        OTHItemList.slicedBrains
+            .set(initItem("slicedBrains", 25, new String[] { texter("slicedBrains", "tt.slicedBrains") }));
+        OTHItemList.encapsulatedBranins
+            .set(initItem("encapsulatedBrains", 26, new String[] { texter("enBrains", "tt.encapsulatedBrains") }));
     }
 }
