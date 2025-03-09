@@ -1,16 +1,24 @@
 package com.newmaa.othtech.common.entity;
 
+import java.util.ArrayList;
+
 import net.minecraft.entity.EntityCreature;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 
+import org.jetbrains.annotations.NotNull;
+
+import com.kuba6000.mobsinfo.api.IMobInfoProvider;
+import com.kuba6000.mobsinfo.api.MobDrop;
+import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.item.ItemLoader;
 
 import gtPlusPlus.core.item.ModItems;
 
-public class entityFakePlayer extends EntityCreature {
+public class entityFakePlayer extends EntityCreature implements IMobInfoProvider {
 
     private static final int DATAWATCHER_ID_SITTING = 20;
     private int sitCooldown = 0;
@@ -71,4 +79,17 @@ public class entityFakePlayer extends EntityCreature {
             .sendChatMsg(new ChatComponentText(EnumChatFormatting.YELLOW + "复制体: " + "我是谁--?" + msg));
     }
 
+    @Override
+    public void provideDropsInformation(@NotNull ArrayList<MobDrop> drops) {
+        var c1 = MobDrop.create(OTHItemList.Brains.get(1))
+            .withType(MobDrop.DropType.Normal)
+            .withChance(1.0d);
+        c1.clampChance();
+        drops.add(c1);
+        var c2 = MobDrop.create(new ItemStack(ModItems.itemMetaFood, 36, 0))
+            .withType(MobDrop.DropType.Normal)
+            .withChance(0.8d);
+        c2.clampChance();
+        drops.add(c2);
+    }
 }
