@@ -11,7 +11,7 @@ public class RecipeLoader {
             new recipesCyclotronRecipes(), new recipesCircuit(), new recipesSINOPEC(),
             new recipesTangshanSteelFactory(), new recipesMegaEEC(), new recipesSunFactoryEnqing(),
             new recipesEpicCokeOvenFake(), new recipesWoodenFusionReactor(), new recipesMISA(), new recipesNaquadah(),
-            new recipesEIO(), new recipesEXH() };
+            new recipesEIO(), new recipesEXH(), new recipesNewWetware() };
         if (!modsEnum.TwistSpaceTechnology.isModLoaded()) {
             new recipesCopiedFromTST().loadRecipes();
         }

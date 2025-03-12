@@ -846,7 +846,7 @@ public class recipesSunFactoryEnqing implements IRecipePool {
         RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Silicon_Wafer7.get(1), 512 * a))
             .itemInputs(
-                GTUtility.getIntegratedCircuit(8),
+                OTHItemList.dustIrOsSmM.get(0),
                 setStackSize(Circuit_Silicon_Wafer6.get(1), 1024),
                 setStackSize(Materials.Glowstone.getNanite(1), 1024))
             .fluidInputs(Materials.Tin.getPlasma(1000 * 1024), FluidRegistry.getFluidStack("oganesson", 4000 * 1024))

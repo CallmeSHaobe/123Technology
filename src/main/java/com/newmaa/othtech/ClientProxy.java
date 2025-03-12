@@ -1,8 +1,11 @@
 package com.newmaa.othtech;
 
+import com.newmaa.othtech.common.entity.entityFakePlayer;
+import com.newmaa.othtech.common.entity.renderPlayer;
 import com.newmaa.othtech.common.item.itemBlock.itemModelAsukaRender;
 import com.newmaa.othtech.common.item.itemBlock.itemModelAyanamiRender;
 
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -24,6 +27,7 @@ public class ClientProxy extends CommonProxy {
 
         // 注册 itemModelAsukaRender 渲染器
         new itemModelAsukaRender(); // 你可以在这里创建 itemModelAsukaRender 对象并进行初始化
+        RenderingRegistry.registerEntityRenderingHandler(entityFakePlayer.class, new renderPlayer());
     }
 
     @Override

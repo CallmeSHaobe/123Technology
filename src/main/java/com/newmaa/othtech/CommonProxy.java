@@ -24,13 +24,12 @@ public class CommonProxy {
         new CreativeTabsLoader(event);
         new ItemLoader(event);
         new OreDictionaryLoader(event);
-        new entityLoader();
         MobHandlerLoaderOTH.init();
     }
 
     // load "Do your mod setup. Build whatever data structures you care about. Register recipes." (Remove if not needed)
     public void init(FMLInitializationEvent event) {
-
+        new entityLoader();
     }
 
     // postInit "Handle interaction with other mods, complete your setup based on this." (Remove if not needed)

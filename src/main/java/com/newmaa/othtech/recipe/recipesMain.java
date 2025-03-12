@@ -78,6 +78,7 @@ public class recipesMain implements IRecipePool {
         final RecipeMap<?> Nan = RecipeMaps.nanoForgeRecipes;
         final RecipeMap<?> Assem = assemblerRecipes;
         final RecipeMap<?> Chem = RecipeMaps.multiblockChemicalReactorRecipes;
+        // final RecipeMap<?> MT = new getRecipeMapsFromOtherMods().get();
         final int IDs = 23520;
 
         // dustIrOsSm assembler
@@ -425,14 +426,6 @@ public class recipesMain implements IRecipePool {
             .duration(4 * 20)
             .eut(TierEU.IV)
             .addTo(Assem);
-        // LCR Recipes Test
-        GTValues.RA.stdBuilder()
-            .itemInputs(new ItemStack(Blocks.dirt, 1))
-            .fluidOutputs(FluidRegistry.getFluidStack("water", 1000))
-            .noOptimize()
-            .duration(1048576)
-            .eut(536870912)
-            .addTo(RecipeMaps.multiblockChemicalReactorRecipes);
         // CoccOven
         addCraftingRecipe(
             OTHItemList.CoccOven.get(1),
@@ -1254,18 +1247,7 @@ public class recipesMain implements IRecipePool {
             .itemInputs(new ItemStack(Blocks.cobblestone, 1).setStackDisplayName("任何物品"))
             .eut(30)
             .addTo(RCY);
-        // Steel leaf & IronWood
-        RecipeBuilder.builder()
-            .itemInputs(
-                Materials.Iron.getDust(64),
-                Materials.Steel.getDust(64),
-                Materials.Wood.getDust(64),
-                new ItemStack(Blocks.leaves, 64))
-            .itemOutputs(Materials.IronWood.getDust(64), Materials.Steeleaf.getDust(64))
-            .eut(123123123)
-            .specialValue(1)
-            .duration(114)
-            .addTo(GTPPRecipeMaps.quantumForceTransformerRecipes);
+
         // EIOM
         RecipeBuilder.builder()
             .itemOutputs(OTHItemList.EIO.get(1))

@@ -1,6 +1,7 @@
 package com.newmaa.othtech;
 
 import static com.newmaa.othtech.common.OTHItemList.SpaceElevatorModulePumpT4;
+import static com.newmaa.othtech.recipe.recipesEXH.generateEXHRecipes;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +19,8 @@ import com.newmaa.othtech.common.ItemAndBlockHandler;
 import com.newmaa.othtech.common.beeyonds.OTHBeeyonds;
 import com.newmaa.othtech.common.materials.MaterialsLoader;
 import com.newmaa.othtech.common.recipemap.NEIRecipeMaps;
-import com.newmaa.othtech.event.EventLogin;
+import com.newmaa.othtech.common.recipemap.Recipemaps;
+import com.newmaa.othtech.event.eventPlayerDied;
 import com.newmaa.othtech.machine.MachineLoader;
 import com.newmaa.othtech.recipe.RecipeLoader;
 
@@ -31,6 +33,9 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartedEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import gtPlusPlus.api.recipe.GTPPRecipeMaps;
 
 @Mod(
     modid = OTHTechnology.MODID,
@@ -52,7 +57,7 @@ public class OTHTechnology {
 
     public static final String modName = Tags.MODNAME;
 
-    public static final String VERSION = "2.0.6";
+    public static final String VERSION = "2.0.7";
 
     public static final String Arthur = "Laodengs";
 
@@ -62,6 +67,10 @@ public class OTHTechnology {
 
     @SidedProxy(clientSide = "com.newmaa.othtech.ClientProxy", serverSide = "com.newmaa.othtech.CommonProxy")
     public static CommonProxy proxy;
+
+    public OTHTechnology() {
+        MinecraftForge.EVENT_BUS.register(new eventPlayerDied());
+    }
 
     @Mod.EventHandler
     // preInit "Run before anything else. Read your config, create blocks, items, etc, and register them with the
@@ -75,11 +84,14 @@ public class OTHTechnology {
     @Mod.EventHandler
     // load "Do your mod setup. Build whatever data structures you care about. Register recipes." (Remove if not needed)
     public void init(FMLInitializationEvent event) {
-        MinecraftForge.EVENT_BUS.register(new EventLogin());
+        MinecraftForge.EVENT_BUS.register(new eventPlayerDied());
         proxy.init(event);
         MachineLoader.loadMachines();
         NEIRecipeMaps.IMCSender();
     }
+
+    @SideOnly(Side.CLIENT)
+    public static void registerRenderers() {}
 
     @Mod.EventHandler
     // postInit "Handle interaction with other mods, complete your setup based on this." (Remove if not needed)
@@ -115,9 +127,7 @@ public class OTHTechnology {
     }
 
     @Mod.EventHandler
-    public void onServerStarted(FMLServerStartedEvent event) {
-
-    }
+    public void onServerStarted(FMLServerStartedEvent event) {}
 
     @Mod.EventHandler
     public void earlyGame(FMLPreInitializationEvent event) {
@@ -126,7 +136,7 @@ public class OTHTechnology {
 
     @Mod.EventHandler
     public void onLoadComplete(FMLLoadCompleteEvent event) {
-
+        generateEXHRecipes(GTPPRecipeMaps.advancedFreezerRecipes, Recipemaps.EXH);
         proxy.onLoadComplete(event);
 
     }

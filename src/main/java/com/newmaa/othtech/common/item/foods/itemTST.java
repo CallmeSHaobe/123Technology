@@ -20,7 +20,7 @@ public class itemTST extends ItemFood {
         this.setPotionEffect(Potion.damageBoost.id, 114514, 64, 1);
         this.setUnlocalizedName("itemTST");
         this.setCreativeTab(CreativeTabsLoader.tabothtech);
-        this.setTextureName("123technology:itemTST");
+        this.setTextureName("123technology:TST");
     }
 
     @Override
