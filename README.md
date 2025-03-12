@@ -142,6 +142,7 @@ PS；可能是一个小小的玩具
 也加入了一些超模的配方
 ***
 ## **机器配方池**
+***
 zs配方脚本编写请查阅GTTweaker in Github与MineTweaker3 or CraftTweaker教程
 
 神之艾萨锻炉 : "otht.recipe.MegaIsaForge"
@@ -161,15 +162,19 @@ zs配方脚本编写请查阅GTTweaker in Github与MineTweaker3 or CraftTweaker�
 压缩精炼厂独有配方池 : otht.recipe.NQF
 
 硅岩通化配方池 : otht.recipe.fuel.nq (谨慎添加)
-
+***
 ## **关于GTNH**
+***
 
 1.3.0及其以下版本只支持GTNH2.6.1 , GTNH2.6.0可以运行但不保证无bug
 
 1.3.0+支持GTNH2.7.0 or GTNH2.7.2
 
-## **关于模型**
+建议添加Mod：https://github.com/RetroForge/SkinPort
+***
 
+## **关于模型**
+***
 绫波丽模型 : BlockBench bbmodel文件存于src\main\resources\assets\123technology\models
 
 作者 : NewMaa 2025-1-17
@@ -177,3 +182,4 @@ zs配方脚本编写请查阅GTTweaker in Github与MineTweaker3 or CraftTweaker�
 明日香模型 : BlockBench bbmodel文件存于src\main\resources\assets\123technology\models
 
 作者：HuimaoX 2025-2-4
+***

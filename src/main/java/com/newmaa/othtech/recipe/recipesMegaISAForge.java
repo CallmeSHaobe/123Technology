@@ -23,6 +23,7 @@ import gregtech.api.recipe.RecipeMap;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTUtility;
+import gtPlusPlus.core.material.MaterialsElements;
 import li.cil.oc.OpenComputers;
 
 public class recipesMegaISAForge implements IRecipePool {
@@ -350,6 +351,83 @@ public class recipesMegaISAForge implements IRecipePool {
                 FluidRegistry.getFluidStack("supercoolant", 500))
             .duration(3600 * 20)
             .eut(220)
+            .addTo(ISA);
+        // Magmatter
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 0, 4143),
+                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 0, 32047),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, 15411),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, 15415))
+            .fluidInputs(
+                FluidRegistry.getFluidStack("temporalfluid", 1152),
+                FluidRegistry.getFluidStack("spatialfluid", 1152),
+                FluidRegistry.getFluidStack("molten.magnetohydrodynamicallyconstrainedstarmatter", 4608),
+                FluidRegistry.getFluidStack("plasma.infinity", 9216),
+                FluidRegistry.getFluidStack("plasma.neutronium", 9216),
+                FluidRegistry.getFluidStack("plasma.sixphasedcopper", 9216),
+                FluidRegistry.getFluidStack("plasma.bedrockium", 9216),
+                FluidRegistry.getFluidStack("plasma.celestialtungsten", 9216),
+                FluidRegistry.getFluidStack("plasma.cosmicneutronium", 9216),
+                FluidRegistry.getFluidStack("plasma.chromaticglass", 9216),
+                FluidRegistry.getFluidStack("plasma.hypogen", 9216),
+                FluidRegistry.getFluidStack("plasma.ichorium", 9216),
+                FluidRegistry.getFluidStack("plasma.draconiumawakened", 9216),
+                FluidRegistry.getFluidStack("plasma.rhugnor", 9216),
+                FluidRegistry.getFluidStack("plasma.draconium", 9216),
+                FluidRegistry.getFluidStack("plasma.dragonblood", 9216),
+                FluidRegistry.getFluidStack("plasma.flerovium_gt5u", 9216))
+            .fluidOutputs(FluidRegistry.getFluidStack("molten.magmatter", 123123))
+            .duration(12 * 20)
+            .eut(TierEU.RECIPE_MAX)
+            .addTo(ISA);
+
+        // Better magmatter
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 0, 4143),
+                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 0, 32047),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, 15411),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, 15415),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, 15414),
+                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 2397),
+                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 2129),
+                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 2147),
+                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 2395),
+                MaterialsElements.STANDALONE.CELESTIAL_TUNGSTEN.getDust(64),
+                MaterialsElements.STANDALONE.CHRONOMATIC_GLASS.getDust(64),
+                MaterialsElements.STANDALONE.HYPOGEN.getDust(64),
+                MaterialsElements.STANDALONE.RHUGNOR.getDust(64),
+                MaterialsElements.STANDALONE.DRAGON_METAL.getDust(64),
+                GTOreDictUnificator.get(OrePrefixes.dust, Materials.Draconium, 64),
+                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 2982),
+                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 2978),
+                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 2976),
+                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 2984))
+            .fluidInputs(
+                FluidRegistry.getFluidStack("temporalfluid", 9216),
+                FluidRegistry.getFluidStack("spatialfluid", 9216),
+                FluidRegistry.getFluidStack("molten.magnetohydrodynamicallyconstrainedstarmatter", 159408),
+                FluidRegistry.getFluidStack("molten.eternity", 159408))
+            .fluidOutputs(FluidRegistry.getFluidStack("molten.magmatter", 123123123))
+            .duration(123 * 20)
+            .eut(TierEU.RECIPE_MAX)
+            .addTo(ISA);
+
+        // quark
+        RecipeBuilder.builder()
+            .itemInputs(
+                OTHItemList.beeISAM.get(0),
+                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 0, 32048),
+                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 0, 4143),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, 15411),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, 15415),
+                GTModHandler.getModItem("dreamcraft", "item.StargateShieldingFoil", 1),
+                GTModHandler.getModItem("dreamcraft", "item.StargateCrystalDust", 64))
+            .fluidInputs(FluidRegistry.getFluidStack("phononmedium", 256000))
+            .fluidOutputs(FluidRegistry.getFluidStack("quarkgluonplasma", 3690000))
+            .duration(123 * 20)
+            .eut(TierEU.RECIPE_MAX)
             .addTo(ISA);
     }
 }
