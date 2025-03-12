@@ -141,7 +141,7 @@ PS；可能是一个小小的玩具
 
 也加入了一些超模的配方
 ***
-## **机器配方池**
+### 机器配方池
 ***
 zs配方脚本编写请查阅GTTweaker in Github与MineTweaker3 or CraftTweaker教程
 
@@ -163,7 +163,7 @@ zs配方脚本编写请查阅GTTweaker in Github与MineTweaker3 or CraftTweaker�
 
 硅岩通化配方池 : otht.recipe.fuel.nq (谨慎添加)
 ***
-## **关于GTNH**
+### 关于GTNH
 ***
 
 1.3.0及其以下版本只支持GTNH2.6.1 , GTNH2.6.0可以运行但不保证无bug
@@ -173,7 +173,7 @@ zs配方脚本编写请查阅GTTweaker in Github与MineTweaker3 or CraftTweaker�
 建议添加Mod：https://github.com/RetroForge/SkinPort
 ***
 
-## **关于模型**
+### 关于模型
 ***
 绫波丽模型 : BlockBench bbmodel文件存于src\main\resources\assets\123technology\models
 
