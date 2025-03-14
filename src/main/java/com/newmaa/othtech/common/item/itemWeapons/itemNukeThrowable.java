@@ -1,4 +1,4 @@
-package com.newmaa.othtech.common.item.weapons;
+package com.newmaa.othtech.common.item.itemWeapons;
 
 import java.util.List;
 

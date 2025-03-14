@@ -13,6 +13,7 @@ import gregtech.api.util.GTLog;
 public enum OTHItemList {
 
     // items
+    Amulet,
     Brains,
     slicedBrains,
     encapsulatedBranins,

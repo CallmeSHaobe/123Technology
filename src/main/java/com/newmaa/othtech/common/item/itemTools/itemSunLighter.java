@@ -1,4 +1,4 @@
-package com.newmaa.othtech.common.item.tools;
+package com.newmaa.othtech.common.item.itemTools;
 
 import static net.minecraft.client.gui.GuiScreen.isShiftKeyDown;
 

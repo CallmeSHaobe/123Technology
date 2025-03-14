@@ -232,7 +232,7 @@ public class OTEEIO extends OTH_MultiMachineBase<OTEEIO> {
             STRUCTURE_DEFINITION = StructureDefinition.<OTEEIO>builder()
                 .addShape(STRUCTURE_PIECE_MAIN, transpose(shapeMain))
                 .addElement('C', ofBlock(Blocks.iron_bars, 0))
-                .addElement('A', ofBlock(Blocks.anvil, 0))
+                .addElement('A', ofBlockAnyMeta(EnderIO.blockDarkSteelAnvil))
                 .addElement(
                     'B',
                     buildHatchAdder(OTEEIO.class)

@@ -20,6 +20,7 @@ import com.newmaa.othtech.common.beeyonds.OTHBeeyonds;
 import com.newmaa.othtech.common.materials.MaterialsLoader;
 import com.newmaa.othtech.common.recipemap.NEIRecipeMaps;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
+import com.newmaa.othtech.event.eventOnPlayerTick;
 import com.newmaa.othtech.event.eventPlayerDied;
 import com.newmaa.othtech.machine.MachineLoader;
 import com.newmaa.othtech.recipe.RecipeLoader;
@@ -70,6 +71,7 @@ public class OTHTechnology {
 
     public OTHTechnology() {
         MinecraftForge.EVENT_BUS.register(new eventPlayerDied());
+        MinecraftForge.EVENT_BUS.register(new eventOnPlayerTick());
     }
 
     @Mod.EventHandler

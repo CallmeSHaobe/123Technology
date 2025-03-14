@@ -1,4 +1,4 @@
-package com.newmaa.othtech.common.item.foods;
+package com.newmaa.othtech.common.item.itemFoods;
 
 import java.util.List;
 
@@ -12,15 +12,15 @@ import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ingotHotDog extends ItemFood {
+public class itemZhangww extends ItemFood {
 
-    public ingotHotDog() {
-        super(114, 1.2F, true);
+    public itemZhangww() {
+        super(114, 1.2F, false);
         this.setAlwaysEdible();
-        this.setPotionEffect(Potion.fireResistance.id, 114514, -1, 1);
-        this.setUnlocalizedName("ingotHotDog");
+        this.setPotionEffect(Potion.regeneration.id, 114, 4, 1);
+        this.setUnlocalizedName("itemZhangww");
         this.setCreativeTab(CreativeTabsLoader.tabothtech);
-        this.setTextureName("123technology:ingotHotDog");
+        this.setTextureName("123technology:itemZhangww");
     }
 
     @Override
@@ -28,7 +28,7 @@ public class ingotHotDog extends ItemFood {
     public void addInformation(final ItemStack itemStack, final EntityPlayer player, final List toolTip,
         final boolean advancedToolTips) {
 
-        toolTip.add("§7Dog♢");
+        toolTip.add("§b§l这就是GTNH，听坠木马斯特说");
 
     }
 }

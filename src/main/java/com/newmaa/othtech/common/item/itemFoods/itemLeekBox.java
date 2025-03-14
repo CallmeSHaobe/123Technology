@@ -1,4 +1,4 @@
-package com.newmaa.othtech.common.item.foods;
+package com.newmaa.othtech.common.item.itemFoods;
 
 import java.util.List;
 
@@ -12,15 +12,15 @@ import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class itemZhangww extends ItemFood {
+public class itemLeekBox extends ItemFood {
 
-    public itemZhangww() {
-        super(114, 1.2F, false);
+    public itemLeekBox() {
+        super(16, 8F, true);
         this.setAlwaysEdible();
-        this.setPotionEffect(Potion.regeneration.id, 114, 4, 1);
-        this.setUnlocalizedName("itemZhangww");
+        this.setPotionEffect(Potion.hunger.id, 100, 10, 1);
+        this.setUnlocalizedName("itemLeekBox");
         this.setCreativeTab(CreativeTabsLoader.tabothtech);
-        this.setTextureName("123technology:itemZhangww");
+        this.setTextureName("123technology:itemLeekBox");
     }
 
     @Override
@@ -28,7 +28,7 @@ public class itemZhangww extends ItemFood {
     public void addInformation(final ItemStack itemStack, final EntityPlayer player, final List toolTip,
         final boolean advancedToolTips) {
 
-        toolTip.add("§b§l这就是GTNH，听坠木马斯特说");
+        toolTip.add("§a吃得饱饱的");
 
     }
 }

@@ -1,4 +1,4 @@
-package com.newmaa.othtech.common.item.foods;
+package com.newmaa.othtech.common.item.itemFoods;
 
 import java.util.List;
 

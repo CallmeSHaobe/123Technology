@@ -1,4 +1,4 @@
-package com.newmaa.othtech.common.item.weapons;
+package com.newmaa.othtech.common.item.itemWeapons;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemSword;

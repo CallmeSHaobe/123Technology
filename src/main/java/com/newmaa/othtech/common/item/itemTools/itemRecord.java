@@ -1,4 +1,4 @@
-package com.newmaa.othtech.common.item.tools;
+package com.newmaa.othtech.common.item.itemTools;
 
 import net.minecraft.item.ItemRecord;
 import net.minecraft.util.ResourceLocation;

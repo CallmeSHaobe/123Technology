@@ -4,16 +4,17 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import com.newmaa.othtech.common.OTHItemList;
-import com.newmaa.othtech.common.item.foods.ingotHotDog;
-import com.newmaa.othtech.common.item.foods.itemBrain;
-import com.newmaa.othtech.common.item.foods.itemLeekBox;
-import com.newmaa.othtech.common.item.foods.itemTST;
-import com.newmaa.othtech.common.item.foods.itemZhangww;
-import com.newmaa.othtech.common.item.tools.Dasima;
-import com.newmaa.othtech.common.item.tools.itemRecord;
-import com.newmaa.othtech.common.item.tools.itemSunLighter;
-import com.newmaa.othtech.common.item.weapons.ShikanokoNoko;
-import com.newmaa.othtech.common.item.weapons.itemNukeThrowable;
+import com.newmaa.othtech.common.item.itemArmors.itemAmulet;
+import com.newmaa.othtech.common.item.itemFoods.ingotHotDog;
+import com.newmaa.othtech.common.item.itemFoods.itemBrain;
+import com.newmaa.othtech.common.item.itemFoods.itemLeekBox;
+import com.newmaa.othtech.common.item.itemFoods.itemTST;
+import com.newmaa.othtech.common.item.itemFoods.itemZhangww;
+import com.newmaa.othtech.common.item.itemTools.Dasima;
+import com.newmaa.othtech.common.item.itemTools.itemRecord;
+import com.newmaa.othtech.common.item.itemTools.itemSunLighter;
+import com.newmaa.othtech.common.item.itemWeapons.ShikanokoNoko;
+import com.newmaa.othtech.common.item.itemWeapons.itemNukeThrowable;
 
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -36,6 +37,7 @@ public class ItemLoader {
     public static Item RecordEVAC = new itemRecord("EVA_C");
     public static Item RecordNGGU = new itemRecord("NGG_U");
     public static Item itemBrain = new itemBrain();
+    public static Item itemAmulet = new itemAmulet();
 
     public ItemLoader(FMLPreInitializationEvent event) {
         OTHItemList.Zhangww.set(registryAndCallback(itemZhangww, "itemZhangww"));
@@ -53,6 +55,7 @@ public class ItemLoader {
         OTHItemList.RecordNGGU.set(registryAndCallback(RecordNGGU, "NGGU"));
         OTHItemList.itemTST.set(registryAndCallback(itemTST, "itemTST"));
         OTHItemList.Brains.set(registryAndCallback(itemBrain, "BrainsHuman"));
+        OTHItemList.Amulet.set(registryAndCallback(itemAmulet, "itemAmulet"));
     }
 
     private static ItemStack registryAndCallback(Item item, String name) {
