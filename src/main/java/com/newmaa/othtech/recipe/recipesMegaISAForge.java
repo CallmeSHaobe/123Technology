@@ -356,7 +356,7 @@ public class recipesMegaISAForge implements IRecipePool {
         RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 0, 4143),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 0, 32047),
+                ItemList.Field_Generator_MAX.get(0),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, 15411),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, 15415))
             .fluidInputs(
@@ -386,7 +386,7 @@ public class recipesMegaISAForge implements IRecipePool {
         RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 0, 4143),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 0, 32047),
+                ItemList.Field_Generator_MAX.get(0),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, 15411),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, 15415),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, 15414),
@@ -418,7 +418,7 @@ public class recipesMegaISAForge implements IRecipePool {
         RecipeBuilder.builder()
             .itemInputs(
                 OTHItemList.beeISAM.get(0),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 0, 32048),
+                ItemList.Field_Generator_MAX.get(0),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 0, 4143),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, 15411),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, 15415),
