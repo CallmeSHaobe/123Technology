@@ -163,7 +163,7 @@ public class OTEGraveDragon extends OTH_MultiMachineBase<OTEGraveDragon> {
     }
 
     private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
-        translateToLocal("1-能源仓，输入输出总线，输入输出仓：替换硅岩聚合机械方块，支持Tech的能源仓"), };
+        translateToLocal("1-能源仓，输入输出总线，输入输出仓：替换硅岩聚合机械方块，支持TecTech能源仓"), };
 
     @Override
     public String[] getStructureDescription(ItemStack stackSize) {
@@ -359,15 +359,15 @@ public class OTEGraveDragon extends OTH_MultiMachineBase<OTEGraveDragon> {
     protected MultiblockTooltipBuilder createTooltip() {
         final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType("§c§l龙研聚合装置")
-            .addInfo("§e§l世上只有一种英雄主义")
-            .addInfo("§e§l那就是在认清生活后依然热爱生活")
-            .addInfo("§c§l铱锇钐倾尽所有创造的墓穴")
-            .addInfo("拥有不可思议的力量")
+            .addInfo("§e§l德拉贡的末日")
+            .addInfo("§c§l铱锇钐倾尽所有创造的墓穴, 拥有不可思议的力量")
+            .addInfo("看来有勇者要失业了.")
+            .addInfo("------------------")
             .addInfo("三级机械方块解锁无损超频")
             .addInfo("并行=机械方块等级 * 128，最高等级解锁int并行")
             .addInfo("§e耗时倍率 = 1 - 0.05 * 加热圈等级")
             .addInfo("§e机械方块等级限制可执行的配方等级")
-            .addInfo("§e更换结构时请重放主机以检测结构！！！")
+            .addInfo("§e更换结构时请重放主机以检测结构")
             .addTecTechHatchInfo()
             .addSeparator()
             .addController("巨龙之墓")
@@ -378,7 +378,7 @@ public class OTEGraveDragon extends OTH_MultiMachineBase<OTEGraveDragon> {
             .addOutputHatch("AnyOutputHatch", 1)
             .addEnergyHatch("AnyEnergyHatch", 1)
             .addMufflerHatch("AnyMufflerHatch", 1)
-            .toolTipFinisher("§a123Technology - §c§l巨龙的悲鸣！");
+            .toolTipFinisher("§a123Technology - §c§lDragonGrave");
         return tt;
     }
 
