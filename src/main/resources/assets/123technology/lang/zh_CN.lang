@@ -87,7 +87,7 @@ otht.evaCannon=%s 被阳电子炮轰炸至灰
 otht.recipe.SINOPEC=§l§a中国石化
 otht.recipe.TSSF=§l§c唐山炼钢厂
 otht.recipe.MEEC=§l§4噬魂监狱
-GT5U.gui.text.casingErr=§4机器因玻璃等级不够而憋憋
+GT5U.gui.text.casingErr=§4机器因外壳等级不够而憋憋
 GT5U.gui.text.tierMill=§4机器因研磨器不够坚硬而憋憋
 GT5U.gui.text.glassErr=§4机器因玻璃等级不够而憋憋
 GT5U.gui.text.nofb=§4机器因老登不放星阵就想用太空组装而憋憋
@@ -149,7 +149,7 @@ otht.recipe.EIO=§l末影接口综合体
 otht.recipe.EXH=§4吊炸天热交换
 item.BrainsHuman.name=§n人类大脑
 item.itemAmulet.name=DSS项圈
-death.attack.amulet_explosion=%1$s被DSS项圈吞炸死了
+death.attack.amulet_explosion=%1$s被DSS项圈炸死了
 
 
 

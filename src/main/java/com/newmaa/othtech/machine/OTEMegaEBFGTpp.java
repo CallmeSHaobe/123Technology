@@ -350,7 +350,7 @@ public class OTEMegaEBFGTpp extends OTH_MultiMachineBase<OTEMegaEBFGTpp> {
             .addOutputHatch("AnyOutputHatch", 1)
             .addEnergyHatch("AnyEnergyHatch", 1)
             .addMufflerHatch("AnyMufflerHatch", 2)
-            .toolTipFinisher("§a123Technology - recipesBlastFurnaceRecipes");
+            .toolTipFinisher("§a123Technology - EBF");
         return tt;
     }
 
