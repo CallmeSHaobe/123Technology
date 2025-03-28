@@ -259,7 +259,7 @@ public class OTEMegaFreezerGTpp extends OTH_MultiMachineBase<OTEMegaFreezerGTpp>
             .addOutputHatch("AnyOutputHatch", 1)
             .addEnergyHatch("AnyEnergyHatch", 1)
             .addMufflerHatch("AnyMufflerHatch", 1)
-            .toolTipFinisher("§a123Technology - recipesVacuumFreezerRecipes");
+            .toolTipFinisher("§a123Technology - VacuumFreezer");
         return tt;
     }
 
