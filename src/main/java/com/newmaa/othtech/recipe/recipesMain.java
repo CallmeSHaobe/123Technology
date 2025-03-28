@@ -3,12 +3,7 @@ package com.newmaa.othtech.recipe;
 import static com.newmaa.othtech.common.recipemap.Recipemaps.AE2;
 import static com.newmaa.othtech.common.recipemap.Recipemaps.RCY;
 import static com.newmaa.othtech.utils.Utils.setStackSize;
-import static gregtech.api.enums.Mods.AppliedEnergistics2;
-import static gregtech.api.enums.Mods.GTPlusPlus;
-import static gregtech.api.enums.Mods.GoodGenerator;
-import static gregtech.api.enums.Mods.GregTech;
-import static gregtech.api.enums.Mods.IndustrialCraft2;
-import static gregtech.api.enums.Mods.NewHorizonsCoreMod;
+import static gregtech.api.enums.Mods.*;
 import static gregtech.api.enums.TierEU.RECIPE_EV;
 import static gregtech.api.enums.TierEU.RECIPE_HV;
 import static gregtech.api.enums.TierEU.RECIPE_IV;
@@ -1279,5 +1274,28 @@ public class recipesMain implements IRecipePool {
             .duration(600 * 20)
             .eut(TierEU.RECIPE_UV)
             .addTo(AssemblyLine);
+        // GraveDragon
+        GTValues.RA.stdBuilder()
+            .metadata(RESEARCH_ITEM, GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 5001))
+            .metadata(RESEARCH_TIME, 4 * HOURS)
+            .itemInputs(
+                ItemList.Electric_Motor_UHV.get(64),
+                ItemList.Electric_Pump_UHV.get(16),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 8, 5001),
+                GTOreDictUnificator.get(OrePrefixes.plateSuperdense, Materials.Void, 64),
+                GTOreDictUnificator.get(OrePrefixes.wireGt02, Materials.SuperconductorUHV, 64),
+                GTOreDictUnificator.get(OrePrefixes.wireGt02, Materials.SuperconductorUHV, 64),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UIV, 16),
+                GTModHandler.getModItem(DraconicEvolution.ID, "draconicCore", 64),
+                GTModHandler.getModItem(DraconicEvolution.ID, "draconiumEnergyCore", 64))
+            .fluidInputs(
+                FluidRegistry.getFluidStack("molten.mutatedlivingsolder", 9216),
+                FluidRegistry.getFluidStack("molten.infinity", 9216),
+                Materials.Void.getMolten(9216))
+            .itemOutputs(OTHItemList.OTEGraveDragon.get(1))
+            .duration(600 * 20)
+            .eut(TierEU.RECIPE_UIV)
+            .addTo(AssemblyLine);
+
     }
 }

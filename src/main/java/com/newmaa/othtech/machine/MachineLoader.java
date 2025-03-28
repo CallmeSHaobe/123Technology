@@ -79,6 +79,8 @@ public class MachineLoader {
         OTHItemList.TP.set(new OTELargeBin(IDs - 1, "LargeBin", "§b盖世神功垃圾桶"));
         OTHItemList.EIO.set(new OTEEIO(IDs - 2, "EIOM", "末影接口综合体"));
         OTHItemList.EXH.set(new OTEHeatExchanger(IDs - 3, "EXchanger", EnumChatFormatting.GOLD + "吊炸天热交换机"));
+        OTHItemList.OTEGraveDragon
+            .set(new OTEGraveDragon(IDs - 4, "GraveDragon", EnumChatFormatting.DARK_AQUA + "巨龙之墓"));
         // Lasers
 
         final int AMPS = 1073741824;

@@ -124,7 +124,9 @@ public enum OTHItemList {
     WirelessMAX,
     CHEMEEE,
 
-    MegaIsaForge;
+    MegaIsaForge,
+
+    OTEGraveDragon;
 
     private boolean mHasNotBeenSet;
     private boolean mDeprecated;
