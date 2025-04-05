@@ -191,8 +191,7 @@ public class recipesMain implements IRecipePool {
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 31028),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 995),
                 ItemList.Robot_Arm_LuV.get(16),
-                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Superconductor, 64),
-                GTUtility.getIntegratedCircuit(17))
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Superconductor, 64))
             .metadata(PRECISE_ASSEMBLER_CASING_TIER, 1)
             .fluidInputs(new FluidStack(FluidRegistry.getFluidID("molten.indalloy140"), 128 * 144))
             .noOptimize()
@@ -297,7 +296,7 @@ public class recipesMain implements IRecipePool {
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 14201),
                 GTModHandler.getModItem("gregtech", "gt.blockframes", 16, 397),
                 GTModHandler.getModItem("gregtech", "gt.blockframes", 16, 395),
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 16, 4491),
+                GTModHandler.getModItem("gregtech", "gt.blockframes", 16, 395),
                 GTModHandler.getModItem("tectech", "gt.blockcasingsTT", 16, 9), ItemList.Robot_Arm_UEV.get(64),
                 ItemList.Robot_Arm_UEV.get(64), GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Optical, 64),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 4054),
