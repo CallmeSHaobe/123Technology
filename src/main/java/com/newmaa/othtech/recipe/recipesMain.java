@@ -3,6 +3,7 @@ package com.newmaa.othtech.recipe;
 import static com.newmaa.othtech.common.recipemap.Recipemaps.AE2;
 import static com.newmaa.othtech.common.recipemap.Recipemaps.RCY;
 import static com.newmaa.othtech.utils.Utils.setStackSize;
+import static goodgenerator.api.recipe.GoodGeneratorRecipeMaps.preciseAssemblerRecipes;
 import static gregtech.api.enums.Mods.*;
 import static gregtech.api.enums.TierEU.RECIPE_EV;
 import static gregtech.api.enums.TierEU.RECIPE_HV;
@@ -23,9 +24,7 @@ import static gregtech.api.util.GTModHandler.addCraftingRecipe;
 import static gregtech.api.util.GTModHandler.getModItem;
 import static gregtech.api.util.GTRecipeBuilder.HOURS;
 import static gregtech.api.util.GTRecipeBuilder.SECONDS;
-import static gregtech.api.util.GTRecipeConstants.AssemblyLine;
-import static gregtech.api.util.GTRecipeConstants.RESEARCH_ITEM;
-import static gregtech.api.util.GTRecipeConstants.RESEARCH_TIME;
+import static gregtech.api.util.GTRecipeConstants.*;
 import static tectech.thing.CustomItemList.eM_Power;
 
 import net.minecraft.init.Blocks;
@@ -194,11 +193,12 @@ public class recipesMain implements IRecipePool {
                 ItemList.Robot_Arm_LuV.get(16),
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Superconductor, 64),
                 GTUtility.getIntegratedCircuit(17))
+            .metadata(PRECISE_ASSEMBLER_CASING_TIER, 1)
             .fluidInputs(new FluidStack(FluidRegistry.getFluidID("molten.indalloy140"), 128 * 144))
             .noOptimize()
             .duration(123 * 20)
             .eut(32000)
-            .addTo(Assem);
+            .addTo(preciseAssemblerRecipes);
         // MEBF
         GTValues.RA.stdBuilder()
             .itemOutputs(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 23527))
