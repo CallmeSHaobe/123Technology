@@ -296,7 +296,7 @@ public class recipesMain implements IRecipePool {
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 14201),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 14201),
                 GTModHandler.getModItem("gregtech", "gt.blockframes", 16, 397),
-                GTModHandler.getModItem("gregtech", "gt.blockframes", 16,395),
+                GTModHandler.getModItem("gregtech", "gt.blockframes", 16, 395),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 16, 4491),
                 GTModHandler.getModItem("tectech", "gt.blockcasingsTT", 16, 9), ItemList.Robot_Arm_UEV.get(64),
                 ItemList.Robot_Arm_UEV.get(64), GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Optical, 64),
