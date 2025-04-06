@@ -8,11 +8,13 @@ import cpw.mods.fml.common.Loader;
 
 public enum modsEnum {
 
-    TwistSpaceTechnology(modsName.TST);
+    TwistSpaceTechnology(modsName.TST),
+    NHUtilities(modsName.NHU);
 
     public static class modsName {
 
         public static final String TST = "TwistSpaceTechnology";
+        public static final String NHU = "NHUtilities";
     }
 
     public final String ID;

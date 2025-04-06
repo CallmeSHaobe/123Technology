@@ -40,10 +40,16 @@ dependencies {
     api("com.github.GTNewHorizons:EnderIO:2.8.22:dev")
     api("com.github.GTNewHorizons:ForestryMC:4.9.19:dev")
     api("com.github.GTNewHorizons:ModularUI:1.2.17:dev")
+    api('com.github.GTNewHorizons:SpiceOfLife:2.1.12-carrot:dev') { transitive = false }
     implementation('com.github.GTNewHorizons:Botania:1.11.7-GTNH:dev')
     implementation("com.github.GTNewHorizons:Infernal-Mobs:1.9.1-GTNH:dev")
     implementation("com.github.GTNewHorizons:Draconic-Evolution:1.4.5-GTNH:dev")
     implementation('com.github.GTNewHorizons:AE2FluidCraft-Rework:1.3.50-gtnh:dev')
+    implementation(rfg.deobf('curse.maven:extra-utilities-225561:2264384'))
+    implementation('com.github.GTNewHorizons:worldedit-gtnh:v0.0.7:dev') { transitive = false }
+    implementation('com.github.GTNewHorizons:Jabba:1.4.6:dev') { transitive = false }
+    implementation('com.github.GTNewHorizons:ThaumicTinkerer:2.10.2:dev')
+    implementation('com.github.GTNewHorizons:WarpTheory:1.4.3-GTNH:dev')
     implementation('com.github.GTNewHorizons:BloodMagic:1.6.11:dev')
     implementation('com.github.GTNewHorizons:Railcraft:9.15.15:dev')
     implementation('com.github.GTNewHorizons:GTNH-Intergalactic:1.4.30:dev')

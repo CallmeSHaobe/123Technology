@@ -334,7 +334,8 @@ public abstract class OTETileEntityModulePumpT4 extends TileEntityModuleBase {
                 .beginStructureBlock(1, 5, 2, false)
                 .addCasingInfoRange("太空电梯基座机械方块", 0, 9, false)
                 .addOutputHatch("任意太空电梯基座机械方块", 1)
-                .toolTipFinisher("§a123Technology - HuimaoX");
+                .addInfo("§b§lAuthor:§l憋憋大师--HuimaoX")
+                .toolTipFinisher("§a123Technology - SpacePump");
             return tt;
         }
     }

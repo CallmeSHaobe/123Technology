@@ -216,7 +216,7 @@ public class recipesComponentAssemblyLineRecipes implements IRecipePool {
             4096,
             (int) TierEU.UMV,
             123,
-            new ItemStack[] { GTModHandler.getModItem("gregtech", "gt.blockframes", 1, 141),
+            new Object[] { GTModHandler.getModItem("gregtech", "gt.blockframes", 1, 141),
                 GTModHandler.getModItem("dreamcraft", "item.StargateShieldingFoil", 2),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 12, 22143),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 12, 22139), ItemList.Robot_Arm_MAX.get(8),

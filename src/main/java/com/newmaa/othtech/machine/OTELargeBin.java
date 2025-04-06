@@ -673,6 +673,11 @@ public class OTELargeBin extends OTH_MultiMachineBase<OTELargeBin> implements IC
             .addInfo("于奇点制造机模式下, 并行为1, 每256000任意物品制作一个奇点")
             .addInfo("于中子态素压缩机模式下, 执行有损超频, 并行为256")
             .addInfo("升级结构获得模式升级, 主机放入编程电路编辑结构等级")
+            .addInfo("一级结构 : 50x脱氧钢机械方块")
+            .addInfo("二级结构 : 245x加强钛机械方块, 12x格栅机械方块, 45x脱氧钢机械方块")
+            .addInfo("三级结构 : 670x强化钨钢机械方块, 69x硼玻璃方块")
+            .addInfo(
+                "四级结构 : 459x超维度机械方块, 38x维度桥接机械方块, 28x遏制场发生器, 893x中子强化硼玻璃方块, 478x中子稳定机械方块, 680x中子机械方块, 612x进阶格栅机械方块")
             .addTecTechHatchInfo()
             .beginStructureBlock(1, 3, 1, false)
             .addController(translateToLocal("结构正中心"))

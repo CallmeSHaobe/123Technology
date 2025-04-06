@@ -15,6 +15,9 @@ public class RecipeLoader {
         if (!modsEnum.TwistSpaceTechnology.isModLoaded()) {
             new recipesCopiedFromTST().loadRecipes();
         }
+        if (modsEnum.NHUtilities.isModLoaded()) {
+            new recipesDE().loadRecipes();
+        }
         for (IRecipePool recipePool : recipePools) {
             recipePool.loadRecipes();
         }

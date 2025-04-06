@@ -358,14 +358,13 @@ public class OTEGraveDragon extends OTH_MultiMachineBase<OTEGraveDragon> {
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
         final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-        tt.addMachineType("§c§l龙研聚合装置")
-            .addInfo("§e§l德拉贡的末日")
-            .addInfo("§c§l铱锇钐倾尽所有创造的墓穴, 拥有不可思议的力量")
-            .addInfo("看来有勇者要失业了.")
-            .addInfo("------------------")
+        tt.addMachineType("§c§l老登的终极造物 - 黑龙驭者(新式龙研聚合装置)")
+            .addInfo("§e§o我说龙研堆了几千回, 工业进步第一次")
+            .addInfo("§c§o123所创造的墓穴, 并非完美")
+            .addInfo("§c§o或许更应该赞美NHU之神, 蛋机要启动了...")
             .addInfo("三级机械方块解锁无损超频")
-            .addInfo("并行=机械方块等级 * 128，最高等级解锁int并行")
-            .addInfo("§e耗时倍率 = 1 - 0.05 * 加热圈等级")
+            .addInfo("并行 = 机械方块等级 * 128，最高等级解锁int并行")
+            .addInfo("§e耗时倍率 = 1 - 0.05 * 线圈等级")
             .addInfo("§e机械方块等级限制可执行的配方等级")
             .addInfo("§e更换结构时请重放主机以检测结构")
             .addTecTechHatchInfo()
@@ -378,6 +377,7 @@ public class OTEGraveDragon extends OTH_MultiMachineBase<OTEGraveDragon> {
             .addOutputHatch("AnyOutputHatch", 1)
             .addEnergyHatch("AnyEnergyHatch", 1)
             .addMufflerHatch("AnyMufflerHatch", 1)
+            .addInfo("§b§lAuthor:§l憋憋大师--HuimaoX")
             .toolTipFinisher("§a123Technology - §c§lDragonGrave");
         return tt;
     }

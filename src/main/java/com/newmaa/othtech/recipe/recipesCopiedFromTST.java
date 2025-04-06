@@ -1,6 +1,5 @@
 package com.newmaa.othtech.recipe;
 
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -43,12 +42,12 @@ public class recipesCopiedFromTST implements IRecipePool {
             256,
             (int) 2097152,
             64,
-            new ItemStack[] { GTModHandler.getModItem("tectech", "gt.blockcasingsTT", 4, 8),
+            new Object[] { GTModHandler.getModItem("tectech", "gt.blockcasingsTT", 4, 8),
                 ItemList.Field_Generator_UEV.get(64), GTModHandler.getModItem("tectech", "gt.blockcasingsTT", 8, 7),
                 GTModHandler.getModItem("dreamcraft", "item.HighEnergyFlowCircuit", 4),
                 ItemList.Field_Generator_UEV.get(24), GTModHandler.getModItem("gregtech", "gt.blockcasings2", 24, 9),
                 GTModHandler.getModItem("gregtech", "gt.blockcasings2", 24, 5),
-                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Optical, 24),
+                new Object[] { OrePrefixes.circuit.get(Materials.Optical), 64 },
                 GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.CosmicNeutronium, 64),
                 GTModHandler.getModItem("miscutils", "particleBase", 2, 14),
                 GTModHandler.getModItem("miscutils", "particleBase", 2, 14),
@@ -75,12 +74,12 @@ public class recipesCopiedFromTST implements IRecipePool {
             256,
             (int) TierEU.UEV,
             64,
-            new ItemStack[] { GTModHandler.getModItem("gregtech", "gt.blockmachines", 16, 4684),
+            new Object[] { GTModHandler.getModItem("gregtech", "gt.blockmachines", 16, 4684),
                 GTModHandler.getModItem("tectech", "gt.blockcasingsTT", 4, 12),
                 GTModHandler.getModItem("gregtech", "gt.blockcasings", 4, 14),
                 GTModHandler.getModItem("gregtech", "gt.blockcasings", 4, 13),
                 GTModHandler.getModItem("tectech", "gt.blockcasingsTT", 16), ItemList.Field_Generator_UMV.get(8),
-                ItemList.Emitter_UMV.get(6), GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Exotic, 64),
+                ItemList.Emitter_UMV.get(6), new Object[] { OrePrefixes.circuit.get(Materials.Exotic), 64 },
                 ItemList.Field_Generator_UEV.get(24), GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 28581),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 23581),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 8, 22581),
