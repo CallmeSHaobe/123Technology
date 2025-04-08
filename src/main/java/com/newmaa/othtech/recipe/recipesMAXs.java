@@ -59,7 +59,7 @@ public class recipesMAXs implements IRecipePool {
         GTValues.RA.stdBuilder()
             .itemInputs(
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 17143),
-                GTUtility.getIntegratedCircuit(8))
+                GTUtility.getIntegratedCircuit(16))
             .itemOutputs(GTModHandler.getModItem("dreamcraft", "gt.blockcasingsNH", 1, 14))
             .noOptimize()
             .duration(50)
