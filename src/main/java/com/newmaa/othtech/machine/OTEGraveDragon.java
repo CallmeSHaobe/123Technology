@@ -109,7 +109,7 @@ public class OTEGraveDragon extends OTH_MultiMachineBase<OTEGraveDragon> {
         return 0;
     }
 
-    public HeatingCoilLevel coilLevel;
+    public HeatingCoilLevel coilLevel = HeatingCoilLevel.None;
 
     public HeatingCoilLevel getCoilLevel() {
         return coilLevel;
