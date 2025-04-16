@@ -43,6 +43,8 @@ import gtPlusPlus.api.recipe.GTPPRecipeMaps;
     version = OTHTechnology.VERSION,
     name = OTHTechnology.modName,
     dependencies = "required-after:IC2;" + "required-after:structurelib;"
+        + "required-after:Avaritia;"
+        + "required-after:eternalsingularity;"
         + "required-after:modularui;"
         + "after:GalacticraftCore;"
         + "required-after:bartworks;"
