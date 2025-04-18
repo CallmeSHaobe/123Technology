@@ -39,7 +39,9 @@ public class recipesCircuit implements IRecipePool {
             .itemInputs(
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 22588),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 4581),
-                GTModHandler.getModItem("tectech", "gt.spacetime_compression_field_generator", 8))
+                GTModHandler.getModItem("tectech", "gt.spacetime_compression_field_generator", 8
+
+                ))
             .fluidInputs(new FluidStack(dtsc, 2000))
             .noOptimize()
             .duration(40 * 20)
@@ -49,8 +51,8 @@ public class recipesCircuit implements IRecipePool {
             .itemOutputs(OTHItemList.capTransM.get(2))
             .itemInputs(
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 22397),
-                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Exotic, 64),
-                GTModHandler.getModItem("tectech", "gt.stabilisation_field_generator", 8))
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Exotic, 4),
+                GTModHandler.getModItem("tectech", "gt.stabilisation_field_generator", 2))
             .fluidInputs(new FluidStack(dtsc, 2000))
             .noOptimize()
             .duration(40 * 20)
@@ -60,11 +62,11 @@ public class recipesCircuit implements IRecipePool {
             .itemOutputs(OTHItemList.transTransM.get(4))
             .itemInputs(
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 22139),
-                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Cosmic, 64),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Cosmic, 2),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 4581),
-                GTModHandler.getModItem("tectech", "gt.spacetime_compression_field_generator", 8, 8),
-                ItemList.Field_Generator_UXV.get(16),
-                ItemList.Sensor_UXV.get(16))
+                GTModHandler.getModItem("tectech", "gt.spacetime_compression_field_generator", 8, 4),
+                ItemList.Field_Generator_UXV.get(1),
+                ItemList.Sensor_UXV.get(1))
             .fluidInputs(new FluidStack(dtsc, 4000))
             .noOptimize()
             .duration(80 * 20)
@@ -74,7 +76,7 @@ public class recipesCircuit implements IRecipePool {
             .itemOutputs(OTHItemList.induTransM.get(4))
             .itemInputs(
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 22143),
-                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Cosmic, 64),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Cosmic, 2),
                 OTHItemList.beeISAM.get(64),
                 OTHItemList.leCasimirM.get(16),
                 GTModHandler.getModItem("tectech", "item.tm.itemAstralArrayFabricator", 1))
@@ -87,12 +89,12 @@ public class recipesCircuit implements IRecipePool {
             .itemOutputs(OTHItemList.resTransM.get(4))
             .itemInputs(
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 22588),
-                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Exotic, 64),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Exotic, 4),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 4581),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 2089),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 2089),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 2089),
-                ItemList.Field_Generator_UMV.get(8))
+                ItemList.Field_Generator_UMV.get(1))
             .fluidInputs(new FluidStack(dtsc, 4000))
             .noOptimize()
             .duration(80 * 20)
@@ -101,11 +103,11 @@ public class recipesCircuit implements IRecipePool {
         GTValues.RA.stdBuilder()
             .itemOutputs(OTHItemList.dioTransM.get(4))
             .itemInputs(
-                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Cosmic, 64),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Cosmic, 2),
                 OTHItemList.beeISAM.get(16),
-                GTModHandler.getModItem("tectech", "gt.time_acceleration_field_generator", 8, 8),
-                ItemList.Field_Generator_UXV.get(16),
-                ItemList.Emitter_UXV.get(16))
+                GTModHandler.getModItem("tectech", "gt.time_acceleration_field_generator", 8, 4),
+                ItemList.Field_Generator_UXV.get(1),
+                ItemList.Emitter_UXV.get(2))
             .fluidInputs(new FluidStack(dtsc, 4000))
             .noOptimize()
             .duration(80 * 20)
@@ -133,7 +135,7 @@ public class recipesCircuit implements IRecipePool {
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 29581),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 29143),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 23143),
-                GTModHandler.getModItem("tectech", "gt.stabilisation_field_generator", 2, 8))
+                GTModHandler.getModItem("tectech", "gt.stabilisation_field_generator", 2, 4))
             .fluidInputs(new FluidStack(dtsc, 256 * 144), liquids.Stars.getFluidOrGas(12 * 144))
             .noOptimize()
             .duration(256 * 20)

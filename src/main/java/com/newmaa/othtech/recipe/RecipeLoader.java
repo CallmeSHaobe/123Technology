@@ -6,7 +6,7 @@ public class RecipeLoader {
 
     public static void loadRecipes() {
         IRecipePool[] recipePools = new IRecipePool[] { new recipesComponentAssemblyLineRecipes(),
-            new recipesBlastFurnaceRecipes(), new recipesVacuumFreezerRecipes(), new recipesMain(), new recipesMAXs(),
+            new recipesBlastFurnaceRecipes(), new recipesFreezerRecipes(), new recipesMain(), new recipesMAXs(),
             new recipesMegaISAForge(), new recipesMixerRecipes(), new recipesQFTRecipes(), new recipesMegaQFT(),
             new recipesCyclotronRecipes(), new recipesCircuit(), new recipesSINOPEC(),
             new recipesTangshanSteelFactory(), new recipesMegaEEC(), new recipesSunFactoryEnqing(),

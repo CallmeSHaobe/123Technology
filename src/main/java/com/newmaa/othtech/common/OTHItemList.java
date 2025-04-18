@@ -87,6 +87,7 @@ public enum OTHItemList {
     RecordNGGU,
 
     // Machines
+    FISH,
     EXH,
     EIO,
     TP,

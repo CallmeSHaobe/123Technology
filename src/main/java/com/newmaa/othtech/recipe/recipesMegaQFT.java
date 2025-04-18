@@ -129,7 +129,7 @@ public class recipesMegaQFT implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Gadolinium, 64),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Holmium, 32),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Lanthanum, 32),
-                GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 32, 11007),
+                GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 32, 3),
                 GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 32, 11002),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 4, 32428))
             .noOptimize()

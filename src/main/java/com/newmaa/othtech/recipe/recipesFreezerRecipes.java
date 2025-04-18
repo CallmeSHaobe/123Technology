@@ -12,8 +12,9 @@ import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
 import gregtech.api.interfaces.IRecipeMap;
 import gregtech.api.recipe.RecipeMaps;
+import gtPlusPlus.api.recipe.GTPPRecipeMaps;
 
-public class recipesVacuumFreezerRecipes implements IRecipePool {
+public class recipesFreezerRecipes implements IRecipePool {
 
     @Override
     public void loadRecipes() {
@@ -30,5 +31,14 @@ public class recipesVacuumFreezerRecipes implements IRecipePool {
             .duration(2000)
             .eut(TierEU.RECIPE_UEV)
             .addTo(VaF);
+        GTValues.RA.stdBuilder()
+            .itemInputs(OTHItemList.ingotHotDog.get(1))
+            .itemOutputs(materials.IrOsSm.get(OrePrefixes.ingot, 1))
+            .fluidInputs(new FluidStack(colder, 100))
+            .fluidOutputs(new FluidStack(water, 100))
+            .noOptimize()
+            .duration(2000)
+            .eut(TierEU.RECIPE_UEV)
+            .addTo(GTPPRecipeMaps.advancedFreezerRecipes);
     }
 }
