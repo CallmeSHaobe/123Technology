@@ -1302,6 +1302,14 @@ public class recipesMain implements IRecipePool {
             .eut(114514)
             .duration(60)
             .addTo(RecipeMaps.multiblockChemicalReactorRecipes);
-
+        // Salt Wasser
+        RecipeBuilder.builder()
+            .itemOutputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Aluminium, 2))
+            .fluidInputs(Materials.SaltWater.getFluid(2000))
+            .itemInputs(GTUtility.getIntegratedCircuit(17), OTHItemList.dustIrOsSmM.get(0))
+            .fluidOutputs(Materials.Nitrogen.getGas(1000), FluidRegistry.getFluidStack("fluid.formaldehyde", 2000))
+            .duration(100)
+            .eut(123123)
+            .addTo(RecipeMaps.multiblockChemicalReactorRecipes);
     }
 }

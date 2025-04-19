@@ -3,17 +3,17 @@ package com.newmaa.othtech.common.entity;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
 
 import com.newmaa.othtech.common.item.ItemLoader;
 
 import cpw.mods.fml.common.registry.EntityRegistry;
+import galaxyspace.core.world.GSBiomeGenBase;
 
 public class entityDogYellow extends EntityWolf {
 
     public entityDogYellow(World worldIn) {
         super(worldIn);
-        EntityRegistry.addSpawn(entityDogYellow.class, 6, 1, 5, EnumCreatureType.creature, BiomeGenBase.savanna);
+        EntityRegistry.addSpawn(entityDogYellow.class, 6, 1, 5, EnumCreatureType.creature, GSBiomeGenBase.SpaceGS);
     }
 
     @Override

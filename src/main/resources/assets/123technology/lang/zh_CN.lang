@@ -150,6 +150,15 @@ otht.recipe.EXH=§4吊炸天热交换
 item.BrainsHuman.name=§n人类大脑
 item.itemAmulet.name=DSS项圈
 death.attack.amulet_explosion=%1$s被DSS项圈炸死了
+planet.Antimonia=§oAntimonia - 锑星
+star.starAntimonia=§0锑洞
+solarsystem.antimoniaSystem=锑星星系
+tile.AntimoniaStone.name=锑石
+tile.AntimoniaDirt.name=锑土
+tile.AntimoniaGrass.name=锑草方块
+tile.AquaRegia.name=王水
+item.itemBucketAqua.name=王水单元(锑星产)
+death.attack.Acid=虽然这可能很不科学,但%1$s还是被王水干死了
 
 
 

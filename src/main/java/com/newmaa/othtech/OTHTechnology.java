@@ -17,10 +17,12 @@ import org.apache.logging.log4j.Logger;
 import com.gtnewhorizons.gtnhintergalactic.recipe.SpacePumpingRecipes;
 import com.newmaa.othtech.common.ItemAndBlockHandler;
 import com.newmaa.othtech.common.beeyonds.OTHBeeyonds;
+import com.newmaa.othtech.common.blocks.antimonia.antimoniaBlocks;
+import com.newmaa.othtech.common.blocks.fluids.antimoniaFluids;
+import com.newmaa.othtech.common.dimensions.registerAntimonia;
 import com.newmaa.othtech.common.materials.MaterialsLoader;
 import com.newmaa.othtech.common.recipemap.NEIRecipeMaps;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
-import com.newmaa.othtech.event.eventOnPlayerTick;
 import com.newmaa.othtech.event.eventPlayerDied;
 import com.newmaa.othtech.machine.MachineLoader;
 import com.newmaa.othtech.recipe.RecipeLoader;
@@ -52,7 +54,8 @@ import gtPlusPlus.api.recipe.GTPPRecipeMaps;
         + "after:dreamcraft;"
         + "after:GalacticraftMars;"
         + "required-after:gregtech;"
-        + "after:GalacticraftPlanets",
+        + "after:GalacticraftPlanets;"
+        + "required-after:GalaxySpace;",
     acceptedMinecraftVersions = "1.7.10")
 public class OTHTechnology {
 
@@ -60,7 +63,7 @@ public class OTHTechnology {
 
     public static final String modName = Tags.MODNAME;
 
-    public static final String VERSION = "2.0.7";
+    public static final String VERSION = "2.0.9 ";
 
     public static final String Arthur = "Laodengs";
 
@@ -73,7 +76,6 @@ public class OTHTechnology {
 
     public OTHTechnology() {
         MinecraftForge.EVENT_BUS.register(new eventPlayerDied());
-        MinecraftForge.EVENT_BUS.register(new eventOnPlayerTick());
     }
 
     @Mod.EventHandler
@@ -83,6 +85,8 @@ public class OTHTechnology {
         proxy.preInit(event);
         MaterialsLoader.load();
         ItemAndBlockHandler.INSTANCE.run();
+        antimoniaBlocks.initialize();
+        antimoniaFluids.initialize();
     }
 
     @Mod.EventHandler
@@ -91,6 +95,7 @@ public class OTHTechnology {
         MinecraftForge.EVENT_BUS.register(new eventPlayerDied());
         proxy.init(event);
         MachineLoader.loadMachines();
+        new registerAntimonia().init();
         NEIRecipeMaps.IMCSender();
     }
 
