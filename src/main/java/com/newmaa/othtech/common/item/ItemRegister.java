@@ -62,5 +62,7 @@ public class ItemRegister {
             .set(initItem("slicedBrains", 25, new String[] { texter("slicedBrains", "tt.slicedBrains") }));
         OTHItemList.encapsulatedBranins
             .set(initItem("wrapBrains", 26, new String[] { texter("wrapBrains", "tt.wrapBrains") }));
+        OTHItemList.AntimoniaPlanetDust
+            .set(initItem("antimoniaPlanetDust", 64, new String[] { texter("antimoniaPlanetDust", "tt.ani") }));
     }
 }

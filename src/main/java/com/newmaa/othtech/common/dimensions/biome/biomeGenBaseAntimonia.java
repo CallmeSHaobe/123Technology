@@ -1,7 +1,6 @@
 package com.newmaa.othtech.common.dimensions.biome;
 
 import net.minecraft.init.Blocks;
-import net.minecraft.world.biome.BiomeDecorator;
 import net.minecraft.world.biome.BiomeGenBase;
 
 import galaxyspace.core.world.GSBiomeGenBase;
@@ -16,14 +15,6 @@ public class biomeGenBaseAntimonia extends GSBiomeGenBase {
         this.enableSnow = true;
         this.topBlock = Blocks.grass;
         this.fillerBlock = Blocks.dirt;
-    }
-
-    public BiomeDecorator createBiomeDecorator() {
-        return new biomeDecAntimonia();
-    }
-
-    protected biomeDecAntimonia getBiomeDecorator() {
-        return (biomeDecAntimonia) this.theBiomeDecorator;
     }
 
     static {

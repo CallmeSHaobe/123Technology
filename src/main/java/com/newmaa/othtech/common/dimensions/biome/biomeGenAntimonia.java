@@ -20,10 +20,12 @@ public class biomeGenAntimonia extends biomeGenBaseAntimonia {
         this.spawnableCreatureList.clear();
         this.spawnableMonsterList.clear();
         this.spawnableWaterCreatureList.clear();
-        this.temperature = 11600F;
+        this.temperature = 116F;
         BiomeDictionary.registerBiomeType(
             this,
-            new BiomeDictionary.Type[] { BiomeDictionary.Type.COLD, BiomeDictionary.Type.DRY, BiomeDictionary.Type.DEAD,
-                BiomeDictionary.Type.SPOOKY });
+            BiomeDictionary.Type.COLD,
+            BiomeDictionary.Type.DRY,
+            BiomeDictionary.Type.DEAD,
+            BiomeDictionary.Type.SPOOKY);
     }
 }

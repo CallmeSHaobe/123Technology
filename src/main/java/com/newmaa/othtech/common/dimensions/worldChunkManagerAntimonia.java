@@ -8,8 +8,7 @@ import micdoodle8.mods.galacticraft.api.prefab.world.gen.WorldChunkManagerSpace;
 
 public class worldChunkManagerAntimonia extends WorldChunkManagerSpace {
 
-    protected worldChunkManagerAntimonia() {}
-
+    @Override
     public BiomeGenBase getBiome() {
         return biomeGenBaseAntimonia.antimonia;
     }

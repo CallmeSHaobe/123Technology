@@ -100,6 +100,56 @@ public class liquids implements Runnable {
             .addCells(),
         offsetID_01 + 11,
         TextureSet.SET_FLUID);
+    public static final Werkstoff HCl10 = new Werkstoff(
+        new short[] { 240, 255, 240 },
+        "HCl10",
+        subscriptNumbers("HCl₁₀"),
+        new Werkstoff.Stats(),
+        Werkstoff.Types.MIXTURE,
+        new Werkstoff.GenerationFeatures().disable()
+            .addCells(),
+        offsetID_01 + 12,
+        TextureSet.SET_FLUID);
+    public static final Werkstoff HCl100 = new Werkstoff(
+        new short[] { 240, 255, 240 },
+        "HCl100",
+        subscriptNumbers("HCl₁₀₀"),
+        new Werkstoff.Stats(),
+        Werkstoff.Types.MIXTURE,
+        new Werkstoff.GenerationFeatures().disable()
+            .addCells(),
+        offsetID_01 + 13,
+        TextureSet.SET_FLUID);
+    public static final Werkstoff HCl1000 = new Werkstoff(
+        new short[] { 240, 255, 240 },
+        "HCl1000",
+        subscriptNumbers("HCl₁₀₀₀"),
+        new Werkstoff.Stats(),
+        Werkstoff.Types.MIXTURE,
+        new Werkstoff.GenerationFeatures().disable()
+            .addCells(),
+        offsetID_01 + 14,
+        TextureSet.SET_FLUID);
+    public static final Werkstoff HCl10000 = new Werkstoff(
+        new short[] { 240, 255, 240 },
+        "HCl10000",
+        subscriptNumbers("HCl₁₀₀₀₀"),
+        new Werkstoff.Stats(),
+        Werkstoff.Types.MIXTURE,
+        new Werkstoff.GenerationFeatures().disable()
+            .addCells(),
+        offsetID_01 + 15,
+        TextureSet.SET_FLUID);
+    public static final Werkstoff HCl100000 = new Werkstoff(
+        new short[] { 240, 255, 240 },
+        "HCl100000",
+        subscriptNumbers("HCl₁₀₀₀₀₀"),
+        new Werkstoff.Stats(),
+        Werkstoff.Types.MIXTURE,
+        new Werkstoff.GenerationFeatures().disable()
+            .addCells(),
+        offsetID_01 + 16,
+        TextureSet.SET_FLUID);
 
     @Override
     public void run() {

@@ -2,6 +2,7 @@ package com.newmaa.othtech.common.blocks.fluids;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
@@ -13,13 +14,13 @@ import com.newmaa.othtech.common.item.itemTools.itemBucketAqua;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import galaxyspace.BarnardsSystem.BRItems;
-import gregtech.api.enums.ItemList;
 
 public class antimoniaFluids {
 
     public static Fluid AquaRegia;
     public static Block BlockAquaRegia;
-    public static Item UnknowWaterBucket;
+    public static Item AquaBucket;
+    public static Item AquaCell;
 
     public antimoniaFluids() {}
 
@@ -31,11 +32,12 @@ public class antimoniaFluids {
         GameRegistry.registerBlock(
             BlockAquaRegia = (new fluidAquaRegia(AquaRegia, Material.water)).setBlockName("AquaRegia"),
             "aquaregia");
-        BRItems.registerItem(UnknowWaterBucket = new itemBucketAqua(BlockAquaRegia));
+        BRItems.registerItem(AquaBucket = new itemBucketAqua(BlockAquaRegia));
         FluidContainerRegistry.registerFluidContainer(
             new FluidContainerRegistry.FluidContainerData(
                 new FluidStack(AquaRegia, 1000),
-                new ItemStack(UnknowWaterBucket),
-                ItemList.Cell_Empty.get(1)));
+                new ItemStack(AquaBucket),
+                new ItemStack(Items.bucket)));
+
     }
 }

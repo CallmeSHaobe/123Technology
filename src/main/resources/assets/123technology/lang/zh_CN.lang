@@ -27,6 +27,7 @@ MetaItemOTH.22.name=§3通用SoC
 MetaItemOTH.23.name=§5超距遥感器
 MetaItemOTH.25.name=§4切片大脑
 MetaItemOTH.26.name=§4封装切片大脑
+MetaItemOTH.64.name=锑星尘
 IsaMillModule.1.name=§aNeI合金研磨器复合体
 IsaMillModule.2.name=§a铱锇钐合金研磨器复合体
 IsaMillModule.3.name=§c海珀珍研磨器复合体
@@ -56,6 +57,7 @@ tt.SPE=研磨过去现在和未来
 tt.brains=他还在跳动...
 tt.slicedBrains=我在故我思.
 tt.wrapBrains=你必须想象,电路板里的大脑是幸福的.
+tt.ani=含锑量99.8%
 
 
 
@@ -128,6 +130,11 @@ fluid.FUELA.name=§d高辛烷超能硅岩火箭燃料
 fluid.FUELA_DE.name=§d枯竭的高辛烷超能硅岩火箭燃料
 fluid.PromoterZPM.name=原子分离助燃剂
 fluid.PromoterUEV.name=超维度等离子助燃剂
+fluid.HCl10.name=超盐酸
+fluid.HCl100.name=极盐酸
+fluid.HCl1000.name=奇盐酸
+fluid.HCl10000.name=魔盐酸
+fluid.HCl100000.name=终盐酸
 item.IrOsSm.name=铱锇钐
 fluid.IrOsSm.name=铱锇钐
 bw.werkstoff.12320.name=铱锇钐
