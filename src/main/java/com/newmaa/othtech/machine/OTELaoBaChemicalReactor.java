@@ -335,7 +335,7 @@ public class OTELaoBaChemicalReactor extends OTH_MultiMachineBase<OTELaoBaChemic
             .addInfo("§l§a    吃饱啦!    ")
             .addInfo("化工厂模式 ： 耗时 = NEI耗时 * (1 - 线圈等级 * 0.15),最低耗时倍率为0.1; 并行16, 无催化剂消耗, 有损超频")
             .addInfo("大型化学反应釜模式 : 耗时 = NEI耗时 * (1 - 线圈等级 * 0.1), 最低耗时倍率为0.1; 无限制并行, 无损超频")
-            .addInfo("玻璃等级决定化工厂等级")
+            .addInfo("玻璃等级决定化工厂等级，化工厂等级==玻璃信道等级-3")
             .addInfo("不成型请重放主机")
             .addInfo("如遇配方不执行，请放置一个普通输入总线，并将所有输入总线的编程电路调到一致")
             .addInfo("主机放入铱锇钐合金粉解锁化工厂无损超频及并行限制")
