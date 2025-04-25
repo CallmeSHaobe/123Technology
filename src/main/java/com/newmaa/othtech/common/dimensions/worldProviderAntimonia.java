@@ -71,7 +71,7 @@ public class worldProviderAntimonia extends WorldProviderSpace
 
     @Override
     public float getGravity() {
-        return -3.03F;
+        return 0.083F;
     }
 
     @Override
@@ -111,7 +111,7 @@ public class worldProviderAntimonia extends WorldProviderSpace
 
     @Override
     public long getDayLength() {
-        return 160L;
+        return 1600L;
     }
 
     @Override
@@ -122,18 +122,13 @@ public class worldProviderAntimonia extends WorldProviderSpace
     @Override
     public Vector3 getFogColor() {
         float f = 0.3F;
-        return new Vector3(0.50, 0.50, 0.50);
+        return new Vector3(0.9418, 1, 1);
     }
 
     @Override
     public Vector3 getSkyColor() {
         float f = 0.05F;
-        return new Vector3(0.5, 0.51, 0.51);
-    }
-
-    @Override
-    public boolean isSkyColored() {
-        return true;
+        return new Vector3(0.0, 0.0, 0.0);
     }
 
     @Override
@@ -231,18 +226,7 @@ public class worldProviderAntimonia extends WorldProviderSpace
     @Override
     @SideOnly(Side.CLIENT)
     public float getSunBrightness(float par1) {
-        float f1 = this.worldObj.getCelestialAngle(1.0F);
-        float f2 = 1.25F - (MathHelper.cos(f1 * 6.2831855F) * 2.0F + 0.2F);
-        if (f2 < 0.0F) {
-            f2 = 0.0F;
-        }
-
-        if (f2 > 1.0F) {
-            f2 = 1.0F;
-        }
-
-        f2 = 1.2F - f2;
-        return f2 * 0.7F;
+        return 0.01F;
     }
 
     @Override

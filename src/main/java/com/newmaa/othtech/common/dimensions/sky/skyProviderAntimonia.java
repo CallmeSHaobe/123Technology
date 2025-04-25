@@ -15,23 +15,23 @@ public class skyProviderAntimonia extends SkyProviderBase implements AntimoniaRe
     public skyProviderAntimonia() {}
 
     @Override
-    protected void setup() {
-        this.sunRGBA[0] = 0.5882353F;
-        this.sunRGBA[1] = 0.8352941F;
-        this.sunRGBA[2] = 1.0F;
-        this.sunRGBA[3] = 0.4F;
-        this.sunRadius = 3.3;
-        this.innerFlareRadius = 10.0;
-        this.outerFlareRadius = 30.0;
-    }
-
-    @Override
     protected ResourceLocation getSunTexture() {
-        return AntimoniaStar;
+        return White;
     }
 
     @Override
     protected void renderCelestialBodies(float partialTicks, WorldClient world, Minecraft mc) {
+        // 启用混合
+        GL11.glEnable(GL11.GL_BLEND);
+        // 设置混合函数：源因子为Alpha，目标因子为1-Alpha
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GL11.glPushMatrix();
+        GL11.glScalef(1.0F, 1.0F, 1.0F);
+        GL11.glRotatef(-180.0F, 100.0F, 1.0F, 0.0F);
+        GL11.glRotatef(40.0F, 1.0F, 0.0F, 0.0F);
+        GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
+        this.drawTexture(AntimoniaStar, 100.0);
+        GL11.glPopMatrix();
         GL11.glPushMatrix();
         GL11.glScalef(0.6F, 0.6F, 0.6F);
         GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);

@@ -55,7 +55,7 @@ public class fluidAquaRegia extends BlockFluidClassic {
 
     public void onEntityCollidedWithBlock(World worldIn, int x, int y, int z, Entity entityIn) {
         {
-            entityIn.attackEntityFrom(new DamageSource("Acid"), 100.0F);
+            entityIn.attackEntityFrom(new DamageSource("Acid"), 400.0F);
         }
     }
 

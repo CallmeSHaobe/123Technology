@@ -22,13 +22,9 @@ import com.newmaa.othtech.common.dimensions.biome.biomeGenBaseAntimonia;
 
 import bartworks.system.worldgen.MapGenRuins;
 import galaxyspace.core.dimension.ChunkProviderSpaceLakes;
-import galaxyspace.core.entity.mob.EntityEvolvedEnderman;
 import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 import micdoodle8.mods.galacticraft.api.prefab.world.gen.BiomeDecoratorSpace;
 import micdoodle8.mods.galacticraft.api.prefab.world.gen.MapGenBaseMeta;
-import micdoodle8.mods.galacticraft.core.entities.EntityEvolvedCreeper;
-import micdoodle8.mods.galacticraft.core.entities.EntityEvolvedSkeleton;
-import micdoodle8.mods.galacticraft.core.entities.EntityEvolvedSpider;
 import micdoodle8.mods.galacticraft.core.world.gen.MapGenVillageMoon;
 import twilightforest.world.MapGenTFHollowTree;
 import twilightforest.world.MapGenTFMajorFeature;
@@ -62,19 +58,11 @@ public class chunkProviderAntimonia extends ChunkProviderSpaceLakes {
     }
 
     public double getHeightModifier() {
-        return 100;
+        return 40;
     }
 
     public int getWaterLevel() {
         return 40;
-    }
-
-    protected BiomeGenBase.SpawnListEntry[] getMonsters() {
-        BiomeGenBase.SpawnListEntry skele = new BiomeGenBase.SpawnListEntry(EntityEvolvedSkeleton.class, 100, 4, 4);
-        BiomeGenBase.SpawnListEntry creeper = new BiomeGenBase.SpawnListEntry(EntityEvolvedCreeper.class, 100, 4, 4);
-        BiomeGenBase.SpawnListEntry spider = new BiomeGenBase.SpawnListEntry(EntityEvolvedSpider.class, 100, 4, 4);
-        BiomeGenBase.SpawnListEntry enderman = new BiomeGenBase.SpawnListEntry(EntityEvolvedEnderman.class, 100, 4, 4);
-        return new BiomeGenBase.SpawnListEntry[] { skele, creeper, spider, enderman };
     }
 
     public double getMountainHeightModifier() {
@@ -108,6 +96,7 @@ public class chunkProviderAntimonia extends ChunkProviderSpaceLakes {
     private final MapGenRuins.RuinsBase ruinsBase = new MapGenRuins.RuinsBase();
     private final List structureGenerators = new ArrayList();
 
+    @Override
     public void onPopulate(IChunkProvider arg0, int arg1, int arg2) {
         BlockFalling.fallInstantly = true;
         boolean flag = false;
@@ -117,23 +106,28 @@ public class chunkProviderAntimonia extends ChunkProviderSpaceLakes {
         this.rand.setSeed(arg1 * var7 + arg2 * var9 ^ this.worldObj.getSeed());
         MinecraftForge.EVENT_BUS.post(new PopulateChunkEvent.Pre(arg0, worldObj, rand, arg1, arg2, flag));
         this.MapGenMineshaft.generateStructuresInChunk(this.worldObj, this.rand, arg1, arg2);
-        this.MapGenTFMajorFeature.generateStructuresInChunk(this.worldObj, this.rand, arg1, arg2);
-        this.MapGenTFHollowTree.generateStructuresInChunk(this.worldObj, this.rand, arg1, arg2);
-        this.MapGenNetherBridge.generateStructuresInChunk(this.worldObj, this.rand, arg1, arg2);
         this.MapGenVillage.generateStructuresInChunk(this.worldObj, this.rand, arg1, arg2);
+        this.MapGenNetherBridge.generateStructuresInChunk(this.worldObj, this.rand, arg1, arg2);
+        this.MapGenTFHollowTree.generateStructuresInChunk(this.worldObj, this.rand, arg1, arg2);
+        this.MapGenTFMajorFeature.generateStructuresInChunk(this.worldObj, this.rand, arg1, arg2);
         flag = this.villageGeneratorA.generateStructuresInChunk(this.worldObj, this.rand, arg1, arg2);
         MinecraftForge.EVENT_BUS.post(new PopulateChunkEvent.Post(arg0, worldObj, rand, arg1, arg2, flag));
         BlockFalling.fallInstantly = false;
     }
 
     @Override
+    protected BiomeGenBase.SpawnListEntry[] getMonsters() {
+        return new BiomeGenBase.SpawnListEntry[0];
+    }
+
+    @Override
     public void recreateStructures(int par1, int par2) {
         this.MapGenMineshaft.func_151539_a(this, this.worldObj, par1, par2, null);
-        this.MapGenVillage.generateStructuresInChunk(this.worldObj, this.rand, par1, par2);
-        this.villageGeneratorA.generateStructuresInChunk(this.worldObj, this.rand, par1, par2);
-        this.MapGenNetherBridge.generateStructuresInChunk(this.worldObj, this.rand, par1, par2);
-        this.MapGenTFMajorFeature.generateStructuresInChunk(this.worldObj, this.rand, par1, par2);
-        this.MapGenTFHollowTree.generateStructuresInChunk(this.worldObj, this.rand, par1, par2);
+        this.villageGeneratorA.func_151539_a(this, this.worldObj, par1, par2, null);
+        this.MapGenVillage.func_151539_a(this, this.worldObj, par1, par2, null);
+        this.MapGenNetherBridge.func_151539_a(this, this.worldObj, par1, par2, null);
+        this.MapGenTFHollowTree.func_151539_a(this, this.worldObj, par1, par2, null);
+        this.MapGenTFMajorFeature.func_151539_a(this, this.worldObj, par1, par2, null);
     }
 
     public boolean chunkExists(int x, int y) {

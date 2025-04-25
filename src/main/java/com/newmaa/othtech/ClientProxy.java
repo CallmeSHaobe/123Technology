@@ -1,20 +1,33 @@
 package com.newmaa.othtech;
 
+import net.minecraftforge.common.MinecraftForge;
+
+import com.newmaa.othtech.common.dimensions.sky.skyProviderHandler;
 import com.newmaa.othtech.common.entity.entityFakePlayer;
 import com.newmaa.othtech.common.entity.renderPlayer;
 import com.newmaa.othtech.common.item.itemBlock.itemModelAsukaRender;
 import com.newmaa.othtech.common.item.itemBlock.itemModelAyanamiRender;
 
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 public class ClientProxy extends CommonProxy {
 
+    public void register_event(Object obj) {
+        FMLCommonHandler.instance()
+            .bus()
+            .register(obj);
+        MinecraftForge.EVENT_BUS.register(obj);
+    }
+
     @Override
     public void preInit(FMLPreInitializationEvent event) {
         super.preInit(event);
+        skyProviderHandler sky = new skyProviderHandler();
+        this.register_event(sky);
         // 在这里添加你需要的预初始化逻辑
     }
 
