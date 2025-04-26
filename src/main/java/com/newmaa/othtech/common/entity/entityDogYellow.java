@@ -18,7 +18,7 @@ public class entityDogYellow extends EntityWolf implements IEntityBreathable {
         super(worldIn);
         EntityRegistry.addSpawn(entityDogYellow.class, 6, 1, 5, EnumCreatureType.creature, GSBiomeGenBase.SpaceGS);
         EntityRegistry
-            .addSpawn(entityDogYellow.class, 8, 10, 20, EnumCreatureType.creature, biomeGenBaseAntimonia.antimonia);
+            .addSpawn(entityDogYellow.class, 8, 1, 8, EnumCreatureType.creature, biomeGenBaseAntimonia.antimonia);
     }
 
     @Override
