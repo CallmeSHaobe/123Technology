@@ -17,18 +17,18 @@ public class structureCityPiecesAntimonia {
         var2.add(
             new structureCityPieceWeightAntimonia(
                 structureComponentCitySolar.class,
-                5,
-                MathHelper.getRandomIntegerInRange(par0Random, 2 + par1, 5 + par1 * 3)));
+                2,
+                MathHelper.getRandomIntegerInRange(par0Random, 2 + par1, (int) (5 + par1 * 1.5))));
         var2.add(
             new structureCityPieceWeightAntimonia(
                 structureComponentCityBuilding.class,
-                3,
-                MathHelper.getRandomIntegerInRange(par0Random, 2 + par1, 5 + par1 * 3)));
+                4,
+                MathHelper.getRandomIntegerInRange(par0Random, 2 + par1, 5 + par1 * 5)));
         var2.add(
             new structureCityPieceWeightAntimonia(
                 structureComponentCityBuildingBlack.class,
-                3,
-                MathHelper.getRandomIntegerInRange(par0Random, 2 + par1, 5 + par1 * 3)));
+                4,
+                MathHelper.getRandomIntegerInRange(par0Random, 2 + par1, 5 + par1 * 5)));
 
         final Iterator<structureCityPieceWeightAntimonia> var3 = var2.iterator();
 

@@ -7,10 +7,11 @@ public class structureCityPieceWeightAntimonia {
     public int villagePiecesSpawned;
     public int villagePiecesLimit;
 
-    public structureCityPieceWeightAntimonia(Class<? extends structureComponentCity> par1Class, int par2, int par3) {
-        this.villagePieceClass = par1Class;
-        this.villagePieceWeight = par2;
-        this.villagePiecesLimit = (int) (par3 / 0.2D);
+    public structureCityPieceWeightAntimonia(Class<? extends structureComponentCity> villagePieceClass,
+        int villagePieceWeight, int villagePiecesLimitBase) {
+        this.villagePieceClass = villagePieceClass;
+        this.villagePieceWeight = villagePieceWeight;
+        this.villagePiecesLimit = (int) (villagePiecesLimitBase / 0.2D);
     }
 
     public boolean canSpawnMoreVillagePiecesOfType(int par1) {

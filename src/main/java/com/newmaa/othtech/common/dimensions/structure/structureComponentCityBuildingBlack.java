@@ -74,7 +74,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
                 this.placeBlockAtCurrentPosition(
                     par1World,
                     Block.getBlockFromName("Botania:quartzTypeDark"),
-                    3,
+                    0,
                     i,
                     0,
                     j,
@@ -87,7 +87,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
                 this.placeBlockAtCurrentPosition(
                     par1World,
                     Block.getBlockFromName("Botania:quartzTypeDark"),
-                    3,
+                    0,
                     i,
                     0,
                     j,
@@ -100,7 +100,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
                 this.placeBlockAtCurrentPosition(
                     par1World,
                     Block.getBlockFromName("Botania:quartzTypeDark"),
-                    3,
+                    0,
                     i,
                     0,
                     j,
@@ -114,7 +114,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 4,
                 yLevel,
                 2,
@@ -122,7 +122,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 3,
                 yLevel,
                 2,
@@ -130,7 +130,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 2,
                 yLevel,
                 3,
@@ -138,7 +138,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 2,
                 yLevel,
                 4,
@@ -147,7 +147,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 1,
                 yLevel,
                 5,
@@ -155,7 +155,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 1,
                 yLevel,
                 6,
@@ -163,7 +163,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 1,
                 yLevel,
                 7,
@@ -171,7 +171,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 yLevel <= 1 ? Block.getBlockFromName("Botania:quartzTypeDark") : EnderIO.blockFusedQuartz,
-                4,
+                0,
                 1,
                 yLevel,
                 8,
@@ -179,7 +179,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 1,
                 yLevel,
                 9,
@@ -187,7 +187,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 1,
                 yLevel,
                 10,
@@ -195,7 +195,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 1,
                 yLevel,
                 11,
@@ -204,7 +204,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 2,
                 yLevel,
                 12,
@@ -212,7 +212,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 2,
                 yLevel,
                 13,
@@ -220,7 +220,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 3,
                 yLevel,
                 14,
@@ -228,7 +228,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 4,
                 yLevel,
                 14,
@@ -237,7 +237,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 5,
                 yLevel,
                 15,
@@ -245,7 +245,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 6,
                 yLevel,
                 15,
@@ -253,7 +253,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 7,
                 yLevel,
                 15,
@@ -261,7 +261,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 yLevel <= 1 ? Block.getBlockFromName("Botania:quartzTypeDark") : EnderIO.blockFusedQuartz,
-                4,
+                0,
                 8,
                 yLevel,
                 15,
@@ -269,7 +269,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 9,
                 yLevel,
                 15,
@@ -277,7 +277,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 10,
                 yLevel,
                 15,
@@ -285,7 +285,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 11,
                 yLevel,
                 15,
@@ -294,7 +294,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 12,
                 yLevel,
                 14,
@@ -302,7 +302,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 13,
                 yLevel,
                 14,
@@ -310,7 +310,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 14,
                 yLevel,
                 13,
@@ -318,7 +318,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 14,
                 yLevel,
                 12,
@@ -327,7 +327,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 15,
                 yLevel,
                 11,
@@ -335,7 +335,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 15,
                 yLevel,
                 10,
@@ -343,7 +343,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 15,
                 yLevel,
                 9,
@@ -351,7 +351,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 yLevel <= 1 ? Block.getBlockFromName("Botania:quartzTypeDark") : EnderIO.blockFusedQuartz,
-                4,
+                0,
                 15,
                 yLevel,
                 8,
@@ -359,7 +359,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 15,
                 yLevel,
                 7,
@@ -367,7 +367,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 15,
                 yLevel,
                 6,
@@ -375,7 +375,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 15,
                 yLevel,
                 5,
@@ -384,7 +384,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 14,
                 yLevel,
                 4,
@@ -392,7 +392,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 14,
                 yLevel,
                 3,
@@ -400,7 +400,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 13,
                 yLevel,
                 2,
@@ -408,7 +408,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 12,
                 yLevel,
                 2,
@@ -417,7 +417,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 11,
                 yLevel,
                 1,
@@ -425,7 +425,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 10,
                 yLevel,
                 1,
@@ -433,7 +433,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 9,
                 yLevel,
                 1,
@@ -441,7 +441,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 yLevel <= 1 ? Block.getBlockFromName("Botania:quartzTypeDark") : EnderIO.blockFusedQuartz,
-                4,
+                0,
                 8,
                 yLevel,
                 1,
@@ -449,7 +449,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 7,
                 yLevel,
                 1,
@@ -457,7 +457,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 6,
                 yLevel,
                 1,
@@ -465,7 +465,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 5,
                 yLevel,
                 1,
@@ -475,7 +475,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 4,
                 yLevel,
                 2,
@@ -483,7 +483,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 3,
                 yLevel,
                 2,
@@ -491,7 +491,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 2,
                 yLevel,
                 3,
@@ -499,7 +499,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 2,
                 yLevel,
                 4,
@@ -508,7 +508,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 1,
                 yLevel,
                 5,
@@ -516,7 +516,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 1,
                 yLevel,
                 6,
@@ -524,7 +524,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 1,
                 yLevel,
                 7,
@@ -532,7 +532,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 yLevel <= 1 ? Block.getBlockFromName("Botania:quartzTypeDark") : EnderIO.blockFusedQuartz,
-                4,
+                0,
                 1,
                 yLevel,
                 8,
@@ -540,7 +540,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 1,
                 yLevel,
                 9,
@@ -548,7 +548,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 1,
                 yLevel,
                 10,
@@ -556,7 +556,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 1,
                 yLevel,
                 11,
@@ -565,7 +565,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 2,
                 yLevel,
                 12,
@@ -573,7 +573,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 2,
                 yLevel,
                 13,
@@ -581,7 +581,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 3,
                 yLevel,
                 14,
@@ -589,7 +589,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 4,
                 yLevel,
                 14,
@@ -598,7 +598,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 5,
                 yLevel,
                 15,
@@ -606,7 +606,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 6,
                 yLevel,
                 15,
@@ -614,7 +614,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 7,
                 yLevel,
                 15,
@@ -622,7 +622,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 yLevel <= 1 ? Block.getBlockFromName("Botania:quartzTypeDark") : EnderIO.blockFusedQuartz,
-                4,
+                0,
                 8,
                 yLevel,
                 15,
@@ -630,7 +630,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 9,
                 yLevel,
                 15,
@@ -638,7 +638,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 10,
                 yLevel,
                 15,
@@ -646,7 +646,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 11,
                 yLevel,
                 15,
@@ -655,7 +655,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 12,
                 yLevel,
                 14,
@@ -663,7 +663,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 13,
                 yLevel,
                 14,
@@ -671,7 +671,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 14,
                 yLevel,
                 13,
@@ -679,7 +679,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 14,
                 yLevel,
                 12,
@@ -688,7 +688,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 15,
                 yLevel,
                 11,
@@ -696,7 +696,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 15,
                 yLevel,
                 10,
@@ -704,7 +704,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 15,
                 yLevel,
                 9,
@@ -712,7 +712,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 yLevel <= 1 ? Block.getBlockFromName("Botania:quartzTypeDark") : EnderIO.blockFusedQuartz,
-                4,
+                0,
                 15,
                 yLevel,
                 8,
@@ -720,7 +720,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 15,
                 yLevel,
                 7,
@@ -728,7 +728,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 15,
                 yLevel,
                 6,
@@ -736,7 +736,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 15,
                 yLevel,
                 5,
@@ -745,7 +745,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 14,
                 yLevel,
                 4,
@@ -753,7 +753,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 14,
                 yLevel,
                 3,
@@ -761,7 +761,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 13,
                 yLevel,
                 2,
@@ -769,7 +769,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 12,
                 yLevel,
                 2,
@@ -778,7 +778,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 11,
                 yLevel,
                 1,
@@ -786,7 +786,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 10,
                 yLevel,
                 1,
@@ -794,7 +794,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 9,
                 yLevel,
                 1,
@@ -802,7 +802,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 yLevel <= 1 ? Block.getBlockFromName("Botania:quartzTypeDark") : EnderIO.blockFusedQuartz,
-                4,
+                0,
                 8,
                 yLevel,
                 1,
@@ -810,7 +810,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 7,
                 yLevel,
                 1,
@@ -818,7 +818,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 6,
                 yLevel,
                 1,
@@ -826,7 +826,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
             this.placeBlockAtCurrentPosition(
                 par1World,
                 Block.getBlockFromName("Botania:quartzTypeDark"),
-                4,
+                0,
                 5,
                 yLevel,
                 1,
@@ -838,7 +838,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
                 this.placeBlockAtCurrentPosition(
                     par1World,
                     Block.getBlockFromName("Botania:quartzTypeDark"),
-                    3,
+                    0,
                     i,
                     80,
                     j,
@@ -851,7 +851,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
                 this.placeBlockAtCurrentPosition(
                     par1World,
                     Block.getBlockFromName("Botania:quartzTypeDark"),
-                    3,
+                    0,
                     i,
                     80,
                     j,
@@ -864,7 +864,7 @@ public class structureComponentCityBuildingBlack extends structureComponentCity 
                 this.placeBlockAtCurrentPosition(
                     par1World,
                     Block.getBlockFromName("Botania:quartzTypeDark"),
-                    3,
+                    0,
                     i,
                     80,
                     j,
