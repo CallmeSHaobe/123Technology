@@ -5,4 +5,12 @@ plugins {
 minecraft {
     extraRunJvmArguments.add("-Xmx16G")
     extraRunJvmArguments.add("-Xms12G")
+
+    def isCiEnvironment = System.getenv("CI") == "true" || System.getenv("GITHUB_ACTIONS") == "true"
+
+    // Mixin Debug Args
+    if (!isCiEnvironment) {
+        extraRunJvmArguments.add("-Dmixin.debug.verbose=true")
+        extraRunJvmArguments.add("-Dmixin.debug.export=true")
+    }
 }

@@ -35,12 +35,12 @@
  */
 dependencies {
     api('com.github.GTNewHorizons:GT5-Unofficial:5.09.50.114:dev')
-    api("com.github.GTNewHorizons:Mobs-Info:0.4.7-GTNH:dev")
-    api("com.github.GTNewHorizons:EnderCore:0.4.6:dev")
-    api("com.github.GTNewHorizons:EnderIO:2.8.22:dev")
-    api("com.github.GTNewHorizons:ForestryMC:4.9.19:dev")
-    api("com.github.GTNewHorizons:ModularUI:1.2.17:dev")
-    api('com.github.GTNewHorizons:SpiceOfLife:2.1.12-carrot:dev') { transitive = false }
+    api("com.github.GTNewHorizons:ForestryMC:4.9.19:dev") { transitive = false }
+    api("com.github.GTNewHorizons:ModularUI:1.2.17:dev") { transitive = false }
+    implementation("com.github.GTNewHorizons:Mobs-Info:0.4.7-GTNH:dev") { transitive = false }
+    implementation("com.github.GTNewHorizons:EnderCore:0.4.6:dev") { transitive = false }
+    implementation("com.github.GTNewHorizons:EnderIO:2.8.22:dev") { transitive = false }
+    implementation('com.github.GTNewHorizons:SpiceOfLife:2.1.12-carrot:dev') { transitive = false }
     implementation('com.github.GTNewHorizons:Botania:1.11.7-GTNH:dev')
     implementation("com.github.GTNewHorizons:Infernal-Mobs:1.9.1-GTNH:dev")
     implementation("com.github.GTNewHorizons:Draconic-Evolution:1.4.5-GTNH:dev")
@@ -58,13 +58,17 @@ dependencies {
     implementation('com.github.GTNewHorizons:Avaritiaddons:1.8.4-GTNH:dev')
     implementation('com.github.GTNewHorizons:Eternal-Singularity:1.2.1:dev')
     implementation('com.github.GTNewHorizons:Universal-Singularities:8.8.0:dev')
-    implementation('com.github.GTNewHorizons:supersolarpanels:1.1.3:dev')
     implementation('com.github.GTNewHorizons:AppleCore:3.3.4:dev')
     implementation('com.github.GTNewHorizons:Binnie:2.4.4:dev')
     implementation('com.github.GTNewHorizons:SGCraft:1.4.4-GTNH:dev')
     implementation('com.github.GTNewHorizons:MagicBees:2.8.5-GTNH:dev')
     implementation('com.github.GTNewHorizons:twilightforest:2.6.5:dev')
-    implementation('curse.maven:advsolar-362768:2885953')
+
+    // 因为hodgepodge的mixin和NHCoreMod(DreamCoreMod)有部分冲突, 使用mixinDebug会报错,具体原因不说
+    // 在hodgepodge最近的版本是修复了的 具体参考 https://github.com/GTNewHorizons/Hodgepodge/pull/494
+    // 顺便说下supersolarpanels就包含了advsolar的依赖 只用声明一次就行了
+    //    implementation rfg.deobf('curse.maven:advsolar-362768:2885953')
+    implementation rfg.deobf('com.github.GTNewHorizons:supersolarpanels:1.1.3:dev')
     implementation ('com.google.auto.value:auto-value-annotations:1.10.1')
     compileOnly('curse.maven:witchery-69673:2234410')
     compileOnly("com.github.GTNewHorizons:BloodMagic:1.6.9:dev")
@@ -78,8 +82,4 @@ dependencies {
     // debug info & nbtEdit
     runtimeOnlyNonPublishable('com.github.GTNewHorizons:ServerUtilities:2.0.88:dev') { transitive = false }
     runtimeOnlyNonPublishable('com.github.GTNewHorizons:BlockRenderer6343:1.2.16:dev') { transitive = false }
-}
-
-configurations.all {
-    exclude group: 'com.github.GTNewHorizons', module: 'Hodgepodge'
 }
