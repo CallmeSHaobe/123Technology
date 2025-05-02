@@ -7,7 +7,6 @@ import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static gregtech.api.util.GTStructureUtility.ofCoil;
 import static net.minecraft.util.StatCollector.translateToLocal;
 
-import gregtech.api.util.shutdown.ShutDownReasonRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
@@ -109,6 +108,7 @@ public class OTEMegaEBFGTpp extends OTH_MultiMachineBase<OTEMegaEBFGTpp> {
         return RecipeMaps.blastFurnaceRecipes;
 
     }
+
     @Override
     public int getPollutionPerSecond(final ItemStack aStack) {
         return 500 * 256;
@@ -121,8 +121,7 @@ public class OTEMegaEBFGTpp extends OTH_MultiMachineBase<OTEMegaEBFGTpp> {
             @NotNull
             @Override
             protected CheckRecipeResult validateRecipe(@NotNull GTRecipe recipe) {
-                return recipe.mSpecialValue <= coilLevel.getHeat() & lava
-                    ? CheckRecipeResultRegistry.SUCCESSFUL
+                return recipe.mSpecialValue <= coilLevel.getHeat() & lava ? CheckRecipeResultRegistry.SUCCESSFUL
                     : SimpleCheckRecipeResult.ofFailure("nowater");
             }
 
@@ -166,7 +165,9 @@ public class OTEMegaEBFGTpp extends OTH_MultiMachineBase<OTEMegaEBFGTpp> {
                 }
             }
         }
-        if (checkForWater()) {this.lava = true;}
+        if (checkForWater()) {
+            this.lava = true;
+        }
         return true;
     }
 
