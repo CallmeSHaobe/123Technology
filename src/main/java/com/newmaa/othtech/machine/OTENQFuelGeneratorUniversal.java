@@ -452,11 +452,11 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
 
     public static int getPipeTier(Block block, int meta) {
         if (block == sBlockCasings9) {
-            return 1;
+            return 14;
         } else if (block == sBlockCasings2) {
-            return 0;
+            return 15;
         }
-        return 0;
+        return 15;
     }
 
     private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",

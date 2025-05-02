@@ -7,6 +7,7 @@ import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static gregtech.api.util.GTStructureUtility.ofCoil;
 import static net.minecraft.util.StatCollector.translateToLocal;
 
+import gregtech.api.util.shutdown.ShutDownReasonRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
@@ -72,6 +73,7 @@ public class OTEMegaEBFGTpp extends OTH_MultiMachineBase<OTEMegaEBFGTpp> {
     }
 
     private byte glassTier;
+    private boolean lava = false;
 
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
@@ -107,7 +109,6 @@ public class OTEMegaEBFGTpp extends OTH_MultiMachineBase<OTEMegaEBFGTpp> {
         return RecipeMaps.blastFurnaceRecipes;
 
     }
-
     @Override
     public int getPollutionPerSecond(final ItemStack aStack) {
         return 500 * 256;
@@ -120,7 +121,7 @@ public class OTEMegaEBFGTpp extends OTH_MultiMachineBase<OTEMegaEBFGTpp> {
             @NotNull
             @Override
             protected CheckRecipeResult validateRecipe(@NotNull GTRecipe recipe) {
-                return recipe.mSpecialValue <= coilLevel.getHeat() & checkForWater()
+                return recipe.mSpecialValue <= coilLevel.getHeat() & lava
                     ? CheckRecipeResultRegistry.SUCCESSFUL
                     : SimpleCheckRecipeResult.ofFailure("nowater");
             }
@@ -165,7 +166,7 @@ public class OTEMegaEBFGTpp extends OTH_MultiMachineBase<OTEMegaEBFGTpp> {
                 }
             }
         }
-
+        if (checkForWater()) {this.lava = true;}
         return true;
     }
 
@@ -338,6 +339,7 @@ public class OTEMegaEBFGTpp extends OTH_MultiMachineBase<OTEMegaEBFGTpp> {
             .addInfo("§6  不消耗烈焰之炽焱， 但输入仓必须至少有123 * 1000L烈焰之炽焱才可运行")
             .addInfo("§l 「烈焰之炽焱这个东西啊, 用个几千个就淘汰了」---风哥语录·改 ")
             .addInfo("请注意玻璃等级要求")
+            .addInfo("在机器结构检测时候检测输入仓炽焱之是否存在")
             .addInfo("§c§l注意:机器污染过高:如遇跳电并报错“无法排出污染”, 请尝试放置多个消声仓")
             .addTecTechHatchInfo()
             .addPollutionAmount(128000)
