@@ -4,6 +4,7 @@ import static com.newmaa.othtech.utils.Utils.setStackSize;
 
 import net.minecraftforge.fluids.FluidRegistry;
 
+import com.newmaa.othtech.Config;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.utils.RecipeBuilder;
 
@@ -35,42 +36,7 @@ public class recipesMISA implements IRecipePool {
             .eut(30720)
             .duration(400 * 20)
             .addTo(Recipemaps.MISA);
-        // Inf
-        RecipeBuilder.builder()
-            .itemOutputs(
-                setStackSize(Materials.Infinity.getDust(1), 16 * 5),
-                setStackSize(Materials.InfinityCatalyst.getDust(1), 16 * 100),
-                setStackSize(Materials.CosmicNeutronium.getDust(1), 16 * 10),
-                setStackSize(Materials.Neutronium.getDust(1), 16 * 20))
-            .itemInputs(
-                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5394), 16 * 256),
-                setStackSize(Materials.Carbon.getDust(1), 40),
-                Materials.Sulfur.getDust(80),
-                Materials.Sodium.getDust(20))
-            .fluidInputs(FluidRegistry.getFluidStack("bioethanol", 20000), Materials.Nitrogen.getPlasma(32000))
-            .fluidOutputs(Materials.Nitrogen.getGas(32000), FluidRegistry.getFluidStack("mud.red.slurry", 32000))
-            .specialValue(3)
-            .eut(16777216)
-            .duration(500 * 20)
-            .addTo(Recipemaps.MISA);
-        // Dragon Blood
-        RecipeBuilder.builder()
-            .itemOutputs(
-                setStackSize(Materials.DraconiumAwakened.getDust(1), 16 * 110),
-                setStackSize(Materials.Draconium.getDust(1), 16 * 40),
-                setStackSize(Materials.NetherStar.getDust(1), 16 * 35),
-                setStackSize(GTModHandler.getModItem("miscutils", "itemDustDragonblood", 1), 16 * 4))
-            .itemInputs(
-                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5976), 16 * 256),
-                setStackSize(Materials.Carbon.getDust(1), 40),
-                Materials.Sulfur.getDust(80),
-                Materials.Sodium.getDust(20))
-            .fluidInputs(FluidRegistry.getFluidStack("bioethanol", 20000), Materials.Oxygen.getPlasma(32000))
-            .fluidOutputs(Materials.Oxygen.getGas(32000), FluidRegistry.getFluidStack("mud.red.slurry", 32000))
-            .specialValue(3)
-            .eut(67108864)
-            .duration(600 * 20)
-            .addTo(Recipemaps.MISA);
+
         // Copper
         RecipeBuilder.builder()
             .itemOutputs(
@@ -280,18 +246,6 @@ public class recipesMISA implements IRecipePool {
             .eut(123123)
             .specialValue(2)
             .addTo(Recipemaps.MISA);
-        // Cosmic Neut
-        RecipeBuilder.builder()
-            .itemInputs(setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5388), 16 * 256))
-            .itemOutputs(
-                setStackSize(Materials.BlackPlutonium.getDust(1), 16 * 120),
-                setStackSize(Materials.CosmicNeutronium.getDust(1), 16 * 32))
-            .fluidInputs(Materials.Helium.getPlasma(16000))
-            .fluidOutputs(Materials.Helium.getGas(16000))
-            .duration(600 * 20)
-            .eut(1919810)
-            .specialValue(2)
-            .addTo(Recipemaps.MISA);
         // Osmium
         RecipeBuilder.builder()
             .itemOutputs(
@@ -313,6 +267,102 @@ public class recipesMISA implements IRecipePool {
             .eut(491520)
             .duration(400 * 20)
             .addTo(Recipemaps.MISA);
+        if (Config.is_MISA_IMBA_Recipes_Enabled) {
+            // Cosmic Neut
+            RecipeBuilder.builder()
+                .itemInputs(setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5388), 16 * 256))
+                .itemOutputs(
+                    setStackSize(Materials.BlackPlutonium.getDust(1), 16 * 120),
+                    setStackSize(Materials.CosmicNeutronium.getDust(1), 16 * 32))
+                .fluidInputs(Materials.Helium.getPlasma(16000))
+                .fluidOutputs(Materials.Helium.getGas(16000))
+                .duration(600 * 20)
+                .eut(1919810)
+                .specialValue(2)
+                .addTo(Recipemaps.MISA);
+            // Inf
+            RecipeBuilder.builder()
+                .itemOutputs(
+                    setStackSize(Materials.Infinity.getDust(1), 16 * 5),
+                    setStackSize(Materials.InfinityCatalyst.getDust(1), 16 * 100),
+                    setStackSize(Materials.CosmicNeutronium.getDust(1), 16 * 10),
+                    setStackSize(Materials.Neutronium.getDust(1), 16 * 20))
+                .itemInputs(
+                    setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5394), 16 * 256),
+                    setStackSize(Materials.Carbon.getDust(1), 40),
+                    Materials.Sulfur.getDust(80),
+                    Materials.Sodium.getDust(20))
+                .fluidInputs(FluidRegistry.getFluidStack("bioethanol", 20000), Materials.Nitrogen.getPlasma(32000))
+                .fluidOutputs(Materials.Nitrogen.getGas(32000), FluidRegistry.getFluidStack("mud.red.slurry", 32000))
+                .specialValue(3)
+                .eut(16777216)
+                .duration(500 * 20)
+                .addTo(Recipemaps.MISA);
+            // Dragon Blood
+            RecipeBuilder.builder()
+                .itemOutputs(
+                    setStackSize(Materials.DraconiumAwakened.getDust(1), 16 * 110),
+                    setStackSize(Materials.Draconium.getDust(1), 16 * 40),
+                    setStackSize(Materials.NetherStar.getDust(1), 16 * 35),
+                    setStackSize(GTModHandler.getModItem("miscutils", "itemDustDragonblood", 1), 16 * 4))
+                .itemInputs(
+                    setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5976), 16 * 256),
+                    setStackSize(Materials.Carbon.getDust(1), 40),
+                    Materials.Sulfur.getDust(80),
+                    Materials.Sodium.getDust(20))
+                .fluidInputs(FluidRegistry.getFluidStack("bioethanol", 20000), Materials.Oxygen.getPlasma(32000))
+                .fluidOutputs(Materials.Oxygen.getGas(32000), FluidRegistry.getFluidStack("mud.red.slurry", 32000))
+                .specialValue(3)
+                .eut(67108864)
+                .duration(600 * 20)
+                .addTo(Recipemaps.MISA);
+        } else {
+            // Cosmic Neut
+            RecipeBuilder.builder()
+                .itemInputs(setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5388), 16 * 256))
+                .itemOutputs(setStackSize(Materials.BlackPlutonium.getDust(1), 32 * 120))
+                .fluidInputs(Materials.Helium.getPlasma(16000))
+                .fluidOutputs(Materials.Helium.getGas(16000))
+                .duration(600 * 20)
+                .eut(1919810)
+                .specialValue(2)
+                .addTo(Recipemaps.MISA);
+            // Inf
+            RecipeBuilder.builder()
+                .itemOutputs(
+                    setStackSize(Materials.InfinityCatalyst.getDust(1), 32 * 100),
+                    setStackSize(Materials.CosmicNeutronium.getDust(1), 16 * 10),
+                    setStackSize(Materials.Neutronium.getDust(1), 16 * 20))
+                .itemInputs(
+                    setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5394), 16 * 256),
+                    setStackSize(Materials.Carbon.getDust(1), 40),
+                    Materials.Sulfur.getDust(80),
+                    Materials.Sodium.getDust(20))
+                .fluidInputs(FluidRegistry.getFluidStack("bioethanol", 20000), Materials.Nitrogen.getPlasma(32000))
+                .fluidOutputs(Materials.Nitrogen.getGas(32000), FluidRegistry.getFluidStack("mud.red.slurry", 32000))
+                .specialValue(3)
+                .eut(16777216)
+                .duration(500 * 20)
+                .addTo(Recipemaps.MISA);
+            // Dragon Blood
+            RecipeBuilder.builder()
+                .itemOutputs(
+                    setStackSize(Materials.DraconiumAwakened.getDust(1), 16 * 110),
+                    setStackSize(Materials.Draconium.getDust(1), 16 * 40),
+                    setStackSize(Materials.NetherStar.getDust(1), 16 * 35),
+                    setStackSize(GTModHandler.getModItem("miscutils", "itemDustDragonblood", 1), 2 * 4))
+                .itemInputs(
+                    setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5976), 16 * 256),
+                    setStackSize(Materials.Carbon.getDust(1), 40),
+                    Materials.Sulfur.getDust(80),
+                    Materials.Sodium.getDust(20))
+                .fluidInputs(FluidRegistry.getFluidStack("bioethanol", 20000), Materials.Oxygen.getPlasma(32000))
+                .fluidOutputs(Materials.Oxygen.getGas(32000), FluidRegistry.getFluidStack("mud.red.slurry", 32000))
+                .specialValue(3)
+                .eut(67108864)
+                .duration(600 * 20)
+                .addTo(Recipemaps.MISA);
+        }
 
     }
 }

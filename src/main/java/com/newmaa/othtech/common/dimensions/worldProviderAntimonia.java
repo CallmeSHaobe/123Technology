@@ -1,5 +1,7 @@
 package com.newmaa.othtech.common.dimensions;
 
+import static com.newmaa.othtech.Config.tier_Antimonia;
+
 import java.util.Random;
 
 import net.minecraft.entity.Entity;
@@ -51,7 +53,7 @@ public class worldProviderAntimonia extends WorldProviderSpace
 
     @Override
     public boolean canSpaceshipTierPass(int tier) {
-        return tier >= 250;
+        return tier >= tier_Antimonia;
     }
 
     @Override

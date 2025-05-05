@@ -1,5 +1,7 @@
 package com.newmaa.othtech.common.dimensions;
 
+import static com.newmaa.othtech.Config.tier_Antimonia;
+
 import com.newmaa.othtech.common.dimensions.sky.skyProviderAntimonia;
 
 import micdoodle8.mods.galacticraft.api.GalacticraftRegistry;
@@ -26,7 +28,7 @@ public class registerAntimonia {
         (planetAntimonia = (new Planet("Antimonia")).setParentSolarSystem(antimoniaSystem))
             .setRingColorRGB(0.1F, 0.9F, 0.6F);
         planetAntimonia.setPhaseShift(18.86F);
-        planetAntimonia.setTierRequired(250);
+        planetAntimonia.setTierRequired(tier_Antimonia);
         planetAntimonia.setBodyIcon(skyProviderAntimonia.AntimoniaPlanet);
         planetAntimonia.setRelativeDistanceFromCenter(new CelestialBody.ScalableDistance(0.5F, 0.5F));
         planetAntimonia.setRelativeOrbitTime(1.8619934F);
