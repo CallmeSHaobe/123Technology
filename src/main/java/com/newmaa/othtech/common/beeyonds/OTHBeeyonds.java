@@ -50,17 +50,17 @@ public class OTHBeeyonds {
 
     public static IAlleleBeeEffect treetwisterEffect;
     public static IAlleleBeeEffect machineBoostEffect;
-    public static HashMap<Integer, combTypes> sCombMappings = new HashMap<>();
+    public static HashMap<Integer, OTHCombTypes> sCombMappings = new HashMap<>();
     public static HashMap<String, Material> sMaterialMappings = new HashMap<>();
 
     public static ItemPropolis propolis;
     public static ItemPollen pollen;
     public static ItemDrop drop;
-    public static itemCombs combs;
+    public static OTHItemCombs combs;
 
     public OTHBeeyonds() {
-        combs = new itemCombs();
-        itemCombs.initCombsRecipes();
+        combs = new OTHItemCombs();
+        OTHItemCombs.initCombsRecipes();
         setupOTHAlleles();
         OTHBeeDefinition.initBees();
     }

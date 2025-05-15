@@ -36,7 +36,7 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
-import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
+import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 import com.newmaa.othtech.utils.Utils;
 
 import crazypants.enderio.EnderIO;
@@ -64,7 +64,7 @@ import gtPlusPlus.core.block.ModBlocks;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 
-public class OTETangShanSteelFactory extends OTH_MultiMachineBase<OTETangShanSteelFactory> {
+public class OTETangShanSteelFactory extends OTHMultiMachineBase<OTETangShanSteelFactory> {
 
     public OTETangShanSteelFactory(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);

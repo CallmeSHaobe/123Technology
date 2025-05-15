@@ -1,7 +1,7 @@
 package com.newmaa.othtech;
 
 import static com.newmaa.othtech.common.OTHItemList.SpaceElevatorModulePumpT4;
-import static com.newmaa.othtech.recipe.recipesEXH.generateEXHRecipes;
+import static com.newmaa.othtech.recipe.RecipesEXH.generateEXHRecipes;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,13 +17,13 @@ import org.apache.logging.log4j.Logger;
 import com.gtnewhorizons.gtnhintergalactic.recipe.SpacePumpingRecipes;
 import com.newmaa.othtech.common.ItemAndBlockHandler;
 import com.newmaa.othtech.common.beeyonds.OTHBeeyonds;
-import com.newmaa.othtech.common.blocks.antimonia.antimoniaBlocks;
-import com.newmaa.othtech.common.blocks.fluids.antimoniaFluids;
-import com.newmaa.othtech.common.dimensions.registerAntimonia;
+import com.newmaa.othtech.common.blocks.antimonia.AntimoniaBlocks;
+import com.newmaa.othtech.common.blocks.fluids.AntimoniaFluids;
+import com.newmaa.othtech.common.dimensions.RegisterAntimonia;
 import com.newmaa.othtech.common.materials.MaterialsLoader;
 import com.newmaa.othtech.common.recipemap.NEIRecipeMaps;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
-import com.newmaa.othtech.event.eventPlayerDied;
+import com.newmaa.othtech.event.EventPlayerDied;
 import com.newmaa.othtech.machine.MachineLoader;
 import com.newmaa.othtech.recipe.RecipeLoader;
 
@@ -75,7 +75,7 @@ public class OTHTechnology {
     public static CommonProxy proxy;
 
     public OTHTechnology() {
-        MinecraftForge.EVENT_BUS.register(new eventPlayerDied());
+        MinecraftForge.EVENT_BUS.register(new EventPlayerDied());
     }
 
     @Mod.EventHandler
@@ -85,17 +85,17 @@ public class OTHTechnology {
         proxy.preInit(event);
         MaterialsLoader.load();
         ItemAndBlockHandler.INSTANCE.run();
-        antimoniaBlocks.initialize();
-        antimoniaFluids.initialize();
+        AntimoniaBlocks.initialize();
+        AntimoniaFluids.initialize();
     }
 
     @Mod.EventHandler
     // load "Do your mod setup. Build whatever data structures you care about. Register recipes." (Remove if not needed)
     public void init(FMLInitializationEvent event) {
-        MinecraftForge.EVENT_BUS.register(new eventPlayerDied());
+        MinecraftForge.EVENT_BUS.register(new EventPlayerDied());
         proxy.init(event);
         MachineLoader.loadMachines();
-        new registerAntimonia().init();
+        new RegisterAntimonia().init();
         NEIRecipeMaps.IMCSender();
     }
 

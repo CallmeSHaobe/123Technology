@@ -4,7 +4,7 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.IntCache;
 
-import com.newmaa.othtech.common.dimensions.biome.biomeGenBaseAntimonia;
+import com.newmaa.othtech.common.dimensions.biome.BiomeGenBaseAntimonia;
 
 public class LayerBiomesGenAntimonia extends GenLayer {
 
@@ -13,15 +13,15 @@ public class LayerBiomesGenAntimonia extends GenLayer {
 
     public LayerBiomesGenAntimonia(long seed, GenLayer genlayer) {
         super(seed);
-        this.commonBiomes = new BiomeGenBase[] { biomeGenBaseAntimonia.antimonia };
-        this.rareBiomes = new BiomeGenBase[] { biomeGenBaseAntimonia.antimonia };
+        this.commonBiomes = new BiomeGenBase[] { BiomeGenBaseAntimonia.antimonia };
+        this.rareBiomes = new BiomeGenBase[] { BiomeGenBaseAntimonia.antimonia };
         this.parent = genlayer;
     }
 
     public LayerBiomesGenAntimonia(long seed) {
         super(seed);
-        this.commonBiomes = new BiomeGenBase[] { biomeGenBaseAntimonia.antimonia };
-        this.rareBiomes = new BiomeGenBase[] { biomeGenBaseAntimonia.antimonia };
+        this.commonBiomes = new BiomeGenBase[] { BiomeGenBaseAntimonia.antimonia };
+        this.rareBiomes = new BiomeGenBase[] { BiomeGenBaseAntimonia.antimonia };
     }
 
     public int[] getInts(int x, int z, int width, int depth) {

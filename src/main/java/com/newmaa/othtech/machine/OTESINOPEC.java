@@ -38,7 +38,7 @@ import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
-import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
+import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 import com.newmaa.othtech.utils.Utils;
 
 import bartworks.API.BorosilicateGlass;
@@ -59,7 +59,7 @@ import gregtech.api.util.MultiblockTooltipBuilder;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 
-public class OTESINOPEC extends OTH_MultiMachineBase<OTESINOPEC> {
+public class OTESINOPEC extends OTHMultiMachineBase<OTESINOPEC> {
 
     public OTESINOPEC(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);

@@ -40,7 +40,7 @@ import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.kuba6000.mobsinfo.api.utils.FastRandom;
 import com.mojang.authlib.GameProfile;
 import com.newmaa.othtech.machine.machineclass.MobHandlerLoaderOTH;
-import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
+import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 
 import bartworks.API.BorosilicateGlass;
 import crazypants.enderio.EnderIO;
@@ -64,7 +64,7 @@ import gregtech.api.util.MultiblockTooltipBuilder;
 import gtPlusPlus.core.material.MaterialsAlloy;
 import tectech.thing.block.BlockQuantumGlass;
 
-public class OTEMegaEEC extends OTH_MultiMachineBase<OTEMegaEEC> implements IWirelessEnergyHatchInformation {
+public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> implements IWirelessEnergyHatchInformation {
 
     public OTEMegaEEC(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);

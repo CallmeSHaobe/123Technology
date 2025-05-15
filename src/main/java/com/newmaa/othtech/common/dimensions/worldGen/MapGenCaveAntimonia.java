@@ -7,7 +7,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
-import com.newmaa.othtech.common.blocks.antimonia.antimoniaBlocks;
+import com.newmaa.othtech.common.blocks.antimonia.AntimoniaBlocks;
 
 import micdoodle8.mods.galacticraft.api.prefab.world.gen.MapGenBaseMeta;
 
@@ -182,10 +182,10 @@ public class MapGenCaveAntimonia extends MapGenBaseMeta {
                                 if (xfactorSq + zfactorSq < 1.0) {
                                     int coords = (localX * 16 + localZ) * 256 + localY;
                                     if (yfactor > -0.7 && xfactorSq + yfactorSq + zfactorSq < 1.0) {
-                                        if (blockIdArray[coords] == antimoniaBlocks.antimoniaBlockGrass
+                                        if (blockIdArray[coords] == AntimoniaBlocks.antimoniaBlockGrass
                                             && random.nextInt(50) == 0
-                                            || blockIdArray[coords] == antimoniaBlocks.antimoniaBlockDirt
-                                            || blockIdArray[coords] == antimoniaBlocks.antimoniaBlockStone) {
+                                            || blockIdArray[coords] == AntimoniaBlocks.antimoniaBlockDirt
+                                            || blockIdArray[coords] == AntimoniaBlocks.antimoniaBlockStone) {
                                             blockIdArray[coords] = Blocks.air;
                                         }
 

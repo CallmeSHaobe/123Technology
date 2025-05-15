@@ -36,7 +36,7 @@ import com.gtnewhorizon.structurelib.structure.IItemSource;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
-import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
+import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 
 import bartworks.API.BorosilicateGlass;
 import cpw.mods.fml.relauncher.Side;
@@ -63,7 +63,7 @@ import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import tectech.thing.metaTileEntity.multi.base.render.TTRenderedExtendedFacingTexture;
 
-public class OTELargeBin extends OTH_MultiMachineBase<OTELargeBin> implements IConstructable, ISurvivalConstructable {
+public class OTELargeBin extends OTHMultiMachineBase<OTELargeBin> implements IConstructable, ISurvivalConstructable {
 
     private int mode = 0;
     public int mSA = 0;

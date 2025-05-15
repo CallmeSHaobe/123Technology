@@ -4,16 +4,16 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import com.newmaa.othtech.common.OTHItemList;
-import com.newmaa.othtech.common.item.itemFoods.ingotHotDog;
-import com.newmaa.othtech.common.item.itemFoods.itemBrain;
-import com.newmaa.othtech.common.item.itemFoods.itemLeekBox;
-import com.newmaa.othtech.common.item.itemFoods.itemTST;
-import com.newmaa.othtech.common.item.itemFoods.itemZhangww;
+import com.newmaa.othtech.common.item.itemFoods.IngotHotDog;
+import com.newmaa.othtech.common.item.itemFoods.ItemBrain;
+import com.newmaa.othtech.common.item.itemFoods.ItemLeekBox;
+import com.newmaa.othtech.common.item.itemFoods.ItemTST;
+import com.newmaa.othtech.common.item.itemFoods.ItemZhangww;
 import com.newmaa.othtech.common.item.itemTools.Dasima;
-import com.newmaa.othtech.common.item.itemTools.itemRecord;
-import com.newmaa.othtech.common.item.itemTools.itemSunLighter;
+import com.newmaa.othtech.common.item.itemTools.ItemRecord;
+import com.newmaa.othtech.common.item.itemTools.ItemSunLighter;
+import com.newmaa.othtech.common.item.itemWeapons.ItemNukeThrowable;
 import com.newmaa.othtech.common.item.itemWeapons.ShikanokoNoko;
-import com.newmaa.othtech.common.item.itemWeapons.itemNukeThrowable;
 
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -21,21 +21,21 @@ import cpw.mods.fml.common.registry.GameRegistry;
 @SuppressWarnings("SameParameterValue")
 public class ItemLoader {
 
-    public static Item itemZhangww = new itemZhangww();
-    public static Item ingotHotDog = new ingotHotDog();
-    public static Item itemLeekBox = new itemLeekBox();
+    public static Item itemZhangww = new ItemZhangww();
+    public static Item ingotHotDog = new IngotHotDog();
+    public static Item itemLeekBox = new ItemLeekBox();
     public static Item Dasima = new Dasima();
     public static Item ShikanokoNoko = new ShikanokoNoko();
-    public static Item itemSunLighter = new itemSunLighter();
-    public static Item itemNukeThrowable = new itemNukeThrowable();
-    public static Item itemTST = new itemTST();
-    public static Item RecordPRKA = new itemRecord("PRK_A");
-    public static Item RecordPRKB = new itemRecord("PRK_B");
-    public static Item RecordEVAA = new itemRecord("EVA_A");
-    public static Item RecordEVAB = new itemRecord("EVA_B");
-    public static Item RecordEVAC = new itemRecord("EVA_C");
-    public static Item RecordNGGU = new itemRecord("NGG_U");
-    public static Item itemBrain = new itemBrain();
+    public static Item itemSunLighter = new ItemSunLighter();
+    public static Item itemNukeThrowable = new ItemNukeThrowable();
+    public static Item itemTST = new ItemTST();
+    public static Item RecordPRKA = new ItemRecord("PRK_A");
+    public static Item RecordPRKB = new ItemRecord("PRK_B");
+    public static Item RecordEVAA = new ItemRecord("EVA_A");
+    public static Item RecordEVAB = new ItemRecord("EVA_B");
+    public static Item RecordEVAC = new ItemRecord("EVA_C");
+    public static Item RecordNGGU = new ItemRecord("NGG_U");
+    public static Item itemBrain = new ItemBrain();
 
     public ItemLoader(FMLPreInitializationEvent event) {
         OTHItemList.Zhangww.set(registryAndCallback(itemZhangww, "itemZhangww"));

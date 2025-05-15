@@ -2,9 +2,9 @@ package com.newmaa.othtech;
 
 import com.newmaa.othtech.common.OreDictionaryLoader;
 import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
-import com.newmaa.othtech.common.entity.entityLoader;
+import com.newmaa.othtech.common.entity.EntityLoader;
 import com.newmaa.othtech.common.item.ItemLoader;
-import com.newmaa.othtech.common.materials.bwMaterialsLocalization;
+import com.newmaa.othtech.common.materials.BWMaterialsLocalization;
 import com.newmaa.othtech.machine.machineclass.MobHandlerLoaderOTH;
 
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -20,7 +20,7 @@ public class CommonProxy {
     // preInit "Run before anything else. Read your config, create blocks, items, etc, and register them with the
     // GameRegistry." (Remove if not needed)
     public void preInit(FMLPreInitializationEvent event) {
-        new bwMaterialsLocalization().loader();
+        new BWMaterialsLocalization().loader();
         new CreativeTabsLoader(event);
         new ItemLoader(event);
         new OreDictionaryLoader(event);
@@ -29,7 +29,7 @@ public class CommonProxy {
 
     // load "Do your mod setup. Build whatever data structures you care about. Register recipes." (Remove if not needed)
     public void init(FMLInitializationEvent event) {
-        new entityLoader();
+        new EntityLoader();
     }
 
     // postInit "Handle interaction with other mods, complete your setup based on this." (Remove if not needed)

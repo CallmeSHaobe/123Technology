@@ -29,7 +29,7 @@ import com.google.common.collect.ImmutableList;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
-import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
+import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 
 import gregtech.api.enums.HeatingCoilLevel;
 import gregtech.api.interfaces.ITexture;
@@ -48,7 +48,7 @@ import kubatech.loaders.DEFCRecipes;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 
-public class OTEGraveDragon extends OTH_MultiMachineBase<OTEGraveDragon> {
+public class OTEGraveDragon extends OTHMultiMachineBase<OTEGraveDragon> {
 
     public OTEGraveDragon(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);

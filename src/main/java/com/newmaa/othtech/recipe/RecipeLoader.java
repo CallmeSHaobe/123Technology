@@ -7,18 +7,18 @@ import com.newmaa.othtech.utils.modsEnum;
 public class RecipeLoader {
 
     public static void loadRecipes() {
-        IRecipePool[] recipePools = new IRecipePool[] { new recipesComponentAssemblyLineRecipes(),
-            new recipesBlastFurnaceRecipes(), new recipesFreezerRecipes(), new recipesMain(), new recipesMAXs(),
-            new recipesMegaISAForge(), new recipesMixerRecipes(), new recipesQFTRecipes(), new recipesMegaQFT(),
-            new recipesCyclotronRecipes(), new recipesCircuit(), new recipesSINOPEC(),
-            new recipesTangshanSteelFactory(), new recipesMegaEEC(), new recipesSunFactoryEnqing(),
-            new recipesEpicCokeOvenFake(), new recipesWoodenFusionReactor(), new recipesMISA(), new recipesNaquadah(),
-            new recipesEIO(), new recipesEXH(), new recipesNewWetware(), new recipesAntimonia() };
+        IRecipePool[] recipePools = new IRecipePool[] { new RecipesComponentAssemblyLineRecipes(),
+            new RecipesBlastFurnaceRecipes(), new RecipesFreezerRecipes(), new RecipesMain(), new RecipesMAXs(),
+            new RecipesMegaISAForge(), new RecipesMixerRecipes(), new RecipesQFTRecipes(), new RecipesMegaQFT(),
+            new RecipesCyclotronRecipes(), new RecipesCircuit(), new RecipesSINOPEC(),
+            new RecipesTangshanSteelFactory(), new RecipesMegaEEC(), new RecipesSunFactoryEnqing(),
+            new RecipesEpicCokeOvenFake(), new RecipesWoodenFusionReactor(), new RecipesMISA(), new RecipesNaquadah(),
+            new RecipesEIO(), new RecipesEXH(), new RecipesNewWetware(), new RecipesAntimonia() };
         if (!modsEnum.TwistSpaceTechnology.isModLoaded()) {
-            new recipesCopiedFromTST().loadRecipes();
+            new RecipesCopiedFromTST().loadRecipes();
         }
         if (modsEnum.NHUtilities.isModLoaded() && is_EggMachine_Recipes_For_NHU) {
-            new recipesDE().loadRecipes();
+            new RecipesDE().loadRecipes();
         }
         for (IRecipePool recipePool : recipePools) {
             recipePool.loadRecipes();

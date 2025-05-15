@@ -36,7 +36,7 @@ import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.gtnewhorizons.gtnhintergalactic.block.IGBlocks;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
-import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
+import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.SoundResourceOTH;
 
 import bartworks.API.BorosilicateGlass;
@@ -56,7 +56,7 @@ import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import tectech.thing.block.BlockQuantumGlass;
 
-public class OTESunFactory extends OTH_MultiMachineBase<OTESunFactory> {
+public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
 
     public OTESunFactory(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);

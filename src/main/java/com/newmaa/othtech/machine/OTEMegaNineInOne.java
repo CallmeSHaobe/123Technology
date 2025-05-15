@@ -26,7 +26,7 @@ import org.jetbrains.annotations.NotNull;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
-import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
+import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 import com.newmaa.othtech.utils.Utils;
 
 import bartworks.API.BorosilicateGlass;
@@ -52,7 +52,7 @@ import gtPlusPlus.core.block.ModBlocks;
 import gtPlusPlus.core.recipe.common.CI;
 import gtPlusPlus.xmod.gregtech.common.blocks.textures.TexturesGtBlock;
 
-public class OTEMegaNineInOne extends OTH_MultiMachineBase<OTEMegaNineInOne> {
+public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
 
     public OTEMegaNineInOne(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);

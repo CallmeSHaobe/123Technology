@@ -8,8 +8,8 @@ import bartworks.API.WerkstoffAdderRegistry;
 public class MaterialsLoader {
 
     public static void load() {
-        WerkstoffAdderRegistry.addWerkstoffAdder(new liquids());
-        WerkstoffAdderRegistry.addWerkstoffAdder(new materials());
+        WerkstoffAdderRegistry.addWerkstoffAdder(new BWLiquids());
+        WerkstoffAdderRegistry.addWerkstoffAdder(new BWMaterials());
         ItemRegister.registryItems();
         ItemRegister.registryItemContainers();
         ItemRegisterISAModule.registryItemContainersISA();

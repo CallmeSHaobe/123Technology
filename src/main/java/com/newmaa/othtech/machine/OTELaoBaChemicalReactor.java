@@ -28,7 +28,7 @@ import org.jetbrains.annotations.NotNull;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
-import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
+import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 import com.newmaa.othtech.utils.Utils;
 
 import bartworks.API.BorosilicateGlass;
@@ -54,7 +54,7 @@ import gtPlusPlus.api.recipe.GTPPRecipeMaps;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 
-public class OTELaoBaChemicalReactor extends OTH_MultiMachineBase<OTELaoBaChemicalReactor> {
+public class OTELaoBaChemicalReactor extends OTHMultiMachineBase<OTELaoBaChemicalReactor> {
 
     public OTELaoBaChemicalReactor(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);

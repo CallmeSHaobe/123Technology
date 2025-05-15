@@ -27,7 +27,7 @@ import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
-import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
+import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 import com.newmaa.othtech.utils.Utils;
 
 import bartworks.API.BorosilicateGlass;
@@ -50,7 +50,7 @@ import gtPlusPlus.core.block.ModBlocks;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 
-public class OTEMegaIsaFactory extends OTH_MultiMachineBase<OTEMegaIsaFactory> {
+public class OTEMegaIsaFactory extends OTHMultiMachineBase<OTEMegaIsaFactory> {
 
     public OTEMegaIsaFactory(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);

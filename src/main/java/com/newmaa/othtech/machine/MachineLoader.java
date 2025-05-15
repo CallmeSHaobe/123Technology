@@ -3,8 +3,8 @@ package com.newmaa.othtech.machine;
 import net.minecraft.util.EnumChatFormatting;
 
 import com.newmaa.othtech.common.OTHItemList;
+import com.newmaa.othtech.machine.hatch.OTEHatchWirelessMulti;
 import com.newmaa.othtech.machine.hatch.OTEWTFHatch;
-import com.newmaa.othtech.machine.hatch.OTH_MTEHatchWirelessMulti;
 
 import gregtech.api.enums.TierEU;
 import tectech.thing.metaTileEntity.hatch.MTEHatchDynamoMulti;
@@ -22,13 +22,13 @@ public class MachineLoader {
         OTHItemList.MegaIsaForge.set(new OTEMegaIsaForge(IDs + 1, "MegaISAForge", "§l神之艾萨锻炉"));
 
         OTHItemList.inf_WirelessHatch
-            .set(new OTH_MTEHatchWirelessMulti(IDs + 2, "infWirelessEnergyHatch", "神人无线能源仓", 14, 2147483647));
+            .set(new OTEHatchWirelessMulti(IDs + 2, "infWirelessEnergyHatch", "神人无线能源仓", 14, 2147483647));
 
-        OTHItemList.legendary_WirelessHatch.set(
-            new OTH_MTEHatchWirelessMulti(IDs + 3, "legendaryWirelessEnergyHatch", "传奇无线能源仓", 13, (int) TierEU.UXV));
+        OTHItemList.legendary_WirelessHatch
+            .set(new OTEHatchWirelessMulti(IDs + 3, "legendaryWirelessEnergyHatch", "传奇无线能源仓", 13, (int) TierEU.UXV));
 
         OTHItemList.WirelessMAX
-            .set(new OTH_MTEHatchWirelessMulti(IDs + 4, "MAX1048576Hatch", "MAX 1,048,576A 无线能源仓", 14, 1048576));
+            .set(new OTEHatchWirelessMulti(IDs + 4, "MAX1048576Hatch", "MAX 1,048,576A 无线能源仓", 14, 1048576));
 
         OTHItemList.inf_infWirelessHatch.set(new OTEWTFHatch(IDs + 5, "longlongHatch", "神威大将军毁天灭地无敌金刚炮无线能源仓", 14));
 

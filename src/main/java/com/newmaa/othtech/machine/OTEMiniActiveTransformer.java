@@ -18,7 +18,7 @@ import com.gtnewhorizon.structurelib.alignment.constructable.IConstructable;
 import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructable;
 import com.gtnewhorizon.structurelib.structure.IItemSource;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
-import com.newmaa.othtech.machine.machineclass.TT_MultiMachineBase_EM;
+import com.newmaa.othtech.machine.machineclass.TTMultiMachineBaseEM;
 
 import gregtech.api.enums.SoundResource;
 import gregtech.api.enums.Textures;
@@ -33,7 +33,7 @@ import tectech.thing.casing.TTCasingsContainer;
 import tectech.thing.metaTileEntity.multi.base.TTMultiblockBase;
 import tectech.thing.metaTileEntity.multi.base.render.TTRenderedExtendedFacingTexture;
 
-public class OTEMiniActiveTransformer extends TT_MultiMachineBase_EM implements IConstructable, ISurvivalConstructable {
+public class OTEMiniActiveTransformer extends TTMultiMachineBaseEM implements IConstructable, ISurvivalConstructable {
 
     private boolean grace = false;
 

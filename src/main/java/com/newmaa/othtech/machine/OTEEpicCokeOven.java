@@ -29,7 +29,7 @@ import org.jetbrains.annotations.NotNull;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
-import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
+import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -51,7 +51,7 @@ import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.common.blocks.BlockCasings2;
 import gtPlusPlus.core.block.ModBlocks;
 
-public class OTEEpicCokeOven extends OTH_MultiMachineBase<OTEEpicCokeOven> {
+public class OTEEpicCokeOven extends OTHMultiMachineBase<OTEEpicCokeOven> {
 
     public OTEEpicCokeOven(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);

@@ -12,12 +12,12 @@ import net.minecraft.nbt.NBTTagCompound;
 import com.gtnewhorizon.structurelib.alignment.constructable.IConstructable;
 import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructable;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
-import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
+import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 
 public abstract class GT_TileEntity_MultiStructureMachine<T extends GT_TileEntity_MultiStructureMachine<T>>
-    extends OTH_MultiMachineBase<T> implements IConstructable, ISurvivalConstructable {
+    extends OTHMultiMachineBase<T> implements IConstructable, ISurvivalConstructable {
 
     // ONLY main block can process recipe or do anything machine need to do.
     // the sub structure actually only add functional models or additional

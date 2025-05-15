@@ -32,7 +32,7 @@ import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructa
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
-import com.newmaa.othtech.machine.machineclass.TT_MultiMachineBase_EM;
+import com.newmaa.othtech.machine.machineclass.TTMultiMachineBaseEM;
 import com.newmaa.othtech.utils.Utils;
 
 import cpw.mods.fml.relauncher.Side;
@@ -56,7 +56,7 @@ import mcp.mobius.waila.api.IWailaDataAccessor;
 import squeek.applecore.api.food.FoodValues;
 import tectech.thing.metaTileEntity.hatch.MTEHatchDynamoMulti;
 
-public class OTEFoodGenerator extends TT_MultiMachineBase_EM implements IConstructable, ISurvivalConstructable {
+public class OTEFoodGenerator extends TTMultiMachineBaseEM implements IConstructable, ISurvivalConstructable {
 
     public OTEFoodGenerator(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);

@@ -3,7 +3,6 @@ package com.newmaa.othtech.machine;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
 import static com.newmaa.othtech.common.recipemap.Recipemaps.NaquadahFuelFakeRecipes;
-import static goodgenerator.main.GGConfigLoader.*;
 import static gregtech.api.GregTechAPI.*;
 import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.enums.HatchElement.OutputHatch;
@@ -40,8 +39,8 @@ import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructa
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
-import com.newmaa.othtech.common.materials.liquids;
-import com.newmaa.othtech.machine.machineclass.TT_MultiMachineBase_EM;
+import com.newmaa.othtech.common.materials.BWLiquids;
+import com.newmaa.othtech.machine.machineclass.TTMultiMachineBaseEM;
 
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
@@ -70,7 +69,7 @@ import tectech.thing.metaTileEntity.multi.base.IStatusFunction;
 import tectech.thing.metaTileEntity.multi.base.LedStatus;
 import tectech.thing.metaTileEntity.multi.base.Parameters;
 
-public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
+public class OTENQFuelGeneratorUniversal extends TTMultiMachineBaseEM
     implements IConstructable, ISurvivalConstructable {
 
     public OTENQFuelGeneratorUniversal(int aID, String aName, String aNameRegional) {
@@ -285,7 +284,7 @@ public class OTENQFuelGeneratorUniversal extends TT_MultiMachineBase_EM
     }
 
     public FluidStack getPromoter() {
-        return pipeTier != 0 ? liquids.PromoterUEV.getFluidOrGas(1) : liquids.PromoterZPM.getFluidOrGas(1);
+        return pipeTier != 0 ? BWLiquids.PromoterUEV.getFluidOrGas(1) : BWLiquids.PromoterZPM.getFluidOrGas(1);
     }
 
     public FluidStack findFuel(GTRecipe aFuel) {

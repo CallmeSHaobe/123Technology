@@ -2,11 +2,11 @@ package com.newmaa.othtech;
 
 import net.minecraftforge.common.MinecraftForge;
 
-import com.newmaa.othtech.common.dimensions.sky.skyProviderHandler;
-import com.newmaa.othtech.common.entity.entityFakePlayer;
-import com.newmaa.othtech.common.entity.renderPlayer;
-import com.newmaa.othtech.common.item.itemBlock.itemModelAsukaRender;
-import com.newmaa.othtech.common.item.itemBlock.itemModelAyanamiRender;
+import com.newmaa.othtech.common.dimensions.sky.SkyProviderHandler;
+import com.newmaa.othtech.common.entity.EntityFakePlayer;
+import com.newmaa.othtech.common.entity.RenderPlayer;
+import com.newmaa.othtech.common.item.itemBlock.ItemModelAsukaRender;
+import com.newmaa.othtech.common.item.itemBlock.ItemModelAyanamiRender;
 
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -26,7 +26,7 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void preInit(FMLPreInitializationEvent event) {
         super.preInit(event);
-        skyProviderHandler sky = new skyProviderHandler();
+        SkyProviderHandler sky = new SkyProviderHandler();
         this.register_event(sky);
         // 在这里添加你需要的预初始化逻辑
     }
@@ -36,11 +36,11 @@ public class ClientProxy extends CommonProxy {
         super.init(event);
 
         // 注册 itemModelAyanamiRender 渲染器
-        new itemModelAyanamiRender();
+        new ItemModelAyanamiRender();
 
         // 注册 itemModelAsukaRender 渲染器
-        new itemModelAsukaRender(); // 你可以在这里创建 itemModelAsukaRender 对象并进行初始化
-        RenderingRegistry.registerEntityRenderingHandler(entityFakePlayer.class, new renderPlayer());
+        new ItemModelAsukaRender(); // 你可以在这里创建 itemModelAsukaRender 对象并进行初始化
+        RenderingRegistry.registerEntityRenderingHandler(EntityFakePlayer.class, new RenderPlayer());
     }
 
     @Override

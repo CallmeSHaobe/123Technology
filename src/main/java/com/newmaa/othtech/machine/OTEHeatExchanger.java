@@ -22,7 +22,7 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
-import com.newmaa.othtech.machine.machineclass.TT_MultiMachineBase_EM;
+import com.newmaa.othtech.machine.machineclass.TTMultiMachineBaseEM;
 
 import gregtech.api.GregTechAPI;
 import gregtech.api.enums.Textures;
@@ -45,7 +45,7 @@ import tectech.thing.metaTileEntity.multi.base.IStatusFunction;
 import tectech.thing.metaTileEntity.multi.base.LedStatus;
 import tectech.thing.metaTileEntity.multi.base.Parameters;
 
-public class OTEHeatExchanger extends TT_MultiMachineBase_EM implements ISurvivalConstructable, IConstructable {
+public class OTEHeatExchanger extends TTMultiMachineBaseEM implements ISurvivalConstructable, IConstructable {
 
     public OTEHeatExchanger(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);

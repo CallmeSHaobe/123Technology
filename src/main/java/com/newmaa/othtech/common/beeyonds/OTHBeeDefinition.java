@@ -96,7 +96,7 @@ public enum OTHBeeDefinition implements IBeeDefinition {
         tMutation.requireResource(GregTechAPI.sBlockMachines, 23524); // MAX1048576
     }),
     HYP(OTHBranchDefinition.OTHBYDS, "Hypogen", true, new Color(0xD31010), new Color(0xB01E0B), beeSpecies -> {
-        beeSpecies.addSpecialty(OTHBeeyonds.combs.getStackForType(combTypes.HYPOGEN), 0.02F);
+        beeSpecies.addSpecialty(OTHBeeyonds.combs.getStackForType(OTHCombTypes.HYPOGEN), 0.02F);
         beeSpecies.setHumidity(DAMP);
         beeSpecies.setTemperature(EnumTemperature.NORMAL);
     }, template -> {
@@ -113,7 +113,7 @@ public enum OTHBeeDefinition implements IBeeDefinition {
     GLAS(OTHBranchDefinition.OTHBYDS, "Glass", true, new Color(0xFFFFFFFF), new Color(0xFFFFFFFF), beeSpecies -> {
         beeSpecies.addProduct(new ItemStack(Blocks.glass, 4), 0.9F);
         beeSpecies.addProduct(new ItemStack(Blocks.glass_pane, 12), 0.9F);
-        beeSpecies.addSpecialty(OTHBeeyonds.combs.getStackForType(combTypes.NORMALGLASS), 0.3F);
+        beeSpecies.addSpecialty(OTHBeeyonds.combs.getStackForType(OTHCombTypes.NORMALGLASS), 0.3F);
         beeSpecies.setHumidity(DAMP);
         beeSpecies.setTemperature(EnumTemperature.NORMAL);
     }, template -> {
@@ -127,7 +127,7 @@ public enum OTHBeeDefinition implements IBeeDefinition {
     }),
     CHG(OTHBranchDefinition.OTHBYDS, "ChromaticGlass", true, new Color(0xFFEE1414, true), new Color(0xFF1422BE, true),
         beeSpecies -> {
-            beeSpecies.addSpecialty(OTHBeeyonds.combs.getStackForType(combTypes.CHROMATICGLASS), 1F);
+            beeSpecies.addSpecialty(OTHBeeyonds.combs.getStackForType(OTHCombTypes.CHROMATICGLASS), 1F);
             beeSpecies.setHumidity(DAMP);
             beeSpecies.setTemperature(EnumTemperature.NORMAL);
         }, template -> {

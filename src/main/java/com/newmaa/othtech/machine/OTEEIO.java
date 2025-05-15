@@ -22,7 +22,7 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
-import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
+import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 
 import crazypants.enderio.EnderIO;
 import gregtech.api.GregTechAPI;
@@ -39,7 +39,7 @@ import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.common.blocks.BlockCasings2;
 
-public class OTEEIO extends OTH_MultiMachineBase<OTEEIO> {
+public class OTEEIO extends OTHMultiMachineBase<OTEEIO> {
 
     public OTEEIO(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);

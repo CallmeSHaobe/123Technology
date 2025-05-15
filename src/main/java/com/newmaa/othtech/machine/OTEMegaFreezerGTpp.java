@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
-import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
+import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 
 import gregtech.api.enums.TAE;
 import gregtech.api.enums.Textures;
@@ -36,7 +36,7 @@ import gtPlusPlus.core.block.ModBlocks;
 import gtPlusPlus.core.util.minecraft.FluidUtils;
 import gtPlusPlus.xmod.gregtech.common.blocks.textures.TexturesGtBlock;
 
-public class OTEMegaFreezerGTpp extends OTH_MultiMachineBase<OTEMegaFreezerGTpp> {
+public class OTEMegaFreezerGTpp extends OTHMultiMachineBase<OTEMegaFreezerGTpp> {
 
     public OTEMegaFreezerGTpp(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);

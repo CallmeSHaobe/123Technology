@@ -30,7 +30,7 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.gtnewhorizon.structurelib.structure.StructureUtility;
-import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
+import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 
 import bartworks.API.BorosilicateGlass;
 import gregtech.api.enums.GTValues;
@@ -58,7 +58,7 @@ import gregtech.common.tileentities.machines.IDualInputHatch;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 
-public class OTELargeCircuitAssembler extends OTH_MultiMachineBase<OTELargeCircuitAssembler> {
+public class OTELargeCircuitAssembler extends OTHMultiMachineBase<OTELargeCircuitAssembler> {
 
     // region Constructor
     public OTELargeCircuitAssembler(int aID, String aName, String aNameRegional) {

@@ -35,7 +35,7 @@ import org.jetbrains.annotations.NotNull;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
-import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
+import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 
 import bartworks.API.BorosilicateGlass;
 import goodgenerator.loader.Loaders;
@@ -58,7 +58,7 @@ import gtPlusPlus.core.block.ModBlocks;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 
-public class OTEMegaCircuitAssLine extends OTH_MultiMachineBase<OTEMegaCircuitAssLine> {
+public class OTEMegaCircuitAssLine extends OTHMultiMachineBase<OTEMegaCircuitAssLine> {
 
     public OTEMegaCircuitAssLine(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);

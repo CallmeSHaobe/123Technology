@@ -26,7 +26,7 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
-import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
+import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -46,7 +46,7 @@ import gtPlusPlus.core.block.ModBlocks;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 
-public class OTEWoodenFusionReactor extends OTH_MultiMachineBase<OTEWoodenFusionReactor> {
+public class OTEWoodenFusionReactor extends OTHMultiMachineBase<OTEWoodenFusionReactor> {
 
     public OTEWoodenFusionReactor(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);

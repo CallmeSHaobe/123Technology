@@ -32,7 +32,7 @@ import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.gtnewhorizons.gtnhintergalactic.block.IGBlocks;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
-import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
+import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 
 import gregtech.api.GregTechAPI;
 import gregtech.api.enums.Materials;
@@ -52,7 +52,7 @@ import mcp.mobius.waila.api.IWailaDataAccessor;
 import tectech.thing.block.BlockQuantumGlass;
 
 // spotless:off
-public class OTEMegaQFT extends OTH_MultiMachineBase<OTEMegaQFT> {
+public class OTEMegaQFT extends OTHMultiMachineBase<OTEMegaQFT> {
 
     public OTEMegaQFT(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);

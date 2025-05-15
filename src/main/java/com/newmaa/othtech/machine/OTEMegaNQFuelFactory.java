@@ -37,7 +37,7 @@ import com.gtnewhorizon.structurelib.structure.IStructureElement;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.gtnewhorizon.structurelib.structure.StructureUtility;
-import com.newmaa.othtech.machine.machineclass.TT_MultiMachineBase_EM;
+import com.newmaa.othtech.machine.machineclass.TTMultiMachineBaseEM;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -62,7 +62,7 @@ import gregtech.api.util.ParallelHelper;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 
-public class OTEMegaNQFuelFactory extends TT_MultiMachineBase_EM implements IConstructable, ISurvivalConstructable {
+public class OTEMegaNQFuelFactory extends TTMultiMachineBaseEM implements IConstructable, ISurvivalConstructable {
 
     public OTEMegaNQFuelFactory(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);

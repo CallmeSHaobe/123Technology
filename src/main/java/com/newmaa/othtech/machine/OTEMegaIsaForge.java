@@ -26,7 +26,7 @@ import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.gtnewhorizons.gtnhintergalactic.recipe.IGRecipeMaps;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
-import com.newmaa.othtech.machine.machineclass.OTH_MultiMachineBase;
+import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 
 import bartworks.API.BorosilicateGlass;
 import galaxyspace.core.register.GSBlocks;
@@ -49,7 +49,7 @@ import gregtech.api.util.MultiblockTooltipBuilder;
 import gtPlusPlus.core.block.ModBlocks;
 import tectech.thing.block.BlockQuantumGlass;
 
-public class OTEMegaIsaForge extends OTH_MultiMachineBase<OTEMegaIsaForge> {
+public class OTEMegaIsaForge extends OTHMultiMachineBase<OTEMegaIsaForge> {
 
     public OTEMegaIsaForge(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
