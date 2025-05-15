@@ -21,6 +21,11 @@ public class Config {
             "A",
             is_MISA_IMBA_Recipes_Enabled,
             "A");
+        is_EggMachine_Recipes_For_NHU = configuration.getBoolean(
+            "OTHTechnology : 丰矿的NHU配方兼容从123大龙研机(eg. 一步到位顶级蛋机 龙蛋馄饨龙蛋远古龙蛋配方), true为是, false为否",
+            "A",
+            is_EggMachine_Recipes_For_NHU,
+            "A");
         ENQING_MULTI = configuration
             .getFloat("OTHTechnology : 恩情工厂配方产物倍率(float) , 倍率四舍五入", "不憋憋", 1.5f, 1.0f, 114514f, "不憋憋");
         tier_Antimonia = configuration.getInt("OTHTechnology : 锑星登陆需求等级(Tier)", "不憋憋", 4, 1, 10, "笑笑");
@@ -40,5 +45,6 @@ public class Config {
     public static boolean BOOM_SWITCH = true;
     public static float ENQING_MULTI = 1.5f;
     public static boolean is_MISA_IMBA_Recipes_Enabled = true;
+    public static boolean is_EggMachine_Recipes_For_NHU = true;
     public static int tier_Antimonia = 4;
 }

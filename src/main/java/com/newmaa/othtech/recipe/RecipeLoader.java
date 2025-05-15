@@ -1,5 +1,7 @@
 package com.newmaa.othtech.recipe;
 
+import static com.newmaa.othtech.Config.is_EggMachine_Recipes_For_NHU;
+
 import com.newmaa.othtech.utils.modsEnum;
 
 public class RecipeLoader {
@@ -15,7 +17,7 @@ public class RecipeLoader {
         if (!modsEnum.TwistSpaceTechnology.isModLoaded()) {
             new recipesCopiedFromTST().loadRecipes();
         }
-        if (modsEnum.NHUtilities.isModLoaded()) {
+        if (modsEnum.NHUtilities.isModLoaded() && is_EggMachine_Recipes_For_NHU) {
             new recipesDE().loadRecipes();
         }
         for (IRecipePool recipePool : recipePools) {
