@@ -32,6 +32,7 @@ import net.minecraftforge.fluids.FluidStack;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import com.google.common.collect.ImmutableList;
 import com.gtnewhorizon.structurelib.alignment.constructable.IConstructable;
@@ -283,7 +284,18 @@ public class OTENQFuelGeneratorUniversal extends TTMultiMachineBaseEM
     }
 
     public FluidStack getPromoter() {
-        return pipeTier != 0 ? BWLiquids.PromoterUEV.getFluidOrGas(1) : BWLiquids.PromoterZPM.getFluidOrGas(1);
+        // 1. 首先判断 pipeTier 是否为 0
+        if (pipeTier == 0) {
+            return BWLiquids.PromoterZPM.getFluidOrGas(1);
+        } else {
+            if (pipeTier == 2) {
+                return BWLiquids.PromoterUEV.getFluidOrGas(1);
+            } else if (pipeTier == 1) {
+                return BWLiquids.PromoterZPM.getFluidOrGas(1);
+            } else {
+                return BWLiquids.PromoterUEV.getFluidOrGas(1);
+            }
+        }
     }
 
     public FluidStack findFuel(GTRecipe aFuel) {
@@ -448,13 +460,15 @@ public class OTENQFuelGeneratorUniversal extends TTMultiMachineBaseEM
 
     private static IStructureDefinition<OTENQFuelGeneratorUniversal> STRUCTURE_DEFINITION = null;
 
-    public static int getPipeTier(Block block, int meta) {
-        if (block == sBlockCasings9) {
-            return 14;
-        } else if (block == sBlockCasings2) {
-            return 15;
+    @Nullable
+    protected static Integer getPipeTier(Block block, int meta) {
+        if (block == null) return null;
+        if (block == sBlockCasings9 && meta == 14) {
+            return 2;
+        } else if (block == sBlockCasings2 && meta == 15) {
+            return 1;
         }
-        return 15;
+        return null;
     }
 
     private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
