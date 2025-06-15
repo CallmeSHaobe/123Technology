@@ -1666,7 +1666,7 @@ public class OTEMegaIsaFactory extends OTHMultiMachineBase<OTEMegaIsaFactory> {
 
     @Override
     public int getPollutionPerSecond(final ItemStack aStack) {
-        return 1919810;
+        return 12321;
     }
 
     @Override
@@ -1683,7 +1683,7 @@ public class OTEMegaIsaFactory extends OTHMultiMachineBase<OTEMegaIsaFactory> {
             .addInfo("§a更是拥有§4意想不到§a的惊喜呀嘻嘻...")
             .addTecTechHatchInfo()
             .addSeparator()
-            .addPollutionAmount(1919810)
+            .addPollutionAmount(12321)
             .addController("MISA")
             .beginStructureBlock(7, 13, 7, false)
             .addInputBus("AnyInputBus", 1)

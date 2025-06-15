@@ -3,8 +3,8 @@ plugins {
     id 'com.gtnewhorizons.gtnhconvention'
 }
 minecraft {
-    extraRunJvmArguments.add("-Xmx16G")
-    extraRunJvmArguments.add("-Xms12G")
+    extraRunJvmArguments.add("-Xmx10G")
+    extraRunJvmArguments.add("-Xms8G")
 
     def isCiEnvironment = System.getenv("CI") == "true" || System.getenv("GITHUB_ACTIONS") == "true"
 

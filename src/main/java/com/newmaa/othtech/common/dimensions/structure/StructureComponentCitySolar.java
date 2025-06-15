@@ -1,7 +1,7 @@
 package com.newmaa.othtech.common.dimensions.structure;
 
 import static advsolar.common.AdvancedSolarPanel.blockAdvSolarPanel;
-import static com.dreammaster.block.BlockList.NeutroniumPlatedReinforcedStone;
+import static com.dreammaster.block.BlockList.TungstensteelPlatedReinforcedStone;
 import static micdoodle8.mods.galacticraft.core.blocks.GCBlocks.sealableBlock;
 import static net.minecraft.init.Blocks.*;
 
@@ -129,9 +129,9 @@ public class StructureComponentCitySolar extends StructureComponentCity {
             0,
             0,
             8,
-            NeutroniumPlatedReinforcedStone.getBlock(),
+            TungstensteelPlatedReinforcedStone.getBlock(),
             0,
-            NeutroniumPlatedReinforcedStone.getBlock(),
+            TungstensteelPlatedReinforcedStone.getBlock(),
             0,
             false);
         this.fillWithMetadataBlocks(
@@ -143,9 +143,9 @@ public class StructureComponentCitySolar extends StructureComponentCity {
             6,
             0,
             8,
-            NeutroniumPlatedReinforcedStone.getBlock(),
+            TungstensteelPlatedReinforcedStone.getBlock(),
             0,
-            NeutroniumPlatedReinforcedStone.getBlock(),
+            TungstensteelPlatedReinforcedStone.getBlock(),
             0,
             false);
         this.fillWithMetadataBlocks(
@@ -157,9 +157,9 @@ public class StructureComponentCitySolar extends StructureComponentCity {
             12,
             0,
             8,
-            NeutroniumPlatedReinforcedStone.getBlock(),
+            TungstensteelPlatedReinforcedStone.getBlock(),
             0,
-            NeutroniumPlatedReinforcedStone.getBlock(),
+            TungstensteelPlatedReinforcedStone.getBlock(),
             0,
             false);
         this.fillWithMetadataBlocks(
@@ -171,9 +171,9 @@ public class StructureComponentCitySolar extends StructureComponentCity {
             11,
             0,
             0,
-            NeutroniumPlatedReinforcedStone.getBlock(),
+            TungstensteelPlatedReinforcedStone.getBlock(),
             0,
-            NeutroniumPlatedReinforcedStone.getBlock(),
+            TungstensteelPlatedReinforcedStone.getBlock(),
             0,
             false);
         this.fillWithMetadataBlocks(
@@ -185,9 +185,9 @@ public class StructureComponentCitySolar extends StructureComponentCity {
             11,
             0,
             8,
-            NeutroniumPlatedReinforcedStone.getBlock(),
+            TungstensteelPlatedReinforcedStone.getBlock(),
             0,
-            NeutroniumPlatedReinforcedStone.getBlock(),
+            TungstensteelPlatedReinforcedStone.getBlock(),
             0,
             false);
         this.fillWithMetadataBlocks(
