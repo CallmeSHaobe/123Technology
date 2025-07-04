@@ -12,6 +12,7 @@ import java.util.UUID;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import com.google.common.math.LongMath;
@@ -53,8 +54,9 @@ public class OTEHatchWirelessMulti extends MTEHatchEnergyMulti implements IWirel
             aNameRegional,
             aTier,
             0,
-            new String[] { GRAY + "Stores energy globally in a network, up to 2^(2^31) EU.",
-                GRAY + "Does not connect to wires. This block withdraws EU from the network.", GOLD + "123Technology",
+            new String[] { EnumChatFormatting.GRAY + "将能量存储于全局网络中, 上限为2^(2^31)EU.",
+                EnumChatFormatting.GRAY + "不连接导线. 此方块可以从网络中抽取EU.", EnumChatFormatting.GRAY + "小心能量溢出.",
+                GOLD + "123Technology",
                 translateToLocal("gt.blockmachines.hatch.energytunnel.desc.1") + ": "
                     + YELLOW
                     + GTUtility.formatNumbers(aAmp * V[aTier])
