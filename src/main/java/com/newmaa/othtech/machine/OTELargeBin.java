@@ -83,7 +83,6 @@ public class OTELargeBin extends OTH_MultiMachineBase<OTELargeBin> implements IC
     @Override
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
         repairMachine();
-        Tier = aStack.stackSize;
         return Tier == 1 ? checkPiece(Tier1, 2, 3, 1)
             : Tier == 2 ? checkPiece(Tier2, 4, 9, 2)
                 : Tier == 3 ? checkPiece(Tier3, 7, 18, 3)
@@ -94,7 +93,7 @@ public class OTELargeBin extends OTH_MultiMachineBase<OTELargeBin> implements IC
     @Override
     public void construct(ItemStack stackSize, boolean hintsOnly) {
         repairMachine();
-        Tier = aStack.stackSize;
+        Tier = stackSize.stackSize;
         if (Tier == 1) {
             buildPiece(Tier1, stackSize, hintsOnly, 2, 3, 1);
         } else if (Tier == 2) {
@@ -111,6 +110,7 @@ public class OTELargeBin extends OTH_MultiMachineBase<OTELargeBin> implements IC
     @Override
     public int survivalConstruct(ItemStack stackSize, int elementBudget, IItemSource source, EntityPlayerMP actor) {
         if (mMachine) return -1;
+        Tier = stackSize.stackSize;
         return Tier == 1 ? survivialBuildPiece(Tier1, stackSize, 2, 3, 1, elementBudget, source, actor, false, true)
             : Tier == 2 ? survivialBuildPiece(Tier2, stackSize, 4, 9, 2, elementBudget, source, actor, false, true)
                 : Tier == 3 ? survivialBuildPiece(Tier3, stackSize, 7, 18, 3, elementBudget, source, actor, false, true)
