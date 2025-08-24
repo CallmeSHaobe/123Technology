@@ -14,7 +14,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.gtnewhorizons.gtnhintergalactic.recipe.SpacePumpingRecipes;
 import com.newmaa.othtech.common.ItemAndBlockHandler;
 import com.newmaa.othtech.common.beeyonds.OTHBeeyonds;
 import com.newmaa.othtech.common.blocks.antimonia.AntimoniaBlocks;
@@ -39,6 +38,7 @@ import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import gtPlusPlus.api.recipe.GTPPRecipeMaps;
+import gtnhintergalactic.recipe.SpacePumpingRecipes;
 
 @Mod(
     modid = OTHTechnology.MODID,
@@ -63,7 +63,7 @@ public class OTHTechnology {
 
     public static final String modName = Tags.MODNAME;
 
-    public static final String VERSION = "2.0.9 ";
+    public static final String VERSION = "2.1.2";
 
     public static final String Arthur = "Laodengs";
 

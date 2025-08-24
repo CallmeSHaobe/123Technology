@@ -47,7 +47,7 @@ public class RecipesNaquadah implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.NetherStar, 1), 2048))
             .eut(TierEU.RECIPE_UMV)
             .duration(150 * 20)
-            .noOptimize()
+
             .addTo(NQF);
         RecipeBuilder.builder()
             .fluidOutputs(FluidRegistry.getFluidStack("naquadah based liquid fuel mkv", 6000))
@@ -69,7 +69,7 @@ public class RecipesNaquadah implements IRecipePool {
                 setStackSize(GTModHandler.getModItem("miscutils", "itemDustChromaticGlass", 1), 1440))
             .eut(TierEU.RECIPE_UMV)
             .duration(100 * 20)
-            .noOptimize()
+
             .addTo(NQF);
         RecipeBuilder.builder()
             .fluidOutputs(FluidRegistry.getFluidStack("naquadah based liquid fuel mkvi", 4500))
@@ -93,7 +93,7 @@ public class RecipesNaquadah implements IRecipePool {
                 setStackSize(MaterialsElements.STANDALONE.CHRONOMATIC_GLASS.getDust(1), 1440))
             .eut(TierEU.RECIPE_UXV)
             .duration(150 * 20)
-            .noOptimize()
+
             .addTo(NQF);
         RecipeBuilder.builder()
             .fluidOutputs(FluidRegistry.getFluidStack("naquadah based liquid fuel mkvi", 7500))
@@ -116,7 +116,7 @@ public class RecipesNaquadah implements IRecipePool {
                 setStackSize(MaterialsElements.STANDALONE.CHRONOMATIC_GLASS.getDust(1), 1440))
             .eut(TierEU.RECIPE_UXV)
             .duration(100 * 20)
-            .noOptimize()
+
             .addTo(NQF);
         // FuelsFakeRecipes
         FluidStack[] inputs = new FluidStack[] { GGMaterial.uraniumBasedLiquidFuelExcited.getFluidOrGas(1),

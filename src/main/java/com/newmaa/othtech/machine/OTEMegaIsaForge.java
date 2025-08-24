@@ -2,6 +2,7 @@ package com.newmaa.othtech.machine;
 
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.withChannel;
+import static gregtech.api.GregTechAPI.sBlockCasingsDyson;
 import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.enums.Textures.BlockIcons.*;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
@@ -24,12 +25,10 @@ import org.jetbrains.annotations.NotNull;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
-import com.gtnewhorizons.gtnhintergalactic.recipe.IGRecipeMaps;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 
 import bartworks.API.BorosilicateGlass;
-import galaxyspace.core.register.GSBlocks;
 import gregtech.api.GregTechAPI;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.Textures;
@@ -47,6 +46,7 @@ import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gtPlusPlus.core.block.ModBlocks;
+import gtnhintergalactic.recipe.IGRecipeMaps;
 import tectech.thing.block.BlockQuantumGlass;
 
 public class OTEMegaIsaForge extends OTHMultiMachineBase<OTEMegaIsaForge> {
@@ -87,7 +87,7 @@ public class OTEMegaIsaForge extends OTHMultiMachineBase<OTEMegaIsaForge> {
         return true;
     }
 
-    protected int getMaxParallelRecipes() {
+    public int getMaxParallelRecipes() {
         return Integer.MAX_VALUE;
     }
 
@@ -150,7 +150,8 @@ public class OTEMegaIsaForge extends OTHMultiMachineBase<OTEMegaIsaForge> {
     }
 
     @Override
-    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ) {
+    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+        ItemStack aTool) {
         if (getBaseMetaTileEntity().isServerSide()) {
             if (mode < 1 & $123) {
                 mode++;
@@ -182,7 +183,7 @@ public class OTEMegaIsaForge extends OTHMultiMachineBase<OTEMegaIsaForge> {
         if (this.mMachine) return -1;
         int realBudget = elementBudget >= 200 ? elementBudget : Math.min(200, elementBudget * 5);
 
-        return this.survivialBuildPiece(
+        return this.survivalBuildPiece(
             STRUCTURE_PIECE_MAIN,
             stackSize,
             horizontalOffSet,
@@ -231,9 +232,9 @@ public class OTEMegaIsaForge extends OTHMultiMachineBase<OTEMegaIsaForge> {
                 .addElement('G', ofBlock(StabilisationFieldGenerators, 8))
                 .addElement('H', ofBlock(TimeAccelerationFieldGenerator, 8))
                 .addElement('I', ofBlock(ModBlocks.blockCasings5Misc, 1))
-                .addElement('J', ofBlock(GSBlocks.DysonSwarmBlocks, 1))
-                .addElement('K', ofBlock(GSBlocks.DysonSwarmBlocks, 5))
-                .addElement('L', ofBlock(GSBlocks.DysonSwarmBlocks, 9))
+                .addElement('J', ofBlock(sBlockCasingsDyson, 1))
+                .addElement('K', ofBlock(sBlockCasingsDyson, 5))
+                .addElement('L', ofBlock(sBlockCasingsDyson, 9))
                 .addElement('M', ofBlock(BlockQuantumGlass.INSTANCE, 0))
                 .addElement('N', ofFrame(Materials.InfinityCatalyst))
                 .addElement(
@@ -3494,11 +3495,6 @@ public class OTEMegaIsaForge extends OTHMultiMachineBase<OTEMegaIsaForge> {
     @Override
     public int getDamageToComponent(ItemStack aStack) {
         return 0;
-    }
-
-    @Override
-    public boolean explodesOnComponentBreak(ItemStack aStack) {
-        return false;
     }
 
     @Override

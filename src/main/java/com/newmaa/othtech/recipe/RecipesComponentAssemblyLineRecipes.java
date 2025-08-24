@@ -47,7 +47,7 @@ public class RecipesComponentAssemblyLineRecipes implements IRecipePool {
                 BWLiquids.Stars.getFluidOrGas(16 * 48 * 144),
                 new FluidStack(Ma, 442368),
                 new FluidStack(Um, 118368))
-            .noOptimize()
+
             .duration(5904 * 20)
             .specialValue(14)
             .eut(512000000)
@@ -71,7 +71,7 @@ public class RecipesComponentAssemblyLineRecipes implements IRecipePool {
                 new FluidStack(Um, 290304),
                 new FluidStack(Mm, 290304),
                 new FluidStack(FluidRegistry.getFluid("molten.blackdwarfmatter"), 995328))
-            .noOptimize()
+
             .duration(5904 * 20)
             .specialValue(14)
             .eut(512000000)
@@ -92,7 +92,7 @@ public class RecipesComponentAssemblyLineRecipes implements IRecipePool {
                 new FluidStack(Um, 165888),
                 new FluidStack(Et, 165888),
                 new FluidStack(FluidRegistry.getFluid("molten.blackdwarfmatter"), 995328))
-            .noOptimize()
+
             .duration(5904 * 20)
             .specialValue(14)
             .eut(512000000)
@@ -114,7 +114,7 @@ public class RecipesComponentAssemblyLineRecipes implements IRecipePool {
                 new FluidStack(Um, 884736),
                 new FluidStack(FluidRegistry.getFluid("molten.whitedwarfmatter"), 884736),
                 new FluidStack(FluidRegistry.getFluid("molten.blackdwarfmatter"), 884736))
-            .noOptimize()
+
             .duration(5904 * 20)
             .specialValue(14)
             .eut(512000000)
@@ -137,7 +137,7 @@ public class RecipesComponentAssemblyLineRecipes implements IRecipePool {
                 new FluidStack(Ma, 276480),
                 new FluidStack(Um, 110592),
                 new FluidStack(Cg, 552960))
-            .noOptimize()
+
             .duration(5904 * 20)
             .specialValue(14)
             .eut(512000000)
@@ -161,7 +161,7 @@ public class RecipesComponentAssemblyLineRecipes implements IRecipePool {
                 new FluidStack(Ma, 276480),
                 new FluidStack(Um, 110592),
                 new FluidStack(Cg, 552960))
-            .noOptimize()
+
             .duration(5904 * 20)
             .specialValue(14)
             .eut(512000000)
@@ -182,7 +182,7 @@ public class RecipesComponentAssemblyLineRecipes implements IRecipePool {
                 BWLiquids.Void.getFluidOrGas(16000 * 48),
                 BWLiquids.Stars.getFluidOrGas(16 * 48 * 144),
                 new FluidStack(Ma, 193536))
-            .noOptimize()
+
             .duration(5904 * 20)
             .specialValue(14)
             .eut(512000000)
@@ -205,7 +205,7 @@ public class RecipesComponentAssemblyLineRecipes implements IRecipePool {
                 BWLiquids.Stars.getFluidOrGas(16 * 48 * 144),
                 new FluidStack(Ma, 304128),
                 new FluidStack(Um, 13824))
-            .noOptimize()
+
             .duration(5904 * 20)
             .specialValue(14)
             .eut(512000000)

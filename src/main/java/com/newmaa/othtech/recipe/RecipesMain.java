@@ -34,7 +34,6 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
-import com.gtnewhorizons.gtnhintergalactic.item.IGItems;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.item.ItemLoader;
 import com.newmaa.othtech.common.materials.BWLiquids;
@@ -53,6 +52,7 @@ import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTUtility;
+import gregtech.api.util.recipe.Scanning;
 import gregtech.common.items.CombType;
 import gregtech.loaders.misc.GTBees;
 import gtPlusPlus.api.recipe.GTPPRecipeMaps;
@@ -85,7 +85,7 @@ public class RecipesMain implements IRecipePool {
         // GTOreDictUnificator.get(OrePrefixes.dust, Materials.Samarium, 1))
         // .fluidInputs(new FluidStack(water, 123123))
         // .itemOutputs(GTModHandler.getModItem("123Technology", "dustIrOsSm", 1))
-        // .noOptimize()
+        //
         // .eut(123123)
         // .duration(8100)
         // .addTo(GTRecipeConstants.AssemblyLine);
@@ -148,7 +148,7 @@ public class RecipesMain implements IRecipePool {
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 4, 4139))
             .itemOutputs(OTHItemList.beeISAM.get(1))
             .fluidInputs(new FluidStack(songyou, 256000))
-            .noOptimize()
+
             .duration(500 * 20)
             .eut(Integer.MAX_VALUE)
             .specialValue(3)
@@ -194,7 +194,7 @@ public class RecipesMain implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Superconductor, 64))
             .metadata(PRECISE_ASSEMBLER_CASING_TIER, 1)
             .fluidInputs(new FluidStack(FluidRegistry.getFluidID("molten.indalloy140"), 128 * 144))
-            .noOptimize()
+
             .duration(123 * 20)
             .eut(32000)
             .addTo(preciseAssemblerRecipes);
@@ -209,7 +209,7 @@ public class RecipesMain implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Superconductor, 64),
                 GTUtility.getIntegratedCircuit(17))
             .fluidInputs(new FluidStack(FluidRegistry.getFluidID("molten.indalloy140"), 128 * 144))
-            .noOptimize()
+
             .duration(123 * 20)
             .eut(32000)
             .addTo(Assem);
@@ -224,7 +224,7 @@ public class RecipesMain implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Superconductor, 64),
                 GTUtility.getIntegratedCircuit(17))
             .fluidInputs(new FluidStack(FluidRegistry.getFluidID("molten.indalloy140"), 128 * 144))
-            .noOptimize()
+
             .duration(123 * 20)
             .eut(32000)
             .addTo(Assem);
@@ -240,7 +240,7 @@ public class RecipesMain implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Ultimate, 16),
                 GTUtility.getIntegratedCircuit(17))
             .fluidInputs(new FluidStack(FluidRegistry.getFluidID("molten.tungstensteel"), 128 * 144))
-            .noOptimize()
+
             .duration(123 * 20)
             .eut(8000)
             .addTo(Assem);
@@ -259,7 +259,7 @@ public class RecipesMain implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Ultimate, 16),
                 GTUtility.getIntegratedCircuit(17))
             .fluidInputs(new FluidStack(FluidRegistry.getFluidID("molten.zeron100"), 4 * 144))
-            .noOptimize()
+
             .duration(123 * 20)
             .eut(12300)
             .addTo(Assem);
@@ -268,7 +268,7 @@ public class RecipesMain implements IRecipePool {
             .fluidInputs(FluidRegistry.getFluidStack("phtalicacid", 2400))
             .itemInputs(GTUtility.getIntegratedCircuit(17), GTBees.combs.getStackForType(CombType.INDIUM, 4))
             .itemOutputs(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 4, 6056))
-            .noOptimize()
+
             .duration(288)
             .eut(12300)
             .addTo(Chem);
@@ -325,7 +325,7 @@ public class RecipesMain implements IRecipePool {
                 ItemList.Robot_Arm_LuV.get(4),
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Ultimate, 24),
                 GTUtility.getIntegratedCircuit(17))
-            .noOptimize()
+
             .duration(123 * 20)
             .eut(TierEU.IV)
             .addTo(Assem);
@@ -341,7 +341,7 @@ public class RecipesMain implements IRecipePool {
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 515),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 275),
                 GTModHandler.getModItem("miscutils", "blockProjectBench", 1))
-            .noOptimize()
+
             .duration(4 * 20)
             .eut(TierEU.IV)
             .addTo(Assem);
@@ -355,7 +355,7 @@ public class RecipesMain implements IRecipePool {
                 GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedlens", 64, 25),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 4054),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 32722))
-            .noOptimize()
+
             .duration(60 * 20)
             .eut(TierEU.UMV)
             .addTo(Assem);
@@ -365,7 +365,7 @@ public class RecipesMain implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Sulfur, 64),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 32))
             .fluidOutputs(FluidRegistry.getFluidStack("carbondisulfide", 32000))
-            .noOptimize()
+
             .duration(123 * 20)
             .eut(30)
             .addTo(RecipeMaps.multiblockChemicalReactorRecipes);
@@ -373,7 +373,7 @@ public class RecipesMain implements IRecipePool {
         GTValues.RA.stdBuilder()
             .itemInputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Gold, 3))
             .itemOutputs(OTHItemList.itemEnqingM.get(1))
-            .noOptimize()
+
             .duration(2024 * 20)
             .eut(194899)
             .addTo(RecipeMaps.laserEngraverRecipes);
@@ -415,7 +415,7 @@ public class RecipesMain implements IRecipePool {
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 48, 32052),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 4, 12005),
                 GTUtility.getIntegratedCircuit(17))
-            .noOptimize()
+
             .duration(4 * 20)
             .eut(TierEU.IV)
             .addTo(Assem);
@@ -493,14 +493,14 @@ public class RecipesMain implements IRecipePool {
         GTValues.RA.stdBuilder()
             .itemInputs(new ItemStack(Items.gold_ingot, 1), GTUtility.getIntegratedCircuit(1))
             .itemOutputs(new ItemStack(ItemLoader.RecordPRKA, 1))
-            .noOptimize()
+
             .duration(1949 * 20)
             .eut(123)
             .addTo(RecipeMaps.laserEngraverRecipes);
         GTValues.RA.stdBuilder()
             .itemInputs(new ItemStack(Items.gold_ingot, 1), GTUtility.getIntegratedCircuit(2))
             .itemOutputs(new ItemStack(ItemLoader.RecordPRKB, 1))
-            .noOptimize()
+
             .duration(1949 * 20)
             .eut(123)
             .addTo(RecipeMaps.laserEngraverRecipes);
@@ -984,7 +984,7 @@ public class RecipesMain implements IRecipePool {
         // NQF
         GTValues.RA.stdBuilder()
             .metadata(RESEARCH_ITEM, GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 32001))
-            .metadata(RESEARCH_TIME, HOURS * 4)
+            .metadata(SCANNING, new Scanning(HOURS * 4, RECIPE_MV))
             .itemInputs(
                 ItemList.Casing_ZPM.get(16),
                 ItemList.Electric_Motor_ZPM.get(64),
@@ -1021,7 +1021,7 @@ public class RecipesMain implements IRecipePool {
         // ISAModule Recipes
         GTValues.RA.stdBuilder()
             .metadata(RESEARCH_ITEM, OTHItemList.dustLookNEIM.get(1))
-            .metadata(RESEARCH_TIME, HOURS * 2)
+            .metadata(SCANNING, new Scanning(HOURS * 2, RECIPE_MV))
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.Iridium, 64),
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.Iridium, 64),
@@ -1046,7 +1046,7 @@ public class RecipesMain implements IRecipePool {
             .addTo(AssemblyLine);
         GTValues.RA.stdBuilder()
             .metadata(RESEARCH_ITEM, OTHItemList.IsaNEI.get(1))
-            .metadata(RESEARCH_TIME, HOURS)
+            .metadata(SCANNING, new Scanning(HOURS, RECIPE_MV))
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.plateSuperdense, Materials.Iridium, 64),
                 GTOreDictUnificator.get(OrePrefixes.plateSuperdense, Materials.Neutronium, 64),
@@ -1071,7 +1071,7 @@ public class RecipesMain implements IRecipePool {
             .addTo(AssemblyLine);
         GTValues.RA.stdBuilder()
             .metadata(RESEARCH_ITEM, OTHItemList.ISAIOS.get(1))
-            .metadata(RESEARCH_TIME, HOURS / 2)
+            .metadata(SCANNING, new Scanning(HOURS / 2, RECIPE_MV))
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.plateTriple, Materials.Infinity, 64),
                 GTOreDictUnificator.get(OrePrefixes.plateTriple, Materials.CosmicNeutronium, 64),
@@ -1115,12 +1115,12 @@ public class RecipesMain implements IRecipePool {
             .itemOutputs(GTModHandler.getModItem(GTPlusPlus.ID, "item.BasicGenericChemItem", 64, 12))
             .eut(114514)
             .duration(12)
-            .noOptimize()
+
             .addTo(Chem);
         // NAF
         GTValues.RA.stdBuilder()
             .metadata(RESEARCH_ITEM, GTModHandler.getModItem(GoodGenerator.ID, "FRF_Casings", 1))
-            .metadata(RESEARCH_TIME, 3 * HOURS)
+            .metadata(SCANNING, new Scanning(HOURS * 3, RECIPE_MV))
             .itemInputs(
                 GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 64, 16999),
                 GTOreDictUnificator.get(OrePrefixes.plateSuperdense, Materials.Naquadah, 64),
@@ -1150,7 +1150,7 @@ public class RecipesMain implements IRecipePool {
         // MCA
         GTValues.RA.stdBuilder()
             .metadata(RESEARCH_ITEM, OTHItemList.LCA.get(1))
-            .metadata(RESEARCH_TIME, 4 * HOURS)
+            .metadata(SCANNING, new Scanning(HOURS * 4, RECIPE_MV))
             .itemInputs(
                 GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 64, 12735),
                 OTHItemList.LCA.get(64),
@@ -1176,9 +1176,9 @@ public class RecipesMain implements IRecipePool {
         // 太空钻机模块MK-321 - Assembler alt
         GTValues.RA.stdBuilder()
             .metadata(RESEARCH_ITEM, OTHItemList.SpaceElevatorModulePumpT4.get(1))
-            .metadata(RESEARCH_TIME, 4 * HOURS)
+            .metadata(SCANNING, new Scanning(HOURS * 4, RECIPE_MV))
             .itemInputs(
-                GTUtility.copyAmount(4, IGItems.SpaceElevatorModulePumpT3),
+                GTUtility.copyAmount(4, ItemList.SpaceElevatorModulePumpT3),
                 GTOreDictUnificator.get(OrePrefixes.frameGt, MaterialsUEVplus.Universium, 8),
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UXV, 16),
                 ItemList.Electric_Pump_MAX.get(8),
@@ -1192,13 +1192,14 @@ public class RecipesMain implements IRecipePool {
             .addTo(assemblerRecipes);
         // 太空钻机模块MK-321
         TTRecipeAdder.addResearchableAssemblylineRecipe(
-            IGItems.SpaceElevatorModulePumpT3,
+            ItemList.SpaceElevatorModulePumpT3.getInternalStack_unsafe(),
             123123123,
             123123,
             256000000,
             4,
-            new Object[] { ItemList.OilDrillInfinite.get(64), GTUtility.copyAmount(64, IGItems.PlanetaryGasSiphon),
-                CustomItemList.enderLinkFluidCover.get(64), CustomItemList.enderLinkFluidCover.get(64),
+            new Object[] { ItemList.OilDrillInfinite.get(64),
+                GTUtility.copyAmount(64, ItemList.PlanetaryGasSiphonCasing), CustomItemList.enderLinkFluidCover.get(64),
+                CustomItemList.enderLinkFluidCover.get(64),
                 GTOreDictUnificator.get(OrePrefixes.frameGt, MaterialsUEVplus.Universium, 4),
                 new Object[] { OrePrefixes.circuit.get(Materials.UXV), 16 }, ItemList.Electric_Pump_MAX.get(8),
                 GTOreDictUnificator.get(OrePrefixes.gearGt, MaterialsUEVplus.Universium, 4),
@@ -1257,7 +1258,7 @@ public class RecipesMain implements IRecipePool {
         // EX
         GTValues.RA.stdBuilder()
             .metadata(RESEARCH_ITEM, Loaders.XHE)
-            .metadata(RESEARCH_TIME, HOURS)
+            .metadata(SCANNING, new Scanning(HOURS, RECIPE_MV))
             .itemInputs(
                 GTUtility.copyAmount(16, Loaders.XHE),
                 ItemList.Machine_Multi_VacuumFreezer.get(16),
@@ -1275,7 +1276,7 @@ public class RecipesMain implements IRecipePool {
         // GraveDragon
         GTValues.RA.stdBuilder()
             .metadata(RESEARCH_ITEM, GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 5001))
-            .metadata(RESEARCH_TIME, 4 * HOURS)
+            .metadata(SCANNING, new Scanning(HOURS * 4, RECIPE_MV))
             .itemInputs(
                 ItemList.Electric_Motor_UHV.get(64),
                 ItemList.Electric_Pump_UHV.get(16),

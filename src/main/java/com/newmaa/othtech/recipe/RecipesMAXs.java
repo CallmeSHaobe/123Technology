@@ -61,7 +61,7 @@ public class RecipesMAXs implements IRecipePool {
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 17143),
                 GTUtility.getIntegratedCircuit(16))
             .itemOutputs(GTModHandler.getModItem("dreamcraft", "gt.blockcasingsNH", 1, 14))
-            .noOptimize()
+
             .duration(50)
             .eut(TierEU.LV)
             .addTo(Assembler);
@@ -166,7 +166,7 @@ public class RecipesMAXs implements IRecipePool {
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 24500),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 16, 2611),
                 GTUtility.getIntegratedCircuit(7))
-            .noOptimize()
+
             .duration(3200 * 20)
             .eut(TierEU.MAX)
             .addTo(Assembler);
@@ -177,7 +177,7 @@ public class RecipesMAXs implements IRecipePool {
             .fluidOutputs(
                 BWLiquids.Galaxy.getFluidOrGas(48 * 144),
                 new FluidStack(FluidRegistry.getFluidID("molten.quantum"), 16 * 144))
-            .noOptimize()
+
             .duration(123 * 20)
             .requiresLowGravity()
             .eut(512000000)

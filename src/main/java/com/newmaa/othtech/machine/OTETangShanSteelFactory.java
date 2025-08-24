@@ -152,7 +152,7 @@ public class OTETangShanSteelFactory extends OTHMultiMachineBase<OTETangShanStee
         return true;
     }
 
-    protected int getMaxParallelRecipes() {
+    public int getMaxParallelRecipes() {
         return Integer.MAX_VALUE;
     }
 
@@ -202,7 +202,8 @@ public class OTETangShanSteelFactory extends OTHMultiMachineBase<OTETangShanStee
     }
 
     @Override
-    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ) {
+    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+        ItemStack aTool) {
         if (isWirelessMode == false) {
             isWirelessMode = true;
         } else {
@@ -283,7 +284,7 @@ public class OTETangShanSteelFactory extends OTHMultiMachineBase<OTETangShanStee
         if (this.mMachine) return -1;
         int realBudget = elementBudget >= 200 ? elementBudget : Math.min(200, elementBudget * 5);
 
-        return this.survivialBuildPiece(
+        return this.survivalBuildPiece(
             STRUCTURE_PIECE_MAIN,
             stackSize,
             horizontalOffSet,
@@ -1324,11 +1325,6 @@ public class OTETangShanSteelFactory extends OTHMultiMachineBase<OTETangShanStee
     @Override
     public int getDamageToComponent(ItemStack aStack) {
         return 0;
-    }
-
-    @Override
-    public boolean explodesOnComponentBreak(ItemStack aStack) {
-        return false;
     }
 
     @Override

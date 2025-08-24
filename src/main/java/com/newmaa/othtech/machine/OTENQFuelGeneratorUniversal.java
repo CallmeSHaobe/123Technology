@@ -178,7 +178,8 @@ public class OTENQFuelGeneratorUniversal extends TTMultiMachineBaseEM
     private long tEff;
 
     @Override
-    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ) {
+    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+        ItemStack aTool) {
         if (pipeTier != 0 && !isWirelessMode) {
             isWirelessMode = true;
         } else {
@@ -346,7 +347,7 @@ public class OTENQFuelGeneratorUniversal extends TTMultiMachineBaseEM
     protected final List<MTEHatchInput> mMiddleInputHatches = new ArrayList<>();
 
     @Override
-    protected void startRecipeProcessing() {
+    public void startRecipeProcessing() {
         for (MTEHatchInput hatch : validMTEList(mMiddleInputHatches)) {
             if (hatch instanceof IRecipeProcessingAwareHatch aware) {
                 aware.startRecipeProcessing();
@@ -356,7 +357,7 @@ public class OTENQFuelGeneratorUniversal extends TTMultiMachineBaseEM
     }
 
     @Override
-    protected void endRecipeProcessing() {
+    public void endRecipeProcessing() {
         super.endRecipeProcessing();
         for (MTEHatchInput hatch : validMTEList(mMiddleInputHatches)) {
             if (hatch instanceof IRecipeProcessingAwareHatch aware) {
@@ -373,7 +374,7 @@ public class OTENQFuelGeneratorUniversal extends TTMultiMachineBaseEM
     @Override
     public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
         if (mMachine) return -1;
-        return survivialBuildPiece(mName, stackSize, 2, 2, 0, elementBudget, env, false, true);
+        return survivalBuildPiece(mName, stackSize, 2, 2, 0, elementBudget, env, false, true);
     }
 
     @Override
@@ -581,11 +582,6 @@ public class OTENQFuelGeneratorUniversal extends TTMultiMachineBaseEM
     @Override
     public int getDamageToComponent(ItemStack aStack) {
         return 0;
-    }
-
-    @Override
-    public boolean explodesOnComponentBreak(ItemStack aStack) {
-        return false;
     }
 
     @Override

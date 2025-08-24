@@ -52,7 +52,7 @@ public class RecipesMegaQFT implements IRecipePool {
                 new FluidStack(FluidRegistry.getFluidID("molten.epoxid"), 128 * 144),
                 new FluidStack(FluidRegistry.getFluidID("molten.epoxidfiberreinforced"), 128 * 144),
                 new FluidStack(FluidRegistry.getFluidID("molten.plastic"), 256 * 144))
-            .noOptimize()
+
             .duration(200 * 20)
             .eut(TierEU.UHV)
             .addTo(MQFT);
@@ -68,7 +68,7 @@ public class RecipesMegaQFT implements IRecipePool {
                 GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 64, 30),
                 GTModHandler.getModItem("miscutils", "itemDustPlutonium238", 64),
                 GTModHandler.getModItem("miscutils", "itemDustUranium233", 64))
-            .noOptimize()
+
             .duration(200 * 20)
             .eut(TierEU.UIV)
             .addTo(MQFT);
@@ -84,7 +84,7 @@ public class RecipesMegaQFT implements IRecipePool {
                 new FluidStack(FluidRegistry.getFluidID("molten.ethylcyanoacrylatesuperglue"), 256 * 1000),
                 new FluidStack(FluidRegistry.getFluidID("advancedglue"), 128 * 1000),
                 new FluidStack(FluidRegistry.getFluidID("molten.solderingalloy"), 1024 * 144))
-            .noOptimize()
+
             .duration(200 * 20)
             .eut(TierEU.UIV)
             .addTo(MQFT);
@@ -96,7 +96,7 @@ public class RecipesMegaQFT implements IRecipePool {
                 new FluidStack(FluidRegistry.getFluidID("molten.radoxpoly"), 256 * 144),
                 new FluidStack(FluidRegistry.getFluidID("molten.kevlar"), 128 * 144),
                 new FluidStack(FluidRegistry.getFluidID("heavyradox"), 64 * 1000))
-            .noOptimize()
+
             .duration(200 * 20)
             .eut(TierEU.UXV)
             .addTo(MQFT);
@@ -114,7 +114,7 @@ public class RecipesMegaQFT implements IRecipePool {
                 GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 32, 3),
                 GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 16, 11000),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 4, 32428))
-            .noOptimize()
+
             .duration(200 * 20)
             .eut(TierEU.UIV)
             .addTo(MQFT);
@@ -132,7 +132,7 @@ public class RecipesMegaQFT implements IRecipePool {
                 GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 32, 3),
                 GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 32, 11002),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 4, 32428))
-            .noOptimize()
+
             .duration(200 * 20)
             .eut(TierEU.UIV)
             .addTo(MQFT);
@@ -146,7 +146,7 @@ public class RecipesMegaQFT implements IRecipePool {
                 Materials.Magnesium.getDust(64),
                 Materials.Phosphorus.getDust(8))
             .fluidOutputs(new FluidStack(FluidRegistry.getFluidID("molten.naquadria"), 96 * 144))
-            .noOptimize()
+
             .duration(200 * 20)
             .eut(TierEU.MAX)
             .addTo(MQFT);
@@ -178,7 +178,7 @@ public class RecipesMegaQFT implements IRecipePool {
                 GTModHandler.getModItem("miscutils", "particleBase", 2, 7))
             .duration(400 * 20)
             .eut(TierEU.MAX)
-            .noOptimize()
+
             .addTo(MQFT);
         GTValues.RA.stdBuilder()
             .itemInputs(
@@ -192,7 +192,7 @@ public class RecipesMegaQFT implements IRecipePool {
             .itemOutputs(
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32073), 256),
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32076), 512))
-            .noOptimize()
+
             .duration(400 * 20)
             .eut(TierEU.UXV)
             .addTo(MQFT);
@@ -209,7 +209,7 @@ public class RecipesMegaQFT implements IRecipePool {
                 new FluidStack(FluidRegistry.getFluidID("molten.shirabon"), 64 * 64 * 144 / 4),
                 new FluidStack(FluidRegistry.getFluidID("temporalfluid"), 128 * 64 * 144 / 4),
                 new FluidStack(FluidRegistry.getFluidID("molten.infinity"), 64 * 144 * 4))
-            .noOptimize()
+
             .duration(400 * 20)
             .eut(TierEU.MAX)
             .addTo(MQFT);
@@ -226,7 +226,7 @@ public class RecipesMegaQFT implements IRecipePool {
             .fluidOutputs(
                 new FluidStack(FluidRegistry.getFluidID("iodine"), 64 * 4 * 1000),
                 new FluidStack(FluidRegistry.getFluidID("seaweedbroth"), 16 * 4 * 1000))
-            .noOptimize()
+
             .duration(1000 * 20)
             .eut(TierEU.UXV)
             .addTo(MQFT);
@@ -237,7 +237,7 @@ public class RecipesMegaQFT implements IRecipePool {
                 new FluidStack(FluidRegistry.getFluidID("lubricant"), 64000),
                 new FluidStack(FluidRegistry.getFluidID("cryotheum"), 32000),
                 BWLiquids.Galaxy.getFluidOrGas(20 * 144))
-            .noOptimize()
+
             .duration(100 * 20)
             .eut(TierEU.UXV)
             .addTo(MQFT);
@@ -251,7 +251,7 @@ public class RecipesMegaQFT implements IRecipePool {
                 new FluidStack(FluidRegistry.getFluidID("exciteddtsc"), 10000),
                 new FluidStack(FluidRegistry.getFluidID("molten.mutatedlivingsolder"), 24 * 144),
                 new FluidStack(FluidRegistry.getFluidID("molten.magmatter"), 144))
-            .noOptimize()
+
             .duration(120 * 20)
             .eut(TierEU.UXV / 2)
             .addTo(MQFT);
@@ -259,7 +259,7 @@ public class RecipesMegaQFT implements IRecipePool {
         GTValues.RA.stdBuilder()
             .itemOutputs(new ItemStack(Blocks.dirt, 1))
             .itemInputs(new ItemStack(Blocks.dirt, 1))
-            .noOptimize()
+
             .duration(114514)
             .eut(1919810)
             .addTo(MQFT);

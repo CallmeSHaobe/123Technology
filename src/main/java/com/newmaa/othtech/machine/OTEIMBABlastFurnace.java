@@ -138,7 +138,7 @@ public class OTEIMBABlastFurnace extends MTEElectricBlastFurnace {
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
         this.mHeatingCapacity = 0;
         setCoilLevel(HeatingCoilLevel.None);
-        mPollutionOutputHatches.clear();
+        mMufflerHatches.clear();
         if (!checkPiece(STRUCTURE_PIECE_MAIN, 2, 3, 0)) return false;
         if (getCoilLevel() == HeatingCoilLevel.None) return false;
         if (mMaintenanceHatches.size() != 1) return false;
@@ -155,11 +155,11 @@ public class OTEIMBABlastFurnace extends MTEElectricBlastFurnace {
     @Override
     public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
         if (mMachine) return -1;
-        return survivialBuildPiece(STRUCTURE_PIECE_MAIN, stackSize, 2, 3, 0, elementBudget, env, false, true);
+        return survivalBuildPiece(STRUCTURE_PIECE_MAIN, stackSize, 2, 3, 0, elementBudget, env, false, true);
     }
 
     public int getPollutionOutputHatchCount() {
-        return this.mPollutionOutputHatches.size();
+        return this.mMufflerHatches.size();
     }
 
     @Override

@@ -2,8 +2,7 @@ package com.newmaa.othtech.machine.hatch;
 
 import static com.gtnewhorizon.gtnhlib.util.AnimatedTooltipHandler.*;
 import static gregtech.api.enums.GTValues.V;
-import static gregtech.common.misc.WirelessNetworkManager.addEUToGlobalEnergyMap;
-import static gregtech.common.misc.WirelessNetworkManager.strongCheckOrAddUser;
+import static gregtech.common.misc.WirelessNetworkManager.*;
 import static java.lang.Long.min;
 import static net.minecraft.util.StatCollector.translateToLocal;
 
@@ -19,14 +18,13 @@ import com.google.common.math.LongMath;
 
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
-import gregtech.api.interfaces.tileentity.IWirelessEnergyHatchInformation;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.util.GTUtility;
 import tectech.thing.metaTileEntity.Textures;
 import tectech.thing.metaTileEntity.hatch.MTEHatchEnergyMulti;
 import tectech.util.TTUtility;
 
-public class OTEHatchWirelessMulti extends MTEHatchEnergyMulti implements IWirelessEnergyHatchInformation {
+public class OTEHatchWirelessMulti extends MTEHatchEnergyMulti {
     // From TecTech
 
     private final long precisionMultiplier = LongMath.pow(10, 15);
@@ -115,11 +113,6 @@ public class OTEHatchWirelessMulti extends MTEHatchEnergyMulti implements IWirel
                 break;
         }
         return new ITexture[] { aBaseTexture, TEXTURE_OVERLAY[mTier] };
-    }
-
-    @Override
-    public boolean isSimpleMachine() {
-        return true;
     }
 
     @Override

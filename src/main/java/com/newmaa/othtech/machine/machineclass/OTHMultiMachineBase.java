@@ -1,7 +1,7 @@
 package com.newmaa.othtech.machine.machineclass;
 
 import static com.newmaa.othtech.utils.Utils.filterValidMTEs;
-import static gregtech.api.enums.GTValues.GT;
+import static gregtech.GTMod.GT;
 import static gregtech.api.enums.GTValues.VN;
 
 import java.util.ArrayList;
@@ -69,7 +69,6 @@ public abstract class OTHMultiMachineBase<T extends OTHMultiMachineBase<T>> exte
     // region new methods
     public void repairMachine() {
         mHardHammer = true;
-        mSoftHammer = true;
         mScrewdriver = true;
         mCrowbar = true;
         mSolderingTool = true;
@@ -133,7 +132,7 @@ public abstract class OTHMultiMachineBase<T extends OTHMultiMachineBase<T>> exte
      * @return The value (or a method to get the value) of Max Parallel (dynamically) .
      */
     @ApiStatus.OverrideOnly
-    protected abstract int getMaxParallelRecipes();
+    public abstract int getMaxParallelRecipes();
 
     /**
      * Limit the max parallel to prevent overflow.
@@ -589,14 +588,6 @@ public abstract class OTHMultiMachineBase<T extends OTHMultiMachineBase<T>> exte
     @Override
     public int getDamageToComponent(ItemStack aStack) {
         return 0;
-    }
-
-    /**
-     * If it explodes when the Component has to be replaced.
-     */
-    @Override
-    public boolean explodesOnComponentBreak(ItemStack aStack) {
-        return false;
     }
 
     /**

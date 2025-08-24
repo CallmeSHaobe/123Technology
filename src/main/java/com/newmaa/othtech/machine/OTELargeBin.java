@@ -111,12 +111,12 @@ public class OTELargeBin extends OTHMultiMachineBase<OTELargeBin> implements ICo
     public int survivalConstruct(ItemStack stackSize, int elementBudget, IItemSource source, EntityPlayerMP actor) {
         if (mMachine) return -1;
         Tier = stackSize.stackSize;
-        return Tier == 1 ? survivialBuildPiece(Tier1, stackSize, 2, 3, 1, elementBudget, source, actor, false, true)
-            : Tier == 2 ? survivialBuildPiece(Tier2, stackSize, 4, 9, 2, elementBudget, source, actor, false, true)
-                : Tier == 3 ? survivialBuildPiece(Tier3, stackSize, 7, 18, 3, elementBudget, source, actor, false, true)
+        return Tier == 1 ? survivalBuildPiece(Tier1, stackSize, 2, 3, 1, elementBudget, source, actor, false, true)
+            : Tier == 2 ? survivalBuildPiece(Tier2, stackSize, 4, 9, 2, elementBudget, source, actor, false, true)
+                : Tier == 3 ? survivalBuildPiece(Tier3, stackSize, 7, 18, 3, elementBudget, source, actor, false, true)
                     : Tier == 4
-                        ? survivialBuildPiece(Tier4, stackSize, 9, 27, 1, elementBudget, source, actor, false, true)
-                        : survivialBuildPiece(Tier1, stackSize, 2, 3, 1, elementBudget, source, actor, false, true);
+                        ? survivalBuildPiece(Tier4, stackSize, 9, 27, 1, elementBudget, source, actor, false, true)
+                        : survivalBuildPiece(Tier1, stackSize, 2, 3, 1, elementBudget, source, actor, false, true);
     }
 
     @Override
@@ -536,7 +536,7 @@ public class OTELargeBin extends OTHMultiMachineBase<OTELargeBin> implements ICo
     }
 
     @Override
-    protected int getMaxParallelRecipes() {
+    public int getMaxParallelRecipes() {
         return mode == 1 ? (GTUtility.getTier(this.getMaxInputVoltage()) * 2560) : 256;
     }
 
@@ -621,7 +621,8 @@ public class OTELargeBin extends OTHMultiMachineBase<OTELargeBin> implements ICo
     }
 
     @Override
-    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ) {
+    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+        ItemStack aTool) {
         if (getBaseMetaTileEntity().isServerSide()) {
             if (mode < Tier - 1) {
                 mode++;
@@ -745,11 +746,6 @@ public class OTELargeBin extends OTHMultiMachineBase<OTELargeBin> implements ICo
     @Override
     public int getDamageToComponent(ItemStack aStack) {
         return 0;
-    }
-
-    @Override
-    public boolean explodesOnComponentBreak(ItemStack aStack) {
-        return false;
     }
 
     @Override

@@ -71,7 +71,7 @@ public class OTEFishtorio extends OTHMultiMachineBase<OTEFishtorio> {
         return true;
     }
 
-    protected int getMaxParallelRecipes() {
+    public int getMaxParallelRecipes() {
         return 64;
     }
 
@@ -190,7 +190,7 @@ public class OTEFishtorio extends OTHMultiMachineBase<OTEFishtorio> {
         if (this.mMachine) return -1;
         int realBudget = elementBudget >= 200 ? elementBudget : Math.min(200, elementBudget * 5);
 
-        return this.survivialBuildPiece(
+        return this.survivalBuildPiece(
             STRUCTURE_PIECE_MAIN,
             stackSize,
             horizontalOffSet,
@@ -204,7 +204,8 @@ public class OTEFishtorio extends OTHMultiMachineBase<OTEFishtorio> {
     }
 
     @Override
-    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ) {
+    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+        ItemStack aTool) {
         if (mode == false) {
             mode = true;
         } else {

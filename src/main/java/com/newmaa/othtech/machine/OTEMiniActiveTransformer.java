@@ -183,7 +183,7 @@ public class OTEMiniActiveTransformer extends TTMultiMachineBaseEM implements IC
     @Override
     public int survivalConstruct(ItemStack stackSize, int elementBudget, IItemSource source, EntityPlayerMP actor) {
         if (mMachine) return -1;
-        return survivialBuildPiece("main", stackSize, 0, 1, 0, elementBudget, source, actor, false, true);
+        return survivalBuildPiece("main", stackSize, 0, 1, 0, elementBudget, source, actor, false, true);
     }
 
     @Override

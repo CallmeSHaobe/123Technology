@@ -123,7 +123,7 @@ public class OTESINOPEC extends OTHMultiMachineBase<OTESINOPEC> {
         return $123;
     }
 
-    protected int getMaxParallelRecipes() {
+    public int getMaxParallelRecipes() {
         if ($123) {
             return Integer.MAX_VALUE;
         } else {
@@ -203,7 +203,7 @@ public class OTESINOPEC extends OTHMultiMachineBase<OTESINOPEC> {
         if (this.mMachine) return -1;
         int realBudget = elementBudget >= 200 ? elementBudget : Math.min(200, elementBudget * 5);
 
-        return this.survivialBuildPiece(
+        return this.survivalBuildPiece(
             STRUCTURE_PIECE_MAIN,
             stackSize,
             horizontalOffSet,

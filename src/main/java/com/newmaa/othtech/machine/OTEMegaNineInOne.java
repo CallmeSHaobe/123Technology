@@ -3,6 +3,7 @@ package com.newmaa.othtech.machine;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.withChannel;
 import static gregtech.api.enums.HatchElement.*;
+import static gregtech.api.enums.ItemList.Circuit_Integrated;
 import static gregtech.api.util.GTStructureUtility.*;
 import static net.minecraft.util.StatCollector.translateToLocal;
 
@@ -49,7 +50,6 @@ import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gtPlusPlus.api.recipe.GTPPRecipeMaps;
 import gtPlusPlus.core.block.ModBlocks;
-import gtPlusPlus.core.recipe.common.CI;
 import gtPlusPlus.xmod.gregtech.common.blocks.textures.TexturesGtBlock;
 
 public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
@@ -119,7 +119,7 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
     }
 
     @Override
-    protected int getMaxParallelRecipes() {
+    public int getMaxParallelRecipes() {
         return Math.max(9, 256 - (GTUtility.getTier(this.getMaxInputVoltage()) * 2));
     }
 
@@ -139,8 +139,7 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
 
     private ItemStack getCircuit(ItemStack[] t) {
         for (ItemStack j : t) {
-            if (j.getItem() == CI.getNumberedAdvancedCircuit(0)
-                .getItem()) {
+            if (j.getItem() == Circuit_Integrated.getItem()) {
                 if (j.getItemDamage() >= 20 && j.getItemDamage() <= 22) {
                     return j;
                 }
@@ -262,7 +261,8 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
     }
 
     @Override
-    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ) {
+    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+        ItemStack aTool) {
         if (mInternalMode < 4) {
             mInternalMode++;
         } else {
@@ -300,7 +300,7 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
         if (this.mMachine) return -1;
         int realBudget = elementBudget >= 200 ? elementBudget : Math.min(200, elementBudget * 5);
 
-        return this.survivialBuildPiece(
+        return this.survivalBuildPiece(
             STRUCTURE_PIECE_MAIN,
             stackSize,
             horizontalOffSet,
@@ -815,7 +815,7 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
     protected MultiblockTooltipBuilder createTooltip() {
         final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType("§c§l老登的终极造物 - 九合一 (巨型加工厂)")
-            .addInfo("§a共有十五种模式, 使用螺丝刀切换类模式， 使用突破编程电路20 21 22切换内部模式")
+            .addInfo("§a共有十五种模式, 使用螺丝刀切换类模式， 使用编程电路20 21 22切换内部模式")
             .addInfo("§aMetal类: 压缩机 车床 电力磁化机")
             .addInfo("§aFluid类: 发酵槽 流体提取机 提取机")
             .addInfo("§aMisc类: 激光蚀刻机 高压釜 流体固化机")
@@ -859,10 +859,6 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
         return 0;
     }
 
-    @Override
-    public boolean explodesOnComponentBreak(ItemStack aStack) {
-        return false;
-    }
 
     @Override
     public boolean supportsVoidProtection() {

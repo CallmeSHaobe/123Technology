@@ -2,10 +2,7 @@ package com.newmaa.othtech.machine;
 
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.withChannel;
-import static com.gtnewhorizons.gtnhintergalactic.block.IGBlocks.SpaceElevatorCasing;
-import static gregtech.api.GregTechAPI.sBlockCasings1;
-import static gregtech.api.GregTechAPI.sBlockCasings2;
-import static gregtech.api.GregTechAPI.sBlockCasings8;
+import static gregtech.api.GregTechAPI.*;
 import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_DTPF_OFF;
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_DTPF_ON;
@@ -51,7 +48,6 @@ import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
-import gregtech.api.interfaces.tileentity.IWirelessEnergyHatchInformation;
 import gregtech.api.logic.ProcessingLogic;
 import gregtech.api.metatileentity.implementations.MTEHatchInputBus;
 import gregtech.api.recipe.check.CheckRecipeResult;
@@ -64,7 +60,7 @@ import gregtech.api.util.MultiblockTooltipBuilder;
 import gtPlusPlus.core.material.MaterialsAlloy;
 import tectech.thing.block.BlockQuantumGlass;
 
-public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> implements IWirelessEnergyHatchInformation {
+public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> {
 
     public OTEMegaEEC(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
@@ -97,7 +93,7 @@ public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> implements IWire
         return true;
     }
 
-    protected int getMaxParallelRecipes() {
+    public int getMaxParallelRecipes() {
         return 134217728;
     }
 
@@ -196,7 +192,7 @@ public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> implements IWire
         if (this.mMachine) return -1;
         int realBudget = elementBudget >= 200 ? elementBudget : Math.min(200, elementBudget * 5);
 
-        return this.survivialBuildPiece(
+        return this.survivalBuildPiece(
             STRUCTURE_PIECE_MAIN,
             stackSize,
             horizontalOffSet,
@@ -258,7 +254,7 @@ public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> implements IWire
                 .addElement('E', ofBlock(sBlockCasings1, 14))
                 .addElement('F', ofBlock(sBlockCasings2, 0))
                 .addElement('G', ofBlock(sBlockCasings8, 10))
-                .addElement('H', ofBlock(SpaceElevatorCasing, 1))
+                .addElement('H', ofBlock(sSpaceElevatorCable, 1))
                 .addElement('I', ofBlock(sBlockCasingsTT, 4))
                 .addElement('J', ofBlock(sBlockCasingsTT, 6))
                 .addElement('K', ofBlock(sBlockCasingsTT, 9))
@@ -4357,11 +4353,6 @@ public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> implements IWire
     @Override
     public int getDamageToComponent(ItemStack aStack) {
         return 0;
-    }
-
-    @Override
-    public boolean explodesOnComponentBreak(ItemStack aStack) {
-        return false;
     }
 
     @Override

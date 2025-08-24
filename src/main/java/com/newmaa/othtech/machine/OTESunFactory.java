@@ -33,7 +33,6 @@ import com.google.common.collect.ImmutableList;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
-import com.gtnewhorizons.gtnhintergalactic.block.IGBlocks;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
@@ -99,7 +98,7 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
         return true;
     }
 
-    protected int getMaxParallelRecipes() {
+    public int getMaxParallelRecipes() {
         return Integer.MAX_VALUE;
     }
 
@@ -193,7 +192,8 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
     }
 
     @Override
-    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ) {
+    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+        ItemStack aTool) {
         if (getBaseMetaTileEntity().isServerSide()) {
             int modeAmount;
             if (stabilisationFieldMetadata >= 8) {
@@ -297,7 +297,7 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
         if (this.mMachine) return -1;
         int realBudget = elementBudget >= 200 ? elementBudget : Math.min(200, elementBudget * 5);
 
-        return this.survivialBuildPiece(
+        return this.survivalBuildPiece(
             STRUCTURE_PIECE_MAIN,
             stackSize,
             horizontalOffSet,
@@ -344,7 +344,7 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
                 .addElement('D', ofBlock(sBlockCasings8, 13))
                 .addElement('E', ofBlock(sBlockCasings8, 14))
                 .addElement('F', ofBlock(sBlockCasings9, 1))
-                .addElement('G', ofBlock(IGBlocks.SpaceElevatorCasing, 1))
+                .addElement('G', ofBlock(sSpaceElevatorCable, 1))
                 .addElement('H', ofBlock(sBlockCasingsTT, 6))
                 .addElement(
                     'J',
@@ -2454,11 +2454,6 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
     @Override
     public int getDamageToComponent(ItemStack aStack) {
         return 0;
-    }
-
-    @Override
-    public boolean explodesOnComponentBreak(ItemStack aStack) {
-        return false;
     }
 
     @Override

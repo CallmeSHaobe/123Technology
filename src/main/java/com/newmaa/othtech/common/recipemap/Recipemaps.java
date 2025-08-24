@@ -28,7 +28,6 @@ public class Recipemaps {
         .neiHandlerInfo(
             builder -> builder.setDisplayStack(ItemList.Electric_Motor_MAX.get(1))
                 .setMaxRecipesPerPage(1))
-        .disableOptimize()
         .build();
     public static final RecipeMap<OTH_RecipeMapBackend> QFTMega = RecipeMapBuilder
         .of("otht.recipe.OTEMegaQFT", OTH_RecipeMapBackend::new)
@@ -38,7 +37,6 @@ public class Recipemaps {
         .neiHandlerInfo(
             builder -> builder.setDisplayStack(ItemList.Field_Generator_MAX.get(1))
                 .setMaxRecipesPerPage(2))
-        .disableOptimize()
         .build();
 
     // 没有使用先注释了 --keriils
@@ -61,7 +59,6 @@ public class Recipemaps {
         .neiHandlerInfo(
             builder -> builder.setDisplayStack(OTHItemList.Zhangww.get(1))
                 .setMaxRecipesPerPage(1))
-        .disableOptimize()
         .build();
 
     public static final RecipeMap<OTH_RecipeMapBackend> TSSF = RecipeMapBuilder
@@ -73,7 +70,6 @@ public class Recipemaps {
         .neiHandlerInfo(
             builder -> builder.setDisplayStack(OTHItemList.Dasima.get(1))
                 .setMaxRecipesPerPage(1))
-        .disableOptimize()
         .build();
 
     public static final RecipeMap<OTH_RecipeMapBackend> SF1 = RecipeMapBuilder
@@ -84,7 +80,6 @@ public class Recipemaps {
         .neiHandlerInfo(
             builder -> builder.setDisplayStack(OTHItemList.itemEnqingM.get(1))
                 .setMaxRecipesPerPage(1))
-        .disableOptimize()
         .build();
 
     public static final RecipeMap<OTH_RecipeMapBackend> SF2 = RecipeMapBuilder
@@ -95,7 +90,6 @@ public class Recipemaps {
         .neiHandlerInfo(
             builder -> builder.setDisplayStack(OTHItemList.itemEnqingM.get(1))
                 .setMaxRecipesPerPage(1))
-        .disableOptimize()
         .build();
 
     public static final RecipeMap<OTH_RecipeMapBackend> SF3 = RecipeMapBuilder
@@ -106,7 +100,6 @@ public class Recipemaps {
         .neiHandlerInfo(
             builder -> builder.setDisplayStack(OTHItemList.itemEnqingM.get(1))
                 .setMaxRecipesPerPage(1))
-        .disableOptimize()
         .build();
 
     public static final RecipeMap<OTH_RecipeMapBackend> SF4 = RecipeMapBuilder
@@ -117,7 +110,6 @@ public class Recipemaps {
         .neiHandlerInfo(
             builder -> builder.setDisplayStack(OTHItemList.itemEnqingM.get(1))
                 .setMaxRecipesPerPage(1))
-        .disableOptimize()
         .build();
     public static final RecipeMap<OTH_RecipeMapBackend> COC = RecipeMapBuilder
         .of("otht.recipe.COC", OTH_RecipeMapBackend::new)
@@ -127,12 +119,10 @@ public class Recipemaps {
         .neiHandlerInfo(
             builder -> builder.setDisplayStack(OTHItemList.CoccOven.get(1))
                 .setMaxRecipesPerPage(1))
-        .disableOptimize()
         .build();
 
     public static final RecipeMap<RecipeMapBackend> WFR = RecipeMapBuilder.of("otht.recipe.WoodenFusionReactor")
         .maxIO(0, 0, 1, 1)
-        .disableOptimize()
         .useCustomFilterForNEI()
         .frontend(FluidOnlyFrontend::new)
         .build();
@@ -146,7 +136,6 @@ public class Recipemaps {
         .neiHandlerInfo(
             builder -> builder.setDisplayStack(OTHItemList.MISA.get(1))
                 .setMaxRecipesPerPage(1))
-        .disableOptimize()
         .build();
     public static final RecipeMap<RecipeMapBackend> NQF = RecipeMapBuilder.of("otht.recipe.NQF", RecipeMapBackend::new)
         .maxIO(10, 0, 10, 1)
@@ -155,7 +144,6 @@ public class Recipemaps {
         .neiHandlerInfo(
             builder -> builder.setDisplayStack(Loaders.FRF.copy())
                 .setMaxRecipesPerPage(1))
-        .disableOptimize()
         .build();
     public static final RecipeMap<FuelBackend> NaquadahFuelFakeRecipes = RecipeMapBuilder
         .of("otht.recipe.fuel.nq", FuelBackend::new)
@@ -178,7 +166,6 @@ public class Recipemaps {
         .neiHandlerInfo(
             builder -> builder.setDisplayStack(OTHItemList.TP.get(1))
                 .setMaxRecipesPerPage(1))
-        .disableOptimize()
         .build();
     public static final RecipeMap<OTH_RecipeMapBackend> BIN = RecipeMapBuilder
         .of("otht.recipe.BIN", OTH_RecipeMapBackend::new)
@@ -188,7 +175,6 @@ public class Recipemaps {
         .neiHandlerInfo(
             builder -> builder.setDisplayStack(OTHItemList.TP.get(1))
                 .setMaxRecipesPerPage(1))
-        .disableOptimize()
         .build();
     public static final RecipeMap<OTH_RecipeMapBackend> RCY = RecipeMapBuilder
         .of("otht.recipe.RCY", OTH_RecipeMapBackend::new)
@@ -198,7 +184,6 @@ public class Recipemaps {
         .neiHandlerInfo(
             builder -> builder.setDisplayStack(OTHItemList.TP.get(1))
                 .setMaxRecipesPerPage(1))
-        .disableOptimize()
         .build();
     public static final RecipeMap<OTH_RecipeMapBackend> EIO = RecipeMapBuilder
         .of("otht.recipe.EIO", OTH_RecipeMapBackend::new)
@@ -208,7 +193,6 @@ public class Recipemaps {
         .neiHandlerInfo(
             builder -> builder.setDisplayStack(OTHItemList.EIO.get(1))
                 .setMaxRecipesPerPage(1))
-        .disableOptimize()
         .build();
     public static final RecipeMap<OTH_RecipeMapBackend> EXH = RecipeMapBuilder
         .of("otht.recipe.EXH", OTH_RecipeMapBackend::new)

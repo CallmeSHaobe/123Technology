@@ -12,7 +12,6 @@ import cpw.mods.fml.common.event.FMLLoadCompleteEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import gtPlusPlus.core.handler.CompatHandler;
 import gtPlusPlus.core.handler.CompatIntermodStaging;
 
 public class CommonProxy {
@@ -42,6 +41,5 @@ public class CommonProxy {
 
     public void onLoadComplete(FMLLoadCompleteEvent event) {
         CompatIntermodStaging.onLoadComplete(event);
-        CompatHandler.onLoadComplete(event);
     }
 }

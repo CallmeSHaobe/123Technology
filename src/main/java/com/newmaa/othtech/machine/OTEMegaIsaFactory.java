@@ -96,7 +96,7 @@ public class OTEMegaIsaFactory extends OTHMultiMachineBase<OTEMegaIsaFactory> {
         return true;
     }
 
-    protected int getMaxParallelRecipes() {
+    public int getMaxParallelRecipes() {
         return 123;
     }
 
@@ -201,7 +201,7 @@ public class OTEMegaIsaFactory extends OTHMultiMachineBase<OTEMegaIsaFactory> {
         if (this.mMachine) return -1;
         int realBudget = elementBudget >= 200 ? elementBudget : Math.min(200, elementBudget * 5);
 
-        return this.survivialBuildPiece(
+        return this.survivalBuildPiece(
             STRUCTURE_PIECE_MAIN,
             stackSize,
             horizontalOffSet,
@@ -1708,11 +1708,6 @@ public class OTEMegaIsaFactory extends OTHMultiMachineBase<OTEMegaIsaFactory> {
     @Override
     public int getDamageToComponent(ItemStack aStack) {
         return super.getDamageToComponent(aStack);
-    }
-
-    @Override
-    public boolean explodesOnComponentBreak(ItemStack aStack) {
-        return super.explodesOnComponentBreak(aStack);
     }
 
     @Override

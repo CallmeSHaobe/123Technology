@@ -127,7 +127,7 @@ public class OTEGraveDragon extends OTHMultiMachineBase<OTEGraveDragon> {
         }
     }
 
-    protected int getMaxParallelRecipes() {
+    public int getMaxParallelRecipes() {
         switch (MachanicalblocksDate) {
             case 1:
                 return 128;
@@ -146,7 +146,7 @@ public class OTEGraveDragon extends OTHMultiMachineBase<OTEGraveDragon> {
 
     // 耗时倍率
     protected float getSpeedBonus() {
-        return (float) (1 - coilLevel.getLevel() * 0.05);
+        return (float) (1 - coilLevel.getTier() * 0.05);
     }
 
     public int getMaxEfficiency() {
@@ -227,7 +227,7 @@ public class OTEGraveDragon extends OTHMultiMachineBase<OTEGraveDragon> {
         if (this.mMachine) return -1;
         int realBudget = elementBudget >= 200 ? elementBudget : Math.min(200, elementBudget * 5);
 
-        return this.survivialBuildPiece(
+        return this.survivalBuildPiece(
             STRUCTURE_PIECE_MAIN,
             stackSize,
             horizontalOffSet,
@@ -392,7 +392,7 @@ public class OTEGraveDragon extends OTHMultiMachineBase<OTEGraveDragon> {
     public void saveNBTData(NBTTagCompound aNBT) {
         super.saveNBTData(aNBT);
         aNBT.setInteger("MachanicalblocksDate", MachanicalblocksDate);
-        aNBT.setInteger("coilLevel", coilLevel.getLevel());
+        aNBT.setInteger("coilLevel", coilLevel.getTier());
         aNBT.setFloat("speedBonus", getSpeedBonus());
     }
 
@@ -412,7 +412,7 @@ public class OTEGraveDragon extends OTHMultiMachineBase<OTEGraveDragon> {
             tag.setString("MachanicalblocksDate", String.valueOf(MachanicalblocksDate));
             tag.setBoolean("PerfectOverclock", isEnablePerfectOverclock());
             tag.setString("MaxParallelRecipes", String.valueOf(getMaxParallelRecipes()));
-            tag.setString("coilLevel", String.valueOf(coilLevel.getLevel()));
+            tag.setString("coilLevel", String.valueOf(coilLevel.getTier()));
         }
     }
 

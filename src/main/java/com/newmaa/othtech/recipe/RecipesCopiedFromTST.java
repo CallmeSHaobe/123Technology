@@ -31,7 +31,7 @@ public class RecipesCopiedFromTST implements IRecipePool {
                 GTModHandler.getModItem("miscutils", "itemScrewCelestialTungsten", 64),
                 GTModHandler.getModItem("miscutils", "itemRingCelestialTungsten", 64))
             .itemOutputs(GTModHandler.getModItem("tectech", "gt.blockcasingsTT", 1, 12))
-            .noOptimize()
+
             .eut(TierEU.UMV)
             .duration(300 * 20)
             .addTo(Assembler);

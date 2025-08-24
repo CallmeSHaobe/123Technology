@@ -20,7 +20,6 @@ public class BWMaterials implements Runnable {
             .addMolten()
             .addMetalItems()
             .addCraftingMetalWorkingItems()
-            .addMultipleIngotMetalWorkingItems()
             .addMetaSolidifierRecipes()
             .addMetalCraftingSolidifierRecipes(),
         offsetID_01 + 20,

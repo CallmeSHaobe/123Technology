@@ -123,7 +123,7 @@ public class OTEFoodGenerator extends TTMultiMachineBaseEM implements IConstruct
                 + EnumChatFormatting.RESET);
     }
 
-    protected int getMaxParallelRecipes() {
+    public int getMaxParallelRecipes() {
         return 64;
     }
 
@@ -197,7 +197,7 @@ public class OTEFoodGenerator extends TTMultiMachineBaseEM implements IConstruct
         if (this.mMachine) return -1;
         int realBudget = elementBudget >= 200 ? elementBudget : Math.min(200, elementBudget * 5);
 
-        return this.survivialBuildPiece(
+        return this.survivalBuildPiece(
             STRUCTURE_PIECE_MAIN,
             stackSize,
             horizontalOffSet,
@@ -446,11 +446,6 @@ public class OTEFoodGenerator extends TTMultiMachineBaseEM implements IConstruct
     @Override
     public int getDamageToComponent(ItemStack aStack) {
         return 0;
-    }
-
-    @Override
-    public boolean explodesOnComponentBreak(ItemStack aStack) {
-        return false;
     }
 
     @Override

@@ -7,11 +7,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
+import gregtech.api.enums.ItemList;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTUtility;
 import gtPlusPlus.api.objects.Logger;
-import gtPlusPlus.core.recipe.common.CI;
 import gtPlusPlus.core.util.minecraft.ItemUtils;
 import gtPlusPlus.core.util.recipe.GTRecipeUtils;
 
@@ -38,12 +38,7 @@ public class RecipesEXH implements IRecipePool {
     private static void init() {
         if (!mInit) {
             mInit = true;
-            mItemsToIgnore.add(
-                ItemUtils.simpleMetaStack(
-                    CI.emptyCells(1)
-                        .getItem(),
-                    8,
-                    1));
+            mItemsToIgnore.add(new ItemStack(ItemList.Cell_Empty.getItem(), 8, 1));
         }
     }
 
@@ -62,7 +57,7 @@ public class RecipesEXH implements IRecipePool {
             return false;
         }
         if (mEmptyCell == null) {
-            mEmptyCell = CI.emptyCells(1);
+            mEmptyCell = new ItemStack(ItemList.Cell_Empty.getItem(), 1);
         }
         if (mEmptyCell != null) {
             ItemStack aTempStack = mEmptyCell.copy();
@@ -137,7 +132,7 @@ public class RecipesEXH implements IRecipePool {
                     aNewItemOutputs[i] = aOutputItemsMap.get(i);
                 }
 
-                if (!ItemUtils.checkForInvalidItems(aNewItemInputs, aNewItemOutputs)) {
+                if (!ItemUtils.checkForInvalidItems(aNewItemInputs)) {
                     aInvalidRecipesToConvert++;
                     continue; // Skip this recipe entirely if we find an item we don't like
                 }

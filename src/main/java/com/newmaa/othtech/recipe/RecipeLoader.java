@@ -11,9 +11,9 @@ public class RecipeLoader {
             new RecipesBlastFurnaceRecipes(), new RecipesFreezerRecipes(), new RecipesMain(), new RecipesMAXs(),
             new RecipesMegaISAForge(), new RecipesMixerRecipes(), new RecipesQFTRecipes(), new RecipesMegaQFT(),
             new RecipesCyclotronRecipes(), new RecipesCircuit(), new RecipesSINOPEC(),
-            new RecipesTangshanSteelFactory(), new RecipesMegaEEC(), new RecipesSunFactoryEnqing(),
-            new RecipesEpicCokeOvenFake(), new RecipesWoodenFusionReactor(), new RecipesMISA(), new RecipesNaquadah(),
-            new RecipesEIO(), new RecipesEXH(), new RecipesNewWetware(), new RecipesAntimonia() };
+            new RecipesTangshanSteelFactory(), new RecipesSunFactoryEnqing(), new RecipesEpicCokeOvenFake(),
+            new RecipesWoodenFusionReactor(), new RecipesMISA(), new RecipesNaquadah(), new RecipesEIO(),
+            new RecipesEXH(), new RecipesNewWetware(), new RecipesAntimonia() };
         if (!modsEnum.TwistSpaceTechnology.isModLoaded()) {
             new RecipesCopiedFromTST().loadRecipes();
         }

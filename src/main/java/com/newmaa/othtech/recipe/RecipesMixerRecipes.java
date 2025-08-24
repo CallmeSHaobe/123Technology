@@ -32,7 +32,7 @@ public class RecipesMixerRecipes implements IRecipePool {
             .fluidInputs(new FluidStack(Ne, 1000), new FluidStack(I, 1000))
             .fluidOutputs(new FluidStack(Shit, 144))
             .itemOutputs(OTHItemList.dustLookNEIM.get(1))
-            .noOptimize()
+
             .duration(200)
             .eut(6144)
             .addTo(LMixer);
@@ -42,7 +42,7 @@ public class RecipesMixerRecipes implements IRecipePool {
         // GTOreDictUnificator.get(OrePrefixes.dust, Materials.Arsenic, 1),
         // GTOreDictUnificator.get(OrePrefixes.ingot, Materials.Fireclay, 4))
         // .itemOutputs(GTModHandler.getModItem("123Technology", "dustSnAs", 1))
-        // .noOptimize()
+        //
         // .duration(200)
         // .eut(30)
         // .addTo(LMixer);
@@ -58,7 +58,7 @@ public class RecipesMixerRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Phosphorus, 40),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Redstone, 10),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Aluminium, 5))
-            .noOptimize()
+
             .duration(400)
             .eut(123123)
             .addTo(LMixer);
@@ -68,7 +68,7 @@ public class RecipesMixerRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Cerium, 1))
             .itemOutputs(setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 10097), 19))
             .fluidInputs(FluidRegistry.getFluidStack("molten.lithium chloride", 144))
-            .noOptimize()
+
             .duration(30 * 20)
             .eut(TierEU.RECIPE_ZPM)
             .addTo(LMixer);

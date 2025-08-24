@@ -93,7 +93,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .fluidInputs(new FluidStack(sb, 36))
             .itemOutputs(
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32748), 128 * a))
-            .noOptimize()
+
             .duration(4 * 20 * 64)
             .eut(TierEU.RECIPE_EV)
             .addTo(PCB);
@@ -106,7 +106,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 22979), 1))
             .fluidInputs(new FluidStack(sb, 36))
             .itemOutputs(setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32106), 2048 * a))
-            .noOptimize()
+
             .duration(4 * 20 * 64)
             .eut(TierEU.RECIPE_EV)
             .addTo(PCB);
@@ -122,7 +122,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .fluidInputs(new FluidStack(sb, 54))
             .itemOutputs(
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32756), 128 * a))
-            .noOptimize()
+
             .duration(6 * 20 * 64)
             .eut(TierEU.RECIPE_IV)
             .addTo(PCB);
@@ -136,7 +136,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 22979), 1))
             .fluidInputs(new FluidStack(sb, 54))
             .itemOutputs(setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32102), 2048 * a))
-            .noOptimize()
+
             .duration(6 * 20 * 64)
             .eut(TierEU.RECIPE_IV)
             .addTo(PCB);
@@ -152,7 +152,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .fluidInputs(new FluidStack(sb, 72))
             .itemOutputs(
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32754), 128 * a))
-            .noOptimize()
+
             .duration(8 * 20 * 64)
             .eut(TierEU.RECIPE_LuV)
             .addTo(PCB);
@@ -166,7 +166,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 22979), 2))
             .fluidInputs(new FluidStack(sb, 72))
             .itemOutputs(setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32103), 2048 * a))
-            .noOptimize()
+
             .duration(8 * 20 * 64)
             .eut(TierEU.RECIPE_LuV)
             .addTo(PCB);
@@ -182,7 +182,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .fluidInputs(new FluidStack(sb, 90))
             .itemOutputs(
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32753), 128 * a))
-            .noOptimize()
+
             .duration(10 * 20 * 64)
             .eut(TierEU.RECIPE_ZPM)
             .addTo(PCB);
@@ -196,7 +196,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 22979), 2))
             .fluidInputs(new FluidStack(sb, 90))
             .itemOutputs(setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32104), 2048 * a))
-            .noOptimize()
+
             .duration(10 * 20 * 64)
             .eut(TierEU.RECIPE_ZPM)
             .addTo(PCB);
@@ -213,7 +213,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .fluidInputs(new FluidStack(sb, 108))
             .itemOutputs(
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32750), 128 * a))
-            .noOptimize()
+
             .duration(12 * 20 * 64)
             .eut(TierEU.RECIPE_UV)
             .addTo(PCB);
@@ -228,7 +228,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 22979), 3))
             .fluidInputs(new FluidStack(sb, 108))
             .itemOutputs(setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32105), 2048 * a))
-            .noOptimize()
+
             .duration(12 * 20 * 64)
             .eut(TierEU.RECIPE_UV)
             .addTo(PCB);
@@ -247,7 +247,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .fluidInputs(new FluidStack(sb, 126))
             .itemOutputs(
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32746), 128 * a))
-            .noOptimize()
+
             .duration(14 * 20 * 64)
             .eut(RECIPE_UHV)
             .addTo(PCB);
@@ -264,7 +264,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 22979), 4))
             .fluidInputs(new FluidStack(sb, 126))
             .itemOutputs(setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32107), 2048 * a))
-            .noOptimize()
+
             .duration(14 * 20 * 64)
             .eut(RECIPE_UHV)
             .addTo(PCB);
@@ -282,7 +282,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .fluidInputs(new FluidStack(sb, 144))
             .itemOutputs(
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32704), 128 * a))
-            .noOptimize()
+
             .duration(16 * 20 * 64)
             .eut(TierEU.RECIPE_UEV)
             .addTo(PCB);
@@ -298,7 +298,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 22979), 7))
             .fluidInputs(new FluidStack(sb, 144))
             .itemOutputs(setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32728), 2048 * a))
-            .noOptimize()
+
             .duration(16 * 20 * 64)
             .eut(TierEU.RECIPE_UEV)
             .addTo(PCB);
@@ -312,7 +312,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .fluidInputs(MaterialsUEVplus.SpaceTime.getMolten(32 * 667))
             .itemOutputs(
                 setStackSize(GTModHandler.getModItem(modsEnum.TwistSpaceTechnology.ID, "MetaItem01", 1, 30), 2048 * a))
-            .noOptimize()
+
             .duration(22 * 20 * 32)
             .eut(TierEU.RECIPE_UEV)
             .addTo(PCB);
@@ -337,7 +337,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32743), 64 * a),
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32744), 64 * a),
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32745), 64 * a))
-            .noOptimize()
+
             .duration(20 * 64)
             .eut(TierEU.RECIPE_ZPM)
             .addTo(SMD);
@@ -360,7 +360,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32018), 1024 * a),
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32020), 1024 * a),
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32182), 1024 * a))
-            .noOptimize()
+
             .duration(20 * 64)
             .eut(TierEU.RECIPE_ZPM)
             .addTo(SMD);
@@ -384,7 +384,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32739), 64 * a),
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32740), 64 * a),
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32707), 64 * a))
-            .noOptimize()
+
             .duration(20 * 64)
             .eut(RECIPE_UHV)
             .addTo(SMD);
@@ -407,7 +407,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32026), 1024 * a),
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32027), 1024 * a),
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32183), 1024 * a))
-            .noOptimize()
+
             .duration(20 * 64)
             .eut(RECIPE_UHV)
             .addTo(SMD);
@@ -443,7 +443,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32709), 64 * a),
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32710), 64 * a),
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32711), 64 * a))
-            .noOptimize()
+
             .duration(20 * 64)
             .eut(TierEU.RECIPE_UIV)
             .addTo(SMD);
@@ -478,7 +478,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32180), 1024 * a),
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32181), 1024 * a),
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32184), 1024 * a))
-            .noOptimize()
+
             .duration(20 * 64)
             .eut(TierEU.RECIPE_UIV)
             .addTo(SMD);
@@ -516,7 +516,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32709), 64 * a),
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32710), 64 * a),
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32711), 64 * a))
-            .noOptimize()
+
             .duration(20 * 64)
             .eut(TierEU.RECIPE_UIV)
             .addTo(SMD);
@@ -553,7 +553,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32180), 1024 * a),
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32181), 1024 * a),
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32184), 1024 * a))
-            .noOptimize()
+
             .duration(20 * 64)
             .eut(TierEU.RECIPE_UIV)
             .addTo(SMD);
@@ -895,7 +895,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .fluidInputs(new FluidStack(water, 1440))
             .fluidOutputs(new FluidStack(water2, 1440))
             .itemOutputs(setStackSize(Circuit_Wafer_PIC.get(1), 1024 * a))
-            .noOptimize()
+
             .duration(60 * 64 * 20)
             .eut(TierEU.EV)
             .addTo(NMD);
@@ -903,7 +903,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .itemInputs(GTUtility.getIntegratedCircuit(4), setStackSize(Circuit_Silicon_Wafer6.get(1), 4))
             .fluidOutputs(new FluidStack(water2, 1440))
             .itemOutputs(setStackSize(Circuit_Wafer_PIC.get(1), 1024 * a))
-            .noOptimize()
+
             .duration(60 * 64 * 20)
             .eut(TierEU.EV)
             .addTo(NMD);
@@ -916,7 +916,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .fluidInputs(new FluidStack(water, 1440))
             .fluidOutputs(new FluidStack(water2, 1440))
             .itemOutputs(setStackSize(Circuit_Chip_PIC.get(1), 2048 * a))
-            .noOptimize()
+
             .duration(60 * 64 * 20)
             .eut(TierEU.EV)
             .addTo(NMD);
@@ -927,7 +927,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 setStackSize(Circuit_Silicon_Wafer6.get(1), 4))
             .fluidOutputs(new FluidStack(water2, 1440))
             .itemOutputs(setStackSize(Circuit_Chip_PIC.get(1), 2048 * a))
-            .noOptimize()
+
             .duration(60 * 64 * 20)
             .eut(TierEU.EV)
             .addTo(NMD);
@@ -941,7 +941,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .fluidInputs(new FluidStack(water, 2880))
             .fluidOutputs(new FluidStack(water2, 2880))
             .itemOutputs(setStackSize(Circuit_Wafer_HPIC.get(1), 1024 * a))
-            .noOptimize()
+
             .duration(60 * 64 * 20)
             .eut(TierEU.LuV)
             .addTo(NMD);
@@ -953,7 +953,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.VanadiumGallium, 1), 2048))
             .fluidOutputs(new FluidStack(water2, 2880))
             .itemOutputs(setStackSize(Circuit_Wafer_HPIC.get(1), 1024 * a))
-            .noOptimize()
+
             .duration(60 * 64 * 20)
             .eut(TierEU.LuV)
             .addTo(NMD);
@@ -968,7 +968,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .fluidInputs(new FluidStack(water, 2880))
             .fluidOutputs(new FluidStack(water2, 2880))
             .itemOutputs(setStackSize(Circuit_Chip_HPIC.get(1), 2048 * a))
-            .noOptimize()
+
             .duration(60 * 64 * 20)
             .eut(TierEU.LuV)
             .addTo(NMD);
@@ -981,7 +981,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.VanadiumGallium, 1), 2048))
             .fluidOutputs(new FluidStack(water2, 2880))
             .itemOutputs(setStackSize(Circuit_Chip_HPIC.get(1), 2048 * a))
-            .noOptimize()
+
             .duration(60 * 64 * 20)
             .eut(TierEU.LuV)
             .addTo(NMD);
@@ -996,7 +996,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .fluidInputs(new FluidStack(water, 4320))
             .fluidOutputs(new FluidStack(water2, 4320))
             .itemOutputs(setStackSize(Circuit_Wafer_UHPIC.get(1), 1024 * a))
-            .noOptimize()
+
             .duration(60 * 64 * 20)
             .eut(TierEU.ZPM)
             .addTo(NMD);
@@ -1009,7 +1009,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Naquadah, 1), 4096))
             .fluidOutputs(new FluidStack(water2, 4320))
             .itemOutputs(setStackSize(Circuit_Wafer_UHPIC.get(1), 1024 * a))
-            .noOptimize()
+
             .duration(60 * 64 * 20)
             .eut(TierEU.ZPM)
             .addTo(NMD);
@@ -1025,7 +1025,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .fluidInputs(new FluidStack(water, 4320))
             .fluidOutputs(new FluidStack(water2, 4320))
             .itemOutputs(setStackSize(Circuit_Chip_UHPIC.get(1), 2048 * a))
-            .noOptimize()
+
             .duration(60 * 64 * 20)
             .eut(TierEU.ZPM)
             .addTo(NMD);
@@ -1039,7 +1039,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Naquadah, 1), 4096))
             .fluidOutputs(new FluidStack(water2, 4320))
             .itemOutputs(setStackSize(Circuit_Chip_UHPIC.get(1), 2048 * a))
-            .noOptimize()
+
             .duration(60 * 64 * 20)
             .eut(TierEU.ZPM)
             .addTo(NMD);
@@ -1052,7 +1052,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Sunnarium, 1), 10240))
             .fluidOutputs(new FluidStack(water2, 5760))
             .itemOutputs(setStackSize(Circuit_Wafer_PPIC.get(1), 1024 * a))
-            .noOptimize()
+
             .duration(60 * 64 * 20)
             .eut(TierEU.UV)
             .addTo(NMD);
@@ -1066,7 +1066,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Sunnarium, 1), 10240))
             .fluidOutputs(new FluidStack(water2, 5760))
             .itemOutputs(setStackSize(Circuit_Chip_PPIC.get(1), 2048 * a))
-            .noOptimize()
+
             .duration(60 * 64 * 20)
             .eut(TierEU.UV)
             .addTo(NMD);
@@ -1112,7 +1112,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 GTUtility.getIntegratedCircuit(4))
             .fluidInputs(new FluidStack(sb, 576))
             .itemOutputs(setStackSize(ItemList.Circuit_Chip_CrystalSoC2.get(1), 64 * 16 * a))
-            .noOptimize()
+
             .duration(60 * 64 * 20)
             .eut(TierEU.UV)
             .addTo(NMD);
@@ -1123,7 +1123,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 GTUtility.getIntegratedCircuit(4))
             .fluidInputs(new FluidStack(sb, 576))
             .itemOutputs(setStackSize(ItemList.Circuit_Chip_CrystalSoC2.get(1), 64 * 16 * a))
-            .noOptimize()
+
             .duration(60 * 64 * 20)
             .eut(TierEU.UV)
             .addTo(NMD);
@@ -1137,7 +1137,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .fluidInputs(new FluidStack(sb, 36))
             .itemOutputs(
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32718), 64 * a))
-            .noOptimize()
+
             .duration(123 * 64 * 20)
             .eut(TierEU.EV)
             .addTo(UNI);
@@ -1149,7 +1149,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .fluidInputs(new FluidStack(sb, 36))
             .itemOutputs(
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32718), 64 * a))
-            .noOptimize()
+
             .duration(123 * 64 * 20)
             .eut(TierEU.EV)
             .addTo(UNI);
@@ -1162,7 +1162,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .fluidInputs(new FluidStack(sb, 144))
             .itemOutputs(
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32717), 64 * a))
-            .noOptimize()
+
             .duration(123 * 64 * 20)
             .eut(TierEU.EV)
             .addTo(UNI);
@@ -1174,7 +1174,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .fluidInputs(new FluidStack(sb, 144))
             .itemOutputs(
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32717), 64 * a))
-            .noOptimize()
+
             .duration(123 * 64 * 20)
             .eut(TierEU.EV)
             .addTo(UNI);
@@ -1189,7 +1189,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .fluidInputs(new FluidStack(sb, 288))
             .itemOutputs(
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32700), 64 * a))
-            .noOptimize()
+
             .duration(240 * 64 * 20)
             .eut(TierEU.UHV)
             .addTo(UNI);
@@ -1203,7 +1203,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .fluidInputs(new FluidStack(sb, 288))
             .itemOutputs(
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32700), 64 * a))
-            .noOptimize()
+
             .duration(240 * 64 * 20)
             .eut(TierEU.UHV)
             .addTo(UNI);
@@ -1216,7 +1216,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .fluidInputs(new FluidStack(sb, 576))
             .itemOutputs(
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32716), 64 * a))
-            .noOptimize()
+
             .duration(60 * 64 * 20)
             .eut(TierEU.UV)
             .addTo(UNI);
@@ -1228,7 +1228,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .fluidInputs(new FluidStack(sb, 576))
             .itemOutputs(
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32716), 64 * a))
-            .noOptimize()
+
             .duration(60 * 64 * 20)
             .eut(TierEU.UV)
             .addTo(UNI);
@@ -1244,7 +1244,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .fluidInputs(FluidRegistry.getFluidStack("ic2uumatter", 576000))
             .itemOutputs(
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32699), 64 * a))
-            .noOptimize()
+
             .duration(15 * 64 * 20)
             .eut(TierEU.UIV)
             .addTo(UNI);
@@ -1267,7 +1267,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 FluidRegistry.getFluidStack("molten.superconductorumvbase", 2880),
                 new FluidStack(sb, 5760))
             .itemOutputs(setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32725), 1024 * a))
-            .noOptimize()
+
             .duration(10 * 64 * 20)
             .eut(TierEU.UMV)
             .addTo(UNI);
@@ -1290,7 +1290,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 new FluidStack(sb, 5760))
             .itemOutputs(
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32701), 64 * a))
-            .noOptimize()
+
             .duration(10 * 64 * 20)
             .eut(TierEU.UMV)
             .addTo(UNI);
@@ -1309,7 +1309,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 GTUtility.getIntegratedCircuit(23))
             .fluidInputs(new FluidStack(sb, 144))
             .itemOutputs(setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32727), 1024 * a))
-            .noOptimize()
+
             .duration(10 * 64 * 20)
             .eut(TierEU.UMV)
             .addTo(UNI);
@@ -1327,7 +1327,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .fluidInputs(new FluidStack(sb, 144))
             .itemOutputs(
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32702), 64 * a))
-            .noOptimize()
+
             .duration(5 * 64 * 20)
             .eut(TierEU.UIV)
             .addTo(UNI);
@@ -1346,7 +1346,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 GTUtility.getIntegratedCircuit(23))
             .fluidInputs(new FluidStack(sb, 1440))
             .itemOutputs(setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32726), 1024 * a))
-            .noOptimize()
+
             .duration(20 * 64 * 20)
             .eut(TierEU.UMV)
             .addTo(UNI);
@@ -1365,7 +1365,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .fluidInputs(new FluidStack(sb, 1440))
             .itemOutputs(
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32703), 64 * a))
-            .noOptimize()
+
             .duration(20 * 64 * 20)
             .eut(TierEU.UMV)
             .addTo(UNI);
@@ -1380,7 +1380,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 GTUtility.getIntegratedCircuit(24))
             .fluidInputs(new FluidStack(sb, 288))
             .itemOutputs(setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32724), 1024 * a))
-            .noOptimize()
+
             .duration(5 * 64 * 20)
             .eut(TierEU.UXV)
             .addTo(UNI);
@@ -1397,7 +1397,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 setStackSize(
                     GTModHandler.getModItem("dreamcraft", "item.EngineeringProcessorItemAdvEmeraldCore", a),
                     1024))
-            .noOptimize()
+
             .duration(114 * 20)
             .eut(TierEU.IV)
             .addTo(UNI);
@@ -1429,7 +1429,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 FluidRegistry.getFluidStack("molten.callistoice", 288 * 64)
 
             )
-            .noOptimize()
+
             .duration(123 * 20)
             .eut(TierEU.EV)
             .addTo(UNI);
@@ -1450,7 +1450,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 FluidRegistry.getFluidStack("hydrogen", 144 * 64)
 
             )
-            .noOptimize()
+
             .duration(20 * 20)
             .eut(TierEU.LuV)
             .addTo(UNI);
@@ -1466,7 +1466,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .fluidInputs(Materials.Helium.getPlasma(80)
 
             )
-            .noOptimize()
+
             .duration(100 * 20)
             .eut(TierEU.LuV)
             .addTo(UNI);
@@ -1481,7 +1481,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .fluidInputs(Materials.Helium.getPlasma(80)
 
             )
-            .noOptimize()
+
             .duration(100 * 20)
             .eut(TierEU.LuV)
             .addTo(UNI);
@@ -1494,7 +1494,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 GTUtility.getIntegratedCircuit(24))
             .fluidInputs(new FluidStack(sb, 2304), FluidRegistry.getFluidStack("molten.infinity", 144))
             .itemOutputs(setStackSize(GTModHandler.getModItem("IC2", "itemPartIridium", 1), 2048 * a))
-            .noOptimize()
+
             .duration(100 * 20)
             .eut(TierEU.UHV)
             .addTo(UNI);
@@ -1517,7 +1517,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 setStackSize(new ItemStack(Blocks.chest, 1), 18 * 256),
                 setStackSize(GTModHandler.getModItem("eternalsingularity", "eternal_singularity", 1), 256),
                 GTModHandler.getModItem("dreamcraft", "item.EngineeringProcessorItemAdvEmeraldCore", 1))
-            .noOptimize()
+
             .duration(256 * 20 * 5)
             .eut(TierEU.UV)
             .addTo(UNI);
@@ -1542,7 +1542,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 FluidRegistry.getFluidStack("molten.Polytetrafluoroethylene", 1152 * 256),
                 FluidRegistry.getFluidStack("molten.solderingalloy", 128123 * 256),
                 FluidRegistry.getFluidStack("molten.neutronium", 9216 * 256))
-            .noOptimize()
+
             .duration(256 * 20 * 8)
             .eut(TierEU.UMV)
             .addTo(UNI);

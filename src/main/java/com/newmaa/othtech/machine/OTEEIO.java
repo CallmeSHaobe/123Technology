@@ -70,7 +70,7 @@ public class OTEEIO extends OTHMultiMachineBase<OTEEIO> {
         return true;
     }
 
-    protected int getMaxParallelRecipes() {
+    public int getMaxParallelRecipes() {
         return 64;
     }
 
@@ -189,7 +189,7 @@ public class OTEEIO extends OTHMultiMachineBase<OTEEIO> {
         if (this.mMachine) return -1;
         int realBudget = elementBudget >= 200 ? elementBudget : Math.min(200, elementBudget * 5);
 
-        return this.survivialBuildPiece(
+        return this.survivalBuildPiece(
             STRUCTURE_PIECE_MAIN,
             stackSize,
             horizontalOffSet,
@@ -203,7 +203,8 @@ public class OTEEIO extends OTHMultiMachineBase<OTEEIO> {
     }
 
     @Override
-    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ) {
+    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+        ItemStack aTool) {
         if (mode == false) {
             mode = true;
         } else {
@@ -292,9 +293,9 @@ public class OTEEIO extends OTHMultiMachineBase<OTEEIO> {
     public ITexture[] getTexture(final IGregTechTileEntity baseMetaTileEntity, final ForgeDirection sideDirection,
         final ForgeDirection facing, final int aColorIndex, final boolean active, final boolean aRedstone) {
 
-        if (CASING_TEXTURE == null) {
-            CASING_TEXTURE = TextureFactory.of(EnderIO.blockSliceAndSplice, 0);
-        }
+        // if (CASING_TEXTURE == null) {
+        // CASING_TEXTURE = TextureFactory.of(BlockSliceAndSplice., 0);
+        // }
         if (sideDirection == facing) {
             if (active) return new ITexture[] { CASING_TEXTURE, TextureFactory.builder()
                 .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_ACTIVE)

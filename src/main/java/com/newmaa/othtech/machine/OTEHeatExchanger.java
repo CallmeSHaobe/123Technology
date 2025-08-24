@@ -30,7 +30,6 @@ import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.logic.ProcessingLogic;
-import gregtech.api.multitileentity.multiblock.casing.Glasses;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
@@ -131,7 +130,7 @@ public class OTEHeatExchanger extends TTMultiMachineBaseEM implements ISurvivalC
         if (this.mMachine) return -1;
         int realBudget = elementBudget >= 200 ? elementBudget : Math.min(200, elementBudget * 5);
 
-        return this.survivialBuildPiece(
+        return this.survivalBuildPiece(
             STRUCTURE_PIECE_MAIN,
             stackSize,
             horizontalOffSet,
@@ -163,7 +162,7 @@ public class OTEHeatExchanger extends TTMultiMachineBaseEM implements ISurvivalC
         if (STRUCTURE_DEFINITION == null) {
             STRUCTURE_DEFINITION = StructureDefinition.<OTEHeatExchanger>builder()
                 .addShape(STRUCTURE_PIECE_MAIN, transpose(shapeMain))
-                .addElement('A', Glasses.chainAllGlasses())
+                .addElement('A', chainAllGlasses())
 
                 .addElement('B', ofBlock(sBlockCasings2, 1))
                 .addElement('C', ofBlock(sBlockCasings2, 15))

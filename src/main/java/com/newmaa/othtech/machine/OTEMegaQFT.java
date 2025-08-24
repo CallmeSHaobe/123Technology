@@ -2,6 +2,7 @@ package com.newmaa.othtech.machine;
 
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
 import static gregtech.api.GregTechAPI.sBlockMetal9;
+import static gregtech.api.GregTechAPI.sSpaceElevatorCable;
 import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.enums.Textures.BlockIcons.*;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
@@ -30,7 +31,6 @@ import com.google.common.collect.ImmutableList;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
-import com.gtnewhorizons.gtnhintergalactic.block.IGBlocks;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 
@@ -99,7 +99,7 @@ public class OTEMegaQFT extends OTHMultiMachineBase<OTEMegaQFT> {
         return true;
     }
 
-    protected int getMaxParallelRecipes() {
+    public int getMaxParallelRecipes() {
         return Integer.MAX_VALUE;
     }
 
@@ -275,16 +275,16 @@ public class OTEMegaQFT extends OTHMultiMachineBase<OTEMegaQFT> {
         if (this.mMachine) return -1;
         int realBudget = elementBudget >= 200 ? elementBudget : Math.min(200, elementBudget * 5);
 
-        return this.survivialBuildPiece(
-            STRUCTURE_PIECE_MAIN,
-            stackSize,
-            horizontalOffSet,
-            verticalOffSet,
-            depthOffSet,
-            realBudget,
-            env,
-            false,
-            true);
+        return this.survivalBuildPiece(
+                STRUCTURE_PIECE_MAIN,
+                stackSize,
+                horizontalOffSet,
+                verticalOffSet,
+                depthOffSet,
+                realBudget,
+                env,
+                false,
+                true);
 
     }
 
@@ -381,8 +381,8 @@ public class OTEMegaQFT extends OTHMultiMachineBase<OTEMegaQFT> {
                             t -> t.timeAccelerationFieldMetadata)))
                 .addElement('M', ofBlock(sBlockMetal9, 4))
                 .addElement('N', ofBlock(sBlockMetal9, 9))
-                .addElement('G', ofBlock(IGBlocks.SpaceElevatorCasing, 1))
-                .addElement('H', ofBlock(IGBlocks.SpaceElevatorCasing, 2))
+                .addElement('G', ofBlock(sSpaceElevatorCable, 1))
+                .addElement('H', ofBlock(sSpaceElevatorCable, 2))
                 .addElement('I', ofBlock(sBlockCasingsTT, 4))
                 .addElement('J', ofBlock(sBlockCasingsTT, 9))
                 .addElement('K', ofBlock(sBlockCasingsTT, 10))
@@ -390,7 +390,7 @@ public class OTEMegaQFT extends OTHMultiMachineBase<OTEMegaQFT> {
                 .addElement('C', ofBlock(sBlockCasingsBA0, 10))
                 .addElement('D', ofBlock(sBlockCasingsBA0, 11))
                 .addElement('E', ofBlock(sBlockCasingsBA0, 12))
-                .addElement('F', ofBlock(IGBlocks.SpaceElevatorCasing, 0))
+                .addElement('F', ofBlock(sSpaceElevatorCable, 0))
                 .addElement('A', ofFrame(Materials.Infinity))
                 .addElement(
                     'B',

@@ -1,6 +1,7 @@
 package com.newmaa.othtech.common.dimensions;
 
 import java.util.List;
+import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFalling;
@@ -25,6 +26,15 @@ import micdoodle8.mods.galacticraft.api.prefab.world.gen.MapGenBaseMeta;
 
 public class ChunkProviderAntimonia extends ChunkProviderSpaceLakes {
 
+    private final World worldObj;
+    private final Random rand;
+
+    public ChunkProviderAntimonia(World world, long seed, boolean mapFeaturesEnabled) {
+        super(world, seed, mapFeaturesEnabled);
+        this.worldObj = world;
+        this.rand = new Random(seed);
+    }
+
     private final MapGenCavesHell caveGenerator = new MapGenCavesHell();
 
     private BiomeGenBase[] biomesForGeneration = this.getBiomesForGeneration();
@@ -32,10 +42,6 @@ public class ChunkProviderAntimonia extends ChunkProviderSpaceLakes {
 
     protected List<MapGenBaseMeta> getWorldGenerators() {
         return Lists.newArrayList();
-    }
-
-    public ChunkProviderAntimonia(World par1World, long seed, boolean mapFeaturesEnabled) {
-        super(par1World, seed, mapFeaturesEnabled);
     }
 
     protected BiomeDecoratorSpace getBiomeGenerator() {
@@ -145,5 +151,9 @@ public class ChunkProviderAntimonia extends ChunkProviderSpaceLakes {
 
     protected boolean enableBiomeGenBaseBlock() {
         return false;
+    }
+
+    public String makeString() {
+        return "AntimoniaLevelSource";
     }
 }

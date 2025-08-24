@@ -17,7 +17,6 @@ public class RecipesBlastFurnaceRecipes implements IRecipePool {
             .itemInputs(GTUtility.getIntegratedCircuit(1), OTHItemList.dustIrOsSmM.get(1))
             .itemOutputs(OTHItemList.ingotHotDog.get(1))
             .specialValue(-3600000)
-            .noOptimize()
             .duration(640 * 20)
             .eut(TierEU.UMV)
             .addTo(EBF);

@@ -27,7 +27,7 @@ public class RecipesFreezerRecipes implements IRecipePool {
             .itemOutputs(BWMaterials.IrOsSm.get(OrePrefixes.ingot, 1))
             .fluidInputs(new FluidStack(colder, 100))
             .fluidOutputs(new FluidStack(water, 100))
-            .noOptimize()
+
             .duration(2000)
             .eut(TierEU.RECIPE_UEV)
             .addTo(VaF);
@@ -36,7 +36,7 @@ public class RecipesFreezerRecipes implements IRecipePool {
             .itemOutputs(BWMaterials.IrOsSm.get(OrePrefixes.ingot, 1))
             .fluidInputs(new FluidStack(colder, 100))
             .fluidOutputs(new FluidStack(water, 100))
-            .noOptimize()
+
             .duration(2000)
             .eut(TierEU.RECIPE_UEV)
             .addTo(GTPPRecipeMaps.advancedFreezerRecipes);

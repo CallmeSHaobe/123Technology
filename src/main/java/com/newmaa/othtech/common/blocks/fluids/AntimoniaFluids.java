@@ -10,10 +10,7 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
-import com.newmaa.othtech.common.item.itemTools.ItemBucketAqua;
-
 import cpw.mods.fml.common.registry.GameRegistry;
-import galaxyspace.BarnardsSystem.BRItems;
 
 public class AntimoniaFluids {
 
@@ -32,7 +29,7 @@ public class AntimoniaFluids {
         GameRegistry.registerBlock(
             BlockAquaRegia = (new FluidAquaRegia(AquaRegia, Material.water)).setBlockName("AquaRegia"),
             "aquaregia");
-        BRItems.registerItem(AquaBucket = new ItemBucketAqua(BlockAquaRegia));
+        GameRegistry.registerItem(AquaBucket, AquaBucket.getUnlocalizedName());
         FluidContainerRegistry.registerFluidContainer(
             new FluidContainerRegistry.FluidContainerData(
                 new FluidStack(AquaRegia, 1000),
