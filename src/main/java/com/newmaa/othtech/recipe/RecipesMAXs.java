@@ -60,7 +60,7 @@ public class RecipesMAXs implements IRecipePool {
             .itemInputs(
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 17143),
                 GTUtility.getIntegratedCircuit(16))
-            .itemOutputs(GTModHandler.getModItem("dreamcraft", "gt.blockcasingsNH", 1, 14))
+            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.blockcasingsNH", 1, 14))
 
             .duration(50)
             .eut(TierEU.LV)
@@ -68,7 +68,7 @@ public class RecipesMAXs implements IRecipePool {
         GTValues.RA.stdBuilder()
             .itemOutputs(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 11234))
             .itemInputs(
-                GTModHandler.getModItem("dreamcraft", "gt.blockcasingsNH", 1, 14),
+                GTModHandler.getModItem("gregtech", "gt.blockcasingsNH", 1, 14),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 2, 2611))
             .fluidInputs(new FluidStack(FluidRegistry.getFluidID("molten.radoxpoly"), 576))
             .duration(50)

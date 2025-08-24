@@ -94,7 +94,7 @@ public class RecipesNewWetware implements IRecipePool {
             .addTo(Recipemaps.EIO);
         // Adv Recipes
         GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+            .itemInputs(
                 GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32746),
                 OTHItemList.encapsulatedBranins.get(4),
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.Polybenzimidazole, 32),
@@ -108,7 +108,7 @@ public class RecipesNewWetware implements IRecipePool {
             .addTo(Recipemaps.EIO);
 
         GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+            .itemInputs(
                 GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32750),
                 OTHItemList.encapsulatedBranins.get(2),
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.Polybenzimidazole, 32),

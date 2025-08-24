@@ -1,7 +1,6 @@
 package com.newmaa.othtech;
 
 import static com.newmaa.othtech.common.OTHItemList.SpaceElevatorModulePumpT4;
-import static com.newmaa.othtech.recipe.RecipesEXH.generateEXHRecipes;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +20,6 @@ import com.newmaa.othtech.common.blocks.fluids.AntimoniaFluids;
 import com.newmaa.othtech.common.dimensions.RegisterAntimonia;
 import com.newmaa.othtech.common.materials.MaterialsLoader;
 import com.newmaa.othtech.common.recipemap.NEIRecipeMaps;
-import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.event.EventPlayerDied;
 import com.newmaa.othtech.machine.MachineLoader;
 import com.newmaa.othtech.recipe.RecipeLoader;
@@ -37,7 +35,6 @@ import cpw.mods.fml.common.event.FMLServerStartedEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import gtPlusPlus.api.recipe.GTPPRecipeMaps;
 import gtnhintergalactic.recipe.SpacePumpingRecipes;
 
 @Mod(
@@ -145,7 +142,7 @@ public class OTHTechnology {
 
     @Mod.EventHandler
     public void onLoadComplete(FMLLoadCompleteEvent event) {
-        generateEXHRecipes(GTPPRecipeMaps.advancedFreezerRecipes, Recipemaps.EXH);
+        // generateEXHRecipes(GTPPRecipeMaps.advancedFreezerRecipes, Recipemaps.EXH);
         proxy.onLoadComplete(event);
 
     }
