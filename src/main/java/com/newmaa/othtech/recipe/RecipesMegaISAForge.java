@@ -1,6 +1,7 @@
 package com.newmaa.othtech.recipe;
 
 import static com.newmaa.othtech.common.OTHItemList.itemEnqingM;
+import static com.newmaa.othtech.recipe.RecipesCircuit.getAstralArray;
 import static com.newmaa.othtech.utils.Utils.setStackSize;
 
 import net.minecraft.init.Blocks;
@@ -93,7 +94,7 @@ public class RecipesMegaISAForge implements IRecipePool {
         GTValues.RA.stdBuilder()
             .itemInputs(
                 GTModHandler.getModItem("tectech", "gt.spacetime_compression_field_generator", 0, 8),
-                GTModHandler.getModItem("tectech", "item.tm.itemAstralArrayFabricator", 0))
+                getAstralArray(0))
             .fluidInputs(
                 new FluidStack(FluidRegistry.getFluid("molten.spacetime"), 16 * 144),
                 new FluidStack(FluidRegistry.getFluid("rawstarmatter"), 1000))
@@ -202,7 +203,7 @@ public class RecipesMegaISAForge implements IRecipePool {
         GTValues.RA.stdBuilder()
             .itemInputs(
                 OTHItemList.beeMagM.get(0),
-                GTModHandler.getModItem("tectech", "item.tm.itemAstralArrayFabricator", 0),
+                getAstralArray(0),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 4, 32727),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 4, 4581),
                 GTOreDictUnificator.get(OrePrefixes.wireFine, Materials.Infinity, 64),

@@ -292,7 +292,7 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
 
     @Override
     public int getPollutionPerSecond(final ItemStack aStack) {
-        return 123123;
+        return 123;
     }
 
     @Override
@@ -830,7 +830,7 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
             .addInfo("§e九合一，我们敬爱你口牙！！ ---Sukune_News")
             .addInfo("§c§l注意:机器污染过高:如遇跳电并报错“无法排出污染”, 请尝试放置多个消声仓")
             .addTecTechHatchInfo()
-            .addPollutionAmount(123123)
+            .addPollutionAmount(123)
             .addSeparator()
             .addController("巨型加工厂")
             .beginStructureBlock(49, 7, 49, false)

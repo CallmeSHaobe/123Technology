@@ -1,5 +1,6 @@
 package com.newmaa.othtech.recipe;
 
+import static com.newmaa.othtech.recipe.RecipesCircuit.getAstralArray;
 import static com.newmaa.othtech.utils.Utils.setStackSize;
 
 import net.minecraft.init.Blocks;
@@ -199,7 +200,7 @@ public class RecipesMegaQFT implements IRecipePool {
         GTValues.RA.stdBuilder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(18),
-                GTModHandler.getModItem("tectech", "item.tm.itemAstralArrayFabricator", 0),
+                getAstralArray(0),
                 GTModHandler.getModItem("eternalsingularity", "eternal_singularity", 64),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 32417))
             .fluidInputs(new FluidStack(FluidRegistry.getFluidID("primordialmatter"), 1152 * 64))

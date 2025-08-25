@@ -1281,7 +1281,7 @@ public class OTETangShanSteelFactory extends OTHMultiMachineBase<OTETangShanStee
 
     @Override
     public int getPollutionPerSecond(final ItemStack aStack) {
-        return 192000;
+        return 19200;
     }
 
     @Override
@@ -1299,7 +1299,7 @@ public class OTETangShanSteelFactory extends OTHMultiMachineBase<OTETangShanStee
             .addInfo("非无线模式执行无损超频")
             .addInfo("§c§l注意:机器污染过高:如遇跳电并报错“无法排出污染”, 请尝试放置多个消声仓")
             .addTecTechHatchInfo()
-            .addPollutionAmount(192000)
+            .addPollutionAmount(19200)
             .addSeparator()
             .addController("钢铁厂")
             .beginStructureBlock(42, 41, 43, false)

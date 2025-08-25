@@ -100,9 +100,6 @@ public class OTEHeatExchanger extends TTMultiMachineBaseEM implements ISurvivalC
     @Override
     @NotNull
     public CheckRecipeResult checkProcessing_EM() {
-        if (getAllStoredInputs().isEmpty()) {
-            return CheckRecipeResultRegistry.NO_RECIPE;
-        }
         setupProcessingLogic(processingLogic);
         CheckRecipeResult result = doCheckRecipe();
         result = postCheckRecipe(result, processingLogic);

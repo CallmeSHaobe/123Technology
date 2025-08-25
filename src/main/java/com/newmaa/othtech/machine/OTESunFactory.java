@@ -344,7 +344,7 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
                 .addElement('D', ofBlock(sBlockCasings8, 13))
                 .addElement('E', ofBlock(sBlockCasings8, 14))
                 .addElement('F', ofBlock(sBlockCasings9, 1))
-                .addElement('G', ofBlock(sSpaceElevatorCable, 1))
+                .addElement('G', ofBlock(sBlockCasingsSE, 1))
                 .addElement('H', ofBlock(sBlockCasingsTT, 6))
                 .addElement(
                     'J',

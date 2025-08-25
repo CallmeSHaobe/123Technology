@@ -1,5 +1,9 @@
 package com.newmaa.othtech.recipe;
 
+import static com.newmaa.othtech.recipe.RecipesCircuit.getAstralArray;
+import static com.newmaa.othtech.recipe.RecipesComponentAssemblyLineRecipes.getNanites;
+import static com.newmaa.othtech.utils.Utils.setStackSize;
+
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -11,15 +15,34 @@ import com.newmaa.othtech.common.materials.BWLiquids;
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
+import gregtech.api.enums.MaterialsUEVplus;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GTModHandler;
+import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTUtility;
 import tectech.recipe.TTRecipeAdder;
 
 public class RecipesMAXs implements IRecipePool {
+
+    public static ItemStack getMM(int amount, OrePrefixes orePrefixes) {
+        return GTOreDictUnificator.get(orePrefixes, MaterialsUEVplus.MagMatter, amount);
+    }
+
+    public static ItemStack getET(int amount, OrePrefixes orePrefixes) {
+        return GTOreDictUnificator.get(orePrefixes, MaterialsUEVplus.Eternity, amount);
+    }
+
+    public static ItemStack getMC(int amount, OrePrefixes orePrefixes) {
+        return GTOreDictUnificator
+            .get(orePrefixes, MaterialsUEVplus.MagnetohydrodynamicallyConstrainedStarMatter, amount);
+    }
+
+    public static ItemStack getUN(int amount, OrePrefixes orePrefixes) {
+        return GTOreDictUnificator.get(orePrefixes, MaterialsUEVplus.Universium, amount);
+    }
 
     @Override
     public void loadRecipes() {
@@ -28,6 +51,7 @@ public class RecipesMAXs implements IRecipePool {
         Fluid UMVsc = FluidRegistry.getFluid("molten.superconductorumvbase");
         final RecipeMap<?> Assembler = RecipeMaps.assemblerRecipes;
         final RecipeMap<?> Tower = RecipeMaps.distillationTowerRecipes;
+        ItemStack coil = GTModHandler.getModItem("gregtech", "gt.blockcasings5", 1, 13);
 
         TTRecipeAdder.addResearchableAssemblylineRecipe(
             ItemList.Electric_Motor_UXV.get(1),
@@ -36,35 +60,25 @@ public class RecipesMAXs implements IRecipePool {
             (int) TierEU.UMV,
             123,
             new ItemStack[] { GTModHandler.getModItem("eternalsingularity", "combined_singularity", 1, 15),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.02", 16, 22139),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 8, 28139),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 32, 25139),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.02", 64, 19143),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.02", 64, 19143),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.02", 64, 19143),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.02", 64, 19143),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.02", 64, 19143),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.02", 64, 19143),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.02", 64, 19143),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.02", 64, 19143),
-                GTModHandler.getModItem("gregtech", "gt.blockcasings5", 8, 13),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 4, 4139),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 4, 4585),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 4, 4586), },
+                getUN(16, OrePrefixes.stickLong), getUN(16, OrePrefixes.ring), getUN(16, OrePrefixes.round),
+                getMM(16, OrePrefixes.wireFine), getMM(16, OrePrefixes.wireFine), getMM(16, OrePrefixes.wireFine),
+                getMM(16, OrePrefixes.wireFine), getMM(16, OrePrefixes.wireFine), getMM(16, OrePrefixes.wireFine),
+                getMM(16, OrePrefixes.wireFine), getMM(16, OrePrefixes.wireFine), setStackSize(coil, 8),
+                getNanites(4, MaterialsUEVplus.Universium), getNanites(4, MaterialsUEVplus.WhiteDwarfMatter),
+                getNanites(4, MaterialsUEVplus.BlackDwarfMatter) },
             new FluidStack[] { BWLiquids.Void.getFluidOrGas(16000), BWLiquids.Stars.getFluidOrGas(144 * 16),
                 new FluidStack(UIVsc, 5760), new FluidStack(UMVsc, 5760) },
             ItemList.Electric_Motor_MAX.get(1),
             2460,
             512000000);
-        GTValues.RA.stdBuilder()
-            .itemInputs(
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 17143),
-                GTUtility.getIntegratedCircuit(16))
-            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.blockcasingsNH", 1, 14))
 
+        GTValues.RA.stdBuilder()
+            .itemInputs(getMM(4, OrePrefixes.plateDouble), GTUtility.getIntegratedCircuit(16))
+            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.blockcasingsNH", 1, 14))
             .duration(50)
             .eut(TierEU.LV)
             .addTo(Assembler);
+
         GTValues.RA.stdBuilder()
             .itemOutputs(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 11234))
             .itemInputs(
@@ -74,6 +88,7 @@ public class RecipesMAXs implements IRecipePool {
             .duration(50)
             .eut(TierEU.UXV)
             .addTo(Assembler);
+
         TTRecipeAdder.addResearchableAssemblylineRecipe(
             GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 269),
             512000,
@@ -83,19 +98,12 @@ public class RecipesMAXs implements IRecipePool {
             new Object[] { GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 11234),
                 GTModHandler.getModItem("GoodGenerator", "compactFusionCoil", 16, 2),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 15300),
-                GTModHandler.getModItem("tectech", "gt.blockcasingsTT", 16),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.02", 64, 19139),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 4, 22583),
-                new Object[] { OrePrefixes.circuit.get(Materials.Cosmic), 64 },
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 32417),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 4, 4141),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 32, 32165),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 32149),
-                GTModHandler.getModItem("gregtech", "gt.1080k_Space_Coolantcell", 1),
-                GTModHandler.getModItem("gregtech", "gt.1080k_Space_Coolantcell", 1),
-                GTModHandler.getModItem("gregtech", "gt.1080k_Space_Coolantcell", 1),
-                GTModHandler.getModItem("gregtech", "gt.1080k_Space_Coolantcell", 1),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 32028) },
+                GTModHandler.getModItem("tectech", "gt.blockcasingsTT", 16), getUN(64, OrePrefixes.wireFine),
+                getMC(4, OrePrefixes.plateDense), new Object[] { OrePrefixes.circuit.get(Materials.Cosmic), 64 },
+                getNanites(4, MaterialsUEVplus.Eternity), ItemList.Circuit_Chip_QPIC.get(32), ItemList.UHV_Coil.get(64),
+                ItemList.Electric_Pump_MAX.get(1), ItemList.Reactor_Coolant_Sp_6.get(1),
+                ItemList.Reactor_Coolant_Sp_6.get(1), ItemList.Reactor_Coolant_Sp_6.get(1),
+                ItemList.Reactor_Coolant_Sp_6.get(1) },
             new FluidStack[] { new FluidStack(FluidRegistry.getFluidID("cryotheum"), 64000),
                 new FluidStack(FluidRegistry.getFluidID("molten.mutatedlivingsolder"), 23040),
                 new FluidStack(FluidRegistry.getFluidID("ic2uumatter"), 32000),
@@ -103,6 +111,7 @@ public class RecipesMAXs implements IRecipePool {
             GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 286),
             1000,
             2000000000);
+
         TTRecipeAdder.addResearchableAssemblylineRecipe(
             GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 286),
             512000000,
@@ -112,12 +121,9 @@ public class RecipesMAXs implements IRecipePool {
             new Object[] { GTModHandler.getModItem("gregtech", "gt.blockmachines", 16, 11234),
                 GTModHandler.getModItem("GoodGenerator", "compactFusionCoil", 64, 4),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 16, 15300),
-                GTModHandler.getModItem("tectech", "gt.blockcasingsTT", 64),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.02", 64, 19143),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 22583),
-                new Object[] { OrePrefixes.circuit.get(Materials.Transcendent), 64 },
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 32417),
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23524),
+                GTModHandler.getModItem("tectech", "gt.blockcasingsTT", 64), getMM(64, OrePrefixes.wireFine),
+                getMC(64, OrePrefixes.plateDense), new Object[] { OrePrefixes.circuit.get(Materials.Transcendent), 64 },
+                ItemList.EnergisedTesseract.get(64), GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23524),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23524),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23524),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23524),
@@ -132,6 +138,7 @@ public class RecipesMAXs implements IRecipePool {
             GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 23522),
             20000,
             2000000000);
+
         TTRecipeAdder.addResearchableAssemblylineRecipe(
             GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 15199),
             (int) TierEU.UXV,
@@ -339,8 +346,7 @@ public class RecipesMAXs implements IRecipePool {
             2048,
             (int) TierEU.UMV,
             123,
-            new Object[] { GTModHandler.getModItem("gregtech", "gt.blockframes", 1, 141),
-                GTModHandler.getModItem("tectech", "item.tm.itemAstralArrayFabricator", 1),
+            new Object[] { GTModHandler.getModItem("gregtech", "gt.blockframes", 1, 141), getAstralArray(1),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 12, 17143),
                 OTHItemList.machineSingularityM.get(4), OTHItemList.glassSingularityM.get(4),
                 GTModHandler.getModItem("eternalsingularity", "eternal_singularity", 4), ItemList.Emitter_MAX.get(4),

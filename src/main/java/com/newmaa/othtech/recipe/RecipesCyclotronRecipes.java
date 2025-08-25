@@ -25,7 +25,6 @@ public class RecipesCyclotronRecipes implements IRecipePool {
             .itemOutputs(GTModHandler.getModItem("GalacticraftAmunRa", "item.baseItem", 1, 26))
             .fluidInputs(new FluidStack(FluidRegistry.getFluidID("molten.transcendentmetal"), 9216))
             .outputChances(1230)
-
             .duration(128 * 20)
             .eut(TierEU.UXV)
             .addTo(CYC);

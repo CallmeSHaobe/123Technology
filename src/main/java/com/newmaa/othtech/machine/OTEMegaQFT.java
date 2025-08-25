@@ -1,8 +1,7 @@
 package com.newmaa.othtech.machine;
 
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
-import static gregtech.api.GregTechAPI.sBlockMetal9;
-import static gregtech.api.GregTechAPI.sSpaceElevatorCable;
+import static gregtech.api.GregTechAPI.*;
 import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.enums.Textures.BlockIcons.*;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
@@ -381,8 +380,8 @@ public class OTEMegaQFT extends OTHMultiMachineBase<OTEMegaQFT> {
                             t -> t.timeAccelerationFieldMetadata)))
                 .addElement('M', ofBlock(sBlockMetal9, 4))
                 .addElement('N', ofBlock(sBlockMetal9, 9))
-                .addElement('G', ofBlock(sSpaceElevatorCable, 1))
-                .addElement('H', ofBlock(sSpaceElevatorCable, 2))
+                .addElement('G', ofBlock(sBlockCasingsSE, 1))
+                .addElement('H', ofBlock(sBlockCasingsSE, 2))
                 .addElement('I', ofBlock(sBlockCasingsTT, 4))
                 .addElement('J', ofBlock(sBlockCasingsTT, 9))
                 .addElement('K', ofBlock(sBlockCasingsTT, 10))
@@ -390,7 +389,7 @@ public class OTEMegaQFT extends OTHMultiMachineBase<OTEMegaQFT> {
                 .addElement('C', ofBlock(sBlockCasingsBA0, 10))
                 .addElement('D', ofBlock(sBlockCasingsBA0, 11))
                 .addElement('E', ofBlock(sBlockCasingsBA0, 12))
-                .addElement('F', ofBlock(sSpaceElevatorCable, 0))
+                .addElement('F', ofBlock(sBlockCasingsSE, 0))
                 .addElement('A', ofFrame(Materials.Infinity))
                 .addElement(
                     'B',

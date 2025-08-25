@@ -254,7 +254,7 @@ public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> {
                 .addElement('E', ofBlock(sBlockCasings1, 14))
                 .addElement('F', ofBlock(sBlockCasings2, 0))
                 .addElement('G', ofBlock(sBlockCasings8, 10))
-                .addElement('H', ofBlock(sSpaceElevatorCable, 1))
+                .addElement('H', ofBlock(sBlockCasingsSE, 1))
                 .addElement('I', ofBlock(sBlockCasingsTT, 4))
                 .addElement('J', ofBlock(sBlockCasingsTT, 6))
                 .addElement('K', ofBlock(sBlockCasingsTT, 9))

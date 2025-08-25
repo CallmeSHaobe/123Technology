@@ -12,7 +12,6 @@ import gregtech.api.recipe.RecipeMap;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTUtility;
 import gtPlusPlus.api.objects.Logger;
-import gtPlusPlus.core.util.minecraft.ItemUtils;
 import gtPlusPlus.core.util.recipe.GTRecipeUtils;
 
 public class RecipesEXH implements IRecipePool {
@@ -81,72 +80,104 @@ public class RecipesEXH implements IRecipePool {
         int aOriginalCount = aInputs.getAllRecipes()
             .size();
         ArrayList<GTRecipe> deDuplicationInputArray = new ArrayList<>();
+        ItemStack[] aInputItems = new ItemStack[0];
+        ItemStack[] aOutputItems = new ItemStack[0];
+        FluidStack[] aInputFluids = new FluidStack[0];
+        FluidStack[] aOutputFluids = new FluidStack[0];
 
-        recipe: for (GTRecipe x : aInputs.getAllRecipes()) {
-            if (x != null && x.mInputs != null && x.mOutputs != null) {
-
-                ItemStack[] aInputItems = x.mInputs.clone();
-                ItemStack[] aOutputItems = x.mOutputs.clone();
-
-                ArrayList<ItemStack> aInputItemsMap = new ArrayList<>();
-                ArrayList<ItemStack> aOutputItemsMap = new ArrayList<>();
-
-                // Iterate Inputs, Convert valid items into fluids
-                for (ItemStack aInputStack : aInputItems) {
-                    FluidStack aFoundFluid = getFluidFromItemStack(aInputStack);
-                    if (aFoundFluid == null) {
-                        for (ItemStack aBadStack : mItemsToIgnore) {
-                            if (doesItemMatchIgnoringStackSize(aInputStack, aBadStack)) {
-                                continue recipe; // Skip this recipe entirely if we find an item we don't like
-                            }
-                        }
-                        if (!isEmptyCell(aInputStack)) {
-                            aInputItemsMap.add(aInputStack);
-                        }
-                    }
+        for (GTRecipe x : aInputs.getAllRecipes()) {
+            if (x != null) {
+                for (ItemStack i1 : x.mInputs) {
+                    aInputItems = new ItemStack[] { i1 };
+                } ;
+                for (ItemStack i2 : x.mOutputs) {
+                    aOutputItems = new ItemStack[] { i2 };
                 }
-                // Iterate Outputs, Convert valid items into fluids
-                for (ItemStack aOutputStack : aOutputItems) {
-                    FluidStack aFoundFluid = getFluidFromItemStack(aOutputStack);
-                    if (aFoundFluid == null) {
-                        for (ItemStack aBadStack : mItemsToIgnore) {
-                            if (doesItemMatchIgnoringStackSize(aOutputStack, aBadStack)) {
-                                continue recipe; // Skip this recipe entirely if we find an item we don't like
-                            }
-                        }
-                        if (!isEmptyCell(aOutputStack)) {
-                            aOutputItemsMap.add(aOutputStack);
-                        }
-                    }
+                for (FluidStack f1 : x.mFluidInputs) {
+                    aInputFluids = new FluidStack[] {
+                        FluidRegistry
+                            .getFluidStack("water", (int) Math.max((double) (x.mEUt * x.mDuration) / 1000 / 2, 2)),
+                        f1 };
                 }
-
-                // Make some new Arrays
-                ItemStack[] aNewItemInputs = new ItemStack[aInputItemsMap.size()];
-                ItemStack[] aNewItemOutputs = new ItemStack[aOutputItemsMap.size()];
-
-                // Add AutoMap contents to Arrays
-                for (int i = 0; i < aInputItemsMap.size(); i++) {
-                    aNewItemInputs[i] = aInputItemsMap.get(i);
+                for (FluidStack f2 : x.mFluidOutputs) {
+                    aOutputFluids = new FluidStack[] { FluidRegistry.getFluidStack(
+                        "densesupercriticalsteam",
+                        (int) Math.max((double) (x.mEUt * x.mDuration) / 4000, 1)), f2 };
                 }
-                for (int i = 0; i < aOutputItemsMap.size(); i++) {
-                    aNewItemOutputs[i] = aOutputItemsMap.get(i);
-                }
-
-                if (!ItemUtils.checkForInvalidItems(aNewItemInputs)) {
-                    aInvalidRecipesToConvert++;
-                    continue; // Skip this recipe entirely if we find an item we don't like
-                }
+                /*
+                 * ArrayList<ItemStack> aInputItemsMap = new ArrayList<>();
+                 * ArrayList<ItemStack> aOutputItemsMap = new ArrayList<>();
+                 * ArrayList<FluidStack> aInputFluidsMap = new ArrayList<>();
+                 * ArrayList<FluidStack> aOutputFluidsMap = new ArrayList<>();
+                 * // Iterate Inputs, Convert valid items into fluids
+                 * for (ItemStack aInputStack : aInputItems) {
+                 * FluidStack aFoundFluid = getFluidFromItemStack(aInputStack);
+                 * if (aFoundFluid == null && aInputStack != null) {
+                 * for (ItemStack aBadStack : mItemsToIgnore) {
+                 * if (doesItemMatchIgnoringStackSize(aInputStack, aBadStack)) {
+                 * continue recipe; // Skip this recipe entirely if we find an item we don't like
+                 * }
+                 * }
+                 * if (!isEmptyCell(aInputStack)) {
+                 * aInputItemsMap.add(aInputStack);
+                 * } else {
+                 * aFoundFluid.amount = aFoundFluid.amount * aInputStack.stackSize;
+                 * aInputFluidsMap.add(aFoundFluid);
+                 * }
+                 * }
+                 * }
+                 * // Iterate Outputs, Convert valid items into fluids
+                 * for (ItemStack aOutputStack : aOutputItems) {
+                 * FluidStack aFoundFluid = getFluidFromItemStack(aOutputStack);
+                 * if (aFoundFluid == null) {
+                 * for (ItemStack aBadStack : mItemsToIgnore) {
+                 * if (doesItemMatchIgnoringStackSize(aOutputStack, aBadStack)) {
+                 * continue recipe; // Skip this recipe entirely if we find an item we don't like
+                 * }
+                 * }
+                 * if (!isEmptyCell(aOutputStack)) {
+                 * aOutputItemsMap.add(aOutputStack);
+                 * }
+                 * } else {
+                 * aFoundFluid.amount = aFoundFluid.amount * aOutputStack.stackSize;
+                 * aOutputFluidsMap.add(aFoundFluid);
+                 * }
+                 * }
+                 * Add Input fluids second
+                 * aInputFluidsMap.addAll(Arrays.asList(aInputFluids));
+                 * // Add Output fluids second
+                 * aOutputFluidsMap.addAll(Arrays.asList(aOutputFluids));
+                 * // Make some new Arrays
+                 * ItemStack[] aNewItemInputs = new ItemStack[aInputItemsMap.size()];
+                 * ItemStack[] aNewItemOutputs = new ItemStack[aOutputItemsMap.size()];
+                 * FluidStack[] aNewFluidInputs = new FluidStack[aInputFluidsMap.size()];
+                 * FluidStack[] aNewFluidOutputs = new FluidStack[aOutputFluidsMap.size()];
+                 * // Add AutoMap contents to Arrays
+                 * for (int i = 0; i < aInputItemsMap.size(); i++) {
+                 * aNewItemInputs[i] = aInputItemsMap.get(i);
+                 * }
+                 * for (int i = 0; i < aOutputItemsMap.size(); i++) {
+                 * aNewItemOutputs[i] = aOutputItemsMap.get(i);
+                 * }
+                 * for (int i = 0; i < aInputFluidsMap.size(); i++) {
+                 * aNewFluidInputs[i] = aInputFluidsMap.get(i);
+                 * }
+                 * for (int i = 0; i < aOutputFluidsMap.size(); i++) {
+                 * aNewFluidOutputs[i] = aOutputFluidsMap.get(i);
+                 * }
+                 * if (!ItemUtils.checkForInvalidItems(aNewItemInputs)) {
+                 * aInvalidRecipesToConvert++;
+                 * continue; // Skip this recipe entirely if we find an item we don't like
+                 * }
+                 */
                 GTRecipe aNewRecipe = new GTRecipe(
                     false,
-                    aNewItemInputs,
-                    aNewItemOutputs,
+                    aInputItems,
+                    aOutputItems,
                     x.mSpecialItems,
                     new int[] { 8888 },
-                    new FluidStack[] { FluidRegistry
-                        .getFluidStack("water", (int) Math.max((double) (x.mEUt * x.mDuration) / 1000 / 2, 2)) },
-                    new FluidStack[] { FluidRegistry.getFluidStack(
-                        "densesupercriticalsteam",
-                        (int) Math.max((double) (x.mEUt * x.mDuration) / 1000 / 2 / 2, 1)) },
+                    aInputFluids,
+                    aOutputFluids,
                     x.mDuration,
                     0,
                     x.mSpecialValue);
@@ -156,6 +187,7 @@ public class RecipesEXH implements IRecipePool {
                 deDuplicationInputArray.add(aNewRecipe);
 
                 aRecipesHandled++;
+
             } else {
                 aInvalidRecipesToConvert++;
             }

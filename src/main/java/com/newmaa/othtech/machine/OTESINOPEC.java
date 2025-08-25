@@ -1113,7 +1113,7 @@ public class OTESINOPEC extends OTHMultiMachineBase<OTESINOPEC> {
 
     @Override
     public int getPollutionPerSecond(final ItemStack aStack) {
-        return 64000;
+        return 6400;
     }
 
     @Override
@@ -1126,7 +1126,7 @@ public class OTESINOPEC extends OTHMultiMachineBase<OTESINOPEC> {
             .addInfo("主机放入铱锇钐合金粉解锁无损超频以及并行限制, 并行默认为64")
             .addInfo("§c§l注意:机器污染过高:如遇跳电并报错“无法排出污染”, 请尝试放置多个消声仓")
             .addTecTechHatchInfo()
-            .addPollutionAmount(64000)
+            .addPollutionAmount(6400)
             .addSeparator()
             .addController("中国石化")
             .beginStructureBlock(33, 49, 48, false)
