@@ -14,7 +14,8 @@ public enum OTHItemList {
 
     // items
     AntimoniaPlanetDust,
-    Amulet,
+    Tallhat,
+    TallHatBlock,
     Brains,
     slicedBrains,
     encapsulatedBranins,

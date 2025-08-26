@@ -41,6 +41,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
+import com.newmaa.othtech.OTHTechnology;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.item.ItemLoader;
 import com.newmaa.othtech.common.materials.BWLiquids;
@@ -1316,5 +1317,16 @@ public class RecipesMain implements IRecipePool {
             .duration(100)
             .eut(123123)
             .addTo(RecipeMaps.multiblockChemicalReactorRecipes);
+        // TallHat
+        addCraftingRecipe(
+            GTModHandler.getModItem(OTHTechnology.MODID, "modelTallHat", 1),
+            new Object[] { "A~~", "~~~", "~~~", 'A', OTHItemList.Tallhat.get(1) });
+        addCraftingRecipe(
+            OTHItemList.Tallhat.get(1),
+            new Object[] { "A~~", "~~~", "~~~", 'A', GTModHandler.getModItem(OTHTechnology.MODID, "modelTallHat", 1) });
+        addCraftingRecipe(
+            OTHItemList.Tallhat.get(1),
+            new Object[] { "~A~", "ABA", "A~A", 'A', new ItemStack(Items.paper, 1), 'B',
+                new ItemStack(Items.dye, 1, 0) });
     }
 }

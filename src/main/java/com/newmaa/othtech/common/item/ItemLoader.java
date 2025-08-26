@@ -1,9 +1,12 @@
 package com.newmaa.othtech.common.item;
 
+import static net.minecraft.item.ItemArmor.ArmorMaterial.DIAMOND;
+
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import com.newmaa.othtech.common.OTHItemList;
+import com.newmaa.othtech.common.item.itemArmor.ItemHelmTallHatLaodeng;
 import com.newmaa.othtech.common.item.itemFoods.IngotHotDog;
 import com.newmaa.othtech.common.item.itemFoods.ItemBrain;
 import com.newmaa.othtech.common.item.itemFoods.ItemLeekBox;
@@ -36,6 +39,7 @@ public class ItemLoader {
     public static Item RecordEVAC = new ItemRecord("EVA_C");
     public static Item RecordNGGU = new ItemRecord("NGG_U");
     public static Item itemBrain = new ItemBrain();
+    public static Item itemHelmTallHatLaodeng = new ItemHelmTallHatLaodeng(DIAMOND, 0, "HelmTallHatLaodeng");
 
     public ItemLoader(FMLPreInitializationEvent event) {
         OTHItemList.Zhangww.set(registryAndCallback(itemZhangww, "itemZhangww"));
@@ -53,6 +57,7 @@ public class ItemLoader {
         OTHItemList.RecordNGGU.set(registryAndCallback(RecordNGGU, "NGGU"));
         OTHItemList.itemTST.set(registryAndCallback(itemTST, "itemTST"));
         OTHItemList.Brains.set(registryAndCallback(itemBrain, "BrainsHuman"));
+        OTHItemList.Tallhat.set(registryAndCallback(itemHelmTallHatLaodeng, "HelmTallHatLaodeng"));
     }
 
     private static ItemStack registryAndCallback(Item item, String name) {
