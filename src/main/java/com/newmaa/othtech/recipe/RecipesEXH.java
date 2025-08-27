@@ -67,7 +67,6 @@ public class RecipesEXH implements IRecipePool {
         }
     }
 
-
     @Override
     public void loadRecipes() {
         generateEnhancedEXHRecipes();
