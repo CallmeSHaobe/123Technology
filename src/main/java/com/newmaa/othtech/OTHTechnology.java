@@ -5,6 +5,7 @@ import static com.newmaa.othtech.common.OTHItemList.SpaceElevatorModulePumpT4;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.newmaa.othtech.recipe.RecipesEXH;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -142,7 +143,6 @@ public class OTHTechnology {
 
     @Mod.EventHandler
     public void onLoadComplete(FMLLoadCompleteEvent event) {
-        // generateEXHRecipes(GTPPRecipeMaps.advancedFreezerRecipes, Recipemaps.EXH);
         proxy.onLoadComplete(event);
 
     }

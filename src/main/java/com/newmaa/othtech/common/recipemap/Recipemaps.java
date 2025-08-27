@@ -196,7 +196,7 @@ public class Recipemaps {
         .build();
     public static final RecipeMap<OTH_RecipeMapBackend> EXH = RecipeMapBuilder
         .of("otht.recipe.EXH", OTH_RecipeMapBackend::new)
-        .maxIO(1, 1, 2, 2)
+        .maxIO(4, 4, 4, 4)
         .dontUseProgressBar()
         .frontend(OTH_GeneralFrontend::new)
         .build();
