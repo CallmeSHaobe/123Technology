@@ -231,7 +231,7 @@ ote.tm.exc.0=真正的热能饕餮 - 真空冷冻热交换机
 ote.tm.exc.1=回收热锭冶炼的废热, 化为超临界蒸汽.
 ote.tm.exc.2=理论可回收热锭冰箱配方50%之EU
 ote.tm.exc.3=物理学还存在吗?
-ote.tm.exc.4=耗电: 0EU/t , 耗时请使用主机参数调整
+ote.tm.exc.4=耗电: 123EU/t , 耗时请使用主机参数调整
 #IMBA EBF
 ote.tm.imba.0=§l超级无敌数值高炉
 ote.tm.imba.1=§6§l不耗电！

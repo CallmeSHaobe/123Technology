@@ -5,14 +5,15 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import com.newmaa.othtech.common.recipemap.Recipemaps;
-import gregtech.api.recipe.RecipeMaps;
-import gregtech.api.util.GTRecipeBuilder;
-import gregtech.api.util.GTRecipeConstants;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
+import com.newmaa.othtech.common.recipemap.Recipemaps;
+
+import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GTRecipe;
+import gregtech.api.util.GTRecipeBuilder;
+import gregtech.api.util.GTRecipeConstants;
 
 public class RecipesEXH implements IRecipePool {
 
@@ -23,7 +24,7 @@ public class RecipesEXH implements IRecipePool {
             if (recipe == null || recipe.mFakeRecipe || recipe.mHidden) continue;
 
             int newDuration = recipe.mDuration * 4;
-            int newEUt = recipe.mEUt / 2;
+            int newEUt = 123;
 
             GTRecipeBuilder builder = GTRecipeBuilder.builder()
                 .duration(newDuration)
@@ -44,7 +45,7 @@ public class RecipesEXH implements IRecipePool {
                 inputFluids.addAll(Arrays.asList(recipe.mFluidInputs));
             }
 
-            long waterAmount = Math.max((long) newEUt * newDuration / 2000, 2);
+            long waterAmount = Math.max((long) recipe.mEUt * recipe.mDuration / 1000, 2);
             int safeWaterAmount = (int) Math.min(waterAmount, Integer.MAX_VALUE);
             FluidStack waterInput = FluidRegistry.getFluidStack("water", safeWaterAmount);
             if (waterInput != null) inputFluids.add(waterInput);
@@ -56,7 +57,7 @@ public class RecipesEXH implements IRecipePool {
                 outputFluids.addAll(Arrays.asList(recipe.mFluidOutputs));
             }
 
-            long steamAmount = Math.max((long) newEUt * newDuration / 4000, 1);
+            long steamAmount = Math.max((long) recipe.mEUt * recipe.mDuration / 2000, 1);
             int safeSteamAmount = (int) Math.min(steamAmount, Integer.MAX_VALUE);
             FluidStack steamOutput = FluidRegistry.getFluidStack("densesupercriticalsteam", safeSteamAmount);
             if (steamOutput != null) outputFluids.add(steamOutput);

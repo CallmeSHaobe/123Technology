@@ -199,5 +199,8 @@ public class Recipemaps {
         .maxIO(4, 4, 4, 4)
         .dontUseProgressBar()
         .frontend(OTH_GeneralFrontend::new)
+        .neiHandlerInfo(
+            builder -> builder.setDisplayStack(OTHItemList.EXH.get(1))
+                .setMaxRecipesPerPage(4))
         .build();
 }

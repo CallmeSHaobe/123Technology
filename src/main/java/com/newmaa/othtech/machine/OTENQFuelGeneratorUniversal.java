@@ -177,17 +177,6 @@ public class OTENQFuelGeneratorUniversal extends TTMultiMachineBaseEM
 
     private long tEff;
 
-    @Override
-    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
-        ItemStack aTool) {
-        if (pipeTier != 0 && !isWirelessMode) {
-            isWirelessMode = true;
-        } else {
-            isWirelessMode = false;
-        }
-        GTUtility.sendChatToPlayer(aPlayer, translateToLocal(isWirelessMode ? "无线模式启动" : "无线模式关闭"));
-    }
-
     public long running_time = 0;
 
     @Override
@@ -284,21 +273,6 @@ public class OTENQFuelGeneratorUniversal extends TTMultiMachineBaseEM
         this.ownerUUID = aBaseMetaTileEntity.getOwnerUuid();
     }
 
-    public FluidStack getPromoter() {
-        // 1. 首先判断 pipeTier 是否为 0
-        if (pipeTier == 0) {
-            return BWLiquids.PromoterZPM.getFluidOrGas(1);
-        } else {
-            if (pipeTier == 2) {
-                return BWLiquids.PromoterUEV.getFluidOrGas(1);
-            } else if (pipeTier == 1) {
-                return BWLiquids.PromoterZPM.getFluidOrGas(1);
-            } else {
-                return BWLiquids.PromoterUEV.getFluidOrGas(1);
-            }
-        }
-    }
-
     public FluidStack findFuel(GTRecipe aFuel) {
         if (aFuel.mInputs != null && aFuel.mInputs.length > 0)
             return GTUtility.getFluidForFilledItem(aFuel.mInputs[0], true);
@@ -327,10 +301,8 @@ public class OTENQFuelGeneratorUniversal extends TTMultiMachineBaseEM
     }
 
     public void consumeAllLiquid(FluidStack liquid, List<FluidStack> input) {
-        startRecipeProcessing();
         for (FluidStack fluid : input) {
             if (fluid.isFluidEqual(liquid)) fluid.amount = 0;
-            endRecipeProcessing();
         }
     }
 
@@ -459,23 +431,6 @@ public class OTENQFuelGeneratorUniversal extends TTMultiMachineBaseEM
         return false;
     }
 
-    private static IStructureDefinition<OTENQFuelGeneratorUniversal> STRUCTURE_DEFINITION = null;
-
-    @Nullable
-    protected static Integer getPipeTier(Block block, int meta) {
-        if (block == null) return null;
-        if (block == sBlockCasings9 && meta == 14) {
-            return 2;
-        } else if (block == sBlockCasings2 && meta == 15) {
-            return 1;
-        }
-        return null;
-    }
-
-    private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
-        translateToLocal("4 - 动力仓或者激光仓 : 替换防辐射硅岩机械方块, 支持TecTech动力仓") + ":",
-        translateToLocal("3 - 输入仓输出仓 : 替换防辐射硅岩机械方块") + ":", translateToLocal("2 - 消声仓(装饰 : 替换防辐射硅岩机械方块)"), };
-
     @Override
     public String[] getStructureDescription(ItemStack stackSize) {
         return description;
@@ -532,6 +487,49 @@ public class OTENQFuelGeneratorUniversal extends TTMultiMachineBaseEM
         }
         return STRUCTURE_DEFINITION;
     }
+
+    public FluidStack getPromoter() {
+        // 1. 首先判断 pipeTier 是否为 0
+        if (pipeTier == 0) {
+            return BWLiquids.PromoterZPM.getFluidOrGas(1);
+        } else {
+            if (pipeTier == 2) {
+                return BWLiquids.PromoterUEV.getFluidOrGas(1);
+            } else if (pipeTier == 1) {
+                return BWLiquids.PromoterZPM.getFluidOrGas(1);
+            } else {
+                return BWLiquids.PromoterUEV.getFluidOrGas(1);
+            }
+        }
+    }
+
+    @Override
+    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+        ItemStack aTool) {
+        if (pipeTier != 0 && !isWirelessMode) {
+            isWirelessMode = true;
+        } else {
+            isWirelessMode = false;
+        }
+        GTUtility.sendChatToPlayer(aPlayer, translateToLocal(isWirelessMode ? "无线模式启动" : "无线模式关闭"));
+    }
+
+    private static IStructureDefinition<OTENQFuelGeneratorUniversal> STRUCTURE_DEFINITION = null;
+
+    @Nullable
+    protected static Integer getPipeTier(Block block, int meta) {
+        if (block == null) return null;
+        if (block == sBlockCasings9 && meta == 14) {
+            return 2;
+        } else if (block == sBlockCasings2 && meta == 15) {
+            return 1;
+        }
+        return null;
+    }
+
+    private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
+        translateToLocal("4 - 动力仓或者激光仓 : 替换防辐射硅岩机械方块, 支持TecTech动力仓") + ":",
+        translateToLocal("3 - 输入仓输出仓 : 替换防辐射硅岩机械方块") + ":", translateToLocal("2 - 消声仓(装饰 : 替换防辐射硅岩机械方块)"), };
 
     @Override
     public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {

@@ -105,7 +105,7 @@ public class OTEHeatExchanger extends TTMultiMachineBaseEM implements ISurvivalC
         result = postCheckRecipe(result, processingLogic);
         updateSlots();
         if (!result.wasSuccessful()) return result;
-
+        mEUt = 123;
         mEfficiency = 10000;
         mEfficiencyIncrease = 10000;
         mMaxProgresstime = (int) time.get();
