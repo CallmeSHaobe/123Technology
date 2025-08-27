@@ -120,12 +120,12 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
 
     @Override
     public int getMaxParallelRecipes() {
-        return Math.max(9, 256 - (GTUtility.getTier(this.getMaxInputVoltage()) * 2));
+        return Math.max(9, 64 - (GTUtility.getTier(this.getMaxInputVoltage()) * 9));
     }
 
     @Override
     protected float getSpeedBonus() {
-        return (float) (1 + (GTUtility.getTier(this.getMaxInputVoltage()) * 0.1));
+        return (float) (1 + (GTUtility.getTier(this.getMaxInputVoltage()) * 0.16));
     }
 
     @Override
@@ -811,6 +811,7 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
         return super.addToMachineList(aTileEntity, aBaseCasingIndex)
             || addExoticEnergyInputToMachineList(aTileEntity, aBaseCasingIndex);
     }
+    /*
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
         final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
@@ -833,6 +834,38 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
             .addPollutionAmount(123)
             .addSeparator()
             .addController("巨型加工厂")
+            .beginStructureBlock(49, 7, 49, false)
+            .addInputBus("AnyInputBus", 1)
+            .addOutputBus("AnyOutputBus", 1)
+            .addInputHatch("AnyInputHatch", 1)
+            .addOutputHatch("AnyOutputHatch", 1)
+            .addEnergyHatch("AnyEnergyHatch", 1)
+            .addMufflerHatch("AnyMufflerHatch", 1)
+            .toolTipFinisher("§a123Technology - For The Best Machine");
+        return tt;
+    }*/
+    @Override
+    protected MultiblockTooltipBuilder createTooltip() {
+        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        tt.addMachineType(translateToLocal("oth.tm.mnio.0"))
+            .addInfo(translateToLocal("oth.tm.mnio.1"))
+            .addInfo(translateToLocal("oth.tm.mnio.2"))
+            .addInfo(translateToLocal("oth.tm.mnio.3"))
+            .addInfo(translateToLocal("oth.tm.mnio.4"))
+            .addInfo(translateToLocal("oth.tm.mnio.5"))
+            .addInfo(translateToLocal("oth.tm.mnio.6"))
+            .addInfo(translateToLocal("oth.tm.mnio.7"))
+            .addInfo(translateToLocal("oth.tm.mnio.8"))
+            .addInfo(translateToLocal("oth.tm.mnio.9"))
+            .addInfo(translateToLocal("oth.tm.mnio.10"))
+            .addInfo(translateToLocal("oth.tm.mnio.11"))
+            .addInfo(translateToLocal("oth.tm.mnio.12"))
+            .addInfo(translateToLocal("oth.tm.mnio.13"))
+            .addInfo(translateToLocal("oth.tm.pollution"))
+            .addTecTechHatchInfo()
+            .addPollutionAmount(123)
+            .addSeparator()
+            .addController(translateToLocal("ote.tn.mnio"))
             .beginStructureBlock(49, 7, 49, false)
             .addInputBus("AnyInputBus", 1)
             .addOutputBus("AnyOutputBus", 1)

@@ -56,8 +56,7 @@ public class OTEWTFHatch extends MTEWirelessEnergy {
     public String[] getDescription() {
         return new String[] { EnumChatFormatting.GRAY + "将能量存储于全局网络中, 上限为2^(2^31)EU.",
             EnumChatFormatting.GRAY + "不连接导线. 此方块可以从网络中抽取EU.", EnumChatFormatting.GRAY + "小心能量溢出.",
-            EnumChatFormatting.GOLD + "DON'T TRY TO USE THIS HATCH , THIS HATCH IS USELESS , IT IS JUST A JOKE",
-            EnumChatFormatting.GOLD + "只是个玩笑 有bug别用 嘻嘻。",
+            EnumChatFormatting.GOLD + "此处省略一百字.", EnumChatFormatting.GOLD + "只是个玩笑 有bug别用 嘻嘻。",
             EnumChatFormatting.DARK_PURPLE
                 + "9,223,372,034,707,292,160 * 9,223,372,034,707,292,160 EU/t(85,070,591,690,620,534,613,323,169,079,597,465,600EU/t)",
             EnumChatFormatting.GOLD + "123Technology" };

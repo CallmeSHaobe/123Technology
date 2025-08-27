@@ -410,19 +410,43 @@ public class OTEFoodGenerator extends TTMultiMachineBaseEM implements IConstruct
         return 100000;
     }
 
+    /*
+     * @Override
+     * protected MultiblockTooltipBuilder createTooltip() {
+     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+     * tt.addMachineType("只是一个发电机")
+     * .addInfo("再也不用担心吃得太饱了")
+     * .addInfo("丰矿地烧掉一切食物")
+     * .addInfo("发电:食物饥饿值^2 * 线圈等级 * 机械方块等级 * 2 , 最高发电1A MAX/t , 64并行 , 一次最多烧毁一组相同食物")
+     * .addInfo("§c§l注意:机器污染过高:如遇跳电并报错“无法排出污染”, 请尝试放置多个消声仓")
+     * .addInfo("支持TecTech多安动力舱")
+     * .addInfo("赞美伟大的富婆Safari_xiu吧!没有他就没有现在的123了憋憋。")
+     * .addSeparator()
+     * .addPollutionAmount(100000)
+     * .addController("发电坤")
+     * .beginStructureBlock(7, 13, 7, false)
+     * .addInputBus("AnyInputBus", 1)
+     * .addOutputBus("AnyOutputBus", 1)
+     * .addInputHatch("AnyInputHatch", 1)
+     * .addOutputHatch("AnyOutputHatch", 1)
+     * .addEnergyHatch("AnyEnergyHatch", 1)
+     * .toolTipFinisher("§a123Technology - FoodGenerator");
+     * return tt;
+     * }
+     */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
         final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-        tt.addMachineType("只是一个发电机")
-            .addInfo("再也不用担心吃得太饱了")
-            .addInfo("丰矿地烧掉一切食物")
-            .addInfo("发电:食物饥饿值^2 * 线圈等级 * 机械方块等级 * 2 , 最高发电1A MAX/t , 64并行 , 一次最多烧毁一组相同食物")
-            .addInfo("§c§l注意:机器污染过高:如遇跳电并报错“无法排出污染”, 请尝试放置多个消声仓")
-            .addInfo("支持TecTech多安动力舱")
-            .addInfo("赞美伟大的富婆Safari_xiu吧!没有他就没有现在的123了憋憋。")
+        tt.addMachineType(translateToLocal("ote.tm.food.0"))
+            .addInfo(translateToLocal("ote.tm.food.1"))
+            .addInfo(translateToLocal("ote.tm.food.2"))
+            .addInfo(translateToLocal("ote.tm.food.3"))
+            .addInfo(translateToLocal("ote.tm.food.4"))
+            .addInfo(translateToLocal("ote.tm.food.5"))
+            .addTecTechHatchInfo()
             .addSeparator()
             .addPollutionAmount(100000)
-            .addController("发电坤")
+            .addController(translateToLocal("ote.tn.food"))
             .beginStructureBlock(7, 13, 7, false)
             .addInputBus("AnyInputBus", 1)
             .addOutputBus("AnyOutputBus", 1)

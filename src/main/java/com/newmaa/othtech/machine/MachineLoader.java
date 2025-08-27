@@ -1,5 +1,7 @@
 package com.newmaa.othtech.machine;
 
+import static net.minecraft.util.StatCollector.translateToLocal;
+
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.machine.hatch.OTEHatchWirelessMulti;
 import com.newmaa.othtech.machine.hatch.OTEWTFHatch;
@@ -15,42 +17,55 @@ public class MachineLoader {
     public static void loadMachines() {
         final int IDs = 23520;
 
-        OTHItemList.NineInOne.set(new OTEMegaNineInOne(IDs, "Mega9in1", "终极压缩巨型加工厂"));
+        OTHItemList.NineInOne.set(new OTEMegaNineInOne(IDs, "Mega9in1", translateToLocal("ote.tn.mnio")));
 
-        OTHItemList.MegaIsaForge.set(new OTEMegaIsaForge(IDs + 1, "MegaISAForge", "神之艾萨锻炉"));
+        OTHItemList.MegaIsaForge.set(new OTEMegaIsaForge(IDs + 1, "MegaISAForge", translateToLocal("ote.tn.mifo")));
 
-        OTHItemList.inf_WirelessHatch
-            .set(new OTEHatchWirelessMulti(IDs + 2, "infWirelessEnergyHatch", "神人无线能源仓", 14, 2147483647));
+        OTHItemList.inf_WirelessHatch.set(
+            new OTEHatchWirelessMulti(
+                IDs + 2,
+                "infWirelessEnergyHatch",
+                translateToLocal("ote.tn.inf"),
+                14,
+                2147483647));
 
-        OTHItemList.legendary_WirelessHatch
-            .set(new OTEHatchWirelessMulti(IDs + 3, "legendaryWirelessEnergyHatch", "传奇无线能源仓", 13, (int) TierEU.UXV));
+        OTHItemList.legendary_WirelessHatch.set(
+            new OTEHatchWirelessMulti(
+                IDs + 3,
+                "legendaryWirelessEnergyHatch",
+                translateToLocal("ote.tn.leg"),
+                13,
+                (int) TierEU.UXV));
 
         OTHItemList.WirelessMAX
-            .set(new OTEHatchWirelessMulti(IDs + 4, "MAX1048576Hatch", "MAX 1,048,576A 无线能源仓", 14, 1048576));
+            .set(new OTEHatchWirelessMulti(IDs + 4, "MAX1048576Hatch", translateToLocal("ote.tn.max"), 14, 1048576));
 
-        OTHItemList.inf_infWirelessHatch.set(new OTEWTFHatch(IDs + 5, "longlongHatch", "神威大将军毁天灭地无敌金刚炮无线能源仓", 14));
+        OTHItemList.inf_infWirelessHatch
+            .set(new OTEWTFHatch(IDs + 5, "longlongHatch", translateToLocal("ote.tn.long"), 14));
 
-        OTHItemList.Mega_QFT.set(new OTEMegaQFT(IDs + 6, "OTEMegaQFT", "狄拉克潮汐"));
+        OTHItemList.Mega_QFT.set(new OTEMegaQFT(IDs + 6, "OTEMegaQFT", translateToLocal("ote.tn.mqft")));
 
-        OTHItemList.MEBFpp.set(new OTEMegaEBFGTpp(IDs + 7, "MegaEBFGTPP", "巨型炽焱高炉"));
+        OTHItemList.MEBFpp.set(new OTEMegaEBFGTpp(IDs + 7, "MegaEBFGTPP", translateToLocal("ote.tn.mebf")));
 
-        OTHItemList.MFREpp.set(new OTEMegaFreezerGTpp(IDs + 8, "MegaFreezerGTPP", "巨型凛冰冷冻机"));
+        OTHItemList.MFREpp.set(new OTEMegaFreezerGTpp(IDs + 8, "MegaFreezerGTPP", translateToLocal("ote.tn.fz")));
 
-        OTHItemList.SINOPECd.set(new OTESINOPEC(IDs + 13, "SINOPEC", "中国石化集成工厂"));
+        OTHItemList.SINOPECd.set(new OTESINOPEC(IDs + 13, "SINOPEC", translateToLocal("ote.tn.sinopec")));
 
-        OTHItemList.Chem.set(new OTELaoBaChemicalReactor(IDs + 14, "CHEMOTH", "铑钯蜜汁化工厂"));
+        OTHItemList.Chem.set(new OTELaoBaChemicalReactor(IDs + 14, "CHEMOTH", translateToLocal("ote.tn.chem")));
 
-        OTHItemList.SF.set(new OTETangShanSteelFactory(IDs + 15, "TangshanSteelFactory", "唐山炼钢厂"));
+        OTHItemList.SF
+            .set(new OTETangShanSteelFactory(IDs + 15, "TangshanSteelFactory", translateToLocal("ote.tn.ts")));
 
-        OTHItemList.MegaEEC.set(new OTEMegaEEC(IDs + 16, "MegaEEC", "噬魂监狱"));
+        OTHItemList.MegaEEC.set(new OTEMegaEEC(IDs + 16, "MegaEEC", translateToLocal("ote.tn.eec")));
 
-        OTHItemList.Sun.set(new OTESunFactory(IDs + 17, "SunFactory", "红日之将军恩情配件厂"));
+        OTHItemList.Sun.set(new OTESunFactory(IDs + 17, "SunFactory", translateToLocal("ote.tn.sf")));
 
-        OTHItemList.LCA.set(new OTELargeCircuitAssembler(IDs + 18, "LCA", "大型电路组装机"));
+        OTHItemList.LCA.set(new OTELargeCircuitAssembler(IDs + 18, "LCA", translateToLocal("ote.tn.lca")));
 
-        OTHItemList.CoccOven.set(new OTEEpicCokeOven(IDs + 19, "CoccOven", "史诗焦炭终结者 T123"));
+        OTHItemList.CoccOven.set(new OTEEpicCokeOven(IDs + 19, "CoccOven", translateToLocal("ote.tn.cocc")));
 
-        OTHItemList.WoodFusion.set(new OTEWoodenFusionReactor(IDs + 20, "WoodFusionReactor", "压缩原木聚变反应堆Mk 0"));
+        OTHItemList.WoodFusion
+            .set(new OTEWoodenFusionReactor(IDs + 20, "WoodFusionReactor", translateToLocal("ote.tn.wfr")));
 
         OTHItemList.GTTEEnergyULV
             .set(new MTEHatchEnergyMulti(IDs + 21, "HVEnergy", "HV 1073741824A 能源仓", 3, 1073741824));
@@ -60,23 +75,26 @@ public class MachineLoader {
 
         OTHItemList.ImbaBlastFurnace.set(new OTEIMBABlastFurnace(IDs + 23, "IMBABlastFurnace"));
 
-        OTHItemList.MISA.set(new OTEMegaIsaFactory(IDs + 24, "MISA", "艾萨处理集成工厂OTH"));
+        OTHItemList.MISA.set(new OTEMegaIsaFactory(IDs + 24, "MISA", translateToLocal("ote.tn.misa")));
 
-        OTHItemList.FooD.set(new OTEFoodGenerator(IDs + 25, "FOOD", "食物发电机"));
+        OTHItemList.FooD.set(new OTEFoodGenerator(IDs + 25, "FOOD", translateToLocal("ote.tn.food")));
 
-        OTHItemList.NQF.set(new OTENQFuelGeneratorUniversal(IDs + 26, "NaquadahFuelGenerator", "通用硅岩燃料引擎"));
+        OTHItemList.NQF
+            .set(new OTENQFuelGeneratorUniversal(IDs + 26, "NaquadahFuelGenerator", translateToLocal("ote.tn.nfg")));
 
-        OTHItemList.AF.set(new OTEMiniActiveTransformer(IDs + 27, "MiniActiveTransformer", "迷你有源变压器"));
+        OTHItemList.AF
+            .set(new OTEMiniActiveTransformer(IDs + 27, "MiniActiveTransformer", translateToLocal("ote.tn.mat")));
 
-        OTHItemList.NQFF.set(new OTEMegaNQFuelFactory(IDs + 28, "MegaNQFuelFactory", "压缩硅岩燃料精炼厂"));
+        OTHItemList.NQFF.set(new OTEMegaNQFuelFactory(IDs + 28, "MegaNQFuelFactory", translateToLocal("ote.tn.mnf")));
 
-        OTHItemList.MCA.set(new OTEMegaCircuitAssLine(IDs + 29, "LargeCircuitAssLine", "进阶高能电路装配线"));
+        OTHItemList.MCA
+            .set(new OTEMegaCircuitAssLine(IDs + 29, "LargeCircuitAssLine", translateToLocal("ote.tn.lcal")));
 
-        OTHItemList.TP.set(new OTELargeBin(IDs - 1, "LargeBin", "§b盖世神功垃圾桶"));
-        OTHItemList.EIO.set(new OTEEIO(IDs - 2, "EIOM", "末影接口综合体"));
-        OTHItemList.EXH.set(new OTEHeatExchanger(IDs - 3, "EXchanger", "吊炸天热交换机"));
-        OTHItemList.OTEGraveDragon.set(new OTEGraveDragon(IDs - 4, "GraveDragon", "巨龙之墓"));
-        OTHItemList.FISH.set(new OTEFishtorio(IDs - 5, "Fishtorio", "异星渔场"));
+        OTHItemList.TP.set(new OTELargeBin(IDs - 1, "LargeBin", translateToLocal("ote.tn.lb")));
+        OTHItemList.EIO.set(new OTEEIO(IDs - 2, "EIOM", translateToLocal("ote.tn.eio")));
+        OTHItemList.EXH.set(new OTEHeatExchanger(IDs - 3, "EXchanger", translateToLocal("ote.tn.exc")));
+        OTHItemList.OTEGraveDragon.set(new OTEGraveDragon(IDs - 4, "GraveDragon", translateToLocal("ote.tn.gd")));
+        OTHItemList.FISH.set(new OTEFishtorio(IDs - 5, "Fishtorio", translateToLocal("ote.tn.ft")));
         // Lasers
 
         final int AMPS = 1073741824;

@@ -98,7 +98,8 @@ public class RecipesNewWetware implements IRecipePool {
                 GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32746),
                 OTHItemList.encapsulatedBranins.get(4),
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.Polybenzimidazole, 32),
-                GTOreDictUnificator.get(OrePrefixes.plateQuadruple, Materials.Silicone, 64),
+                GTOreDictUnificator.get(OrePrefixes.plateDouble, Materials.Silicone, 64),
+                GTOreDictUnificator.get(OrePrefixes.plateDouble, Materials.Silicone, 64),
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.HSSS, 64),
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.Thaumium, 64))
             .fluidInputs(Materials.BioMediumSterilized.getFluid(6400))
@@ -112,7 +113,8 @@ public class RecipesNewWetware implements IRecipePool {
                 GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32750),
                 OTHItemList.encapsulatedBranins.get(2),
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.Polybenzimidazole, 32),
-                GTOreDictUnificator.get(OrePrefixes.plateQuadruple, Materials.Silicone, 64),
+                GTOreDictUnificator.get(OrePrefixes.plateDouble, Materials.Silicone, 64),
+                GTOreDictUnificator.get(OrePrefixes.plateDouble, Materials.Silicone, 64),
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.HSSS, 64),
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.Thaumium, 64))
             .fluidInputs(Materials.GrowthMediumSterilized.getFluid(6400))

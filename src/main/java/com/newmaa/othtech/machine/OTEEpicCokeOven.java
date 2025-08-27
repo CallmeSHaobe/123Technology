@@ -1309,19 +1309,43 @@ public class OTEEpicCokeOven extends OTHMultiMachineBase<OTEEpicCokeOven> {
         return 114514;
     }
 
+    /*
+     * @Override
+     * protected MultiblockTooltipBuilder createTooltip() {
+     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+     * tt.addMachineType("§d§n小登的终极造物, 中登的期盼之物, 老登的可望不可得之物 - 史诗焦炉")
+     * .addInfo("§n§c永远不要忽略小登的力量...")
+     * .addInfo("§o真正的终极机器, 没有高贵的造价, 更没有乱七八糟的机制(")
+     * .addInfo("§o他所做的, 只有将特定材料烧为焦炭")
+     * .addInfo("§e转换比例: 钻石(粉)->焦炭 1:1024, 煤炭(粉)->焦炭 1:16， 土->焦炭 1:1(这是怎么做到的?)")
+     * .addInfo("§e耗时: 1800 * 20ticks - (煤炭产出 / 5)ticks, 耗电: 0EU/t")
+     * .addInfo("§c§l注意:机器污染过高:如遇跳电并报错“无法排出污染”, 请尝试放置多个消声仓")
+     * .addSeparator()
+     * .addPollutionAmount(114514)
+     * .addController("无敌焦炉")
+     * .beginStructureBlock(7, 13, 7, false)
+     * .addInputBus("AnyInputBus", 1)
+     * .addOutputBus("AnyOutputBus", 1)
+     * .addInputHatch("AnyInputHatch", 1)
+     * .addOutputHatch("AnyOutputHatch", 1)
+     * .addEnergyHatch("AnyEnergyHatch", 1)
+     * .toolTipFinisher("§a123Technology - CoccOven");
+     * return tt;
+     * }
+     */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
         final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-        tt.addMachineType("§d§n小登的终极造物, 中登的期盼之物, 老登的可望不可得之物 - 史诗焦炉")
-            .addInfo("§n§c永远不要忽略小登的力量...")
-            .addInfo("§o真正的终极机器, 没有高贵的造价, 更没有乱七八糟的机制(")
-            .addInfo("§o他所做的, 只有将特定材料烧为焦炭")
-            .addInfo("§e转换比例: 钻石(粉)->焦炭 1:1024, 煤炭(粉)->焦炭 1:16， 土->焦炭 1:1(这是怎么做到的?)")
-            .addInfo("§e耗时: 1800 * 20ticks - (煤炭产出 / 5)ticks, 耗电: 0EU/t")
-            .addInfo("§c§l注意:机器污染过高:如遇跳电并报错“无法排出污染”, 请尝试放置多个消声仓")
+        tt.addMachineType(translateToLocal("ote.tm.cocc.0"))
+            .addInfo(translateToLocal("ote.tm.cocc.1"))
+            .addInfo(translateToLocal("ote.tm.cocc.2"))
+            .addInfo(translateToLocal("ote.tm.cocc.3"))
+            .addInfo(translateToLocal("ote.tm.cocc.4"))
+            .addInfo(translateToLocal("ote.tm.cocc.5"))
+            .addInfo(translateToLocal("ote.tm.cocc.6"))
             .addSeparator()
             .addPollutionAmount(114514)
-            .addController("无敌焦炉")
+            .addController(translateToLocal("ote.tn.cocc"))
             .beginStructureBlock(7, 13, 7, false)
             .addInputBus("AnyInputBus", 1)
             .addOutputBus("AnyOutputBus", 1)

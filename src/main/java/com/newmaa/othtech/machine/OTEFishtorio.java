@@ -260,21 +260,45 @@ public class OTEFishtorio extends OTHMultiMachineBase<OTEFishtorio> {
             || addExoticEnergyInputToMachineList(aTileEntity, aBaseCasingIndex);
     }
 
+    /*
+     * @Override
+     * protected MultiblockTooltipBuilder createTooltip() {
+     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+     * tt.addMachineType(EnumChatFormatting.DARK_GREEN + "§l老登的终极造物 - 异星渔场")
+     * .addInfo(EnumChatFormatting.ITALIC + "§b赞美伟大的造物主Dr.Jumping! 如果没有她的万物至理公式'主 = 6', 老登们又怎么可能会有机会用到如此机器呢 ?")
+     * .addInfo(
+     * EnumChatFormatting.ITALIC
+     * + "§b具体捕鱼原理 : Jumping恒等式解决了维度方块所蕴含的不确定性问题, 从而使得渔场内部小型维度的建立成为可能, 各种'鱼'将会被渔场内部的墨鱼之神所捕捉.")
+     * .addInfo(EnumChatFormatting.ITALIC + "'鱼'包括鱼, 海象, 韭菜盒子, 鲸鱼座藻类, 立方休, 苔石墙 etc. *也许可以放入锑星的维度方块, 但后果自负.")
+     * .addInfo(EnumChatFormatting.WHITE + "执行无损超频, 玻璃等级决定能源仓等级")
+     * .addInfo(EnumChatFormatting.WHITE + "主机需要放入维度方块")
+     * .addInfo("随机产出喔, 可恶的抽卡. 憋憋.")
+     * .addTecTechHatchInfo()
+     * .addSeparator()
+     * .addController("渔场")
+     * .beginStructureBlock(7, 4, 5, false)
+     * .addInputBus("AnyInputBus", 1)
+     * .addOutputBus("AnyOutputBus", 1)
+     * .addInputHatch("AnyInputHatch", 1)
+     * .addOutputHatch("AnyOutputHatch", 1)
+     * .addEnergyHatch("AnyEnergyHatch", 1)
+     * .toolTipFinisher("§a123Technology - Fishtorio");
+     * return tt;
+     * }
+     */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
         final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-        tt.addMachineType(EnumChatFormatting.DARK_GREEN + "§l老登的终极造物 - 异星渔场")
-            .addInfo(EnumChatFormatting.ITALIC + "§b赞美伟大的造物主Dr.Jumping! 如果没有她的万物至理公式'主 = 6', 老登们又怎么可能会有机会用到如此机器呢 ?")
-            .addInfo(
-                EnumChatFormatting.ITALIC
-                    + "§b具体捕鱼原理 : Jumping恒等式解决了维度方块所蕴含的不确定性问题, 从而使得渔场内部小型维度的建立成为可能, 各种'鱼'将会被渔场内部的墨鱼之神所捕捉.")
-            .addInfo(EnumChatFormatting.ITALIC + "'鱼'包括鱼, 海象, 韭菜盒子, 鲸鱼座藻类, 立方休, 苔石墙 etc. *也许可以放入锑星的维度方块, 但后果自负.")
-            .addInfo(EnumChatFormatting.WHITE + "执行无损超频, 玻璃等级决定能源仓等级")
-            .addInfo(EnumChatFormatting.WHITE + "主机需要放入维度方块")
-            .addInfo("随机产出喔, 可恶的抽卡. 憋憋.")
+        tt.addMachineType(EnumChatFormatting.DARK_GREEN + translateToLocal("ote.tm.ft.0"))
+            .addInfo(EnumChatFormatting.ITALIC + translateToLocal("ote.tm.ft.1"))
+            .addInfo(EnumChatFormatting.ITALIC + translateToLocal("ote.tm.ft.2"))
+            .addInfo(EnumChatFormatting.ITALIC + translateToLocal("ote.tm.ft.3"))
+            .addInfo(EnumChatFormatting.WHITE + translateToLocal("ote.tm.ft.4"))
+            .addInfo(EnumChatFormatting.WHITE + translateToLocal("ote.tm.ft.5"))
+            .addInfo(translateToLocal("ote.tm.ft.6"))
             .addTecTechHatchInfo()
             .addSeparator()
-            .addController("渔场")
+            .addController(translateToLocal("ote.tn.ft"))
             .beginStructureBlock(7, 4, 5, false)
             .addInputBus("AnyInputBus", 1)
             .addOutputBus("AnyOutputBus", 1)

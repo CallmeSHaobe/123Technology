@@ -169,6 +169,107 @@ tile.AquaRegia.name=王水
 item.itemBucketAqua.name=王水单元(锑星产)
 death.attack.Acid=虽然这可能很不科学,但%1$s还是被王水干死了
 
-
-
-
+#Machine_ToolTips
+oth.tm.pollution=§c注意 : 如遇跳电并报错“无法排出污染”, 请尝试放置多个消声仓
+#9in1
+oth.tm.mnio.0=§c§l老登的终极造物 - 九合一 (巨型加工厂)
+oth.tm.mnio.1=§a共有十五种模式, 使用螺丝刀切换类模式， 使用编程电路20 21 22切换内部模式
+oth.tm.mnio.2=§aMetal类: 压缩机 车床 电力磁化机
+oth.tm.mnio.3=§aFluid类: 发酵槽 流体提取机 提取机
+oth.tm.mnio.4=§aMisc类: 激光蚀刻机 高压釜 流体固化机
+oth.tm.mnio.5=§aIsa类: 艾萨研磨机 工业浮选机 真空干燥炉
+oth.tm.mnio.6=§aCol类: 分子重组仪 酿造室 流体加热机
+oth.tm.mnio.7=§b并行耗时公式来自某位§9冰之妖精
+oth.tm.mnio.8=§b电压等级提高一级，并行 -9， 最低为9, 默认为64
+oth.tm.mnio.9=§b配方耗时 = NEI耗时 * (1 + (能源仓电压等级 * 16%))
+oth.tm.mnio.10=§bEU消耗 : (1 / 线圈等级) * 0.1, 最低为0.01")
+oth.tm.mnio.11=§b海珀珍线圈解锁稳定的黑洞, 通流琥珀金线圈解锁HIP
+oth.tm.mnio.12=§b执行无损超频
+oth.tm.mnio.13=§e九合一，我们敬爱你口牙！！ ---Sukune_News
+#EIO
+ote.tm.eio.0=§l中登的终极造物 - 末影接口综合体
+ote.tm.eio.1=怪物的灵魂们终将得到解放
+ote.tm.eio.2=这就是工业化的魅力吗..?
+ote.tm.eio.3=使用先进的EU系机器来代替RF系机器, 真是伟大的进步.
+ote.tm.eio.4=处理EIO一些机器的配方, 如头颅装配机, 灵魂绑定机等.
+ote.tm.eio.5=执行无损超频, 默认并行64.
+ote.tm.eio.6=螺丝刀右键开启刷怪笼绑定模式, 耗电固定114EU/t, 耗时100ticks
+#EpicCoccOven
+ote.tm.cocc.0=§d§n小登的终极造物, 中登的期盼之物, 老登的可望不可得之物 - 史诗焦炉
+ote.tm.cocc.1=§n§c永远不要忽略小登的力量...
+ote.tm.cocc.2=§o真正的终极机器, 没有高贵的造价, 更没有乱七八糟的机制(
+ote.tm.cocc.3=§o他所做的, 只有将特定材料烧为焦炭
+ote.tm.cocc.4=§e转换比例: 钻石(粉)->焦炭 1:1024, 煤炭(粉)->焦炭 1:16， 土->焦炭 1:1(这是怎么做到的?)
+ote.tm.cocc.5=§e耗时: 1800 * 20ticks - (煤炭产出 / 5)ticks, 耗电: 0EU/t
+ote.tm.cocc.6=§c§l注意:机器污染过高:如遇跳电并报错“无法排出污染”, 请尝试放置多个消声仓
+#Fishtorio
+ote.tm.ft.0=§l老登的终极造物 - 异星渔场
+ote.tm.ft.1=§b赞美伟大的造物主Dr.Jumping! 如果没有她的万物至理公式'主 = 6', 老登们又怎么可能会有机会用到如此机器呢 ?
+ote.tm.ft.2=§b具体捕鱼原理 : Jumping恒等式解决了维度方块所蕴含的不确定性问题, 从而使得渔场内部小型维度的建立成为可能, 各种'鱼'将会被渔场内部的墨鱼之神所捕捉.
+ote.tm.ft.3='鱼'包括鱼, 海象, 韭菜盒子, 鲸鱼座藻类, 立方休, 苔石墙 etc. *也许可以放入锑星的维度方块, 但后果自负.
+ote.tm.ft.4=执行无损超频, 玻璃等级决定能源仓等级
+ote.tm.ft.5=主机需要放入维度方块
+ote.tm.ft.6=随机产出喔, 可恶的抽卡. 憋憋.
+#FoodGenerator
+ote.tm.food.0=只是一个发电机
+ote.tm.food.1=再也不用担心吃得太饱了
+ote.tm.food.2=丰矿地烧掉一切食物
+ote.tm.food.3=发电:食物饥饿值^2 * 线圈等级 * 机械方块等级 * 2 , 最高发电1A MAX/t , 64并行 , 一次最多烧毁一组相同食物
+ote.tm.food.4=§c§l注意:机器污染过高:如遇跳电并报错“无法排出污染”, 请尝试放置多个消声仓
+ote.tm.food.5=赞美伟大的富婆Safari_xiu吧!没有他就没有现在的123了憋憋.
+#Dragon Grave
+ote.tm.gd.0=§c§l老登的终极造物 - 黑龙驭者(新式龙研聚合装置)
+ote.tm.gd.1=§e§o龙研堆了几千回, 工业进步第一次
+ote.tm.gd.2=§c§o应赞美NHU之神, 蛋机要启动了...
+ote.tm.gd.3=三级机械方块解锁无损超频
+ote.tm.gd.4=并行 = 机械方块等级 * 128，最高等级解锁int并行
+ote.tm.gd.5=§e耗时倍率 = 1 - 0.05 * 线圈等级
+ote.tm.gd.6=§e机械方块等级限制可执行的配方等级
+ote.tm.gd.7=§e更换结构时请重放主机以检测结构
+#Heat Exchanger
+ote.tm.exc.0=真正的热能饕餮 - 真空冷冻热交换机
+ote.tm.exc.1=回收热锭冶炼的废热, 化为超临界蒸汽.
+ote.tm.exc.2=理论可回收热锭冰箱配方50%之EU
+ote.tm.exc.3=物理学还存在吗?
+ote.tm.exc.4=耗电: 0EU/t , 耗时请使用主机参数调整
+#IMBA EBF
+ote.tm.imba.0=§l超级无敌数值高炉
+ote.tm.imba.1=§6§l不耗电！
+ote.tm.imba.2=§6§lint并行！
+ote.tm.imba.3=§6§l任何工作都可以10tick完成！
+ote.tm.imba.4=§6§l内置一颗中子星！炉温无上限！
+ote.tm.imba.5=§1§o来自EOHBUF作者的眷顾
+ote.tm.imba.6=§6“传说中，神明在喝醉后设计了一台机器，醒来后却忘了删掉它。于是，它降临到了凡人世界。”
+ote.tm.imba.7=§4§l性能？直接拉满！成本？低到怀疑人生！
+ote.tm.imba.8=§c甚至你会怀疑，‘我靠，这东西真的允许造出来吗？’
+ote.tm.imba.9=§9只要有它，资源匮乏、效率低下、能量不足统统不存在。它不仅能让你在服务器里翻天覆地，§m还能让你在群聊里发出嘲讽的哈哈哈哈！！
+ote.tm.imba.10=§6它不是工具，它是玩家的梦想，是DEV的噩梦！
+#Machine_Name
+ote.tn.mnio=终极压缩巨型加工厂
+ote.tn.mifo=神之艾萨锻炉
+ote.tn.inf=神人无线能源仓
+ote.tn.leg=传奇无线能源仓
+ote.tn.max=MAX 1,048,576A 无线能源仓
+ote.tn.long=神威大将军·奇迹和魔法并不是免费的~我真是个笨蛋阿·面硬加咸蔬菜加倍蒜末和油多多还有韭菜盒子~天上天下天地无双毁天灭地无敌金刚炮的·粗制的·原始的·稳定的·先进的·异星的·完美的·太初的·鸿蒙的·终焉寂灭~无线能源仓();
+ote.tn.mqft=狄拉克潮汐
+ote.tn.mebf=巨型炽焱高炉
+ote.tn.fz=巨型凛冰冷冻机
+ote.tn.sinopec=中国石化集成工厂
+ote.tn.chem=铑钯蜜汁化工厂
+ote.tn.ts=唐山炼钢厂
+ote.tn.eec=噬魂监狱
+ote.tn.sf=红日之将军恩情配件厂
+ote.tn.lca=大型电路组装机
+ote.tn.cocc=史诗焦炭终结者 T123
+ote.tn.wfr=压缩原木聚变反应堆Mk 0
+ote.tn.misa=艾萨处理集成工厂OTH
+ote.tn.food=食物发电机
+ote.tn.nfg=通用硅岩燃料引擎
+ote.tn.mat=迷你有源变压器
+ote.tn.mnf=压缩硅岩燃料精炼厂
+ote.tn.lcal=进阶高能电路装配线
+ote.tn.lb=盖世神功垃圾桶
+ote.tn.eio=末影接口综合体
+ote.tn.exc=吊炸天热交换机
+ote.tn.gd=巨龙之墓
+ote.tn.ft=异星渔场

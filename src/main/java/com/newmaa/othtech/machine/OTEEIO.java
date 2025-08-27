@@ -259,19 +259,43 @@ public class OTEEIO extends OTHMultiMachineBase<OTEEIO> {
             || addExoticEnergyInputToMachineList(aTileEntity, aBaseCasingIndex);
     }
 
+    /*
+     * @Override
+     * protected MultiblockTooltipBuilder createTooltip() {
+     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+     * tt.addMachineType(EnumChatFormatting.WHITE + "§l中登的终极造物 - 末影接口综合体")
+     * .addInfo(EnumChatFormatting.ITALIC + "怪物的灵魂们终将得到解放")
+     * .addInfo(EnumChatFormatting.ITALIC + "这就是工业化的魅力吗..?")
+     * .addInfo(EnumChatFormatting.LIGHT_PURPLE + "使用先进的EU系机器来代替RF系机器, 真是伟大的进步.")
+     * .addInfo(EnumChatFormatting.LIGHT_PURPLE + "处理EIO一些机器的配方, 如头颅装配机, 灵魂绑定机等.")
+     * .addInfo(EnumChatFormatting.LIGHT_PURPLE + "执行无损超频, 默认并行64.")
+     * .addInfo("螺丝刀右键开启刷怪笼绑定模式, 耗电固定114EU/t, 耗时100ticks")
+     * .addTecTechHatchInfo()
+     * .addSeparator()
+     * .addController("EIO")
+     * .beginStructureBlock(7, 4, 5, false)
+     * .addInputBus("AnyInputBus", 1)
+     * .addOutputBus("AnyOutputBus", 1)
+     * .addInputHatch("AnyInputHatch", 1)
+     * .addOutputHatch("AnyOutputHatch", 1)
+     * .addEnergyHatch("AnyEnergyHatch", 1)
+     * .toolTipFinisher("§a123Technology - EnderIO");
+     * return tt;
+     * }
+     */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
         final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-        tt.addMachineType(EnumChatFormatting.WHITE + "§l中登的终极造物 - 末影接口综合体")
-            .addInfo(EnumChatFormatting.ITALIC + "怪物的灵魂们终将得到解放")
-            .addInfo(EnumChatFormatting.ITALIC + "这就是工业化的魅力吗..?")
-            .addInfo(EnumChatFormatting.LIGHT_PURPLE + "使用先进的EU系机器来代替RF系机器, 真是伟大的进步.")
-            .addInfo(EnumChatFormatting.LIGHT_PURPLE + "处理EIO一些机器的配方, 如头颅装配机, 灵魂绑定机等.")
-            .addInfo(EnumChatFormatting.LIGHT_PURPLE + "执行无损超频, 默认并行64.")
-            .addInfo("螺丝刀右键开启刷怪笼绑定模式, 耗电固定114EU/t, 耗时100ticks")
+        tt.addMachineType(EnumChatFormatting.WHITE + translateToLocal("ote.tm.eio.0"))
+            .addInfo(EnumChatFormatting.ITALIC + translateToLocal("ote.tm.eio.1"))
+            .addInfo(EnumChatFormatting.ITALIC + translateToLocal("ote.tm.eio.2"))
+            .addInfo(EnumChatFormatting.LIGHT_PURPLE + translateToLocal("ote.tm.eio.3"))
+            .addInfo(EnumChatFormatting.LIGHT_PURPLE + translateToLocal("ote.tm.eio.4"))
+            .addInfo(EnumChatFormatting.LIGHT_PURPLE + translateToLocal("ote.tm.eio.5"))
+            .addInfo(translateToLocal("ote.tm.eio.6"))
             .addTecTechHatchInfo()
             .addSeparator()
-            .addController("EIO")
+            .addController(translateToLocal("ote.tn.eio"))
             .beginStructureBlock(7, 4, 5, false)
             .addInputBus("AnyInputBus", 1)
             .addOutputBus("AnyOutputBus", 1)

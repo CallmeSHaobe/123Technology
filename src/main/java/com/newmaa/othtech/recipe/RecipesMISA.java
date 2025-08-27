@@ -2,6 +2,8 @@ package com.newmaa.othtech.recipe;
 
 import static com.newmaa.othtech.utils.Utils.setStackSize;
 
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 
 import com.newmaa.othtech.Config;
@@ -267,6 +269,22 @@ public class RecipesMISA implements IRecipePool {
             .eut(491520)
             .duration(400 * 20)
             .addTo(Recipemaps.MISA);
+        // Netherite
+        RecipeBuilder.builder()
+            .itemOutputs(
+                setStackSize(Materials.Sulfur.getDust(1), 16 * 256),
+                setStackSize(Materials.Antimony.getDust(1), 16 * 55),
+                setStackSize(Materials.CertusQuartz.getDust(1), 16 * 40),
+                setStackSize(Materials.NetherQuartz.getDust(1), 16 * 40),
+                setStackSize(Materials.Ardite.getDust(1), 16 * 32),
+                setStackSize(Materials.Cobalt.getDust(1), 16 * 32))
+            .itemInputs(setStackSize(new ItemStack(Blocks.netherrack, 1), 2048))
+            .fluidInputs(Materials.NefariousGas.getFluid(64000 * 3))
+            .fluidOutputs(Materials.PoorNetherWaste.getFluid(256_000))
+            .specialValue(1)
+            .eut(123123)
+            .duration(600 * 20)
+            .addTo(Recipemaps.MISA);
         if (Config.is_MISA_IMBA_Recipes_Enabled) {
             // Cosmic Neut
             RecipeBuilder.builder()
@@ -316,6 +334,7 @@ public class RecipesMISA implements IRecipePool {
                 .eut(67108864)
                 .duration(600 * 20)
                 .addTo(Recipemaps.MISA);
+
         } else {
             // Cosmic Neut
             RecipeBuilder.builder()
