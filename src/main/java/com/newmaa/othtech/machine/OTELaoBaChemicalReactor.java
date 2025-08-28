@@ -329,27 +329,52 @@ public class OTELaoBaChemicalReactor extends OTHMultiMachineBase<OTELaoBaChemica
             || addExoticEnergyInputToMachineList(aTileEntity, aBaseCasingIndex);
     }
 
+    /*
+     * @Override
+     * protected MultiblockTooltipBuilder createTooltip() {
+     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+     * tt.addMachineType("§e§l老登的终极造物 - 铑钯反应釜(化学反应釜 & 化工厂)")
+     * .addInfo("§l§a    吃饱啦!    ")
+     * .addInfo("化工厂模式 ： 耗时 = NEI耗时 * (1 - 线圈等级 * 0.15),最低耗时倍率为0.1; 并行16, 无催化剂消耗, 有损超频")
+     * .addInfo("大型化学反应釜模式 : 耗时 = NEI耗时 * (1 - 线圈等级 * 0.1), 最低耗时倍率为0.1; 无限制并行, 无损超频")
+     * .addInfo("玻璃等级决定化工厂等级，化工厂等级==玻璃信道等级-3")
+     * .addInfo("不成型请重放主机")
+     * .addInfo("如遇配方不执行，请放置一个普通输入总线，并将所有输入总线的编程电路调到一致")
+     * .addInfo("主机放入铱锇钐合金粉解锁化工厂无损超频及并行限制")
+     * .addTecTechHatchInfo()
+     * .addSeparator()
+     * .addController("反应釜")
+     * .beginStructureBlock(7, 13, 7, false)
+     * .addInputBus("AnyInputBus", 1)
+     * .addOutputBus("AnyOutputBus", 1)
+     * .addInputHatch("AnyInputHatch", 1)
+     * .addOutputHatch("AnyOutputHatch", 1)
+     * .addEnergyHatch("AnyEnergyHatch", 1)
+     * .toolTipFinisher("§a123Technology - CHEM-ENDER");
+     * return tt;
+     * }
+     */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
         final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-        tt.addMachineType("§e§l老登的终极造物 - 铑钯反应釜(化学反应釜 & 化工厂)")
-            .addInfo("§l§a    吃饱啦!    ")
-            .addInfo("化工厂模式 ： 耗时 = NEI耗时 * (1 - 线圈等级 * 0.15),最低耗时倍率为0.1; 并行16, 无催化剂消耗, 有损超频")
-            .addInfo("大型化学反应釜模式 : 耗时 = NEI耗时 * (1 - 线圈等级 * 0.1), 最低耗时倍率为0.1; 无限制并行, 无损超频")
-            .addInfo("玻璃等级决定化工厂等级，化工厂等级==玻璃信道等级-3")
-            .addInfo("不成型请重放主机")
-            .addInfo("如遇配方不执行，请放置一个普通输入总线，并将所有输入总线的编程电路调到一致")
-            .addInfo("主机放入铱锇钐合金粉解锁化工厂无损超频及并行限制")
+        tt.addMachineType(translateToLocal("ote.tm.chem.0"))
+            .addInfo(translateToLocal("ote.tm.chem.1"))
+            .addInfo(translateToLocal("ote.tm.chem.2"))
+            .addInfo(translateToLocal("ote.tm.chem.3"))
+            .addInfo(translateToLocal("ote.tm.chem.4"))
+            .addInfo(translateToLocal("ote.tm.chem.5"))
+            .addInfo(translateToLocal("ote.tm.chem.6"))
+            .addInfo(translateToLocal("ote.tm.chem.7"))
             .addTecTechHatchInfo()
             .addSeparator()
-            .addController("反应釜")
+            .addController(translateToLocal("ote.tn.chem"))
             .beginStructureBlock(7, 13, 7, false)
             .addInputBus("AnyInputBus", 1)
             .addOutputBus("AnyOutputBus", 1)
             .addInputHatch("AnyInputHatch", 1)
             .addOutputHatch("AnyOutputHatch", 1)
             .addEnergyHatch("AnyEnergyHatch", 1)
-            .toolTipFinisher("§a123Technology - CHEM-ENDER");
+            .toolTipFinisher("§a123Technology - Chem-Terminator");
         return tt;
     }
 

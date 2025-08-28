@@ -1038,5 +1038,6 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .eut(TierEU.UEV)
             .duration(1024 * 1000 * 20 * 60)
             .addTo(SF);
+
     }
 }

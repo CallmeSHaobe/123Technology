@@ -330,20 +330,47 @@ public class OTELargeCircuitAssembler extends OTHMultiMachineBase<OTELargeCircui
     // endregion
 
     // region Misc
+
+    /*
+     * @Override
+     * protected MultiblockTooltipBuilder createTooltip() {
+     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+     * tt.addMachineType("§e§l轻工业计划 - 大型电路组装机")
+     * .addInfo("§l朴实无华...")
+     * .addInfo("能源仓等级限制配方等级")
+     * .addInfo("§q§l升级电子单元机械方块获得更加§4§l炫酷§q§l的外观(§e§l这实在是太帅太有用了吧!§q§l)")
+     * .addInfo("速度 + 123%")
+     * .addInfo("执行无损超频")
+     * .addInfo("结构太不复杂了!")
+     * .addTecTechHatchInfo()
+     * .addPollutionAmount(1024)
+     * .addSeparator()
+     * .addController("电路组装机")
+     * .beginStructureBlock(8, 6, 13, false)
+     * .addInputBus("AnyInputBus", 3)
+     * .addOutputBus("AnyOutputBus", 2)
+     * .addInputHatch("AnyInputHatch", 3)
+     * .addOutputHatch("AnyOutputHatch", 2)
+     * .addEnergyHatch("AnyEnergyHatch", 1)
+     * .addMufflerHatch("AnyMufflerHatch", 1)
+     * .toolTipFinisher("§a123Technology - Light Industry - LargeCircuitAssembler");
+     * return tt;
+     * }
+     */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
         final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-        tt.addMachineType("§e§l轻工业计划 - 大型电路组装机")
-            .addInfo("§l朴实无华...")
-            .addInfo("能源仓等级限制配方等级")
-            .addInfo("§q§l升级电子单元机械方块获得更加§4§l炫酷§q§l的外观(§e§l这实在是太帅太有用了吧!§q§l)")
-            .addInfo("速度 + 123%")
-            .addInfo("执行无损超频")
-            .addInfo("结构太不复杂了!")
+        tt.addMachineType(translateToLocal("ote.tm.lca.0"))
+            .addInfo(translateToLocal("ote.tm.lca.1"))
+            .addInfo(translateToLocal("ote.tm.lca.2"))
+            .addInfo(translateToLocal("ote.tm.lca.3"))
+            .addInfo(translateToLocal("ote.tm.lca.4"))
+            .addInfo(translateToLocal("ote.tm.lca.5"))
+            .addInfo(translateToLocal("ote.tm.lca.6"))
             .addTecTechHatchInfo()
             .addPollutionAmount(1024)
             .addSeparator()
-            .addController("电路组装机")
+            .addController(translateToLocal("ote.tn.lca"))
             .beginStructureBlock(8, 6, 13, false)
             .addInputBus("AnyInputBus", 3)
             .addOutputBus("AnyOutputBus", 2)

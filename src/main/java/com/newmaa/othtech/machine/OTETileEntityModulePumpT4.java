@@ -1,12 +1,13 @@
 package com.newmaa.othtech.machine;
 
 import static gregtech.api.enums.GTValues.VP;
+import static net.minecraft.util.StatCollector.translateToLocal;
 
 import java.util.ArrayList;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -208,7 +209,7 @@ public abstract class OTETileEntityModulePumpT4 extends TileEntityModuleBase {
     protected void drawTexts(DynamicPositionedColumn screenElements, SlotWidget inventorySlot) {
         super.drawTexts(screenElements, inventorySlot);
         screenElements.widget(
-            new TextWidget(StatCollector.translateToLocal("gt.blockmachines.multimachine.ig.elevator.gui.config"))
+            new TextWidget(translateToLocal("gt.blockmachines.multimachine.ig.elevator.gui.config"))
                 .setDefaultColor(COLOR_TEXT_WHITE.get())
                 .setEnabled(widget -> mMachine));
         for (int i = 0; i < getParallelRecipes(); i++) {
@@ -318,23 +319,45 @@ public abstract class OTETileEntityModulePumpT4 extends TileEntityModuleBase {
             return new ModulePumpT4(mName);
         }
 
+        /*
+         * @Override
+         * protected MultiblockTooltipBuilder createTooltip() {
+         * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+         * tt.addMachineType("太空钻机模块")
+         * .addInfo("将太空钻机功能添加到太空电梯")
+         * .addInfo(EnumChatFormatting.LIGHT_PURPLE + "§l我 是 吸 仰 阳.")
+         * .addInfo("直接从太空电梯接受能量,不使用能源仓")
+         * .addInfo("设定的行星和气体类型决定了输出的流体")
+         * .addInfo("锁定输出仓即可防止溢出销毁")
+         * .addInfo("§9运行电压：§aMAX 每个配方的最大并行：§c123123")
+         * .addInfo("一次处理多达§e5§r种不同的配方")
+         * .addInfo("需要§6MK-V§r或更高等级的加速轨道")
+         * .addSeparator()
+         * .beginStructureBlock(1, 5, 2, false)
+         * .addCasingInfoRange("太空电梯基座机械方块", 0, 9, false)
+         * .addOutputHatch("任意太空电梯基座机械方块", 1)
+         * .addInfo("§b§lAuthor:§l憋憋大师--HuimaoX")
+         * .toolTipFinisher("§a123Technology - SpacePump");
+         * return tt;
+         * }
+         */
         @Override
         protected MultiblockTooltipBuilder createTooltip() {
             final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-            tt.addMachineType("太空钻机模块")
-                .addInfo("将太空钻机功能添加到太空电梯")
-                .addInfo("§n§b我不羡慕太阳 照不亮你过往")
-                .addInfo("直接从太空电梯接受能量,不使用能源仓")
-                .addInfo("设定的行星和气体类型决定了输出的流体")
-                .addInfo("锁定输出仓即可防止溢出销毁")
-                .addInfo("§9运行电压：§aMAX 每个配方的最大并行：§c123123")
-                .addInfo("一次处理多达§e5§r种不同的配方")
-                .addInfo("需要§6MK-V§r或更高等级的加速轨道")
+            tt.addMachineType(translateToLocal("ote.tm.pump.0"))
+                .addInfo(translateToLocal("ote.tm.pump.1"))
+                .addInfo(EnumChatFormatting.LIGHT_PURPLE + translateToLocal("ote.tm.pump.2"))
+                .addInfo(translateToLocal("ote.tm.pump.3"))
+                .addInfo(translateToLocal("ote.tm.pump.4"))
+                .addInfo(translateToLocal("ote.tm.pump.5"))
+                .addInfo(translateToLocal("ote.tm.pump.6"))
+                .addInfo(translateToLocal("ote.tm.pump.7"))
+                .addInfo(translateToLocal("ote.tm.pump.8"))
                 .addSeparator()
                 .beginStructureBlock(1, 5, 2, false)
-                .addCasingInfoRange("太空电梯基座机械方块", 0, 9, false)
-                .addOutputHatch("任意太空电梯基座机械方块", 1)
-                .addInfo("§b§lAuthor:§l憋憋大师--HuimaoX")
+                .addCasingInfoRange(translateToLocal("ote.tm.pump.9"), 0, 9, false)
+                .addOutputHatch(translateToLocal("ote.tm.pump.10"), 1)
+                .addInfo(translateToLocal("ote.tm.pump.11"))
                 .toolTipFinisher("§a123Technology - SpacePump");
             return tt;
         }

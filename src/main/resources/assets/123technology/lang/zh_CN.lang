@@ -171,6 +171,7 @@ death.attack.Acid=虽然这可能很不科学,但%1$s还是被王水干死了
 
 #Machine_ToolTips
 oth.tm.pollution=§c注意 : 如遇跳电并报错“无法排出污染”, 请尝试放置多个消声仓
+
 #9in1
 oth.tm.mnio.0=§c§l老登的终极造物 - 九合一 (巨型加工厂)
 oth.tm.mnio.1=§a共有十五种模式, 使用螺丝刀切换类模式， 使用编程电路20 21 22切换内部模式
@@ -186,6 +187,7 @@ oth.tm.mnio.10=§bEU消耗 : (1 / 线圈等级) * 0.1, 最低为0.01")
 oth.tm.mnio.11=§b海珀珍线圈解锁稳定的黑洞, 通流琥珀金线圈解锁HIP
 oth.tm.mnio.12=§b执行无损超频
 oth.tm.mnio.13=§e九合一，我们敬爱你口牙！！ ---Sukune_News
+
 #EIO
 ote.tm.eio.0=§l中登的终极造物 - 末影接口综合体
 ote.tm.eio.1=怪物的灵魂们终将得到解放
@@ -194,6 +196,7 @@ ote.tm.eio.3=使用先进的EU系机器来代替RF系机器, 真是伟大的进�
 ote.tm.eio.4=处理EIO一些机器的配方, 如头颅装配机, 灵魂绑定机等.
 ote.tm.eio.5=执行无损超频, 默认并行64.
 ote.tm.eio.6=螺丝刀右键开启刷怪笼绑定模式, 耗电固定114EU/t, 耗时100ticks
+
 #EpicCoccOven
 ote.tm.cocc.0=§d§n小登的终极造物, 中登的期盼之物, 老登的可望不可得之物 - 史诗焦炉
 ote.tm.cocc.1=§n§c永远不要忽略小登的力量...
@@ -202,6 +205,7 @@ ote.tm.cocc.3=§o他所做的, 只有将特定材料烧为焦炭
 ote.tm.cocc.4=§e转换比例: 钻石(粉)->焦炭 1:1024, 煤炭(粉)->焦炭 1:16， 土->焦炭 1:1(这是怎么做到的?)
 ote.tm.cocc.5=§e耗时: 1800 * 20ticks - (煤炭产出 / 5)ticks, 耗电: 0EU/t
 ote.tm.cocc.6=§c§l注意:机器污染过高:如遇跳电并报错“无法排出污染”, 请尝试放置多个消声仓
+
 #Fishtorio
 ote.tm.ft.0=§l老登的终极造物 - 异星渔场
 ote.tm.ft.1=§b赞美伟大的造物主Dr.Jumping! 如果没有她的万物至理公式'主 = 6', 老登们又怎么可能会有机会用到如此机器呢 ?
@@ -210,6 +214,7 @@ ote.tm.ft.3='鱼'包括鱼, 海象, 韭菜盒子, 鲸鱼座藻类, 立方休, �
 ote.tm.ft.4=执行无损超频, 玻璃等级决定能源仓等级
 ote.tm.ft.5=主机需要放入维度方块
 ote.tm.ft.6=随机产出喔, 可恶的抽卡. 憋憋.
+
 #FoodGenerator
 ote.tm.food.0=只是一个发电机
 ote.tm.food.1=再也不用担心吃得太饱了
@@ -217,6 +222,7 @@ ote.tm.food.2=丰矿地烧掉一切食物
 ote.tm.food.3=发电:食物饥饿值^2 * 线圈等级 * 机械方块等级 * 2 , 最高发电1A MAX/t , 64并行 , 一次最多烧毁一组相同食物
 ote.tm.food.4=§c§l注意:机器污染过高:如遇跳电并报错“无法排出污染”, 请尝试放置多个消声仓
 ote.tm.food.5=赞美伟大的富婆Safari_xiu吧!没有他就没有现在的123了憋憋.
+
 #Dragon Grave
 ote.tm.gd.0=§c§l老登的终极造物 - 黑龙驭者(新式龙研聚合装置)
 ote.tm.gd.1=§e§o龙研堆了几千回, 工业进步第一次
@@ -226,12 +232,14 @@ ote.tm.gd.4=并行 = 机械方块等级 * 128，最高等级解锁int并行
 ote.tm.gd.5=§e耗时倍率 = 1 - 0.05 * 线圈等级
 ote.tm.gd.6=§e机械方块等级限制可执行的配方等级
 ote.tm.gd.7=§e更换结构时请重放主机以检测结构
+
 #Heat Exchanger
 ote.tm.exc.0=真正的热能饕餮 - 真空冷冻热交换机
 ote.tm.exc.1=回收热锭冶炼的废热, 化为超临界蒸汽.
 ote.tm.exc.2=理论可回收热锭冰箱配方50%之EU
 ote.tm.exc.3=物理学还存在吗?
 ote.tm.exc.4=耗电: 123EU/t , 耗时请使用主机参数调整
+
 #IMBA EBF
 ote.tm.imba.0=§l超级无敌数值高炉
 ote.tm.imba.1=§6§l不耗电！
@@ -244,6 +252,62 @@ ote.tm.imba.7=§4§l性能？直接拉满！成本？低到怀疑人生！
 ote.tm.imba.8=§c甚至你会怀疑，‘我靠，这东西真的允许造出来吗？’
 ote.tm.imba.9=§9只要有它，资源匮乏、效率低下、能量不足统统不存在。它不仅能让你在服务器里翻天覆地，§m还能让你在群聊里发出嘲讽的哈哈哈哈！！
 ote.tm.imba.10=§6它不是工具，它是玩家的梦想，是DEV的噩梦！
+
+#Laoba
+ote.tm.chem.0=§e§l老登的终极造物 - 铑钯反应釜(化学反应釜 & 化工厂)
+ote.tm.chem.1=§l§a    吃饱啦!    
+ote.tm.chem.2=化工厂模式 ： 耗时 = NEI耗时 * (1 - 线圈等级 * 0.15),最低耗时倍率为0.1; 并行16, 无催化剂消耗, 有损超频
+ote.tm.chem.3=大型化学反应釜模式 : 耗时 = NEI耗时 * (1 - 线圈等级 * 0.1), 最低耗时倍率为0.1; 无限制并行, 无损超频
+ote.tm.chem.4=玻璃等级决定化工厂等级，化工厂等级==玻璃信道等级-3
+ote.tm.chem.5=不成型请重放主机
+ote.tm.chem.6=如遇配方不执行，请放置一个普通输入总线，并将所有输入总线的编程电路调到一致
+ote.tm.chem.7=主机放入铱锇钐合金粉解锁化工厂无损超频及并行限制
+
+#Bin
+ote.tm.bin.0=垃圾桶丨回收机丨AE奇点制造机丨中子态素压缩机
+ote.tm.bin.1=销毁一切, 仅此而已吗?
+ote.tm.bin.2=支持存储输入系列, 螺丝刀切换模式, 剪线钳切换耗时
+ote.tm.bin.3=回收机模式功率为并行 * 30EU/t
+ote.tm.bin.4=于回收机模式下, 电压等级 + 1, 并行 + 2560, 完全固定输出输入物品数量50%的废料
+ote.tm.bin.5=于奇点制造机模式下, 并行为1, 每256000任意物品制作一个奇点
+ote.tm.bin.6=于中子态素压缩机模式下, 执行有损超频, 并行为256
+ote.tm.bin.12=结构正中心
+ote.tm.bin.13=0x 脱氧钢机械方块(最低)
+ote.tm.bin.14=任意输入总线, 输入仓, 输出总线, 能源仓, 动力仓
+
+#LCA
+ote.tm.lca.0=§e§l轻工业计划 - 大型电路组装机
+ote.tm.lca.1=§l朴实无华...
+ote.tm.lca.2=能源仓等级限制配方等级
+ote.tm.lca.3=§q§l升级电子单元机械方块获得更加§4§l炫酷§q§l的外观(§e§l这实在是太帅太有用了吧!§q§l)
+ote.tm.lca.4=速度 + 123%
+ote.tm.lca.5=执行无损超频
+ote.tm.lca.6=结构太不复杂了!
+
+#MCA
+ote.tm.mca.0=§d§l电路组装的最终奥义 - 进阶高能电路装配线
+ote.tm.mca.1=§q便宜好用的电路装配设施, 继承了原有的电装打包机制, 但是直接支持总成
+ote.tm.mca.2=§q§o“是不是有点太超模了?”
+ote.tm.mca.3=§b玻璃等级决定他的外观, 不成型请重放主机
+ote.tm.mca.4=默认为128并行. 电压等级每提高一级, 并行 + 16
+ote.tm.mca.5=主机放入UEV力场以解锁无损超频
+
+#pump
+ote.tm.pump.0=太空钻机模块
+ote.tm.pump.1=将太空钻机功能添加到太空电梯
+ote.tm.pump.2=§l我 是 吸 仰 阳.
+ote.tm.pump.3=直接从太空电梯接受能量,不使用能源仓
+ote.tm.pump.4=设定的行星和气体类型决定了输出的流体
+ote.tm.pump.5=锁定输出仓即可防止溢出销毁
+ote.tm.pump.6=§9运行电压：§aMAX 每个配方的最大并行：§c123123
+ote.tm.pump.7=一次处理多达§e5§r种不同的配方
+ote.tm.pump.8=需要§6MK-V§r或更高等级的加速轨道
+ote.tm.pump.9=太空电梯基座机械方块
+ote.tm.pump.10=任意太空电梯基座机械方块
+ote.tm.pump.11=§b§lAuthor:§l憋憋大师--HuimaoX
+
+
+
 #Machine_Name
 ote.tn.mnio=终极压缩巨型加工厂
 ote.tn.mifo=神之艾萨锻炉
@@ -267,9 +331,10 @@ ote.tn.food=食物发电机
 ote.tn.nfg=通用硅岩燃料引擎
 ote.tn.mat=迷你有源变压器
 ote.tn.mnf=压缩硅岩燃料精炼厂
-ote.tn.lcal=进阶高能电路装配线
+ote.tn.mca=进阶高能电路装配线
 ote.tn.lb=盖世神功垃圾桶
 ote.tn.eio=末影接口综合体
 ote.tn.exc=吊炸天热交换机
 ote.tn.gd=巨龙之墓
 ote.tn.ft=异星渔场
+ote.tn.pump=太空钻机模块MK-123

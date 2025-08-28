@@ -319,18 +319,41 @@ public class OTEMegaCircuitAssLine extends OTHMultiMachineBase<OTEMegaCircuitAss
             || addExoticEnergyInputToMachineList(aTileEntity, aBaseCasingIndex);
     }
 
+    /*
+     * @Override
+     * protected MultiblockTooltipBuilder createTooltip() {
+     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+     * tt.addMachineType("§d§l电路组装的最终奥义 - 进阶高能电路装配线")
+     * .addInfo("§q便宜好用的电路装配设施, 继承了原有的电装打包机制, 但是直接支持总成")
+     * .addInfo("§q§o“是不是有点太超模了?”")
+     * .addInfo("§b玻璃等级决定他的外观, 不成型请重放主机")
+     * .addInfo("默认为128并行. 电压等级每提高一级, 并行 + 16")
+     * .addInfo("主机放入UEV力场以解锁无损超频")
+     * .addTecTechHatchInfo()
+     * .addSeparator()
+     * .addController("电装")
+     * .beginStructureBlock(13, 9, 29, false)
+     * .addInputBus("AnyInputBus", 1)
+     * .addOutputBus("AnyOutputBus", 1)
+     * .addInputHatch("AnyInputHatch", 1)
+     * .addOutputHatch("AnyOutputHatch", 1)
+     * .addEnergyHatch("AnyEnergyHatch", 1)
+     * .toolTipFinisher("§d123Technology - CircuitAssemblerLine");
+     * return tt;
+     * }
+     */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
         final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-        tt.addMachineType("§d§l电路组装的最终奥义 - 进阶高能电路装配线")
-            .addInfo("§q便宜好用的电路装配设施, 继承了原有的电装打包机制, 但是直接支持总成")
-            .addInfo("§q§o“是不是有点太超模了?”")
-            .addInfo("§b玻璃等级决定他的外观, 不成型请重放主机")
-            .addInfo("默认为128并行. 电压等级每提高一级, 并行 + 16")
-            .addInfo("主机放入UEV力场以解锁无损超频")
+        tt.addMachineType(translateToLocal("ote.tm.mca.0"))
+            .addInfo(translateToLocal("ote.tm.mca.1"))
+            .addInfo(translateToLocal("ote.tm.mca.2"))
+            .addInfo(translateToLocal("ote.tm.mca.3"))
+            .addInfo(translateToLocal("ote.tm.mca.4"))
+            .addInfo(translateToLocal("ote.tm.mca.5"))
             .addTecTechHatchInfo()
             .addSeparator()
-            .addController("电装")
+            .addController(translateToLocal("ote.tn.mca"))
             .beginStructureBlock(13, 9, 29, false)
             .addInputBus("AnyInputBus", 1)
             .addOutputBus("AnyOutputBus", 1)

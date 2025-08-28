@@ -87,8 +87,7 @@ public class MachineLoader {
 
         OTHItemList.NQFF.set(new OTEMegaNQFuelFactory(IDs + 28, "MegaNQFuelFactory", translateToLocal("ote.tn.mnf")));
 
-        OTHItemList.MCA
-            .set(new OTEMegaCircuitAssLine(IDs + 29, "LargeCircuitAssLine", translateToLocal("ote.tn.lcal")));
+        OTHItemList.MCA.set(new OTEMegaCircuitAssLine(IDs + 29, "MegaCircuitAssLine", translateToLocal("ote.tn.mca")));
 
         OTHItemList.TP.set(new OTELargeBin(IDs - 1, "LargeBin", translateToLocal("ote.tn.lb")));
         OTHItemList.EIO.set(new OTEEIO(IDs - 2, "EIOM", translateToLocal("ote.tn.eio")));
@@ -157,7 +156,7 @@ public class MachineLoader {
         final int IDs = 23520;
 
         OTHItemList.SpaceElevatorModulePumpT4
-            .set(new OTETileEntityModulePumpT4.ModulePumpT4(IDs + 56, "ModulePumpT4", "太空钻机模块MK-321"));
+            .set(new OTETileEntityModulePumpT4.ModulePumpT4(IDs + 56, "ModulePumpT4", translateToLocal("ote.tn.pump")));
     }
 
 }
