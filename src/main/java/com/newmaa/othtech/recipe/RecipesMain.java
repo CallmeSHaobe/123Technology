@@ -385,7 +385,7 @@ public class RecipesMain implements IRecipePool {
             10240,
             (int) TierEU.UMV,
             640,
-            new Object[] { getGM(23520, 64), getGM(23527, 64), getGM(23528, 64), getGM(10086, 64),
+            new Object[] { getGM(23520, 64), getGM(23527, 64), getGM(23528, 64), getGM(10886, 64),
                 OTHItemList.itemEnqingM.get(64), OTHItemList.itemEnqingM.get(64), OTHItemList.itemEnqingM.get(64),
                 OTHItemList.itemEnqingM.get(64), ItemList.Robot_Arm_UMV.get(64),
                 new Object[] { OrePrefixes.circuit.get(Materials.Cosmic), 64 },
