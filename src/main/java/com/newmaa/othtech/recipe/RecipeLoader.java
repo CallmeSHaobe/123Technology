@@ -2,6 +2,7 @@ package com.newmaa.othtech.recipe;
 
 import static com.newmaa.othtech.Config.is_EggMachine_Recipes_For_NHU;
 
+import com.newmaa.othtech.machine.OTEMiniSteamNineInOne;
 import com.newmaa.othtech.utils.modsEnum;
 
 public class RecipeLoader {
@@ -14,6 +15,7 @@ public class RecipeLoader {
             new RecipesTangshanSteelFactory(), new RecipesSunFactoryEnqing(), new RecipesEpicCokeOvenFake(),
             new RecipesWoodenFusionReactor(), new RecipesMISA(), new RecipesNaquadah(), new RecipesEIO(),
             new RecipesEXH(), new RecipesNewWetware(), new RecipesAntimonia() };
+        OTEMiniSteamNineInOne.loadRecipes();
         if (!modsEnum.TwistSpaceTechnology.isModLoaded()) {
             new RecipesCopiedFromTST().loadRecipes();
         }

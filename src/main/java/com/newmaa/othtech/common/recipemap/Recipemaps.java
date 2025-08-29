@@ -203,4 +203,13 @@ public class Recipemaps {
             builder -> builder.setDisplayStack(OTHItemList.EXH.get(1))
                 .setMaxRecipesPerPage(4))
         .build();
+    public static final RecipeMap<OTH_RecipeMapBackend> STEAM_PUMP = RecipeMapBuilder
+        .of("otht.recipe.steam.pump", OTH_RecipeMapBackend::new)
+        .maxIO(1, 0, 0, 1)
+        .dontUseProgressBar()
+        .frontend(OTH_GeneralFrontend::new)
+        .neiHandlerInfo(
+            builder -> builder.setDisplayStack(OTHItemList.SteamNeinInOne.get(1))
+                .setMaxRecipesPerPage(4))
+        .build();
 }

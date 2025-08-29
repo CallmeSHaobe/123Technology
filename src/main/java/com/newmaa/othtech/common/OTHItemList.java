@@ -103,6 +103,7 @@ public enum OTHItemList {
     inf_infWirelessHatch,
     Mega_QFT,
     NineInOne,
+    SteamNeinInOne,
     MEBFpp,
     MFREpp,
     Sun,

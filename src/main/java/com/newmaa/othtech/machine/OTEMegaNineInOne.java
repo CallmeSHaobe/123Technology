@@ -271,10 +271,11 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
         GTUtility.sendChatToPlayer(
             aPlayer,
             StatCollector.translateToLocal(
-                mInternalMode == 0 ? "Metal"
-                    : mInternalMode == 1 ? "Fluid"
-                        : mInternalMode == 2 ? "Misc"
-                            : mInternalMode == 3 ? "Isa" : mInternalMode == 4 ? "Col" : "Null"));
+                mInternalMode == 0 ? translateToLocal("ote.tm.m9in1.mode.0")
+                    : mInternalMode == 1 ? translateToLocal("ote.tm.m9in1.mode.1")
+                        : mInternalMode == 2 ? translateToLocal("ote.tm.m9in1.mode.2")
+                            : mInternalMode == 3 ? translateToLocal("ote.tm.m9in1.mode.3")
+                                : mInternalMode == 4 ? translateToLocal("ote.tm.m9in1.mode.4") : "Null"));
     }
 
     @Override

@@ -150,6 +150,9 @@ public class MachineLoader {
             .set(new MTEHatchDynamoTunnel(IDs + 54, "UXV Laser 1073DY", "UXV 1,073,741,824A 激光源仓", 13, AMPS));
         OTHItemList.UXVB
             .set(new MTEHatchEnergyTunnel(IDs + 55, "UXV Laser 1073EN", "UXV 1,073,741,824A 激光靶仓", 13, AMPS));
+
+        OTHItemList.SteamNeinInOne
+            .set(new OTEMiniSteamNineInOne(IDs + 57, "SteamNineInOne", translateToLocal("ote.tn.s9in1")));
     }
 
     public static void loadMachinePostInit() {

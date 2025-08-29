@@ -8,6 +8,7 @@ import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_ASSEMBLY_LINE
 import static gregtech.api.util.GTStructureUtility.*;
 import static net.minecraft.util.StatCollector.translateToLocal;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -317,9 +318,9 @@ public class OTEEIO extends OTHMultiMachineBase<OTEEIO> {
     public ITexture[] getTexture(final IGregTechTileEntity baseMetaTileEntity, final ForgeDirection sideDirection,
         final ForgeDirection facing, final int aColorIndex, final boolean active, final boolean aRedstone) {
 
-        // if (CASING_TEXTURE == null) {
-        // CASING_TEXTURE = TextureFactory.of(BlockSliceAndSplice., 0);
-        // }
+        if (CASING_TEXTURE == null) {
+            CASING_TEXTURE = TextureFactory.of((Block) EnderIO.blockSliceAndSplice, 0);
+        }
         if (sideDirection == facing) {
             if (active) return new ITexture[] { CASING_TEXTURE, TextureFactory.builder()
                 .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_ACTIVE)

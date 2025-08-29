@@ -156,9 +156,8 @@ otht.recipe.BIN=垃圾桶
 otht.recipe.RCY=回收机
 otht.recipe.EIO=§l末影接口综合体
 otht.recipe.EXH=§4吊炸天热交换
+otht.recipe.steam.pump=蒸汽九合一-水泵
 item.BrainsHuman.name=§n人类大脑
-item.itemAmulet.name=DSS项圈
-death.attack.amulet_explosion=%1$s被DSS项圈炸死了
 planet.Antimonia=§oAntimonia - 锑星
 star.starAntimonia=§0锑洞
 solarsystem.antimoniaSystem=锑星星系
@@ -187,6 +186,11 @@ oth.tm.mnio.10=§bEU消耗 : (1 / 线圈等级) * 0.1, 最低为0.01")
 oth.tm.mnio.11=§b海珀珍线圈解锁稳定的黑洞, 通流琥珀金线圈解锁HIP
 oth.tm.mnio.12=§b执行无损超频
 oth.tm.mnio.13=§e九合一，我们敬爱你口牙！！ ---Sukune_News
+ote.tm.m9in1.mode.0=压缩-车床-磁化(Metal)
+ote.tm.m9in1.mode.1=发酵-流体提取-提取(Fluid)
+ote.tm.m9in1.mode.2=激光蚀刻-高压釜-流体固化(Misc)
+ote.tm.m9in1.mode.3=艾萨-浮选-真空干燥(Isa)
+ote.tm.m9in1.mode.4=分子-酿造-流体加热(Col)
 
 #EIO
 ote.tm.eio.0=§l中登的终极造物 - 末影接口综合体
@@ -453,6 +457,24 @@ ote.tm.wfr.2=EU消耗 : 0, 耗时 : (输入蒸汽数量(L) / 1000) * 20sec , 更
 ote.tm.wfr.3=耗时 : 普通蒸汽 - 100% , 过热蒸汽 : 50% , 超临界蒸汽 : 10%
 ote.tm.wfr.4=产出 : 普通蒸汽 - 1000L / 1L氢等离子体 , 过热蒸汽 : 1000L / 10L氢等离子体 , 超临界蒸汽 : 1000L / 100L氢等离子体
 
+#Steam 9in1
+ote.tm.s9in1.mode.0=水泵-合金炉-提取(metalProcess0)
+ote.tm.s9in1.mode.1=洗矿-粉碎-锻造(oreProcess0)
+ote.tm.s9in1.mode.2=压缩-搅拌-离心(metalProcess1)
+ote.tm.s9in1.0=§l蒸汽时代又一奇迹 - 蒸汽九合一
+ote.tm.s9in1.1=§7§o§n相传, 在古老的NH大陆上, 流传着这样一个神秘机器的传说.
+ote.tm.s9in1.2=§7§o§n只要人们有了这个神秘的机器. 无论是小中老登, 还是新登旧登, 皆可攀登到他人无法企及的新一奇迹顶点.
+ote.tm.s9in1.3=§7§o§n但某一天, 可怕的造物主: 德拉姆·马斯特鲁·埃克斯埃克斯艾路, 发现了那个机器, 并摧毁了他.
+ote.tm.s9in1.4=§7§o§n相对应的, 造物主德拉姆·马斯特鲁释放了新一批的性能机器, 也许这不失是一件美事.
+ote.tm.s9in1.5=§7§o§n可受过神秘机器的恩泽的老登们, 将永远铭记他的传说, 并将并行+2的优良传统流传下去.
+ote.tm.s9in1.6=§7§o§nYOU. 你, 老登, 希望你听完这个刚编的故事, 能永远记住伟大的九合一之神, 与他的并行+2~UwUb.
+ote.tm.s9in1.7=§l§b蒸汽时代的九合一, 多么了不起的传承!
+ote.tm.s9in1.8=§c可支持运行九个配方池, 单台机器通过编程电路20 21 22在类的基础上切换内部配方池, 类通过螺丝刀切换.
+ote.tm.s9in1.9=类一: §c水泵-合金炉-提取(名称: metalProcess0), 
+ote.tm.s9in1.10=类二: §c洗矿-粉碎-锻造(名称: oreProcess0), 
+ote.tm.s9in1.11=类三: §c压缩-搅拌-离心(名称: metalProcess1), 
+ote.tm.s9in1.12=默认并行为16, 耗时为NEI配方耗时的85%, 若配方不运行可尝试关闭输入隔离. 支持高级输入输出总线/仓.
+ote.tm.s9in1.13=简直太憋憋了.
 
 
 
@@ -488,3 +510,4 @@ ote.tn.exc=吊炸天热交换机
 ote.tn.gd=巨龙之墓
 ote.tn.ft=异星渔场
 ote.tn.pump=太空钻机模块MK-123
+ote.tn.s9in1=小型蒸汽加工厂
