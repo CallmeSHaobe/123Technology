@@ -93,7 +93,9 @@ public class MachineLoader {
         OTHItemList.EIO.set(new OTEEIO(IDs - 2, "EIOM", translateToLocal("ote.tn.eio")));
         OTHItemList.EXH.set(new OTEHeatExchanger(IDs - 3, "EXchanger", translateToLocal("ote.tn.exc")));
         OTHItemList.OTEGraveDragon.set(new OTEGraveDragon(IDs - 4, "GraveDragon", translateToLocal("ote.tn.gd")));
-        OTHItemList.FISH.set(new OTEFishtorio(IDs - 5, "Fishtorio", translateToLocal("ote.tn.ft")));
+        // OTHItemList.FISH.set(new OTEFishtorio(IDs - 5, "Fishtorio", translateToLocal("ote.tn.ft")));
+        // TODO FUTURE
+
         // Lasers
 
         final int AMPS = 1073741824;
@@ -153,6 +155,9 @@ public class MachineLoader {
 
         OTHItemList.SteamNeinInOne
             .set(new OTEMiniSteamNineInOne(IDs + 57, "SteamNineInOne", translateToLocal("ote.tn.s9in1")));
+        OTHItemList.Beeyonds.set(new OTEBeeyonds(IDs + 58, "IndustrialBeeHouse", translateToLocal("ote.tn.bee")));
+        // TODO FUTURE
+
     }
 
     public static void loadMachinePostInit() {

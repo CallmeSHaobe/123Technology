@@ -440,7 +440,7 @@ public class OTEMiniSteamNineInOne extends MTESteamMultiBase<OTEMiniSteamNineInO
     private final int depthOffSet = 0;
     private static IStructureDefinition<OTEMiniSteamNineInOne> STRUCTURE_DEFINITION = null;
     private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
-        translateToLocal("1 - 消声仓, 能源仓, 输入输出总线, 输入输出仓 : 替换多功能机械方块, 支持TecTech能源仓"),
+        translateToLocal("1 - 消声仓, 蒸汽输入仓, 输入输出总线, 输入输出仓 : 替换镀铜砖块"),
         EnumChatFormatting.LIGHT_PURPLE + translateToLocal("这便是蒸汽时代了吗？."),
         EnumChatFormatting.GOLD + translateToLocal("天无二日, 九合一便是我们心中唯一的太阳") };
 

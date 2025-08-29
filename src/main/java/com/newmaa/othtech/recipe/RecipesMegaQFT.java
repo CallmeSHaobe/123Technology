@@ -277,6 +277,23 @@ public class RecipesMegaQFT implements IRecipePool {
             .duration(10 * 20)
             .eut(TierEU.UHV)
             .addTo(MQFT);
+        // wasser
+        RecipeBuilder.builder()
+            .itemInputs(GTModHandler.getModItem("miscutils", "item.BasicGenericChemItem", 0, 30))
+            .fluidInputs(Materials.Water.getFluid(123123123))
+            .fluidOutputs(
+                Materials.Grade1PurifiedWater.getFluid(25600000),
+                Materials.Grade2PurifiedWater.getFluid(12800000),
+                Materials.Grade3PurifiedWater.getFluid(6400000),
+                Materials.Grade4PurifiedWater.getFluid(3200000),
+                Materials.Grade5PurifiedWater.getFluid(1600000),
+                Materials.Grade6PurifiedWater.getFluid(800000),
+                Materials.Grade7PurifiedWater.getFluid(400000),
+                Materials.Grade8PurifiedWater.getFluid(200000),
+                Materials.StableBaryonicMatter.getFluid(50000))
+            .duration(1200 * 20)
+            .eut(TierEU.RECIPE_MAX / 2)
+            .addTo(MQFT);
 
     }
 }

@@ -41,6 +41,7 @@ import gregtech.common.blocks.BlockCasings2;
 import gtPlusPlus.xmod.gregtech.common.blocks.textures.TexturesGtBlock;
 
 public class OTEFishtorio extends OTHMultiMachineBase<OTEFishtorio> {
+    // TODO 憋憋渔场.
 
     public OTEFishtorio(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);

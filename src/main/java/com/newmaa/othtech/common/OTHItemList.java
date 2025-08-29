@@ -104,6 +104,7 @@ public enum OTHItemList {
     Mega_QFT,
     NineInOne,
     SteamNeinInOne,
+    Beeyonds,
     MEBFpp,
     MFREpp,
     Sun,

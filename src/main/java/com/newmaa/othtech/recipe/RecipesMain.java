@@ -191,7 +191,7 @@ public class RecipesMain implements IRecipePool {
         GTValues.RA.stdBuilder()
             .itemOutputs(getGM(23520, 1))
             .itemInputs(
-                getGM(860, 64),
+                OTHItemList.SteamNeinInOne.get(64),
                 getGM(31027, 64),
                 getGM(31028, 64),
                 getGM(995, 64),

@@ -476,6 +476,12 @@ ote.tm.s9in1.11=类三: §c压缩-搅拌-离心(名称: metalProcess1),
 ote.tm.s9in1.12=默认并行为16, 耗时为NEI配方耗时的85%, 若配方不运行可尝试关闭输入隔离. 支持高级输入输出总线/仓.
 ote.tm.s9in1.13=简直太憋憋了.
 
+#Water Factory
+
+#Beeyonds
+ote.tm.bee.0=§aBee登们的初级造物 - Beeyonds之家(大型工业蜂箱)
+ote.tm.bee.1=一个HV的大型蜂箱. #真的只能养蜂!
+ote.tm.bee.2=说真的, 为什么不用工业蜂箱呢:)
 
 
 
@@ -511,3 +517,4 @@ ote.tn.gd=巨龙之墓
 ote.tn.ft=异星渔场
 ote.tn.pump=太空钻机模块MK-123
 ote.tn.s9in1=小型蒸汽加工厂
+ote.tn.bee=Beeyonds之家
