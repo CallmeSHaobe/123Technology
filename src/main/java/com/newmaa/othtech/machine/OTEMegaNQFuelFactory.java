@@ -680,20 +680,43 @@ public class OTEMegaNQFuelFactory extends TTMultiMachineBaseEM implements IConst
     }
 
     // spotless:off
-    // structured from compactFusionReactor
-
+    // structure copied from compactFusionReactor
+    /*
+     * @Override
+     * protected MultiblockTooltipBuilder createTooltip() {
+     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+     * tt.addMachineType("§z§l秒杀八台巨蒸的史诗级机器 - 压缩硅岩燃料精炼厂")
+     * .addInfo("§l§o甜甜圈喜加一系列")
+     * .addInfo("更高级的线圈允许并行与加速 :")
+     * .addInfo("一级线圈 : 16并行, 超频一次; 二级线圈 : 32并行, 超频二次;")
+     * .addInfo("三级线圈 : 64并行, 超频三次; 四级线圈 : 256并行, 超频四次")
+     * .addInfo("四级线圈解锁§c独有配方池")
+     * .addInfo("§b螺丝刀切换模式, §c独有配方池§b允许更高级的单步配方")
+     * .addSeparator()
+     * .addController("压缩硅岩燃料精炼厂")
+     * .beginStructureBlock(49, 7, 49, false)
+     * .addInputBus("AnyInputBus", 1)
+     * .addOutputBus("AnyOutputBus", 1)
+     * .addInputHatch("AnyInputHatch", 1)
+     * .addOutputHatch("AnyOutputHatch", 1)
+     * .addEnergyHatch("AnyEnergyHatch", 1)
+     * .addMufflerHatch("AnyMufflerHatch", 1)
+     * .toolTipFinisher("§7123Technology - Naquadah's Dream");
+     * return tt;
+     * }
+     */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
         final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-        tt.addMachineType("§z§l秒杀八台巨蒸的史诗级机器 - 压缩硅岩燃料精炼厂")
-            .addInfo("§l§o甜甜圈喜加一系列")
-            .addInfo("更高级的线圈允许并行与加速 :")
-            .addInfo("一级线圈 : 16并行, 超频一次; 二级线圈 : 32并行, 超频二次;")
-            .addInfo("三级线圈 : 64并行, 超频三次; 四级线圈 : 256并行, 超频四次")
-            .addInfo("四级线圈解锁§c独有配方池")
-            .addInfo("§b螺丝刀切换模式, §c独有配方池§b允许更高级的单步配方")
+        tt.addMachineType(translateToLocal("ote.tm.mnf.0"))
+            .addInfo(translateToLocal("ote.tm.mnf.1"))
+            .addInfo(translateToLocal("ote.tm.mnf.2"))
+            .addInfo(translateToLocal("ote.tm.mnf.3"))
+            .addInfo(translateToLocal("ote.tm.mnf.4"))
+            .addInfo(translateToLocal("ote.tm.mnf.5"))
+            .addInfo(translateToLocal("ote.tm.mnf.6"))
             .addSeparator()
-            .addController("压缩硅岩燃料精炼厂")
+            .addController(translateToLocal("ote.tn.mnf"))
             .beginStructureBlock(49, 7, 49, false)
             .addInputBus("AnyInputBus", 1)
             .addOutputBus("AnyOutputBus", 1)

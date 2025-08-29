@@ -536,27 +536,58 @@ public class OTENQFuelGeneratorUniversal extends TTMultiMachineBaseEM
         return new OTENQFuelGeneratorUniversal(this.mName);
     }
 
+    /*
+     * @Override
+     * protected MultiblockTooltipBuilder createTooltip() {
+     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+     * tt.addMachineType("通化之梦")
+     * .addInfo(" §l§4“你产能不够吧? -v-” ")
+     * .addInfo("通化的升级版本, 可以支持硅岩燃料, 但不能使用传统燃料喔 ~ 真正的清洁能源")
+     * .addInfo("耗时根据主机参数决定, 单位tick, 无线模式实际功率为总发电 / 耗时(tick)")
+     * .addInfo("和通化一样的设计, 但同时兼备了大硅岩的加成")
+     * .addInfo("一次消耗输入仓内所有燃料和助燃剂")
+     * .addInfo("感谢伟大的铱锇钐大人，所有输出功率都将为原来的三倍")
+     * .addInfo("二级管道方块解锁无线模式, 使用螺丝刀开启")
+     * .addInfo("§a更高级的结构意味着更高级的§c助燃剂, §a一级结构:原子分离助燃剂, 二级结构:超维度等离子助燃剂")
+     * .addInfo("§a效率随着运行时间提升, 每秒提升1%效率，具体效率阈值为1230%")
+     * .addInfo("计算公式：总发电量=燃料数量*输出系数(3)*效率*燃料输出功率*配方时间")
+     * .addInfo("PS：上述计算的发电量为一次运行的总发电")
+     * .addInfo("§a注意 : 如果耗时小于20ticks, 则效率不会累加")
+     * .addInfo("§4你知道会发生什么。")
+     * .addInfo("§e警告 : 如果强行使用有线模式烧高级硅岩燃料, 将会导致电表倒转憋憋")
+     * .addInfo("§c支持TecTech多安动力仓, 激光仓, 但尽量请使用1,073,741,824A激光仓直连电容库")
+     * .addSeparator()
+     * .addController("发电坤")
+     * .beginStructureBlock(7, 13, 7, false)
+     * .addInputBus("AnyInputBus", 1)
+     * .addOutputBus("AnyOutputBus", 1)
+     * .addInputHatch("AnyInputHatch", 1)
+     * .addOutputHatch("AnyOutputHatch", 1)
+     * .addEnergyHatch("AnyEnergyHatch", 1)
+     * .toolTipFinisher("§b123Technology - KING OF GENERATORS , FOR THE GOD PIGEON");
+     * return tt;
+     * }
+     */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
         final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-        tt.addMachineType("通化之梦")
-            .addInfo(" §l§4“你产能不够吧? -v-” ")
-            .addInfo("通化的升级版本, 可以支持硅岩燃料, 但不能使用传统燃料喔 ~ 真正的清洁能源")
-            .addInfo("耗时根据主机参数决定, 单位tick, 无线模式实际功率为总发电 / 耗时(tick)")
-            .addInfo("和通化一样的设计, 但同时兼备了大硅岩的加成")
-            .addInfo("一次消耗输入仓内所有燃料和助燃剂")
-            .addInfo("感谢伟大的铱锇钐大人，所有输出功率都将为原来的三倍")
-            .addInfo("二级管道方块解锁无线模式, 使用螺丝刀开启")
-            .addInfo("§a更高级的结构意味着更高级的§c助燃剂, §a一级结构:原子分离助燃剂, 二级结构:超维度等离子助燃剂")
-            .addInfo("§a效率随着运行时间提升, 每秒提升1%效率，具体效率阈值为1230%")
-            .addInfo("计算公式：总发电量=燃料数量*输出系数(3)*效率*燃料输出功率*配方时间")
-            .addInfo("PS：上述计算的发电量为一次运行的总发电")
-            .addInfo("§a注意 : 如果耗时小于20ticks, 则效率不会累加")
-            .addInfo("§4你知道会发生什么。")
-            .addInfo("§e警告 : 如果强行使用有线模式烧高级硅岩燃料, 将会导致电表倒转憋憋")
-            .addInfo("§c支持TecTech多安动力仓, 激光仓, 但尽量请使用1,073,741,824A激光仓直连电容库")
+        tt.addMachineType(translateToLocal("ote.tm.nfg.0"))
+            .addInfo(translateToLocal("ote.tm.nfg.1"))
+            .addInfo(translateToLocal("ote.tm.nfg.2"))
+            .addInfo(translateToLocal("ote.tm.nfg.3"))
+            .addInfo(translateToLocal("ote.tm.nfg.4"))
+            .addInfo(translateToLocal("ote.tm.nfg.5"))
+            .addInfo(translateToLocal("ote.tm.nfg.6"))
+            .addInfo(translateToLocal("ote.tm.nfg.7"))
+            .addInfo(translateToLocal("ote.tm.nfg.8"))
+            .addInfo(translateToLocal("ote.tm.nfg.9"))
+            .addInfo(translateToLocal("ote.tm.nfg.10"))
+            .addInfo(translateToLocal("ote.tm.nfg.12"))
+            .addInfo(translateToLocal("ote.tm.nfg.13"))
+            .addInfo(translateToLocal("ote.tm.nfg.14"))
+            .addInfo(translateToLocal("ote.tm.nfg.15"))
             .addSeparator()
-            .addController("发电坤")
+            .addController(translateToLocal("ote.tm.nfg.16"))
             .beginStructureBlock(7, 13, 7, false)
             .addInputBus("AnyInputBus", 1)
             .addOutputBus("AnyOutputBus", 1)

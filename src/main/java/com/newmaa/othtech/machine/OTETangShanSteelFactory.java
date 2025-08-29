@@ -1284,24 +1284,52 @@ public class OTETangShanSteelFactory extends OTHMultiMachineBase<OTETangShanStee
         return 19200;
     }
 
+    /*
+     * @Override
+     * protected MultiblockTooltipBuilder createTooltip() {
+     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+     * tt.addMachineType("§e§l重工业计划 - 唐山炼钢厂")
+     * .addInfo("§l§8无数黑烟源源不断地从烟囱中冒出")
+     * .addInfo("§l§8工业化的必由之路......")
+     * .addInfo("§l§8一步到位各种与钢铁相关之合金 : GTPP / GT5U, 以及部分BW")
+     * .addInfo("正常耗时倍率 : 1 / 线圈等级")
+     * .addInfo("无线耗时 = 240s / 编程电路编号 ^ 2)")
+     * .addInfo("无线EU消耗 = 功率 * 耗时 * 编程电路编号 ^ 2")
+     * .addInfo("请注意炉温要求.")
+     * .addInfo("螺丝刀切换无线模式")
+     * .addInfo("非无线模式执行无损超频")
+     * .addInfo("§c§l注意:机器污染过高:如遇跳电并报错“无法排出污染”, 请尝试放置多个消声仓")
+     * .addTecTechHatchInfo()
+     * .addPollutionAmount(19200)
+     * .addSeparator()
+     * .addController("钢铁厂")
+     * .beginStructureBlock(42, 41, 43, false)
+     * .addInputBus("AnyInputBus", 1)
+     * .addOutputBus("AnyOutputBus", 1)
+     * .addInputHatch("AnyInputHatch", 1)
+     * .addOutputHatch("AnyOutputHatch", 1)
+     * .addEnergyHatch("AnyEnergyHatch", 1)
+     * .toolTipFinisher("§a123Technology - Heavy industry - SteelFactory");
+     * return tt;
+     * }
+     */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
         final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-        tt.addMachineType("§e§l重工业计划 - 唐山炼钢厂")
-            .addInfo("§l§8无数黑烟源源不断地从烟囱中冒出")
-            .addInfo("§l§8工业化的必由之路......")
-            .addInfo("§l§8一步到位各种与钢铁相关之合金 : GTPP / GT5U, 以及部分BW")
-            .addInfo("正常耗时倍率 : 1 / 线圈等级")
-            .addInfo("无线耗时 = 240s / 编程电路编号 ^ 2)")
-            .addInfo("无线EU消耗 = 功率 * 耗时 * 编程电路编号 ^ 2")
-            .addInfo("请注意炉温要求.")
-            .addInfo("螺丝刀切换无线模式")
-            .addInfo("非无线模式执行无损超频")
-            .addInfo("§c§l注意:机器污染过高:如遇跳电并报错“无法排出污染”, 请尝试放置多个消声仓")
+        tt.addMachineType(translateToLocal("ote.tm.ts.0"))
+            .addInfo(translateToLocal("ote.tm.ts.1"))
+            .addInfo(translateToLocal("ote.tm.ts.2"))
+            .addInfo(translateToLocal("ote.tm.ts.3"))
+            .addInfo(translateToLocal("ote.tm.ts.4"))
+            .addInfo(translateToLocal("ote.tm.ts.5"))
+            .addInfo(translateToLocal("ote.tm.ts.6"))
+            .addInfo(translateToLocal("ote.tm.ts.7"))
+            .addInfo(translateToLocal("ote.tm.ts.8"))
+            .addInfo(translateToLocal("ote.tm.ts.9"))
             .addTecTechHatchInfo()
             .addPollutionAmount(19200)
             .addSeparator()
-            .addController("钢铁厂")
+            .addController(translateToLocal("ote.tn.ts"))
             .beginStructureBlock(42, 41, 43, false)
             .addInputBus("AnyInputBus", 1)
             .addOutputBus("AnyOutputBus", 1)

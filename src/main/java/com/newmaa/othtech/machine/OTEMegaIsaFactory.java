@@ -1669,23 +1669,49 @@ public class OTEMegaIsaFactory extends OTHMultiMachineBase<OTEMegaIsaFactory> {
         return 12321;
     }
 
+    /*
+     * @Override
+     * protected MultiblockTooltipBuilder createTooltip() {
+     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+     * tt.addMachineType("§2§l艾萨领主的终极造物 - 艾萨集成工厂")
+     * .addInfo("§o神奇的艾萨系列, 将垃圾和化工产品融为一体, 这不神奇吗?")
+     * .addInfo("§oNEI点击机器主机, 获取一个集大成之作...")
+     * .addInfo("§d许多老登们最喜欢的一步到位: 扔掉了乱七八糟的流程, 只是了节约一些tps")
+     * .addInfo("执行无损超频")
+     * .addInfo("耗时倍率 : 1/线圈等级")
+     * .addInfo("耗电倍率 : 玻璃等级^-0.1")
+     * .addInfo("'研磨器复合体' 决定机器执行的配方等级, 只是一个物品")
+     * .addInfo("§a更是拥有§4意想不到§a的惊喜呀嘻嘻...")
+     * .addTecTechHatchInfo()
+     * .addSeparator()
+     * .addPollutionAmount(12321)
+     * .addController("MISA")
+     * .beginStructureBlock(7, 13, 7, false)
+     * .addInputBus("AnyInputBus", 1)
+     * .addOutputBus("AnyOutputBus", 1)
+     * .addInputHatch("AnyInputHatch", 1)
+     * .addOutputHatch("AnyOutputHatch", 1)
+     * .addEnergyHatch("AnyEnergyHatch", 1)
+     * .toolTipFinisher("§a123Technology - One Last ISA");
+     * return tt;
+     * }
+     */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
         final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-        tt.addMachineType("§2§l艾萨领主的终极造物 - 艾萨集成工厂")
-            .addInfo("§o神奇的艾萨系列, 将垃圾和化工产品融为一体, 这不神奇吗?")
-            .addInfo("§oNEI点击机器主机, 获取一个集大成之作...")
-            .addInfo("§d许多老登们最喜欢的一步到位: 扔掉了乱七八糟的流程, 只是了节约一些tps")
-            .addInfo("执行无损超频")
-            .addInfo("耗时倍率 : 1/线圈等级")
-            .addInfo("耗电倍率 : 玻璃等级^-0.1")
-            .addInfo("'研磨器复合体' 决定机器执行的配方等级, 只是一个物品")
-            .addInfo("§a更是拥有§4意想不到§a的惊喜呀嘻嘻...")
+        tt.addMachineType(translateToLocal("ote.tm.misa.0"))
+            .addInfo(translateToLocal("ote.tm.misa.1"))
+            .addInfo(translateToLocal("ote.tm.misa.2"))
+            .addInfo(translateToLocal("ote.tm.misa.3"))
+            .addInfo(translateToLocal("ote.tm.misa.4"))
+            .addInfo(translateToLocal("ote.tm.misa.5"))
+            .addInfo(translateToLocal("ote.tm.misa.6"))
+            .addInfo(translateToLocal("ote.tm.misa.7"))
+            .addInfo(translateToLocal("ote.tm.misa.8"))
             .addTecTechHatchInfo()
             .addSeparator()
             .addPollutionAmount(12321)
-            .addController("MISA")
-            .beginStructureBlock(7, 13, 7, false)
+            .addController(translateToLocal("ote.tn.misa"))
             .addInputBus("AnyInputBus", 1)
             .addOutputBus("AnyOutputBus", 1)
             .addInputHatch("AnyInputHatch", 1)

@@ -330,22 +330,50 @@ public class OTEMegaEBFGTpp extends OTHMultiMachineBase<OTEMegaEBFGTpp> {
             "BBBBBBBBBBBBBBB", "BBBBBBBBBBBBBBB", "BBBBBBBBBBBBBBB", "BBBBBBBBBBBBBBB", "BBBBBBBBBBBBBBB",
             "BBBBBBBBBBBBBBB", "BBBBBBBBBBBBBBB", "BBBBBBBBBBBBBBB", "BBBBBBBBBBBBBBB", "BBBBBBBBBBBBBBB" } };
 
+    /*
+     * @Override
+     * protected MultiblockTooltipBuilder createTooltip() {
+     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+     * tt.addMachineType("§l老登的终极造物 - 工业高炉")
+     * .addInfo("§b  EU消耗: 90%")
+     * .addInfo("§b  速度 + 120%")
+     * .addInfo("§b  并行: 2048")
+     * .addInfo("§6  不消耗烈焰之炽焱， 但输入仓必须至少有123 * 1000L烈焰之炽焱才可运行")
+     * .addInfo("§l 「烈焰之炽焱这个东西啊, 用个几千个就淘汰了」---风哥语录·改 ")
+     * .addInfo("请注意玻璃等级要求")
+     * .addInfo("在机器结构检测时候检测输入仓炽焱之是否存在")
+     * .addInfo("§c§l注意:机器污染过高:如遇跳电并报错“无法排出污染”, 请尝试放置多个消声仓")
+     * .addTecTechHatchInfo()
+     * .addPollutionAmount(128000)
+     * .addSeparator()
+     * .addController("巨型炽焱高炉")
+     * .beginStructureBlock(15, 20, 15, false)
+     * .addInputBus("AnyInputBus", 1)
+     * .addOutputBus("AnyOutputBus", 1)
+     * .addInputHatch("AnyInputHatch", 1)
+     * .addOutputHatch("AnyOutputHatch", 1)
+     * .addEnergyHatch("AnyEnergyHatch", 1)
+     * .addMufflerHatch("AnyMufflerHatch", 2)
+     * .toolTipFinisher("§a123Technology - EBF");
+     * return tt;
+     * }
+     */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
         final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-        tt.addMachineType("§l老登的终极造物 - 工业高炉")
-            .addInfo("§b  EU消耗: 90%")
-            .addInfo("§b  速度 + 120%")
-            .addInfo("§b  并行: 2048")
-            .addInfo("§6  不消耗烈焰之炽焱， 但输入仓必须至少有123 * 1000L烈焰之炽焱才可运行")
-            .addInfo("§l 「烈焰之炽焱这个东西啊, 用个几千个就淘汰了」---风哥语录·改 ")
-            .addInfo("请注意玻璃等级要求")
-            .addInfo("在机器结构检测时候检测输入仓炽焱之是否存在")
-            .addInfo("§c§l注意:机器污染过高:如遇跳电并报错“无法排出污染”, 请尝试放置多个消声仓")
+        tt.addMachineType(translateToLocal("ote.tm.mebf.0"))
+            .addInfo(translateToLocal("ote.tm.mebf.1"))
+            .addInfo(translateToLocal("ote.tm.mebf.2"))
+            .addInfo(translateToLocal("ote.tm.mebf.3"))
+            .addInfo(translateToLocal("ote.tm.mebf.4"))
+            .addInfo(translateToLocal("ote.tm.mebf.5"))
+            .addInfo(translateToLocal("ote.tm.mebf.6"))
+            .addInfo(translateToLocal("ote.tm.mebf.7"))
+            .addInfo(translateToLocal("oth.tm.pollution"))
             .addTecTechHatchInfo()
             .addPollutionAmount(128000)
             .addSeparator()
-            .addController("巨型炽焱高炉")
+            .addController(translateToLocal("ote.tn.mebf"))
             .beginStructureBlock(15, 20, 15, false)
             .addInputBus("AnyInputBus", 1)
             .addOutputBus("AnyOutputBus", 1)

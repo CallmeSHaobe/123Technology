@@ -655,6 +655,7 @@ public class OTEWoodenFusionReactor extends OTHMultiMachineBase<OTEWoodenFusionR
         return super.addToMachineList(aTileEntity, aBaseCasingIndex)
             || addExoticEnergyInputToMachineList(aTileEntity, aBaseCasingIndex);
     }
+    /*
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
         final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
@@ -665,6 +666,26 @@ public class OTEWoodenFusionReactor extends OTHMultiMachineBase<OTEWoodenFusionR
             .addInfo("产出 : 普通蒸汽 - 1000L / 1L氢等离子体 , 过热蒸汽 : 1000L / 10L氢等离子体 , 超临界蒸汽 : 1000L / 100L氢等离子体")
             .addSeparator()
             .addController("压缩木头聚变堆")
+            .beginStructureBlock(49, 7, 49, false)
+            .addInputBus("AnyInputBus", 1)
+            .addOutputBus("AnyOutputBus", 1)
+            .addInputHatch("AnyInputHatch", 1)
+            .addOutputHatch("AnyOutputHatch", 1)
+            .addEnergyHatch("AnyEnergyHatch", 1)
+            .addMufflerHatch("AnyMufflerHatch", 1)
+            .toolTipFinisher("§7123Technology - Steam age");
+        return tt;
+    }*/
+    @Override
+    protected MultiblockTooltipBuilder createTooltip() {
+        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        tt.addMachineType(translateToLocal("ote.tm.wfr.0"))
+            .addInfo(translateToLocal("ote.tm.wfr.1"))
+            .addInfo(translateToLocal("ote.tm.wfr.2"))
+            .addInfo(translateToLocal("ote.tm.wfr.3"))
+            .addInfo(translateToLocal("ote.tm.wfr.4"))
+            .addSeparator()
+            .addController(translateToLocal("ote.tn.wfr"))
             .beginStructureBlock(49, 7, 49, false)
             .addInputBus("AnyInputBus", 1)
             .addOutputBus("AnyOutputBus", 1)

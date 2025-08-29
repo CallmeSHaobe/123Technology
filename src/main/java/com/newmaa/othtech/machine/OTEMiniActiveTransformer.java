@@ -118,27 +118,45 @@ public class OTEMiniActiveTransformer extends TTMultiMachineBaseEM implements IC
             : SimpleCheckRecipeResult.ofFailure("no_routing");
     }
 
+    /*
+     * @Override
+     * public MultiblockTooltipBuilder createTooltip() {
+     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+     * tt.addMachineType(translateToLocal("中登的小型核弹 : 迷你有源变压器"))
+     * .addInfo(translateToLocal("由于落后的IV工艺, 此机器导能时破坏主机依然会爆炸, 损耗不变"))
+     * .addInfo(translateToLocal("他真的会有用吗?"))
+     * .addInfo(translateToLocal("桑百安够么, 应该够吧? 来吧! 试一下米妮!"))
+     * .addInfo(translateToLocal("请不要使用特高电流之激光仓, 不然有源可能会坏掉."))
+     * .addInfo(translateToLocal("§c§l警告 : 爆炸为龙堆式爆炸 , 威力和输入功率正相关 ! 服务器请在配置文件内关闭 !"))
+     * .addInfo(translateToLocal("§c§l警告 : 爆炸为龙堆式爆炸 , 威力和输入功率正相关 ! 服务器请在配置文件内关闭 !"))
+     * .addInfo(translateToLocal("§c§l警告 : 爆炸为龙堆式爆炸 , 威力和输入功率正相关 ! 服务器请在配置文件内关闭 !"))
+     * // .addInfo(translateToLocal("爆炸威力等于安培数"))
+     * .addTecTechHatchInfo()
+     * .beginStructureBlock(1, 3, 1, false)
+     * .addController(translateToLocal("结构正中心"))
+     * .addCasingInfoMin(translateToLocal("0x 超能机械方块(最低)"), 5, false)
+     * .addEnergyHatch(translateToLocal("任意能源仓, 激光靶仓"), 1)
+     * .addDynamoHatch(translateToLocal("任意动力仓, 激光源仓"), 1)
+     * .toolTipFinisher("§a123Technology - MINI NUKE");
+     * return tt;
+     * }
+     */
     @Override
     public MultiblockTooltipBuilder createTooltip() {
         final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-        tt.addMachineType(translateToLocal("中登的小型核弹 : 迷你有源变压器"))
-            .addInfo(translateToLocal("由于落后的IV工艺, 此机器导能时破坏主机依然会爆炸, 损耗不变"))
-            .addInfo(translateToLocal("他真的会有用吗?"))
-            .addInfo(translateToLocal("桑百安够么, 应该够吧? 来吧! 试一下米妮!"))
-            .addInfo(translateToLocal("请不要使用特高电流之激光仓, 不然有源可能会坏掉."))
-            .addInfo(translateToLocal("§c§l警告 : 爆炸为龙堆式爆炸 , 威力和输入功率正相关 ! 服务器请在配置文件内关闭 !"))
-            .addInfo(translateToLocal("§c§l警告 : 爆炸为龙堆式爆炸 , 威力和输入功率正相关 ! 服务器请在配置文件内关闭 !"))
-            .addInfo(translateToLocal("§c§l警告 : 爆炸为龙堆式爆炸 , 威力和输入功率正相关 ! 服务器请在配置文件内关闭 !"))
+        tt.addMachineType(translateToLocal("ote.tm.mat.0"))
+            .addInfo(translateToLocal("ote.tm.mat.1"))
+            .addInfo(translateToLocal("ote.tm.mat.2"))
+            .addInfo(translateToLocal("ote.tm.mat.3"))
+            .addInfo(translateToLocal("ote.tm.mat.4"))
+            .addInfo(translateToLocal("ote.tm.mat.5"))
             // .addInfo(translateToLocal("爆炸威力等于安培数"))
             .addTecTechHatchInfo()
             .beginStructureBlock(1, 3, 1, false)
-            .addController(translateToLocal("结构正中心")) // Controller: Front center
-            .addCasingInfoMin(translateToLocal("0x 超能机械方块(最低)"), 5, false) // 0x High Power Casing
-            // (minimum)
-            .addEnergyHatch(translateToLocal("任意能源仓, 激光靶仓"), 1) // Energy Hatch: Any
-            // High Power Casing
-            .addDynamoHatch(translateToLocal("任意动力仓, 激光源仓"), 1) // Dynamo Hatch: Any
-            // High Power Casing
+            .addController(translateToLocal("ote.tm.mat.6"))
+            .addCasingInfoMin(translateToLocal("ote.tm.mat.7"), 5, false)
+            .addEnergyHatch(translateToLocal("ote.tm.mat.8"), 1)
+            .addDynamoHatch(translateToLocal("ote.tm.mat.9"), 1)
             .toolTipFinisher("§a123Technology - MINI NUKE");
         return tt;
     }

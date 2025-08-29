@@ -3459,18 +3459,42 @@ public class OTEMegaIsaForge extends OTHMultiMachineBase<OTEMegaIsaForge> {
             || addExoticEnergyInputToMachineList(aTileEntity, aBaseCasingIndex);
     }
 
+    /*
+     * @Override
+     * protected MultiblockTooltipBuilder createTooltip() {
+     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+     * tt.addMachineType("§b§l老登的终极造物 - 神之艾萨机 (老登制造者 & 太空组装机)")
+     * .addInfo("§c§l'我拒绝了§4血魔法的恩赐§c和§e蜜蜂的甜蜜'")
+     * .addInfo("§d艾萨领主认证")
+     * .addInfo("§7无法想象的速度与并行")
+     * .addInfo("耗时 = NEI耗时 * { 1 / {电压等级^[(玻璃等级 / 2)+1]}^(1/3)}")
+     * .addInfo("§q主机放入星阵解锁太空组装模式")
+     * .addTecTechHatchInfo()
+     * .addSeparator()
+     * .addController("巨艾萨控制器")
+     * .beginStructureBlock(64, 50, 64, false)
+     * .addInputBus("AnyInputBus", 1)
+     * .addOutputBus("AnyOutputBus", 1)
+     * .addInputHatch("AnyInputHatch", 1)
+     * .addOutputHatch("AnyOutputHatch", 1)
+     * .addEnergyHatch("AnyEnergyHatch", 1)
+     * .addMufflerHatch("AnyMufflerHatch", 1)
+     * .toolTipFinisher("§a123Technology - Make ISA great again!");
+     * return tt;
+     * }
+     */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
         final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-        tt.addMachineType("§b§l老登的终极造物 - 神之艾萨机 (老登制造者 & 太空组装机)")
-            .addInfo("§c§l'我拒绝了§4血魔法的恩赐§c和§e蜜蜂的甜蜜'")
-            .addInfo("§d艾萨领主认证")
-            .addInfo("§7无法想象的速度与并行")
-            .addInfo("耗时 = NEI耗时 * { 1 / {电压等级^[(玻璃等级 / 2)+1]}^(1/3)}")
-            .addInfo("§q主机放入星阵解锁太空组装模式")
+        tt.addMachineType(translateToLocal("ote.tm.mifo.0"))
+            .addInfo(translateToLocal("ote.tm.mifo.1"))
+            .addInfo(translateToLocal("ote.tm.mifo.2"))
+            .addInfo(translateToLocal("ote.tm.mifo.3"))
+            .addInfo(translateToLocal("ote.tm.mifo.4"))
+            .addInfo(translateToLocal("ote.tm.mifo.5"))
             .addTecTechHatchInfo()
             .addSeparator()
-            .addController("巨艾萨控制器")
+            .addController(translateToLocal("ote.tn.mifo"))
             .beginStructureBlock(64, 50, 64, false)
             .addInputBus("AnyInputBus", 1)
             .addOutputBus("AnyOutputBus", 1)

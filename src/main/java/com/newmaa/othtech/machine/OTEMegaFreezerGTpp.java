@@ -238,20 +238,46 @@ public class OTEMegaFreezerGTpp extends OTHMultiMachineBase<OTEMegaFreezerGTpp> 
             "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA",
             "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA" } };
 
+    /*
+     * @Override
+     * protected MultiblockTooltipBuilder createTooltip() {
+     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+     * tt.addMachineType("§l老登的终极造物 - 真空冷冻机")
+     * .addInfo("§b  EU消耗: 100%")
+     * .addInfo("§b  速度 + 100%")
+     * .addInfo("§b  并行: 1024")
+     * .addInfo("§6  不消耗极寒之凛冰， 但输入仓必须至少有123 * 1000L极寒之凛冰才可运行")
+     * .addInfo("§q§l「巨凛冰这个段位就很尴尬，往上走有TST冰箱，再往下有原版立方体，巨凛冰上不去下不来卡在这里了」 ")
+     * .addInfo("§c§l注意:机器污染过高:如遇跳电并报错“无法排出污染”, 请尝试放置多个消声仓")
+     * .addTecTechHatchInfo()
+     * .addPollutionAmount(128000)
+     * .addSeparator()
+     * .addController("巨型凛冰冷冻机")
+     * .beginStructureBlock(15, 15, 15, false)
+     * .addInputBus("AnyInputBus", 1)
+     * .addOutputBus("AnyOutputBus", 1)
+     * .addInputHatch("AnyInputHatch", 1)
+     * .addOutputHatch("AnyOutputHatch", 1)
+     * .addEnergyHatch("AnyEnergyHatch", 1)
+     * .addMufflerHatch("AnyMufflerHatch", 1)
+     * .toolTipFinisher("§a123Technology - VacuumFreezer");
+     * return tt;
+     * }
+     */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
         final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-        tt.addMachineType("§l老登的终极造物 - 真空冷冻机")
-            .addInfo("§b  EU消耗: 100%")
-            .addInfo("§b  速度 + 100%")
-            .addInfo("§b  并行: 1024")
-            .addInfo("§6  不消耗极寒之凛冰， 但输入仓必须至少有123 * 1000L极寒之凛冰才可运行")
-            .addInfo("§q§l「巨凛冰这个段位就很尴尬，往上走有TST冰箱，再往下有原版立方体，巨凛冰上不去下不来卡在这里了」 ")
-            .addInfo("§c§l注意:机器污染过高:如遇跳电并报错“无法排出污染”, 请尝试放置多个消声仓")
+        tt.addMachineType(translateToLocal("ote.tm.fz.0"))
+            .addInfo(translateToLocal("ote.tm.fz.1"))
+            .addInfo(translateToLocal("ote.tm.fz.2"))
+            .addInfo(translateToLocal("ote.tm.fz.3"))
+            .addInfo(translateToLocal("ote.tm.fz.4"))
+            .addInfo(translateToLocal("ote.tm.fz.5"))
+            .addInfo(translateToLocal("oth.tm.pollution"))
             .addTecTechHatchInfo()
             .addPollutionAmount(128000)
             .addSeparator()
-            .addController("巨型凛冰冷冻机")
+            .addController(translateToLocal("ote.tn.fz"))
             .beginStructureBlock(15, 15, 15, false)
             .addInputBus("AnyInputBus", 1)
             .addOutputBus("AnyOutputBus", 1)

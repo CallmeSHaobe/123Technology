@@ -472,6 +472,7 @@ public class OTEMegaQFT extends OTHMultiMachineBase<OTEMegaQFT> {
         ArrayList<String> str = new ArrayList<>(Arrays.asList(super.getInfoData()));
         return str.toArray(new String[0]);
     }
+    /*
 
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
@@ -489,6 +490,32 @@ public class OTEMegaQFT extends OTHMultiMachineBase<OTEMegaQFT> {
             .addTecTechHatchInfo()
             .addSeparator()
             .addController("Mega recipesQFTRecipes")
+            .beginStructureBlock(19, 24, 19, false)
+            .addInputBus("AnyInputBus", 1)
+            .addOutputBus("AnyOutputBus", 1)
+            .addInputHatch("AnyInputHatch", 1)
+            .addOutputHatch("AnyOutputHatch", 1)
+            .addEnergyHatch("AnyEnergyHatch", 1)
+            .addMufflerHatch("AnyMufflerHatch", 1)
+            .toolTipFinisher("§b123Technology - Make QFT great again!");
+        return tt;
+    }*/
+    @Override
+    protected MultiblockTooltipBuilder createTooltip() {
+        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        tt.addMachineType(translateToLocal("ote.tm.mqft.0"))
+            .addInfo(translateToLocal("ote.tm.mqft.1"))
+            .addInfo(translateToLocal("ote.tm.mqft.2"))
+            .addInfo(translateToLocal("ote.tm.mqft.3"))
+            .addInfo(translateToLocal("ote.tm.mqft.4"))
+            .addInfo(translateToLocal("ote.tm.mqft.5"))
+            .addInfo(translateToLocal("ote.tm.mqft.6"))
+            .addInfo(translateToLocal("ote.tm.mqft.7"))
+            .addInfo(translateToLocal("ote.tm.mqft.8"))
+            .addInfo(translateToLocal("ote.tm.mqft.9"))
+            .addTecTechHatchInfo()
+            .addSeparator()
+            .addController(translateToLocal("ote.tn.mqft"))
             .beginStructureBlock(19, 24, 19, false)
             .addInputBus("AnyInputBus", 1)
             .addOutputBus("AnyOutputBus", 1)
