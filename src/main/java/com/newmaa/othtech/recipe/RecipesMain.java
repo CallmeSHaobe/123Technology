@@ -141,7 +141,7 @@ public class RecipesMain implements IRecipePool {
                 getGM(2083, 64), getGM(2092, 64), OTHItemList.dustIrOsSmM.get(64), OTHItemList.dustLookNEIM.get(64) },
             new FluidStack[] { new FluidStack(white, 4608), new FluidStack(cuihuaji, 123123),
                 new FluidStack(Ewater, 4096000), new FluidStack(songyou, 32000000) },
-            getGM(20521, 1),
+            getGM(23521, 1),
             105000,
             123123123);
         // IsaBee

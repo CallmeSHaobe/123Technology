@@ -2,12 +2,9 @@ package com.newmaa.othtech.machine;
 
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
 import static gregtech.api.enums.HatchElement.*;
-import static gregtech.api.enums.HatchElement.OutputHatch;
-import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static net.minecraft.util.StatCollector.translateToLocal;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
@@ -19,11 +16,9 @@ import org.jetbrains.annotations.NotNull;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
-import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 
 import crazypants.enderio.EnderIO;
-import gregtech.api.GregTechAPI;
 import gregtech.api.enums.TAE;
 import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
@@ -37,7 +32,6 @@ import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
-import gregtech.common.blocks.BlockCasings2;
 import gtPlusPlus.xmod.gregtech.common.blocks.textures.TexturesGtBlock;
 
 public class OTEFishtorio extends OTHMultiMachineBase<OTEFishtorio> {
@@ -82,7 +76,7 @@ public class OTEFishtorio extends OTHMultiMachineBase<OTEFishtorio> {
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        return Recipemaps.EIO;
+        return null;
     }
 
     @Override
@@ -234,26 +228,13 @@ public class OTEFishtorio extends OTHMultiMachineBase<OTEFishtorio> {
         if (STRUCTURE_DEFINITION == null) {
             STRUCTURE_DEFINITION = StructureDefinition.<OTEFishtorio>builder()
                 .addShape(STRUCTURE_PIECE_MAIN, transpose(shapeMain))
-                .addElement('C', ofBlock(Blocks.iron_bars, 0))
-                .addElement('A', ofBlockAnyMeta(EnderIO.blockDarkSteelAnvil))
-                .addElement(
-                    'B',
-                    buildHatchAdder(OTEFishtorio.class)
-                        .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch)
-                        .adder(OTEFishtorio::addToMachineList)
-                        .dot(1)
-                        .casingIndex(((BlockCasings2) GregTechAPI.sBlockCasings2).getTextureIndex(0))
-                        .buildAndChain(EnderIO.blockIngotStorage, 7))
                 .build();
         }
         return STRUCTURE_DEFINITION;
     }
 
     // Structured by LyeeR
-    private final String[][] shapeMain = new String[][] { { "BBBBBBB", "BBBBBBB", "BBBBBBB", "BBBBBBB", "BBBBBBB" },
-        { "BCCCCCB", "B     B", "B     B", "B     B", "BBBBBBB" },
-        { "BCCCCCB", "B     B", "B     B", "B AAA B", "BBBBBBB" },
-        { "BBB~BBB", "BBBBBBB", "BBBBBBB", "BBBBBBB", "BBBBBBB" } };
+    private final String[][] shapeMain = new String[][] { {} };
 
     @Override
     public boolean addToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {

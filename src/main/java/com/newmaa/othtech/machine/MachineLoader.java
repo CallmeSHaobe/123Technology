@@ -93,7 +93,7 @@ public class MachineLoader {
         OTHItemList.EIO.set(new OTEEIO(IDs - 2, "EIOM", translateToLocal("ote.tn.eio")));
         OTHItemList.EXH.set(new OTEHeatExchanger(IDs - 3, "EXchanger", translateToLocal("ote.tn.exc")));
         OTHItemList.OTEGraveDragon.set(new OTEGraveDragon(IDs - 4, "GraveDragon", translateToLocal("ote.tn.gd")));
-        // OTHItemList.FISH.set(new OTEFishtorio(IDs - 5, "Fishtorio", translateToLocal("ote.tn.ft")));
+        OTHItemList.FISH.set(new OTEFishtorio(IDs - 5, "Fishtorio", translateToLocal("ote.tn.ft")));
         // TODO FUTURE
 
         // Lasers

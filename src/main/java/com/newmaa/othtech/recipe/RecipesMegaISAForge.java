@@ -324,7 +324,7 @@ public class RecipesMegaISAForge implements IRecipePool {
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 15411), 123123123),
                 setStackSize(new ItemStack(ItemLoader.itemLeekBox, 1), Integer.MAX_VALUE),
                 setStackSize(new ItemStack(ItemLoader.itemZhangww, 1), Integer.MAX_VALUE),
-                setStackSize(new ItemStack(ItemLoader.itemNukeThrowable, 1), Integer.MAX_VALUE),
+                setStackSize(new ItemStack(ItemLoader.itemNukeThrowable, 1), 123123),
                 setStackSize(itemEnqingM.get(1), Integer.MAX_VALUE))
 
             .eut(TierEU.RECIPE_UXV)
