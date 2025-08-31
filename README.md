@@ -190,6 +190,8 @@ zs配方脚本编写请查阅GTTweaker in Github与MineTweaker3 or CraftTweaker�
 
 1.3.0+支持GTNH2.7.0 or GTNH2.7.2
 
+2.1.1_GTNH2.8.0支持GTNH2.8.0beta , 不能保证完全没有Bug,但是能跑
+
 建议添加Mod：https://github.com/RetroForge/SkinPort
 ***
 
