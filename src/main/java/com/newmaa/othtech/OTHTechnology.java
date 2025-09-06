@@ -17,7 +17,7 @@ import com.newmaa.othtech.common.ItemAndBlockHandler;
 import com.newmaa.othtech.common.beeyonds.OTHBeeyonds;
 import com.newmaa.othtech.common.blocks.antimonia.AntimoniaBlocks;
 import com.newmaa.othtech.common.blocks.fluids.AntimoniaFluids;
-import com.newmaa.othtech.common.dimensions.RegisterAntimonia;
+import com.newmaa.othtech.common.dimensions.RegisterDimensions;
 import com.newmaa.othtech.common.materials.MaterialsLoader;
 import com.newmaa.othtech.common.recipemap.NEIRecipeMaps;
 import com.newmaa.othtech.event.EventPlayerDied;
@@ -92,7 +92,7 @@ public class OTHTechnology {
         MinecraftForge.EVENT_BUS.register(new EventPlayerDied());
         proxy.init(event);
         MachineLoader.loadMachines();
-        new RegisterAntimonia().init();
+        new RegisterDimensions().init();
         NEIRecipeMaps.IMCSender();
     }
 

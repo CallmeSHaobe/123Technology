@@ -1,4 +1,4 @@
-package com.newmaa.othtech.common.dimensions.structure;
+package com.newmaa.othtech.common.dimensions.structure.antimonia;
 
 import java.util.ArrayList;
 import java.util.Iterator;

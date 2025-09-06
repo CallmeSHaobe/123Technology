@@ -3,7 +3,8 @@ package com.newmaa.othtech.common.dimensions.sky;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.world.WorldProvider;
 
-import com.newmaa.othtech.common.dimensions.WorldProviderAntimonia;
+import com.newmaa.othtech.common.dimensions.antimonia.WorldProviderAntimonia;
+import com.newmaa.othtech.common.dimensions.ross123b.WorldProviderRoss123b;
 
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -23,6 +24,11 @@ public class SkyProviderHandler {
             if (provider instanceof WorldProviderAntimonia) {
                 if (provider.getSkyRenderer() == null) {
                     provider.setSkyRenderer(new SkyProviderAntimonia());
+                }
+            }
+            if (provider instanceof WorldProviderRoss123b) {
+                if (provider.getSkyRenderer() == null) {
+                    provider.setSkyRenderer(new SkyProviderRoss123b());
                 }
             }
         }

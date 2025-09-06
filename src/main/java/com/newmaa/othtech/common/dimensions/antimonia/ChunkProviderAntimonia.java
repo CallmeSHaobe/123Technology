@@ -1,4 +1,4 @@
-package com.newmaa.othtech.common.dimensions;
+package com.newmaa.othtech.common.dimensions.antimonia;
 
 import java.util.List;
 import java.util.Random;
@@ -17,7 +17,7 @@ import com.newmaa.othtech.common.blocks.antimonia.AntimoniaBlocks;
 import com.newmaa.othtech.common.blocks.fluids.AntimoniaFluids;
 import com.newmaa.othtech.common.dimensions.biome.BiomeDecOreAntimonia;
 import com.newmaa.othtech.common.dimensions.biome.BiomeGenBaseAntimonia;
-import com.newmaa.othtech.common.dimensions.structure.MapGenCityAntimonia;
+import com.newmaa.othtech.common.dimensions.structure.antimonia.MapGenCityAntimonia;
 
 import galaxyspace.core.dimension.ChunkProviderSpaceLakes;
 import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
@@ -68,28 +68,6 @@ public class ChunkProviderAntimonia extends ChunkProviderSpaceLakes {
     public int getWaterLevel() {
         return 64;
     }
-
-    public double getMountainHeightModifier() {
-        return 800.0;
-    }
-
-    protected int getSeaLevel() {
-        return 80;
-    }
-
-    public double getSmallFeatureHeightModifier() {
-        return 100.0;
-    }
-
-    public double getValleyHeightModifier() {
-        return 60.0;
-    }
-
-    public int getCraterProbability() {
-        return 100;
-    }
-
-    public void onChunkProvide(int cX, int cZ, Block[] blocks, byte[] metadata) {}
 
     private final MapGenMineshaft MapGenMineshaft = new MapGenMineshaft();
     private final MapGenCityAntimonia villageGeneratorA = new MapGenCityAntimonia();

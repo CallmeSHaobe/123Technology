@@ -1,6 +1,6 @@
-package com.newmaa.othtech.common.dimensions;
+package com.newmaa.othtech.common.dimensions.ross123b;
 
-import static com.newmaa.othtech.Config.tier_Antimonia;
+import static com.newmaa.othtech.Config.tier_Ross123b;
 
 import java.util.Random;
 
@@ -13,6 +13,9 @@ import net.minecraft.world.biome.WorldChunkManager;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraftforge.client.IRenderHandler;
+
+import com.newmaa.othtech.common.dimensions.RegisterDimensions;
+import com.newmaa.othtech.common.dimensions.sky.SkyProviderRoss123b;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -28,11 +31,25 @@ import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStats;
 import micdoodle8.mods.galacticraft.core.util.ConfigManagerCore;
 import micdoodle8.mods.galacticraft.planets.mars.entities.EntityLandingBalloons;
 
-public class WorldProviderAntimonia extends WorldProviderSpace
+public class WorldProviderRoss123b extends WorldProviderSpace
     implements IExitHeight, ISolarLevel, ITeleportType, IHostileBody {
 
-    public WorldProviderAntimonia() {
+    public WorldProviderRoss123b() {}
 
+    @Override
+    @SideOnly(Side.CLIENT)
+    public IRenderHandler getSkyRenderer() {
+        return new SkyProviderRoss123b();
+    }
+
+    @Override
+    public boolean isSkyColored() {
+        return false;
+    }
+
+    @Override
+    public boolean canDoRainSnowIce(Chunk chunk) {
+        return false;
     }
 
     @Override
@@ -43,7 +60,7 @@ public class WorldProviderAntimonia extends WorldProviderSpace
     @Override
     @SideOnly(Side.CLIENT)
     public float getCloudHeight() {
-        return 188.0F;
+        return 100000f;
     }
 
     @Override
@@ -53,7 +70,7 @@ public class WorldProviderAntimonia extends WorldProviderSpace
 
     @Override
     public boolean canSpaceshipTierPass(int tier) {
-        return tier >= tier_Antimonia;
+        return tier >= tier_Ross123b;
     }
 
     @Override
@@ -73,7 +90,7 @@ public class WorldProviderAntimonia extends WorldProviderSpace
 
     @Override
     public float getGravity() {
-        return 0.083F;
+        return -0.5F;
     }
 
     @Override
@@ -93,7 +110,7 @@ public class WorldProviderAntimonia extends WorldProviderSpace
 
     @Override
     public float getWindLevel() {
-        return 100.0F;
+        return 0.0F;
     }
 
     @Override
@@ -103,17 +120,17 @@ public class WorldProviderAntimonia extends WorldProviderSpace
 
     @Override
     public CelestialBody getCelestialBody() {
-        return RegisterAntimonia.planetAntimonia;
+        return RegisterDimensions.planetRoss123b;
     }
 
     @Override
     public Class<? extends IChunkProvider> getChunkProviderClass() {
-        return ChunkProviderAntimonia.class;
+        return ChunkProviderRoss123b.class;
     }
 
     @Override
     public long getDayLength() {
-        return 1600L;
+        return 160000L;
     }
 
     @Override
@@ -123,19 +140,17 @@ public class WorldProviderAntimonia extends WorldProviderSpace
 
     @Override
     public Vector3 getFogColor() {
-        float f = 0.3F;
-        return new Vector3(0.9418, 1, 1);
+        return new Vector3(0.1, 0.1, 0.1);
     }
 
     @Override
     public Vector3 getSkyColor() {
-        float f = 0.05F;
         return new Vector3(0.0, 0.0, 0.0);
     }
 
     @Override
     public Class<? extends WorldChunkManager> getWorldChunkManagerClass() {
-        return WorldChunkManagerAntimonia.class;
+        return WorldChunkManagerRoss123b.class;
     }
 
     @Override

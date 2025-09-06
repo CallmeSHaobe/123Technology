@@ -2,8 +2,11 @@ package com.newmaa.othtech.common.dimensions;
 
 import net.minecraft.util.ResourceLocation;
 
-public interface AntimoniaResources {
+public interface ResourcesDimensions {
 
+    ResourceLocation Ross123bPlanet = new ResourceLocation(
+        "123technology",
+        "textures/gui/celestialbodies/antimonia/ross123b.png");
     ResourceLocation AntimoniaPlanet = new ResourceLocation(
         "123technology",
         "textures/gui/celestialbodies/antimonia/antimonia.png");

@@ -1,4 +1,4 @@
-package com.newmaa.othtech.common.dimensions.structure;
+package com.newmaa.othtech.common.dimensions.structure.antimonia;
 
 public class StructureCityPieceWeightAntimonia {
 

@@ -1,4 +1,4 @@
-package com.newmaa.othtech.common.dimensions;
+package com.newmaa.othtech.common.dimensions.antimonia;
 
 import net.minecraft.world.biome.BiomeGenBase;
 

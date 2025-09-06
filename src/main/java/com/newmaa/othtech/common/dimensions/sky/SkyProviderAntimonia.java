@@ -6,11 +6,11 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
-import com.newmaa.othtech.common.dimensions.AntimoniaResources;
+import com.newmaa.othtech.common.dimensions.ResourcesDimensions;
 
 import galaxyspace.core.render.sky.SkyProviderBase;
 
-public class SkyProviderAntimonia extends SkyProviderBase implements AntimoniaResources {
+public class SkyProviderAntimonia extends SkyProviderBase implements ResourcesDimensions {
 
     public SkyProviderAntimonia() {}
 
@@ -23,7 +23,6 @@ public class SkyProviderAntimonia extends SkyProviderBase implements AntimoniaRe
     protected void renderCelestialBodies(float partialTicks, WorldClient world, Minecraft mc) {
         // 启用混合
         GL11.glEnable(GL11.GL_BLEND);
-        // 设置混合函数：源因子为Alpha，目标因子为1-Alpha
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glPushMatrix();
         GL11.glScalef(1.0F, 1.0F, 1.0F);

@@ -1,4 +1,4 @@
-package com.newmaa.othtech.common.dimensions.structure;
+package com.newmaa.othtech.common.dimensions.structure.antimonia;
 
 import java.util.List;
 import java.util.Random;
@@ -11,26 +11,26 @@ import net.minecraft.world.gen.structure.StructureComponent;
 
 import crazypants.enderio.EnderIO;
 
-public class StructureComponentCityBuilding extends StructureComponentCity {
+public class StructureComponentCityBuildingBlack extends StructureComponentCity {
 
     private int averageGroundLevel = -1;
 
-    public StructureComponentCityBuilding() {}
+    public StructureComponentCityBuildingBlack() {}
 
-    public StructureComponentCityBuilding(StructureStartPiecesAntimoniaCity par1ComponentVillageStartPiece, int par2,
-        Random par3Random, StructureBoundingBox par4StructureBoundingBox, int par5) {
+    public StructureComponentCityBuildingBlack(StructureStartPiecesAntimoniaCity par1ComponentVillageStartPiece,
+        int par2, Random par3Random, StructureBoundingBox par4StructureBoundingBox, int par5) {
         super(par1ComponentVillageStartPiece, par2);
         this.coordBaseMode = par5;
         this.boundingBox = par4StructureBoundingBox;
     }
 
-    public static StructureComponentCityBuilding func_74921_a(
+    public static StructureComponentCityBuildingBlack func_74921_a(
         StructureStartPiecesAntimoniaCity par0ComponentVillageStartPiece, List<StructureComponent> par1List,
         Random par2Random, int par3, int par4, int par5, int par6, int par7) {
         final StructureBoundingBox var8 = StructureBoundingBox
             .getComponentToAddBoundingBox(par3, par4, par5, 0, 0, 0, 17, 9, 17, par6);
         return StructureComponent.findIntersecting(par1List, var8) == null
-            ? new StructureComponentCityBuilding(par0ComponentVillageStartPiece, par7, par2Random, var8, par6)
+            ? new StructureComponentCityBuildingBlack(par0ComponentVillageStartPiece, par7, par2Random, var8, par6)
             : null;
     }
 
@@ -73,7 +73,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
             for (int j = 3; j <= 13; j++) {
                 this.placeBlockAtCurrentPosition(
                     par1World,
-                    Block.getBlockFromName("Botania:quartzTypeLavender"),
+                    Block.getBlockFromName("Botania:quartzTypeDark"),
                     0,
                     i,
                     0,
@@ -86,7 +86,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
             for (int j = 2; j <= 14; j++) {
                 this.placeBlockAtCurrentPosition(
                     par1World,
-                    Block.getBlockFromName("Botania:quartzTypeLavender"),
+                    Block.getBlockFromName("Botania:quartzTypeDark"),
                     0,
                     i,
                     0,
@@ -99,7 +99,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
             for (int j = 5; j <= 11; j++) {
                 this.placeBlockAtCurrentPosition(
                     par1World,
-                    Block.getBlockFromName("Botania:quartzTypeLavender"),
+                    Block.getBlockFromName("Botania:quartzTypeDark"),
                     0,
                     i,
                     0,
@@ -113,7 +113,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
         for (yLevel = -8; yLevel < 40; yLevel++) {
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 4,
                 yLevel,
@@ -121,7 +121,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 3,
                 yLevel,
@@ -129,7 +129,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 2,
                 yLevel,
@@ -137,7 +137,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 2,
                 yLevel,
@@ -146,7 +146,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
 
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 1,
                 yLevel,
@@ -154,7 +154,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 1,
                 yLevel,
@@ -162,7 +162,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 1,
                 yLevel,
@@ -170,7 +170,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                yLevel <= 1 ? Block.getBlockFromName("Botania:quartzTypeLavender") : EnderIO.blockFusedQuartz,
+                yLevel <= 1 ? Block.getBlockFromName("Botania:quartzTypeDark") : EnderIO.blockFusedQuartz,
                 0,
                 1,
                 yLevel,
@@ -178,7 +178,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 1,
                 yLevel,
@@ -186,7 +186,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 1,
                 yLevel,
@@ -194,7 +194,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 1,
                 yLevel,
@@ -203,7 +203,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
 
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 2,
                 yLevel,
@@ -211,7 +211,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 2,
                 yLevel,
@@ -219,7 +219,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 3,
                 yLevel,
@@ -227,7 +227,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 4,
                 yLevel,
@@ -236,7 +236,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
 
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 5,
                 yLevel,
@@ -244,7 +244,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 6,
                 yLevel,
@@ -252,7 +252,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 7,
                 yLevel,
@@ -260,7 +260,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                yLevel <= 1 ? Block.getBlockFromName("Botania:quartzTypeLavender") : EnderIO.blockFusedQuartz,
+                yLevel <= 1 ? Block.getBlockFromName("Botania:quartzTypeDark") : EnderIO.blockFusedQuartz,
                 0,
                 8,
                 yLevel,
@@ -268,7 +268,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 9,
                 yLevel,
@@ -276,7 +276,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 10,
                 yLevel,
@@ -284,7 +284,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 11,
                 yLevel,
@@ -293,7 +293,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
 
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 12,
                 yLevel,
@@ -301,7 +301,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 13,
                 yLevel,
@@ -309,7 +309,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 14,
                 yLevel,
@@ -317,7 +317,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 14,
                 yLevel,
@@ -326,7 +326,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
 
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 15,
                 yLevel,
@@ -334,7 +334,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 15,
                 yLevel,
@@ -342,7 +342,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 15,
                 yLevel,
@@ -350,7 +350,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                yLevel <= 1 ? Block.getBlockFromName("Botania:quartzTypeLavender") : EnderIO.blockFusedQuartz,
+                yLevel <= 1 ? Block.getBlockFromName("Botania:quartzTypeDark") : EnderIO.blockFusedQuartz,
                 0,
                 15,
                 yLevel,
@@ -358,7 +358,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 15,
                 yLevel,
@@ -366,7 +366,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 15,
                 yLevel,
@@ -374,7 +374,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 15,
                 yLevel,
@@ -383,7 +383,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
 
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 14,
                 yLevel,
@@ -391,7 +391,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 14,
                 yLevel,
@@ -399,7 +399,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 13,
                 yLevel,
@@ -407,7 +407,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 12,
                 yLevel,
@@ -416,7 +416,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
 
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 11,
                 yLevel,
@@ -424,7 +424,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 10,
                 yLevel,
@@ -432,7 +432,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 9,
                 yLevel,
@@ -440,7 +440,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                yLevel <= 1 ? Block.getBlockFromName("Botania:quartzTypeLavender") : EnderIO.blockFusedQuartz,
+                yLevel <= 1 ? Block.getBlockFromName("Botania:quartzTypeDark") : EnderIO.blockFusedQuartz,
                 0,
                 8,
                 yLevel,
@@ -448,7 +448,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 7,
                 yLevel,
@@ -456,7 +456,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 6,
                 yLevel,
@@ -464,7 +464,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 5,
                 yLevel,
@@ -474,7 +474,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
         for (yLevel = -8 + 40; yLevel < 40 + 40; yLevel++) {
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 4,
                 yLevel,
@@ -482,7 +482,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 3,
                 yLevel,
@@ -490,7 +490,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 2,
                 yLevel,
@@ -498,7 +498,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 2,
                 yLevel,
@@ -507,7 +507,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
 
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 1,
                 yLevel,
@@ -515,7 +515,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 1,
                 yLevel,
@@ -523,7 +523,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 1,
                 yLevel,
@@ -531,7 +531,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                yLevel <= 1 ? Block.getBlockFromName("Botania:quartzTypeLavender") : EnderIO.blockFusedQuartz,
+                yLevel <= 1 ? Block.getBlockFromName("Botania:quartzTypeDark") : EnderIO.blockFusedQuartz,
                 0,
                 1,
                 yLevel,
@@ -539,7 +539,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 1,
                 yLevel,
@@ -547,7 +547,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 1,
                 yLevel,
@@ -555,7 +555,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 1,
                 yLevel,
@@ -564,7 +564,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
 
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 2,
                 yLevel,
@@ -572,7 +572,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 2,
                 yLevel,
@@ -580,7 +580,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 3,
                 yLevel,
@@ -588,7 +588,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 4,
                 yLevel,
@@ -597,7 +597,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
 
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 5,
                 yLevel,
@@ -605,7 +605,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 6,
                 yLevel,
@@ -613,7 +613,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 7,
                 yLevel,
@@ -621,7 +621,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                yLevel <= 1 ? Block.getBlockFromName("Botania:quartzTypeLavender") : EnderIO.blockFusedQuartz,
+                yLevel <= 1 ? Block.getBlockFromName("Botania:quartzTypeDark") : EnderIO.blockFusedQuartz,
                 0,
                 8,
                 yLevel,
@@ -629,7 +629,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 9,
                 yLevel,
@@ -637,7 +637,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 10,
                 yLevel,
@@ -645,7 +645,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 11,
                 yLevel,
@@ -654,7 +654,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
 
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 12,
                 yLevel,
@@ -662,7 +662,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 13,
                 yLevel,
@@ -670,7 +670,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 14,
                 yLevel,
@@ -678,7 +678,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 14,
                 yLevel,
@@ -687,7 +687,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
 
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 15,
                 yLevel,
@@ -695,7 +695,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 15,
                 yLevel,
@@ -703,7 +703,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 15,
                 yLevel,
@@ -711,7 +711,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                yLevel <= 1 ? Block.getBlockFromName("Botania:quartzTypeLavender") : EnderIO.blockFusedQuartz,
+                yLevel <= 1 ? Block.getBlockFromName("Botania:quartzTypeDark") : EnderIO.blockFusedQuartz,
                 0,
                 15,
                 yLevel,
@@ -719,7 +719,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 15,
                 yLevel,
@@ -727,7 +727,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 15,
                 yLevel,
@@ -735,7 +735,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 15,
                 yLevel,
@@ -744,7 +744,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
 
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 14,
                 yLevel,
@@ -752,7 +752,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 14,
                 yLevel,
@@ -760,7 +760,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 13,
                 yLevel,
@@ -768,7 +768,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 12,
                 yLevel,
@@ -777,7 +777,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
 
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 11,
                 yLevel,
@@ -785,7 +785,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 10,
                 yLevel,
@@ -793,7 +793,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 9,
                 yLevel,
@@ -801,7 +801,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                yLevel <= 1 ? Block.getBlockFromName("Botania:quartzTypeLavender") : EnderIO.blockFusedQuartz,
+                yLevel <= 1 ? Block.getBlockFromName("Botania:quartzTypeDark") : EnderIO.blockFusedQuartz,
                 0,
                 8,
                 yLevel,
@@ -809,7 +809,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 7,
                 yLevel,
@@ -817,7 +817,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 6,
                 yLevel,
@@ -825,7 +825,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
                 par3StructureBoundingBox);
             this.placeBlockAtCurrentPosition(
                 par1World,
-                Block.getBlockFromName("Botania:quartzTypeLavender"),
+                Block.getBlockFromName("Botania:quartzTypeDark"),
                 0,
                 5,
                 yLevel,
@@ -837,7 +837,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
             for (int j = 3; j <= 13; j++) {
                 this.placeBlockAtCurrentPosition(
                     par1World,
-                    Block.getBlockFromName("Botania:quartzTypeLavender"),
+                    Block.getBlockFromName("Botania:quartzTypeDark"),
                     0,
                     i,
                     80,
@@ -850,7 +850,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
             for (int j = 2; j <= 14; j++) {
                 this.placeBlockAtCurrentPosition(
                     par1World,
-                    Block.getBlockFromName("Botania:quartzTypeLavender"),
+                    Block.getBlockFromName("Botania:quartzTypeDark"),
                     0,
                     i,
                     80,
@@ -863,7 +863,7 @@ public class StructureComponentCityBuilding extends StructureComponentCity {
             for (int j = 5; j <= 11; j++) {
                 this.placeBlockAtCurrentPosition(
                     par1World,
-                    Block.getBlockFromName("Botania:quartzTypeLavender"),
+                    Block.getBlockFromName("Botania:quartzTypeDark"),
                     0,
                     i,
                     80,

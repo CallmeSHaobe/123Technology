@@ -1,4 +1,4 @@
-package com.newmaa.othtech.common.dimensions.structure;
+package com.newmaa.othtech.common.dimensions.structure.antimonia;
 
 import static gregtech.api.GregTechAPI.sBlockCasings8;
 import static gregtech.api.enums.Mods.IndustrialCraft2;
