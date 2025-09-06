@@ -34,17 +34,8 @@ import micdoodle8.mods.galacticraft.planets.mars.entities.EntityLandingBalloons;
 public class WorldProviderRoss123b extends WorldProviderSpace
     implements IExitHeight, ISolarLevel, ITeleportType, IHostileBody {
 
-    public WorldProviderRoss123b() {}
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IRenderHandler getSkyRenderer() {
-        return new SkyProviderRoss123b();
-    }
-
-    @Override
-    public boolean isSkyColored() {
-        return false;
+    public WorldProviderRoss123b() {
+        this.setSkyRenderer(new SkyProviderRoss123b());
     }
 
     @Override
@@ -53,8 +44,9 @@ public class WorldProviderRoss123b extends WorldProviderSpace
     }
 
     @Override
-    public boolean canBlockFreeze(int x, int y, int z, boolean byWater) {
-        return false;
+    @SideOnly(Side.CLIENT)
+    public IRenderHandler getSkyRenderer() {
+        return new SkyProviderRoss123b();
     }
 
     @Override
@@ -105,7 +97,7 @@ public class WorldProviderRoss123b extends WorldProviderSpace
 
     @Override
     public float getThermalLevelModifier() {
-        return 3.0F;
+        return 5.0F;
     }
 
     @Override
@@ -140,12 +132,12 @@ public class WorldProviderRoss123b extends WorldProviderSpace
 
     @Override
     public Vector3 getFogColor() {
-        return new Vector3(0.1, 0.1, 0.1);
+        return new Vector3(0.75, 0.75, 0.75);
     }
 
     @Override
     public Vector3 getSkyColor() {
-        return new Vector3(0.0, 0.0, 0.0);
+        return new Vector3(0.54, 0.0, 0.0);
     }
 
     @Override

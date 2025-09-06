@@ -3,6 +3,7 @@ package com.newmaa.othtech.common.dimensions.sky;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraftforge.client.IRenderHandler;
 
 import org.lwjgl.opengl.GL11;
 
@@ -10,16 +11,15 @@ import com.newmaa.othtech.common.dimensions.ResourcesDimensions;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import galaxyspace.core.render.sky.SkyProviderBase;
 
 @SideOnly(Side.CLIENT)
-public class SkyProviderRoss123b extends SkyProviderBase implements ResourcesDimensions {
+public class SkyProviderRoss123b extends IRenderHandler implements ResourcesDimensions {
 
-    // TODO 憋憋了。
+    // TODO 憋憋了。 不会修呀兄弟。
     public SkyProviderRoss123b() {}
 
     @Override
-    public void renderCelestialBodies(float partialTicks, WorldClient world, Minecraft mc) {
+    public void render(float partialTicks, WorldClient world, Minecraft mc) {
         GL11.glPushAttrib(GL11.GL_ALL_ATTRIB_BITS);
         GL11.glPushMatrix();
 
