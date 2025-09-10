@@ -6,6 +6,7 @@ import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.world.World;
 
 import com.newmaa.othtech.common.dimensions.biome.BiomeGenBaseAntimonia;
+import com.newmaa.othtech.common.dimensions.biome.BiomeGenBaseRoss123b;
 import com.newmaa.othtech.common.item.ItemLoader;
 
 import cpw.mods.fml.common.registry.EntityRegistry;
@@ -19,6 +20,8 @@ public class EntityDogYellow extends EntityWolf implements IEntityBreathable {
         EntityRegistry.addSpawn(EntityDogYellow.class, 6, 1, 5, EnumCreatureType.creature, GSBiomeGenBase.SPACE);
         EntityRegistry
             .addSpawn(EntityDogYellow.class, 8, 1, 8, EnumCreatureType.creature, BiomeGenBaseAntimonia.antimonia);
+        EntityRegistry
+            .addSpawn(EntityDogYellow.class, 8, 1, 8, EnumCreatureType.creature, BiomeGenBaseRoss123b.ross123b);
     }
 
     @Override

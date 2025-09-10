@@ -15,7 +15,6 @@ import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraftforge.client.IRenderHandler;
 
 import com.newmaa.othtech.common.dimensions.RegisterDimensions;
-import com.newmaa.othtech.common.dimensions.sky.SkyProviderRoss123b;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -35,18 +34,27 @@ public class WorldProviderRoss123b extends WorldProviderSpace
     implements IExitHeight, ISolarLevel, ITeleportType, IHostileBody {
 
     public WorldProviderRoss123b() {
-        this.setSkyRenderer(new SkyProviderRoss123b());
+
+    }
+
+    @Override
+    public void updateWeather() {
+        // 永远保持下雨状态
+        this.worldObj.getWorldInfo()
+            .setRaining(true);
+        this.worldObj.getWorldInfo()
+            .setRainTime(0);
+
+        // 永远禁止雷暴
+        this.worldObj.getWorldInfo()
+            .setThundering(false);
+        this.worldObj.getWorldInfo()
+            .setThunderTime(0);
     }
 
     @Override
     public boolean canDoRainSnowIce(Chunk chunk) {
         return false;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IRenderHandler getSkyRenderer() {
-        return new SkyProviderRoss123b();
     }
 
     @Override
@@ -122,7 +130,7 @@ public class WorldProviderRoss123b extends WorldProviderSpace
 
     @Override
     public long getDayLength() {
-        return 160000L;
+        return 2000L;
     }
 
     @Override
