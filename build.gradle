@@ -1,6 +1,7 @@
 
 plugins {
     id 'com.gtnewhorizons.gtnhconvention'
+    id 'com.github.ElytraServers.elytra-conventions' version 'v1.1.0'
 }
 minecraft {
     extraRunJvmArguments.add("-Xmx10G")
@@ -12,5 +13,10 @@ minecraft {
     if (!isCiEnvironment) {
         extraRunJvmArguments.add("-Dmixin.debug.verbose=true")
         extraRunJvmArguments.add("-Dmixin.debug.export=true")
+    }
+    def gtnhVersion = project.property("elytra.manifest.version")
+
+    jar {
+    	archiveVersion = project.version + "+" + gtnhVersion
     }
 }
