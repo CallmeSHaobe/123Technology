@@ -17,6 +17,7 @@ import com.newmaa.othtech.common.ItemAndBlockHandler;
 import com.newmaa.othtech.common.beeyonds.OTHBeeyonds;
 import com.newmaa.othtech.common.blocks.antimonia.AntimoniaBlocks;
 import com.newmaa.othtech.common.blocks.fluids.AntimoniaFluids;
+import com.newmaa.othtech.common.blocks.fluids.RossFluids;
 import com.newmaa.othtech.common.dimensions.RegisterDimensions;
 import com.newmaa.othtech.common.materials.MaterialsLoader;
 import com.newmaa.othtech.common.recipemap.NEIRecipeMaps;
@@ -84,6 +85,7 @@ public class OTHTechnology {
         ItemAndBlockHandler.INSTANCE.run();
         AntimoniaBlocks.initialize();
         AntimoniaFluids.initialize();
+        RossFluids.initialize();
     }
 
     @Mod.EventHandler

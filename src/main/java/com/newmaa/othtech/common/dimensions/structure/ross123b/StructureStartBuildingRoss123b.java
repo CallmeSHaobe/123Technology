@@ -19,7 +19,7 @@ public class StructureStartBuildingRoss123b extends StructureStart {
         int baseZ = chunkZ * 16;
         int buildingWidth = 24;
         int buildingLength = 24;
-        int buildingHeight = 200;
+        int buildingHeight = rand.nextInt(200);
         int roadWidth = 5;
         int groundY = 1;
 
@@ -31,12 +31,6 @@ public class StructureStartBuildingRoss123b extends StructureStart {
             buildingLength,
             buildingHeight);
         this.components.add(building);
-        /*
-         * StructureComponentRoadRoss123b road = new StructureComponentRoadRoss123b(baseX, 20, baseZ, buildingWidth,
-         * buildingLength, roadWidth);
-         * this.components.add(road);
-         */
-
         this.updateBoundingBox();
     }
 }

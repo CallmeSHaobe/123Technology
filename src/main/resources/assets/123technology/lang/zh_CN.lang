@@ -166,6 +166,7 @@ tile.AntimoniaStone.name=锑石
 tile.AntimoniaDirt.name=锑土
 tile.AntimoniaGrass.name=锑草方块
 tile.AquaRegia.name=王水
+tile.LCL.name=LCL
 item.itemBucketAqua.name=王水单元(锑星产)
 death.attack.Acid=虽然这可能很不科学,但%1$s还是被王水干死了
 

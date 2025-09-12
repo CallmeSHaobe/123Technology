@@ -1,17 +1,13 @@
 package com.newmaa.othtech.machine.hatch;
 
-import static gregtech.api.enums.Textures.BlockIcons.OVERLAYS_ENERGY_IN_MULTI_WIRELESS_ON;
-import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_ENERGY_ON_WIRELESS_MAX;
+import static gregtech.api.enums.Textures.BlockIcons.OVERLAYS_ENERGY_ON_WIRELESS;
 
-import gregtech.api.enums.Textures;
 import net.minecraft.util.EnumChatFormatting;
 
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.implementations.MTEWirelessEnergy;
-
-import java.lang.reflect.Field;
 
 public class OTEWTFHatch extends MTEWirelessEnergy {
 
@@ -69,13 +65,13 @@ public class OTEWTFHatch extends MTEWirelessEnergy {
 
     @Override
     public ITexture[] getTexturesActive(ITexture aBaseTexture) {
- //       return new ITexture[] { aBaseTexture, OVERLAY_ENERGY_ON_WIRELESS_MAX[1] };
-        return super.getTexturesActive(aBaseTexture);
+        return new ITexture[] { aBaseTexture, OVERLAYS_ENERGY_ON_WIRELESS[15] };
+        // return super.getTexturesActive(aBaseTexture);
     }
 
     @Override
     public ITexture[] getTexturesInactive(ITexture aBaseTexture) {
-//        return new ITexture[] { aBaseTexture, OVERLAY_ENERGY_ON_WIRELESS_MAX };
-        return super.getTexturesInactive(aBaseTexture);
+        return new ITexture[] { aBaseTexture, OVERLAYS_ENERGY_ON_WIRELESS[15] };
+        // return super.getTexturesInactive(aBaseTexture);
     }
 }

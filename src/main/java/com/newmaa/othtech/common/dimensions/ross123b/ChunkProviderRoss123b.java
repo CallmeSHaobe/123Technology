@@ -1,7 +1,5 @@
 package com.newmaa.othtech.common.dimensions.ross123b;
 
-import static net.minecraft.init.Blocks.water;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -16,6 +14,7 @@ import net.minecraft.world.chunk.IChunkProvider;
 
 import com.google.common.collect.Lists;
 import com.newmaa.othtech.common.blocks.antimonia.AntimoniaBlocks;
+import com.newmaa.othtech.common.blocks.fluids.RossFluids;
 import com.newmaa.othtech.common.dimensions.biome.BiomeGenBaseRoss123b;
 import com.newmaa.othtech.common.dimensions.structure.ross123b.MapGenBuildingRoss123b;
 
@@ -92,7 +91,7 @@ public class ChunkProviderRoss123b extends ChunkProviderSpaceLakes {
         if (roadX || roadZ) {
             for (int x = 0; x < 16; x++) {
                 for (int z = 0; z < 16; z++) {
-                    int y = 15;
+                    int y = 16;
                     world.setBlock(worldX + x, y, worldZ + z, Blocks.quartz_block);
                 }
             }
@@ -192,7 +191,7 @@ public class ChunkProviderRoss123b extends ChunkProviderSpaceLakes {
 
     @Override
     protected BlockMetaPair getWaterBlock() {
-        return new BlockMetaPair(water, (byte) 0);
+        return new BlockMetaPair(RossFluids.BlockLCL, (byte) 0);
     }
 
     @Override

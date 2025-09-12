@@ -44,7 +44,7 @@ public class MapGenBuildingRoss123b extends MapGenStructure {
         int spacingChunks = 3;
         if ((chunkX % spacingChunks == 0) && (chunkZ % spacingChunks == 0)) {
             Random rand = new Random(worldObj.getSeed() + (chunkX * 341873128712L) + (chunkZ * 132897987541L));
-            return rand.nextFloat() < 0.8F;
+            return rand.nextFloat() < 0.4F;
         }
         return false;
     }

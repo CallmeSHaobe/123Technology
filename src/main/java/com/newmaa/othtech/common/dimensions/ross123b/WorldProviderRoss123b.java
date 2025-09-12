@@ -39,17 +39,10 @@ public class WorldProviderRoss123b extends WorldProviderSpace
 
     @Override
     public void updateWeather() {
-        // 永远保持下雨状态
         this.worldObj.getWorldInfo()
             .setRaining(true);
         this.worldObj.getWorldInfo()
-            .setRainTime(0);
-
-        // 永远禁止雷暴
-        this.worldObj.getWorldInfo()
-            .setThundering(false);
-        this.worldObj.getWorldInfo()
-            .setThunderTime(0);
+            .setRainTime(1000);
     }
 
     @Override
@@ -135,7 +128,7 @@ public class WorldProviderRoss123b extends WorldProviderSpace
 
     @Override
     public boolean hasBreathableAtmosphere() {
-        return false;
+        return true;
     }
 
     @Override
@@ -155,7 +148,7 @@ public class WorldProviderRoss123b extends WorldProviderSpace
 
     @Override
     public boolean hasSunset() {
-        return false;
+        return true;
     }
 
     @Override
