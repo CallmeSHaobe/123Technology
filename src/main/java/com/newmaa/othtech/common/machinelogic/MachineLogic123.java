@@ -56,12 +56,3 @@ public class MachineLogic123 extends ProcessingLogic {
         return this;
     }
 
-    /**
-     * 重写 setOverclock 方法以确保外部设置的优先级高于默认值
-     */
-    @Override
-    public ProcessingLogic setOverclock(int timeReduction, int powerIncrease) {
-        this.defaultOverclockApplied = true; // 标记已通过外部调用设置超频
-        return super.setOverclock(timeReduction, powerIncrease);
-    }
-}
