@@ -1,4 +1,3 @@
-
 pluginManagement {
     repositories {
         maven {
@@ -10,15 +9,15 @@ pluginManagement {
                 includeGroupByRegex("com\\.gtnewhorizons\\..+")
             }
         }
-        maven {
-        			name "JitPack"
-        			url "https://jitpack.io"
-        			mavenContent {
-        				includeGroupByRegex("com\\.github\\..+")
-        			}
-        		}
         gradlePluginPortal()
         mavenCentral()
+        maven {
+            name "JitPack"
+            url "https://jitpack.io"
+            mavenContent {
+                includeGroupByRegex("com\\.github\\..+")
+            }
+        }
         mavenLocal()
     }
 }
