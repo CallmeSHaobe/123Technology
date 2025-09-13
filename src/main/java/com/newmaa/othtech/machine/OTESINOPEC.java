@@ -169,7 +169,7 @@ public class OTESINOPEC extends OTHMultiMachineBase<OTESINOPEC> {
 
     @Override
     protected ProcessingLogic createProcessingLogic() {
-        MachineLogic123 logic = new MachineLogic123()
+        MachineLogic123 logic = new MachineLogic123();
         return new MachineLogic123() {
 
             @NotNull
