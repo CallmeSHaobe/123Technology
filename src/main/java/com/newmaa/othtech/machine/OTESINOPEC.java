@@ -178,7 +178,8 @@ public class OTESINOPEC extends OTHMultiMachineBase<OTESINOPEC> {
                 return super.process();
             }
 
-        }.setUnlimitedTierSkips().setMaxParallelSupplier(this::getMaxParallelRecipes);
+        }.setUnlimitedTierSkips()
+            .setMaxParallelSupplier(this::getMaxParallelRecipes);
     }
 
     @Override
