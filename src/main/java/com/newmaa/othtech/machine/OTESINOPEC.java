@@ -175,11 +175,10 @@ public class OTESINOPEC extends OTHMultiMachineBase<OTESINOPEC> {
             @Override
             public CheckRecipeResult process() {
                 setSpeedBonus(getSpeedBonus());
-                setOverclock(isEnablePerfectOverclock() ? 4 : 2, 4);
                 return super.process();
             }
 
-        }.setMaxParallelSupplier(this::getMaxParallelRecipes);
+        }.setUnlimitedTierSkips().setMaxParallelSupplier(this::getMaxParallelRecipes);
     }
 
     @Override
