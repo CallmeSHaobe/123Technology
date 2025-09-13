@@ -55,4 +55,7 @@ public class MachineLogic123 extends ProcessingLogic {
         this.defaultOverclockApplied = false; // 重置标志，以便下次处理时应用新设置
         return this;
     }
+}
+
+
 
