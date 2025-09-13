@@ -1,5 +1,6 @@
 package com.newmaa.othtech.machine;
 
+import com.newmaa.othtech.common.machinelogic.MachineLogic123;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.withChannel;
 import static gregtech.api.GregTechAPI.sBlockCasings2;
@@ -169,7 +170,7 @@ public class OTESINOPEC extends OTHMultiMachineBase<OTESINOPEC> {
     @Override
     protected ProcessingLogic createProcessingLogic() {
 
-        return new ProcessingLogic() {
+        return new MachineLogic123() {
 
             @NotNull
             @Override
