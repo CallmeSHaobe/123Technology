@@ -1,0 +1,125 @@
+name: Spotless Format and Auto PR
+
+on:
+  workflow_dispatch: # 允许手动触发
+  schedule:
+    - cron: '0 0 * * 1' # 每周一次（可选）
+  pull_request:
+    branches: [main, master]
+  push:
+    branches: [main, master]
+
+jobs:
+  spotless-format-and-pr:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+      pull-requests: write
+      
+    steps:
+    - name: Install Ubuntu dependencies
+      run: |
+        sudo apt-get update -y
+        sudo apt-get install -y mesa-utils xvfb x11-xserver-utils
+
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        ref: ${{ github.head_ref || github.ref }}
+
+    - name: Set up JDK versions
+      uses: actions/setup-java@v4
+      with:
+        java-version: |
+          8
+          17
+          21
+        distribution: 'zulu'
+
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v4
+      with:
+        build-scan-publish: true
+        build-scan-terms-of-use-url: "https://gradle.com/terms-of-service"
+        build-scan-terms-of-use-agree: "yes"
+        validate-wrappers: true
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+
+    - name: Run Spotless Apply
+      id: spotless_apply
+      run: |
+        # 运行 spotlessApply
+        ./gradlew --build-cache --info --stacktrace spotlessApply || exit 1
+        
+        # 检查是否有更改
+        if git diff --quiet; then
+          echo "changes=false" >> $GITHUB_OUTPUT
+          echo "没有需要格式化的更改，退出工作流"
+          exit 0
+        else
+          echo "changes=true" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Create and push fixed branch
+      if: steps.spotless_apply.outputs.changes == 'true'
+      run: |
+        # 设置 git 配置
+        git config user.name "GitHub GTNH Actions"
+        git config user.email "<>"
+        
+        # 创建分支名
+        if [ "${{ github.event_name }}" = "pull_request" ]; then
+          PR_BRANCH="${{ github.head_ref }}"
+          FIXED_BRANCH="${PR_BRANCH}-spotless-fixes"
+        else
+          BASE_BRANCH="${{ github.ref_name }}"
+          FIXED_BRANCH="spotless/auto-format-$(date +%Y%m%d-%H%M%S)"
+        fi
+        
+        # 切换到新分支并提交更改
+        git switch -c "${FIXED_BRANCH}"
+        git commit -am "Apply spotless formatting"
+        
+        # 推送分支
+        git push --force-with-lease origin "${FIXED_BRANCH}"
+        
+        # 设置输出变量供后续步骤使用
+        echo "fixed_branch=${FIXED_BRANCH}" >> $GITHUB_OUTPUT
+        if [ "${{ github.event_name }}" = "pull_request" ]; then
+          echo "base_branch=${PR_BRANCH}" >> $GITHUB_OUTPUT
+        else
+          echo "base_branch=${BASE_BRANCH}" >> $GITHUB_OUTPUT
+        fi
+      id: create_branch
+
+    - name: Create Pull Request
+      if: steps.spotless_apply.outputs.changes == 'true'
+      run: |
+        # 设置 PR 标题和正文
+        if [ "${{ github.event_name }}" = "pull_request" ]; then
+          PR_TITLE="Spotless apply for branch ${{ github.head_ref }} for #${{ github.event.pull_request.number }}"
+          PR_BODY="Automatic spotless apply to fix formatting errors, applies to PR #${{ github.event.pull_request.number }}"
+          BASE_BRANCH="${{ github.head_ref }}"
+        else
+          PR_TITLE="自动格式化: Spotless 代码格式化"
+          PR_BODY="这是一个自动创建的PR，包含由Spotless工具格式化的代码变更。\n\n**变更说明:**\n- 自动应用了代码格式化规则\n- 无功能逻辑变更"
+          BASE_BRANCH="${{ github.ref_name }}"
+        fi
+        
+        # 创建 PR
+        gh pr create \
+          --head "${{ steps.create_branch.outputs.fixed_branch }}" \
+          --base "${BASE_BRANCH}" \
+          --title "${PR_TITLE}" \
+          --body "${PR_BODY}" \
+          2>&1 | tee pr-message.log
+        
+        # 如果是 PR 事件，添加评论
+        if [ "${{ github.event_name }}" = "pull_request" ]; then
+          gh pr comment "${{ github.head_ref }}" -F pr-message.log || true
+        fi
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
