@@ -15,7 +15,7 @@ public class MachineLogic123 extends ProcessingLogic {
     private int defaultTimeReduction = 2;
     private int defaultPowerIncrease = 4;
     private boolean defaultOverclockApplied = false;
-    
+
     @NotNull
     @Override
     protected ParallelHelper createParallelHelper(@Nonnull GTRecipe recipe) {
@@ -56,6 +56,3 @@ public class MachineLogic123 extends ProcessingLogic {
         return this;
     }
 }
-
-
-
