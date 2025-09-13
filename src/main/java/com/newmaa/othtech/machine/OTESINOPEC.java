@@ -37,7 +37,6 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.common.OTHItemList;
-import com.newmaa.othtech.common.machinelogic.MachineLogic123;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 import com.newmaa.othtech.utils.Utils;
@@ -169,18 +168,18 @@ public class OTESINOPEC extends OTHMultiMachineBase<OTESINOPEC> {
 
     @Override
     protected ProcessingLogic createProcessingLogic() {
-        MachineLogic123 logic = new MachineLogic123();
-        return new MachineLogic123() {
+
+        return new ProcessingLogic() {
 
             @NotNull
             @Override
             public CheckRecipeResult process() {
                 setSpeedBonus(getSpeedBonus());
-                setOverclock(isEnablePerfectOverclock() ? 4 : 2, 4);
                 return super.process();
             }
 
-        }.setMaxParallelSupplier(this::getMaxParallelRecipes);
+        }.setUnlimitedTierSkips()
+            .setMaxParallelSupplier(this::getMaxParallelRecipes);
     }
 
     @Override
