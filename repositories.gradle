@@ -1,5 +1,15 @@
 // Add any additional repositories for your dependencies here.
 
-repositories {
-
+repositories { handler ->
+    exclusiveContent {
+        forRepository {
+            handler.maven {
+                name = 'glease'
+                url = 'https://maven.glease.net/repos/releases/'
+            }
+        }
+        filter {
+            includeGroup('net.glease')
+        }
+    }
 }
