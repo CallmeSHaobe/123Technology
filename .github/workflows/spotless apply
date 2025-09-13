@@ -1,13 +1,7 @@
 name: Spotless Format and Auto PR
 
 on:
-  workflow_dispatch: # 允许手动触发
-  schedule:
-    - cron: '0 0 * * 1' # 每周一次（可选）
-  pull_request:
-    branches: [main, master]
-  push:
-    branches: [main, master]
+  workflow_dispatch:
 
 jobs:
   spotless-format-and-pr:
