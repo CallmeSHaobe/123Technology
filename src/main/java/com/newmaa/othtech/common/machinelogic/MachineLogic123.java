@@ -5,6 +5,7 @@ import javax.annotation.Nonnull;
 import org.jetbrains.annotations.NotNull;
 
 import gregtech.api.logic.ProcessingLogic;
+import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.ParallelHelper;
 
