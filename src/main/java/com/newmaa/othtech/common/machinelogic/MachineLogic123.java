@@ -10,6 +10,11 @@ import gregtech.api.util.ParallelHelper;
 
 public class MachineLogic123 extends ProcessingLogic {
 
+    public MachineLogic123() {
+        super();
+        setMaxTierSkips(999);
+    }
+
     @NotNull
     @Override
     protected ParallelHelper createParallelHelper(@Nonnull GTRecipe recipe) {
