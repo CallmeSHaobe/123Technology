@@ -1,7 +1,6 @@
 package com.newmaa.othtech.machine;
 
-import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
-import static com.gtnewhorizon.structurelib.structure.StructureUtility.withChannel;
+import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
 import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.enums.ItemList.Circuit_Integrated;
 import static gregtech.api.util.GTStructureUtility.*;
@@ -14,6 +13,7 @@ import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.newmaa.othtech.common.machinelogic.MachineLogic123;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -177,7 +177,7 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
 
     @Override
     protected ProcessingLogic createProcessingLogic() {
-        return new ProcessingLogic() {
+        return new MachineLogic123() {
 
             private ItemStack lastCircuit = null;
 
@@ -356,7 +356,7 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
                 .addElement(
                     'B',
                     withChannel("coil", ofCoil(OTEMegaNineInOne::setCoilLevel, OTEMegaNineInOne::getCoilLevel)))
-                .addElement('F', ofBlock(Blocks.beacon, 0))
+                .addElement('F', ofBlockUnlocalizedName("minecraft","beacon",0))
                 .build();
 
         }
