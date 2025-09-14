@@ -641,7 +641,7 @@ public class OTENQFuelGeneratorUniversal extends TTMultiMachineBaseEM
                 TextureFactory.builder()
                     .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE)
                     .extFacing()
-                    .build(),修复
+                    .build(),
                 TextureFactory.builder()
                     .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_GLOW)
                     .extFacing()
