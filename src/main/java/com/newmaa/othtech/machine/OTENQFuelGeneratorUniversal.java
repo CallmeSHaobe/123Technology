@@ -489,24 +489,19 @@ public class OTENQFuelGeneratorUniversal extends TTMultiMachineBaseEM
     }
 
     public FluidStack getPromoter() {
-        // 1. 首先判断 pipeTier 是否为 0
         if (pipeTier == 0) {
-            return BWLiquids.PromoterZPM.getFluidOrGas(1);
+            return BWLiquids.PromoterZPM.getFluidOrGas(1); // T1
+        } else if (pipeTier == 1) {
+            return BWLiquids.PromoterUEV.getFluidOrGas(1); // T2
         } else {
-            if (pipeTier == 2) {
-                return BWLiquids.PromoterUEV.getFluidOrGas(1);
-            } else if (pipeTier == 1) {
-                return BWLiquids.PromoterZPM.getFluidOrGas(1);
-            } else {
-                return BWLiquids.PromoterUEV.getFluidOrGas(1);
-            }
+            return BWLiquids.PromoterZPM.getFluidOrGas(1); // fallback
         }
     }
 
     @Override
     public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
-        if (pipeTier != 0 && !isWirelessMode) {
+        if (pipeTier == 1 && !isWirelessMode) { // 仅 T2 能开
             isWirelessMode = true;
         } else {
             isWirelessMode = false;
@@ -519,10 +514,10 @@ public class OTENQFuelGeneratorUniversal extends TTMultiMachineBaseEM
     @Nullable
     protected static Integer getPipeTier(Block block, int meta) {
         if (block == null) return null;
-        if (block == sBlockCasings9 && meta == 14) {
-            return 2;
-        } else if (block == sBlockCasings2 && meta == 15) {
-            return 1;
+        if (block == sBlockCasings2 && meta == 15) {
+            return 0; // T1
+        } else if (block == sBlockCasings9 && meta == 14) {
+            return 1; // T2
         }
         return null;
     }
@@ -646,7 +641,7 @@ public class OTENQFuelGeneratorUniversal extends TTMultiMachineBaseEM
                 TextureFactory.builder()
                     .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE)
                     .extFacing()
-                    .build(),
+                    .build(),修复
                 TextureFactory.builder()
                     .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_GLOW)
                     .extFacing()
