@@ -1,9 +1,18 @@
 package com.newmaa.othtech.machine;
 
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
-import static gregtech.api.enums.HatchElement.*;
+import static gregtech.api.enums.HatchElement.Energy;
+import static gregtech.api.enums.HatchElement.ExoticEnergy;
+import static gregtech.api.enums.HatchElement.InputBus;
+import static gregtech.api.enums.HatchElement.InputHatch;
+import static gregtech.api.enums.HatchElement.Maintenance;
+import static gregtech.api.enums.HatchElement.Muffler;
+import static gregtech.api.enums.HatchElement.OutputBus;
+import static gregtech.api.enums.HatchElement.OutputHatch;
 import static gregtech.api.enums.ItemList.Circuit_Integrated;
-import static gregtech.api.util.GTStructureUtility.*;
+import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
+import static gregtech.api.util.GTStructureUtility.ofCoil;
+import static gregtech.api.util.GTStructureUtility.ofFrame;
 import static net.minecraft.util.StatCollector.translateToLocal;
 
 import java.util.Arrays;
@@ -13,7 +22,9 @@ import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
@@ -28,10 +39,12 @@ import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.common.machinelogic.MachineLogic123;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 import com.newmaa.othtech.utils.Utils;
+import com.newmaa.othtech.utils.modsEnum;
 
 import bartworks.API.BorosilicateGlass;
 import gregtech.api.enums.HeatingCoilLevel;
 import gregtech.api.enums.Materials;
+import gregtech.api.enums.Mods;
 import gregtech.api.enums.TAE;
 import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
@@ -44,6 +57,7 @@ import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.recipe.metadata.CompressionTierKey;
 import gregtech.api.render.TextureFactory;
+import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
@@ -355,7 +369,14 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
                 .addElement(
                     'B',
                     withChannel("coil", ofCoil(OTEMegaNineInOne::setCoilLevel, OTEMegaNineInOne::getCoilLevel)))
-                .addElement('F', ofBlockUnlocalizedName("minecraft", "beacon", 0))
+                .addElement(
+                    'F',
+                    ofChain(
+                        modsEnum.ET_Futurum.isModLoaded()
+                            ? ofBlockAnyMeta(
+                                Block.getBlockFromItem(
+                                    (GTModHandler.getModItem(Mods.EtFuturumRequiem.ID, "beacon", 1)).getItem()))
+                            : ofBlockAnyMeta(Blocks.beacon)))
                 .build();
 
         }
