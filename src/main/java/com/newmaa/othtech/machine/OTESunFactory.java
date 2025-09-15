@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import gregtech.api.gui.modularui.GTUITextures;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -67,16 +68,38 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
 
     private int stabilisationFieldMetadata = 0;
 
-    private byte mode = 0;
     private byte glassTier = 0;
 
     private double Beeyonds = 0;
     private String BYDS = "0";
+    @Override
+    public int totalMachineMode() {
+        return 4;
+    }
+
+    @Override
+    public void setMachineModeIcons() {
+        super.setMachineModeIcons();
+    }
+    @Override
+    public String getMachineModeName(int mode) {
+        return switch (mode){
+            case 0 -> "巨型PCB工厂模式";
+            case 1 -> "贴片工坊模式";
+            case 2 -> "NMD晶圆厂模式";
+            case 3 -> "原件批发者模式";
+            default -> "mode";
+        };
+    }
+    @Override
+    public void setMachineMode(int index){
+        super.setMachineMode(index);
+    }
 
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
         super.saveNBTData(aNBT);
-        aNBT.setInteger("mode", mode);
+        aNBT.setInteger("mode", machineMode);
         aNBT.setByte("glassTier", glassTier);
         aNBT.setDouble("speedBonus", Beeyonds);
         aNBT.setInteger("sfg", stabilisationFieldMetadata);
@@ -86,7 +109,7 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
     @Override
     public void loadNBTData(final NBTTagCompound aNBT) {
         super.loadNBTData(aNBT);
-        mode = aNBT.getByte("mode");
+        machineMode = aNBT.getByte("mode");
         glassTier = aNBT.getByte("glassTier");
         Beeyonds = aNBT.getDouble("speedBonus");
         stabilisationFieldMetadata = aNBT.getInteger("sfg");
@@ -133,7 +156,6 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
 
     @Override
     public boolean onRunningTick(ItemStack aStack) {
-
         startRecipeProcessing();
         if (checkEnqing(1)) {
             endRecipeProcessing();
@@ -148,7 +170,7 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
 
     @Override
     public void getWailaBody(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor,
-        IWailaConfigHandler config) {
+        IWailaConfigHandler config){
         super.getWailaBody(itemStack, currentTip, accessor, config);
         final NBTTagCompound tag = accessor.getNBTData();
         currentTip.add(
@@ -158,8 +180,8 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
                 + tag.getString("speedBonus")
                 + EnumChatFormatting.RESET
                 + " ");
-    }
 
+    }
     @Override
     public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
         int z) {
@@ -172,6 +194,7 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
         }
     }
 
+
     protected float getSpeedBonus() {
         getBeeyonds();
         return (float) (1 / (1 + Beeyonds));
@@ -179,9 +202,9 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        if (mode == 1) return Recipemaps.SF2;
-        if (mode == 2) return Recipemaps.SF3;
-        if (mode == 3) return Recipemaps.SF4;
+        if (machineMode == 1) return Recipemaps.SF2;
+        if (machineMode == 2) return Recipemaps.SF3;
+        if (machineMode == 3) return Recipemaps.SF4;
         return Recipemaps.SF1;
     }
 
@@ -194,24 +217,29 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
     @Override
     public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
+        /*
         if (getBaseMetaTileEntity().isServerSide()) {
-            int modeAmount;
-            if (stabilisationFieldMetadata >= 8) {
-                modeAmount = 4;
-            } else if (stabilisationFieldMetadata >= 5) {
-                modeAmount = 3;
-            } else if (stabilisationFieldMetadata >= 2) {
-                modeAmount = 2;
-            } else {
-                modeAmount = 1;
+            if (supportsMachineModeSwitch()) {
+                setMachineMode(nextMachineMode()); {
+                    int modeAmount;
+                    if (stabilisationFieldMetadata >= 8) {
+                        modeAmount = 4;
+                    } else if (stabilisationFieldMetadata >= 5) {
+                        modeAmount = 3;
+                    } else if (stabilisationFieldMetadata >= 2) {
+                        modeAmount = 2;
+                    } else {
+                        modeAmount = 1;
+                    }
+                    this.machineMode = (byte) ((this.machineMode + 1) % modeAmount);
+                    GTUtility.sendChatToPlayer(
+                        aPlayer,
+                        StatCollector.translateToLocal(
+                            machineMode == 0 ? "巨型PCB工厂模式"
+                                : machineMode == 1 ? "贴片工坊模式" : machineMode == 2 ? "NMD晶圆厂模式" : machineMode == 3 ? "元件批发者模式" : "null"));
+                }
             }
-            this.mode = (byte) ((this.mode + 1) % modeAmount);
-            GTUtility.sendChatToPlayer(
-                aPlayer,
-                StatCollector.translateToLocal(
-                    mode == 0 ? "巨型PCB工厂模式"
-                        : mode == 1 ? "贴片工坊模式" : mode == 2 ? "NMD晶圆厂模式" : mode == 3 ? "元件批发者模式" : "null"));
-        }
+        }*/
     }
 
     @Override
@@ -233,9 +261,9 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
     @NotNull
     @Override
     public CheckRecipeResult checkProcessing() {
-        if (stabilisationFieldMetadata < 2 && mode > 0) return CheckRecipeResultRegistry.INTERNAL_ERROR;
-        if (stabilisationFieldMetadata < 5 && mode > 1) return CheckRecipeResultRegistry.INTERNAL_ERROR;
-        if (stabilisationFieldMetadata < 8 && mode > 2) return CheckRecipeResultRegistry.INTERNAL_ERROR;
+        if (stabilisationFieldMetadata < 2 && machineMode > 0) return CheckRecipeResultRegistry.insufficientMachineTier(2);
+        if (stabilisationFieldMetadata < 5 && machineMode > 1) return CheckRecipeResultRegistry.insufficientMachineTier(5);
+        if (stabilisationFieldMetadata < 8 && machineMode > 2) return CheckRecipeResultRegistry.insufficientMachineTier(8);
 
         setupProcessingLogic(processingLogic);
 

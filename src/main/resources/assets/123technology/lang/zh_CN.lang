@@ -437,7 +437,7 @@ ote.tm.sf.12=sfg信道 = 0 解锁PCB工厂
 ote.tm.sf.13=sfg信道 = 2 解锁贴片工坊
 ote.tm.sf.14=sfg信道 = 5 解锁NMD晶圆厂
 ote.tm.sf.15=sfg信道 = 8 解锁元件聚合者
-ote.tm.sf.16=更换力场后结构不成型请重放主机
+ote.tm.sf.16=更换力场后结构不成型请重放主机, 使用机器GUI按钮配置机器模式
 
 #TangShan
 ote.tm.ts.0=§e§l重工业计划 - 唐山炼钢厂

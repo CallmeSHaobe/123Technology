@@ -3,20 +3,33 @@ package com.newmaa.othtech.machine.machineclass;
 import static com.newmaa.othtech.utils.Utils.filterValidMTEs;
 import static gregtech.GTMod.GT;
 import static gregtech.api.enums.GTValues.VN;
+import static gregtech.api.metatileentity.BaseTileEntity.TOOLTIP_DELAY;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 import javax.annotation.Nonnull;
 
+import com.gtnewhorizons.modularui.api.drawable.IDrawable;
+import com.gtnewhorizons.modularui.api.drawable.UITexture;
+import com.gtnewhorizons.modularui.api.screen.ModularWindow;
+import com.gtnewhorizons.modularui.api.widget.IWidgetBuilder;
+import com.gtnewhorizons.modularui.api.widget.Widget;
+import com.gtnewhorizons.modularui.common.widget.ButtonWidget;
+import com.gtnewhorizons.modularui.common.widget.FakeSyncWidget;
+import gregtech.api.gui.modularui.GTUITextures;
+import mcp.mobius.waila.api.IWailaConfigHandler;
+import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
+import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -767,6 +780,86 @@ public abstract class OTHMultiMachineBase<T extends OTHMultiMachineBase<T>> exte
             if (activitySoundLoop != null) {
                 activitySoundLoop = null;
             }
+        }
+    }
+    /**
+     * Set total mode count for the machine.
+     * Also indicate whether this machine has multiple modes.
+     * Use {@link #machineMode} to get current machine mode index.
+     * Override {@link #getMachineModeName(int)} to set name for each mode.
+     * Override {@link #setMachineModeIcons()} to set button icon.
+     * Override {@link #setMachineMode(int)} or {@link #nextMachineMode()} to restrict mode change.
+     */
+    public int totalMachineMode() {
+        return 1;
+    }
+    public String getMachineModeName(int mode) {
+        return "Unknown Mode " + mode;
+    }
+    @Override
+    public final String getMachineModeName() {
+        return getMachineModeName(machineMode);
+    }
+    @Override
+    public boolean supportsMachineModeSwitch() {
+        return totalMachineMode() > 1;
+    }
+
+    @Override
+    public int nextMachineMode() {
+        if (machineMode + 1 >= totalMachineMode()) {
+            return 0;
+        }
+        return machineMode + 1;
+    }
+    public boolean canButtonSwitchMode() {
+        return supportsMachineModeSwitch();
+    }
+
+    @Override
+    public ButtonWidget createModeSwitchButton(IWidgetBuilder<?> builder) {
+        if (!supportsMachineModeSwitch()) return null;
+        Widget button = new ButtonWidget().setOnClick((clickData, widget) -> {
+                if (canButtonSwitchMode()) {
+                    onMachineModeSwitchClick();
+                    setMachineMode(nextMachineMode());
+                }
+            })
+            .setPlayClickSound(supportsMachineModeSwitch())
+            .setBackground(() -> {
+                List<UITexture> ret = new ArrayList<>();
+                if (supportsMachineModeSwitch()) {
+                    ret.add(GTUITextures.BUTTON_STANDARD);
+                    ret.add(getMachineModeIcon(getMachineMode()));
+                } else return null;
+                return ret.toArray(new IDrawable[0]);
+            })
+            .attachSyncer(new FakeSyncWidget.IntegerSyncer(this::getMachineMode, this::setMachineMode), builder)
+            .addTooltip(StatCollector.translateToLocal("GT5U.gui.button.mode_switch"))
+            .setTooltipShowUpDelay(TOOLTIP_DELAY)
+            .setPos(getMachineModeSwitchButtonPos())
+            .setSize(16, 16);
+        return (ButtonWidget) button;
+    }
+    @Override
+    public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
+                                int z) {
+        super.getWailaNBTData(player, tile, tag, world, x, y, z);
+        if (supportsMachineModeSwitch()) {
+            tag.setInteger("mode", machineMode);
+        }
+    }
+    @Override
+    public void getWailaBody(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor,
+                             IWailaConfigHandler config) {
+        super.getWailaBody(itemStack, currentTip, accessor, config);
+        final NBTTagCompound tag = accessor.getNBTData();
+        if (tag.hasKey("mode")) {
+            currentTip.add(
+                StatCollector.translateToLocal("Mode :") + " "
+                    + EnumChatFormatting.WHITE
+                    + getMachineModeName(tag.getInteger("mode"))
+                    + EnumChatFormatting.RESET);
         }
     }
 

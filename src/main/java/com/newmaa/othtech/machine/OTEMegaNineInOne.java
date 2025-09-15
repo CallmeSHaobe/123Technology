@@ -70,11 +70,9 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
     public OTEMegaNineInOne(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
     }
-
     public OTEMegaNineInOne(String aName) {
         super(aName);
     }
-
     protected int mInternalMode = 0;
     private static final int MODE_COMPRESSOR = 0;
     private static final int MODE_LATHE = 1;
@@ -912,7 +910,6 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
     public int getDamageToComponent(ItemStack aStack) {
         return 0;
     }
-
 
     @Override
     public boolean supportsVoidProtection() {
