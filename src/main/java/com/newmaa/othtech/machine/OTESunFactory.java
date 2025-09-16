@@ -16,14 +16,12 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import gregtech.api.gui.modularui.GTUITextures;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -72,6 +70,7 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
 
     private double Beeyonds = 0;
     private String BYDS = "0";
+
     @Override
     public int totalMachineMode() {
         return 4;
@@ -81,9 +80,10 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
     public void setMachineModeIcons() {
         super.setMachineModeIcons();
     }
+
     @Override
     public String getMachineModeName(int mode) {
-        return switch (mode){
+        return switch (mode) {
             case 0 -> "巨型PCB工厂模式";
             case 1 -> "贴片工坊模式";
             case 2 -> "NMD晶圆厂模式";
@@ -91,8 +91,9 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
             default -> "mode";
         };
     }
+
     @Override
-    public void setMachineMode(int index){
+    public void setMachineMode(int index) {
         super.setMachineMode(index);
     }
 
@@ -170,7 +171,7 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
 
     @Override
     public void getWailaBody(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor,
-        IWailaConfigHandler config){
+        IWailaConfigHandler config) {
         super.getWailaBody(itemStack, currentTip, accessor, config);
         final NBTTagCompound tag = accessor.getNBTData();
         currentTip.add(
@@ -182,6 +183,7 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
                 + " ");
 
     }
+
     @Override
     public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
         int z) {
@@ -193,7 +195,6 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
 
         }
     }
-
 
     protected float getSpeedBonus() {
         getBeeyonds();
@@ -218,28 +219,29 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
     public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
         /*
-        if (getBaseMetaTileEntity().isServerSide()) {
-            if (supportsMachineModeSwitch()) {
-                setMachineMode(nextMachineMode()); {
-                    int modeAmount;
-                    if (stabilisationFieldMetadata >= 8) {
-                        modeAmount = 4;
-                    } else if (stabilisationFieldMetadata >= 5) {
-                        modeAmount = 3;
-                    } else if (stabilisationFieldMetadata >= 2) {
-                        modeAmount = 2;
-                    } else {
-                        modeAmount = 1;
-                    }
-                    this.machineMode = (byte) ((this.machineMode + 1) % modeAmount);
-                    GTUtility.sendChatToPlayer(
-                        aPlayer,
-                        StatCollector.translateToLocal(
-                            machineMode == 0 ? "巨型PCB工厂模式"
-                                : machineMode == 1 ? "贴片工坊模式" : machineMode == 2 ? "NMD晶圆厂模式" : machineMode == 3 ? "元件批发者模式" : "null"));
-                }
-            }
-        }*/
+         * if (getBaseMetaTileEntity().isServerSide()) {
+         * if (supportsMachineModeSwitch()) {
+         * setMachineMode(nextMachineMode()); {
+         * int modeAmount;
+         * if (stabilisationFieldMetadata >= 8) {
+         * modeAmount = 4;
+         * } else if (stabilisationFieldMetadata >= 5) {
+         * modeAmount = 3;
+         * } else if (stabilisationFieldMetadata >= 2) {
+         * modeAmount = 2;
+         * } else {
+         * modeAmount = 1;
+         * }
+         * this.machineMode = (byte) ((this.machineMode + 1) % modeAmount);
+         * GTUtility.sendChatToPlayer(
+         * aPlayer,
+         * StatCollector.translateToLocal(
+         * machineMode == 0 ? "巨型PCB工厂模式"
+         * : machineMode == 1 ? "贴片工坊模式" : machineMode == 2 ? "NMD晶圆厂模式" : machineMode == 3 ? "元件批发者模式" : "null"));
+         * }
+         * }
+         * }
+         */
     }
 
     @Override
@@ -261,9 +263,12 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
     @NotNull
     @Override
     public CheckRecipeResult checkProcessing() {
-        if (stabilisationFieldMetadata < 2 && machineMode > 0) return CheckRecipeResultRegistry.insufficientMachineTier(2);
-        if (stabilisationFieldMetadata < 5 && machineMode > 1) return CheckRecipeResultRegistry.insufficientMachineTier(5);
-        if (stabilisationFieldMetadata < 8 && machineMode > 2) return CheckRecipeResultRegistry.insufficientMachineTier(8);
+        if (stabilisationFieldMetadata < 2 && machineMode > 0)
+            return CheckRecipeResultRegistry.insufficientMachineTier(2);
+        if (stabilisationFieldMetadata < 5 && machineMode > 1)
+            return CheckRecipeResultRegistry.insufficientMachineTier(5);
+        if (stabilisationFieldMetadata < 8 && machineMode > 2)
+            return CheckRecipeResultRegistry.insufficientMachineTier(8);
 
         setupProcessingLogic(processingLogic);
 

@@ -5,23 +5,16 @@ import static gregtech.GTMod.GT;
 import static gregtech.api.enums.GTValues.VN;
 import static gregtech.api.metatileentity.BaseTileEntity.TOOLTIP_DELAY;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 
-import com.gtnewhorizons.modularui.api.drawable.IDrawable;
-import com.gtnewhorizons.modularui.api.drawable.UITexture;
-import com.gtnewhorizons.modularui.api.screen.ModularWindow;
-import com.gtnewhorizons.modularui.api.widget.IWidgetBuilder;
-import com.gtnewhorizons.modularui.api.widget.Widget;
-import com.gtnewhorizons.modularui.common.widget.ButtonWidget;
-import com.gtnewhorizons.modularui.common.widget.FakeSyncWidget;
-import gregtech.api.gui.modularui.GTUITextures;
-import mcp.mobius.waila.api.IWailaConfigHandler;
-import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -38,6 +31,12 @@ import org.jetbrains.annotations.NotNull;
 
 import com.gtnewhorizon.structurelib.alignment.constructable.IConstructable;
 import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructable;
+import com.gtnewhorizons.modularui.api.drawable.IDrawable;
+import com.gtnewhorizons.modularui.api.drawable.UITexture;
+import com.gtnewhorizons.modularui.api.widget.IWidgetBuilder;
+import com.gtnewhorizons.modularui.api.widget.Widget;
+import com.gtnewhorizons.modularui.common.widget.ButtonWidget;
+import com.gtnewhorizons.modularui.common.widget.FakeSyncWidget;
 import com.newmaa.othtech.Config;
 
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -45,6 +44,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import gregtech.api.GregTechAPI;
 import gregtech.api.enums.SoundResource;
+import gregtech.api.gui.modularui.GTUITextures;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.logic.ProcessingLogic;
@@ -64,6 +64,8 @@ import gregtech.common.tileentities.machines.IDualInputHatch;
 import gregtech.common.tileentities.machines.IDualInputInventory;
 import gregtech.common.tileentities.machines.MTEHatchInputBusME;
 import gregtech.common.tileentities.machines.MTEHatchInputME;
+import mcp.mobius.waila.api.IWailaConfigHandler;
+import mcp.mobius.waila.api.IWailaDataAccessor;
 
 public abstract class OTHMultiMachineBase<T extends OTHMultiMachineBase<T>> extends MTEExtendedPowerMultiBlockBase<T>
     implements IConstructable, ISurvivalConstructable {
@@ -782,6 +784,7 @@ public abstract class OTHMultiMachineBase<T extends OTHMultiMachineBase<T>> exte
             }
         }
     }
+
     /**
      * Set total mode count for the machine.
      * Also indicate whether this machine has multiple modes.
@@ -793,13 +796,16 @@ public abstract class OTHMultiMachineBase<T extends OTHMultiMachineBase<T>> exte
     public int totalMachineMode() {
         return 1;
     }
+
     public String getMachineModeName(int mode) {
         return "Unknown Mode " + mode;
     }
+
     @Override
     public final String getMachineModeName() {
         return getMachineModeName(machineMode);
     }
+
     @Override
     public boolean supportsMachineModeSwitch() {
         return totalMachineMode() > 1;
@@ -812,6 +818,7 @@ public abstract class OTHMultiMachineBase<T extends OTHMultiMachineBase<T>> exte
         }
         return machineMode + 1;
     }
+
     public boolean canButtonSwitchMode() {
         return supportsMachineModeSwitch();
     }
@@ -820,11 +827,11 @@ public abstract class OTHMultiMachineBase<T extends OTHMultiMachineBase<T>> exte
     public ButtonWidget createModeSwitchButton(IWidgetBuilder<?> builder) {
         if (!supportsMachineModeSwitch()) return null;
         Widget button = new ButtonWidget().setOnClick((clickData, widget) -> {
-                if (canButtonSwitchMode()) {
-                    onMachineModeSwitchClick();
-                    setMachineMode(nextMachineMode());
-                }
-            })
+            if (canButtonSwitchMode()) {
+                onMachineModeSwitchClick();
+                setMachineMode(nextMachineMode());
+            }
+        })
             .setPlayClickSound(supportsMachineModeSwitch())
             .setBackground(() -> {
                 List<UITexture> ret = new ArrayList<>();
@@ -841,17 +848,19 @@ public abstract class OTHMultiMachineBase<T extends OTHMultiMachineBase<T>> exte
             .setSize(16, 16);
         return (ButtonWidget) button;
     }
+
     @Override
     public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
-                                int z) {
+        int z) {
         super.getWailaNBTData(player, tile, tag, world, x, y, z);
         if (supportsMachineModeSwitch()) {
             tag.setInteger("mode", machineMode);
         }
     }
+
     @Override
     public void getWailaBody(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor,
-                             IWailaConfigHandler config) {
+        IWailaConfigHandler config) {
         super.getWailaBody(itemStack, currentTip, accessor, config);
         final NBTTagCompound tag = accessor.getNBTData();
         if (tag.hasKey("mode")) {
