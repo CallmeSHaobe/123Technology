@@ -30,6 +30,7 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.gtnewhorizon.structurelib.structure.StructureUtility;
+import com.newmaa.othtech.common.machinelogic.MachineLogic123;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 
 import bartworks.API.BorosilicateGlass;
@@ -110,7 +111,7 @@ public class OTELargeCircuitAssembler extends OTHMultiMachineBase<OTELargeCircui
     @Override
     protected ProcessingLogic createProcessingLogic() {
 
-        return new ProcessingLogic() {
+        return new MachineLogic123() {
 
             @NotNull
             @Override
