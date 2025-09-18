@@ -35,6 +35,7 @@ import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructa
 import com.gtnewhorizon.structurelib.structure.IItemSource;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
+import com.newmaa.othtech.common.machinelogic.MachineLogic123;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 
@@ -515,7 +516,7 @@ public class OTELargeBin extends OTHMultiMachineBase<OTELargeBin> implements ICo
 
     @Override
     protected ProcessingLogic createProcessingLogic() {
-        return new ProcessingLogic() {
+        return new MachineLogic123() {
 
             @NotNull
             @Override

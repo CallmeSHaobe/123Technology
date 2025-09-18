@@ -30,6 +30,7 @@ import com.google.common.collect.ImmutableList;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
+import com.newmaa.othtech.common.machinelogic.MachineLogic123;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 
@@ -234,7 +235,7 @@ public class OTEMegaQFT extends OTHMultiMachineBase<OTEMegaQFT> {
     @Override
     protected ProcessingLogic createProcessingLogic() {
 
-        return new ProcessingLogic() {
+        return new MachineLogic123() {
 
             @NotNull
             @Override

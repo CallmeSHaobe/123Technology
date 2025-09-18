@@ -36,6 +36,7 @@ import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.kuba6000.mobsinfo.api.utils.FastRandom;
 import com.mojang.authlib.GameProfile;
+import com.newmaa.othtech.common.machinelogic.MachineLogic123;
 import com.newmaa.othtech.machine.machineclass.MobHandlerLoaderOTH;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 
@@ -154,7 +155,7 @@ public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> {
     @Override
     protected ProcessingLogic createProcessingLogic() {
 
-        return new ProcessingLogic() {
+        return new MachineLogic123() {
 
             @NotNull
             @Override

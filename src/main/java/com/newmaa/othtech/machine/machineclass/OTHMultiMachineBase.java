@@ -38,6 +38,7 @@ import com.gtnewhorizons.modularui.api.widget.Widget;
 import com.gtnewhorizons.modularui.common.widget.ButtonWidget;
 import com.gtnewhorizons.modularui.common.widget.FakeSyncWidget;
 import com.newmaa.othtech.Config;
+import com.newmaa.othtech.common.machinelogic.MachineLogic123;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
@@ -101,7 +102,7 @@ public abstract class OTHMultiMachineBase<T extends OTHMultiMachineBase<T>> exte
      */
     @ApiStatus.OverrideOnly
     protected ProcessingLogic createProcessingLogic() {
-        return new ProcessingLogic() {
+        return new MachineLogic123() {
 
             @NotNull
             @Override
