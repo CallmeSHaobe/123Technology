@@ -83,7 +83,7 @@ public class OTENQFuelGeneratorUniversal extends TTMultiMachineBaseEM
         super.useLongPower = true;
     }
 
-    private int pipeTier = 0;
+    private int pipeTier = 1; // 修改默认值为1而不是0
     private UUID ownerUUID;
     private boolean isWirelessMode = false;
     private String costingWirelessEU = "0";
@@ -104,6 +104,10 @@ public class OTENQFuelGeneratorUniversal extends TTMultiMachineBaseEM
     @Override
     public void loadNBTData(final NBTTagCompound aNBT) {
         pipeTier = aNBT.getInteger("pipe");
+        // 兼容旧版本数据：如果pipeTier为0，则升级为1
+        if (pipeTier == 0) {
+            pipeTier = 1;
+        }
         isWirelessMode = aNBT.getBoolean("wireless");
         running_time = aNBT.getLong("Time");
         super.loadNBTData(aNBT);
@@ -362,31 +366,60 @@ public class OTENQFuelGeneratorUniversal extends TTMultiMachineBaseEM
     protected final int HEATING_TIMER = SECOND * 10;
 
     void addAutoEnergy() {
-        long exEU = this.getPowerFlow() * tEff / 100;
-        if (!mDynamoHatches.isEmpty()) {
-            MTEHatchDynamo tHatch = mDynamoHatches.get(0);
-            if (tHatch.maxEUOutput() * tHatch.maxAmperesOut() >= exEU) {
-                tHatch.setEUVar(
-                    Math.min(
-                        tHatch.maxEUStore(),
-                        tHatch.getBaseMetaTileEntity()
-                            .getStoredEU() + exEU));
-            } else if (!isStoppingSafe) {
+        long exEU = this.getPowerFlow(); // 直接使用功率流，不再乘以效率
+
+        // 分配能量到所有可用的动力仓
+        if (!addEnergyOutputMultipleDynamos(exEU, false)) {
+            // 如果能量无法完全输出，停止机器
+            if (!isStoppingSafe) {
                 stopMachine();
             }
         }
-        if (!eDynamoMulti.isEmpty()) {
-            MTEHatchDynamoMulti tHatch = eDynamoMulti.get(0);
-            if (tHatch.maxEUOutput() * tHatch.maxAmperesOut() >= exEU) {
-                tHatch.setEUVar(
-                    Math.min(
-                        tHatch.maxEUStore(),
+    }
+
+    // 添加能量输出到多个动力仓的方法
+    public boolean addEnergyOutputMultipleDynamos(long totalEU, boolean aAllowMixedVoltageDynamos) {
+        // check positive
+        if (totalEU < 0) totalEU = -totalEU;
+        // to store free capacity of dynamo hatch
+        long freeCapacity;
+
+        // 检查普通动力仓
+        for (MTEHatchDynamo tHatch : validMTEList(mDynamoHatches)) {
+            freeCapacity = tHatch.maxEUStore() - tHatch.getBaseMetaTileEntity()
+                .getStoredEU();
+            if (freeCapacity > 0) {
+                if (totalEU > freeCapacity) {
+                    tHatch.setEUVar(tHatch.maxEUStore());
+                    totalEU -= freeCapacity;
+                } else {
+                    tHatch.setEUVar(
                         tHatch.getBaseMetaTileEntity()
-                            .getStoredEU() + exEU));
-            } else if (!isStoppingSafe) {
-                stopMachine();
+                            .getStoredEU() + totalEU);
+                    return true;
+                }
             }
         }
+
+        // 检查多安仓
+        for (MTEHatchDynamoMulti tHatch : validMTEList(eDynamoMulti)) {
+            freeCapacity = tHatch.maxEUStore() - tHatch.getBaseMetaTileEntity()
+                .getStoredEU();
+            if (freeCapacity > 0) {
+                if (totalEU > freeCapacity) {
+                    tHatch.setEUVar(tHatch.maxEUStore());
+                    totalEU -= freeCapacity;
+                } else {
+                    tHatch.setEUVar(
+                        tHatch.getBaseMetaTileEntity()
+                            .getStoredEU() + totalEU);
+                    return true;
+                }
+            }
+        }
+
+        // 如果还有剩余能量，返回false
+        return totalEU == 0;
     }
 
     public final boolean addMuffler(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
@@ -465,7 +498,10 @@ public class OTENQFuelGeneratorUniversal extends TTMultiMachineBaseEM
                         .buildAndChain(sBlockCasings8, 10))
                 .addElement(
                     'E',
-                    buildHatchAdder(OTENQFuelGeneratorUniversal.class).atLeast(Dynamo)
+                    buildHatchAdder(OTENQFuelGeneratorUniversal.class)
+                        .atLeast(
+                            tectech.thing.metaTileEntity.multi.base.TTMultiblockBase.HatchElement.DynamoMulti
+                                .or(gregtech.api.enums.HatchElement.Dynamo))
                         .adder(OTENQFuelGeneratorUniversal::addToMachineList)
                         .dot(4)
                         .casingIndex(((BlockCasings8) sBlockCasings8).getTextureIndex(10))
@@ -477,7 +513,7 @@ public class OTENQFuelGeneratorUniversal extends TTMultiMachineBaseEM
                         ofBlocksTiered(
                             OTENQFuelGeneratorUniversal::getPipeTier,
                             ImmutableList.of(Pair.of(sBlockCasings2, 15), Pair.of(sBlockCasings9, 14)),
-                            0,
+                            -1, // 将notSet值改为-1
                             (t, meta) -> t.pipeTier = meta,
                             t -> t.pipeTier)))
                 .addElement('C', ofBlock(sBlockCasings6, 8))
@@ -489,10 +525,10 @@ public class OTENQFuelGeneratorUniversal extends TTMultiMachineBaseEM
     }
 
     public FluidStack getPromoter() {
-        if (pipeTier == 0) {
-            return BWLiquids.PromoterZPM.getFluidOrGas(1); // T1
-        } else if (pipeTier == 1) {
-            return BWLiquids.PromoterUEV.getFluidOrGas(1); // T2
+        if (pipeTier == 1) { // T1
+            return BWLiquids.PromoterZPM.getFluidOrGas(1);
+        } else if (pipeTier == 2) { // T2
+            return BWLiquids.PromoterUEV.getFluidOrGas(1);
         } else {
             return BWLiquids.PromoterZPM.getFluidOrGas(1); // fallback
         }
@@ -501,7 +537,7 @@ public class OTENQFuelGeneratorUniversal extends TTMultiMachineBaseEM
     @Override
     public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
-        if (pipeTier == 1 && !isWirelessMode) { // 仅 T2 能开
+        if (pipeTier == 2 && !isWirelessMode) { // 仅 T2 能开
             isWirelessMode = true;
         } else {
             isWirelessMode = false;
@@ -515,9 +551,9 @@ public class OTENQFuelGeneratorUniversal extends TTMultiMachineBaseEM
     protected static Integer getPipeTier(Block block, int meta) {
         if (block == null) return null;
         if (block == sBlockCasings2 && meta == 15) {
-            return 0; // T1
+            return 1; // T1 - 修改为1而不是0
         } else if (block == sBlockCasings9 && meta == 14) {
-            return 1; // T2
+            return 2; // T2 - 修改为2而不是1
         }
         return null;
     }
