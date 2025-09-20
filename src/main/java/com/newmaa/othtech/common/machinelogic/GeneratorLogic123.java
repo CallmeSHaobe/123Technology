@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
+
 import gregtech.api.interfaces.IHatchElement;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;

@@ -19,7 +19,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-import com.newmaa.othtech.common.machinelogic.TTMachinelogic123;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -41,8 +40,8 @@ import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructa
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
+import com.newmaa.othtech.common.machinelogic.TTMachinelogic123;
 import com.newmaa.othtech.common.materials.BWLiquids;
-import com.newmaa.othtech.machine.machineclass.TTMultiMachineBaseEM;
 
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
@@ -71,8 +70,7 @@ import tectech.thing.metaTileEntity.multi.base.IStatusFunction;
 import tectech.thing.metaTileEntity.multi.base.LedStatus;
 import tectech.thing.metaTileEntity.multi.base.Parameters;
 
-public class OTENQFuelGeneratorUniversal extends TTMachinelogic123
-    implements IConstructable, ISurvivalConstructable {
+public class OTENQFuelGeneratorUniversal extends TTMachinelogic123 implements IConstructable, ISurvivalConstructable {
 
     public OTENQFuelGeneratorUniversal(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
@@ -123,7 +121,7 @@ public class OTENQFuelGeneratorUniversal extends TTMachinelogic123
 
     @Override
     public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
-                                int z) {
+        int z) {
         super.getWailaNBTData(player, tile, tag, world, x, y, z);
         final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
         if (tileEntity != null) {
@@ -137,7 +135,7 @@ public class OTENQFuelGeneratorUniversal extends TTMachinelogic123
 
     @Override
     public void getWailaBody(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor,
-                             IWailaConfigHandler config) {
+        IWailaConfigHandler config) {
         super.getWailaBody(itemStack, currentTip, accessor, config);
         final NBTTagCompound tag = accessor.getNBTData();
         currentTip.add(
@@ -195,7 +193,7 @@ public class OTENQFuelGeneratorUniversal extends TTMachinelogic123
     }
 
     protected CheckRecipeResult processFuel(ArrayList<FluidStack> tFluids, RecipeMap<FuelBackend> recipeMap,
-                                            long PromoterAmount, double efficiencyCoefficient, double FuelsValueBonus) {
+        long PromoterAmount, double efficiencyCoefficient, double FuelsValueBonus) {
         List<FluidStack> extraFluids = new ArrayList<>();
         for (GTRecipe recipe : recipeMap.getAllRecipes()) {
             FluidStack tFuel = findFuel(recipe);
@@ -383,13 +381,16 @@ public class OTENQFuelGeneratorUniversal extends TTMachinelogic123
 
         // 检查普通动力仓
         for (MTEHatchDynamo tHatch : validMTEList(mDynamoHatches)) {
-            freeCapacity = tHatch.maxEUStore() - tHatch.getBaseMetaTileEntity().getStoredEU();
+            freeCapacity = tHatch.maxEUStore() - tHatch.getBaseMetaTileEntity()
+                .getStoredEU();
             if (freeCapacity > 0) {
                 if (totalEU > freeCapacity) {
                     tHatch.setEUVar(tHatch.maxEUStore());
                     totalEU -= freeCapacity;
                 } else {
-                    tHatch.setEUVar(tHatch.getBaseMetaTileEntity().getStoredEU() + totalEU);
+                    tHatch.setEUVar(
+                        tHatch.getBaseMetaTileEntity()
+                            .getStoredEU() + totalEU);
                     return true;
                 }
             }
@@ -397,13 +398,16 @@ public class OTENQFuelGeneratorUniversal extends TTMachinelogic123
 
         // 检查多安仓
         for (MTEHatchDynamoMulti tHatch : validMTEList(eDynamoMulti)) {
-            freeCapacity = tHatch.maxEUStore() - tHatch.getBaseMetaTileEntity().getStoredEU();
+            freeCapacity = tHatch.maxEUStore() - tHatch.getBaseMetaTileEntity()
+                .getStoredEU();
             if (freeCapacity > 0) {
                 if (totalEU > freeCapacity) {
                     tHatch.setEUVar(tHatch.maxEUStore());
                     totalEU -= freeCapacity;
                 } else {
-                    tHatch.setEUVar(tHatch.getBaseMetaTileEntity().getStoredEU() + totalEU);
+                    tHatch.setEUVar(
+                        tHatch.getBaseMetaTileEntity()
+                            .getStoredEU() + totalEU);
                     return true;
                 }
             }
@@ -489,7 +493,10 @@ public class OTENQFuelGeneratorUniversal extends TTMachinelogic123
                         .buildAndChain(sBlockCasings8, 10))
                 .addElement(
                     'E',
-                    buildHatchAdder(OTENQFuelGeneratorUniversal.class).atLeast(tectech.thing.metaTileEntity.multi.base.TTMultiblockBase.HatchElement.DynamoMulti.or(gregtech.api.enums.HatchElement.Dynamo))
+                    buildHatchAdder(OTENQFuelGeneratorUniversal.class)
+                        .atLeast(
+                            tectech.thing.metaTileEntity.multi.base.TTMultiblockBase.HatchElement.DynamoMulti
+                                .or(gregtech.api.enums.HatchElement.Dynamo))
                         .adder(OTENQFuelGeneratorUniversal::addToMachineList)
                         .dot(4)
                         .casingIndex(((BlockCasings8) sBlockCasings8).getTextureIndex(10))
@@ -524,7 +531,7 @@ public class OTENQFuelGeneratorUniversal extends TTMachinelogic123
 
     @Override
     public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
-                                              ItemStack aTool) {
+        ItemStack aTool) {
         if (pipeTier == 1 && !isWirelessMode) { // 仅 T2 能开
             isWirelessMode = true;
         } else {
@@ -649,14 +656,14 @@ public class OTENQFuelGeneratorUniversal extends TTMachinelogic123
 
     @Override
     public ITexture[] getTexture(final IGregTechTileEntity baseMetaTileEntity, final ForgeDirection sideDirection,
-                                 final ForgeDirection facing, final int aColorIndex, final boolean active, final boolean aRedstone) {
+        final ForgeDirection facing, final int aColorIndex, final boolean active, final boolean aRedstone) {
 
         if (sideDirection == facing) {
             if (active) return new ITexture[] {
                 getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings8, 10)), TextureFactory.builder()
-                .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_ACTIVE)
-                .extFacing()
-                .build(),
+                    .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_ACTIVE)
+                    .extFacing()
+                    .build(),
                 TextureFactory.builder()
                     .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_ACTIVE_GLOW)
                     .extFacing()
