@@ -631,18 +631,19 @@ public class OTELargeBin extends OTHMultiMachineBase<OTELargeBin> implements ICo
             } else {
                 mode = 0;
             }
-            switch (mode){
+            switch (mode) {
                 case 0 -> aPlayer.addChatMessage(new ChatComponentTranslation("垃圾桶模式"));
                 case 1 -> aPlayer.addChatMessage(new ChatComponentTranslation("回收机模式"));
                 case 2 -> aPlayer.addChatMessage(new ChatComponentTranslation("AE奇点制造机模式"));
                 case 3 -> aPlayer.addChatMessage(new ChatComponentTranslation("中子态素压缩机模式"));
             }
             /*
-            GTUtility.sendChatToPlayer(
-                aPlayer,
-                StatCollector.translateToLocal(
-                    mode == 0 ? "垃圾桶模式"
-                        : mode == 1 ? "回收机模式" : mode == 2 ? "AE奇点制造机模式" : mode == 3 ? "中子态素压缩机模式" : "Null"));*/
+             * GTUtility.sendChatToPlayer(
+             * aPlayer,
+             * StatCollector.translateToLocal(
+             * mode == 0 ? "垃圾桶模式"
+             * : mode == 1 ? "回收机模式" : mode == 2 ? "AE奇点制造机模式" : mode == 3 ? "中子态素压缩机模式" : "Null"));
+             */
         }
     }
 

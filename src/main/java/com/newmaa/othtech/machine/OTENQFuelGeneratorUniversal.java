@@ -549,7 +549,7 @@ public class OTENQFuelGeneratorUniversal extends TTMultiMachineBaseEM
             aPlayer.addChatMessage(new ChatComponentTranslation("无线模式关闭"));
         }
         /*
-        GTUtility.sendChatToPlayer(aPlayer, translateToLocal(isWirelessMode ? "无线模式启动" : "无线模式关闭"));
+         * GTUtility.sendChatToPlayer(aPlayer, translateToLocal(isWirelessMode ? "无线模式启动" : "无线模式关闭"));
          */
     }
 
