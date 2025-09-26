@@ -21,8 +21,8 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -138,9 +138,15 @@ public class OTEMegaNQFuelFactory extends TTMultiMachineBaseEM implements IConst
             } else {
                 mode = 0;
             }
-            GTUtility.sendChatToPlayer(
-                aPlayer,
-                StatCollector.translateToLocal(mode == 1 ? "压缩硅岩燃料精炼厂模式" : mode == 0 ? "硅岩燃料精炼厂模式" : "Null"));
+            switch (mode) {
+                case 0 -> aPlayer.addChatMessage(new ChatComponentTranslation("硅岩燃料精炼厂模式"));
+                case 1 -> aPlayer.addChatMessage(new ChatComponentTranslation("压缩硅岩燃料精炼厂模式"));
+            }
+            /*
+             * GTUtility.sendChatToPlayer(
+             * aPlayer,
+             * StatCollector.translateToLocal(mode == 1 ? "压缩硅岩燃料精炼厂模式" : mode == 0 ? "硅岩燃料精炼厂模式" : "Null"));
+             */
         }
     }
 

@@ -13,8 +13,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import org.jetbrains.annotations.NotNull;
@@ -37,7 +37,6 @@ import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GTRecipe;
-import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.common.blocks.BlockCasings2;
 
@@ -212,7 +211,11 @@ public class OTEEIO extends OTHMultiMachineBase<OTEEIO> {
         } else {
             mode = false;
         }
-        GTUtility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal(mode ? "刷怪笼绑定模式启动" : "刷怪笼绑定模式关闭"));
+        if (mode) {
+            aPlayer.addChatMessage(new ChatComponentTranslation("刷怪笼绑定模式启动"));
+        } else {
+            aPlayer.addChatMessage(new ChatComponentTranslation("刷怪笼绑定模式关闭"));
+        }
     }
 
     private static final String STRUCTURE_PIECE_MAIN = "main";

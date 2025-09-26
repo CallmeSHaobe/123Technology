@@ -18,8 +18,8 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -180,9 +180,10 @@ public class OTELaoBaChemicalReactor extends OTHMultiMachineBase<OTELaoBaChemica
             } else {
                 mode = 0;
             }
-            GTUtility.sendChatToPlayer(
-                aPlayer,
-                StatCollector.translateToLocal(mode == 1 ? "大型化学反应釜模式" : mode == 0 ? "化工厂模式" : "Null"));
+            switch (mode) {
+                case 0 -> aPlayer.addChatMessage(new ChatComponentTranslation("化工厂模式"));
+                case 1 -> aPlayer.addChatMessage(new ChatComponentTranslation("大型化学反应釜模式"));
+            }
         }
     }
 
