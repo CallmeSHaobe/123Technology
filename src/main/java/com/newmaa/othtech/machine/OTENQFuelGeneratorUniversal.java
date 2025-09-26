@@ -25,6 +25,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -542,7 +543,14 @@ public class OTENQFuelGeneratorUniversal extends TTMultiMachineBaseEM
         } else {
             isWirelessMode = false;
         }
+        if (isWirelessMode) {
+            aPlayer.addChatMessage(new ChatComponentTranslation("无线模式启动"));
+        } else {
+            aPlayer.addChatMessage(new ChatComponentTranslation("无线模式关闭"));
+        }
+        /*
         GTUtility.sendChatToPlayer(aPlayer, translateToLocal(isWirelessMode ? "无线模式启动" : "无线模式关闭"));
+         */
     }
 
     private static IStructureDefinition<OTENQFuelGeneratorUniversal> STRUCTURE_DEFINITION = null;

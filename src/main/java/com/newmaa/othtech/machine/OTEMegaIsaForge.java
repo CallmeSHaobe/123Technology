@@ -16,6 +16,7 @@ import java.util.Collection;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -159,9 +160,14 @@ public class OTEMegaIsaForge extends OTHMultiMachineBase<OTEMegaIsaForge> {
             } else {
                 mode = 0;
             }
+            switch (mode){
+                case 0 -> aPlayer.addChatMessage(new ChatComponentTranslation("艾萨锻炉模式"));
+                case 1 -> aPlayer.addChatMessage(new ChatComponentTranslation("太空组装模式"));
+            }
+            /*
             GTUtility.sendChatToPlayer(
                 aPlayer,
-                StatCollector.translateToLocal(mode == 1 ? "太空组装模式" : mode == 0 ? "艾萨锻炉模式" : "Null"));
+                StatCollector.translateToLocal(mode == 1 ? "太空组装模式" : mode == 0 ? "艾萨锻炉模式" : "Null"));*/
         }
     }
 

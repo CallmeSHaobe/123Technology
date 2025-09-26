@@ -27,6 +27,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -281,6 +282,14 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
         } else {
             mInternalMode = 0;
         }
+        switch (mInternalMode){
+            case 0 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.m9in1.mode.0"));
+            case 1 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.m9in1.mode.1"));
+            case 2 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.m9in1.mode.2"));
+            case 3 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.m9in1.mode.3"));
+            case 4 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.m9in1.mode.4"));
+        }
+        /*
         GTUtility.sendChatToPlayer(
             aPlayer,
             StatCollector.translateToLocal(
@@ -289,6 +298,7 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
                         : mInternalMode == 2 ? translateToLocal("ote.tm.m9in1.mode.2")
                             : mInternalMode == 3 ? translateToLocal("ote.tm.m9in1.mode.3")
                                 : mInternalMode == 4 ? translateToLocal("ote.tm.m9in1.mode.4") : "Null"));
+        */
     }
 
     @Override

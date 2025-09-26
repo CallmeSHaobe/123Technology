@@ -25,6 +25,7 @@ import javax.annotation.Nullable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -351,12 +352,20 @@ public class OTEMiniSteamNineInOne extends MTESteamMultiBase<OTEMiniSteamNineInO
         } else {
             mInternalMode = 0;
         }
+        switch (mInternalMode){
+            case 0 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.s9in1.mode.0"));
+            case 1 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.s9in1.mode.1"));
+            case 2 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.s9in1.mode.2"));
+        }
+        /*
         GTUtility.sendChatToPlayer(
             aPlayer,
             StatCollector.translateToLocal(
                 mInternalMode == 0 ? translateToLocal("ote.tm.s9in1.mode.0")
                     : mInternalMode == 1 ? translateToLocal("ote.tm.s9in1.mode.1")
                         : mInternalMode == 2 ? translateToLocal("ote.tm.s9in1.mode.2") : "null"));
+
+         */
     }
 
     @Override
