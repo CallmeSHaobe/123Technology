@@ -156,6 +156,8 @@ public class MachineLoader {
         OTHItemList.SteamNeinInOne
             .set(new OTEMiniSteamNineInOne(IDs + 57, "SteamNineInOne", translateToLocal("ote.tn.s9in1")));
         OTHItemList.Beeyonds.set(new OTEBeeyonds(IDs + 58, "IndustrialBeeHouse", translateToLocal("ote.tn.bee")));
+        OTHItemList.OTEBBPlasmaForge
+            .set(new OTEBBPlasmaForge(IDs + 59, "OTEBBPlasmaForge", translateToLocal("ote.tn.bbpf")));
         // TODO FUTURE
 
     }

@@ -5,13 +5,7 @@ import static com.newmaa.othtech.common.recipemap.Recipemaps.RCY;
 import static com.newmaa.othtech.recipe.RecipesComponentAssemblyLineRecipes.getNanites;
 import static com.newmaa.othtech.utils.Utils.setStackSize;
 import static goodgenerator.api.recipe.GoodGeneratorRecipeMaps.preciseAssemblerRecipes;
-import static gregtech.api.enums.Mods.AppliedEnergistics2;
-import static gregtech.api.enums.Mods.DraconicEvolution;
-import static gregtech.api.enums.Mods.GTPlusPlus;
-import static gregtech.api.enums.Mods.GoodGenerator;
-import static gregtech.api.enums.Mods.GregTech;
-import static gregtech.api.enums.Mods.IndustrialCraft2;
-import static gregtech.api.enums.Mods.NewHorizonsCoreMod;
+import static gregtech.api.enums.Mods.*;
 import static gregtech.api.enums.TierEU.RECIPE_EV;
 import static gregtech.api.enums.TierEU.RECIPE_HV;
 import static gregtech.api.enums.TierEU.RECIPE_IV;
@@ -1080,6 +1074,35 @@ public class RecipesMain implements IRecipePool {
             .fluidInputs(Materials.Iron.getMolten(144000))
             .itemOutputs(OTHItemList.ISAHYP.get(1))
             .eut(RECIPE_UHV)
+            .duration(600 * 20)
+            .addTo(AssemblyLine);
+        // BBPF
+        GTValues.RA.stdBuilder()
+            .metadata(RESEARCH_ITEM, OTHItemList.Mega_QFT.get(1))
+            .metadata(SCANNING, new Scanning(HOURS / 2, RECIPE_MV))
+            .itemInputs(
+                GTOreDictUnificator.get(OrePrefixes.block, MaterialsUEVplus.SpaceTime, 64),
+                ItemList.Machine_Multi_PlasmaForge.get(64),
+                ItemList.Electric_Motor_UMV.get(32),
+                ItemList.Transdimensional_Alignment_Matrix.get(4),
+                ItemList.neutroniumHeatCapacitor.get(1),
+                ItemList.neutroniumHeatCapacitor.get(1),
+                ItemList.neutroniumHeatCapacitor.get(1),
+                ItemList.neutroniumHeatCapacitor.get(1),
+                ItemList.neutroniumHeatCapacitor.get(1),
+                ItemList.neutroniumHeatCapacitor.get(1),
+                ItemList.neutroniumHeatCapacitor.get(1),
+                ItemList.neutroniumHeatCapacitor.get(1),
+                OTHItemList.UIVB.get(4),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Cosmic, 64),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Cosmic, 64),
+                ItemList.Field_Generator_UMV.get(32))
+            .fluidInputs(
+                MaterialsUEVplus.DimensionallyShiftedSuperfluid.getFluid(1231230),
+                MaterialsUEVplus.SpaceTime.getFluid(114514),
+                MaterialsUEVplus.Creon.getFluid(144 * 1024))
+            .itemOutputs(OTHItemList.OTEBBPlasmaForge.get(1))
+            .eut(RECIPE_UXV)
             .duration(600 * 20)
             .addTo(AssemblyLine);
         // MINI NUKE

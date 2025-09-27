@@ -413,6 +413,13 @@ ote.tm.nfg.14=§e警告 : 如果强行使用有线模式烧高级硅岩燃料, �
 ote.tm.nfg.15=§c支持TecTech多安动力仓, 激光仓, 但尽量请使用1,073,741,824A激光仓直连电容库
 ote.tm.nfg.16=发电坤.
 
+#BBPF
+ote.bbpf.0=超维度憋憋锻炉
+ote.bbpf.1=老登梦寐以求的§l§e憋憋牌§r锻炉
+ote.bbpf.2=无催化剂减免,无持续运行奖励
+ote.bbpf.3=妈妈再也不用怕有催化剂残留啦
+ote.bbpf.4=放入星阵以开启无损超频
+
 #SINOPEC
 ote.tm.sinopec.0=§q§l重工业计划 - 中国石化集成工厂
 ote.tm.sinopec.1=§l§a黑金的最终流处...
@@ -520,3 +527,4 @@ ote.tn.ft=异星渔场
 ote.tn.pump=太空钻机模块MK-123
 ote.tn.s9in1=小型蒸汽加工厂
 ote.tn.bee=Beeyonds之家
+ote.tn.bbpf=超维度憋憋锻炉
