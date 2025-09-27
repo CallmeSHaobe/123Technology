@@ -23,6 +23,8 @@ import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTUtility;
+import gtPlusPlus.core.material.MaterialsElements;
+import gtnhlanth.common.register.WerkstoffMaterialPool;
 import tectech.thing.CustomItemList;
 import tectech.thing.item.ItemAstralArrayFabricator;
 
@@ -34,7 +36,6 @@ public class RecipesCircuit implements IRecipePool {
 
     @Override
     public void loadRecipes() {
-        Fluid dtsc = FluidRegistry.getFluid("exciteddtsc");
         Fluid i140 = FluidRegistry.getFluid("molten.indalloy140");
         Fluid bio = FluidRegistry.getFluid("molten.mutatedlivingsolder");
 
@@ -50,7 +51,7 @@ public class RecipesCircuit implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.plateDense, MaterialsUEVplus.SpaceTime, 16),
                 GTOreDictUnificator.get(OrePrefixes.nanite, MaterialsUEVplus.TranscendentMetal, 16),
                 CustomItemList.SpacetimeCompressionFieldGeneratorTier0.get(2))
-            .fluidInputs(new FluidStack(dtsc, 2000))
+            .fluidInputs(MaterialsUEVplus.ExcitedDTSC.getFluid(2000))
             .duration(40 * 20)
             .eut(eut)
             .addTo(MQFT);
@@ -61,7 +62,7 @@ public class RecipesCircuit implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Infinity, 16),
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UMV, 4),
                 CustomItemList.StabilisationFieldGeneratorTier0.get(2))
-            .fluidInputs(new FluidStack(dtsc, 2000))
+            .fluidInputs(MaterialsUEVplus.ExcitedDTSC.getFluid(2000))
             .duration(40 * 20)
             .eut(eut)
             .addTo(MQFT);
@@ -75,7 +76,7 @@ public class RecipesCircuit implements IRecipePool {
                 CustomItemList.SpacetimeCompressionFieldGeneratorTier6.get(4),
                 ItemList.Field_Generator_UXV.get(1),
                 ItemList.Sensor_UXV.get(1))
-            .fluidInputs(new FluidStack(dtsc, 4000))
+            .fluidInputs(MaterialsUEVplus.ExcitedDTSC.getFluid(4000))
             .duration(80 * 20)
             .eut(eut)
             .addTo(MQFT);
@@ -88,7 +89,7 @@ public class RecipesCircuit implements IRecipePool {
                 OTHItemList.beeISAM.get(64),
                 OTHItemList.leCasimirM.get(16),
                 getAstralArray(1))
-            .fluidInputs(new FluidStack(dtsc, 4000))
+            .fluidInputs(MaterialsUEVplus.ExcitedDTSC.getFluid(4000))
             .duration(80 * 20)
             .eut(eut)
             .addTo(MQFT);
@@ -102,7 +103,7 @@ public class RecipesCircuit implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.wireGt01, Materials.SuperconductorUMV, 64),
                 GTOreDictUnificator.get(OrePrefixes.wireGt01, Materials.SuperconductorUMV, 64),
                 ItemList.Field_Generator_UMV.get(1))
-            .fluidInputs(new FluidStack(dtsc, 4000))
+            .fluidInputs(MaterialsUEVplus.ExcitedDTSC.getFluid(4000))
             .duration(80 * 20)
             .eut(eut)
             .addTo(MQFT);
@@ -115,7 +116,7 @@ public class RecipesCircuit implements IRecipePool {
                 CustomItemList.TimeAccelerationFieldGeneratorTier5.get(4),
                 ItemList.Field_Generator_UXV.get(1),
                 ItemList.Emitter_UXV.get(2))
-            .fluidInputs(new FluidStack(dtsc, 4000))
+            .fluidInputs(MaterialsUEVplus.ExcitedDTSC.getFluid(4000))
             .duration(80 * 20)
             .eut(eut)
             .addTo(MQFT);
@@ -127,7 +128,7 @@ public class RecipesCircuit implements IRecipePool {
                 OTHItemList.beeISAM.get(16),
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UIV, 32),
                 GTOreDictUnificator.get(OrePrefixes.nanite, MaterialsUEVplus.Eternity, 16))
-            .fluidInputs(new FluidStack(dtsc, 256 * 144), BWLiquids.Stars.getFluidOrGas(16 * 144))
+            .fluidInputs(MaterialsUEVplus.ExcitedDTSC.getFluid(4000), BWLiquids.Stars.getFluidOrGas(16 * 144))
             .duration(256 * 20)
             .eut(eut)
             .addTo(ISA);
@@ -146,7 +147,7 @@ public class RecipesCircuit implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.foil, MaterialsUEVplus.MagMatter, 32),
                 GTOreDictUnificator.get(OrePrefixes.stick, MaterialsUEVplus.MagMatter, 4),
                 CustomItemList.StabilisationFieldGeneratorTier5.get(2))
-            .fluidInputs(new FluidStack(dtsc, 256 * 144), BWLiquids.Stars.getFluidOrGas(12 * 144))
+            .fluidInputs(MaterialsUEVplus.ExcitedDTSC.getFluid(256 * 144), BWLiquids.Stars.getFluidOrGas(12 * 144))
             .duration(256 * 20)
             .eut(eut)
             .addTo(ISA);
@@ -159,14 +160,12 @@ public class RecipesCircuit implements IRecipePool {
                 GTOreDictUnificator
                     .get(OrePrefixes.wireFine, MaterialsUEVplus.MagnetohydrodynamicallyConstrainedStarMatter, 64))
             .fluidInputs(
-                new FluidStack(dtsc, 64 * 144),
+                MaterialsUEVplus.ExcitedDTSC.getFluid(64 * 144),
                 BWLiquids.Stars.getFluidOrGas(8 * 144),
-                new FluidStack(FluidRegistry.getFluidID("molten.magmatter"), 64 * 144),
-                new FluidStack(
-                    FluidRegistry.getFluidID("molten.magnetohydrodynamicallyconstrainedstarmatter"),
-                    64 * 144),
-                new FluidStack(FluidRegistry.getFluidID("molten.universium"), 64 * 144),
-                new FluidStack(FluidRegistry.getFluidID("molten.spacetime"), 64 * 144))
+                MaterialsUEVplus.MagMatter.getMolten(64 * 144),
+                MaterialsUEVplus.MagnetohydrodynamicallyConstrainedStarMatter.getMolten(64 * 144),
+                MaterialsUEVplus.Universium.getMolten(64 * 144),
+                MaterialsUEVplus.SpaceTime.getMolten(64 * 144))
             .duration(128 * 20)
             .eut(eut)
             .addTo(ISA);
@@ -174,11 +173,11 @@ public class RecipesCircuit implements IRecipePool {
         GTValues.RA.stdBuilder()
             .itemOutputs(OTHItemList.energyHatchSpacetimeM.get(4))
             .itemInputs(
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 4, 32145),
+                ItemList.ZPM5.get(4),
                 ItemList.Wireless_Hatch_Energy_UMV.get(16),
                 ItemList.Wireless_Hatch_Energy_UMV.get(16),
                 ItemList.Emitter_UMV.get(16))
-            .fluidInputs(new FluidStack(dtsc, 16 * 144), BWLiquids.Stars.getFluidOrGas(4 * 144))
+            .fluidInputs(MaterialsUEVplus.ExcitedDTSC.getFluid(16 * 144), BWLiquids.Stars.getFluidOrGas(4 * 144))
             .duration(512 * 20)
             .eut(eut)
             .addTo(ISA);
@@ -271,12 +270,11 @@ public class RecipesCircuit implements IRecipePool {
                 ItemList.Field_Generator_UMV.get(0),
                 GTUtility.getIntegratedCircuit(1),
                 ItemList.Circuit_Silicon_Wafer7.get(1),
-                GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedgemExquisite", 4, 11499))
+                WerkstoffMaterialPool.CeriumDopedLutetiumAluminiumGarnet.get(OrePrefixes.gemExquisite, 4))
             .fluidInputs(
-                new FluidStack(FluidRegistry.getFluidID("ic2uumatter"), 1600),
-                new FluidStack(FluidRegistry.getFluidID("molten.hypogen"), 36),
-                new FluidStack(FluidRegistry.getFluidID("biohmediumsterilized"), 3200))
-
+                Materials.UUMatter.getFluid(1600),
+                MaterialsElements.STANDALONE.HYPOGEN.getFluidStack(2000),
+                Materials.BioMediumSterilized.getFluid(1600))
             .duration(200 * 20)
             .requiresCleanRoom()
             .requiresLowGravity()
