@@ -1,7 +1,7 @@
 
 elytraModpackVersion {
     // 在这配置的gtnh版本 用于自动拉取依赖版本
-    gtnhVersion = "2.8.0-beta-4"
+    gtnhVersion = "2.8.0"
     // 是否不缓存拉取的依赖清单文件
     manifestNoCache = false
     // 是否自动为输出的jar添加 `gtnhVersion` 后缀
@@ -22,7 +22,8 @@ dependencies {
     implementation(gtnhDev("Avaritia"))
     implementation(gtnhDev("Avaritiaddons"))
     implementation(gtnhDev("neiaddons"))
-    implementation(gtnhDev("Binnie"))
+    implementation('com.github.GTNewHorizons:Binnie:2.5.16:dev')
+//    implementation(gtnhDev("Binnie"))
     implementation(gtnhDev("BloodMagic"))
     implementation(gtnhDev("Botania"))
     implementation(gtnhDev("Draconic-Evolution"))
