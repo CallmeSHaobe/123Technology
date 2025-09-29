@@ -13,7 +13,7 @@ public class Config {
         Configuration configuration = new Configuration(configFile);
 
         greeting = configuration.getString("greeting", Configuration.CATEGORY_GENERAL, greeting, "How shall I greet?");
-        BOOM_SWITCH = configuration.getBoolean("OTHTechnology : 控制TT模版机器爆炸", "憋憋", BOOM_SWITCH, "憋憋");
+        is_TT_Boom = configuration.getBoolean("OTHTechnology : 控制TT模版机器爆炸", "憋憋", is_TT_Boom, "憋憋");
         NEIFrontend = configuration
             .getBoolean("OTHTechnology : 123机器配方池界面使用铱锇钐合金粉替换GT齿轮, true为是, false为替换成憋憋", "A", NEIFrontend, "A");
         is_MISA_IMBA_Recipes_Enabled = configuration.getBoolean(
@@ -30,7 +30,11 @@ public class Config {
             .getFloat("OTHTechnology : 恩情工厂配方产物倍率(float) , 倍率四舍五入", "不憋憋", 1.5f, 1.0f, 114514f, "不憋憋");
         tier_Antimonia = configuration.getInt("OTHTechnology : 锑星登陆需求等级(Tier)", "不憋憋", 4, 1, 10, "笑笑");
         tier_Ross123b = configuration.getInt("OTHTechnology : 锑罗斯登陆需求等级(Tier)", "不憋憋", 1, 1, 10, "笑笑");
-
+        is_Enqing_Song_Play = configuration.getBoolean(
+            "OTHTechnology : 开启将军工厂的开机音效, true为是, false为否",
+            "A",
+            is_Enqing_Song_Play,
+            "A");
         if (configuration.hasChanged()) {
             configuration.save();
         }
@@ -43,10 +47,11 @@ public class Config {
     public static float SpeedBonus_MultiplyPerVoltageTier_ISA_Forge = 0.5F;
     public static float SpeedMultiplier_ISA_Forge = 1F;
     public static float Piece_EnablePO_ISA = 1;
-    public static boolean BOOM_SWITCH = true;
+    public static boolean is_TT_Boom = true;
     public static float ENQING_MULTI = 1.5f;
     public static boolean is_MISA_IMBA_Recipes_Enabled = true;
     public static boolean is_EggMachine_Recipes_For_NHU = true;
     public static int tier_Antimonia = 4;
     public static int tier_Ross123b = 1;
+    public static boolean is_Enqing_Song_Play = true;
 }
