@@ -30,11 +30,8 @@ public class Config {
             .getFloat("OTHTechnology : 恩情工厂配方产物倍率(float) , 倍率四舍五入", "不憋憋", 1.5f, 1.0f, 114514f, "不憋憋");
         tier_Antimonia = configuration.getInt("OTHTechnology : 锑星登陆需求等级(Tier)", "不憋憋", 4, 1, 10, "笑笑");
         tier_Ross123b = configuration.getInt("OTHTechnology : 锑罗斯登陆需求等级(Tier)", "不憋憋", 1, 1, 10, "笑笑");
-        is_Enqing_Song_Play = configuration.getBoolean(
-            "OTHTechnology : 开启将军工厂的开机音效, true为是, false为否",
-            "A",
-            is_Enqing_Song_Play,
-            "A");
+        is_Enqing_Song_Play = configuration
+            .getBoolean("OTHTechnology : 开启将军工厂的开机音效, true为是, false为否", "A", is_Enqing_Song_Play, "A");
         if (configuration.hasChanged()) {
             configuration.save();
         }

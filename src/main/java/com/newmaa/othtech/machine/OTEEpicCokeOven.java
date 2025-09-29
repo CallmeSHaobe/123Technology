@@ -49,7 +49,6 @@ import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.common.blocks.BlockCasings2;
-import gtPlusPlus.core.block.ModBlocks;
 
 public class OTEEpicCokeOven extends OTHMultiMachineBase<OTEEpicCokeOven> {
 
@@ -214,7 +213,7 @@ public class OTEEpicCokeOven extends OTHMultiMachineBase<OTEEpicCokeOven> {
                         .casingIndex(((BlockCasings2) GregTechAPI.sBlockCasings2).getTextureIndex(0))
                         .buildAndChain(sBlockCasings2, 0))
                 .addElement('B', ofFrame(Materials.Steel))
-                .addElement('C', ofBlock(ModBlocks.blockCasingsMisc, 2))
+                .addElement('C', ofBlock(GregTechAPI.sBlockCasings3, 13))
                 .addElement(
                     'D',
                     ofBlock(Objects.requireNonNull(Block.getBlockFromName(TinkerConstruct.ID + ":GlassBlock")), 0))

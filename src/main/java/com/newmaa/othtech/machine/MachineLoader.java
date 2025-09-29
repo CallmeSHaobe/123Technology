@@ -3,7 +3,6 @@ package com.newmaa.othtech.machine;
 import static net.minecraft.util.StatCollector.translateToLocal;
 
 import com.newmaa.othtech.common.OTHItemList;
-import com.newmaa.othtech.machine.hatch.OTEHatchWirelessMulti;
 import com.newmaa.othtech.machine.hatch.OTEWTFHatch;
 
 import gregtech.api.enums.TierEU;
@@ -11,6 +10,7 @@ import tectech.thing.metaTileEntity.hatch.MTEHatchDynamoMulti;
 import tectech.thing.metaTileEntity.hatch.MTEHatchDynamoTunnel;
 import tectech.thing.metaTileEntity.hatch.MTEHatchEnergyMulti;
 import tectech.thing.metaTileEntity.hatch.MTEHatchEnergyTunnel;
+import tectech.thing.metaTileEntity.hatch.MTEHatchWirelessMulti;
 
 public class MachineLoader {
 
@@ -22,7 +22,7 @@ public class MachineLoader {
         OTHItemList.MegaIsaForge.set(new OTEMegaIsaForge(IDs + 1, "MegaISAForge", translateToLocal("ote.tn.mifo")));
 
         OTHItemList.inf_WirelessHatch.set(
-            new OTEHatchWirelessMulti(
+            new MTEHatchWirelessMulti(
                 IDs + 2,
                 "infWirelessEnergyHatch",
                 translateToLocal("ote.tn.inf"),
@@ -30,7 +30,7 @@ public class MachineLoader {
                 2147483647));
 
         OTHItemList.legendary_WirelessHatch.set(
-            new OTEHatchWirelessMulti(
+            new MTEHatchWirelessMulti(
                 IDs + 3,
                 "legendaryWirelessEnergyHatch",
                 translateToLocal("ote.tn.leg"),
@@ -38,7 +38,7 @@ public class MachineLoader {
                 (int) TierEU.UXV));
 
         OTHItemList.WirelessMAX
-            .set(new OTEHatchWirelessMulti(IDs + 4, "MAX1048576Hatch", translateToLocal("ote.tn.max"), 14, 1048576));
+            .set(new MTEHatchWirelessMulti(IDs + 4, "MAX1048576Hatch", translateToLocal("ote.tn.max"), 14, 1048576));
 
         OTHItemList.inf_infWirelessHatch
             .set(new OTEWTFHatch(IDs + 5, "longlongHatch", translateToLocal("ote.tn.long"), 14));
