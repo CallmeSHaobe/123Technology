@@ -30,6 +30,7 @@ import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import gregtech.api.GregTechAPI;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.SoundResource;
 import gregtech.api.enums.TAE;
@@ -42,7 +43,6 @@ import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
-import gtPlusPlus.core.block.ModBlocks;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 
@@ -247,7 +247,7 @@ public class OTEWoodenFusionReactor extends OTHMultiMachineBase<OTEWoodenFusionR
                         .buildAndChain(Blocks.stonebrick, 0))
                 .addElement('A', ofBlock(Blocks.glass, 0))
                 .addElement('G', ofFrame(Materials.Wood))
-                .addElement('B', ofBlock(ModBlocks.blockCasingsMisc, 2))
+                .addElement('B', ofBlock(GregTechAPI.sBlockCasings3, 13))
                 .build();
 
         }
