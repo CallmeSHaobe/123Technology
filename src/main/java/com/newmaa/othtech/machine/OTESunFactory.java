@@ -1,6 +1,7 @@
 package com.newmaa.othtech.machine;
 
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
+import static com.newmaa.othtech.Config.is_Enqing_Song_Play;
 import static com.newmaa.othtech.utils.Utils.metaItemEqual;
 import static gregtech.api.GregTechAPI.*;
 import static gregtech.api.enums.HatchElement.*;
@@ -2549,7 +2550,8 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
 
     @Override
     protected SoundResourceOTH getProcessStartSoundOTH() {
-        return SoundResourceOTH.ENQING;
+        if (is_Enqing_Song_Play) return SoundResourceOTH.ENQING;
+        return super.getProcessStartSoundOTH();
     }
 
     @Override

@@ -65,7 +65,7 @@ public abstract class TTMultiMachineBaseEM extends TTMultiblockBase implements I
         if (explodedThisTick) {
             return;
         }
-        if (Config.BOOM_SWITCH) {
+        if (Config.is_TT_Boom) {
             TecTech.proxy.broadcast(
                 "Multi Explode BOOM! " + getBaseMetaTileEntity().getXCoord()
                     + ' '
@@ -100,7 +100,7 @@ public abstract class TTMultiMachineBaseEM extends TTMultiblockBase implements I
 
     @Override
     public void doExplosion(long aExplosionPower) {
-        if (Config.BOOM_SWITCH) {
+        if (Config.is_TT_Boom) {
             explodeMultiblockOTH();
             super.doExplosion(aExplosionPower);
         }
