@@ -13,16 +13,21 @@ import static gregtech.api.enums.HatchElement.OutputHatch;
 import static gregtech.api.enums.ItemList.Circuit_Integrated;
 import static gregtech.api.enums.Textures.BlockIcons.MACHINE_BRONZE_SIDE;
 import static gregtech.api.util.GTStructureUtility.*;
+import static gregtech.api.util.GTUtility.filterValidMTEs;
+import static gregtech.api.util.GTUtility.validMTEList;
 import static net.minecraft.util.StatCollector.translateToLocal;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Stream;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatComponentTranslation;
@@ -41,10 +46,14 @@ import com.newmaa.othtech.utils.RecipeBuilder;
 import gregtech.api.GregTechAPI;
 import gregtech.api.enums.Materials;
 import gregtech.api.interfaces.ITexture;
+import gregtech.api.interfaces.metatileentity.IItemLockable;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.logic.ProcessingLogic;
 import gregtech.api.metatileentity.implementations.MTEHatch;
+import gregtech.api.metatileentity.implementations.MTEHatchOutput;
+import gregtech.api.metatileentity.implementations.MTEHatchOutputBus;
+import gregtech.api.metatileentity.implementations.MTEHatchVoidBus;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.recipe.check.CheckRecipeResult;
@@ -54,6 +63,7 @@ import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.common.blocks.BlockCasings1;
+import gregtech.common.tileentities.machines.MTEHatchOutputBusME;
 import gtPlusPlus.api.recipe.GTPPRecipeMaps;
 import gtPlusPlus.xmod.gregtech.api.metatileentity.implementations.base.MTESteamMultiBase;
 import gtPlusPlus.xmod.gregtech.common.blocks.textures.TexturesGtBlock;
@@ -103,6 +113,90 @@ public class OTEMiniSteamNineInOne extends MTESteamMultiBase<OTEMiniSteamNineInO
     }
 
     @Override
+    public boolean addOutput(ItemStack aStack) {
+        if (GTUtility.isStackInvalid(aStack)) return false;
+        aStack = GTUtility.copyOrNull(aStack);
+
+        final List<MTEHatchOutputBus> validBusses = filterValidMTEs(mOutputBusses);
+        if (dumpItem(validBusses, aStack, true, false)) return true;
+        if (dumpItem(validBusses, aStack, false, false)) return true;
+
+        boolean outputSuccess = true;
+        final List<MTEHatchOutput> filteredHatches = filterValidMTEs(mOutputHatches);
+        while (outputSuccess && aStack.stackSize > 0) {
+            outputSuccess = false;
+            ItemStack single = aStack.splitStack(1);
+            for (MTEHatchOutput tHatch : filteredHatches) {
+                if (!outputSuccess && tHatch.outputsItems()) {
+                    if (tHatch.getBaseMetaTileEntity()
+                        .addStackToSlot(1, single)) outputSuccess = true;
+                }
+            }
+        }
+        return outputSuccess;
+    }
+
+    public ArrayList<ItemStack> getStoredOutputs() {
+        ArrayList<ItemStack> rList = new ArrayList<>();
+        for (MTEHatchOutputBus tHatch : validMTEList(mOutputBusses)) {
+            IGregTechTileEntity baseMetaTileEntity = tHatch.getBaseMetaTileEntity();
+            for (int i = baseMetaTileEntity.getSizeInventory() - 1; i >= 0; i--) {
+                rList.add(baseMetaTileEntity.getStackInSlot(i));
+            }
+        }
+        return rList;
+    }
+
+    @Override
+    public List<ItemStack> getItemOutputSlots(ItemStack[] toOutput) {
+        List<ItemStack> ret = new ArrayList<>();
+        for (final MTEHatch tBus : validMTEList(mOutputBusses)) {
+            if (!(tBus instanceof MTEHatchOutputBusME meBus)) {
+                final IInventory tBusInv = tBus.getBaseMetaTileEntity();
+                for (int i = 0; i < tBusInv.getSizeInventory(); i++) {
+                    final ItemStack stackInSlot = tBus.getStackInSlot(i);
+
+                    if (stackInSlot == null && tBus instanceof IItemLockable lockable && lockable.isLocked()) {
+                        // getItemOutputSlots is only used to calculate free room for the purposes of parallels and
+                        // void protection. We can use a fake item stack here without creating weirdness in the output
+                        // bus' actual inventory.
+                        assert lockable.getLockedItem() != null;
+                        ItemStack fakeItemStack = lockable.getLockedItem()
+                            .copy();
+                        fakeItemStack.stackSize = 0;
+                        ret.add(fakeItemStack);
+                    } else {
+                        ret.add(stackInSlot);
+                    }
+                }
+            } else {
+                if (meBus.isLocked() && meBus.canAcceptItem()) {
+                    for (ItemStack stack : meBus.getLockedItems()) {
+                        ItemStack fakeItemStack = stack.copy();
+                        fakeItemStack.stackSize = 65;
+                        ret.add(fakeItemStack);
+                    }
+                }
+            }
+        }
+        return ret;
+    }
+
+    @Override
+    public List<ItemStack> getVoidOutputSlots() {
+        List<ItemStack> ret = new ArrayList<>();
+        for (final MTEHatch tBus : validMTEList(mOutputBusses)) {
+            if (tBus instanceof MTEHatchVoidBus vBus && vBus.isLocked()) {
+                for (ItemStack lockedItem : vBus.getLockedItems()) {
+                    if (lockedItem == null) continue;
+                    ret.add(lockedItem.copy());
+                }
+            }
+        }
+        return ret;
+    }
+
+    @Override
     public int getMaxParallelRecipes() {
         return 16;
     }
@@ -147,134 +241,6 @@ public class OTEMiniSteamNineInOne extends MTESteamMultiBase<OTEMiniSteamNineInO
             GTPPRecipeMaps.mixerNonCellRecipes,
             GTPPRecipeMaps.centrifugeNonCellRecipes);
     }
-    // From MTEMultiFurnace.java FAILED
-    /*
-     * @Override
-     * @NotNull
-     * public CheckRecipeResult checkProcessing() {
-     * if (this.IS_FURNACE_MODE) {
-     * List <ItemStack>tInput = getAllStoredInputs();
-     * long availableEUt = GTUtility.roundUpVoltage(getMaxInputVoltage());
-     * for (ItemStack i : tInput) {
-     * if (availableEUt < RECIPE_EUT) {
-     * return CheckRecipeResultRegistry.insufficientPower(RECIPE_EUT);
-     * }
-     * if (tInput.isEmpty()) {
-     * return CheckRecipeResultRegistry.NO_RECIPE;
-     * }
-     * }
-     * OverclockCalculator calculator = new OverclockCalculator().setEUt(availableEUt)
-     * .setRecipeEUt(RECIPE_EUT)
-     * .setDuration(128)
-     * .setParallel(16);
-     * int currentParallel = (int) Math.min(getMaxParallelRecipes(), availableEUt / RECIPE_EUT);
-     * int itemParallel = 0;
-     * for (ItemStack item : tInput) {
-     * ItemStack smeltedOutput = GTModHandler.getSmeltingOutput(item, false, null);
-     * if (smeltedOutput != null) {
-     * int parallelsLeft = currentParallel - itemParallel;
-     * if (parallelsLeft <= 0) break;
-     * itemParallel += Math.min(item.stackSize, parallelsLeft);
-     * }
-     * }
-     * currentParallel = itemParallel;
-     * if (currentParallel <= 0) {
-     * return CheckRecipeResultRegistry.NO_RECIPE;
-     * }
-     * if (currentParallel <= 0) {
-     * return CheckRecipeResultRegistry.NO_RECIPE;
-     * }
-     * // Copy the getItemOutputSlots as to not mutate the output busses' slots.
-     * List<ItemStack> outputSlots = new ArrayList<>();
-     * for (ItemStack stack : getItemOutputSlots(null)) {
-     * if (stack != null) {
-     * outputSlots.add(stack.copy());
-     * } else {
-     * outputSlots.add(null);
-     * }
-     * }
-     * boolean hasMEOutputBus = false;
-     * for (final MTEHatch bus : validMTEList(mOutputBusses)) {
-     * if (bus instanceof MTEHatchOutputBusME meBus) {
-     * if (!meBus.isLocked() && meBus.canAcceptItem()) {
-     * hasMEOutputBus = true;
-     * break;
-     * }
-     * }
-     * }
-     * // Consume items and generate outputs
-     * ArrayList<ItemStack> smeltedOutputs = new ArrayList<>();
-     * int toSmelt = currentParallel;
-     * for (ItemStack item : tInput) {
-     * ItemStack smeltedOutput = GTModHandler.getSmeltingOutput(item, false, null);
-     * if (smeltedOutput != null) {
-     * int maxOutput = 0;
-     * int remainingToSmelt = Math.min(toSmelt, item.stackSize);
-     * if (hasMEOutputBus) {
-     * // Has an unlocked ME Output Bus and therefore can always fit the full stack
-     * maxOutput = remainingToSmelt;
-     * } else {
-     * // Calculate how many of this output can fit in the output slots
-     * int needed = remainingToSmelt;
-     * ItemStack outputType = smeltedOutput.copy();
-     * outputType.stackSize = 1;
-     * for (int i = 0; i < outputSlots.size(); i++) {
-     * ItemStack slot = outputSlots.get(i);
-     * if (slot == null) {
-     * // Empty slot: can fit a full stack
-     * int canFit = Math.min(needed, outputType.getMaxStackSize());
-     * ItemStack newStack = outputType.copy();
-     * newStack.stackSize = canFit;
-     * outputSlots.set(i, newStack); // Fill the slot
-     * maxOutput += canFit;
-     * needed -= canFit;
-     * } else if (slot.isItemEqual(outputType)) {
-     * int canFit;
-     * // Check for locked ME Output bus
-     * if (slot.stackSize == 65) {
-     * canFit = needed;
-     * } else {
-     * // Same type: can fit up to max stack size
-     * int space = outputType.getMaxStackSize() - slot.stackSize;
-     * canFit = Math.min(needed, space);
-     * }
-     * slot.stackSize += canFit;
-     * maxOutput += canFit;
-     * needed -= canFit;
-     * // No need to set, since slot is a reference
-     * }
-     * if (needed <= 0) break;
-     * }
-     * }
-     * // If void protection is enabled, only process what fits
-     * int toProcess = protectsExcessItem() ? maxOutput : remainingToSmelt;
-     * if (toProcess > 0) {
-     * ItemStack outputStack = smeltedOutput.copy();
-     * outputStack.stackSize *= toProcess;
-     * smeltedOutputs.add(outputStack);
-     * item.stackSize -= toProcess;
-     * toSmelt -= toProcess;
-     * if (toSmelt <= 0) break;
-     * }
-     * }
-     * }
-     * if (smeltedOutputs.isEmpty()) {
-     * return CheckRecipeResultRegistry.NO_RECIPE;
-     * }
-     * this.mOutputItems = smeltedOutputs.toArray(new ItemStack[0]);
-     * this.mEfficiency = 10000 - (getIdealStatus() - getRepairStatus()) * 1000;
-     * this.mEfficiencyIncrease = 10000;
-     * this.mMaxProgresstime = (int) (calculator.getDuration());
-     * this.lEUt = calculator.getConsumption();
-     * if (this.lEUt > 0) {
-     * this.lEUt = -this.lEUt;
-     * }
-     * this.updateSlots();
-     * return CheckRecipeResultRegistry.SUCCESSFUL;
-     * }
-     * return doCheckRecipe();
-     * }
-     */
 
     @Override
     protected ProcessingLogic createProcessingLogic() {
