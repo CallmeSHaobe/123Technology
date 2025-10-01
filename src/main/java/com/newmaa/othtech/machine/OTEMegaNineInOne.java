@@ -44,7 +44,6 @@ import com.newmaa.othtech.utils.modsEnum;
 import bartworks.API.BorosilicateGlass;
 import gregtech.api.enums.HeatingCoilLevel;
 import gregtech.api.enums.Materials;
-import gregtech.api.enums.Mods;
 import gregtech.api.enums.TAE;
 import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
@@ -57,7 +56,6 @@ import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.recipe.metadata.CompressionTierKey;
 import gregtech.api.render.TextureFactory;
-import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
@@ -381,10 +379,7 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
                 .addElement(
                     'F',
                     ofChain(
-                        modsEnum.ET_Futurum.isModLoaded()
-                            ? ofBlockAnyMeta(
-                                Block.getBlockFromItem(
-                                    (GTModHandler.getModItem(Mods.EtFuturumRequiem.ID, "beacon", 1)).getItem()))
+                        modsEnum.ET_Futurum.isModLoaded() ? ofBlockAnyMeta(Block.getBlockFromName("etfuturum:beacon"))
                             : ofBlockAnyMeta(Blocks.beacon)))
                 .build();
 
