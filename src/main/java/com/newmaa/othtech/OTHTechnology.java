@@ -46,13 +46,12 @@ import gtnhintergalactic.recipe.SpacePumpingRecipes;
         + "required-after:Avaritia;"
         + "required-after:eternalsingularity;"
         + "required-after:modularui;"
-        + "after:GalacticraftCore;"
+        + "required-after:GalacticraftCore;"
         + "required-after:bartworks;"
-        + "after:miscutils;"
-        + "after:dreamcraft;"
-        + "after:GalacticraftMars;"
+        + "required-after:miscutils;"
+        + "required-after:dreamcraft;"
+        + "required-after:GalacticraftMars;"
         + "required-after:gregtech;"
-        + "after:GalacticraftPlanets;"
         + "required-after:GalaxySpace;",
     acceptedMinecraftVersions = "1.7.10")
 public class OTHTechnology {
