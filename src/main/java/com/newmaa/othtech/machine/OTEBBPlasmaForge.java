@@ -90,7 +90,7 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
     }
 
     private int mHeatingCapacity = 0;
-    private int MLevel = 2;
+    private int MLevel = 1;
     private HeatingCoilLevel mCoilLevel;
     private UUID ownerUUID;
     private static IStructureDefinition<OTEBBPlasmaForge> STRUCTURE_DEFINITION = null;
