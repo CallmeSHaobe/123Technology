@@ -50,7 +50,6 @@ import gtnhintergalactic.recipe.SpacePumpingRecipes;
         + "required-after:bartworks;"
         + "required-after:miscutils;"
         + "required-after:dreamcraft;"
-        + "required-after:GalacticraftMars;"
         + "required-after:gregtech;"
         + "required-after:GalaxySpace;",
     acceptedMinecraftVersions = "1.7.10")
