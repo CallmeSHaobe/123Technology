@@ -16,7 +16,6 @@ dependencies {
     implementation(gtnhDev("Galaxy-Space-GTNH"))
     implementation(gtnhDev("SGCraft"))
     implementation(gtnhDev("twilightforest"))
-    implementation(gtnhDev("Angelica"))
     implementation(gtnhDev("AE2FluidCraft-Rework"))
     implementation(gtnhDev("ae2stuff"))
     implementation(gtnhDev("Avaritia"))
