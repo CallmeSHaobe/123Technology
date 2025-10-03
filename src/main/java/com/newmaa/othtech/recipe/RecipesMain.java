@@ -1097,7 +1097,10 @@ public class RecipesMain implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Bio, 64),
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Optical, 64),
                 GTOreDictUnificator.get(OrePrefixes.wireGt04, Materials.SuperconductorUEV, 64))
-            .fluidInputs(Materials.SuperCoolant.getFluid(123123),(MaterialsUEVplus.TranscendentMetal.getMolten(114514)),(Materials.Infinity.getMolten(144 * 1024)))
+            .fluidInputs(
+                Materials.SuperCoolant.getFluid(123123),
+                (MaterialsUEVplus.TranscendentMetal.getMolten(114514)),
+                (Materials.Infinity.getMolten(144 * 1024)))
             .itemOutputs(OTHItemList.OTEBBPlasmaForge.get(1))
             .eut(RECIPE_UEV)
             .duration(600 * 20)
