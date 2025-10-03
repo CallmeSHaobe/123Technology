@@ -16,12 +16,12 @@ public class AntimoniaFluids {
 
     public static void initialize() {
         FluidRegistry.registerFluid(
-            AquaRegia = (new Fluid("aquaregia")).setDensity(100)
+            AquaRegia = (new Fluid("aquaregiaoth")).setDensity(100)
                 .setViscosity(300));
-        AquaRegia = FluidRegistry.getFluid("aquaregia");
+        AquaRegia = FluidRegistry.getFluid("aquaregiaoth");
         GameRegistry.registerBlock(
             BlockAquaRegia = (new FluidAquaRegia(AquaRegia, Material.water)).setBlockName("AquaRegia"),
-            "aquaregia");
+            "aquaregiaoth");
 
     }
 }

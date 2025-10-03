@@ -28,7 +28,7 @@ public class RecipesAntimonia implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 16),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Bismuth, 4))
             .fluidOutputs(
-                FluidRegistry.getFluidStack("aquaregia", 400),
+                FluidRegistry.getFluidStack("aquaregiaoth", 400),
                 BWLiquids.HCl10.getFluidOrGas(10000),
                 BWLiquids.HCl100.getFluidOrGas(1000),
                 BWLiquids.HCl1000.getFluidOrGas(100),
@@ -48,7 +48,7 @@ public class RecipesAntimonia implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 16),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Bismuth, 4))
             .fluidOutputs(
-                FluidRegistry.getFluidStack("aquaregia", 400),
+                FluidRegistry.getFluidStack("aquaregiaoth", 400),
                 BWLiquids.HCl10.getFluidOrGas(10000),
                 BWLiquids.HCl100.getFluidOrGas(1000),
                 BWLiquids.HCl1000.getFluidOrGas(100),
