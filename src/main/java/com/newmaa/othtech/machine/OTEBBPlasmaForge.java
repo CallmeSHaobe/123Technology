@@ -23,6 +23,7 @@ import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
+import gregtech.common.misc.GTStructureChannels;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -492,8 +493,9 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
             .addInputHatch("AnyInputHatch", 1)
             .addOutputHatch("AnyOutputHatch", 1)
             .addEnergyHatch("AnyEnergyHatch", 1)
+            .addSubChannelUsage(GTStructureChannels.HEATING_COIL)
             .addSeparator()
-            .addInfo("§b§lAuthor:§kUnknown§r§lczqwq")
+            .addInfo("§b§lAuthor:§r§kunknown§r§lczqwq§r")
             .toolTipFinisher("§a123Technology——§l超维度§c憋憋牌§r§l锻炉");
         return tt;
     }
