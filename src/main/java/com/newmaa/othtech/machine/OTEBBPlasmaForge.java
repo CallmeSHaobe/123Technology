@@ -86,7 +86,7 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
         if (intprocess) {
             return Integer.MAX_VALUE;
         } else {
-            return 123 + mCoilLevel.getTier() * 1230;
+            return mCoilLevel == null ? 0 : 123 + mCoilLevel.getTier() * 1230;
         }
     }
 
