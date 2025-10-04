@@ -1077,36 +1077,34 @@ public class RecipesMain implements IRecipePool {
             .duration(600 * 20)
             .addTo(AssemblyLine);
         // BBPF
-        /*
-         * GTValues.RA.stdBuilder()
-         * .metadata(RESEARCH_ITEM, OTHItemList.Mega_QFT.get(1))
-         * .metadata(SCANNING, new Scanning(HOURS / 2, RECIPE_MV))
-         * .itemInputs(
-         * GTOreDictUnificator.get(OrePrefixes.block, MaterialsUEVplus.SpaceTime, 64),
-         * ItemList.Machine_Multi_PlasmaForge.get(64),
-         * ItemList.Electric_Motor_UMV.get(32),
-         * ItemList.Transdimensional_Alignment_Matrix.get(4),
-         * ItemList.neutroniumHeatCapacitor.get(1),
-         * ItemList.neutroniumHeatCapacitor.get(1),
-         * ItemList.neutroniumHeatCapacitor.get(1),
-         * ItemList.neutroniumHeatCapacitor.get(1),
-         * ItemList.neutroniumHeatCapacitor.get(1),
-         * ItemList.neutroniumHeatCapacitor.get(1),
-         * ItemList.neutroniumHeatCapacitor.get(1),
-         * ItemList.neutroniumHeatCapacitor.get(1),
-         * OTHItemList.UIVB.get(4),
-         * GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Cosmic, 64),
-         * GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Cosmic, 64),
-         * ItemList.Field_Generator_UMV.get(32))
-         * .fluidInputs(
-         * MaterialsUEVplus.DimensionallyShiftedSuperfluid.getFluid(1231230),
-         * MaterialsUEVplus.SpaceTime.getFluid(114514),
-         * MaterialsUEVplus.Creon.getFluid(144 * 1024))
-         * .itemOutputs(OTHItemList.OTEBBPlasmaForge.get(1))
-         * .eut(RECIPE_UXV)
-         * .duration(600 * 20)
-         * .addTo(AssemblyLine);
-         */
+        GTValues.RA.stdBuilder()
+            .metadata(RESEARCH_ITEM, OTHItemList.UEVA.get(1))
+            .metadata(SCANNING, new Scanning(HOURS / 2, RECIPE_MV))
+            .itemInputs(
+                GTOreDictUnificator.get(OrePrefixes.block, Materials.Infinity, 64),
+                ItemList.Machine_Multi_PlasmaForge.get(16),
+                ItemList.Electric_Motor_UEV.get(64),
+                ItemList.Electric_Piston_UEV.get(64),
+                ItemList.Electric_Pump_UEV.get(64),
+                ItemList.Electric_Piston_UEV.get(64),
+                ItemList.Robot_Arm_UEV.get(64),
+                ItemList.Field_Generator_UEV.get(16),
+                ItemList.Casing_Coil_Infinity.get(64),
+                ItemList.EnergisedTesseract.get(16),
+                OTHItemList.UEVA.get(4),
+                OTHItemList.UEVB.get(4),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Infinite, 64),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Bio, 64),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Optical, 64),
+                GTOreDictUnificator.get(OrePrefixes.wireGt04, Materials.SuperconductorUEV, 64))
+            .fluidInputs(
+                Materials.SuperCoolant.getFluid(123123),
+                (MaterialsUEVplus.TranscendentMetal.getMolten(114514)),
+                (Materials.Infinity.getMolten(144 * 1024)))
+            .itemOutputs(OTHItemList.OTEBBPlasmaForge.get(1))
+            .eut(RECIPE_UEV)
+            .duration(600 * 20)
+            .addTo(AssemblyLine);
         // MINI NUKE
         RecipeBuilder.builder()
             .itemOutputs(OTHItemList.AF.get(1))
