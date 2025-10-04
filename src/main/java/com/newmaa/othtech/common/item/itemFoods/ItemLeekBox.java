@@ -1,11 +1,14 @@
 package com.newmaa.othtech.common.item.itemFoods;
 
+import static net.minecraft.util.StatCollector.translateToLocal;
+
 import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
+import net.minecraft.util.EnumChatFormatting;
 
 import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
 
@@ -28,7 +31,7 @@ public class ItemLeekBox extends ItemFood {
     public void addInformation(final ItemStack itemStack, final EntityPlayer player, final List toolTip,
         final boolean advancedToolTips) {
 
-        toolTip.add("§a吃得饱饱的");
+        toolTip.add(EnumChatFormatting.GREEN + translateToLocal("tt.lb.0"));
 
     }
 }

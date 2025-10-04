@@ -22,7 +22,7 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
-import com.newmaa.othtech.machine.machineclass.TTMultiMachineBaseEM;
+import com.newmaa.othtech.machine.machineclass.OTHTTMultiMachineBaseEM;
 
 import gregtech.api.GregTechAPI;
 import gregtech.api.enums.Textures;
@@ -44,7 +44,7 @@ import tectech.thing.metaTileEntity.multi.base.IStatusFunction;
 import tectech.thing.metaTileEntity.multi.base.LedStatus;
 import tectech.thing.metaTileEntity.multi.base.Parameters;
 
-public class OTEHeatExchanger extends TTMultiMachineBaseEM implements ISurvivalConstructable, IConstructable {
+public class OTEHeatExchanger extends OTHTTMultiMachineBaseEM implements ISurvivalConstructable, IConstructable {
 
     public OTEHeatExchanger(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
@@ -57,7 +57,7 @@ public class OTEHeatExchanger extends TTMultiMachineBaseEM implements ISurvivalC
     Parameters.Group.ParameterIn time;
     private static final IStatusFunction<OTEHeatExchanger> timeSTATUES = (base, p) -> LedStatus
         .fromLimitsInclusiveOuterBoundary(p.get(), 1, 2, 1000, 114514);
-    private static final INameFunction<OTEHeatExchanger> timeName = (base, p) -> GCCoreUtil.translate("耗时");
+    private static final INameFunction<OTEHeatExchanger> timeName = (base, p) -> GCCoreUtil.translate("ote.tt.0");
 
     @Override
     protected void parametersInstantiation_EM() {
@@ -146,8 +146,8 @@ public class OTEHeatExchanger extends TTMultiMachineBaseEM implements ISurvivalC
     private final int verticalOffSet = 7;
     private final int depthOffSet = 0;
     private static IStructureDefinition<OTEHeatExchanger> STRUCTURE_DEFINITION = null;
-    private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
-        translateToLocal("1 - 输入输出总线, 输入输出仓, 能源仓 : 替换钨钢机械方块, 支持TecTech能源仓") };
+    private static final String[] description = new String[] {
+        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.exc.0") };
 
     @Override
     public String[] getStructureDescription(ItemStack stackSize) {

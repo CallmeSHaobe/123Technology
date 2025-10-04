@@ -36,8 +36,8 @@ import org.jetbrains.annotations.NotNull;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
-import com.newmaa.othtech.common.machinelogic.MachineLogic123;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
+import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
 import com.newmaa.othtech.utils.Utils;
 import com.newmaa.othtech.utils.modsEnum;
 
@@ -188,7 +188,7 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
 
     @Override
     protected ProcessingLogic createProcessingLogic() {
-        return new MachineLogic123() {
+        return new OTHProcessingLogic() {
 
             private ItemStack lastCircuit = null;
 
@@ -340,10 +340,10 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
     private final int verticalOffSet = 3;
     private final int depthOffSet = 40;
     private static IStructureDefinition<OTEMegaNineInOne> STRUCTURE_DEFINITION = null;
-    private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
-        translateToLocal("1 - 消声仓, 能源仓, 输入输出总线, 输入输出仓 : 替换多功能机械方块, 支持TecTech能源仓"),
-        EnumChatFormatting.LIGHT_PURPLE + translateToLocal("神说世间要有光, 便有了九合一."),
-        EnumChatFormatting.GOLD + translateToLocal("天无二日, 九合一便是我们心中唯一的太阳") };
+    private static final String[] description = new String[] {
+        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.mnio.0"),
+        EnumChatFormatting.LIGHT_PURPLE + translateToLocal("ote.cm.mnio.1"),
+        EnumChatFormatting.GOLD + translateToLocal("ote.cm.mnio.2") };
 
     @Override
     public String[] getStructureDescription(ItemStack stackSize) {

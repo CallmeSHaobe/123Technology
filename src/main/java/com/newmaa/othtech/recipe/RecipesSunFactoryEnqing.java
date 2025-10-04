@@ -1462,7 +1462,10 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tantalum, 1), 16),
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 11000), 4),
                 GTUtility.getIntegratedCircuit(20))
-            .itemOutputs(setStackSize(GTModHandler.getModItem("GalaxySpace", "item.DysonSwarmParts", 1, 3), 10 * a))
+            .itemOutputs(
+                setStackSize(
+                    GTModHandler.getModItem(ModIDs.G_T_N_H_INTERGALACTIC, "item.DysonSwarmParts", 1, 3),
+                    10 * a))
             .fluidInputs(Materials.Helium.getPlasma(80)
 
             )
@@ -1477,7 +1480,10 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tantalum, 1), 16),
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 11002), 4),
                 GTUtility.getIntegratedCircuit(20))
-            .itemOutputs(setStackSize(GTModHandler.getModItem("GalaxySpace", "item.DysonSwarmParts", 1, 3), 10 * a))
+            .itemOutputs(
+                setStackSize(
+                    GTModHandler.getModItem(ModIDs.G_T_N_H_INTERGALACTIC, "item.DysonSwarmParts", 1, 3),
+                    10 * a))
             .fluidInputs(Materials.Helium.getPlasma(80)
 
             )

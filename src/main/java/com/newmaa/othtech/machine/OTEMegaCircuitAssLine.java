@@ -35,8 +35,8 @@ import org.jetbrains.annotations.NotNull;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
-import com.newmaa.othtech.common.machinelogic.MachineLogic123;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
+import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
 
 import bartworks.API.BorosilicateGlass;
 import goodgenerator.loader.Loaders;
@@ -116,9 +116,6 @@ public class OTEMegaCircuitAssLine extends OTHMultiMachineBase<OTEMegaCircuitAss
         if (tileEntity != null) {
             tag.setBoolean("123Processing", $123);
         }
-        if (tileEntity != null) {
-            tag.setInteger("parallel", getMaxParallelRecipes());
-        }
     }
 
     @Override
@@ -127,16 +124,10 @@ public class OTEMegaCircuitAssLine extends OTHMultiMachineBase<OTEMegaCircuitAss
         super.getWailaBody(itemStack, currentTip, accessor, config);
         final NBTTagCompound tag = accessor.getNBTData();
         currentTip.add(
-            "123" + EnumChatFormatting.RESET
+            translateToLocal("otht.waila.123") + EnumChatFormatting.RESET
                 + ": "
                 + EnumChatFormatting.GOLD
                 + tag.getString("123Processing")
-                + EnumChatFormatting.RESET);
-        currentTip.add(
-            "目前并行" + EnumChatFormatting.RESET
-                + ": "
-                + EnumChatFormatting.GOLD
-                + tag.getString("parallel")
                 + EnumChatFormatting.RESET);
     }
 
@@ -166,7 +157,7 @@ public class OTEMegaCircuitAssLine extends OTHMultiMachineBase<OTEMegaCircuitAss
     @Override
     protected ProcessingLogic createProcessingLogic() {
 
-        return new MachineLogic123() {
+        return new OTHProcessingLogic() {
 
             @NotNull
             @Override
@@ -220,8 +211,8 @@ public class OTEMegaCircuitAssLine extends OTHMultiMachineBase<OTEMegaCircuitAss
     private final int verticalOffSet = 6;
     private final int depthOffSet = 3;
     private static IStructureDefinition<OTEMegaCircuitAssLine> STRUCTURE_DEFINITION = null;
-    private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
-        translateToLocal("1 - 输入输出总线, 输入输出仓, 能源仓 : 替换脱氧钢机械方块, 支持TecTech能源仓") };
+    private static final String[] description = new String[] {
+        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.mca.0") };
 
     @Override
     public String[] getStructureDescription(ItemStack stackSize) {
