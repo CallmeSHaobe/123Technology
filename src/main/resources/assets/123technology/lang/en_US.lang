@@ -175,7 +175,6 @@ death.attack.Acid=Though it may be unscientific, %1$s was still killed by Aqua R
 oth.tm.pollution=§cWarning: If powerfail occurs with the error "Cannot vent pollution," try placing multiple Muffler Hatches
 
 #9in1
-#oth.tm.mnio.0=§c§lLaodeng's Ultimate Creation - Multi-Machine (Mega Factory)
 oth.tm.mnio.1=§aFeatures fifteen modes. Use a screwdriver to switch mode categories, and programmed circuits 20, 21, 22 to switch sub-modes.
 oth.tm.mnio.2=§aMetal Mode: Compressor, Lathe, Electromagnetic Polarizer
 oth.tm.mnio.3=§aFluid Mode: Fermenter, Fluid Extractor, Extractor
