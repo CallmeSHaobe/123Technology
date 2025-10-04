@@ -412,10 +412,10 @@ public class OTEMiniSteamNineInOne extends MTESteamMultiBase<OTEMiniSteamNineInO
     private final int verticalOffSet = 1;
     private final int depthOffSet = 0;
     private static IStructureDefinition<OTEMiniSteamNineInOne> STRUCTURE_DEFINITION = null;
-    private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
-        translateToLocal("1 - 消声仓, 蒸汽输入仓, 输入输出总线, 输入输出仓 : 替换镀铜砖块"),
-        EnumChatFormatting.LIGHT_PURPLE + translateToLocal("这便是蒸汽时代了吗？."),
-        EnumChatFormatting.GOLD + translateToLocal("天无二日, 九合一便是我们心中唯一的太阳") };
+    private static final String[] description = new String[] {
+        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.s9in1.0"),
+        EnumChatFormatting.LIGHT_PURPLE + translateToLocal("ote.cm.s9in1.1"),
+        EnumChatFormatting.GOLD + translateToLocal("ote.cm.s9in1.2") };
 
     @Override
     public String[] getStructureDescription(ItemStack stackSize) {

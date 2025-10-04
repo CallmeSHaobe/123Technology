@@ -11,13 +11,13 @@ import gregtech.common.pollution.Pollution;
 import tectech.TecTech;
 import tectech.thing.metaTileEntity.multi.base.TTMultiblockBase;
 
-public abstract class TTMultiMachineBaseEM extends TTMultiblockBase implements ISecondaryDescribable {
+public abstract class OTHTTMultiMachineBaseEM extends TTMultiblockBase implements ISecondaryDescribable {
 
-    public TTMultiMachineBaseEM(int aID, String aName, String aNameRegional) {
+    public OTHTTMultiMachineBaseEM(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
     }
 
-    public TTMultiMachineBaseEM(String aName) {
+    public OTHTTMultiMachineBaseEM(String aName) {
         super(aName);
     }
 

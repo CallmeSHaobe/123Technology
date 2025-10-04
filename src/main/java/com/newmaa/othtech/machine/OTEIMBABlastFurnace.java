@@ -16,7 +16,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
-import com.newmaa.othtech.common.machinelogic.MachineLogic123;
+import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
 
 import gregtech.api.GregTechAPI;
 import gregtech.api.enums.HeatingCoilLevel;
@@ -37,8 +37,9 @@ public class OTEIMBABlastFurnace extends MTEElectricBlastFurnace {
 
     private static final String STRUCTURE_PIECE_MAIN = "main";
     private static final int CASING_INDEX = 11;
-    private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
-        EnumChatFormatting.GOLD + translateToLocal("太吊炸天了。") };
+    private static final String[] description = new String[] {
+        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":",
+        EnumChatFormatting.GOLD + translateToLocal("ote.cm.imba.0") };
 
     @Override
     public String[] getStructureDescription(ItemStack stackSize) {
@@ -104,7 +105,7 @@ public class OTEIMBABlastFurnace extends MTEElectricBlastFurnace {
 
     @Override
     protected ProcessingLogic createProcessingLogic() {
-        return new MachineLogic123() {
+        return new OTHProcessingLogic() {
 
             @Nonnull
             @Override

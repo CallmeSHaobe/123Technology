@@ -47,14 +47,14 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import kubatech.Tags;
 import kubatech.config.Config;
 
-public class MobHandlerLoaderOTH {
+public class OTHMobHandlerLoader {
 
     private static final Logger LOG = LogManager.getLogger(Tags.MODID + "[Mob Handler Loader]");
 
-    private static MobHandlerLoaderOTH instance = null;
+    private static OTHMobHandlerLoader instance = null;
 
     public static void init() {
-        instance = new MobHandlerLoaderOTH();
+        instance = new OTHMobHandlerLoader();
         MinecraftForge.EVENT_BUS.register(instance);
     }
 

@@ -18,7 +18,7 @@ import com.gtnewhorizon.structurelib.alignment.constructable.IConstructable;
 import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructable;
 import com.gtnewhorizon.structurelib.structure.IItemSource;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
-import com.newmaa.othtech.machine.machineclass.TTMultiMachineBaseEM;
+import com.newmaa.othtech.machine.machineclass.OTHTTMultiMachineBaseEM;
 
 import gregtech.api.enums.SoundResource;
 import gregtech.api.enums.Textures;
@@ -33,7 +33,8 @@ import tectech.thing.casing.TTCasingsContainer;
 import tectech.thing.metaTileEntity.multi.base.TTMultiblockBase;
 import tectech.thing.metaTileEntity.multi.base.render.TTRenderedExtendedFacingTexture;
 
-public class OTEMiniActiveTransformer extends TTMultiMachineBaseEM implements IConstructable, ISurvivalConstructable {
+public class OTEMiniActiveTransformer extends OTHTTMultiMachineBaseEM
+    implements IConstructable, ISurvivalConstructable {
 
     private boolean grace = false;
 
@@ -60,8 +61,10 @@ public class OTEMiniActiveTransformer extends TTMultiMachineBaseEM implements IC
     private int casingCount = 0;
 
     // region structure
-    private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
-        translateToLocal("1 - 能源仓, 动力仓或者激光仓 : 替换超能机械方块"), // 1 - Energy IO Hatches or High
+    private static final String[] description = new String[] {
+        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.mat.0"), // 1 - Energy IO
+                                                                                                        // Hatches or
+                                                                                                        // High
         // Power Casing
     };
     private static final IStructureDefinition<OTEMiniActiveTransformer> STRUCTURE_DEFINITION = IStructureDefinition

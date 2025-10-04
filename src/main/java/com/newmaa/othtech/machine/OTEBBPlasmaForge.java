@@ -46,8 +46,8 @@ import com.gtnewhorizons.modularui.api.screen.ModularWindow;
 import com.gtnewhorizons.modularui.api.screen.UIBuildContext;
 import com.gtnewhorizons.modularui.common.widget.ButtonWidget;
 import com.gtnewhorizons.modularui.common.widget.FakeSyncWidget;
-import com.newmaa.othtech.common.machinelogic.MachineLogic123;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
+import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
 import com.newmaa.othtech.utils.Utils;
 
 import cpw.mods.fml.relauncher.Side;
@@ -124,7 +124,7 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
         super.getWailaBody(itemStack, currentTip, accessor, config);
         final NBTTagCompound tag = accessor.getNBTData();
         currentTip.add(
-            "当前无线EU消耗" + EnumChatFormatting.RESET
+            translateToLocal("otht.waila.wirelesseu") + EnumChatFormatting.RESET
                 + ": "
                 + EnumChatFormatting.GOLD
                 + tag.getString("costingWirelessEU")
@@ -496,7 +496,7 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
             .addSubChannelUsage(GTStructureChannels.HEATING_COIL)
             .addSeparator()
             .addInfo("§b§lAuthor:§r§kunknown§r§lczqwq§r")
-            .toolTipFinisher("§a123Technology——§l超维度§c憋憋牌§r§l锻炉");
+            .toolTipFinisher("§a123Technology - BBPlasmaForge");
         return tt;
     }
 
@@ -530,7 +530,7 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
 
     @Override
     protected ProcessingLogic createProcessingLogic() {
-        return new MachineLogic123() {
+        return new OTHProcessingLogic() {
 
             @Override
             public ProcessingLogic setSpeedBonus(double speedModifier) {

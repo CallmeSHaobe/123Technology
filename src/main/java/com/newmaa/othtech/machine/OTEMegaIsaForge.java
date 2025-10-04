@@ -25,9 +25,9 @@ import org.jetbrains.annotations.NotNull;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
-import com.newmaa.othtech.common.machinelogic.MachineLogic123;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
+import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
 
 import bartworks.API.BorosilicateGlass;
 import gregtech.api.GregTechAPI;
@@ -127,7 +127,7 @@ public class OTEMegaIsaForge extends OTHMultiMachineBase<OTEMegaIsaForge> {
 
     @Override
     protected ProcessingLogic createProcessingLogic() {
-        return new MachineLogic123() {
+        return new OTHProcessingLogic() {
 
             @NotNull
             @Override
@@ -160,8 +160,8 @@ public class OTEMegaIsaForge extends OTHMultiMachineBase<OTEMegaIsaForge> {
                 mode = 0;
             }
             switch (mode) {
-                case 0 -> aPlayer.addChatMessage(new ChatComponentTranslation("艾萨锻炉模式"));
-                case 1 -> aPlayer.addChatMessage(new ChatComponentTranslation("太空组装模式"));
+                case 0 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.mifo.mode.0"));
+                case 1 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.mifo.mode.1"));
             }
             /*
              * GTUtility.sendChatToPlayer(
@@ -209,8 +209,8 @@ public class OTEMegaIsaForge extends OTHMultiMachineBase<OTEMegaIsaForge> {
     private final int verticalOffSet = 46;
     private final int depthOffSet = 19;
     private static IStructureDefinition<OTEMegaIsaForge> STRUCTURE_DEFINITION = null;
-    private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
-        translateToLocal("1 - 消声仓, 能源仓, 输入输出总线, 输入输出仓 : 替换终极分子机械方块, 支持TecTech能源仓") };
+    private static final String[] description = new String[] {
+        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.mifo.0") };
 
     @Override
     public String[] getStructureDescription(ItemStack stackSize) {

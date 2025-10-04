@@ -11,18 +11,20 @@ public class Config {
     public static void synchronizeConfiguration(File configFile) {
 
         Configuration configuration = new Configuration(configFile);
+        // TODO NEED ENGLISH TRANSLATION O.O
 
-        greeting = configuration.getString("greeting", Configuration.CATEGORY_GENERAL, greeting, "How shall I greet?");
+        // greeting = configuration.getString("greeting", Configuration.CATEGORY_GENERAL, greeting, "How shall I
+        // greet?");
         is_TT_Boom = configuration.getBoolean("OTHTechnology : 控制TT模版机器爆炸", "憋憋", is_TT_Boom, "憋憋");
         NEIFrontend = configuration
             .getBoolean("OTHTechnology : 123机器配方池界面使用铱锇钐合金粉替换GT齿轮, true为是, false为替换成憋憋", "A", NEIFrontend, "A");
         is_MISA_IMBA_Recipes_Enabled = configuration.getBoolean(
-            "OTHTechnology : 艾萨集成工厂超模配方是否开启(eg. 无尽催化剂矿出无尽粉 黑钚矿出黑中子粉), true为是, false为否",
+            "OTHTechnology : 艾萨集成工厂超模配方是否开启(e.g. 无尽催化剂矿出无尽粉 黑钚矿出黑中子粉), true为是, false为否",
             "A",
             is_MISA_IMBA_Recipes_Enabled,
             "A");
         is_EggMachine_Recipes_For_NHU = configuration.getBoolean(
-            "OTHTechnology : 丰矿的NHU配方兼容从123大龙研机(eg. 一步到位顶级蛋机 龙蛋馄饨龙蛋远古龙蛋配方), true为是, false为否",
+            "OTHTechnology : 丰矿的NHU配方兼容从123大龙研机(e.g. 一步到位顶级蛋机 龙蛋馄饨龙蛋远古龙蛋配方), true为是, false为否",
             "A",
             is_EggMachine_Recipes_For_NHU,
             "A");
@@ -37,13 +39,8 @@ public class Config {
         }
     }
 
-    public static int MAX_PARALLEL_LIMIT = Integer.MAX_VALUE;
     public static boolean DEFAULT_BATCH_MODE = false;
     public static boolean NEIFrontend = true;
-    public static int Parallel_PerPiece_ISA_Forge = 64;
-    public static float SpeedBonus_MultiplyPerVoltageTier_ISA_Forge = 0.5F;
-    public static float SpeedMultiplier_ISA_Forge = 1F;
-    public static float Piece_EnablePO_ISA = 1;
     public static boolean is_TT_Boom = true;
     public static float ENQING_MULTI = 1.5f;
     public static boolean is_MISA_IMBA_Recipes_Enabled = true;

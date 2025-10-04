@@ -215,8 +215,9 @@ public class OTEFishtorio extends OTHMultiMachineBase<OTEFishtorio> {
     private final int verticalOffSet = 3;
     private final int depthOffSet = 0;
     private static IStructureDefinition<OTEFishtorio> STRUCTURE_DEFINITION = null;
-    private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
-        translateToLocal("1 - 输入输出总线, 输入输出仓, 能源仓 : 替换魂金块, 支持TecTech能源仓") };
+    private static final String[] description = new String[] {
+        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":",
+        translateToLocal("1 - 输入输出总线, 输入输出仓, 能源仓 : 替换渔场机械方块, 支持TecTech能源仓") };
 
     @Override
     public String[] getStructureDescription(ItemStack stackSize) {

@@ -25,8 +25,8 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -35,9 +35,9 @@ import org.jetbrains.annotations.NotNull;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
-import com.newmaa.othtech.common.machinelogic.MachineLogic123;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
+import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
 import com.newmaa.othtech.utils.Utils;
 
 import crazypants.enderio.EnderIO;
@@ -128,7 +128,7 @@ public class OTETangShanSteelFactory extends OTHMultiMachineBase<OTETangShanStee
         super.getWailaBody(itemStack, currentTip, accessor, config);
         final NBTTagCompound tag = accessor.getNBTData();
         currentTip.add(
-            "当前无线EU消耗" + EnumChatFormatting.RESET
+            translateToLocal("otht.waila.gen.wireless") + EnumChatFormatting.RESET
                 + ": "
                 + EnumChatFormatting.GOLD
                 + tag.getString("costingWirelessEU")
@@ -169,7 +169,7 @@ public class OTETangShanSteelFactory extends OTHMultiMachineBase<OTETangShanStee
     @Override
     protected ProcessingLogic createProcessingLogic() {
 
-        return new MachineLogic123() {
+        return new OTHProcessingLogic() {
 
             @NotNull
             @Override
@@ -205,12 +205,16 @@ public class OTETangShanSteelFactory extends OTHMultiMachineBase<OTETangShanStee
     @Override
     public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
-        if (isWirelessMode == false) {
+        if (!isWirelessMode) {
             isWirelessMode = true;
         } else {
             isWirelessMode = false;
         }
-        GTUtility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal(isWirelessMode ? "无线模式启动" : "无线模式关闭"));
+        if (isWirelessMode) {
+            aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.nfg.mode.0"));
+        } else {
+            aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.nfg.mode.1"));
+        }
     }
 
     @NotNull
@@ -308,9 +312,9 @@ public class OTETangShanSteelFactory extends OTHMultiMachineBase<OTETangShanStee
     private static final int HORIZONTAL_DIRT_METAID_B = 0;
     private static final int HORIZONTAL_DIRT_METAID_C = 14;
     private static IStructureDefinition<OTETangShanSteelFactory> STRUCTURE_DEFINITION = null;
-    private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
-        translateToLocal("1 - 消声仓, 能源仓, 输入输出总线, 输入输出仓 : 替换脱氧钢机械方块, 支持TecTech能源仓") + ":",
-        translateToLocal("2 - 消声仓 : 替换脱氧钢机械方块(烟囱上, 其实放主机旁边也行)") };
+    private static final String[] description = new String[] {
+        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.ts.0") + ":",
+        translateToLocal("ote.cm.ts.1") };
 
     @Override
     public String[] getStructureDescription(ItemStack stackSize) {

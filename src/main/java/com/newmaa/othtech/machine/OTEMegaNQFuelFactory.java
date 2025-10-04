@@ -37,7 +37,7 @@ import com.gtnewhorizon.structurelib.structure.IStructureElement;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.gtnewhorizon.structurelib.structure.StructureUtility;
-import com.newmaa.othtech.machine.machineclass.TTMultiMachineBaseEM;
+import com.newmaa.othtech.machine.machineclass.OTHTTMultiMachineBaseEM;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -61,7 +61,7 @@ import gregtech.api.util.ParallelHelper;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 
-public class OTEMegaNQFuelFactory extends TTMultiMachineBaseEM implements IConstructable, ISurvivalConstructable {
+public class OTEMegaNQFuelFactory extends OTHTTMultiMachineBaseEM implements IConstructable, ISurvivalConstructable {
 
     public OTEMegaNQFuelFactory(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
@@ -97,10 +97,8 @@ public class OTEMegaNQFuelFactory extends TTMultiMachineBaseEM implements IConst
         if (tileEntity != null) {
             String Mode = GTUtility.formatNumbers(mode);
             String OC = GTUtility.formatNumbers(tier);
-            String pa = GTUtility.formatNumbers(getParallel());
             tag.setString("Tier", Mode);
             tag.setString("OC", OC);
-            tag.setString("pa", pa);
         }
     }
 
@@ -110,19 +108,13 @@ public class OTEMegaNQFuelFactory extends TTMultiMachineBaseEM implements IConst
         super.getWailaBody(itemStack, currentTip, accessor, config);
         final NBTTagCompound tag = accessor.getNBTData();
         currentTip.add(
-            "模式" + EnumChatFormatting.RESET
+            translateToLocal("otht.waila.mode") + EnumChatFormatting.RESET
                 + ": "
                 + EnumChatFormatting.GOLD
                 + tag.getString("Tier")
                 + EnumChatFormatting.RESET);
         currentTip.add(
-            "并行" + EnumChatFormatting.RESET
-                + ": "
-                + EnumChatFormatting.GOLD
-                + tag.getString("pa")
-                + EnumChatFormatting.RESET);
-        currentTip.add(
-            "超频次数" + EnumChatFormatting.RESET
+            translateToLocal("otht.waila.oc.amount") + EnumChatFormatting.RESET
                 + ": "
                 + EnumChatFormatting.GOLD
                 + tag.getString("OC")
@@ -139,8 +131,8 @@ public class OTEMegaNQFuelFactory extends TTMultiMachineBaseEM implements IConst
                 mode = 0;
             }
             switch (mode) {
-                case 0 -> aPlayer.addChatMessage(new ChatComponentTranslation("硅岩燃料精炼厂模式"));
-                case 1 -> aPlayer.addChatMessage(new ChatComponentTranslation("压缩硅岩燃料精炼厂模式"));
+                case 0 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.mnf.mode.0"));
+                case 1 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.mnf.mode.1"));
             }
             /*
              * GTUtility.sendChatToPlayer(
@@ -233,8 +225,8 @@ public class OTEMegaNQFuelFactory extends TTMultiMachineBaseEM implements IConst
             true);
     }
 
-    private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
-        translateToLocal("1 - 消声仓, 能源仓, 输入输出总线, 输入输出仓 : 替换硅岩燃料精炼机械方块, 支持TecTech能源仓") };
+    private static final String[] description = new String[] {
+        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.mnf.0") };
 
     @Override
     public String[] getStructureDescription(ItemStack stackSize) {

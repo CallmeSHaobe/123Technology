@@ -36,9 +36,9 @@ import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.kuba6000.mobsinfo.api.utils.FastRandom;
 import com.mojang.authlib.GameProfile;
-import com.newmaa.othtech.common.machinelogic.MachineLogic123;
-import com.newmaa.othtech.machine.machineclass.MobHandlerLoaderOTH;
+import com.newmaa.othtech.machine.machineclass.OTHMobHandlerLoader;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
+import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
 
 import bartworks.API.BorosilicateGlass;
 import crazypants.enderio.EnderIO;
@@ -121,7 +121,7 @@ public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> {
         if (mobType.equals("Skeleton") && getBaseMetaTileEntity().getWorld().provider instanceof WorldProviderHell
             && rand.nextInt(5) > 0) mobType = "witherSkeleton";
 
-        MobHandlerLoaderOTH.MobEECRecipe recipe = MobHandlerLoaderOTH.recipeMap.get(mobType);
+        OTHMobHandlerLoader.MobEECRecipe recipe = OTHMobHandlerLoader.recipeMap.get(mobType);
 
         if (recipe == null) return CheckRecipeResultRegistry.NO_RECIPE;
         if (!recipe.recipe.isPeacefulAllowed && this.getBaseMetaTileEntity()
@@ -155,7 +155,7 @@ public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> {
     @Override
     protected ProcessingLogic createProcessingLogic() {
 
-        return new MachineLogic123() {
+        return new OTHProcessingLogic() {
 
             @NotNull
             @Override
@@ -219,7 +219,8 @@ public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> {
     private final int verticalOffSet = 55;
     private final int depthOffSet = 26;
     private static IStructureDefinition<OTEMegaEEC> STRUCTURE_DEFINITION = null;
-    private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
+    private static final String[] description = new String[] {
+        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":",
         translateToLocal("1 - 消声仓, 能源仓, 输入输出总线, 输入输出仓 : 替换分子机械方块, 支持TecTech能源仓") };
 
     @Override

@@ -1,4 +1,4 @@
-package com.newmaa.othtech.common.machinelogic;
+package com.newmaa.othtech.machine.machineclass;
 
 import javax.annotation.Nonnull;
 
@@ -8,9 +8,9 @@ import gregtech.api.logic.ProcessingLogic;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.ParallelHelper;
 
-public class MachineLogic123 extends ProcessingLogic {
+public class OTHProcessingLogic extends ProcessingLogic {
 
-    public MachineLogic123() {
+    public OTHProcessingLogic() {
         super();
         setMaxTierSkips(999);
     }
