@@ -27,6 +27,7 @@ MetaItemOTH.22.name=§3General SoC
 MetaItemOTH.23.name=§5Long-range remote sensor
 MetaItemOTH.25.name=§4Sliced Brains
 MetaItemOTH.26.name=§4Packed Sliced Brains
+MetaItemOTH.64.name=Antimony Stardust
 IsaMillModule.1.name=§aNeI Grinder complex
 IsaMillModule.2.name=§aIrdiosamarium Grinder complex
 IsaMillModule.3.name=§cHypogen Grinder complex
@@ -56,7 +57,7 @@ tt.SPE=Milling the past and the future
 tt.brains=He is still beating
 tt.slicedBrains=I am therefore I think.
 tt.wrapBrains=You have to imagine that the brain inside the circuit board is happy.
-
+tt.ani=99.8% Antimony Content
 
 
 
@@ -119,6 +120,8 @@ item.record.EVA_B.desc=ARIANNE - Komm, süsser Tod
 item.record.EVA_C.desc=Claire - Fly Me To The Moon
 item.record.NGG_U.desc=Rick Astley - Never Gonna Give You Up
 item.itemTST.name=TST Burger
+item.TallHatLaodeng.name=White Christmas Top Hat (For Laodengs)
+tile.modelTallHat.name=White Christmas Top Hat (Block)
 tile.modelAyanami.name=Ayanami Rei
 tile.modelAsuka.name=Asuka Langley Soryu
 fluid.FluidGalaxy.name=Molten Galaxy
@@ -129,6 +132,11 @@ fluid.FUELA_DE.name=§dHNRF-OTHT (Exhausted)
 fluid.PromoterZPM.name=Atom separation promoter
 fluid.PromoterUEV.name=DTP Promoter
 item.IrOsSm.name=Irdiosamarium
+fluid.HCl10.name=Super Hydrochloric Acid
+fluid.HCl100.name=Extreme Hydrochloric Acid
+fluid.HCl1000.name=Ultra Hydrochloric Acid
+fluid.HCl10000.name=Magic Hydrochloric Acid
+fluid.HCl100000.name=Ultimate Hydrochloric Acid
 fluid.IrOsSm.name=Irdiosamarium
 bw.werkstoff.12320.name=Irdiosamarium
 LCL=L.C.L
@@ -147,6 +155,30 @@ otht.recipe.BIN=Bin
 otht.recipe.RCY=Recycler
 otht.recipe.EIO=§lEIO Complex
 otht.recipe.EXH=§4SuperNB Heat Exchanger
+otht.recipe.steam.pump=Steam Nonuple - Water Pump
 item.BrainsHuman.name=§nBrains
 item.itemAmulet.name=DSS Collar
 death.attack.amulet_explosion=%1$s has be killed by DSS collar
+planet.Antimonia=§oAntimonia - Antimony Planet
+planet.Ross123b=§oRoss 123b - Antimony Moon
+star.starAntimonia=§oAntimony Void
+solarsystem.antimoniaSystem=Antimony Galaxy
+tile.AntimoniaStone.name=Antimony Stone
+tile.AntimoniaDirt.name=Antimony Soil
+tile.AntimoniaGrass.name=Antimony Grass Block
+tile.AquaRegia.name=Aqua Regia
+tile.LCL.name=LCL
+item.itemBucketAqua.name=Aqua Regia Unit (Antimonia Origin)
+death.attack.Acid=Though it may be unscientific, %1$s was still killed by Aqua Regia
+
+#Machine_ToolTips
+oth.tm.pollution=§cWarning: If powerfail occurs with the error "Cannot vent pollution," try placing multiple Muffler Hatches
+
+#9in1
+#oth.tm.mnio.0=§c§lLaodeng's Ultimate Creation - Multi-Machine (Mega Factory)
+oth.tm.mnio.1=§aFeatures fifteen modes. Use a screwdriver to switch mode categories, and programmed circuits 20, 21, 22 to switch sub-modes.
+oth.tm.mnio.2=§aMetal Mode: Compressor, Lathe, Electromagnetic Polarizer
+oth.tm.mnio.3=§aFluid Mode: Fermenter, Fluid Extractor, Extractor
+oth.tm.mnio.4=§aMisc Mode: Laser Engraver, Autoclave, Fluid Solidifier
+oth.tm.mnio.5=§aIsa Mode: IsaMill, Industrial Flotation Cell, Utupu-Tanuri
+oth.tm.mnio.6=§aCol Mode: Molecular Transformer, Brewery, Fluid Heater
