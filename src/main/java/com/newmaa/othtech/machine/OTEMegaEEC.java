@@ -1,7 +1,6 @@
 package com.newmaa.othtech.machine;
 
-import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
-import static com.gtnewhorizon.structurelib.structure.StructureUtility.withChannel;
+import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
 import static gregtech.api.GregTechAPI.*;
 import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_DTPF_OFF;
@@ -261,7 +260,7 @@ public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> {
                 .addElement('J', ofBlock(sBlockCasingsTT, 6))
                 .addElement('K', ofBlock(sBlockCasingsTT, 9))
                 .addElement('L', ofBlock(EnderIO.blockDarkIronBars, 0))
-                .addElement('M', ofBlock(Blocks.air, 0))
+                .addElement('M', isAir())
                 .addElement('N', ofBlock(Blocks.soul_sand, 0))
                 .addElement('O', ofBlock(Blocks.obsidian, 0))
                 .addElement('R', ofBlock(Blocks.obsidian, 0))
