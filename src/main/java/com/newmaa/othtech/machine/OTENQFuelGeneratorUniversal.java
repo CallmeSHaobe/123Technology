@@ -514,7 +514,7 @@ public class OTENQFuelGeneratorUniversal extends TTMultiMachineBaseEM
                         ofBlocksTiered(
                             OTENQFuelGeneratorUniversal::getPipeTier,
                             ImmutableList.of(Pair.of(sBlockCasings2, 15), Pair.of(sBlockCasings9, 14)),
-                            -1, // 将notSet值改为-1
+                            1, // 将notSet值改为0
                             (t, meta) -> t.pipeTier = meta,
                             t -> t.pipeTier)))
                 .addElement('C', ofBlock(sBlockCasings6, 8))
