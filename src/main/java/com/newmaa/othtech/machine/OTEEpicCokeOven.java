@@ -191,8 +191,8 @@ public class OTEEpicCokeOven extends OTHMultiMachineBase<OTEEpicCokeOven> {
     private final int verticalOffSet = 5;
     private final int depthOffSet = 48;
     private static IStructureDefinition<OTEEpicCokeOven> STRUCTURE_DEFINITION = null;
-    private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
-        translateToLocal("1 - 输入输出总线, 输入输出仓, 消声仓 : 替换脱氧钢机械方块") };
+    private static final String[] description = new String[] {
+        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.cocc.0") };
 
     @Override
     public String[] getStructureDescription(ItemStack stackSize) {

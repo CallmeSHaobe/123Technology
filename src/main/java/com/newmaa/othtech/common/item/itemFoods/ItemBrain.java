@@ -1,5 +1,7 @@
 package com.newmaa.othtech.common.item.itemFoods;
 
+import static net.minecraft.util.StatCollector.translateToLocal;
+
 import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,12 +30,12 @@ public class ItemBrain extends ItemFood {
     @SideOnly(Side.CLIENT)
     public void addInformation(final ItemStack itemStack, final EntityPlayer player, final List toolTip,
         final boolean advancedToolTips) {
-        toolTip.add(EnumChatFormatting.DARK_RED + "我还活着...吗?");
-        toolTip.add(EnumChatFormatting.DARK_RED + "我曾活着...吗?");
-        toolTip.add(EnumChatFormatting.DARK_RED + "我思故我在.");
-        toolTip.add(EnumChatFormatting.RED + "他看起来还在跳动...");
-        toolTip.add(EnumChatFormatting.RED + "第一个脑子, 要从哪里来呢..?");
-        toolTip.add(EnumChatFormatting.RED + "你知道的, 做这种事自己总要付出一些代价.");
+        toolTip.add(EnumChatFormatting.DARK_RED + translateToLocal("tt.br.0"));
+        toolTip.add(EnumChatFormatting.DARK_RED + translateToLocal("tt.br.1"));
+        toolTip.add(EnumChatFormatting.DARK_RED + translateToLocal("tt.br.2"));
+        toolTip.add(EnumChatFormatting.RED + translateToLocal("tt.br.3"));
+        toolTip.add(EnumChatFormatting.RED + translateToLocal("tt.br.4"));
+        toolTip.add(EnumChatFormatting.RED + translateToLocal("tt.br.5"));
 
     }
 }

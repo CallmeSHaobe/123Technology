@@ -37,9 +37,9 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.common.OTHItemList;
-import com.newmaa.othtech.common.machinelogic.MachineLogic123;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
+import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
 import com.newmaa.othtech.utils.Utils;
 
 import bartworks.API.BorosilicateGlass;
@@ -155,7 +155,7 @@ public class OTESINOPEC extends OTHMultiMachineBase<OTESINOPEC> {
         super.getWailaBody(itemStack, currentTip, accessor, config);
         final NBTTagCompound tag = accessor.getNBTData();
         currentTip.add(
-            "123" + EnumChatFormatting.RESET
+            translateToLocal("otht.waila.123") + EnumChatFormatting.RESET
                 + ": "
                 + EnumChatFormatting.GOLD
                 + tag.getString("123Processing")
@@ -170,7 +170,7 @@ public class OTESINOPEC extends OTHMultiMachineBase<OTESINOPEC> {
     @Override
     protected ProcessingLogic createProcessingLogic() {
 
-        return new MachineLogic123() {
+        return new OTHProcessingLogic() {
 
             @NotNull
             @Override
@@ -222,10 +222,9 @@ public class OTESINOPEC extends OTHMultiMachineBase<OTESINOPEC> {
     private final int depthOffSet = 2;
     private static final int HORIZONTAL_DIRT_METAID = 10;
     private static IStructureDefinition<OTESINOPEC> STRUCTURE_DEFINITION = null;
-    private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
-        translateToLocal("1 - 消声仓, 能源仓, 输入输出总线, 输入输出仓 : 替换钨钢机械方块, 支持TecTech能源仓") + ":",
-        translateToLocal("2 - 消声仓 : 烟囱顶端中央机械方块, 其实放主机旁边也行") // 1 - Energy IO Hatches or High
-    };
+    private static final String[] description = new String[] {
+        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.sinopec.0") + ":",
+        translateToLocal("ote.cm.sinopec.1") };
 
     @Override
     public String[] getStructureDescription(ItemStack stackSize) {

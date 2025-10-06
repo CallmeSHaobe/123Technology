@@ -1,7 +1,6 @@
 package com.newmaa.othtech.machine;
 
-import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
-import static com.gtnewhorizon.structurelib.structure.StructureUtility.withChannel;
+import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
 import static gregtech.api.GregTechAPI.*;
 import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_DTPF_OFF;
@@ -36,9 +35,9 @@ import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.kuba6000.mobsinfo.api.utils.FastRandom;
 import com.mojang.authlib.GameProfile;
-import com.newmaa.othtech.common.machinelogic.MachineLogic123;
-import com.newmaa.othtech.machine.machineclass.MobHandlerLoaderOTH;
+import com.newmaa.othtech.machine.machineclass.OTHMobHandlerLoader;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
+import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
 
 import bartworks.API.BorosilicateGlass;
 import crazypants.enderio.EnderIO;
@@ -121,7 +120,7 @@ public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> {
         if (mobType.equals("Skeleton") && getBaseMetaTileEntity().getWorld().provider instanceof WorldProviderHell
             && rand.nextInt(5) > 0) mobType = "witherSkeleton";
 
-        MobHandlerLoaderOTH.MobEECRecipe recipe = MobHandlerLoaderOTH.recipeMap.get(mobType);
+        OTHMobHandlerLoader.MobEECRecipe recipe = OTHMobHandlerLoader.recipeMap.get(mobType);
 
         if (recipe == null) return CheckRecipeResultRegistry.NO_RECIPE;
         if (!recipe.recipe.isPeacefulAllowed && this.getBaseMetaTileEntity()
@@ -155,7 +154,7 @@ public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> {
     @Override
     protected ProcessingLogic createProcessingLogic() {
 
-        return new MachineLogic123() {
+        return new OTHProcessingLogic() {
 
             @NotNull
             @Override
@@ -219,7 +218,8 @@ public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> {
     private final int verticalOffSet = 55;
     private final int depthOffSet = 26;
     private static IStructureDefinition<OTEMegaEEC> STRUCTURE_DEFINITION = null;
-    private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
+    private static final String[] description = new String[] {
+        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":",
         translateToLocal("1 - 消声仓, 能源仓, 输入输出总线, 输入输出仓 : 替换分子机械方块, 支持TecTech能源仓") };
 
     @Override
@@ -260,7 +260,7 @@ public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> {
                 .addElement('J', ofBlock(sBlockCasingsTT, 6))
                 .addElement('K', ofBlock(sBlockCasingsTT, 9))
                 .addElement('L', ofBlock(EnderIO.blockDarkIronBars, 0))
-                .addElement('M', ofBlock(Blocks.air, 0))
+                .addElement('M', isAir())
                 .addElement('N', ofBlock(Blocks.soul_sand, 0))
                 .addElement('O', ofBlock(Blocks.obsidian, 0))
                 .addElement('R', ofBlock(Blocks.obsidian, 0))

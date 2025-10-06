@@ -100,19 +100,19 @@ public class OTEWoodenFusionReactor extends OTHMultiMachineBase<OTEWoodenFusionR
         super.getWailaBody(itemStack, currentTip, accessor, config);
         final NBTTagCompound tag = accessor.getNBTData();
         currentTip.add(
-            "蒸汽等级" + EnumChatFormatting.RESET
+            translateToLocal("otht.waila.tier.steam") + EnumChatFormatting.RESET
                 + ": "
                 + EnumChatFormatting.GOLD
                 + tag.getString("Tier")
                 + EnumChatFormatting.RESET);
         currentTip.add(
-            "千升蒸汽等离子产出" + EnumChatFormatting.RESET
+            translateToLocal("otht.waila.gen.plasma") + EnumChatFormatting.RESET
                 + ": "
                 + EnumChatFormatting.GOLD
                 + tag.getString("PlasmaAmount")
                 + EnumChatFormatting.RESET);
         currentTip.add(
-            "耗时倍率" + EnumChatFormatting.RESET
+            translateToLocal("otht.waila.bonus.speed") + EnumChatFormatting.RESET
                 + ": "
                 + EnumChatFormatting.GOLD
                 + tag.getString("bonus")
@@ -223,8 +223,8 @@ public class OTEWoodenFusionReactor extends OTHMultiMachineBase<OTEWoodenFusionR
     private final int verticalOffSet = 3;
     private final int depthOffSet = 40;
     private static IStructureDefinition<OTEWoodenFusionReactor> STRUCTURE_DEFINITION = null;
-    private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
-        translateToLocal("1 - 输入输出仓 : 替换石砖") };
+    private static final String[] description = new String[] {
+        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.wfr.0") };
 
     @Override
     public String[] getStructureDescription(ItemStack stackSize) {

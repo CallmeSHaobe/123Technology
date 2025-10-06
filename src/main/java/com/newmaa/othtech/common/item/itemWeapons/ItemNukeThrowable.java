@@ -1,5 +1,7 @@
 package com.newmaa.othtech.common.item.itemWeapons;
 
+import static net.minecraft.util.StatCollector.translateToLocal;
+
 import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -39,8 +41,8 @@ public class ItemNukeThrowable extends Item {
     public void addInformation(final ItemStack itemStack, final EntityPlayer player, final List toolTip,
         final boolean advancedToolTips) {
 
-        toolTip.add("§z§l一发摧毁一个航母战斗群");
-        toolTip.add("§4警告：投掷者后果自负 将造成大范围爆炸");
+        toolTip.add(translateToLocal("tt.690.0"));
+        toolTip.add(translateToLocal("tt.690.1"));
 
     }
 

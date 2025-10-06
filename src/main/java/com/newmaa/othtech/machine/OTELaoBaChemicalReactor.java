@@ -28,8 +28,8 @@ import org.jetbrains.annotations.NotNull;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
-import com.newmaa.othtech.common.machinelogic.MachineLogic123;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
+import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
 import com.newmaa.othtech.utils.Utils;
 
 import bartworks.API.BorosilicateGlass;
@@ -133,13 +133,13 @@ public class OTELaoBaChemicalReactor extends OTHMultiMachineBase<OTELaoBaChemica
         super.getWailaBody(itemStack, currentTip, accessor, config);
         final NBTTagCompound tag = accessor.getNBTData();
         currentTip.add(
-            "123" + EnumChatFormatting.RESET
+            translateToLocal("otht.waila.123") + EnumChatFormatting.RESET
                 + ": "
                 + EnumChatFormatting.GOLD
                 + tag.getString("123Processing")
                 + EnumChatFormatting.RESET);
         currentTip.add(
-            "Mode" + EnumChatFormatting.RESET
+            translateToLocal("otht.waila.mode") + EnumChatFormatting.RESET
                 + ": "
                 + EnumChatFormatting.GOLD
                 + tag.getString("Mode")
@@ -181,8 +181,8 @@ public class OTELaoBaChemicalReactor extends OTHMultiMachineBase<OTELaoBaChemica
                 mode = 0;
             }
             switch (mode) {
-                case 0 -> aPlayer.addChatMessage(new ChatComponentTranslation("化工厂模式"));
-                case 1 -> aPlayer.addChatMessage(new ChatComponentTranslation("大型化学反应釜模式"));
+                case 0 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.chem.mode.0"));
+                case 1 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.chem.mode.1"));
             }
         }
     }
@@ -202,7 +202,7 @@ public class OTELaoBaChemicalReactor extends OTHMultiMachineBase<OTELaoBaChemica
     @Override
     protected ProcessingLogic createProcessingLogic() {
 
-        return new MachineLogic123() {
+        return new OTHProcessingLogic() {
 
             @NotNull
             @Override
@@ -263,8 +263,8 @@ public class OTELaoBaChemicalReactor extends OTHMultiMachineBase<OTELaoBaChemica
     private final int verticalOffSet = 12;
     private final int depthOffSet = 0;
     private static IStructureDefinition<OTELaoBaChemicalReactor> STRUCTURE_DEFINITION = null;
-    private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
-        translateToLocal("1 - 输入输出总线, 输入输出仓, 能源仓 : 替换镀铑钯机械方块, 支持TecTech能源仓") };
+    private static final String[] description = new String[] {
+        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.chem.0") };
 
     @Override
     public String[] getStructureDescription(ItemStack stackSize) {

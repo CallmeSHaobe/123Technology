@@ -14,12 +14,9 @@ import static net.minecraft.util.StatCollector.translateToLocal;
 import java.util.Arrays;
 import java.util.List;
 
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -30,8 +27,8 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.gtnewhorizon.structurelib.structure.StructureUtility;
-import com.newmaa.othtech.common.machinelogic.MachineLogic123;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
+import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
 
 import bartworks.API.BorosilicateGlass;
 import gregtech.api.enums.GTValues;
@@ -53,11 +50,8 @@ import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.recipe.check.SimpleCheckRecipeResult;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GTRecipe;
-import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.common.tileentities.machines.IDualInputHatch;
-import mcp.mobius.waila.api.IWailaConfigHandler;
-import mcp.mobius.waila.api.IWailaDataAccessor;
 
 public class OTELargeCircuitAssembler extends OTHMultiMachineBase<OTELargeCircuitAssembler> {
 
@@ -111,7 +105,7 @@ public class OTELargeCircuitAssembler extends OTHMultiMachineBase<OTELargeCircui
     @Override
     protected ProcessingLogic createProcessingLogic() {
 
-        return new MachineLogic123() {
+        return new OTHProcessingLogic() {
 
             @NotNull
             @Override
@@ -231,9 +225,10 @@ public class OTELargeCircuitAssembler extends OTHMultiMachineBase<OTELargeCircui
         return tier;
     }
 
-    private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
-        translateToLocal("1 - 消声仓, 能源仓 : 替换精密机械方块, 支持TecTech能源仓") + ":", translateToLocal("2 - 输出仓, 输出总线") + ":",
-        translateToLocal("3 - 输入仓, 输入总线") + ":", translateToLocal("细节仅供参考因为我不会写仓室位置限制憋憋") };
+    private static final String[] description = new String[] {
+        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.lca.0") + ":",
+        translateToLocal("ote.cm.lca.1") + ":", translateToLocal("ote.cm.lca.2") + ":",
+        translateToLocal("ote.cm.lca.3") };
 
     @Override
     public String[] getStructureDescription(ItemStack stackSize) {
@@ -407,30 +402,6 @@ public class OTELargeCircuitAssembler extends OTHMultiMachineBase<OTELargeCircui
         mode = aNBT.getByte("mode");
         casingTier = aNBT.getInteger("casingTier");
         machineLimitedVoltage = aNBT.getLong("machineLimitedVoltage");
-    }
-
-    @Override
-    public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
-        int z) {
-        super.getWailaNBTData(player, tile, tag, world, x, y, z);
-        final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
-        if (tileEntity != null) {
-            String par = GTUtility.formatNumbers(getMaxParallelRecipes());
-            tag.setString("Parallel", par);
-        }
-    }
-
-    @Override
-    public void getWailaBody(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor,
-        IWailaConfigHandler config) {
-        super.getWailaBody(itemStack, currentTip, accessor, config);
-        final NBTTagCompound tag = accessor.getNBTData();
-        currentTip.add(
-            "并行" + EnumChatFormatting.RESET
-                + ": "
-                + EnumChatFormatting.BLUE
-                + tag.getString("Parallel")
-                + EnumChatFormatting.RESET);
     }
     // endregion
 }

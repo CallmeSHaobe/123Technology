@@ -18,7 +18,7 @@ import com.gtnewhorizon.structurelib.alignment.constructable.IConstructable;
 import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructable;
 import com.gtnewhorizon.structurelib.structure.IItemSource;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
-import com.newmaa.othtech.machine.machineclass.TTMultiMachineBaseEM;
+import com.newmaa.othtech.machine.machineclass.OTHTTMultiMachineBaseEM;
 
 import gregtech.api.enums.SoundResource;
 import gregtech.api.interfaces.ITexture;
@@ -28,7 +28,7 @@ import gregtech.api.render.TextureFactory;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import tectech.thing.metaTileEntity.multi.base.TTMultiblockBase;
 
-public class OTEBeeyonds extends TTMultiMachineBaseEM implements IConstructable, ISurvivalConstructable {
+public class OTEBeeyonds extends OTHTTMultiMachineBaseEM implements IConstructable, ISurvivalConstructable {
 
     private boolean grace = false;
 
@@ -55,10 +55,8 @@ public class OTEBeeyonds extends TTMultiMachineBaseEM implements IConstructable,
     private int casingCount = 0;
 
     // region structure
-    private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
-        translateToLocal("1 - 能源仓, 动力仓或者激光仓, 输入输出总线/仓: 替换塑料混凝土方块"), // 1 - Energy IO Hatches or High
-        // Power Casing
-    };
+    private static final String[] description = new String[] {
+        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.bee.0"), };
     private static final IStructureDefinition<OTEBeeyonds> STRUCTURE_DEFINITION = IStructureDefinition
         .<OTEBeeyonds>builder()
         .addShape(
