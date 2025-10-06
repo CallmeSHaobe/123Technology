@@ -96,7 +96,6 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
 
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
-
         aNBT.setBoolean("wireless", isWirelessMode);
         aNBT.setInteger("pipe", pipeTier);
         aNBT.setLong("Time", running_time);
