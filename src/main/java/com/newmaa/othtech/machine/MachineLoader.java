@@ -95,6 +95,13 @@ public class MachineLoader {
         OTHItemList.OTEGraveDragon.set(new OTEGraveDragon(IDs - 4, "GraveDragon", translateToLocal("ote.tn.gd")));
         OTHItemList.FISH.set(new OTEFishtorio(IDs - 5, "Fishtorio", translateToLocal("ote.tn.ft")));
         // TODO FUTURE
+        OTHItemList.SteamNeinInOne
+            .set(new OTEMiniSteamNineInOne(IDs + 57, "SteamNineInOne", translateToLocal("ote.tn.s9in1")));
+        OTHItemList.Beeyonds.set(new OTEBeeyonds(IDs + 58, "IndustrialBeeHouse", translateToLocal("ote.tn.bee")));
+        OTHItemList.OTEBBPlasmaForge
+            .set(new OTEBBPlasmaForge(IDs + 59, "OTEBBPlasmaForge", translateToLocal("ote.tn.bbpf")));
+        OTHItemList.NASA
+            .set(new OTEFireRocketAssembler(IDs + 60, "FireRocketAssembler", translateToLocal("ote.tn.nasa")));
 
         // Lasers
 
@@ -152,12 +159,6 @@ public class MachineLoader {
             .set(new MTEHatchDynamoTunnel(IDs + 54, "UXV Laser 1073DY", "UXV 1,073,741,824A 激光源仓", 13, AMPS));
         OTHItemList.UXVB
             .set(new MTEHatchEnergyTunnel(IDs + 55, "UXV Laser 1073EN", "UXV 1,073,741,824A 激光靶仓", 13, AMPS));
-
-        OTHItemList.SteamNeinInOne
-            .set(new OTEMiniSteamNineInOne(IDs + 57, "SteamNineInOne", translateToLocal("ote.tn.s9in1")));
-        OTHItemList.Beeyonds.set(new OTEBeeyonds(IDs + 58, "IndustrialBeeHouse", translateToLocal("ote.tn.bee")));
-        OTHItemList.OTEBBPlasmaForge
-            .set(new OTEBBPlasmaForge(IDs + 59, "OTEBBPlasmaForge", translateToLocal("ote.tn.bbpf")));
         // TODO FUTURE
 
     }
