@@ -1,6 +1,6 @@
 package com.newmaa.othtech.common.item.itemTools;
 
-import static net.minecraft.client.gui.GuiScreen.isShiftKeyDown;
+import static net.minecraft.util.StatCollector.translateToLocal;
 
 import java.util.List;
 
@@ -44,9 +44,10 @@ public class ItemSunLighter extends Item {
 
     @Override
     public String getItemStackDisplayName(final ItemStack p_77653_1_) {
-        return EnumChatFormatting.YELLOW + "太阳能打火机 ["
+        return EnumChatFormatting.YELLOW + translateToLocal("item.sl.name.p0")
+            + " ["
             + EnumChatFormatting.RED
-            + "老玩家专属"
+            + translateToLocal("item.sl.name.p1")
             + EnumChatFormatting.YELLOW
             + "]";
     }
@@ -54,11 +55,7 @@ public class ItemSunLighter extends Item {
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public void addInformation(final ItemStack stack, final EntityPlayer aPlayer, final List list, final boolean bool) {
-        if (isShiftKeyDown()) {
-            list.add(EnumChatFormatting.BLACK + "除了隐藏在光芒里的");
-        } else {
-            list.add(EnumChatFormatting.BLUE + "光能驱逐一切黑暗");
-        }
+        list.add(EnumChatFormatting.BLUE + translateToLocal("tt.sl.0"));
         super.addInformation(stack, aPlayer, list, bool);
     }
 

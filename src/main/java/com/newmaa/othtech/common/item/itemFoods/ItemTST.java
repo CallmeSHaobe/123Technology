@@ -1,5 +1,7 @@
 package com.newmaa.othtech.common.item.itemFoods;
 
+import static net.minecraft.util.StatCollector.translateToLocal;
+
 import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,7 +30,7 @@ public class ItemTST extends ItemFood {
     public void addInformation(final ItemStack itemStack, final EntityPlayer player, final List toolTip,
         final boolean advancedToolTips) {
 
-        toolTip.add("§7哦塔斯汀, 哦塔斯汀, 有了你生活美好没烦恼~");
+        toolTip.add(translateToLocal("tt.tst.0"));
 
     }
 }

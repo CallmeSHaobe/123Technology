@@ -36,9 +36,9 @@ import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructa
 import com.gtnewhorizon.structurelib.structure.IItemSource;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
-import com.newmaa.othtech.common.machinelogic.MachineLogic123;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
+import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
 
 import bartworks.API.BorosilicateGlass;
 import cpw.mods.fml.relauncher.Side;
@@ -136,8 +136,8 @@ public class OTELargeBin extends OTHMultiMachineBase<OTELargeBin> implements ICo
     }
 
     // region structure
-    private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
-        translateToLocal("1 - 输入输出总线, 输入仓, 能源仓, 动力仓"),
+    private static final String[] description = new String[] {
+        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.bin.0"),
         // Power Casing
     };
     private static final IStructureDefinition<OTELargeBin> STRUCTURE_DEFINITION = StructureDefinition
@@ -478,19 +478,19 @@ public class OTELargeBin extends OTHMultiMachineBase<OTELargeBin> implements ICo
         super.getWailaBody(itemStack, currentTip, accessor, config);
         final NBTTagCompound tag = accessor.getNBTData();
         currentTip.add(
-            "模式" + EnumChatFormatting.RESET
+            translateToLocal("otht.waila.mode") + EnumChatFormatting.RESET
                 + ": "
                 + EnumChatFormatting.GOLD
                 + tag.getString("mode")
                 + EnumChatFormatting.RESET);
         currentTip.add(
-            "奇点模式物品输入数量" + EnumChatFormatting.RESET
+            translateToLocal("otht.waila.bin.input") + EnumChatFormatting.RESET
                 + ": "
                 + EnumChatFormatting.GOLD
                 + tag.getLong("MM")
                 + EnumChatFormatting.RESET);
         currentTip.add(
-            "结构等级" + EnumChatFormatting.RESET
+            translateToLocal("otht.waila.tier") + EnumChatFormatting.RESET
                 + ": "
                 + EnumChatFormatting.GOLD
                 + tag.getLong("Tier")
@@ -517,7 +517,7 @@ public class OTELargeBin extends OTHMultiMachineBase<OTELargeBin> implements ICo
 
     @Override
     protected ProcessingLogic createProcessingLogic() {
-        return new MachineLogic123() {
+        return new OTHProcessingLogic() {
 
             @NotNull
             @Override
@@ -632,10 +632,10 @@ public class OTELargeBin extends OTHMultiMachineBase<OTELargeBin> implements ICo
                 mode = 0;
             }
             switch (mode) {
-                case 0 -> aPlayer.addChatMessage(new ChatComponentTranslation("垃圾桶模式"));
-                case 1 -> aPlayer.addChatMessage(new ChatComponentTranslation("回收机模式"));
-                case 2 -> aPlayer.addChatMessage(new ChatComponentTranslation("AE奇点制造机模式"));
-                case 3 -> aPlayer.addChatMessage(new ChatComponentTranslation("中子态素压缩机模式"));
+                case 0 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.bin.mode.0"));
+                case 1 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.bin.mode.1"));
+                case 2 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.bin.mode.2"));
+                case 3 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.bin.mode.3"));
             }
             /*
              * GTUtility.sendChatToPlayer(

@@ -34,10 +34,10 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.common.OTHItemList;
-import com.newmaa.othtech.common.machinelogic.MachineLogic123;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
-import com.newmaa.othtech.machine.machineclass.SoundResourceOTH;
+import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
+import com.newmaa.othtech.machine.machineclass.OTHSoundResource;
 
 import bartworks.API.BorosilicateGlass;
 import gregtech.api.enums.Materials;
@@ -177,7 +177,7 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
         super.getWailaBody(itemStack, currentTip, accessor, config);
         final NBTTagCompound tag = accessor.getNBTData();
         currentTip.add(
-            "耗时倍率" + EnumChatFormatting.RESET
+            translateToLocal("otht.waila.bonus.speed") + EnumChatFormatting.RESET
                 + ": "
                 + EnumChatFormatting.RED
                 + tag.getString("speedBonus")
@@ -249,7 +249,7 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
     @Override
     protected ProcessingLogic createProcessingLogic() {
 
-        return new MachineLogic123() {
+        return new OTHProcessingLogic() {
 
             @NotNull
             @Override
@@ -351,8 +351,8 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
     private final int verticalOffSet = 27;
     private final int depthOffSet = 51;
     private static IStructureDefinition<OTESunFactory> STRUCTURE_DEFINITION = null;
-    private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
-        translateToLocal("1 - 能源仓, 输入输出总线, 输入输出仓 : 替换终极分子机械方块, 支持TecTech能源仓") };
+    private static final String[] description = new String[] {
+        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.sf.0") };
 
     @Override
     public String[] getStructureDescription(ItemStack stackSize) {
@@ -2549,8 +2549,8 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
     }
 
     @Override
-    protected SoundResourceOTH getProcessStartSoundOTH() {
-        if (is_Enqing_Song_Play) return SoundResourceOTH.ENQING;
+    protected OTHSoundResource getProcessStartSoundOTH() {
+        if (is_Enqing_Song_Play) return OTHSoundResource.ENQING;
         return super.getProcessStartSoundOTH();
     }
 

@@ -18,8 +18,8 @@ import org.jetbrains.annotations.NotNull;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
-import com.newmaa.othtech.common.machinelogic.MachineLogic123;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
+import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
 import com.newmaa.othtech.utils.Utils;
 
 import bartworks.API.BorosilicateGlass;
@@ -117,7 +117,7 @@ public class OTEMegaEBFGTpp extends OTHMultiMachineBase<OTEMegaEBFGTpp> {
 
     @Override
     protected ProcessingLogic createProcessingLogic() {
-        return new MachineLogic123() {
+        return new OTHProcessingLogic() {
 
             @NotNull
             @Override
@@ -208,8 +208,8 @@ public class OTEMegaEBFGTpp extends OTHMultiMachineBase<OTEMegaEBFGTpp> {
         return false;
     }
 
-    private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
-        translateToLocal("1 - 消声仓, 能源仓, 输入输出总线, 输入输出仓 : 替换赤焱高炉机械方块, 支持TecTech能源仓, 有玻璃限制(真的!)") };
+    private static final String[] description = new String[] {
+        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.eec.0") };
 
     @Override
     public String[] getStructureDescription(ItemStack stackSize) {

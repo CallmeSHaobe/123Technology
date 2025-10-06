@@ -7,7 +7,6 @@ import static gregtech.api.enums.Mods.IndustrialCraft2;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static gregtech.api.util.GTStructureUtility.ofCoil;
 import static net.minecraft.util.StatCollector.translateToLocal;
-import static tectech.thing.casing.TTCasingsContainer.*;
 
 import java.util.List;
 import java.util.Objects;
@@ -32,7 +31,7 @@ import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructa
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
-import com.newmaa.othtech.machine.machineclass.TTMultiMachineBaseEM;
+import com.newmaa.othtech.machine.machineclass.OTHTTMultiMachineBaseEM;
 import com.newmaa.othtech.utils.Utils;
 
 import cpw.mods.fml.relauncher.Side;
@@ -56,7 +55,7 @@ import mcp.mobius.waila.api.IWailaDataAccessor;
 import squeek.applecore.api.food.FoodValues;
 import tectech.thing.metaTileEntity.hatch.MTEHatchDynamoMulti;
 
-public class OTEFoodGenerator extends TTMultiMachineBaseEM implements IConstructable, ISurvivalConstructable {
+public class OTEFoodGenerator extends OTHTTMultiMachineBaseEM implements IConstructable, ISurvivalConstructable {
 
     public OTEFoodGenerator(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
@@ -114,7 +113,7 @@ public class OTEFoodGenerator extends TTMultiMachineBaseEM implements IConstruct
         super.getWailaBody(itemStack, currentTip, accessor, config);
         final NBTTagCompound tag = accessor.getNBTData();
         currentTip.add(
-            "发电" + EnumChatFormatting.RESET
+            translateToLocal("otht.waila.gen") + EnumChatFormatting.RESET
                 + ": "
                 + EnumChatFormatting.GOLD
                 + tag.getString("bonus")
@@ -269,8 +268,9 @@ public class OTEFoodGenerator extends TTMultiMachineBaseEM implements IConstruct
     private final int verticalOffSet = 12;
     private final int depthOffSet = 0;
     private static IStructureDefinition<OTEFoodGenerator> STRUCTURE_DEFINITION = null;
-    private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
-        translateToLocal("1 - 输入输出总线, 输入输出仓, 消声仓 : 替换脱氧钢机械方块") + ":", translateToLocal("2 - 动力仓 : 替换尾部脱氧钢机械方块") };
+    private static final String[] description = new String[] {
+        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.food.0") + ":",
+        translateToLocal("ote.cm.food.1") };
 
     @Override
     public String[] getStructureDescription(ItemStack stackSize) {

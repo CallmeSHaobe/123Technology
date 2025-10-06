@@ -1,6 +1,7 @@
 package com.newmaa.othtech.machine.hatch;
 
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAYS_ENERGY_ON_WIRELESS;
+import static net.minecraft.util.StatCollector.translateToLocal;
 
 import net.minecraft.util.EnumChatFormatting;
 
@@ -21,7 +22,7 @@ public class OTEWTFHatch extends MTEWirelessEnergy {
 
     @Override
     public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-        return new OTEWTFHatch(mName, (byte) 14, new String[] { "" }, mTextures);
+        return new OTEWTFHatch(mName, mTier, new String[] { "" }, mTextures);
     }
 
     // endregion
@@ -55,9 +56,11 @@ public class OTEWTFHatch extends MTEWirelessEnergy {
     // region General
     @Override
     public String[] getDescription() {
-        return new String[] { EnumChatFormatting.GRAY + "将能量存储于全局网络中, 上限为2^(2^31)EU.",
-            EnumChatFormatting.GRAY + "不连接导线. 此方块可以从网络中抽取EU.", EnumChatFormatting.GRAY + "小心能量溢出.",
-            EnumChatFormatting.GOLD + "此处省略一百字.", EnumChatFormatting.GOLD + "只是个玩笑 有bug别用 嘻嘻。",
+        return new String[] { EnumChatFormatting.GRAY + translateToLocal("ote.tm.wtf.0"),
+            EnumChatFormatting.GRAY + translateToLocal("ote.tm.wtf.1"),
+            EnumChatFormatting.GRAY + translateToLocal("ote.tm.wtf.2"),
+            EnumChatFormatting.GOLD + translateToLocal("ote.tm.wtf.3"),
+            EnumChatFormatting.GOLD + translateToLocal("ote.tm.wtf.4"),
             EnumChatFormatting.DARK_PURPLE
                 + "9,223,372,034,707,292,160 * 9,223,372,034,707,292,160 EU/t(85,070,591,690,620,534,613,323,169,079,597,465,600EU/t)",
             EnumChatFormatting.GOLD + "123Technology" };
@@ -65,13 +68,13 @@ public class OTEWTFHatch extends MTEWirelessEnergy {
 
     @Override
     public ITexture[] getTexturesActive(ITexture aBaseTexture) {
-        return new ITexture[] { aBaseTexture, OVERLAYS_ENERGY_ON_WIRELESS[15] };
+        return new ITexture[] { aBaseTexture, OVERLAYS_ENERGY_ON_WIRELESS[14] };
         // return super.getTexturesActive(aBaseTexture);
     }
 
     @Override
     public ITexture[] getTexturesInactive(ITexture aBaseTexture) {
-        return new ITexture[] { aBaseTexture, OVERLAYS_ENERGY_ON_WIRELESS[15] };
+        return new ITexture[] { aBaseTexture, OVERLAYS_ENERGY_ON_WIRELESS[14] };
         // return super.getTexturesInactive(aBaseTexture);
     }
 }

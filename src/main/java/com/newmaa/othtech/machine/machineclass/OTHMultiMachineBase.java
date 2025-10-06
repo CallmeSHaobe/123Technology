@@ -38,7 +38,6 @@ import com.gtnewhorizons.modularui.api.widget.Widget;
 import com.gtnewhorizons.modularui.common.widget.ButtonWidget;
 import com.gtnewhorizons.modularui.common.widget.FakeSyncWidget;
 import com.newmaa.othtech.Config;
-import com.newmaa.othtech.common.machinelogic.MachineLogic123;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
@@ -102,7 +101,7 @@ public abstract class OTHMultiMachineBase<T extends OTHMultiMachineBase<T>> exte
      */
     @ApiStatus.OverrideOnly
     protected ProcessingLogic createProcessingLogic() {
-        return new MachineLogic123() {
+        return new OTHProcessingLogic() {
 
             @NotNull
             @Override
@@ -645,7 +644,7 @@ public abstract class OTHMultiMachineBase<T extends OTHMultiMachineBase<T>> exte
         return -1;
     }
 
-    protected SoundResourceOTH getProcessStartSoundOTH() {
+    protected OTHSoundResource getProcessStartSoundOTH() {
         return null;
     }
 
@@ -712,12 +711,12 @@ public abstract class OTHMultiMachineBase<T extends OTHMultiMachineBase<T>> exte
             aZ);
     }
 
-    public static boolean doSoundAtClientOTH(SoundResourceOTH aSound, int aTimeUntilNextSound, float aSoundStrength,
+    public static boolean doSoundAtClientOTH(OTHSoundResource aSound, int aTimeUntilNextSound, float aSoundStrength,
         double aX, double aY, double aZ) {
         return doSoundAtClientOTH(aSound.resourceLocation, aTimeUntilNextSound, aSoundStrength, aX, aY, aZ);
     }
 
-    public static boolean doSoundAtClientOTH(SoundResourceOTH aSound, int aTimeUntilNextSound, float aSoundStrength,
+    public static boolean doSoundAtClientOTH(OTHSoundResource aSound, int aTimeUntilNextSound, float aSoundStrength,
         float aSoundModulation, double aX, double aY, double aZ) {
         return doSoundAtClientOTH(
             aSound.resourceLocation,

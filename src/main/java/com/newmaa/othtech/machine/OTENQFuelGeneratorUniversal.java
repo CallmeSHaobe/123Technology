@@ -42,7 +42,7 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.common.materials.BWLiquids;
-import com.newmaa.othtech.machine.machineclass.TTMultiMachineBaseEM;
+import com.newmaa.othtech.machine.machineclass.OTHTTMultiMachineBaseEM;
 
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
@@ -71,7 +71,7 @@ import tectech.thing.metaTileEntity.multi.base.IStatusFunction;
 import tectech.thing.metaTileEntity.multi.base.LedStatus;
 import tectech.thing.metaTileEntity.multi.base.Parameters;
 
-public class OTENQFuelGeneratorUniversal extends TTMultiMachineBaseEM
+public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
     implements IConstructable, ISurvivalConstructable {
 
     public OTENQFuelGeneratorUniversal(int aID, String aName, String aNameRegional) {
@@ -91,7 +91,8 @@ public class OTENQFuelGeneratorUniversal extends TTMultiMachineBaseEM
     Parameters.Group.ParameterIn time;
     private static final IStatusFunction<OTENQFuelGeneratorUniversal> timeSTATUES = (base, p) -> LedStatus
         .fromLimitsInclusiveOuterBoundary(p.get(), 1, 2, 1000, 114514);
-    private static final INameFunction<OTENQFuelGeneratorUniversal> timeName = (base, p) -> GCCoreUtil.translate("耗时");
+    private static final INameFunction<OTENQFuelGeneratorUniversal> timeName = (base, p) -> GCCoreUtil
+        .translate("ote.tt.exc.0");
 
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
@@ -145,7 +146,7 @@ public class OTENQFuelGeneratorUniversal extends TTMultiMachineBaseEM
         super.getWailaBody(itemStack, currentTip, accessor, config);
         final NBTTagCompound tag = accessor.getNBTData();
         currentTip.add(
-            EnumChatFormatting.BOLD + "有线发电"
+            EnumChatFormatting.BOLD + translateToLocal("otht.waila.gen.wire")
                 + EnumChatFormatting.RESET
                 + ": "
                 + EnumChatFormatting.GOLD
@@ -154,7 +155,7 @@ public class OTENQFuelGeneratorUniversal extends TTMultiMachineBaseEM
                 + "EU/t"
                 + EnumChatFormatting.RESET);
         currentTip.add(
-            EnumChatFormatting.BOLD + "无线总发电"
+            EnumChatFormatting.BOLD + translateToLocal("otht.waila.gen.wireless")
                 + EnumChatFormatting.RESET
                 + ": "
                 + EnumChatFormatting.GOLD
@@ -163,14 +164,14 @@ public class OTENQFuelGeneratorUniversal extends TTMultiMachineBaseEM
                 + "EU"
                 + EnumChatFormatting.RESET);
         currentTip.add(
-            EnumChatFormatting.BOLD + "无线模式"
+            EnumChatFormatting.BOLD + translateToLocal("otht.waila.mode.wireless")
                 + EnumChatFormatting.RESET
                 + ": "
                 + EnumChatFormatting.RESET
                 + tag.getBoolean("WM")
                 + EnumChatFormatting.RESET);
         currentTip.add(
-            EnumChatFormatting.BOLD + "效率"
+            EnumChatFormatting.BOLD + translateToLocal("otht.waila.eff")
                 + EnumChatFormatting.RESET
                 + ": "
                 + EnumChatFormatting.GOLD
@@ -544,9 +545,9 @@ public class OTENQFuelGeneratorUniversal extends TTMultiMachineBaseEM
             isWirelessMode = false;
         }
         if (isWirelessMode) {
-            aPlayer.addChatMessage(new ChatComponentTranslation("无线模式启动"));
+            aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.nfg.mode.0"));
         } else {
-            aPlayer.addChatMessage(new ChatComponentTranslation("无线模式关闭"));
+            aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.nfg.mode.1"));
         }
         /*
          * GTUtility.sendChatToPlayer(aPlayer, translateToLocal(isWirelessMode ? "无线模式启动" : "无线模式关闭"));
@@ -566,9 +567,9 @@ public class OTENQFuelGeneratorUniversal extends TTMultiMachineBaseEM
         return null;
     }
 
-    private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
-        translateToLocal("4 - 动力仓或者激光仓 : 替换防辐射硅岩机械方块, 支持TecTech动力仓") + ":",
-        translateToLocal("3 - 输入仓输出仓 : 替换防辐射硅岩机械方块") + ":", translateToLocal("2 - 消声仓(装饰 : 替换防辐射硅岩机械方块)"), };
+    private static final String[] description = new String[] {
+        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.nfg.0") + ":",
+        translateToLocal("ote.cm.nfg.1") + ":", translateToLocal("ote.cm.nfg.2"), };
 
     @Override
     public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {

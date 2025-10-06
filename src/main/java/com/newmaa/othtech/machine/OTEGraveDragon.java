@@ -29,8 +29,8 @@ import com.google.common.collect.ImmutableList;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
-import com.newmaa.othtech.common.machinelogic.MachineLogic123;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
+import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
 
 import gregtech.api.enums.HeatingCoilLevel;
 import gregtech.api.interfaces.ITexture;
@@ -154,17 +154,12 @@ public class OTEGraveDragon extends OTHMultiMachineBase<OTEGraveDragon> {
         return 10000;
     }
 
-    public boolean explodesOnComponentBreak() {
-
-        return false;
-    }
-
     public RecipeMap<?> getRecipeMap() {
         return DEFCRecipes.fusionCraftingRecipes;
     }
 
-    private static final String[] description = new String[] { EnumChatFormatting.AQUA + translateToLocal("搭建细节") + ":",
-        translateToLocal("1-能源仓，输入输出总线，输入输出仓：替换硅岩聚合机械方块，支持TecTech能源仓"), };
+    private static final String[] description = new String[] {
+        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.gd.0"), };
 
     @Override
     public String[] getStructureDescription(ItemStack stackSize) {
@@ -191,7 +186,7 @@ public class OTEGraveDragon extends OTHMultiMachineBase<OTEGraveDragon> {
 
     @Override
     protected ProcessingLogic createProcessingLogic() {
-        return new MachineLogic123() {
+        return new OTHProcessingLogic() {
 
             @NotNull
             @Override
@@ -436,10 +431,6 @@ public class OTEGraveDragon extends OTHMultiMachineBase<OTEGraveDragon> {
         final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
         if (tileEntity != null) {
             tag.setString("SpeedBonus", String.valueOf(getSpeedBonus()));
-            tag.setString("MachanicalblocksDate", String.valueOf(MachanicalblocksDate));
-            tag.setBoolean("PerfectOverclock", isEnablePerfectOverclock());
-            tag.setString("MaxParallelRecipes", String.valueOf(getMaxParallelRecipes()));
-            tag.setString("coilLevel", String.valueOf(coilLevel.getTier()));
         }
     }
 
@@ -449,42 +440,11 @@ public class OTEGraveDragon extends OTHMultiMachineBase<OTEGraveDragon> {
         super.getWailaBody(itemStack, currentTip, accessor, config);
         final NBTTagCompound tag = accessor.getNBTData();
         currentTip.add(
-            EnumChatFormatting.BOLD + "耗时倍率"
+            EnumChatFormatting.BOLD + translateToLocal("otht.waila.bonus.speed")
                 + EnumChatFormatting.RESET
                 + ": "
                 + EnumChatFormatting.GOLD
                 + tag.getString("SpeedBonus")
-                + EnumChatFormatting.GOLD
-                + EnumChatFormatting.RESET);
-        currentTip.add(
-            EnumChatFormatting.BOLD + "无损超频"
-                + EnumChatFormatting.RESET
-                + ": "
-                + EnumChatFormatting.RESET
-                + tag.getBoolean("PerfectOverclock")
-                + EnumChatFormatting.RESET);
-        currentTip.add(
-            EnumChatFormatting.BOLD + "机械方块等级"
-                + EnumChatFormatting.RESET
-                + ": "
-                + EnumChatFormatting.GOLD
-                + tag.getString("MachanicalblocksDate")
-                + EnumChatFormatting.GOLD
-                + EnumChatFormatting.RESET);
-        currentTip.add(
-            EnumChatFormatting.BOLD + "并行数量"
-                + EnumChatFormatting.RESET
-                + ": "
-                + EnumChatFormatting.GOLD
-                + tag.getString("MaxParallelRecipes")
-                + EnumChatFormatting.GOLD
-                + EnumChatFormatting.RESET);
-        currentTip.add(
-            EnumChatFormatting.BOLD + "线圈等级"
-                + EnumChatFormatting.RESET
-                + ": "
-                + EnumChatFormatting.GOLD
-                + tag.getString("coilLevel")
                 + EnumChatFormatting.GOLD
                 + EnumChatFormatting.RESET);
     }
