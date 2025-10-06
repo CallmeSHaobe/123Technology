@@ -106,11 +106,6 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
     @Override
     public void loadNBTData(final NBTTagCompound aNBT) {
         pipeTier = aNBT.getInteger("pipe");
-        if (pipeTier == 1) {
-            pipeTier = 0; // 旧T1 → 新等级0
-        } else if (pipeTier == 2) {
-            pipeTier = 1; // 旧T2 → 新等级1
-        }
         isWirelessMode = aNBT.getBoolean("wireless");
         running_time = aNBT.getLong("Time");
         super.loadNBTData(aNBT);
@@ -519,7 +514,7 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
                                 Pair.of(sBlockCasings2, 15), // 等级1
                                 Pair.of(sBlockCasings9, 14) // 等级2
                             ),
-                            0, // 将notSet值改为0(默认未成型就是0,免得出岔子)
+                            -1, // 将notSet值改为-1(默认未成型就是-1,免得出岔子)
                             (t, meta) -> t.pipeTier = meta,
                             t -> t.pipeTier)))
                 .addElement('C', ofBlock(sBlockCasings6, 8))
