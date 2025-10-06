@@ -84,7 +84,7 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
         super.useLongPower = true;
     }
 
-    private int pipeTier = 1; // 修改默认值为1而不是0
+    private int pipeTier = 0; // 修改默认值为1而不是0
     private UUID ownerUUID;
     private boolean isWirelessMode = false;
     private String costingWirelessEU = "0";
@@ -106,9 +106,10 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
     @Override
     public void loadNBTData(final NBTTagCompound aNBT) {
         pipeTier = aNBT.getInteger("pipe");
-        // 兼容旧版本数据：如果pipeTier为0，则升级为1
-        if (pipeTier == 0) {
-            pipeTier = 1;
+        if (pipeTier == 1) {
+            pipeTier = 0; // 旧T1 → 新等级0
+        } else if (pipeTier == 2) {
+            pipeTier = 1; // 旧T2 → 新等级1
         }
         isWirelessMode = aNBT.getBoolean("wireless");
         running_time = aNBT.getLong("Time");
@@ -514,8 +515,11 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
                         "pipe",
                         ofBlocksTiered(
                             OTENQFuelGeneratorUniversal::getPipeTier,
-                            ImmutableList.of(Pair.of(sBlockCasings2, 15), Pair.of(sBlockCasings9, 14)),
-                            1, // 将notSet值改为1(默认未成型就是1,免得出岔子)
+                            ImmutableList.of(
+                                Pair.of(sBlockCasings2, 15), // 等级1
+                                Pair.of(sBlockCasings9, 14) // 等级2
+                            ),
+                            0, // 将notSet值改为0(默认未成型就是0,免得出岔子)
                             (t, meta) -> t.pipeTier = meta,
                             t -> t.pipeTier)))
                 .addElement('C', ofBlock(sBlockCasings6, 8))
@@ -527,9 +531,9 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
     }
 
     public FluidStack getPromoter() {
-        if (pipeTier == 1) { // T1
+        if (pipeTier == 0) { // T1
             return BWLiquids.PromoterZPM.getFluidOrGas(1);
-        } else if (pipeTier == 2) { // T2
+        } else if (pipeTier == 1) { // T2
             return BWLiquids.PromoterUEV.getFluidOrGas(1);
         } else {
             return BWLiquids.PromoterZPM.getFluidOrGas(1); // fallback
@@ -539,7 +543,7 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
     @Override
     public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
-        if (pipeTier == 2 && !isWirelessMode) { // 仅 T2 能开
+        if (pipeTier == 1 && !isWirelessMode) { // 仅 T2 能开
             isWirelessMode = true;
         } else {
             isWirelessMode = false;
@@ -560,9 +564,9 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
     protected static Integer getPipeTier(Block block, int meta) {
         if (block == null) return null;
         if (block == sBlockCasings2 && meta == 15) {
-            return 1; // T1 - 修改为1而不是0
+            return 0; // T1 - 修改为1而不是0
         } else if (block == sBlockCasings9 && meta == 14) {
-            return 2; // T2 - 修改为2而不是1
+            return 1; // T2 - 修改为2而不是1
         }
         return null;
     }
