@@ -84,7 +84,7 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
         super.useLongPower = true;
     }
 
-    private int pipeTier = 1; // 修改默认值为1而不是0
+    static int pipeTier = 0; // 修改默认值为1而不是0
     private UUID ownerUUID;
     private boolean isWirelessMode = false;
     private String costingWirelessEU = "0";
@@ -96,7 +96,6 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
 
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
-
         aNBT.setBoolean("wireless", isWirelessMode);
         aNBT.setInteger("pipe", pipeTier);
         aNBT.setLong("Time", running_time);
@@ -106,10 +105,6 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
     @Override
     public void loadNBTData(final NBTTagCompound aNBT) {
         pipeTier = aNBT.getInteger("pipe");
-        // 兼容旧版本数据：如果pipeTier为0，则升级为1
-        if (pipeTier == 0) {
-            pipeTier = 1;
-        }
         isWirelessMode = aNBT.getBoolean("wireless");
         running_time = aNBT.getLong("Time");
         super.loadNBTData(aNBT);
@@ -514,8 +509,11 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
                         "pipe",
                         ofBlocksTiered(
                             OTENQFuelGeneratorUniversal::getPipeTier,
-                            ImmutableList.of(Pair.of(sBlockCasings2, 15), Pair.of(sBlockCasings9, 14)),
-                            -1, // 将notSet值改为-1
+                            ImmutableList.of(
+                                Pair.of(sBlockCasings2, 15), // 等级1
+                                Pair.of(sBlockCasings9, 14) // 等级2
+                            ),
+                            -1, // nonset
                             (t, meta) -> t.pipeTier = meta,
                             t -> t.pipeTier)))
                 .addElement('C', ofBlock(sBlockCasings6, 8))
@@ -560,9 +558,9 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
     protected static Integer getPipeTier(Block block, int meta) {
         if (block == null) return null;
         if (block == sBlockCasings2 && meta == 15) {
-            return 1; // T1 - 修改为1而不是0
+            return pipeTier = 1; // T1 - 修改为1而不是0
         } else if (block == sBlockCasings9 && meta == 14) {
-            return 2; // T2 - 修改为2而不是1
+            return pipeTier = 2; // T2 - 修改为2而不是1
         }
         return null;
     }
