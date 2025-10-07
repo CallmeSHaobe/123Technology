@@ -84,7 +84,7 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
         super.useLongPower = true;
     }
 
-    private int pipeTier = 0; // 修改默认值为1而不是0
+    static int pipeTier = 0; // 修改默认值为1而不是0
     private UUID ownerUUID;
     private boolean isWirelessMode = false;
     private String costingWirelessEU = "0";
@@ -513,7 +513,7 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
                                 Pair.of(sBlockCasings2, 15), // 等级1
                                 Pair.of(sBlockCasings9, 14) // 等级2
                             ),
-                            -1, // 将notSet值改为-1(默认未成型就是-1,免得出岔子)
+                            -1, // nonset
                             (t, meta) -> t.pipeTier = meta,
                             t -> t.pipeTier)))
                 .addElement('C', ofBlock(sBlockCasings6, 8))
@@ -525,9 +525,9 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
     }
 
     public FluidStack getPromoter() {
-        if (pipeTier == 0) { // T1
+        if (pipeTier == 1) { // T1
             return BWLiquids.PromoterZPM.getFluidOrGas(1);
-        } else if (pipeTier == 1) { // T2
+        } else if (pipeTier == 2) { // T2
             return BWLiquids.PromoterUEV.getFluidOrGas(1);
         } else {
             return BWLiquids.PromoterZPM.getFluidOrGas(1); // fallback
@@ -537,7 +537,7 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
     @Override
     public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
-        if (pipeTier == 1 && !isWirelessMode) { // 仅 T2 能开
+        if (pipeTier == 2 && !isWirelessMode) { // 仅 T2 能开
             isWirelessMode = true;
         } else {
             isWirelessMode = false;
@@ -558,9 +558,9 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
     protected static Integer getPipeTier(Block block, int meta) {
         if (block == null) return null;
         if (block == sBlockCasings2 && meta == 15) {
-            return 0; // T1 - 修改为1而不是0
+            return pipeTier = 1; // T1 - 修改为1而不是0
         } else if (block == sBlockCasings9 && meta == 14) {
-            return 1; // T2 - 修改为2而不是1
+            return pipeTier = 2; // T2 - 修改为2而不是1
         }
         return null;
     }
