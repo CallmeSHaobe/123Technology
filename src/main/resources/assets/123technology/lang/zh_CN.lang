@@ -74,7 +74,7 @@ tt.br.3=他看起来还在跳动...
 tt.br.4=第一个脑子, 要从哪里来呢..?
 tt.br.5=你知道的, 做这种事自己总要付出一些代价.
 tt.lb.0=吃得饱饱的
-tt.tst.0§7哦塔斯汀, 哦塔斯汀, 有了你生活美好没烦恼~
+tt.tst.0=§7哦塔斯汀, 哦塔斯汀, 有了你生活美好没烦恼~
 tt.ww.0=§b§l这就是GTNH，听坠木马斯特说
 tt.690.0=§z§l一发摧毁一个航母战斗群
 tt.690.1=§4警告：投掷者后果自负 将造成大范围爆炸
@@ -632,4 +632,6 @@ ote.tm.wtf.2=不用小心能量溢出.
 ote.tm.wtf.3=此处省略一百字.
 ote.tm.wtf.4=只是个玩笑 有bug别用 嘻嘻.
 
-
+item.itemAmulet.name=DSS Collar
+death.attack.amulet_explosion=%1$s has be killed by DSS collar
+item.itemBucketAqua.name=Aqua Regia Unit (Antimonia Origin)

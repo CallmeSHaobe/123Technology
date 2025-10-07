@@ -68,8 +68,21 @@ tt.ani=99.8% Antimony Content
 
 
 
-
-
+#Normal Items
+item.sl.name.p0=Solar Lighter
+item.sl.name.p1=Exclusive for Veteran Players
+tt.sl.0=Light banishes all darkness
+tt.br.0=Am I still alive...?
+tt.br.1=Was I ever alive...?
+tt.br.2=I think, therefore I am.
+tt.br.3=It still seems to be beating...
+tt.br.4=The first brain, where does it come from...?
+tt.br.5=You know, doing this kind of thing always comes at a cost.
+tt.lb.0=Well-fed and satisfied
+tt.tst.0=§7Oh TST,oh TST,with you, life is wonderful and worry-free~
+tt.ww.0=§b§lThis is GTNH, so says DrEaMMaStEr
+tt.690.0=§z§l§z§lOne shot annihilates an entire carrier battle group
+tt.690.1=§4Warning: Thrower bears full responsibility. Will cause large-scale explosions
 item.itemZhangww.name=Weiwei bean milk
 item.ingotHotDog.name=Hot Dog Ingot
 item.itemLeekBox.name=Leek Box
@@ -83,8 +96,8 @@ GT5U.gui.text.HeatErr=§4Shut down due to the loss of EBF temperature.
 GT5U.gui.text.nolava=§4Shut down due to the loss of cryotheum
 GT5U.gui.text.noEnqing=§bShut down due to the loss of enqings
 GT5U.gui.text.voltage=§bShut down due to the energy hatch voltage tier
-otht.recipe.EVACannon=§l§6EVA专用改造阳电子炮GT
-otht.evaCannon=%s 被阳电子炮轰炸至灰
+otht.recipe.EVACannon=§l§6EVA-Exclusive Modified Positron Cannon GT
+otht.evaCannon=%s was obliterated to ashes by the Positron Cannon
 otht.recipe.SINOPEC=§l§aSINOPEC
 otht.recipe.TSSF=§l§cTangshan Steel Factory
 otht.recipe.MEEC=§l§4Soul Devouring Prison
@@ -174,10 +187,35 @@ death.attack.Acid=Though it may be unscientific, %1$s was still killed by Aqua R
 #Machine_ToolTips
 oth.tm.pollution=§cWarning: If powerfail occurs with the error "Cannot vent pollution," try placing multiple Muffler Hatches
 
+#Machine_Construction
+otht.con=Construction Details
+
+#Machine_TT
+ote.tt.exc.0=Time Taken
+
 #9in1
+oth.tm.mnio.0=§c§'s Ultimate Creation - Nonuple (Mega Factory)
 oth.tm.mnio.1=§aFeatures fifteen modes. Use a screwdriver to switch mode categories, and programmed circuits 20, 21, 22 to switch sub-modes.
 oth.tm.mnio.2=§aMetal Mode: Compressor, Lathe, Electromagnetic Polarizer
 oth.tm.mnio.3=§aFluid Mode: Fermenter, Fluid Extractor, Extractor
 oth.tm.mnio.4=§aMisc Mode: Laser Engraver, Autoclave, Fluid Solidifier
 oth.tm.mnio.5=§aIsa Mode: IsaMill, Industrial Flotation Cell, Utupu-Tanuri
 oth.tm.mnio.6=§aCol Mode: Molecular Transformer, Brewery, Fluid Heater
+
+#Machine_Waila
+otht.waila.wirelesseu=Current Wireless EU Consumption
+otht.waila.gen=Current Power Generation
+otht.waila.bonus.speed=Current Processing Time Multiplier
+otht.waila.mode=§eRunning Mode:
+otht.waila.123=Irdiosamarium Alloy Dust Inserted
+otht.waila.bin.input=Current Singularity Mode Item Input Total
+otht.waila.tier=Current Tier
+otht.waila.isa.tier=Current IsaMill Tier
+otht.waila.oc.amount=Current Overclock Count
+otht.waila.bonus.output=Current Output Multiplier
+otht.waila.gen.wire=Current Wired Power Generation
+otht.waila.gen.wireless=Current Wireless Power Generation
+otht.waila.mode.wireless=Wireless Mode Enabled
+otht.waila.eff=Current Generation Efficiency
+otht.waila.gen.plasma=Current Plasma Output per kL
+otht.waila.tier.steam=Current Steam Tier
