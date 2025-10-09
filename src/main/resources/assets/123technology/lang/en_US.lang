@@ -196,14 +196,14 @@ item.itemBucketAqua.name=Aqua Regia Unit (Antimonia Origin)
 death.attack.Acid=Though it may be unscientific, %1$s was still killed by Aqua Regia
 
 #9in1
-oth.tm.mnio.0=§c§Old Timer's Ultimate Creation - Mega Factory
+oth.tm.mnio.0=§c§lOld Timer's Ultimate Creation - Mega Factory
 oth.tm.mnio.1=§aFeatures fifteen modes. Use a screwdriver to switch mode categories, and programmed circuits 20, 21, 22 to switch sub-modes.
 oth.tm.mnio.2=§aMetal Mode: Compressor, Lathe, Electromagnetic Polarizer
 oth.tm.mnio.3=§aFluid Mode: Fermenter, Fluid Extractor, Extractor
 oth.tm.mnio.4=§aMisc Mode: Laser Engraver, Autoclave, Fluid Solidifier
 oth.tm.mnio.5=§aIsa Mode: IsaMill, Industrial Flotation Cell, Utupu-Tanuri
 oth.tm.mnio.6=§aCol Mode: Molecular Transformer, Brewery, Fluid Heater
-oth.tm.mnio.7=§bParallel processing time formula by a certain §9Ice Fairy
+oth.tm.mnio.7=§bParallel processing time formula by a §9Ice Fairy
 oth.tm.mnio.8=§bIncrease voltage tier by one,reduce 9 Parallel, minimum 9, default 64
 oth.tm.mnio.9= §bRecipe Time = NEI Time * (1 + (Energy Hatch Voltage Tier * 16%))
 oth.tm.mnio.10=§bEU Consumption: (1 / Coil Tier) * 0.1, minimum 0.01
@@ -256,7 +256,7 @@ ote.tm.food.1=No more worrying about eating too much
 ote.tm.food.2=Insanely torch all food
 ote.tm.food.3=Power Generation: (Food Hunger Value^2 * Coil Tier * casing Tier * 2), maximum output 1A MAX/t, 64 Parallel, burns up to one stack of identical food at a time
 ote.tm.food.4=§c§lWarning: High machine pollution: If a powerfail occurs with the error "Cannot vent pollution," try placing multiple Muffler Hatches
-ote.tm.food.5=Praise the great tycoon Safari_xiu! Without him,there would be no 123.Lmao.
+ote.tm.food.5=Praise the great tycoon Safari_xiu! Without her,there would be no 123.Lmao.
 ote.cm.food.0=1 - Input/Output Bus, Input/Output Hatch, Muffler Hatch: Replace Deoxidized Steel casing
 ote.cm.food.1=2 - Dynamo Hatch: Replace Tail Deoxidized Steel casing
 
@@ -320,6 +320,42 @@ ote.tm.mca.3=§bGlass tier determines its appearance; if not forming, reposition
 ote.tm.mca.4=Default 128 Parallel; for each voltage tier increase, add 16 Parallel
 ote.tm.mca.5=Insert a UEV Field Generator into the main frame to unlock perfect overclocks
 ote.cm.mca.0=1 - Input/Output Bus, Input/Output Hatch, Energy Hatch: Replace Solid Steel Machine Casing, supports TecTech Energy Hatch
+
+#pump
+ote.tm.pump.0=Space Drill Module
+ote.tm.pump.1=Adds Space Drill functionality to the Space Elevator
+
+ote.tm.pump.3=Draws energy directly from the Space Elevator, no Energy Hatch required
+ote.tm.pump.4=Selected planet and gas type determine the output fluid
+ote.tm.pump.5=Lock the Output Hatch to prevent overflow destruction
+ote.tm.pump.6=§9Operating Voltage: §aMAX Maximum Parallel per recipe: §c123123
+ote.tm.pump.7=Processes up to §e5§r different recipes at once
+ote.tm.pump.8=Requires §6MK-V§r or higher-grade Acceleration Track
+ote.tm.pump.9=Space Elevator Base Casing
+ote.tm.pump.10=Any Space Elevator Base Casing
+ote.tm.pump.11=§b§lAuthor: §lMaster Lmao -- HuimaoX
+
+#MEBF
+ote.tm.mebf.1=§Old Timer's Ultimate Creation - Electric Blast Furnace
+ote.tm.mebf.2=§bEU Consumption: 90%
+ote.tm.mebf.3=§bSpeed +120%
+ote.tm.mebf.4=§6Does not consume Blazing Pyrotheum, but the Input Hatch must contain at least 123 * 1000L of Blazing Pyrotheum to operate
+ote.tm.mebf.5=§l“Blazing Pyrotheum, huh? Use a few thousand and it’s obsolete.” ---Fengge’s Quote, Revised
+ote.tm.mebf.6=Please note the glass tier requirement
+ote.tm.mebf.7=Checks for the presence of Blazing Pyrotheum in the Input Hatch during structure validation
+ote.tm.mebf.0=§Old Timer's Ultimate Creation - Electric Blast Furnace
+ote.cm.mebf.0=1 - Muffler Hatch, Energy Hatch, Input/Output Bus, Input/Output Hatch: Replace Pyrotheum Blast Casing, supports TecTech Energy Hatch, with glass tier restrictions (seriously!)
+
+#Freezer
+ote.tm.fz.0=§lOld Timer's Ultimate Creation - Vacuum Freezer
+ote.tm.fz.1=§b  EU Consumption: 100%
+ote.tm.fz.2=§b  Speed + 100%
+ote.tm.fz.3=§b  1024 Parallel
+ote.tm.fz.4=§6  Does not consume Gelid Cryotheum but the input hatch must contain at least 123 * 1000L of Gelid Cryotheum to operate
+ote.tm.fz.5=§q§l「"Mega Cryogenic Freezer is in an awkward position: above it is the TST Freezer, below it is the origin Freezer, stuck in the middle with nowhere to go."
+ote.cm.fz.0=1 - Muffler Hatch, Energy Hatch, Input/Output Bus, Input/Output Hatch: Replace Cryogenic Freezer Machine Casing, supports TecTech Energy Hatch
+ote.cm.fz.1=You actually made this thing?
+
 
 #Machine_Waila
 otht.waila.wirelesseu=Current Wireless EU Consumption
