@@ -470,7 +470,6 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
         return new OTEBBPlasmaForge(mName);
     }
 
-
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
         MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
@@ -654,55 +653,54 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
             return false;
         }
 
-
         // Heat capacity of coils used on multi. No free heat from extra EU!
         mHeatingCapacity = (int) getCoilLevel().getHeat();
 
         // All structure checks passed, return true.
         return true;
     }
-        // if (isWirelessMode) {
-        // mMaxProgresstime = (int) 6.4 * 20;
-        // } else mMaxProgresstime = processingLogic.getDuration();
+    // if (isWirelessMode) {
+    // mMaxProgresstime = (int) 6.4 * 20;
+    // } else mMaxProgresstime = processingLogic.getDuration();
 
-        // // Item input bus check.
-        // if (mInputBusses.size() > max_input_bus) return false;
-        //
-        // // Item output bus check.
-        // if (mOutputBusses.size() > max_output_bus) return false;
-        //
-        // // Fluid input hatch check.
-        // if (mInputHatches.size() > max_input_hatch) return false;
-        //
-        // // Fluid output hatch check.
-        // if (mOutputHatches.size() > max_output_hatch) return false;
-        //
-        // // If there is more than 1 TT energy hatch, the structure check will fail.
-        // // If there is a TT hatch and a normal hatch, the structure check will fail.
-        // if (!mExoticEnergyHatches.isEmpty()) {
-        // if (!mEnergyHatches.isEmpty()) return false;
-        // if (mExoticEnergyHatches.size() > 1) return false;
-        // }
-        //
-        // // If there is 0 or more than 2 energy hatches structure check will fail.
-        // if (!mEnergyHatches.isEmpty()) {
-        // if (mEnergyHatches.size() > 2) return false;
-        //
-        // // Check will also fail if energy hatches are not of the same tier.
-        // byte tier_of_hatch = mEnergyHatches.get(0).mTier;
-        // for (MTEHatchEnergy energyHatch : mEnergyHatches) {
-        // if (energyHatch.mTier != tier_of_hatch) {
-        // return false;
-        // }
-        // }
-        // }
-        //
-        // // If there are no energy hatches or TT energy hatches, structure will fail to form.
-        // if ((mEnergyHatches.isEmpty()) && (mExoticEnergyHatches.isEmpty())) return false;
-        //
-        // // Maintenance hatch not required but left for compatibility.
-        // // Don't allow more than 1, no free casing spam!
-        // if (mMaintenanceHatches.size() > 1) return false;
+    // // Item input bus check.
+    // if (mInputBusses.size() > max_input_bus) return false;
+    //
+    // // Item output bus check.
+    // if (mOutputBusses.size() > max_output_bus) return false;
+    //
+    // // Fluid input hatch check.
+    // if (mInputHatches.size() > max_input_hatch) return false;
+    //
+    // // Fluid output hatch check.
+    // if (mOutputHatches.size() > max_output_hatch) return false;
+    //
+    // // If there is more than 1 TT energy hatch, the structure check will fail.
+    // // If there is a TT hatch and a normal hatch, the structure check will fail.
+    // if (!mExoticEnergyHatches.isEmpty()) {
+    // if (!mEnergyHatches.isEmpty()) return false;
+    // if (mExoticEnergyHatches.size() > 1) return false;
+    // }
+    //
+    // // If there is 0 or more than 2 energy hatches structure check will fail.
+    // if (!mEnergyHatches.isEmpty()) {
+    // if (mEnergyHatches.size() > 2) return false;
+    //
+    // // Check will also fail if energy hatches are not of the same tier.
+    // byte tier_of_hatch = mEnergyHatches.get(0).mTier;
+    // for (MTEHatchEnergy energyHatch : mEnergyHatches) {
+    // if (energyHatch.mTier != tier_of_hatch) {
+    // return false;
+    // }
+    // }
+    // }
+    //
+    // // If there are no energy hatches or TT energy hatches, structure will fail to form.
+    // if ((mEnergyHatches.isEmpty()) && (mExoticEnergyHatches.isEmpty())) return false;
+    //
+    // // Maintenance hatch not required but left for compatibility.
+    // // Don't allow more than 1, no free casing spam!
+    // if (mMaintenanceHatches.size() > 1) return false;
 
     @NotNull
     @Override
@@ -744,7 +742,6 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
         super.onFirstTick(aBaseMetaTileEntity);
         this.ownerUUID = aBaseMetaTileEntity.getOwnerUuid();
     }
-
 
     @Override
     public boolean addOutput(FluidStack aLiquid) {
