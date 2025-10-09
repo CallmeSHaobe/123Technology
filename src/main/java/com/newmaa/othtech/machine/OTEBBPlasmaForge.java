@@ -470,11 +470,6 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
         return new OTEBBPlasmaForge(mName);
     }
 
-    @Override
-    public boolean addToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
-        boolean exotic = addExoticEnergyInputToMachineList(aTileEntity, aBaseCasingIndex);
-        return super.addToMachineList(aTileEntity, aBaseCasingIndex) || exotic;
-    }
 
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
@@ -550,7 +545,19 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
                 overclockCalculator = super.createOverclockCalculator(recipe).setRecipeHeat(recipe.mSpecialValue)
                     .setMachineHeat(mHeatingCapacity);
 
-                if (MLevel >= 2) {
+                // 添加限制：当 MLevel=1 且使用能源仓时限制超频
+                if (MLevel == 1 && !isWirelessMode && !mEnergyHatches.isEmpty()) {
+                    // 获取能源仓的总功率
+                    long totalPowerCapacity = getTotalPowerCapacity();
+                    // 获取配方基础功耗
+                    long baseEUt = recipe.mEUt;
+                    // 计算最大允许的超频次数，确保不超过能源仓总功率
+                    int maxOverclocks = calculateMaxOverclocks(baseEUt, totalPowerCapacity);
+
+                    // 限制超频次数
+                    overclockCalculator = overclockCalculator.setMaxOverclocks(maxOverclocks);
+                } else if (MLevel >= 2) {
+                    // MLevel>=2 时允许无损超频
                     overclockCalculator = overclockCalculator.enablePerfectOC();
                 }
 
@@ -559,11 +566,73 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
 
             @Override
             protected @Nonnull CheckRecipeResult validateRecipe(@Nonnull GTRecipe recipe) {
-                return recipe.mSpecialValue <= mHeatingCapacity ? CheckRecipeResultRegistry.SUCCESSFUL
-                    : CheckRecipeResultRegistry.insufficientHeat(recipe.mSpecialValue);
+                // 原有的热量检查
+                if (recipe.mSpecialValue > mHeatingCapacity) {
+                    return CheckRecipeResultRegistry.insufficientHeat(recipe.mSpecialValue);
+                }
+
+                // 添加功率限制检查：当 MLevel=1 且使用能源仓时
+                if (MLevel == 1 && !isWirelessMode && !mEnergyHatches.isEmpty()) {
+                    long totalPowerCapacity = getTotalPowerCapacity();
+                    long baseEUt = recipe.mEUt;
+
+                    // 如果基础功耗已经超过能源仓总功率，直接拒绝配方
+                    if (baseEUt > totalPowerCapacity) {
+                        return CheckRecipeResultRegistry.insufficientPower(totalPowerCapacity);
+                    }
+
+                    // 检查超频后的功耗是否会超过限制
+                    int maxOverclocks = calculateMaxOverclocks(baseEUt, totalPowerCapacity);
+                    if (maxOverclocks <= 0) {
+                        return CheckRecipeResultRegistry.insufficientPower(totalPowerCapacity);
+                    }
+                }
+
+                return CheckRecipeResultRegistry.SUCCESSFUL;
             }
-        }.setUnlimitedTierSkips()
-            .setMaxParallelSupplier(this::getMaxParallelRecipes);
+        }.setMaxParallelSupplier(this::getMaxParallelRecipes);
+    }
+
+    // 计算能源仓总功率
+    private long getTotalPowerCapacity() {
+        long totalCapacity = 0;
+        for (MTEHatch hatch : mEnergyHatches) {
+            // 获取单个能源仓的功率容量（电压 * 安培）
+            long hatchCapacity = 0;
+            if (hatch.getBaseMetaTileEntity() != null) {
+                hatchCapacity = hatch.getBaseMetaTileEntity()
+                    .getInputVoltage()
+                    * hatch.getBaseMetaTileEntity()
+                        .getInputAmperage();
+            }
+            totalCapacity += hatchCapacity;
+        }
+        return totalCapacity;
+    }
+
+    // 计算最大允许的超频次数
+    private int calculateMaxOverclocks(long baseEUt, long totalPowerCapacity) {
+        int maxOverclocks = 0;
+        long currentEUt = baseEUt;
+
+        // 每次超频功耗翻倍，计算在不超过总功率的前提下能超频多少次
+        while (currentEUt * 2 <= totalPowerCapacity && maxOverclocks < 10) { // 限制最大超频次数为10
+            currentEUt *= 2;
+            maxOverclocks++;
+        }
+
+        return maxOverclocks;
+    }
+
+    // 获取实际能耗使用情况
+    protected long getActualEnergyUsage() {
+        if (isWirelessMode) {
+            // 无线模式使用无线网络能量
+            return processingLogic.getCalculatedEut();
+        } else {
+            // 返回当前配方的实际能耗
+            return Math.abs(lEUt);
+        }
     }
 
     @Override
@@ -580,6 +649,18 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
 
         if (getCoilLevel() == HeatingCoilLevel.None) return false;
 
+        // 检查能源仓数量
+        if (mEnergyHatches.size() > 1) {
+            return false;
+        }
+
+
+        // Heat capacity of coils used on multi. No free heat from extra EU!
+        mHeatingCapacity = (int) getCoilLevel().getHeat();
+
+        // All structure checks passed, return true.
+        return true;
+    }
         // if (isWirelessMode) {
         // mMaxProgresstime = (int) 6.4 * 20;
         // } else mMaxProgresstime = processingLogic.getDuration();
@@ -623,13 +704,6 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
         // // Don't allow more than 1, no free casing spam!
         // if (mMaintenanceHatches.size() > 1) return false;
 
-        // Heat capacity of coils used on multi. No free heat from extra EU!
-        mHeatingCapacity = (int) getCoilLevel().getHeat();
-
-        // All structure checks passed, return true.
-        return true;
-    }
-
     @NotNull
     @Override
     public CheckRecipeResult checkProcessing() {
@@ -671,11 +745,6 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
         this.ownerUUID = aBaseMetaTileEntity.getOwnerUuid();
     }
 
-    @Override
-    public void clearHatches() {
-        super.clearHatches();
-        mExoticEnergyHatches.clear();
-    }
 
     @Override
     public boolean addOutput(FluidStack aLiquid) {

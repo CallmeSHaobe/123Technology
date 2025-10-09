@@ -150,3 +150,14 @@ otht.recipe.EXH=§4SuperNB Heat Exchanger
 item.BrainsHuman.name=§nBrains
 item.itemAmulet.name=DSS Collar
 death.attack.amulet_explosion=%1$s has be killed by DSS collar
+
+#BBPF
+ote.bbpf.0=§d§lLaodeng's legend Machine  - BB PlasmaForge
+ote.bbpf.1="§cMake DTPF useful again!-V-"
+ote.bbpf.2=§lParallel: 123 + coilTier *1230
+ote.bbpf.3=There will be no more catalyst residue
+ote.bbpf.4=§a§mUpdate T2 Structure to Unlock Wireless Mode §l§8(You can't use T2 for now beacause i didn't do it lol)
+ote.bbpf.5=Turn Wireless Mode
+ote.bbpf.6=§cSupport Tectech Energy/Laser Hatches
+ote.bbpf.wireless.off=Something seems locked(Wireless off)
+ote.bbpf.wireless.on=The Machine seems unlock something....(Wireless on)
