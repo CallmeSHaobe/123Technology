@@ -356,6 +356,105 @@ ote.tm.fz.5=§q§l「"Mega Cryogenic Freezer is in an awkward position: above it
 ote.cm.fz.0=1 - Muffler Hatch, Energy Hatch, Input/Output Bus, Input/Output Hatch: Replace Cryogenic Freezer Machine Casing, supports TecTech Energy Hatch
 ote.cm.fz.1=You actually made this thing?
 
+#MegaIsaFactory
+ote.tm.misa.0=§2§lThe Ultimate Creation of the Isa Lord - Isa Integrated Factory
+ote.tm.misa.1=§oThe marvelous Isa series, blending trash and chemical products into one—isn't that amazing?
+ote.tm.misa.2=§oClick the machine main frame to obtain a masterpiece...
+ote.tm.misa.3=§dThe favorite one-step solution of many old Timers: eliminates messy processes, just to save some TPS
+ote.tm.misa.4=Performs perfect overclocks
+ote.tm.misa.5=Time multiplier: 1/Coil Tier
+ote.tm.misa.6=Power consumption multiplier: Glass Tier^-0.1
+ote.tm.misa.7='Grinder Complex' determines the recipe tier executed by the machine, just an item
+ote.tm.misa.8=§aAlso comes with §4unexpected§a surprises, hehe...
+ote.cm.misa.0=1 - Muffler Hatch, Energy Hatch, Input/Output Bus, Input/Output Hatch: Replace Isa Machine Casing, supports TecTech Energy Hatch
+ote.cm.misa.1=2 - Muffler Hatch, replace Vacuum Machine Casing
+
+#MegaIsaForge
+ote.tm.mifo.0=§b§lThe Ultimate Creation of the Old Timer - Divine Isa Machine (Old Timer Fabricator & Space Assembler)
+ote.tm.mifo.1=§c§l"I rejected the §4gift of Blood Magic§c and the §esweetness of bees"
+ote.tm.mifo.2=§dCertified by the Isa Lord
+ote.tm.mifo.3=§7Unimaginable speed and parallelism
+ote.tm.mifo.4=Time = NEI Time * { 1 / {Voltage Tier^[(Glass Tier / 2)+1]}^(1/3)}
+ote.tm.mifo.5=§qPlace the Astral Array in the controller to unlock Space Assembly Mode
+ote.cm.mifo.0=1 - Muffler Hatch, Energy Hatch, Input/Output Bus, Input/Output Hatch: Replace Ultimate Molecular Machine Casing, supports TecTech Energy Hatch
+ote.tm.mifo.mode.0=Isa Forge Mode
+ote.tm.mifo.mode.1=Space Assembly Mode
+
+
+#MegaNqFF
+ote.tm.mnf.0=§z§lEpic Machine Outperforming Eight Mega Distilleries - Compressed Naquadah Fuel Refinery
+ote.tm.mnf.1=§l§oDoughnut Bonus Series
+ote.tm.mnf.2=Higher-tier coils enable parallelism and acceleration: :
+ote.tm.mnf.3=Tier 1 Coil: 16 Parallel, 1 Overclock; Tier 2 Coil: 32 Parallel, 2 Overclocks;
+ote.tm.mnf.4=Tier 3 Coil: 64 Parallel, 3 Overclocks; Tier 4 Coil: 256 Parallel, 4 Overclocks
+ote.tm.mnf.5=Tier 4 Coil unlocks §cExclusive Recipe Pool
+ote.tm.mnf.6=§bScrewdriver switches modes, §cExclusive Recipe Pool§b enables advanced single-step recipes
+ote.cm.mnf.0=1 - Muffler Hatch, Energy Hatch, Input/Output Bus, Input/Output Hatch: Replace Naquadah Fuel Refinery Machine Casing, supports TecTech Energy Hatch
+ote.tm.mnf.mode.0=Naquadah Fuel Refinery Mode
+ote.tm.mnf.mode.1=Compressed Naquadah Fuel Refinery Mode
+
+#MQFT
+ote.tm.mqft.0=§e§lAnother Creation of the Old Timer - §b"Dirac Inverter"
+ote.tm.mqft.1=§b§lManipulation of virtual particles stirs colossal waves in the Quantum Sea...
+ote.tm.mqft.2=§dProvides basic materials, enabling complex chemical and physical processes in one step
+ote.tm.mqft.3=§dRelying on virtual particles in the Quantum Sea, outputs can exceed the scale of inputs
+ote.tm.mqft.4=§d*Matter remains conserved, merely transformed from virtual particles to real particles
+ote.tm.mqft.5=Dirac Inversion Mode offers unexpected surprises
+ote.tm.mqft.6=§9Each level of the Time Dilation Field Generator reduces recipe time by 10%
+ote.tm.mqft.7=§9When Stability Field Generator Tier < 6, output remains unchanged
+ote.tm.mqft.8=§9When Stability Field Generator Tier ≤ 8 and ≥ 6, output is doubled
+ote.tm.mqft.9=§9When Stability Field Generator Tier ≥ 9, output is tripled
+ote.cm.mqft.0=1 - Energy Hatch, Input/Output Bus, Input/Output Hatch: Replace Molecular Machine Casing, supports TecTech Energy Hatch
+
+#BBPF
+ote.bbpf.0=§d§lThe Legendary Creation of the Old Timer - Banter Bustle Plasma Forge
+ote.bbpf.1="§cTurns out DTPF without catalyst reduction is so useful -V-""
+ote.bbpf.2=§lParallelism Formula: 123 + Coil Tier * 1230
+ote.bbpf.3="no longer has to worry about catalyst residue!"
+ote.bbpf.4=§a§mUpgrade to T2 structure to enable perfect overclocks/Int parallelism + unlock wireless mode §l§8(T2 cannot be successfully replicated yet due to technological limitations...)
+ote.bbpf.5=Switch to wireless mode
+ote.bbpf.6=§cSupports Multi-Amp Hatch/TecTech Laser/Energy Hatch
+ote.bbpf.wireless.off=The machine's power is sealed (wireless off)
+ote.bbpf.wireless.on=The machine unleashes its full power (wireless on)
+
+#SINOPEC
+ote.tm.sinopec.0=§q§lHeavy Industry Project - SINOPEC Integrated Factory
+ote.tm.sinopec.1=§l§aThe final destination of black gold...
+ote.tm.sinopec.2=§lOne-step solution.
+ote.tm.sinopec.3=When Coil Tier < 10, Time Multiplier = 1 - Coil Tier * 0.1; when ≥ 10, Time Multiplier is fixed at 0.1
+ote.tm.sinopec.4=Placing Irdiosamarium in the controller unlocks perfect overclocks and parallelism limits, with a default parallelism of 64
+ote.cm.sinopec.0=1 - Muffler Hatch, Energy Hatch, Input/Output Bus, Input/Output Hatch: Replace Tungstensteel Machine Casing，supports TecTech Energy Hatch
+ote.cm.sinopec.1=2 - Muffler Hatch: Replace the central machine casing at the top of the chimney (actually, placing it next to the controller is also fine)
+
+#TangShan
+ote.tm.ts.0=§e§lHeavy Industry Project - Tangshan Steelworks
+ote.tm.ts.1=§l§8Countless plumes of black smoke continuously rise from the chimney
+ote.tm.ts.2=§l§8The inevitable path of industrialization...
+ote.tm.ts.3=§l§8One-step production of various steel-related alloys: GTPP / GT5U, and some BW
+ote.tm.ts.4=Normal time multiplier: 1 / Coil Tier
+ote.tm.ts.5=Wireless time = 240s / (Programming Circuit Number ^ 2)
+ote.tm.ts.6=Wireless EU consumption = Power * Time * (Programming Circuit Number ^ 2)
+ote.tm.ts.7=Please note the furnace temperature requirements.
+ote.tm.ts.8=Screwdriver switches to wireless mode
+ote.tm.ts.9=Non-wireless mode performs perfect overclocks
+ote.tm.ts.10=
+ote.cm.ts.0=1 - Muffler Hatch, Energy Hatch, Input/Output Bus, Input/Output Hatch: Replace Deoxidized Solid Steel Machine Casing, supports TecTech Energy Hatch
+ote.cm.ts.1=2 - Muffler Hatch: Replace Solid Steel Machine Casing(on the chimney, actually, placing it next to the controller is also fine)
+
+#WoodenFusion
+ote.tm.wfr.0=§c§lThe Final Fantasy of the Steam Age - Steam Fusion Reactor
+ote.tm.wfr.1=§b§oAll it can do is transform steam into hydrogen plasma through some unpredictable means
+ote.tm.wfr.2=EU Consumption: 0, Time: (Input Steam Amount (L) / 1000) * 20 sec, higher-tier steam reduces runtime
+ote.tm.wfr.3=Time: Regular Steam - 100%, Superheated Steam - 50%, Supercritical Steam - 10%
+ote.tm.wfr.4=Output: Regular Steam - 1000L / 1L Hydrogen Plasma, Superheated Steam - 1000L / 10L Hydrogen Plasma, Supercritical Steam - 1000L / 100L Hydrogen Plasma
+ote.cm.wfr.0=1 - Input/Output Hatch: Replace Stone Bricks
+
+#WTFHatch
+ote.tm.wtf.0=Stores energy in a global network, with a capacity limit of 2^(2^31) EU.
+ote.tm.wtf.1=Does not connect to wires. This block can draw EU from the network.
+ote.tm.wtf.2=No need to worry about energy overflow.
+ote.tm.wtf.3=One hundred words omitted here.
+ote.tm.wtf.4=Just a joke, don’t use it if there are bugs, hehe.
 
 #Machine_Waila
 otht.waila.wirelesseu=Current Wireless EU Consumption
