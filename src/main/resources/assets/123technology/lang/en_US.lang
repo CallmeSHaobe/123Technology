@@ -234,7 +234,7 @@ ote.tm.eio.mode.1=Spawner Binding Mode Deactivated
 
 #EpicCoccOven
 ote.tm.cocc.0=§d§nNew Timer's Ultimate Creation, Mid Timer's Aspired Treasure, Old Timer's Unattainable Dream - Epic Coke Oven
-ote.tm.cocc.1=§n§cNever underestimate Xiaodeng's power...
+ote.tm.cocc.1=§n§cNever underestimate New Timer's power...
 ote.tm.cocc.2=§oThe true ultimate machine, no exorbitant costs, no convoluted mechanics
 ote.tm.cocc.3=§oAll it does is turn specific materials into coke
 ote.tm.cocc.4=§eConversion Ratio: Diamond (Dust) -> Coke 1:1024, Coal (Dust) -> Coke 1:16, Dirt -> Coke 1:1 (How is this even possible?)
@@ -259,6 +259,17 @@ ote.tm.food.4=§c§lWarning: High machine pollution: If a powerfail occurs with 
 ote.tm.food.5=Praise the great tycoon Safari_xiu! Without her,there would be no 123.Lmao.
 ote.cm.food.0=1 - Input/Output Bus, Input/Output Hatch, Muffler Hatch: Replace Deoxidized Steel casing
 ote.cm.food.1=2 - Dynamo Hatch: Replace Tail Deoxidized Steel casing
+
+#Dragon Grave
+ote.tm.gd.0=§c§lThe Ultimate Creation of the Old Master - Fatalis Tamer (New Draconic Evolution Fusion Crafter)
+ote.tm.gd.1=§e§oThat’s  one giant leap for stacked,one small step for industrial progress.
+ote.tm.gd.2=§c§oPraise the God of NHU, the MEA is about to start...
+ote.tm.gd.3=Tier 3 Machine Casing unlocks perfect overclocks
+ote.tm.gd.4=Parallelism = Machine Casing Tier * 128, highest tier unlocks Int parallelism
+ote.tm.gd.5=§eTime Multiplier = 1 - 0.05 * Coil Tier
+ote.tm.gd.6=§eMachine Casing Tier limits the executable recipe tier
+ote.tm.gd.7=§eWhen changing the structure, please replace the main frame to detect the structure
+ote.cm.gd.0=1 - Energy Hatch, Input/Output Bus, Input/Output Hatch: Replace Naquadah Polymerization Machine Casing, supports TecTech Energy Hatch
 
 #Heat Exchanger
 ote.tm.exc.0=The True Thermal Energy Devourer - Vacuum Cryogenic Heat Exchanger
@@ -344,7 +355,22 @@ ote.tm.mebf.5=§l“Blazing Pyrotheum, huh? Use a few thousand and it’s obsole
 ote.tm.mebf.6=Please note the glass tier requirement
 ote.tm.mebf.7=Checks for the presence of Blazing Pyrotheum in the Input Hatch during structure validation
 ote.tm.mebf.0=§Old Timer's Ultimate Creation - Electric Blast Furnace
-ote.cm.mebf.0=1 - Muffler Hatch, Energy Hatch, Input/Output Bus, Input/Output Hatch: Replace Pyrotheum Blast Casing, supports TecTech Energy Hatch, with glass tier restrictions (seriously!)
+ote.cm.mebf.0=1 - Muffler Hatch, Energy Hatch, Input/Output Bus, Input/Output Hatch: Replace Volcanus Casing, supports TecTech Energy Hatch, with glass tier restrictions (seriously!)
+
+#EEC
+ote.tm.eec.0=§e§lThe Ultimate Creation of the Old Timer - Soul Prison (Extreme Entity Crusher)
+ote.tm.eec.1=§l§4"Avalokiteshvara Bodhisattva, when practicing deeply the Prajna Paramita, perceives that all five skandhas are empty and is saved from all suffering."
+ote.tm.eec.2=§l§4Advanced technology makes it impossible to control blood magic rituals, automatically destroying all enchanted items and equipment with durability loss
+ote.tm.eec.3=§n§bThe charm of industrialization...?
+ote.tm.eec.4=Parallelism: 134,217,728, fixed power consumption at 64A MAX, Fortune level 64
+ote.tm.eec.5=Note: Too many multiblock structure blocks to preview the structure
+ote.tm.eec.6=Statistics: Soul Sand * 2200, Botmium Alloy Block * 1493, Radioactive Naquadah Alloy Machine Casing * 12309
+ote.tm.eec.7=Obsidian * 611, Steel Frame * 169, Solid Steel Machine Casing * 100
+ote.tm.eec.8=Borosilicate Glass Series Blocks * 240, Space Elevator Support Structure Blocks * 918, Molecular Machine Casing * 2271
+ote.tm.eec.9=Quantum Glass * 1101, Containment Field Generator * 44, Dark Iron Fence * 111
+ote.tm.eec.10=Dimension Bridge Machine Casing * 233, Dimension Injection Machine Casing * 241, Spacetime Distortion Machine Casing * 32
+ote.cm.eec.0=1 - Muffler Hatch, Energy Hatch, Input/Output Bus, Input/Output Hatch: Replace Volcanus Casing, supports TecTech Energy Hatch, with glass restrictions (seriously!)
+
 
 #Freezer
 ote.tm.fz.0=§lOld Timer's Ultimate Creation - Vacuum Freezer
@@ -406,6 +432,42 @@ ote.tm.mqft.8=§9When Stability Field Generator Tier ≤ 8 and ≥ 6, output is 
 ote.tm.mqft.9=§9When Stability Field Generator Tier ≥ 9, output is tripled
 ote.cm.mqft.0=1 - Energy Hatch, Input/Output Bus, Input/Output Hatch: Replace Molecular Machine Casing, supports TecTech Energy Hatch
 
+#MAT
+ote.tm.mat.0=Mid Timer's Mini Nuke: Mini Active Transformer
+ote.tm.mat.1=Due to outdated IV-tier technology, destroying the Mainframe will still cause an explosion, with unchanged energy loss
+ote.tm.mat.2=Is it really useful?
+
+ote.tm.mat.4=Please do not use ultra-high current Laser Hatch, as it may damage the Active Transformer.
+ote.tm.mat.5=§c§lWarning: Explosion is a Draconic Reactor explosion, with power proportional to input power! Servers should disable it in the configuration file!
+ote.tm.mat.6=Structure center
+ote.tm.mat.7=0x High Power Casing (minimum)
+ote.tm.mat.8=Any Energy Hatch, Laser Target Hatch
+ote.tm.mat.9=Any Dynamo Hatch, Laser Source Hatch
+ote.cm.mat.0=1 - Energy Hatch, Dynamo Hatch, or Laser Hatch: Replace Superconducting Machine Casing
+
+#NqFuelGU
+ote.tm.nfg.0=Dream of UCFE
+ote.tm.nfg.1= §l§4"Your production capacity isn't enough, is it? -v-"
+ote.tm.nfg.2=An upgraded version of UCFE, supports Naquadah Fuel, but cannot use traditional fuels ~ True clean energy
+ote.tm.nfg.3=Time depends on controller parameters, in ticks; wireless mode actual power is total generation / time (ticks)
+ote.tm.nfg.4=Same design as UCFE, but also benefits from Mega Naquadah bonuses (really?)
+ote.tm.nfg.5=Consumes all fuel and oxidizer in the input hatch at once
+ote.tm.nfg.6=Thanks to the great Irdiosamarium,all output power is tripled
+ote.tm.nfg.7=Tier 2 Pipe Casing unlocks wireless mode, activated with a screwdriver
+ote.tm.nfg.8=§aHigher-tier structures require higher-tier §coxidizers, §aTier 1 structure: Atomic Separation Oxidizer, Tier 2 structure: Transdimensional Plasma Oxidizer
+ote.tm.nfg.9=§aEfficiency increases with runtime, gaining 1% per second, capped at 1230%
+ote.tm.nfg.10=Calculation formula: Total power generation = Fuel Amount * Output Factor (3) * Efficiency * Fuel Output Power * Recipe Time
+ote.tm.nfg.12=§aNote: If time is set below 20 ticks, efficiency will not accumulate
+ote.tm.nfg.13=§4You know what will happen.
+ote.tm.nfg.14=§eWarning: Forcing wired mode with advanced Naquadah Fuel will result in wasted effort 
+ote.tm.nfg.15=§cSupports TecTech Multi-Amp Dynamo Hatch, Laser Hatch, but preferably use a 1,073,741,824A Laser Hatch directly connected to the Supercapacitor
+ote.tm.nfg.16=Power Plant.
+ote.cm.nfg.0=4 - Dynamo Hatch or Laser Hatch: Replace Radiation-Proof Naquadah Machine Casing, supports TecTech Dynamo Hatch
+ote.cm.nfg.1=3 - Input Hatch/Output Hatch: Replace Radiation-Proof Naquadah Machine Casing 
+ote.cm.nfg.2=2 - Muffler Hatch (decorative: Replace Radiation-Proof Naquadah Machine Casing)
+ote.tm.nfg.mode.0=Wireless Mode Activated
+ote.tm.nfg.mode.1=Wireless Mode Deactivated
+
 #BBPF
 ote.bbpf.0=§d§lThe Legendary Creation of the Old Timer - Banter Bustle Plasma Forge
 ote.bbpf.1="§cTurns out DTPF without catalyst reduction is so useful -V-""
@@ -425,6 +487,27 @@ ote.tm.sinopec.3=When Coil Tier < 10, Time Multiplier = 1 - Coil Tier * 0.1; whe
 ote.tm.sinopec.4=Placing Irdiosamarium in the controller unlocks perfect overclocks and parallelism limits, with a default parallelism of 64
 ote.cm.sinopec.0=1 - Muffler Hatch, Energy Hatch, Input/Output Bus, Input/Output Hatch: Replace Tungstensteel Machine Casing，supports TecTech Energy Hatch
 ote.cm.sinopec.1=2 - Muffler Hatch: Replace the central machine casing at the top of the chimney (actually, placing it next to the controller is also fine)
+
+#SunFactory
+ote.tm.sf.0=§c§l老登的传奇造物 - 巨型PCB工厂丨贴片工坊丨NMD晶圆厂丨元件聚合者
+
+
+
+
+ote.tm.sf.5=§a消耗恩情运行 : 1t/个
+ote.tm.sf.6=在配置文件设置配方NEI产出倍率, 默认为1.5, 四舍五入
+ote.tm.sf.7=§b主机放入一团纳米蜂群, 按照堆叠数量获得相应加速(log2(蜂群数量), 舍弃小数向下取整)
+ote.tm.sf.8=§b碳纳米蜂群 -- -2%
+ote.tm.sf.9=§b超时空蜂群 -- 30%
+ote.tm.sf.10=§b永恒蜂群 -- 75%
+ote.tm.sf.11=§b宇宙素蜂群 -- 150%
+ote.tm.sf.12=sfg信道 = 0 解锁PCB工厂
+ote.tm.sf.13=sfg信道 = 2 解锁贴片工坊
+ote.tm.sf.14=sfg信道 = 5 解锁NMD晶圆厂
+ote.tm.sf.15=sfg信道 = 8 解锁元件聚合者
+ote.tm.sf.16=更换力场后结构不成型请重放主机, 使用机器GUI按钮配置机器模式
+ote.cm.sf.0=1 - 能源仓, 输入输出总线, 输入输出仓 : 替换终极分子机械方块, 支持TecTech能源仓
+
 
 #TangShan
 ote.tm.ts.0=§e§lHeavy Industry Project - Tangshan Steelworks
@@ -448,6 +531,35 @@ ote.tm.wfr.2=EU Consumption: 0, Time: (Input Steam Amount (L) / 1000) * 20 sec, 
 ote.tm.wfr.3=Time: Regular Steam - 100%, Superheated Steam - 50%, Supercritical Steam - 10%
 ote.tm.wfr.4=Output: Regular Steam - 1000L / 1L Hydrogen Plasma, Superheated Steam - 1000L / 10L Hydrogen Plasma, Supercritical Steam - 1000L / 100L Hydrogen Plasma
 ote.cm.wfr.0=1 - Input/Output Hatch: Replace Stone Bricks
+
+#Steam 9in1
+ote.tm.s9in1.mode.0=Water Pump-Alloy Smelter-Extraction (metalProcess0)
+ote.tm.s9in1.mode.1=Ore Washing-Macerator-Forge (oreProcess0)
+ote.tm.s9in1.mode.2=Compression-Mixing-Centrifugation (metalProcess1)
+ote.tm.s9in1.0=§lAnother Miracle of the Steam Age - Steam 9-in-1
+
+
+
+
+
+ote.tm.s9in1.7=§l§bThe 9-in-1 of the Steam Age, what a remarkable legacy!
+ote.tm.s9in1.8=§cSupports running nine recipe pools; a single machine switches internal recipe pools based on circuit configurations 20, 21, 22, with modes switched using a screwdriver.
+ote.tm.s9in1.9=Mode 1: §cWater Pump-Alloy Smelter-Extraction (Name: metalProcess0)
+ote.tm.s9in1.10=Mode 2: §cOre Washing-Macerator-Forge (Name: oreProcess0)
+ote.tm.s9in1.11=Mode 3: §cCompression-Mixing-Centrifugation (Name: metalProcess1)
+ote.tm.s9in1.12=Default 16 parallel, time is 85% of NEI recipe time; if recipes fail to run, try disabling input separation. Supports advanced Input/Output Bus/Hatch.
+
+ote.cm.s9in1.0=1 - Muffler Hatch, Steam Input Hatch, Input/Output Bus, Input/Output Hatch: Replace Bronze Plated Bricks
+ote.cm.s9in1.1=Is this the Steam Age?
+
+#Water Factory
+
+#Beeyonds
+ote.tm.bee.0=§aThe Primary Creation of the Bee Masters - Beeyonds' Home (Large Industrial Apiary)
+ote.tm.bee.1=An HV-tier large apiary. #Really only for beekeeping!
+ote.tm.bee.2=Seriously, why not use an Industrial Apiary? :)
+ote.cm.bee.0=1 - Energy Hatch, Dynamo Hatch or Laser Hatch, Input/Output Bus/Hatch: Replace Plascrete Block
+
 
 #WTFHatch
 ote.tm.wtf.0=Stores energy in a global network, with a capacity limit of 2^(2^31) EU.
