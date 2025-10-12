@@ -62,6 +62,39 @@ tt.ani=99.8% Antimony Content
 
 
 
+#Machine_Name
+ote.tn.mnio=Ultimate Compression Mega Processing Factory
+ote.tn.mifo=Mega Isa Forge
+
+
+
+
+ote.tn.mqft=Dirac Tidal
+ote.tn.mebf=Mega Volcanus
+ote.tn.fz=Mega Cryogenic Freezer
+ote.tn.sinopec=SINOPEC Integrated Factory
+
+ote.tn.ts=Tangshan Steelworks
+ote.tn.eec=Soul Prison
+
+ote.tn.lca=Large Circuit Assembler
+ote.tn.cocc=Epic Coke Oven T123
+ote.tn.wfr=Compressed Wooden Fusion Reactor Mk 0
+ote.tn.misa=MegaIsaFactoryOTH
+ote.tn.food=FoodGenerator
+ote.tn.nfg=Universal Naquadah Fuel Engine
+ote.tn.mat=Mini Active Transformer
+ote.tn.mnf=Compressed Naquadah Fuel Refinery
+ote.tn.mca=Mega Circuit AssemblerLine
+ote.tn.lb=Peerless Trash Bin
+ote.tn.eio=Ender IO Complex
+ote.tn.exc=Epic Heat Exchanger
+ote.tn.gd=Dragon Grave
+ote.tn.ft=Alien Fishery
+ote.tn.pump=Space Drill Module MK-123
+ote.tn.s9in1=Steam 9-in-1
+ote.tn.bee=Beeyonds' Home
+ote.tn.bbpf=Transdimensional Banter-Bustle Processing Forge
 
 
 
@@ -324,7 +357,7 @@ ote.cm.lca.2=3 - Input Hatch, Input Bus
 ote.cm.lca.3=Details for reference only because I can’t write hatch placement restrictions,Lmao.
 
 #MCA
-ote.tm.mca.0=§d§lThe Ultimate Secret of Circuit Assembly - Advanced Hyper Circuit Assembly Line
+ote.tm.mca.0=§d§lThe Ultimate Secret of Circuit Assembly - Mega Circuit AssemblerLine
 ote.tm.mca.1=§qCost-effective circuit assembly facility, inherits the original circuit packing mechanism but directly supports Buffer
 ote.tm.mca.2=§q§o“Is this a bit too OP?”
 ote.tm.mca.3=§bGlass tier determines its appearance; if not forming, reposition the main frame
