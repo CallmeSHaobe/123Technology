@@ -489,25 +489,24 @@ ote.cm.sinopec.0=1 - Muffler Hatch, Energy Hatch, Input/Output Bus, Input/Output
 ote.cm.sinopec.1=2 - Muffler Hatch: Replace the central machine casing at the top of the chimney (actually, placing it next to the controller is also fine)
 
 #SunFactory
-ote.tm.sf.0=§c§l老登的传奇造物 - 巨型PCB工厂丨贴片工坊丨NMD晶圆厂丨元件聚合者
+ote.tm.sf.0=§c§lOld Timer's Ultimate Creation - Mega PCB Factory | SMD Workshop | NMD Wafer Fab | Component Aggregator
 
 
 
 
-ote.tm.sf.5=§a消耗恩情运行 : 1t/个
-ote.tm.sf.6=在配置文件设置配方NEI产出倍率, 默认为1.5, 四舍五入
-ote.tm.sf.7=§b主机放入一团纳米蜂群, 按照堆叠数量获得相应加速(log2(蜂群数量), 舍弃小数向下取整)
-ote.tm.sf.8=§b碳纳米蜂群 -- -2%
-ote.tm.sf.9=§b超时空蜂群 -- 30%
-ote.tm.sf.10=§b永恒蜂群 -- 75%
-ote.tm.sf.11=§b宇宙素蜂群 -- 150%
-ote.tm.sf.12=sfg信道 = 0 解锁PCB工厂
-ote.tm.sf.13=sfg信道 = 2 解锁贴片工坊
-ote.tm.sf.14=sfg信道 = 5 解锁NMD晶圆厂
-ote.tm.sf.15=sfg信道 = 8 解锁元件聚合者
-ote.tm.sf.16=更换力场后结构不成型请重放主机, 使用机器GUI按钮配置机器模式
-ote.cm.sf.0=1 - 能源仓, 输入输出总线, 输入输出仓 : 替换终极分子机械方块, 支持TecTech能源仓
 
+ote.tm.sf.6=Set recipe NEI output multiplier in the configuration file, default is 1.5, rounded to the nearest integer
+ote.tm.sf.7=§bPlace a stack of Nanites in the controller, gain acceleration based on stack size (log2(stack size), rounded down)
+ote.tm.sf.8=§bCarbonNanites -- -2%
+ote.tm.sf.9=§Transcendent MetalNanites -- 30%
+ote.tm.sf.10=§bEternityNanites -- 75%
+ote.tm.sf.11=§bUniversiumNanites -- 150%
+ote.tm.sf.12=SFG Channel = 0 unlocks PCB Factory
+ote.tm.sf.13=SFG Channel = 2 unlocks SMD Workshop
+ote.tm.sf.14=SFG Channel = 5 unlocks NMD Wafer Fab
+ote.tm.sf.15=SFG Channel = 8 unlocks Component Aggregator
+ote.tm.sf.16=changing the force field when structure fail to form,replace the mainframe; use the machine GUI buttons to configure modes
+ote.cm.sf.0=1 - Energy Hatch, Input/Output Bus, Input/Output Hatch: Replace Ultimate Molecular Machine Casing, supports TecTech Energy Hatch
 
 #TangShan
 ote.tm.ts.0=§e§lHeavy Industry Project - Tangshan Steelworks
