@@ -23,6 +23,9 @@ import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
+import buildcraft.core.ItemList;
+import com.newmaa.othtech.common.OTHItemList;
+import gregtech.api.util.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -66,10 +69,6 @@ import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.render.TextureFactory;
-import gregtech.api.util.GTRecipe;
-import gregtech.api.util.GTUtility;
-import gregtech.api.util.MultiblockTooltipBuilder;
-import gregtech.api.util.OverclockCalculator;
 import gregtech.common.misc.GTStructureChannels;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
@@ -77,16 +76,34 @@ import tectech.thing.gui.TecTechUITextures;
 
 public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> implements ISurvivalConstructable {
 
+
+    @Override
+    public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
+        super.onPostTick(aBaseMetaTileEntity, aTick);
+        if (aTick % 20 == 0 && (MLevel == 1)) {
+            ItemStack aGuiStack = this.getControllerSlot();
+            if (aGuiStack != null) {
+                if (GTUtility.areStacksEqual(
+                    aGuiStack,
+                    GTModHandler.getModItem("gregtech", "gt.metaitem.03",1, 32758))) {
+                    this.MLevel = 2;
+                }
+            }
+        }
+    }
+
+
+    //老大哥锻炉,老大哥的恩情还不完
     protected float getSpeedBonus() {
         return 1;
     }
 
     @Override
     public int getMaxParallelRecipes() {
-        if (intprocess) {
+        if (MLevel == 2) {
             return Integer.MAX_VALUE;
         } else {
-            return mCoilLevel == null ? 0 : 123 + mCoilLevel.getTier() * 1230;
+            return mCoilLevel == null ? 0 : 1230 + mCoilLevel.getTier() * 1230;
         }
     }
 
@@ -96,7 +113,6 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
     private UUID ownerUUID;
     private static IStructureDefinition<OTEBBPlasmaForge> STRUCTURE_DEFINITION = null;
     private boolean isWirelessMode = false;
-    private boolean intprocess = false;
     private String costingWirelessEU = "0";
     private OverclockCalculator overclockCalculator;
 
@@ -135,12 +151,10 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
     @Override
     protected void setProcessingLogicPower(ProcessingLogic logic) {
         if (isWirelessMode) {
-            intprocess = true;
             logic.setAvailableVoltage(Long.MAX_VALUE);
             logic.setAvailableAmperage(1);
             logic.setAmperageOC(false);
         } else {
-            intprocess = false;
             super.setProcessingLogicPower(logic);
         }
     }
@@ -530,6 +544,7 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
             public ProcessingLogic setSpeedBonus(double speedModifier) {
                 return super.setSpeedBonus(getSpeedBonus());
             }
+
 
             protected float getSpeedBonus() {
                 if (getCoilTier() == 14) {

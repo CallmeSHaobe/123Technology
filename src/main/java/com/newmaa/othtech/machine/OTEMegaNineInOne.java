@@ -192,14 +192,13 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
 
     @Override
     protected ProcessingLogic createProcessingLogic() {
-        return new OTHProcessingLogic() {
+        return new ProcessingLogic() {
 
             private ItemStack lastCircuit = null;
 
             @NotNull
             @Override
             public CheckRecipeResult process() {
-
                 setEuModifier(getEuModifier());
                 setSpeedBonus(getSpeedBonus());
                 setOverclock(isEnablePerfectOverclock() ? 4 : 2, 4);
@@ -237,6 +236,7 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
             }
 
         }.enablePerfectOverclock()
+            .setUnlimitedTierSkips()
             .setMaxParallelSupplier(this::getMaxParallelRecipes);
 
     }
