@@ -42,7 +42,6 @@ import com.gtnewhorizon.structurelib.structure.IStructureElement;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
-import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
 import com.newmaa.othtech.utils.Utils;
 
 import bartworks.API.BorosilicateGlass;
@@ -192,14 +191,13 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
 
     @Override
     protected ProcessingLogic createProcessingLogic() {
-        return new OTHProcessingLogic() {
+        return new ProcessingLogic() {
 
             private ItemStack lastCircuit = null;
 
             @NotNull
             @Override
             public CheckRecipeResult process() {
-
                 setEuModifier(getEuModifier());
                 setSpeedBonus(getSpeedBonus());
                 setOverclock(isEnablePerfectOverclock() ? 4 : 2, 4);
@@ -237,6 +235,7 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
             }
 
         }.enablePerfectOverclock()
+            .setUnlimitedTierSkips()
             .setMaxParallelSupplier(this::getMaxParallelRecipes);
 
     }

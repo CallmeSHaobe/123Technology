@@ -15,6 +15,7 @@ import static gregtech.api.util.GTStructureUtility.ofCoil;
 import static gregtech.api.util.GTUtility.validMTEList;
 import static gregtech.common.misc.WirelessNetworkManager.addEUToGlobalEnergyMap;
 import static net.minecraft.util.StatCollector.translateToLocal;
+import static tectech.thing.casing.TTCasingsContainer.sBlockCasingsTT;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -55,7 +56,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 import gregtech.api.enums.HeatingCoilLevel;
 import gregtech.api.enums.SoundResource;
 import gregtech.api.gui.modularui.GTUITextures;
-import gregtech.api.interfaces.IIconContainer;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
@@ -66,6 +66,7 @@ import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.render.TextureFactory;
+import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
@@ -73,20 +74,38 @@ import gregtech.api.util.OverclockCalculator;
 import gregtech.common.misc.GTStructureChannels;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
+import tectech.thing.block.BlockQuantumGlass;
 import tectech.thing.gui.TecTechUITextures;
 
 public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> implements ISurvivalConstructable {
 
+    @Override
+    public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
+        super.onPostTick(aBaseMetaTileEntity, aTick);
+        if (aTick % 20 == 0 && (MLevel == 1)) {
+            ItemStack aGuiStack = this.getControllerSlot();
+            if (aGuiStack != null) {
+                if (GTUtility
+                    .areStacksEqual(aGuiStack, GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32758))) {
+                    this.MLevel = 2;
+                }
+            } else {
+                this.MLevel = 1;
+            }
+        }
+    }
+
+    // 老大哥锻炉,老大哥的恩情还不完
     protected float getSpeedBonus() {
         return 1;
     }
 
     @Override
     public int getMaxParallelRecipes() {
-        if (intprocess) {
+        if (MLevel == 2) {
             return Integer.MAX_VALUE;
         } else {
-            return mCoilLevel == null ? 0 : 123 + mCoilLevel.getTier() * 1230;
+            return mCoilLevel == null ? 0 : 1230 + mCoilLevel.getTier() * 1230;
         }
     }
 
@@ -96,7 +115,6 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
     private UUID ownerUUID;
     private static IStructureDefinition<OTEBBPlasmaForge> STRUCTURE_DEFINITION = null;
     private boolean isWirelessMode = false;
-    private boolean intprocess = false;
     private String costingWirelessEU = "0";
     private OverclockCalculator overclockCalculator;
 
@@ -135,12 +153,10 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
     @Override
     protected void setProcessingLogicPower(ProcessingLogic logic) {
         if (isWirelessMode) {
-            intprocess = true;
             logic.setAvailableVoltage(Long.MAX_VALUE);
             logic.setAvailableAmperage(1);
             logic.setAmperageOC(false);
         } else {
-            intprocess = false;
             super.setProcessingLogicPower(logic);
         }
     }
@@ -149,6 +165,12 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
     private final String[][] shapeMain = new String[][] {
         { "                                               ", "                                               ",
             "                                               ", "                                               ",
+            "                                               ", "                                               ",
+            "                                               ", "                                               ",
+            "                                               ", "                                               ",
+            "                                               " },
+        { "                                               ", "                                               ",
+            "                                               ", "                                               ",
             "                    BAAAAAB                    ", "                    BACCCAB                    ",
             "                    BAAAAAB                    ", "                                               ",
             "                                               ", "                                               ",
@@ -251,7 +273,7 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
             "                                               " },
         { "                                               ", "                                               ",
             "                                               ", "   AAA                                   AAA   ",
-            "  AADAA                                 AADAA  ", "  ADDDA                                 ADDDA  ",
+            "  AADAA                                 ADDAA  ", "  ADDDA                                 ADDDA  ",
             "  AADAA                                 AADAA  ", "   AAA                                   AAA   ",
             "                                               ", "                                               ",
             "                                               " },
@@ -262,58 +284,58 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
             "                                               ", "                                               ",
             "                                               " },
         { "                                               ", "                                               ",
-            "                                               ", "  AAA                                     AAA  ",
-            " AADAA                                   AADAA ", " ADDDA                                   ADDDA ",
-            " AADAA                                   AADAA ", "  AAA                                     AAA  ",
-            "                                               ", "                                               ",
+            "                      AAA                      ", "  AAA                ABBBA                AAA  ",
+            " AADAA              ABBBBBA              AADAA ", " ADDDA              ABB~BBA              ADDDA ",
+            " AADAA              ABBBBBA              AADAA ", "  AAA                ABBBA                AAA  ",
+            "                      AAA                      ", "                                               ",
             "                                               " },
-        { "                                               ", "                                               ",
+        { "                                               ", "                      AAA                      ",
             "  BBB                AAAAA                BBB  ", " BAAAB              ABBBBBA              BAAAB ",
-            "BAADAAB             ABCCCBA             BAADAAB", "BADDDAB             ABC~CBA             BADDDAB",
-            "BAADAAB             ABCCCBA             BAADAAB", " BAAAB              ABBBBBA              BAAAB ",
-            "  BBB                AAAAA                BBB  ", "                                               ",
+            "BAADAAB            AABCCCBAA            BAADAAB", "BADDDAB            AABCCCBAA            BADDDAB",
+            "BAADAAB            AABCCCBAA            BAADAAB", " BAAAB              ABBBBBA              BAAAB ",
+            "  BBB                AAAAA                BBB  ", "                      AAA                      ",
             "                                               " },
         { "                                               ", "                     AAAAA                     ",
-            "  AAA               ABCBCBA               AAA  ", " A   A              BDDDDDB              A   A ",
-            "A  D  A             BD   DB             A  D  A", "A DDD A             BD   DB             A DDD A",
-            "A  D  A             BD   DB             A  D  A", " A   A              BDDDDDB              A   A ",
+            "  AAA               ABCBCBA               AAA  ", " A   A             ABDDDDDBA             A   A ",
+            "A  D  A             BDGGGDB             A  D  A", "A DDD A             BDGGGDB             A DDD A",
+            "A  D  A             BDGGGDB             A  D  A", " A   A             ABDDDDDBA             A   A ",
             "  AAA               ABCBCBA               AAA  ", "                     AAAAA                     ",
             "                                               " },
-        { "                                               ", "                     ABBBA                     ",
-            "  ACA               ACBCBCA               ACA  ", " C   C              BD   DB              C   C ",
-            "A  D  A             C     C             A  D  A", "C DDD C             C     C             C DDD C",
-            "A  D  A             C     C             A  D  A", " C   C              BD   DB              C   C ",
-            "  ACA               ACBCBCA               ACA  ", "                     ABBBA                     ",
+        { "                                               ", "                    AABBBAA                    ",
+            "  ACA              AACBCBCAA              ACA  ", " C   C              BDGGGDB              C   C ",
+            "A  D  A             CGEEEGC             A  D  A", "C DDD C             CGEEEGC             C DDD C",
+            "A  D  A             CGEEEGC             A  D  A", " C   C              BDGGGDB              C   C ",
+            "  ACA              AACBCBCAA              ACA  ", "                    AABBBAA                    ",
             "                                               " },
-        { "                                               ", "                     ABBBA                     ",
-            "  ACA               ABCBCBA               ACA  ", " C   C              BD   DB              C   C ",
-            "A  D  A             C     C             A  D  A", "C DDD C                                 C DDD C",
-            "A  D  A             C     C             A  D  A", " C   C              BD   DB              C   C ",
-            "  ACA               ABCBCBA               ACA  ", "                     ABBBA                     ",
+        { "                                               ", "                    AABBBAA                    ",
+            "  ACA              AABCBCBAA              ACA  ", " C   C              BDGGGDB              C   C ",
+            "A  D  A             CGEEEGC             A  D  A", "C DDD C             CGEFEGC             C DDD C",
+            "A  D  A             CGEEEGC             A  D  A", " C   C              BDGGGDB              C   C ",
+            "  ACA              AABCBCBAA              ACA  ", "                    AABBBAA                    ",
             "                                               " },
-        { "                                               ", "                     ABBBA                     ",
-            "  ACA               ACBCBCA               ACA  ", " C   C              BD   DB              C   C ",
-            "A  D  A             C     C             A  D  A", "C DDD C             C     C             C DDD C",
-            "A  D  A             C     C             A  D  A", " C   C              BD   DB              C   C ",
-            "  ACA               ACBCBCA               ACA  ", "                     ABBBA                     ",
+        { "                                               ", "                    AABBBAA                    ",
+            "  ACA              AACBCBCAA              ACA  ", " C   C              BDGGGDB              C   C ",
+            "A  D  A             CGEEEGC             A  D  A", "C DDD C             CGEEEGC             C DDD C",
+            "A  D  A             CGEEEGC             A  D  A", " C   C              BDGGGDB              C   C ",
+            "  ACA              AACBCBCAA              ACA  ", "                    AABBBAA                    ",
             "                                               " },
         { "                                               ", "                     AAAAA                     ",
-            "  AAA               ABCBCBA               AAA  ", " A   A              BDDDDDB              A   A ",
-            "A  D  A             BD   DB             A  D  A", "A DDD A             BD   DB             A DDD A",
-            "A  D  A             BD   DB             A  D  A", " A   A              BDDDDDB              A   A ",
+            "  AAA               ABCBCBAA              AAA  ", " A   A             ABDDDDDBA             A   A ",
+            "A  D  A             BDGGGDB             A  D  A", "A DDD A             BDGGGDB             A DDD A",
+            "A  D  A             BDGGGDB             A  D  A", " A   A             ABDDDDDBA             A   A ",
             "  AAA               ABCBCBA               AAA  ", "                     AAAAA                     ",
             "                                               " },
-        { "                                               ", "                                               ",
+        { "                                               ", "                      AAA                      ",
             "  BBB                AAAAA                BBB  ", " BAAAB              ABBBBBA              BAAAB ",
-            "BAADAAB             ABCCCBA             BAADAAB", "BADDDAB             ABC CBA             BADDDAB",
-            "BAADAAB             ABCCCBA             BAADAAB", " BAAAB              ABBBBBA              BAAAB ",
-            "  BBB                AAAAA                BBB  ", "                                               ",
+            "BAADAAB            AABCCCBAA            BAADAAB", "BADDDAB            AABCCCBAA            BADDDAB",
+            "BAADAAB            AABCCCBAA            BAADAAB", " BAAAB              ABBBBBA              BAAAB ",
+            "  BBB                AAAAA                BBB  ", "                      AAA                      ",
             "                                               " },
         { "                                               ", "                                               ",
-            "                                               ", "  AAA                                     AAA  ",
-            " AADAA                                   AADAA ", " ADDDA                                   ADDDA ",
-            " AADAA                                   AADAA ", "  AAA                                     AAA  ",
-            "                                               ", "                                               ",
+            "                      AAA                      ", "  AAA                A   A                AAA  ",
+            " AADAA              A     A              AADAA ", " ADDDA              A     A              ADDDA ",
+            " AADAA              A     A              AADAA ", "  AAA                A   A                AAA  ",
+            "                      AAA                      ", "                                               ",
             "                                               " },
         { "                                               ", "                                               ",
             "                                               ", "   AAA                                   AAA   ",
@@ -421,16 +443,9 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
             "                                               ", "                    BACCCAB                    ",
             "                   AA     AA                   ", "                   AA     AA                   ",
             "                   AA     AA                   ", "                    BACCCAB                    ",
-            "                                               ", "                                               ",
-            "                                               " },
-        { "                                               ", "                                               ",
-            "                                               ", "                                               ",
-            "                    BAAAAAB                    ", "                    BACCCAB                    ",
-            "                    BAAAAAB                    ", "                                               ",
             "                                               ", "                                               ",
             "                                               " } };
 
-    protected static final int DIM_BRIDGE_CASING = 12;
     protected static final int DIM_INJECTION_CASING = 13;
 
     protected static final String STRUCTURE_PIECE_MAIN = "main";
@@ -452,6 +467,9 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
                 .addElement(
                     'D',
                     withChannel("coil", ofCoil(OTEBBPlasmaForge::setCoilLevel, OTEBBPlasmaForge::getCoilLevel)))
+                .addElement('E', ofBlock(sBlockCasingsTT, 7))
+                .addElement('F', ofBlock(sBlockCasingsTT, 9))
+                .addElement('G', ofBlock(BlockQuantumGlass.INSTANCE, 0))
                 .build();
         }
         return STRUCTURE_DEFINITION;
@@ -479,6 +497,7 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
             .addInfo(translateToLocal("ote.bbpf.3"))
             .addInfo((translateToLocal("ote.bbpf.4")))
             .addInfo((translateToLocal("ote.bbpf.6")))
+            .addInfo((translateToLocal("ote.bbpf.7")))
             .addSeparator()
             .addController(translateToLocal("ote.bbpf.0"))
             .beginStructureBlock(47, 11, 47, false)
@@ -490,14 +509,13 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
             .addSubChannelUsage(GTStructureChannels.HEATING_COIL)
             .addSeparator()
             .addInfo("§b§lAuthor:§r§kunknown§r§lczqwq§r")
-            .toolTipFinisher("§a123Technology - BBPlasmaForge");
+            .toolTipFinisher("§a123Technology - BigBrother BB PlasmaForge");
         return tt;
     }
 
     @Override
     public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection aFacing,
         int colorIndex, boolean aActive, boolean redstoneLevel) {
-        IIconContainer glow = OVERLAY_FUSION1_GLOW;
 
         if (side == aFacing) {
             if (aActive) return new ITexture[] { casingTexturePages[0][DIM_INJECTION_CASING], TextureFactory.builder()
@@ -505,7 +523,7 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
                 .extFacing()
                 .build(),
                 TextureFactory.builder()
-                    .addIcon(glow)
+                    .addIcon(OVERLAY_FUSION1_GLOW)
                     .extFacing()
                     .glow()
                     .build() };
@@ -531,7 +549,7 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
                 return super.setSpeedBonus(getSpeedBonus());
             }
 
-            protected float getSpeedBonus() {
+            private float getSpeedBonus() {
                 if (getCoilTier() == 14) {
                     return 0.1F;
                 }
@@ -578,6 +596,16 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
                     // 如果基础功耗已经超过能源仓总功率，直接拒绝配方
                     if (baseEUt > totalPowerCapacity) {
                         return CheckRecipeResultRegistry.insufficientPower(totalPowerCapacity);
+                    }
+                    if (isWirelessMode) {
+                        BigInteger requiredEnergy = BigInteger.valueOf(recipe.mEUt)
+                            .multiply(BigInteger.valueOf(recipe.mDuration));
+
+                        if (!addEUToGlobalEnergyMap(ownerUUID, requiredEnergy.multiply(NEGATIVE_ONE))) {
+                            return CheckRecipeResultRegistry.insufficientPower(requiredEnergy.longValue());
+                        }
+                        // 回退检查时的扣除，等实际处理时再扣
+                        addEUToGlobalEnergyMap(ownerUUID, requiredEnergy);
                     }
 
                     // 检查超频后的功耗是否会超过限制
@@ -713,10 +741,8 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
         if (!result.wasSuccessful()) return result;
 
         if (isWirelessMode) {
-            BigInteger c = BigInteger.valueOf(1);
             BigInteger costingWirelessEUTemp = BigInteger.valueOf(processingLogic.getCalculatedEut())
-                .multiply(BigInteger.valueOf(processingLogic.getDuration()))
-                .multiply(c.pow(2));
+                .multiply(BigInteger.valueOf(processingLogic.getDuration()));
             costingWirelessEU = GTUtility.formatNumbers(costingWirelessEUTemp);
             if (!addEUToGlobalEnergyMap(ownerUUID, costingWirelessEUTemp.multiply(NEGATIVE_ONE))) {
                 return CheckRecipeResultRegistry.insufficientPower(costingWirelessEUTemp.longValue());
@@ -758,10 +784,14 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
         long maxEnergy = 0;
 
         for (MTEHatch tHatch : validMTEList(mExoticEnergyHatches)) {
-            storedEnergy += tHatch.getBaseMetaTileEntity()
-                .getStoredEU();
-            maxEnergy += tHatch.getBaseMetaTileEntity()
-                .getEUCapacity();
+            if (tHatch.getBaseMetaTileEntity() != null) {
+                storedEnergy += tHatch.getBaseMetaTileEntity()
+                    .getStoredEU();
+            }
+            if (tHatch.getBaseMetaTileEntity() != null) {
+                maxEnergy += tHatch.getBaseMetaTileEntity()
+                    .getEUCapacity();
+            }
         }
         long voltage = getAverageInputVoltage();
         long amps = getMaxInputAmps();
@@ -843,21 +873,29 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
             // isWireless on!
             // 亿万火种之怒,燃尽此身!
             if (getMLevel() >= 2) {
-                if (this.mEnergyHatches.isEmpty() | this.mExoticEnergyHatches.isEmpty()) {
-                    isWirelessMode = true;
+                if (this.mEnergyHatches.isEmpty() || this.mExoticEnergyHatches.isEmpty()) {
+                    isWirelessMode = !isWirelessMode;
                 } else {
+                    translateToLocal("ote.bbpf.wireless.checkfail");
                     isWirelessMode = false;
                 }
             }
-            // 如果MLevel < 2，保持isWirelessMode = false，不执行任何操作
+
         })
             .setPlayClickSound(true)
             .setBackground(() -> {
                 List<UITexture> ret = new ArrayList<>();
                 ret.add(GTUITextures.BUTTON_STANDARD);
-                if (isWirelessMode && getMLevel() >= 2) {
-                    ret.add(TecTechUITextures.OVERLAY_BUTTON_POWER_PASS_ON);
+
+                // fix：只有在 MLevel >= 2 时才根据 isWirelessMode 显示不同图标
+                if (getMLevel() >= 2) {
+                    if (isWirelessMode) {
+                        ret.add(TecTechUITextures.OVERLAY_BUTTON_POWER_PASS_ON);
+                    } else {
+                        ret.add(TecTechUITextures.OVERLAY_BUTTON_POWER_PASS_OFF);
+                    }
                 } else {
+                    // 如果 MLevel < 2，总是显示关闭状态的图标
                     ret.add(TecTechUITextures.OVERLAY_BUTTON_POWER_PASS_OFF);
                 }
                 return ret.toArray(new IDrawable[0]);
@@ -900,49 +938,38 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
     }
 
     protected boolean isEnablePerfectOverclock() {
-        if (MLevel >= 2) {
-            return true;
-        } else {
-            return false;
-        }
+        return MLevel >= 2;
     }
 
     @Override
     public boolean supportsVoidProtection() {
-        return true;
+        return super.supportsVoidProtection();
     }
 
     @Override
     public boolean supportsBatchMode() {
-        return true;
+        return super.supportsBatchMode();
     }
 
     @Override
     public boolean getDefaultHasMaintenanceChecks() {
-        return false;
+        return super.getDefaultHasMaintenanceChecks();
     }
 
     public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
-        if (aPlayer.isSneaking()) {
-            if (MLevel >= 2) {
-                isWirelessMode = true;
+        if (getMLevel() >= 2) {
+            if (this.mEnergyHatches.isEmpty() || this.mExoticEnergyHatches.isEmpty()) {
+                isWirelessMode = !isWirelessMode;
             } else {
+                translateToLocal("ote.bbpf.wireless.checkfail");
                 isWirelessMode = false;
             }
-            if (isWirelessMode) {
-                GTUtility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("ote.bbpf.wireless.on"));
-            } else {
-                GTUtility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("ote.bbpf.wireless.off"));
-            }
         }
-    }
-
-    public UUID getOwnerUUID() {
-        return ownerUUID;
-    }
-
-    public void setOwnerUUID(UUID ownerUUID) {
-        this.ownerUUID = ownerUUID;
+        if (isWirelessMode) {
+            GTUtility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("ote.bbpf.wireless.on"));
+        } else {
+            GTUtility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("ote.bbpf.wireless.off"));
+        }
     }
 }
