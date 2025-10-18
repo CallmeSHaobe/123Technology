@@ -94,7 +94,7 @@ ote.tn.ft=Alien Fishery
 ote.tn.pump=Space Drill Module MK-123
 ote.tn.s9in1=Steam 9-in-1
 ote.tn.bee=Beeyonds' Home
-ote.tn.bbpf=Transdimensional Banter-Bustle Processing Forge
+ote.tn.bbpf=Transdimensional BigBrother Processing Forge
 
 
 
@@ -502,7 +502,7 @@ ote.tm.nfg.mode.0=Wireless Mode Activated
 ote.tm.nfg.mode.1=Wireless Mode Deactivated
 
 #BBPF
-ote.bbpf.0=§d§lThe Legendary Creation of the Old Timer - Banter Bustle Plasma Forge
+ote.bbpf.0=§d§lThe Legendary Creation of the Old Timer - BigBrother Plasma Forge 
 ote.bbpf.1="§cTurns out DTPF without catalyst reduction is so useful -V-""
 ote.bbpf.2=§lParallelism Formula: 123 + Coil Tier * 1230
 ote.bbpf.3="no longer has to worry about catalyst residue!"
