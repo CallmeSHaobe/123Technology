@@ -37,11 +37,6 @@ jobs:
 
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v4
-      with:
-        build-scan-publish: true
-        build-scan-terms-of-use-url: "https://gradle.com/terms-of-service"
-        build-scan-terms-of-use-agree: "yes"
-        validate-wrappers: true
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
@@ -49,24 +44,33 @@ jobs:
     - name: Run Spotless Apply
       id: spotless_apply
       run: |
-        # 运行 spotlessApply
-        ./gradlew --build-cache --info --stacktrace spotlessApply || exit 1
+        echo "运行 Spotless 格式化..."
+        ./gradlew --build-cache --info --stacktrace spotlessApply
         
-        # 检查是否有更改
-        if git diff --quiet; then
-          echo "changes=false" >> $GITHUB_OUTPUT
-          echo "没有需要格式化的更改，退出工作流"
-          exit 0
-        else
+        echo "检查文件更改..."
+        git status
+        git diff --name-only
+        
+        # 检查是否有更改（包括未暂存的更改）
+        if ! git diff --quiet || ! git diff --staged --quiet; then
+          echo "检测到代码格式化更改"
           echo "changes=true" >> $GITHUB_OUTPUT
+          
+          # 显示具体的更改
+          echo "具体的文件更改："
+          git diff --name-only
+          git diff --stat
+        else
+          echo "没有检测到代码格式化更改"
+          echo "changes=false" >> $GITHUB_OUTPUT
         fi
 
     - name: Create and push fixed branch
       if: steps.spotless_apply.outputs.changes == 'true'
       run: |
         # 设置 git 配置
-        git config user.name "GitHub GTNH Actions"
-        git config user.email "<>"
+        git config user.name "GitHub Actions"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
         
         # 创建分支名
         if [ "${{ github.event_name }}" = "pull_request" ]; then
@@ -74,15 +78,21 @@ jobs:
           FIXED_BRANCH="${PR_BRANCH}-spotless-fixes"
         else
           BASE_BRANCH="${{ github.ref_name }}"
-          FIXED_BRANCH="spotless/auto-format-$(date +%Y%m%d-%H%M%S)"
+          FIXED_BRANCH="spotless/auto-format-$(date +%s)"
         fi
         
+        echo "创建分支: ${FIXED_BRANCH}"
+        
+        # 添加所有更改并提交
+        git add -A
+        git status
+        
         # 切换到新分支并提交更改
-        git switch -c "${FIXED_BRANCH}"
-        git commit -am "Apply spotless formatting"
+        git checkout -b "${FIXED_BRANCH}"
+        git commit -m "Apply spotless formatting" || exit 0
         
         # 推送分支
-        git push --force-with-lease origin "${FIXED_BRANCH}"
+        git push origin "${FIXED_BRANCH}"
         
         # 设置输出变量供后续步骤使用
         echo "fixed_branch=${FIXED_BRANCH}" >> $GITHUB_OUTPUT
@@ -95,93 +105,34 @@ jobs:
 
     - name: Create Pull Request
       if: steps.spotless_apply.outputs.changes == 'true'
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         # 设置 PR 标题和正文
         if [ "${{ github.event_name }}" = "pull_request" ]; then
-          PR_TITLE="Spotless apply for branch ${{ github.head_ref }} for #${{ github.event.pull_request.number }}"
-          PR_BODY="Automatic spotless apply to fix formatting errors, applies to PR #${{ github.event.pull_request.number }}
-
+          PR_TITLE="Spotless formatting fixes for PR ${{ github.event.pull_request.number }}"
+          PR_BODY="Automatically applied spotless formatting fixes for PR ${{ github.event.pull_request.number }}."
           BASE_BRANCH="${{ github.head_ref }}"
         else
-          PR_TITLE="自动格式化: Spotless 代码格式化"
-          PR_BODY="这是一个自动创建的PR，包含由Spotless工具格式化的代码变更。
-
+          PR_TITLE="Automatic Spotless Code Formatting"
+          PR_BODY="Automatically applied spotless formatting fixes."
           BASE_BRANCH="${{ github.ref_name }}"
         fi
+        
+        echo "创建 PR: ${FIXED_BRANCH} -> ${BASE_BRANCH}"
         
         # 创建 PR
         gh pr create \
           --head "${{ steps.create_branch.outputs.fixed_branch }}" \
-          --base "${BASE_BRANCH}" \
+          --base "${{ steps.create_branch.outputs.base_branch }}" \
           --title "${PR_TITLE}" \
           --body "${PR_BODY}" \
-          2>&1 | tee pr-message.log
+          --label "automated-pr,code-formatting" || echo "PR 创建失败或已存在"
         
-        # 如果是 PR 事件，添加评论
+        # 如果是 PR 事件，在原始 PR 中添加评论
         if [ "${{ github.event_name }}" = "pull_request" ]; then
-          gh pr comment "${{ github.head_ref }}" -F pr-message.log || true
-        fi
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  # 新增：自动删除分支工作流
-  delete-branch-on-merge:
-    runs-on: ubuntu-24.04
-    permissions:
-      contents: write
-    # 只在 spotless-format-and-pr 工作流成功创建 PR 后运行
-    needs: spotless-format-and-pr
-    if: ${{ needs.spotless-format-and-pr.result == 'success' && needs.spotless-format-and-pr.outputs.changes == 'true' }}
-    
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-
-    - name: Wait for PR merge and delete branch
-      run: |
-        FIXED_BRANCH="${{ needs.spotless-format-and-pr.outputs.fixed_branch }}"
-        
-        echo "等待 PR 合并并自动删除分支: ${FIXED_BRANCH}"
-        
-        # 获取创建的 PR 信息
-        PR_JSON=$(gh pr list --head "${FIXED_BRANCH}" --state open --json number,title,state)
-        PR_NUMBER=$(echo "${PR_JSON}" | jq -r '.[0].number')
-        
-        if [ -z "${PR_NUMBER}" ] || [ "${PR_NUMBER}" = "null" ]; then
-          echo "未找到对应的 PR，退出"
-          exit 0
-        fi
-        
-        echo "监控 PR #${PR_NUMBER} 状态..."
-        
-        # 等待 PR 合并或关闭
-        while true; do
-          PR_STATE=$(gh pr view "${PR_NUMBER}" --json state,merged --jq '.state')
-          PR_MERGED=$(gh pr view "${PR_NUMBER}" --json state,merged --jq '.merged')
+          ORIGINAL_PR="${{ github.event.pull_request.number }}"
+          COMMENT="Automated formatting fixes have been created. Please merge the formatting PR first."
           
-          if [ "${PR_STATE}" = "CLOSED" ]; then
-            if [ "${PR_MERGED}" = "true" ]; then
-              echo "PR #${PR_NUMBER} 已合并，开始删除分支 ${FIXED_BRANCH}"
-              
-              # 删除分支
-              if git show-ref --verify --quiet "refs/heads/${FIXED_BRANCH}"; then
-                git push origin --delete "${FIXED_BRANCH}"
-                echo "✅ 分支 ${FIXED_BRANCH} 已成功删除"
-              else
-                echo "⚠️  分支 ${FIXED_BRANCH} 不存在，可能已被删除"
-              fi
-              
-              break
-            else
-              echo "PR #${PR_NUMBER} 已关闭但未合并，不删除分支"
-              break
-            fi
-          fi
-          
-          echo "PR 状态: ${PR_STATE}, 等待 30 秒后重试..."
-          sleep 30
-        done
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          gh pr comment "${ORIGINAL_PR}" --body "${COMMENT}" || echo "无法添加评论到原始 PR"
+        fi
