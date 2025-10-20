@@ -85,6 +85,9 @@ public class OTELargeBin extends OTHMultiMachineBase<OTELargeBin> implements ICo
     @Override
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
         repairMachine();
+        if (Tier >= 5) {
+            Tier = 0;
+        }
         return Tier == 1 ? checkPiece(Tier1, 2, 3, 1)
             : Tier == 2 ? checkPiece(Tier2, 4, 9, 2)
                 : Tier == 3 ? checkPiece(Tier3, 7, 18, 3)
@@ -647,16 +650,17 @@ public class OTELargeBin extends OTHMultiMachineBase<OTELargeBin> implements ICo
         }
     }
 
-    @Override
-    public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
-        super.onPostTick(aBaseMetaTileEntity, aTick);
-        if (aTick % 20 == 0) {
-            ItemStack aGuiStack = this.getControllerSlot();
-            if (aGuiStack != null) {
-                Tier = aGuiStack.getItemDamage();
-            }
-        }
-    }
+    // 蓝狗你干嘛啊,写debug代码还不删-v-
+    // @Override
+    // public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
+    // super.onPostTick(aBaseMetaTileEntity, aTick);
+    // if (aTick % 20 == 0) {
+    // ItemStack aGuiStack = this.getControllerSlot();
+    // if (aGuiStack != null) {
+    // Tier = aGuiStack.getItemDamage();
+    // }
+    // }
+    // }
 
     protected int getBaseProgressingTick() {
         return progressingTick[progressingTickIndex];

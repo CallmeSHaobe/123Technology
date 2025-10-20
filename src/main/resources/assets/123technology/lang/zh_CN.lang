@@ -537,13 +537,15 @@ ote.tm.nfg.mode.1=无线模式关闭
 #BBPF
 ote.bbpf.0=§d§l老登的传奇造物 - 超维度憋憋锻炉
 ote.bbpf.1="§c原来没催化剂减免的DTPF这么好用-V-"
-ote.bbpf.2=§l并行公式: 123+线圈等级*1230
+ote.bbpf.2=§l并行公式: 1230+线圈等级*1230
 ote.bbpf.3="妈妈再也不用怕有催化剂残留啦"
-ote.bbpf.4=§a§m升级T2结构以开启无损超频/Int并行+解锁无线模式§l§8(T2因为科技限制导致你暂时无法成功复现出来.....)
+ote.bbpf.4=§a§m放入§c超维校准矩阵§r§a§m以开启无损超频/Int并行+解锁无线模式
 ote.bbpf.5=切换无线模式
-ote.bbpf.6=§c支持多安仓/TecTech激光/能源仓
+ote.bbpf.6=如果无线电量不足,输入材料将会直接§c湮灭
+ote.bbpf.7=§c支持多安仓/TecTech激光/能源仓
 ote.bbpf.wireless.off=该机器的力量被封印(无线关闭)
 ote.bbpf.wireless.on=该机器解放了它全部的力量(无线开启)
+ote.bbpf.wireless.checkfail=无线开启失败,请检查是否放入超维校准矩阵/是否存在能源仓(无线不允许存在能源仓)
 
 #SINOPEC
 ote.tm.sinopec.0=§q§l重工业计划 - 中国石化集成工厂
