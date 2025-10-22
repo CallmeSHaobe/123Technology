@@ -1,10 +1,9 @@
 package com.newmaa.othtech.recipe;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
+import gregtech.api.util.GTUtility;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -32,12 +31,9 @@ public class RecipesEXH implements IRecipePool {
                 .metadata(GTRecipeConstants.CLEANROOM, true)
                 .specialValue(1001);
 
+            List<ItemStack> inputItems = new ArrayList<>();
             if (recipe.mInputs != null && recipe.mInputs.length > 0) {
-                builder.itemInputs(recipe.mInputs);
-            }
-
-            if (recipe.mOutputs != null && recipe.mOutputs.length > 0) {
-                builder.itemOutputs(recipe.mOutputs);
+                inputItems.addAll(Arrays.asList(recipe.mInputs));
             }
 
             List<FluidStack> inputFluids = new ArrayList<>();
@@ -52,6 +48,20 @@ public class RecipesEXH implements IRecipePool {
 
             builder.fluidInputs(inputFluids.toArray(new FluidStack[0]));
 
+            long waterCountInNewRecipe = inputFluids.stream()
+                .filter(Objects::nonNull)
+                .filter(fs -> fs.getFluid() != null && "water".equals(fs.getFluid().getName()))
+                .count();
+
+            if (waterCountInNewRecipe >= 2) {
+                ItemStack circuit = GTUtility.getIntegratedCircuit(1);
+                if (circuit != null) inputItems.add(circuit);
+            }
+
+            if (recipe.mOutputs != null && recipe.mOutputs.length > 0) {
+                builder.itemOutputs(recipe.mOutputs);
+            }
+
             List<FluidStack> outputFluids = new ArrayList<>();
             if (recipe.mFluidOutputs != null) {
                 outputFluids.addAll(Arrays.asList(recipe.mFluidOutputs));
@@ -63,6 +73,10 @@ public class RecipesEXH implements IRecipePool {
             if (steamOutput != null) outputFluids.add(steamOutput);
 
             builder.fluidOutputs(outputFluids.toArray(new FluidStack[0]));
+
+            if (!inputItems.isEmpty()) {
+                builder.itemInputs(inputItems.toArray(new ItemStack[0]));
+            }
 
             builder.addTo(Recipemaps.EXH);
         }
