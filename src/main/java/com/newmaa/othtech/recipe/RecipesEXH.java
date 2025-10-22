@@ -2,6 +2,7 @@ package com.newmaa.othtech.recipe;
 
 import java.util.*;
 
+import gregtech.api.util.GTUtility;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -12,7 +13,6 @@ import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTRecipeBuilder;
 import gregtech.api.util.GTRecipeConstants;
-import gregtech.api.util.GTUtility;
 
 public class RecipesEXH implements IRecipePool {
 
@@ -50,10 +50,7 @@ public class RecipesEXH implements IRecipePool {
 
             long waterCountInNewRecipe = inputFluids.stream()
                 .filter(Objects::nonNull)
-                .filter(
-                    fs -> fs.getFluid() != null && "water".equals(
-                        fs.getFluid()
-                            .getName()))
+                .filter(fs -> fs.getFluid() != null && "water".equals(fs.getFluid().getName()))
                 .count();
 
             if (waterCountInNewRecipe >= 2) {
