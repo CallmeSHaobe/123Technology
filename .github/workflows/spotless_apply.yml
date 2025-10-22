@@ -119,15 +119,16 @@ jobs:
           BASE_BRANCH="${{ github.ref_name }}"
         fi
         
+        FIXED_BRANCH="${{ steps.create_branch.outputs.fixed_branch }}"
+        
         echo "创建 PR: ${FIXED_BRANCH} -> ${BASE_BRANCH}"
         
-        # 创建 PR
+        # 创建 PR，移除不存在的标签
         gh pr create \
-          --head "${{ steps.create_branch.outputs.fixed_branch }}" \
-          --base "${{ steps.create_branch.outputs.base_branch }}" \
+          --head "${FIXED_BRANCH}" \
+          --base "${BASE_BRANCH}" \
           --title "${PR_TITLE}" \
-          --body "${PR_BODY}" \
-          --label "automated-pr,code-formatting" || echo "PR 创建失败或已存在"
+          --body "${PR_BODY}" || echo "PR 创建失败或已存在"
         
         # 如果是 PR 事件，在原始 PR 中添加评论
         if [ "${{ github.event_name }}" = "pull_request" ]; then
@@ -136,8 +137,6 @@ jobs:
           
           gh pr comment "${ORIGINAL_PR}" --body "${COMMENT}" || echo "无法添加评论到原始 PR"
         fi
-              env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   # 新增：自动删除分支工作流
   delete-branch-on-merge:
@@ -155,6 +154,8 @@ jobs:
         fetch-depth: 0
 
     - name: Wait for PR merge and delete branch
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         FIXED_BRANCH="${{ needs.spotless-format-and-pr.outputs.fixed_branch }}"
         
@@ -198,5 +199,3 @@ jobs:
           echo "PR 状态: ${PR_STATE}, 等待 30 秒后重试..."
           sleep 30
         done
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
