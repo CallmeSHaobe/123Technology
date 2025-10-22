@@ -14,6 +14,11 @@ jobs:
       contents: write
       pull-requests: write
       
+    # 添加 outputs 以便其他 job 可以访问
+    outputs:
+      changes: ${{ steps.spotless_apply.outputs.changes }}
+      fixed_branch: ${{ steps.create_branch.outputs.fixed_branch }}
+      
     steps:
     - name: Install Ubuntu dependencies
       run: |
@@ -75,10 +80,10 @@ jobs:
         # 创建分支名
         if [ "${{ github.event_name }}" = "pull_request" ]; then
           PR_BRANCH="${{ github.head_ref }}"
-          FIXED_BRANCH="${PR_BRANCH}-spotless-fixes"
+          FIXED_BRANCH="${PR_BRANCH}-spotless-fixes-${{ github.run_id }}"
         else
           BASE_BRANCH="${{ github.ref_name }}"
-          FIXED_BRANCH="spotless/auto-format-$(date +%s)"
+          FIXED_BRANCH="spotless/auto-format-${{ github.run_id }}"
         fi
         
         echo "创建分支: ${FIXED_BRANCH}"
@@ -119,15 +124,16 @@ jobs:
           BASE_BRANCH="${{ github.ref_name }}"
         fi
         
+        FIXED_BRANCH="${{ steps.create_branch.outputs.fixed_branch }}"
+        
         echo "创建 PR: ${FIXED_BRANCH} -> ${BASE_BRANCH}"
         
         # 创建 PR
         gh pr create \
-          --head "${{ steps.create_branch.outputs.fixed_branch }}" \
-          --base "${{ steps.create_branch.outputs.base_branch }}" \
+          --head "${FIXED_BRANCH}" \
+          --base "${BASE_BRANCH}" \
           --title "${PR_TITLE}" \
-          --body "${PR_BODY}" \
-          --label "automated-pr,code-formatting" || echo "PR 创建失败或已存在"
+          --body "${PR_BODY}" || echo "PR 创建失败或已存在"
         
         # 如果是 PR 事件，在原始 PR 中添加评论
         if [ "${{ github.event_name }}" = "pull_request" ]; then
@@ -136,16 +142,15 @@ jobs:
           
           gh pr comment "${ORIGINAL_PR}" --body "${COMMENT}" || echo "无法添加评论到原始 PR"
         fi
-              env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  # 新增：自动删除分支工作流
+  # 修复：自动删除分支工作流
   delete-branch-on-merge:
     runs-on: ubuntu-24.04
     permissions:
       contents: write
     # 只在 spotless-format-and-pr 工作流成功创建 PR 后运行
     needs: spotless-format-and-pr
+    # 修复条件：使用 job 的输出而不是步骤的输出
     if: ${{ needs.spotless-format-and-pr.result == 'success' && needs.spotless-format-and-pr.outputs.changes == 'true' }}
     
     steps:
@@ -154,49 +159,93 @@ jobs:
       with:
         fetch-depth: 0
 
+    - name: Debug outputs
+      run: |
+        echo "spotless-format-and-pr result: ${{ needs.spotless-format-and-pr.result }}"
+        echo "changes output: ${{ needs.spotless-format-and-pr.outputs.changes }}"
+        echo "fixed_branch output: ${{ needs.spotless-format-and-pr.outputs.fixed_branch }}"
+
     - name: Wait for PR merge and delete branch
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         FIXED_BRANCH="${{ needs.spotless-format-and-pr.outputs.fixed_branch }}"
         
+        if [ -z "${FIXED_BRANCH}" ] || [ "${FIXED_BRANCH}" = "null" ]; then
+          echo "错误：fixed_branch 为空，无法继续"
+          exit 1
+        fi
+        
         echo "等待 PR 合并并自动删除分支: ${FIXED_BRANCH}"
         
-        # 获取创建的 PR 信息
-        PR_JSON=$(gh pr list --head "${FIXED_BRANCH}" --state open --json number,title,state)
-        PR_NUMBER=$(echo "${PR_JSON}" | jq -r '.[0].number')
+        # 等待一段时间让 PR 创建完成
+        echo "等待 PR 创建完成..."
+        sleep 30
         
-        if [ -z "${PR_NUMBER}" ] || [ "${PR_NUMBER}" = "null" ]; then
-          echo "未找到对应的 PR，退出"
-          exit 0
+        # 获取创建的 PR 信息
+        PR_JSON=$(gh pr list --head "${FIXED_BRANCH}" --state open --json number,title,state 2>/dev/null || echo "[]")
+        PR_NUMBER=$(echo "${PR_JSON}" | jq -r '.[0].number // empty')
+        
+        if [ -z "${PR_NUMBER}" ]; then
+          echo "未找到对应的 PR，尝试查找已关闭的 PR..."
+          PR_JSON=$(gh pr list --head "${FIXED_BRANCH}" --state all --json number,title,state 2>/dev/null || echo "[]")
+          PR_NUMBER=$(echo "${PR_JSON}" | jq -r '.[0].number // empty')
+        fi
+        
+        if [ -z "${PR_NUMBER}" ]; then
+          echo "错误：未找到对应的 PR，退出"
+          exit 1
         fi
         
         echo "监控 PR #${PR_NUMBER} 状态..."
         
+        # 设置最大等待时间（2小时）
+        MAX_WAIT_SECONDS=7200
+        WAITED_SECONDS=0
+        CHECK_INTERVAL=30
+        
         # 等待 PR 合并或关闭
-        while true; do
-          PR_STATE=$(gh pr view "${PR_NUMBER}" --json state,merged --jq '.state')
-          PR_MERGED=$(gh pr view "${PR_NUMBER}" --json state,merged --jq '.merged')
+        while [ ${WAITED_SECONDS} -lt ${MAX_WAIT_SECONDS} ]; do
+          PR_STATE=$(gh pr view "${PR_NUMBER}" --json state,merged --jq '.state' 2>/dev/null || echo "UNKNOWN")
+          PR_MERGED=$(gh pr view "${PR_NUMBER}" --json state,merged --jq '.merged' 2>/dev/null || echo "false")
+          
+          echo "PR 状态: ${PR_STATE}, 合并状态: ${PR_MERGED}"
           
           if [ "${PR_STATE}" = "CLOSED" ]; then
             if [ "${PR_MERGED}" = "true" ]; then
               echo "PR #${PR_NUMBER} 已合并，开始删除分支 ${FIXED_BRANCH}"
               
               # 删除分支
-              if git show-ref --verify --quiet "refs/heads/${FIXED_BRANCH}"; then
+              if git show-ref --verify --quiet "refs/heads/${FIXED_BRANCH}" 2>/dev/null; then
                 git push origin --delete "${FIXED_BRANCH}"
                 echo "✅ 分支 ${FIXED_BRANCH} 已成功删除"
               else
                 echo "⚠️  分支 ${FIXED_BRANCH} 不存在，可能已被删除"
               fi
               
-              break
+              exit 0
             else
               echo "PR #${PR_NUMBER} 已关闭但未合并，不删除分支"
-              break
+              exit 0
             fi
+          elif [ "${PR_STATE}" = "MERGED" ]; then
+            echo "PR #${PR_NUMBER} 已合并，开始删除分支 ${FIXED_BRANCH}"
+            
+            # 删除分支
+            if git show-ref --verify --quiet "refs/heads/${FIXED_BRANCH}" 2>/dev/null; then
+              git push origin --delete "${FIXED_BRANCH}"
+              echo "✅ 分支 ${FIXED_BRANCH} 已成功删除"
+            else
+              echo "⚠️  分支 ${FIXED_BRANCH} 不存在，可能已被删除"
+            fi
+            
+            exit 0
           fi
           
-          echo "PR 状态: ${PR_STATE}, 等待 30 秒后重试..."
-          sleep 30
+          echo "等待 ${CHECK_INTERVAL} 秒后重试..."
+          sleep ${CHECK_INTERVAL}
+          WAITED_SECONDS=$((WAITED_SECONDS + CHECK_INTERVAL))
         done
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
+        echo "⏰ 达到最大等待时间，PR 仍未合并，停止监控"
+        echo "分支 ${FIXED_BRANCH} 将保持存在"
