@@ -74,7 +74,7 @@ tt.br.3=他看起来还在跳动...
 tt.br.4=第一个脑子, 要从哪里来呢..?
 tt.br.5=你知道的, 做这种事自己总要付出一些代价.
 tt.lb.0=吃得饱饱的
-tt.tst.0§7哦塔斯汀, 哦塔斯汀, 有了你生活美好没烦恼~
+tt.tst.0=§7哦塔斯汀, 哦塔斯汀, 有了你生活美好没烦恼~
 tt.ww.0=§b§l这就是GTNH，听坠木马斯特说
 tt.690.0=§z§l一发摧毁一个航母战斗群
 tt.690.1=§4警告：投掷者后果自负 将造成大范围爆炸
@@ -310,7 +310,7 @@ ote.tm.food.1=再也不用担心吃得太饱了
 ote.tm.food.2=丰矿地烧掉一切食物
 ote.tm.food.3=发电:食物饥饿值^2 * 线圈等级 * 机械方块等级 * 2 , 最高发电1A MAX/t , 64并行 , 一次最多烧毁一组相同食物
 ote.tm.food.4=§c§l注意:机器污染过高:如遇跳电并报错“无法排出污染”, 请尝试放置多个消声仓
-ote.tm.food.5=赞美伟大的富婆Safari_xiu吧!没有他就没有现在的123了憋憋.
+ote.tm.food.5=赞美伟大的富婆Safari_xiu吧!没有他就没有现在的123了 憋憋.
 ote.cm.food.0=1 - 输入输出总线, 输入输出仓, 消声仓 : 替换脱氧钢机械方块
 ote.cm.food.1=2 - 动力仓 : 替换尾部脱氧钢机械方块
 
@@ -324,6 +324,7 @@ ote.tm.gd.5=§e耗时倍率 = 1 - 0.05 * 线圈等级
 ote.tm.gd.6=§e机械方块等级限制可执行的配方等级
 ote.tm.gd.7=§e更换结构时请重放主机以检测结构
 ote.cm.gd.0=1 - 能源仓，输入输出总线，输入输出仓：替换硅岩聚合机械方块，支持TecTech能源仓
+#Naquadah 
 
 #Heat Exchanger
 ote.tm.exc.0=真正的热能饕餮 - 真空冷冻热交换机
@@ -634,4 +635,6 @@ ote.tm.wtf.2=不用小心能量溢出.
 ote.tm.wtf.3=此处省略一百字.
 ote.tm.wtf.4=只是个玩笑 有bug别用 嘻嘻.
 
-
+item.itemAmulet.name=DSS Collar
+death.attack.amulet_explosion=%1$s has be killed by DSS collar
+item.itemBucketAqua.name=Aqua Regia Unit (Antimonia Origin)
