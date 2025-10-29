@@ -82,6 +82,7 @@ GT5U.gui.text.HeatErr=§4Shut down due to the loss of EBF temperature.
 GT5U.gui.text.nolava=§4Shut down due to the loss of cryotheum
 GT5U.gui.text.noEnqing=§bShut down due to the loss of enqings
 GT5U.gui.text.voltage=§bShut down due to the energy hatch voltage tier
+GT5U.gui.text.nohatch=§4Shut down due to an existing energy hatch.
 otht.recipe.EVACannon=§l§6EVA专用改造阳电子炮GT
 otht.evaCannon=%s 被阳电子炮轰炸至灰
 otht.recipe.SINOPEC=§l§aSINOPEC
