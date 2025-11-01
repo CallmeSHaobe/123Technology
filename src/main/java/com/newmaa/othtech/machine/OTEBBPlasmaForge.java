@@ -873,7 +873,6 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
                 if (this.mEnergyHatches.isEmpty() || this.mExoticEnergyHatches.isEmpty()) {
                     isWirelessMode = !isWirelessMode;
                 } else {
-                    translateToLocal("ote.bbpf.wireless.checkfail");
                     isWirelessMode = false;
                 }
             }
@@ -919,7 +918,7 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
 
     public void saveNBTData(NBTTagCompound aNBT) {
         aNBT.setBoolean("wireless", isWirelessMode);
-        aNBT.setInteger("Mlevel", MLevel);
+        aNBT.setInteger("MLevel", MLevel);
         super.saveNBTData(aNBT);
     }
 
@@ -959,7 +958,6 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
             if (this.mEnergyHatches.isEmpty() || this.mExoticEnergyHatches.isEmpty()) {
                 isWirelessMode = !isWirelessMode;
             } else {
-                translateToLocal("ote.bbpf.wireless.checkfail");
                 isWirelessMode = false;
             }
         }
