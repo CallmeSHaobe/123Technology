@@ -332,7 +332,6 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
             return SimpleCheckRecipeResult.ofFailure("no_computing");
         }
 
-
         if (overclock.getStatus(true).isOk && overvolt.getStatus(true).isOk) {
             float eut = Math.max(V[6], V[7] * (float) overClockRatio * (float) overVoltageRatio);
             if (eut < Integer.MAX_VALUE - 7) {
