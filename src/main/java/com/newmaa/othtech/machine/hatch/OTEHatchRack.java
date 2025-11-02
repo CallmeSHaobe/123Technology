@@ -1,6 +1,5 @@
 package com.newmaa.othtech.machine.hatch;
 
-import static gregtech.api.enums.Mods.GraviSuite;
 import static gregtech.api.enums.Mods.NewHorizonsCoreMod;
 import static gregtech.api.enums.Mods.OpenComputers;
 import static gregtech.api.recipe.RecipeMaps.quantumComputerFakeRecipes;
@@ -26,6 +25,7 @@ import com.gtnewhorizons.modularui.common.internal.wrapper.BaseSlot;
 import com.gtnewhorizons.modularui.common.widget.DrawableWidget;
 import com.gtnewhorizons.modularui.common.widget.FakeSyncWidget;
 import com.gtnewhorizons.modularui.common.widget.SlotWidget;
+import com.newmaa.othtech.common.OTHItemList;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -292,36 +292,31 @@ public class OTEHatchRack extends MTEHatch implements IAddGregtechLogo, IAddUIWi
 
         if (NewHorizonsCoreMod.isModLoaded()) {
             // GTNH-GT5u circuits (these components causes crashes when used with the original GT5u)
-            new RackComponent(ItemList.Circuit_Bioprocessor.get(1), 200, 36, -1f, 60000, true); // ZPM
-            new RackComponent(ItemList.Circuit_Biowarecomputer.get(1), 220, 34, -1f, 60000, true); // UV
-            new RackComponent(ItemList.Circuit_Biowaresupercomputer.get(1), 240, 32, -1f, 60000, true); // UHV
-            new RackComponent(ItemList.Circuit_Biomainframe.get(1), 260, 30, -1f, 60000, true); // UEV
+            new RackComponent(ItemList.Circuit_Bioprocessor.get(1), 2000, 36, -1f, 60000, true); // ZPM
+            new RackComponent(ItemList.Circuit_Biowarecomputer.get(1), 2000, 34, -1f, 60000, true); // UV
+            new RackComponent(ItemList.Circuit_Biowaresupercomputer.get(1), 2400, 32, -1f, 60000, true); // UHV
+            new RackComponent(ItemList.Circuit_Biomainframe.get(1), 2600, 30, -1f, 60000, true); // UEV
 
-            new RackComponent(ItemList.Circuit_OpticalProcessor.get(1), 200, 26, -1f, 80000, true); // UV
-            new RackComponent(ItemList.Circuit_OpticalAssembly.get(1), 220, 24, -1f, 80000, true); // UHV
-            new RackComponent(ItemList.Circuit_OpticalComputer.get(1), 240, 22, -1f, 80000, true); // UEV
-            new RackComponent(ItemList.Circuit_OpticalMainframe.get(1), 260, 20, -1f, 80000, true); // UIV
+            new RackComponent(ItemList.Circuit_OpticalProcessor.get(1), 2000, 26, -1f, 80000, true); // UV
+            new RackComponent(ItemList.Circuit_OpticalAssembly.get(1), 2200, 24, -1f, 80000, true); // UHV
+            new RackComponent(ItemList.Circuit_OpticalComputer.get(1), 2400, 22, -1f, 80000, true); // UEV
+            new RackComponent(ItemList.Circuit_OpticalMainframe.get(1), 2600, 20, -1f, 80000, true); // UIV
 
-            new RackComponent(getModItem(NewHorizonsCoreMod.ID, "item.PikoCircuit", 1), 260, 12, -1f, 95000, true); // UMV
-            new RackComponent(getModItem(NewHorizonsCoreMod.ID, "item.QuantumCircuit", 1), 320, 10, -1f, 100000, true); // UXV
+            new RackComponent(getModItem(NewHorizonsCoreMod.ID, "item.PikoCircuit", 1), 2600, 12, -1f, 95000, true); // UMV
+            new RackComponent(getModItem(NewHorizonsCoreMod.ID, "item.QuantumCircuit", 1), 3200, 10, -1f, 100000, true); // UXV
+            new RackComponent(OTHItemList.NukeThrowable.get(1), 123123, 114514, -1f, 1919810, true);
         }
 
         if (OpenComputers.isModLoaded()) {
-            // 特别关注APU T3的注册
             ItemStack apuT3Stack = getModItem(OpenComputers.ID, "item", 1, 102);
             if (apuT3Stack != null) {
-                new RackComponent(apuT3Stack, 120, 42, -1f, 20000, true); // APU T3
+                new RackComponent(apuT3Stack, 1200, 42, -1f, 20000, true); // APU T3
             }
 
-            new RackComponent(getModItem(OpenComputers.ID, "item", 1, 43), 80, 46, -1f, 20000, true); // CPU T3
-            new RackComponent(getModItem(OpenComputers.ID, "item", 1, 10), 100, 44, -1f, 20000, true); // GPU T3
-            new RackComponent(getModItem(OpenComputers.ID, "item", 1, 103), 240, 40, -1f, 20000, true); // APU Creative
+            new RackComponent(getModItem(OpenComputers.ID, "item", 1, 43), 800, 46, -1f, 20000, true); // CPU T3
+            new RackComponent(getModItem(OpenComputers.ID, "item", 1, 10), 1000, 44, -1f, 20000, true); // GPU T3
+            new RackComponent(getModItem(OpenComputers.ID, "item", 1, 103), 2400, 40, -1f, 20000, true); // APU Creative
         }
-
-        if (GraviSuite.isModLoaded()) {
-            new RackComponent(getModItem(GraviSuite.ID, "itemSimpleItem", 1, 2), 0, -1, 2000f, 100000, false); // CC
-        }
-
     }
 
     public static class RackComponent implements Comparable<RackComponent> {

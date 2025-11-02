@@ -7,7 +7,6 @@ import static gregtech.api.GregTechAPI.sBlockCasings8;
 import static gregtech.api.GregTechAPI.sBlockGlass1;
 import static gregtech.api.enums.GTValues.V;
 import static gregtech.api.enums.HatchElement.Energy;
-import static gregtech.api.enums.HatchElement.InputHatch;
 import static gregtech.api.enums.HatchElement.Maintenance;
 import static gregtech.api.recipe.RecipeMaps.quantumComputerFakeRecipes;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
@@ -61,6 +60,7 @@ import gregtech.api.util.IGTHatchAdder;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.api.util.shutdown.ShutDownReason;
 import gregtech.common.WirelessComputationPacket;
+import gregtech.common.tileentities.machines.MTEHatchInputME;
 import tectech.mechanics.dataTransport.QuantumDataPacket;
 import tectech.thing.block.BlockQuantumGlass;
 import tectech.thing.casing.BlockGTCasingsTT;
@@ -129,7 +129,6 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
                             HatchElement.Uncertainty,
                             HatchElement.InputData,
                             HatchElement.OutputData,
-                            InputHatch,
                             CoolantHatchElement.INSTANCE,
                             WirelessComputationHatchElement.INSTANCE)
                         .casingIndex(BlockGTCasingsTT.textureOffset + 1)
@@ -306,6 +305,30 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
         }
         coolantStored = aNBT.getInteger("coolantStored");// 加载冷却液数据
     }
+    // @Override
+    // public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
+    // super.onPostTick(aBaseMetaTileEntity, aTick);
+    // if (aBaseMetaTileEntity.isServerSide() && mMachine) {
+    // for (MTEHatchInput coolantHatch : validMTEList(eCoolantInputs)) {
+    // int amountToDrain = MAX_COOLANT_STORAGE - coolantStored;
+    // if (amountToDrain <= 0) break;
+    //
+    // FluidStack requiredCoolant = new FluidStack(Materials.SuperCoolant.mFluid, amountToDrain);
+    //
+    // // 方法1: 使用 depleteInput (最推荐)
+    // if (depleteInput(requiredCoolant, false)) {
+    // coolantStored += requiredCoolant.amount;
+    // break;
+    // }
+    //
+    //
+    // }
+    //
+    // if (hasInsufficientCoolant && aBaseMetaTileEntity.isActive()) {
+    // hasInsufficientCoolant = false;
+    // }
+    // }
+    // }
 
     @Override
     public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
@@ -537,8 +560,8 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
 
             .addInfo(translateToLocal("ote.computer.desc.3")) // 新增：冷却液系统说明
 
-            .addInfo(translateToLocal("ote.computer.desc.coolant")) // 冷却液效果说明// Use screwdriver to
-            // toggle
+            .addInfo(translateToLocal("ote.computer.desc.coolant")) // 冷却液效果说明//
+            .addInfo(translateToLocal("ote.computer.desc.coolant.01"))
             // wireless mode
             .addTecTechHatchInfo()
             .beginVariableStructureBlock(2, 2, 4, 4, 5, 16, false)
@@ -553,7 +576,7 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
             .addOtherStructurePart(translateToLocal("ote.calc.rank"), translateToLocal("gt.blockcasingsTT.0.name"), 2)
             .addInputHatch(translateToLocal("ote.computer.coolantinput"), 1) // 新增冷却液输入
             .addEnergyHatch(translateToLocal("tt.keyword.Structure.AnyComputerCasing"), 1) // Energy
-
+            .addInfo("Author:IDEA")
             .toolTipFinisher();
         return tt;
     }
@@ -746,6 +769,10 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
         if (aMetaTileEntity == null) {
             return false;
         }
+        if (aMetaTileEntity instanceof MTEHatchInputME) {
+            ((MTEHatch) aMetaTileEntity).updateTexture(aBaseCasingIndex);
+            return eCoolantInputs.add((MTEHatchInput) aMetaTileEntity);
+        }
         if (aMetaTileEntity instanceof MTEHatchInput) {
             ((MTEHatch) aMetaTileEntity).updateTexture(aBaseCasingIndex);
             return eCoolantInputs.add((MTEHatchInput) aMetaTileEntity);
@@ -779,7 +806,7 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
 
         @Override
         public List<? extends Class<? extends IMetaTileEntity>> mteClasses() {
-            return Collections.singletonList(MTEHatchInput.class);
+            return Arrays.asList(MTEHatchInput.class, MTEHatchInputME.class);
         }
 
         @Override
