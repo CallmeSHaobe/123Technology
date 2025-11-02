@@ -161,7 +161,7 @@ public class MachineLoader {
             .set(new OTEBBPlasmaForge(IDs + 59, "OTEBBPlasmaForge", translateToLocal("ote.tn.bbpf")));
         OTHItemList.OTEComputer.set(new OTEComputer(IDs + 60, "OTEComputer", translateToLocal("ote.computer.name")));
         OTHItemList.OTEHatchRack
-            .set(new OTEHatchRack(IDs + 61, "OTEHatchRack", translateToLocal("ote.calc.rank"), 0).getStackForm(1L));
+            .set(new OTEHatchRack(IDs + 61, "OTEHatchRack", translateToLocal("ote.calc.rank"), 11).getStackForm(1L));
         // 模型错位,已无言
         // OTHItemList.OTEHatchRack.set(
         // new OTEHatchRack(IDs + 114514, "OTESuperHatchRack", translateToLocal("ote.super.calc.rank"), 1, true)

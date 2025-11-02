@@ -7,6 +7,7 @@ import static gregtech.api.GregTechAPI.sBlockCasings8;
 import static gregtech.api.GregTechAPI.sBlockGlass1;
 import static gregtech.api.enums.GTValues.V;
 import static gregtech.api.enums.HatchElement.Energy;
+import static gregtech.api.enums.HatchElement.InputHatch;
 import static gregtech.api.enums.HatchElement.Maintenance;
 import static gregtech.api.recipe.RecipeMaps.quantumComputerFakeRecipes;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
@@ -128,24 +129,13 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
                             HatchElement.Uncertainty,
                             HatchElement.InputData,
                             HatchElement.OutputData,
+                            InputHatch,
                             CoolantHatchElement.INSTANCE,
                             WirelessComputationHatchElement.INSTANCE)
                         .casingIndex(BlockGTCasingsTT.textureOffset + 1)
                         .dot(1)
                         .buildAndChain(ofBlock(TTCasingsContainer.sBlockCasingsTT, 1)))
                 .addElement('E', ofBlock(sBlockCasingsTT, 2))
-                // HatchElementBuilder.<OTEComputer>builder()
-                // .atLeast(
-                // Energy.or(ExoticEnergy),
-                // InputBus,
-                // InputHatch,
-                // InputData,
-                // WirelessComputationHatchElement.INSTANCE,
-                // OutputData)
-                // .adder(OTEComputer::addToMachineList)
-                // .dot(1)
-                // .casingIndex(BlockGTCasingsTT.textureOffset)
-                // .buildAndChain(sBlockCasingsTT, 0))
                 .addElement('F', ofBlock(sBlockCasingsTT, 3))
                 .addElement('G', ofBlock(sBlockGlass1, 1))
                 .addElement('I', ofBlock(BlockQuantumGlass.INSTANCE, 0))
@@ -230,9 +220,9 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
     private static final INameFunction<OTEComputer> COMPUTE_NAME = (base, p) -> translateToLocal("ote.computer.cfgo.1"); // Produced
     // computation
     private static final IStatusFunction<OTEComputer> OC_STATUS = (base, p) -> LedStatus
-        .fromLimitsInclusiveOuterBoundary(p.get(), 0, 1, 8000, 9999);
+        .fromLimitsInclusiveOuterBoundary(p.get(), 0, 5, 10, 10);
     private static final IStatusFunction<OTEComputer> OV_STATUS = (base, p) -> LedStatus
-        .fromLimitsInclusiveOuterBoundary(p.get(), 0, 1, 8000, 9999);
+        .fromLimitsInclusiveOuterBoundary(p.get(), 0, 1, 10, 10);
     private static final IStatusFunction<OTEComputer> COMPUTE_STATUS = (base, p) -> {
         if (base.eAvailableData < 0) {
             return LedStatus.STATUS_TOO_LOW;
@@ -278,15 +268,13 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
 
     @Override
     public boolean checkMachine_EM(IGregTechTileEntity iGregTechTileEntity, ItemStack itemStack) {
-        repairMachine();
+        eRacks.clear();
+        for (OTEHatchRack rack : validMTEList(eRacks)) {
+            rack.getBaseMetaTileEntity()
+                .setActive(false);
+        }
         if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet)) {
             return false;
-        }
-        if (mMachine) {
-            eAvailableData = 0;
-            if (availableData != null) {
-                availableData.set(0);
-            }
         }
         return true;
     }
@@ -294,7 +282,7 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
         super.saveNBTData(aNBT);
-        aNBT.setLong("eAvailableData", eAvailableData);
+        aNBT.setDouble("computation", availableData.get());
         aNBT.setBoolean("wirelessModeEnabled", wirelessModeEnabled);
         aNBT.setInteger("coolantStored", coolantStored); // 保存冷却液数据
     }
@@ -302,7 +290,10 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
     @Override
     public void loadNBTData(NBTTagCompound aNBT) {
         super.loadNBTData(aNBT);
-        aNBT.setLong("eAvailableData", eAvailableData);
+        if (availableData != null) {
+            availableData.set(aNBT.getDouble("computation"));
+            eAvailableData = (long) availableData.get();
+        }
         if (aNBT.hasKey("wirelessModeEnabled")) {
             wirelessModeEnabled = aNBT.getBoolean("wirelessModeEnabled");
             if (wirelessModeEnabled) {
@@ -314,18 +305,12 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
             wirelessModeEnabled = false;
         }
         coolantStored = aNBT.getInteger("coolantStored");// 加载冷却液数据
-        if (aNBT.hasKey("eAvailableData")) {
-            eAvailableData = aNBT.getInteger("eAvailableData");
-        } else {
-            eAvailableData = 0;
-        }
     }
 
     @Override
     public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
         super.onPostTick(aBaseMetaTileEntity, aTick);
         if (aBaseMetaTileEntity.isServerSide() && mMachine) {
-            // 冷却液输入处理
             for (MTEHatchInput coolantHatch : validMTEList(eCoolantInputs)) {
                 if (coolantHatch.getFluid() != null) {
                     FluidStack coolantFluid = coolantHatch.getFluid();
@@ -339,22 +324,6 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
                             }
                         }
                     }
-                }
-            }
-
-            // 新增：如果机器不活动，确保所有数据被清空
-            if (!aBaseMetaTileEntity.isActive()) {
-                if (eAvailableData != 0) {
-                    eAvailableData = 0;
-                    if (availableData != null) {
-                        availableData.set(0);
-                    }
-                }
-
-                // 重置机架状态
-                for (OTEHatchRack rack : validMTEList(eRacks)) {
-                    rack.getBaseMetaTileEntity()
-                        .setActive(false);
                 }
             }
 
@@ -373,14 +342,12 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
     @NotNull
     protected CheckRecipeResult checkProcessing_EM() {
         parametrization.setToDefaults(false, true);
-        eAvailableData = 0; // 确保每次检查时重置输出数据
-        int rackComputation;
+        eAvailableData = 0;
         double overClockRatio = overclock.get();
         double overVoltageRatio = overvolt.get();
         if (Double.isNaN(overClockRatio) || Double.isNaN(overVoltageRatio)) {
             return SimpleCheckRecipeResult.ofFailure("no_computing");
         }
-
         if (overclock.getStatus(true).isOk && overvolt.getStatus(true).isOk) {
             float eut = Math.max(V[6], V[7] * (float) overClockRatio * (float) overVoltageRatio);
             if (eut < Integer.MAX_VALUE - 7) {
@@ -390,17 +357,17 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
                 return CheckRecipeResultRegistry.POWER_OVERFLOW;
             }
             short thingsActive = 0;
+            int rackComputation;
 
             for (OTEHatchRack rack : validMTEList(eRacks)) {
                 rackComputation = rack.tickComponents((float) overClockRatio, (float) overVoltageRatio);
                 if (rackComputation > 0) {
                     eAvailableData += rackComputation;
-                    thingsActive = 4;
+                    thingsActive += 4;
                 }
                 rack.getBaseMetaTileEntity()
                     .setActive(true);
             }
-            availableData.set(eAvailableData);
 
             for (MTEHatchDataInput di : eInputData) {
                 if (di.q != null) // ok for power losses
@@ -409,33 +376,22 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
                 }
             }
 
+            double coolantRequired = (eAvailableData / 50.0) * Math.pow(overClockRatio, 1.2)
+                * Math.pow(overVoltageRatio, 0.6);
+            // 如果你改成10,10那么你将会消耗原算力的流体(10*10)/10*10
+            int coolantRequiredInt = (int) Math.ceil(coolantRequired);
             if (thingsActive > 0 && eCertainStatus == 0) {
-                // 计算冷却液消耗量：输出算力 * 超频比^过压比 / 10000
-                double coolantRequired = (eAvailableData / 100.0) * (overClockRatio + overVoltageRatio);
-                int coolantRequiredInt = (int) Math.ceil(coolantRequired);
-
-                // 检查冷却液是否足够
                 if (coolantStored >= coolantRequiredInt) {
-                    // 消耗冷却液
                     coolantStored -= coolantRequiredInt;
                     coolantConsumptionRate = coolantRequiredInt;
                     hasInsufficientCoolant = false;
-
-                    thingsActive += (short) eOutputData.size();
+                    thingsActive += eOutputData.size();
                     eAmpereFlow = 1 + (thingsActive >> 2);
                     mMaxProgresstime = 20;
                     mEfficiencyIncrease = 10000;
                     availableData.set(eAvailableData);
                     return SimpleCheckRecipeResult.ofSuccess("computing");
                 } else {
-                    // 冷却液不足，停止处理
-                    eAvailableData = 0;
-                    mEUt = 0; // 停止消耗能量
-                    eAmpereFlow = 0;
-                    mMaxProgresstime = 0;
-                    coolantConsumptionRate = 0;
-                    hasInsufficientCoolant = true;
-                    availableData.set(0);
                     return SimpleCheckRecipeResult.ofFailure("ote.computer.noliquid");
                 }
             } else {
@@ -445,12 +401,94 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
                 mMaxProgresstime = 20;
                 mEfficiencyIncrease = 10000;
                 coolantConsumptionRate = 0;
+                hasInsufficientCoolant = true;
                 availableData.set(eAvailableData);
                 return SimpleCheckRecipeResult.ofSuccess("no_computing");
             }
         }
         return SimpleCheckRecipeResult.ofFailure("no_computing");
     }
+
+    // @Override
+    // @NotNull
+    // protected CheckRecipeResult checkProcessing_EM() {
+    // parametrization.setToDefaults(false, true);
+    // eAvailableData = 0;
+    // double overClockRatio = overclock.get();
+    // double overVoltageRatio = overvolt.get();
+    // if (Double.isNaN(overClockRatio) || Double.isNaN(overVoltageRatio)) {
+    // return SimpleCheckRecipeResult.ofFailure("no_computing");
+    // }
+    // if (overclock.getStatus(true).isOk && overvolt.getStatus(true).isOk) {
+    // float eut = Math.max(V[6], V[7] * (float) overClockRatio * (float) overVoltageRatio);
+    // if (eut < Integer.MAX_VALUE - 7) {
+    // mEUt = -(int) eut;
+    // } else {
+    // mEUt = -(int) V[7];
+    // return CheckRecipeResultRegistry.POWER_OVERFLOW;
+    // }
+    // short thingsActive = 0;
+    // int rackComputation;
+    //
+    // for (OTEHatchRack rack : validMTEList(eRacks)) {
+    // rackComputation = rack.tickComponents((float) overClockRatio, (float) overVoltageRatio);
+    // if (rackComputation > 0) {
+    // eAvailableData += rackComputation;
+    // thingsActive += 4;
+    // }
+    // rack.getBaseMetaTileEntity()
+    // .setActive(true);
+    // }
+    //
+    // for (MTEHatchDataInput di : eInputData) {
+    // if (di.q != null) // ok for power losses
+    // {
+    // thingsActive++;
+    // }
+    // }
+    //
+    // if (thingsActive > 0) {
+    // // 改进的冷却液消耗公式
+    // double coolantRequired = (eAvailableData / 100.0) * overClockRatio * overVoltageRatio;
+    //
+    // // 添加边界检查
+    // if (coolantRequired > Integer.MAX_VALUE) {
+    // coolantRequired = Integer.MAX_VALUE;
+    // }
+    // int coolantRequiredInt = (int) Math.ceil(coolantRequired);
+    //
+    // if (coolantStored >= coolantRequiredInt) {
+    // coolantStored -= coolantRequiredInt;
+    // coolantConsumptionRate = coolantRequiredInt;
+    // hasInsufficientCoolant = false;
+    // eAmpereFlow = 1 + (thingsActive >> 2);
+    // mMaxProgresstime = 20;
+    // mEfficiencyIncrease = 10000;
+    // //availableData.set(eAvailableData);
+    // return SimpleCheckRecipeResult.ofSuccess("computing");
+    // } else {
+    // eAvailableData = 0;
+    // mEUt = 0;
+    // eAmpereFlow = 0;
+    // mMaxProgresstime = 0;
+    // coolantConsumptionRate = 0;
+    // hasInsufficientCoolant = true;
+    // availableData.set(0);
+    // return SimpleCheckRecipeResult.ofFailure("ote.computer.noliquid");
+    // }
+    // } else {
+    // eAvailableData = 0;
+    // mEUt = -(int) V[7];
+    // eAmpereFlow = 1;
+    // mMaxProgresstime = 20;
+    // mEfficiencyIncrease = 10000;
+    // coolantConsumptionRate = 0;
+    // availableData.set(eAvailableData);
+    // return SimpleCheckRecipeResult.ofSuccess("no_computing");
+    // }
+    // }
+    // return SimpleCheckRecipeResult.ofFailure("no_computing");
+    // }
 
     @Override
     public void outputAfterRecipe_EM() {
@@ -490,10 +528,8 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
     @Override
     public MultiblockTooltipBuilder createTooltip() {
         final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-        tt.addMachineType(translateToLocal("ote.computer.machinetype")) // Machine Type:
-            // Quantum
-            // Computer
-            .addInfo(translateToLocal("ote.computer.desc.0")) // Controller block of
+        tt.addMachineType(translateToLocal("ote.computer.name"))
+            .addInfo(translateToLocal("ote.computer.desc.0"))
             // the Quantum Computer
             .addInfo(translateToLocal("ote.computer.desc.1")) // Used to generate
             // computation (and heat)
@@ -513,30 +549,11 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
             .addOtherStructurePart(
                 translateToLocal("tt.keyword.Structure.DataConnector"),
                 translateToLocal("tt.keyword.Structure.AnyComputerCasing"),
-                1) // Optical Connector: Any Computer Casing on first or last slice
+                1)
             .addOtherStructurePart(translateToLocal("ote.calc.rank"), translateToLocal("gt.blockcasingsTT.0.name"), 2)
-            .addInputHatch(translateToLocal("ote.computer.coolantInput"), 1) // 新增冷却液输入
-            // Computer Rack: Any Advanced Computer Casing, except the outer ones
+            .addInputHatch(translateToLocal("ote.computer.coolantinput"), 1) // 新增冷却液输入
             .addEnergyHatch(translateToLocal("tt.keyword.Structure.AnyComputerCasing"), 1) // Energy
-            // Hatch:
-            // Any
-            // Computer
-            // Casing
-            // on
-            // first
-            // or
-            // last
-            // slice
-            .addMaintenanceHatch(translateToLocal("tt.keyword.Structure.AnyComputerCasing"), 1) // Maintenance
-            // Hatch:
-            // Any
-            // Computer
-            // Casing
-            // on
-            // first
-            // or
-            // last
-            // slice
+
             .toolTipFinisher();
         return tt;
     }
@@ -605,19 +622,10 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
     @Override
     public void stopMachine(@Nonnull ShutDownReason reason) {
         super.stopMachine(reason);
-
-        // 确保停止时完全清空所有计算相关数据
         eAvailableData = 0;
-        if (availableData != null) {
-            availableData.set(0);
-        }
-
-        // 清空所有机架的计算状态
         for (OTEHatchRack rack : validMTEList(eRacks)) {
             rack.getBaseMetaTileEntity()
                 .setActive(false);
-            // 调用机架的方法来重置其内部计算状态
-            rack.tickComponents(0, 0); // 传入0来清空计算状态
         }
 
         // 重置冷却液消耗率
@@ -636,7 +644,6 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
         for (OTEHatchRack rack : validMTEList(eRacks)) {
             rack.getBaseMetaTileEntity()
                 .setActive(false);
-            rack.tickComponents(0, 0);
         }
     }
 
@@ -695,14 +702,14 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
                     + coolantStored
                     + " / "
                     + MAX_COOLANT_STORAGE
-                    + " mb"
+                    + " L"
                     + EnumChatFormatting.RESET));
 
         if (coolantConsumptionRate > 0) {
             data.add(
                 StatCollector.translateToLocalFormatted(
                     "ote.computer.info.coolant_usage",
-                    EnumChatFormatting.GREEN + "" + coolantConsumptionRate + " mb/t" + EnumChatFormatting.RESET));
+                    EnumChatFormatting.GREEN + "" + coolantConsumptionRate + " L/t" + EnumChatFormatting.RESET));
         }
 
         if (hasInsufficientCoolant) {
