@@ -305,30 +305,6 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
         }
         coolantStored = aNBT.getInteger("coolantStored");// 加载冷却液数据
     }
-    // @Override
-    // public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
-    // super.onPostTick(aBaseMetaTileEntity, aTick);
-    // if (aBaseMetaTileEntity.isServerSide() && mMachine) {
-    // for (MTEHatchInput coolantHatch : validMTEList(eCoolantInputs)) {
-    // int amountToDrain = MAX_COOLANT_STORAGE - coolantStored;
-    // if (amountToDrain <= 0) break;
-    //
-    // FluidStack requiredCoolant = new FluidStack(Materials.SuperCoolant.mFluid, amountToDrain);
-    //
-    // // 方法1: 使用 depleteInput (最推荐)
-    // if (depleteInput(requiredCoolant, false)) {
-    // coolantStored += requiredCoolant.amount;
-    // break;
-    // }
-    //
-    //
-    // }
-    //
-    // if (hasInsufficientCoolant && aBaseMetaTileEntity.isActive()) {
-    // hasInsufficientCoolant = false;
-    // }
-    // }
-    // }
 
     @Override
     public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
