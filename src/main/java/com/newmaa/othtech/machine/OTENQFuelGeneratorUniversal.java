@@ -132,6 +132,7 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
             tag.setBoolean("WM", isWirelessMode);
             tag.setString("costingWirelessEU", costingWirelessEU);
             tag.setString("EFF", String.valueOf(tEff));
+            tag.setString("pipe", String.valueOf(pipeTier));
         }
     }
 
@@ -158,6 +159,14 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
                 + EnumChatFormatting.GOLD
                 + "EU"
                 + EnumChatFormatting.RESET);
+        currentTip.add(
+            EnumChatFormatting.BOLD + translateToLocal("otht.waila.tier.pipe")
+                + EnumChatFormatting.RESET
+                + ": "
+                + EnumChatFormatting.GOLD
+                + tag.getString("pipe")
+                + EnumChatFormatting.RESET);
+
         currentTip.add(
             EnumChatFormatting.BOLD + translateToLocal("otht.waila.mode.wireless")
                 + EnumChatFormatting.RESET
@@ -313,6 +322,9 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
             if (tHatch instanceof MTEHatchInputME) {
                 return false;
             }
+        }
+        if (pipeTier != 2) {
+            isWirelessMode = false;
         }
 
         return structureCheck_EM(mName, 2, 2, 0);
@@ -496,9 +508,7 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
                         .buildAndChain(sBlockCasings8, 10))
                 .addElement(
                     'E',
-                    buildHatchAdder(OTENQFuelGeneratorUniversal.class)
-                        .atLeast(
-                            Energy.or(ExoticEnergy))
+                    buildHatchAdder(OTENQFuelGeneratorUniversal.class).atLeast(Energy.or(ExoticEnergy))
                         .adder(OTENQFuelGeneratorUniversal::addToMachineList)
                         .dot(4)
                         .casingIndex(((BlockCasings8) sBlockCasings8).getTextureIndex(10))
