@@ -40,10 +40,10 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.implementations.MTEHatch;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GTModHandler;
-import gregtech.api.util.GTUtility;
 import gregtech.api.util.recipe.QuantumComputerRecipeData;
 import gregtech.mixin.interfaces.accessors.EntityPlayerMPAccessor;
 import tectech.TecTech;
+import tectech.loader.ConfigHandler;
 import tectech.thing.gui.TecTechUITextures;
 import tectech.util.CommonValues;
 import tectech.util.TTUtility;
@@ -319,7 +319,7 @@ public class OTEHatchRack extends MTEHatch implements IAddGregtechLogo, IAddUIWi
         }
     }
 
-    public static class RackComponent implements Comparable<RackComponent> {
+    public static class RackComponent implements Comparable<OTEHatchRack.RackComponent> {
 
         private final String unlocalizedName;
         private final float heatConstant, coolConstant, computation, maxHeat;
@@ -328,23 +328,9 @@ public class OTEHatchRack extends MTEHatch implements IAddGregtechLogo, IAddUIWi
         RackComponent(ItemStack is, float computation, float heatConstant, float coolConstant, float maxHeat,
             boolean subZero) {
             this(TTUtility.getUniqueIdentifier(is), computation, heatConstant, coolConstant, maxHeat, subZero);
-        }
 
-        RackComponent(String is, float computation, float heatConstant, float coolConstant, float maxHeat,
-            boolean subZero) {
-            this.unlocalizedName = is;
-            this.computation = computation;
-            this.heatConstant = heatConstant;
-            this.coolConstant = coolConstant;
-            this.maxHeat = maxHeat;
-            this.subZero = subZero;
-
-            // 注册到组件绑定
-            componentBinds.put(unlocalizedName, this);
-
-            // 同时注册到量子计算机配方
             GTValues.RA.stdBuilder()
-                .itemInputs(GTUtility.copyAmount(1, getItemStackFromIdentifier(unlocalizedName)))
+                .itemInputs(is)
                 .metadata(
                     QUANTUM_COMPUTER_DATA,
                     new QuantumComputerRecipeData(heatConstant, coolConstant, computation, maxHeat, subZero))
@@ -352,7 +338,20 @@ public class OTEHatchRack extends MTEHatch implements IAddGregtechLogo, IAddUIWi
                 .eut(0)
                 .fake()
                 .addTo(quantumComputerFakeRecipes);
+        }
 
+        RackComponent(String is, float computation, float heatConstant, float coolConstant, float maxHeat,
+            boolean subZero) {
+            unlocalizedName = is;
+            this.computation = computation;
+            this.heatConstant = heatConstant;
+            this.coolConstant = coolConstant;
+            this.maxHeat = maxHeat;
+            this.subZero = subZero;
+            componentBinds.put(unlocalizedName, this);
+            if (ConfigHandler.debug.DEBUG_MODE) {
+                TecTech.LOGGER.info("Component registered: " + unlocalizedName);
+            }
         }
 
         @Override
@@ -369,23 +368,4 @@ public class OTEHatchRack extends MTEHatch implements IAddGregtechLogo, IAddUIWi
         }
     }
 
-    /**
-     * 从标识符获取ItemStack的辅助方法
-     */
-    private static ItemStack getItemStackFromIdentifier(String identifier) {
-        // 这里需要根据你的标识符系统实现相应的逻辑
-        // 这只是一个示例实现，你需要根据实际情况调整
-        try {
-            String[] parts = identifier.split(":");
-            if (parts.length >= 3) {
-                String modId = parts[0];
-                String itemName = parts[1];
-                int meta = Integer.parseInt(parts[2]);
-                return getModItem(modId, itemName, 1, meta);
-            }
-        } catch (Exception e) {
-            TecTech.LOGGER.error("无法从标识符解析物品: " + identifier, e);
-        }
-        return null;
-    }
 }
