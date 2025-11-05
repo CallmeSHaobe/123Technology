@@ -519,13 +519,10 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
                         "pipe",
                         ofBlocksTiered(
                             OTENQFuelGeneratorUniversal::getPipeTier,
-                            ImmutableList.of(
-                                Pair.of(sBlockCasings2, 15), // 等级1
-                                Pair.of(sBlockCasings9, 14) // 等级2
-                            ),
+                            ImmutableList.of(Pair.of(sBlockCasings2, 15), Pair.of(sBlockCasings9, 14)),
                             -1, // nonset
                             (t, meta) -> pipeTier = meta,
-                            t -> pipeTier)))
+                            t -> pipeTier)))// 说个笑话,这λ函数根本没用,有用的都在getPipeTier了
                 .addElement('C', ofBlock(sBlockCasings6, 8))
                 .addElement('G', ofBlock(sBlockCasings2, 4))
                 .addElement('I', ofBlock(sBlockCasings8, 4))
@@ -563,6 +560,7 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
     @Nullable
     protected static Integer getPipeTier(Block block, int meta) {
         if (block == null) return null;
+        // fuck you lambda
         if (block == sBlockCasings2 && meta == 15) {
             return pipeTier = 1;
         } else if (block == sBlockCasings9 && meta == 14) {

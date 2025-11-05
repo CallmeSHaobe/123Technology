@@ -463,8 +463,7 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
                 .addElement(
                     'B',
                     buildHatchAdder(OTEBBPlasmaForge.class)
-                        .atLeast(InputHatch, OutputHatch, InputBus, OutputBus, Energy, ExoticEnergy, Maintenance)
-                        .adder(OTEBBPlasmaForge::addToMachineList)
+                        .atLeast(InputHatch, OutputHatch, InputBus, OutputBus, Energy.or(ExoticEnergy), Maintenance)
                         .casingIndex(DIM_INJECTION_CASING)
                         .dot(1)
                         .buildAndChain(sBlockCasings1, 13))
@@ -955,7 +954,7 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
     public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
         if (getMLevel() >= 2) {
-            if (this.mEnergyHatches.isEmpty() || this.mExoticEnergyHatches.isEmpty()) {
+            if (this.mEnergyHatches.isEmpty() && this.mExoticEnergyHatches.isEmpty()) {
                 isWirelessMode = !isWirelessMode;
             } else {
                 isWirelessMode = false;
