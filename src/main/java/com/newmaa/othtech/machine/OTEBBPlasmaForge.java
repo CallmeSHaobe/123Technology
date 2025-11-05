@@ -665,6 +665,8 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
 
         // Get heating capacity from coils in structure.
         setCoilLevel(HeatingCoilLevel.None);
+        mEnergyHatches.clear();
+        mExoticEnergyHatches.clear();
 
         if (!checkPiece(STRUCTURE_PIECE_MAIN, 23, 5, 20)) {
             return false;
