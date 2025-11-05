@@ -566,6 +566,7 @@ ote.computer.info.coolant_usage=冷却液消耗: %s
 ote.computer.desc.coolant.01=§c[§l冷却液系统§r]目前只支持§l普通输入仓§r输入
 ote.computer.noliquid=超级冷却液不足,无法计算
 ote.computer.output.x10=§c由于憋憋之神的眷顾,输出算力全部x10,§r§l请注意冷却液消耗
+ote.computer.recipe=异星计算机可用部件配方
 
 #SINOPEC
 ote.tm.sinopec.0=§q§l重工业计划 - 中国石化集成工厂

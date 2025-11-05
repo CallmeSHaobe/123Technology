@@ -1,8 +1,8 @@
 package com.newmaa.othtech.machine.hatch;
 
+import static com.newmaa.othtech.recipe.RecipesMain.OTEquantumComputerFakeRecipes;
 import static gregtech.api.enums.Mods.NewHorizonsCoreMod;
 import static gregtech.api.enums.Mods.OpenComputers;
-import static gregtech.api.recipe.RecipeMaps.quantumComputerFakeRecipes;
 import static gregtech.api.util.GTModHandler.getModItem;
 import static gregtech.api.util.GTRecipeConstants.QUANTUM_COMPUTER_DATA;
 import static net.minecraft.util.StatCollector.translateToLocal;
@@ -26,6 +26,7 @@ import com.gtnewhorizons.modularui.common.widget.DrawableWidget;
 import com.gtnewhorizons.modularui.common.widget.FakeSyncWidget;
 import com.gtnewhorizons.modularui.common.widget.SlotWidget;
 import com.newmaa.othtech.common.OTHItemList;
+import com.newmaa.othtech.recipe.RecipesOTEFakeQuantumComputerData;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -40,7 +41,6 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.implementations.MTEHatch;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GTModHandler;
-import gregtech.api.util.recipe.QuantumComputerRecipeData;
 import gregtech.mixin.interfaces.accessors.EntityPlayerMPAccessor;
 import tectech.TecTech;
 import tectech.loader.ConfigHandler;
@@ -273,80 +273,77 @@ public class OTEHatchRack extends MTEHatch implements IAddGregtechLogo, IAddUIWi
 
     public static void run() { // 20k heat cap max!
 
-        new RackComponent(ItemList.Circuit_Crystalprocessor.get(1), 60, 56, -1f, 20000, true); // IV
-        new RackComponent(ItemList.Circuit_Crystalcomputer.get(1), 80, 54, -1f, 20000, true); // LuV
-        new RackComponent(ItemList.Circuit_Ultimatecrystalcomputer.get(1), 100, 52, -1f, 20000, true); // ZPM
-        new RackComponent(ItemList.Circuit_Crystalmainframe.get(1), 120, 50, -1f, 20000, true); // UV
+        new RackComponent(ItemList.Circuit_Crystalprocessor.get(1), 60, 56, -1f, true); // IV
+        new RackComponent(ItemList.Circuit_Crystalcomputer.get(1), 80, 54, -1f, true); // LuV
+        new RackComponent(ItemList.Circuit_Ultimatecrystalcomputer.get(1), 100, 52, -1f, true); // ZPM
+        new RackComponent(ItemList.Circuit_Crystalmainframe.get(1), 120, 50, -1f, true); // UV
 
-        new RackComponent(ItemList.Circuit_Neuroprocessor.get(1), 160, 46, -1f, 40000, true); // LuV
-        new RackComponent(ItemList.Circuit_Wetwarecomputer.get(1), 180, 44, -1f, 40000, true); // ZPM
-        new RackComponent(ItemList.Circuit_Wetwaresupercomputer.get(1), 200, 42, -1f, 40000, true); // UV
-        new RackComponent(ItemList.Circuit_Wetwaremainframe.get(1), 220, 40, -1f, 40000, true); // UHV
+        new RackComponent(ItemList.Circuit_Neuroprocessor.get(1), 160, 46, -1f, true); // LuV
+        new RackComponent(ItemList.Circuit_Wetwarecomputer.get(1), 180, 44, -1f, true); // ZPM
+        new RackComponent(ItemList.Circuit_Wetwaresupercomputer.get(1), 200, 42, -1f, true); // UV
+        new RackComponent(ItemList.Circuit_Wetwaremainframe.get(1), 220, 40, -1f, true); // UHV
 
-        new RackComponent(GTModHandler.getIC2Item("reactorVent", 1), 0, -1, 40f, 20000, false); // Heat Vent
-        new RackComponent(GTModHandler.getIC2Item("reactorVentCore", 1), 0, -1, 80f, 40000, false); // Reactor Heat Vent
-        new RackComponent(GTModHandler.getIC2Item("reactorVentGold", 1), 0, -1, 120f, 60000, false); // Overclocked Heat
+        new RackComponent(GTModHandler.getIC2Item("reactorVent", 1), 0, -1, 40f, false); // Heat Vent
+        new RackComponent(GTModHandler.getIC2Item("reactorVentCore", 1), 0, -1, 80f, false); // Reactor Heat Vent
+        new RackComponent(GTModHandler.getIC2Item("reactorVentGold", 1), 0, -1, 120f, false); // Overclocked Heat
         // Vent
-        new RackComponent(GTModHandler.getIC2Item("reactorVentDiamond", 1), 0, -1, 160f, 80000, false); // Advanced Heat
+        new RackComponent(GTModHandler.getIC2Item("reactorVentDiamond", 1), 0, -1, 160f, false); // Advanced Heat
         // Vent
 
         if (NewHorizonsCoreMod.isModLoaded()) {
             // GTNH-GT5u circuits (these components causes crashes when used with the original GT5u)
-            new RackComponent(ItemList.Circuit_Bioprocessor.get(1), 2000, 36, -1f, 60000, true); // ZPM
-            new RackComponent(ItemList.Circuit_Biowarecomputer.get(1), 2000, 34, -1f, 60000, true); // UV
-            new RackComponent(ItemList.Circuit_Biowaresupercomputer.get(1), 2400, 32, -1f, 60000, true); // UHV
-            new RackComponent(ItemList.Circuit_Biomainframe.get(1), 2600, 30, -1f, 60000, true); // UEV
+            new RackComponent(ItemList.Circuit_Bioprocessor.get(1), 2000, 36, -1f, true); // ZPM
+            new RackComponent(ItemList.Circuit_Biowarecomputer.get(1), 2000, 34, -1f, true); // UV
+            new RackComponent(ItemList.Circuit_Biowaresupercomputer.get(1), 2400, 32, -1f, true); // UHV
+            new RackComponent(ItemList.Circuit_Biomainframe.get(1), 2600, 30, -1f, true); // UEV
 
-            new RackComponent(ItemList.Circuit_OpticalProcessor.get(1), 2000, 26, -1f, 80000, true); // UV
-            new RackComponent(ItemList.Circuit_OpticalAssembly.get(1), 2200, 24, -1f, 80000, true); // UHV
-            new RackComponent(ItemList.Circuit_OpticalComputer.get(1), 2400, 22, -1f, 80000, true); // UEV
-            new RackComponent(ItemList.Circuit_OpticalMainframe.get(1), 2600, 20, -1f, 80000, true); // UIV
+            new RackComponent(ItemList.Circuit_OpticalProcessor.get(1), 2000, 26, -1f, true); // UV
+            new RackComponent(ItemList.Circuit_OpticalAssembly.get(1), 2200, 24, -1f, true); // UHV
+            new RackComponent(ItemList.Circuit_OpticalComputer.get(1), 2400, 22, -1f, true); // UEV
+            new RackComponent(ItemList.Circuit_OpticalMainframe.get(1), 2600, 20, -1f, true); // UIV
 
-            new RackComponent(getModItem(NewHorizonsCoreMod.ID, "item.PikoCircuit", 1), 2600, 12, -1f, 95000, true); // UMV
-            new RackComponent(getModItem(NewHorizonsCoreMod.ID, "item.QuantumCircuit", 1), 3200, 10, -1f, 100000, true); // UXV
-            new RackComponent(OTHItemList.NukeThrowable.get(1), 123123, 114514, -1f, 1919810, true);
+            new RackComponent(getModItem(NewHorizonsCoreMod.ID, "item.PikoCircuit", 1), 2600, 12, -1f, true); // UMV
+            new RackComponent(getModItem(NewHorizonsCoreMod.ID, "item.QuantumCircuit", 1), 3200, 10, -1f, true); // UXV
+            new RackComponent(OTHItemList.NukeThrowable.get(1), 123123, 114514, -1f, true);
         }
 
         if (OpenComputers.isModLoaded()) {
             ItemStack apuT3Stack = getModItem(OpenComputers.ID, "item", 1, 102);
             if (apuT3Stack != null) {
-                new RackComponent(apuT3Stack, 1200, 42, -1f, 20000, true); // APU T3
+                new RackComponent(apuT3Stack, 1200, 42, -1f, true); // APU T3
             }
 
-            new RackComponent(getModItem(OpenComputers.ID, "item", 1, 43), 800, 46, -1f, 20000, true); // CPU T3
-            new RackComponent(getModItem(OpenComputers.ID, "item", 1, 10), 1000, 44, -1f, 20000, true); // GPU T3
-            new RackComponent(getModItem(OpenComputers.ID, "item", 1, 103), 2400, 40, -1f, 20000, true); // APU Creative
+            new RackComponent(getModItem(OpenComputers.ID, "item", 1, 43), 800, 46, -1f, true); // CPU T3
+            new RackComponent(getModItem(OpenComputers.ID, "item", 1, 10), 1000, 44, -1f, true); // GPU T3
+            new RackComponent(getModItem(OpenComputers.ID, "item", 1, 103), 2400, 40, -1f, true); // APU Creative
         }
     }
 
     public static class RackComponent implements Comparable<OTEHatchRack.RackComponent> {
 
         private final String unlocalizedName;
-        private final float heatConstant, coolConstant, computation, maxHeat;
+        private final float heatConstant, coolConstant, computation;
         private final boolean subZero;
 
-        RackComponent(ItemStack is, float computation, float heatConstant, float coolConstant, float maxHeat,
-            boolean subZero) {
-            this(TTUtility.getUniqueIdentifier(is), computation, heatConstant, coolConstant, maxHeat, subZero);
+        RackComponent(ItemStack is, float computation, float heatConstant, float coolConstant, boolean subZero) {
+            this(TTUtility.getUniqueIdentifier(is), computation, heatConstant, coolConstant, subZero);
 
             GTValues.RA.stdBuilder()
                 .itemInputs(is)
                 .metadata(
                     QUANTUM_COMPUTER_DATA,
-                    new QuantumComputerRecipeData(heatConstant, coolConstant, computation, maxHeat, subZero))
+                    new RecipesOTEFakeQuantumComputerData(heatConstant, coolConstant, computation, subZero))
                 .duration(0)
                 .eut(0)
                 .fake()
-                .addTo(quantumComputerFakeRecipes);
+                .addTo(OTEquantumComputerFakeRecipes);
         }
 
-        RackComponent(String is, float computation, float heatConstant, float coolConstant, float maxHeat,
-            boolean subZero) {
+        RackComponent(String is, float computation, float heatConstant, float coolConstant, boolean subZero) {
             unlocalizedName = is;
             this.computation = computation;
             this.heatConstant = heatConstant;
             this.coolConstant = coolConstant;
-            this.maxHeat = maxHeat;
             this.subZero = subZero;
             componentBinds.put(unlocalizedName, this);
             if (ConfigHandler.debug.DEBUG_MODE) {
@@ -367,5 +364,4 @@ public class OTEHatchRack extends MTEHatch implements IAddGregtechLogo, IAddUIWi
             return false;
         }
     }
-
 }

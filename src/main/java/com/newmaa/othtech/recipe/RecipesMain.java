@@ -50,7 +50,10 @@ import gregtech.api.enums.MaterialsUEVplus;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMap;
+import gregtech.api.recipe.RecipeMapBackend;
+import gregtech.api.recipe.RecipeMapBuilder;
 import gregtech.api.recipe.RecipeMaps;
+import gregtech.api.recipe.maps.QuantumComputerFrontend;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTUtility;
@@ -153,6 +156,7 @@ public class RecipesMain implements IRecipePool {
             .eut(Integer.MAX_VALUE)
             .specialValue(3)
             .addTo(Nan);
+
         // Mega recipesQFTRecipes
         TTRecipeAdder.addResearchableAssemblylineRecipe(
             getGM(31151, 1),
@@ -1339,4 +1343,15 @@ public class RecipesMain implements IRecipePool {
                 getGM(31080, 1), 'E', getGM(31085, 1), 'F', getGM(31082, 1), 'G', getGM(31083, 1), 'H', getGM(31084, 1),
                 'I', getGM(23540, 1) });
     }
+
+    public static final RecipeMap<RecipeMapBackend> OTEquantumComputerFakeRecipes = RecipeMapBuilder
+        .of("ote.computer.recipe")
+        .maxIO(1, 0, 0, 0)
+        .minInputs(1, 0)
+        .dontUseProgressBar()
+        .frontend(QuantumComputerFrontend::new)
+        .neiHandlerInfo(
+            builder -> builder.setMaxRecipesPerPage(4)
+                .setDisplayStack(OTHItemList.OTEComputer.get(1)))
+        .build();
 }
