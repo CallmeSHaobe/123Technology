@@ -125,7 +125,7 @@ public class RecipesMISA implements IRecipePool {
                 setStackSize(Materials.Platinum.getDust(1), 16 * 128),
                 setStackSize(Materials.Tellurium.getDust(1), 16 * 70),
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 78), 16 * 60),
-                setStackSize(GTModHandler.getModItem("miscutils", "itemDustSelenium", 1, 64), 16 * 40))
+                setStackSize(GTModHandler.getModItem("miscutils", "itemDustSelenium", 1, 0), 16 * 40))
             .itemInputs(
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5085), 16 * 256),
                 setStackSize(Materials.Carbon.getDust(1), 40),
