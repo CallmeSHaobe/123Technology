@@ -132,7 +132,8 @@ public enum OTHItemList {
     MegaIsaForge,
 
     OTEGraveDragon,
-    OTEBBPlasmaForge;
+    OTEBBPlasmaForge,
+    OTEComputer;
 
     private boolean mHasNotBeenSet;
     private boolean mDeprecated;

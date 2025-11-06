@@ -90,7 +90,7 @@ public class RecipesSINOPEC implements IRecipePool {
                 new FluidStack(naphthenicacid, 12000),
                 new FluidStack(lig, 108000),
                 new FluidStack(hea, 600000))
-            .fluidInputs(new FluidStack(FluidRegistry.getFluidID("liquid_heavy_oil"), 24000))
+            .fluidInputs(new FluidStack(FluidRegistry.getFluidID("liquid_heavy_oil"), 240000))
             .itemInputs(GTUtility.getIntegratedCircuit(24))
             .itemOutputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Sulfur, 96))
 

@@ -65,6 +65,7 @@ import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
+import gregtech.api.recipe.check.SimpleCheckRecipeResult;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTRecipe;
@@ -82,15 +83,18 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
     @Override
     public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
         super.onPostTick(aBaseMetaTileEntity, aTick);
-        if (aTick % 20 == 0 && (MLevel == 1)) {
-            ItemStack aGuiStack = this.getControllerSlot();
-            if (aGuiStack != null) {
-                if (GTUtility
-                    .areStacksEqual(aGuiStack, GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32758))) {
-                    this.MLevel = 2;
+        if (aTick % 300 == 0) {
+            // if check structure true then continue
+            if (checkMachine(aBaseMetaTileEntity, null)) {
+                ItemStack aGuiStack = this.getControllerSlot();
+                if (aGuiStack != null) {
+                    if (GTUtility
+                        .areStacksEqual(aGuiStack, GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32758))) {
+                        this.MLevel = 2;
+                    }
+                } else {
+                    this.MLevel = 1;
                 }
-            } else {
-                this.MLevel = 1;
             }
         }
     }
@@ -111,6 +115,7 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
 
     private int mHeatingCapacity = 0;
     private int MLevel = 1;
+    private boolean failure = false;
     private HeatingCoilLevel mCoilLevel;
     private UUID ownerUUID;
     private static IStructureDefinition<OTEBBPlasmaForge> STRUCTURE_DEFINITION = null;
@@ -562,19 +567,17 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
                 overclockCalculator = super.createOverclockCalculator(recipe).setRecipeHeat(recipe.mSpecialValue)
                     .setMachineHeat(mHeatingCapacity);
 
-                // 添加限制：当 MLevel=1 且使用能源仓时限制超频
                 if (MLevel == 1 && !isWirelessMode && !mEnergyHatches.isEmpty()) {
                     // 获取能源仓的总功率
                     long totalPowerCapacity = getTotalPowerCapacity();
                     // 获取配方基础功耗
                     long baseEUt = recipe.mEUt;
-                    // 计算最大允许的超频次数，确保不超过能源仓总功率
+
                     int maxOverclocks = calculateMaxOverclocks(baseEUt, totalPowerCapacity);
 
-                    // 限制超频次数
                     overclockCalculator = overclockCalculator.setMaxOverclocks(maxOverclocks);
+
                 } else if (MLevel >= 2) {
-                    // MLevel>=2 时允许无损超频
                     overclockCalculator = overclockCalculator.enablePerfectOC();
                 }
 
@@ -583,20 +586,18 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
 
             @Override
             protected @Nonnull CheckRecipeResult validateRecipe(@Nonnull GTRecipe recipe) {
-                // 原有的热量检查
+                if (failure) {
+                    return SimpleCheckRecipeResult.ofFailure("nohatch");
+                }
+
                 if (recipe.mSpecialValue > mHeatingCapacity) {
                     return CheckRecipeResultRegistry.insufficientHeat(recipe.mSpecialValue);
                 }
 
-                // 添加功率限制检查：当 MLevel=1 且使用能源仓时
                 if (MLevel == 1 && !isWirelessMode && !mEnergyHatches.isEmpty()) {
                     long totalPowerCapacity = getTotalPowerCapacity();
                     long baseEUt = recipe.mEUt;
 
-                    // 如果基础功耗已经超过能源仓总功率，直接拒绝配方
-                    if (baseEUt > totalPowerCapacity) {
-                        return CheckRecipeResultRegistry.insufficientPower(totalPowerCapacity);
-                    }
                     if (isWirelessMode) {
                         BigInteger requiredEnergy = BigInteger.valueOf(recipe.mEUt)
                             .multiply(BigInteger.valueOf(recipe.mDuration));
@@ -604,11 +605,9 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
                         if (!addEUToGlobalEnergyMap(ownerUUID, requiredEnergy.multiply(NEGATIVE_ONE))) {
                             return CheckRecipeResultRegistry.insufficientPower(requiredEnergy.longValue());
                         }
-                        // 回退检查时的扣除，等实际处理时再扣
+
                         addEUToGlobalEnergyMap(ownerUUID, requiredEnergy);
                     }
-
-                    // 检查超频后的功耗是否会超过限制
                     int maxOverclocks = calculateMaxOverclocks(baseEUt, totalPowerCapacity);
                     if (maxOverclocks <= 0) {
                         return CheckRecipeResultRegistry.insufficientPower(totalPowerCapacity);
@@ -620,7 +619,6 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
         }.setMaxParallelSupplier(this::getMaxParallelRecipes);
     }
 
-    // 计算能源仓总功率
     private long getTotalPowerCapacity() {
         long totalCapacity = 0;
         for (MTEHatch hatch : mEnergyHatches) {
@@ -637,7 +635,6 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
         return totalCapacity;
     }
 
-    // 计算最大允许的超频次数
     private int calculateMaxOverclocks(long baseEUt, long totalPowerCapacity) {
         int maxOverclocks = 0;
         long currentEUt = baseEUt;
@@ -676,13 +673,13 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
 
         if (getCoilLevel() == HeatingCoilLevel.None) return false;
 
-        // 检查能源仓数量
-        if (mEnergyHatches.size() > 1) {
-            return false;
-        }
-
         // Heat capacity of coils used on multi. No free heat from extra EU!
         mHeatingCapacity = (int) getCoilLevel().getHeat();
+        if (isWirelessMode && !mEnergyHatches.isEmpty() | !mExoticEnergyHatches.isEmpty()) {
+            this.failure = true;
+        } else {
+            this.failure = false;
+        }
 
         // All structure checks passed, return true.
         return true;
@@ -876,7 +873,6 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
                 if (this.mEnergyHatches.isEmpty() || this.mExoticEnergyHatches.isEmpty()) {
                     isWirelessMode = !isWirelessMode;
                 } else {
-                    translateToLocal("ote.bbpf.wireless.checkfail");
                     isWirelessMode = false;
                 }
             }
@@ -922,7 +918,7 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
 
     public void saveNBTData(NBTTagCompound aNBT) {
         aNBT.setBoolean("wireless", isWirelessMode);
-        aNBT.setInteger("Mlevel", MLevel);
+        aNBT.setInteger("MLevel", MLevel);
         super.saveNBTData(aNBT);
     }
 
@@ -962,7 +958,6 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
             if (this.mEnergyHatches.isEmpty() || this.mExoticEnergyHatches.isEmpty()) {
                 isWirelessMode = !isWirelessMode;
             } else {
-                translateToLocal("ote.bbpf.wireless.checkfail");
                 isWirelessMode = false;
             }
         }

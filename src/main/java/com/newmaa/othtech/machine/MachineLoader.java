@@ -158,6 +158,7 @@ public class MachineLoader {
         OTHItemList.Beeyonds.set(new OTEBeeyonds(IDs + 58, "IndustrialBeeHouse", translateToLocal("ote.tn.bee")));
         OTHItemList.OTEBBPlasmaForge
             .set(new OTEBBPlasmaForge(IDs + 59, "OTEBBPlasmaForge", translateToLocal("ote.tn.bbpf")));
+        // OTHItemList.OTEComputer.set(new OTEComputer(IDs + 60, "OTEComputer", translateToLocal("ote.computer.name")));
         // TODO FUTURE
 
     }
