@@ -676,7 +676,7 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
 
         // Heat capacity of coils used on multi. No free heat from extra EU!
         mHeatingCapacity = (int) getCoilLevel().getHeat();
-        if (isWirelessMode && !mEnergyHatches.isEmpty() | !mExoticEnergyHatches.isEmpty()) {
+        if (isWirelessMode && (!mEnergyHatches.isEmpty() || !mExoticEnergyHatches.isEmpty())) {
             this.failure = true;
         } else {
             this.failure = false;
