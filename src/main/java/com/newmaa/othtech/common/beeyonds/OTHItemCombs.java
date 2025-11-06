@@ -123,7 +123,7 @@ public class OTHItemCombs extends Item {
                 OTHCombTypes.HYPOGEN.getStackForType(1),
                 GTModHandler.getModItem("miscutils", "MU-metaitem.01", 0, 32100))
             .fluidInputs(
-                FluidRegistry.getFluidStack("molten.neutronium", 5760),
+                Materials.CosmicNeutronium.getMolten(5760),
                 FluidRegistry.getFluidStack("molten.quantum", 5760),
                 FluidRegistry.getFluidStack("molten.infinity", 1440),
                 FluidRegistry.getFluidStack("exciteddtec", 1000))
@@ -140,7 +140,7 @@ public class OTHItemCombs extends Item {
                 OTHCombTypes.HYPOGEN.getStackForType(1),
                 GTModHandler.getModItem("miscutils", "MU-metaitem.01", 0, 32100))
             .fluidInputs(
-                FluidRegistry.getFluidStack("molten.neutronium", 11520),
+                Materials.CosmicNeutronium.getMolten(11520),
                 FluidRegistry.getFluidStack("molten.quantum", 5760),
                 FluidRegistry.getFluidStack("molten.infinity", 1440),
                 FluidRegistry.getFluidStack("exciteddtsc", 1000))
