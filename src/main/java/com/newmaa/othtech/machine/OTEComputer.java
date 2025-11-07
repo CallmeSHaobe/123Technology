@@ -36,6 +36,7 @@ import org.jetbrains.annotations.NotNull;
 import com.gtnewhorizon.structurelib.alignment.constructable.IConstructable;
 import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructable;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
+import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.gtnewhorizon.structurelib.util.Vec3Impl;
 import com.newmaa.othtech.machine.hatch.OTEHatchRack;
@@ -596,6 +597,22 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
     }
 
     @Override
+    public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
+        if (mMachine) return -1;
+        int realBudget = elementBudget >= 200 ? elementBudget : Math.min(200, elementBudget * 5);
+        return survivalBuildPiece(
+            STRUCTURE_PIECE_MAIN,
+            stackSize,
+            horizontalOffSet,
+            verticalOffSet,
+            depthOffSet,
+            realBudget,
+            env,
+            false,
+            true);
+    }
+
+    @Override
     public String[] getStructureDescription(ItemStack stackSize) {
         return description;
     }
@@ -609,14 +626,6 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
                     "ote.computer.info.coolant_usage",
                     EnumChatFormatting.GREEN + "" + coolantConsumptionRate + " L/t" + EnumChatFormatting.RESET));
         }
-
-        if (hasInsufficientCoolant) {
-            data.add(
-                StatCollector.translateToLocal("ote.computer.noliquid") + EnumChatFormatting.RED
-                    + " INSUFFICIENT COOLANT!"
-                    + EnumChatFormatting.RESET);
-        }
-
         if (wirelessModeEnabled) {
             WirelessComputationPacket wirelessComputationPacket = null;
             if (getBaseMetaTileEntity() != null) {
