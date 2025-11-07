@@ -513,7 +513,7 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
             .addSubChannelUsage(GTStructureChannels.HEATING_COIL)
             .addSeparator()
             .addInfo("§b§lAuthor:§r§kunknown§r§lczqwq§r")
-            .toolTipFinisher("§a123Technology - BigBrother BB PlasmaForge");
+            .toolTipFinisher();
         return tt;
     }
 
