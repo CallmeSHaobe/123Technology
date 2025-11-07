@@ -485,6 +485,7 @@ ote.tm.mnf.6=§b螺丝刀切换模式, §c独有配方池§b允许更高级的�
 ote.cm.mnf.0=1 - 消声仓, 能源仓, 输入输出总线, 输入输出仓 : 替换硅岩燃料精炼机械方块, 支持TecTech能源仓
 ote.tm.mnf.mode.0=硅岩燃料精炼厂模式
 ote.tm.mnf.mode.1=压缩硅岩燃料精炼厂模式
+ote.tm.mnf.parallel.max=最大并行
 
 #MQFT
 ote.tm.mqft.0=§e§l老登们的又一造物 - §b「狄拉克逆变器」
