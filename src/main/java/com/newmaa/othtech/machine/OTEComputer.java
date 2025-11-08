@@ -23,10 +23,6 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.common.FMLCommonHandler;
-import mcp.mobius.waila.api.IWailaConfigHandler;
-import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -69,6 +65,8 @@ import gregtech.api.util.IGTHatchAdder;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.api.util.shutdown.ShutDownReason;
 import gregtech.common.WirelessComputationPacket;
+import mcp.mobius.waila.api.IWailaConfigHandler;
+import mcp.mobius.waila.api.IWailaDataAccessor;
 import tectech.mechanics.dataTransport.QuantumDataPacket;
 import tectech.thing.block.BlockQuantumGlass;
 import tectech.thing.casing.BlockGTCasingsTT;
@@ -293,7 +291,7 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
 
     @Override
     public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
-                                int z) {
+        int z) {
         super.getWailaNBTData(player, tile, tag, world, x, y, z);
         final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
         if (tileEntity != null) {
@@ -305,7 +303,7 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
 
     @Override
     public void getWailaBody(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor,
-                             IWailaConfigHandler config) {
+        IWailaConfigHandler config) {
         super.getWailaBody(itemStack, currentTip, accessor, config);
         final NBTTagCompound tag = accessor.getNBTData();
         currentTip.add(
@@ -483,7 +481,7 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
     public MultiblockTooltipBuilder createTooltip() {
         final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType(translateToLocal("ote.computer.name"))
-            //.addInfo(translateToLocal("ote.computer.desc.0"))
+            // .addInfo(translateToLocal("ote.computer.desc.0"))
             // the Quantum Computer
             .addInfo(translateToLocal("ote.computer.desc.1")) // Used to generate
             // computation (and heat)
@@ -636,7 +634,6 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
         }
         return false;
     }
-
 
     @Override
     public void construct(ItemStack stackSize, boolean hintsOnly) {
