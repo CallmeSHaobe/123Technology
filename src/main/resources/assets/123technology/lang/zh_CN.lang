@@ -550,7 +550,7 @@ ote.bbpf.wireless.on=该机器解放了它全部的力量(无线开启)
 
 #computer
 ote.calc.rank=计算机箱
-ote.computer.name=§l§u异星§c量子超级计算机
+ote.computer.name=§l§u异星§c量子超级计算机§r
 ote.computer.hint.0=1 - 基础仓室、光学接口或电子计算机机械方块
 ote.computer.hint.1=2 - 计算机箱或超能机械方块
 ote.computer.hint.2=3 - 冷却液输入仓室或计算机散热风扇
@@ -563,11 +563,10 @@ ote.computer.desc.1=用于生成算力(以及热量)
 ote.computer.desc.2=银河计算力皆掌在手中
 ote.computer.coolant=工作需要提供超级冷却液,计算公式: 冷却液需求: (算力/50) × 超频^1.2 × 超压^0.6 L/tick"
 ote.computer.coolantinput=任意输入仓(冷却液输入仓)
-ote.computer.info.coolant=已存储冷却液: %s 
 ote.computer.info.coolant_usage=冷却液消耗: %s
-ote.computer.desc.coolant.01=§c[§l冷却液系统§r]冷却液输入支持ME输入仓!
+ote.computer.desc.coolant.01=§c[§l冷却液系统]§r冷却液输入支持§cME输入仓§r!
 ote.computer.noliquid=超级冷却液不足,无法计算
-ote.computer.output.x10=§c由于憋憋之神的眷顾,输出算力全部x10,§r§l请注意冷却液消耗
+ote.computer.output.x2=§c由于憋憋之神的眷顾,输出算力全部x2,§r§l请注意冷却液消耗
 ote.computer.recipe=异星计算机可用部件配方
 
 #SINOPEC

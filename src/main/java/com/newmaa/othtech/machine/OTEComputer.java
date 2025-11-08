@@ -7,6 +7,7 @@ import static gregtech.api.GregTechAPI.sBlockCasings8;
 import static gregtech.api.GregTechAPI.sBlockGlass1;
 import static gregtech.api.enums.GTValues.V;
 import static gregtech.api.enums.HatchElement.Energy;
+import static gregtech.api.enums.HatchElement.ExoticEnergy;
 import static gregtech.api.enums.HatchElement.InputHatch;
 import static gregtech.api.enums.HatchElement.Maintenance;
 import static gregtech.api.recipe.RecipeMaps.quantumComputerFakeRecipes;
@@ -22,12 +23,19 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
+import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.common.FMLCommonHandler;
+import mcp.mobius.waila.api.IWailaConfigHandler;
+import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -122,13 +130,12 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
                     'D',
                     buildHatchAdder(OTEComputer.class)
                         .atLeast(
-                            Energy.or(HatchElement.EnergyMulti),
+                            Energy.or(ExoticEnergy),
                             Maintenance,
                             HatchElement.Uncertainty,
                             HatchElement.InputData,
-                            HatchElement.OutputData,
-                            InputHatch,
-                            WirelessComputationHatchElement.INSTANCE)
+                            WirelessComputationHatchElement.INSTANCE.or(HatchElement.OutputData),
+                            InputHatch)
                         .casingIndex(BlockGTCasingsTT.textureOffset + 1)
                         .dot(1)
                         .buildAndChain(ofBlock(TTCasingsContainer.sBlockCasingsTT, 1)))
@@ -282,6 +289,43 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
+                                int z) {
+        super.getWailaNBTData(player, tile, tag, world, x, y, z);
+        final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
+        if (tileEntity != null) {
+            tag.setString("oc", String.valueOf(overclock.get()));
+            tag.setString("ov", String.valueOf(overvolt.get()));
+            tag.setString("data", String.valueOf(availableData.get()));
+        }
+    }
+
+    @Override
+    public void getWailaBody(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor,
+                             IWailaConfigHandler config) {
+        super.getWailaBody(itemStack, currentTip, accessor, config);
+        final NBTTagCompound tag = accessor.getNBTData();
+        currentTip.add(
+            translateToLocal("ote.computer.cfgi.0") + EnumChatFormatting.RESET
+                + ": "
+                + EnumChatFormatting.GOLD
+                + tag.getString("oc")
+                + EnumChatFormatting.RESET);
+        currentTip.add(
+            translateToLocal("ote.computer.cfgi.1") + EnumChatFormatting.RESET
+                + ": "
+                + EnumChatFormatting.GOLD
+                + tag.getString("ov")
+                + EnumChatFormatting.RESET);
+        currentTip.add(
+            translateToLocal("ote.computer.cfgo.1") + EnumChatFormatting.RESET
+                + ": "
+                + EnumChatFormatting.GOLD
+                + tag.getString("data")
+                + EnumChatFormatting.RESET);
     }
 
     @Override
@@ -439,11 +483,13 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
     public MultiblockTooltipBuilder createTooltip() {
         final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType(translateToLocal("ote.computer.name"))
-            .addInfo(translateToLocal("ote.computer.desc.0"))
+            //.addInfo(translateToLocal("ote.computer.desc.0"))
             // the Quantum Computer
             .addInfo(translateToLocal("ote.computer.desc.1")) // Used to generate
             // computation (and heat)
             .addInfo(translateToLocal("ote.computer.desc.2"))
+
+            .addInfo(translateToLocal("ote.computer.output.x2"))
 
             .addInfo(translateToLocal("ote.computer.coolant"))
 
@@ -464,7 +510,7 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
             .addInputHatch(translateToLocal("ote.computer.coolantinput"), 1) // 新增冷却液输入
             .addEnergyHatch(translateToLocal("tt.keyword.Structure.AnyComputerCasing"), 1) // Energy
             .addSeparator()
-            .addInfo("Author:IDEA")
+            .addInfo("Author:IDEA & DeepSeek")
             .toolTipFinisher("§a123Technology - ExoicComputer");
         return tt;
     }
@@ -590,6 +636,7 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
         }
         return false;
     }
+
 
     @Override
     public void construct(ItemStack stackSize, boolean hintsOnly) {
