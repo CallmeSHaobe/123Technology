@@ -84,7 +84,7 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
         super.useLongPower = true;
     }
 
-    static int pipeTier = 0; // 修改默认值为1而不是0
+    private int pipeTier = -1;
     private UUID ownerUUID;
     private boolean isWirelessMode = false;
     private String costingWirelessEU = "0";
@@ -97,14 +97,14 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
         aNBT.setBoolean("wireless", isWirelessMode);
-        aNBT.setInteger("pipe", pipeTier);
+        aNBT.setInteger("pipe", this.pipeTier);
         aNBT.setLong("Time", running_time);
         super.saveNBTData(aNBT);
     }
 
     @Override
     public void loadNBTData(final NBTTagCompound aNBT) {
-        pipeTier = aNBT.getInteger("pipe");
+        this.pipeTier = aNBT.getInteger("pipe");
         isWirelessMode = aNBT.getBoolean("wireless");
         running_time = aNBT.getLong("Time");
         super.loadNBTData(aNBT);
@@ -132,6 +132,7 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
             tag.setBoolean("WM", isWirelessMode);
             tag.setString("costingWirelessEU", costingWirelessEU);
             tag.setString("EFF", String.valueOf(tEff));
+            tag.setString("pipe", String.valueOf(this.pipeTier));
         }
     }
 
@@ -159,6 +160,14 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
                 + "EU"
                 + EnumChatFormatting.RESET);
         currentTip.add(
+            EnumChatFormatting.BOLD + translateToLocal("otht.waila.tier.pipe")
+                + EnumChatFormatting.RESET
+                + ": "
+                + EnumChatFormatting.GOLD
+                + tag.getString("pipe")
+                + EnumChatFormatting.RESET);
+
+        currentTip.add(
             EnumChatFormatting.BOLD + translateToLocal("otht.waila.mode.wireless")
                 + EnumChatFormatting.RESET
                 + ": "
@@ -174,6 +183,25 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
                 + EnumChatFormatting.GOLD
                 + "%"
                 + EnumChatFormatting.RESET);
+        if (tag.getString("pipe")
+            .equals("1")) {
+            currentTip.add(
+                EnumChatFormatting.BOLD + "otht.waila.gen.requireFluid"
+                    + EnumChatFormatting.RESET
+                    + ": "
+                    + EnumChatFormatting.AQUA
+                    + "ote.fluid.gen.1"
+                    + EnumChatFormatting.RESET);
+        } else if (tag.getString("pipe")
+            .equals("2")) {
+                currentTip.add(
+                    EnumChatFormatting.BOLD + "otht.waila.gen.requireFluid"
+                        + EnumChatFormatting.RESET
+                        + ": "
+                        + EnumChatFormatting.AQUA
+                        + "ote.fluid.gen.2"
+                        + EnumChatFormatting.RESET);
+            }
     }
 
     private long tEff;
@@ -314,6 +342,10 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
                 return false;
             }
         }
+        if (this.pipeTier != 2) {
+            this.isWirelessMode = false;
+        }
+
         return structureCheck_EM(mName, 2, 2, 0);
     }
 
@@ -495,10 +527,7 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
                         .buildAndChain(sBlockCasings8, 10))
                 .addElement(
                     'E',
-                    buildHatchAdder(OTENQFuelGeneratorUniversal.class)
-                        .atLeast(
-                            tectech.thing.metaTileEntity.multi.base.TTMultiblockBase.HatchElement.DynamoMulti
-                                .or(gregtech.api.enums.HatchElement.Dynamo))
+                    buildHatchAdder(OTENQFuelGeneratorUniversal.class).atLeast(Energy.or(ExoticEnergy))
                         .adder(OTENQFuelGeneratorUniversal::addToMachineList)
                         .dot(4)
                         .casingIndex(((BlockCasings8) sBlockCasings8).getTextureIndex(10))
@@ -508,14 +537,11 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
                     withChannel(
                         "pipe",
                         ofBlocksTiered(
-                            OTENQFuelGeneratorUniversal::getPipeTier,
-                            ImmutableList.of(
-                                Pair.of(sBlockCasings2, 15), // 等级1
-                                Pair.of(sBlockCasings9, 14) // 等级2
-                            ),
-                            -1, // nonset
+                            this::getPipeTier,
+                            ImmutableList.of(Pair.of(sBlockCasings2, 15), Pair.of(sBlockCasings9, 14)),
+                            -1,
                             (t, meta) -> t.pipeTier = meta,
-                            t -> t.pipeTier)))
+                            OTENQFuelGeneratorUniversal::getPipeTierInstance)))
                 .addElement('C', ofBlock(sBlockCasings6, 8))
                 .addElement('G', ofBlock(sBlockCasings2, 4))
                 .addElement('I', ofBlock(sBlockCasings8, 4))
@@ -525,23 +551,23 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
     }
 
     public FluidStack getPromoter() {
-        if (pipeTier == 1) { // T1
+        if (this.pipeTier == 1) { // T1
             return BWLiquids.PromoterZPM.getFluidOrGas(1);
-        } else if (pipeTier == 2) { // T2
+        } else if (this.pipeTier >= 2) { // T2
             return BWLiquids.PromoterUEV.getFluidOrGas(1);
         } else {
             return BWLiquids.PromoterZPM.getFluidOrGas(1); // fallback
         }
     }
 
+    public Integer getPipeTierInstance() {
+        return this.pipeTier;
+    }
+
     @Override
     public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
-        if (pipeTier == 2 && !isWirelessMode) { // 仅 T2 能开
-            isWirelessMode = true;
-        } else {
-            isWirelessMode = false;
-        }
+        isWirelessMode = this.pipeTier == 2 && !isWirelessMode;
         if (isWirelessMode) {
             aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.nfg.mode.0"));
         } else {
@@ -555,12 +581,15 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
     private static IStructureDefinition<OTENQFuelGeneratorUniversal> STRUCTURE_DEFINITION = null;
 
     @Nullable
-    protected static Integer getPipeTier(Block block, int meta) {
+    protected Integer getPipeTier(Block block, int meta) {
         if (block == null) return null;
+
         if (block == sBlockCasings2 && meta == 15) {
-            return pipeTier = 1; // T1 - 修改为1而不是0
+            this.pipeTier = 1; // 使用 this.pipeTier 设置当前实例的值
+            return 1;
         } else if (block == sBlockCasings9 && meta == 14) {
-            return pipeTier = 2; // T2 - 修改为2而不是1
+            this.pipeTier = 2; // 使用 this.pipeTier 设置当前实例的值
+            return 2;
         }
         return null;
     }

@@ -463,8 +463,7 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
                 .addElement(
                     'B',
                     buildHatchAdder(OTEBBPlasmaForge.class)
-                        .atLeast(InputHatch, OutputHatch, InputBus, OutputBus, Energy, ExoticEnergy, Maintenance)
-                        .adder(OTEBBPlasmaForge::addToMachineList)
+                        .atLeast(InputHatch, OutputHatch, InputBus, OutputBus, Energy.or(ExoticEnergy), Maintenance)
                         .casingIndex(DIM_INJECTION_CASING)
                         .dot(1)
                         .buildAndChain(sBlockCasings1, 13))
@@ -514,7 +513,7 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
             .addSubChannelUsage(GTStructureChannels.HEATING_COIL)
             .addSeparator()
             .addInfo("§b§lAuthor:§r§kunknown§r§lczqwq§r")
-            .toolTipFinisher("§a123Technology - BigBrother BB PlasmaForge");
+            .toolTipFinisher();
         return tt;
     }
 
@@ -666,6 +665,8 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
 
         // Get heating capacity from coils in structure.
         setCoilLevel(HeatingCoilLevel.None);
+        mEnergyHatches.clear();
+        mExoticEnergyHatches.clear();
 
         if (!checkPiece(STRUCTURE_PIECE_MAIN, 23, 5, 20)) {
             return false;
@@ -675,7 +676,7 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
 
         // Heat capacity of coils used on multi. No free heat from extra EU!
         mHeatingCapacity = (int) getCoilLevel().getHeat();
-        if (isWirelessMode && !mEnergyHatches.isEmpty() | !mExoticEnergyHatches.isEmpty()) {
+        if (isWirelessMode && (!mEnergyHatches.isEmpty() || !mExoticEnergyHatches.isEmpty())) {
             this.failure = true;
         } else {
             this.failure = false;
@@ -955,7 +956,7 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
     public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
         if (getMLevel() >= 2) {
-            if (this.mEnergyHatches.isEmpty() || this.mExoticEnergyHatches.isEmpty()) {
+            if (this.mEnergyHatches.isEmpty() && this.mExoticEnergyHatches.isEmpty()) {
                 isWirelessMode = !isWirelessMode;
             } else {
                 isWirelessMode = false;
