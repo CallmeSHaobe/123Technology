@@ -71,7 +71,6 @@ public class OTEMegaNQFuelFactory extends OTHTTMultiMachineBaseEM implements ICo
 
     public int mode = 0;
     private static int tier = -1;
-    private int Parallel = 0;
 
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
