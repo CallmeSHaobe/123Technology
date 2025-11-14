@@ -249,6 +249,7 @@ otht.waila.eff=当前发电效率
 otht.waila.gen.plasma=当前等离子每千升产出
 otht.waila.tier.steam=当前蒸汽等级
 otht.waila.tier.pipe=当前管道等级
+otht.waila.gen.requireFluid=需求催化剂
 
 #9in1
 oth.tm.mnio.0=§c§l老登的终极造物 - 九合一 (巨型加工厂)
@@ -535,6 +536,8 @@ ote.cm.nfg.1=3 - 输入仓输出仓 : 替换防辐射硅岩机械方块
 ote.cm.nfg.2=2 - 消声仓(装饰 : 替换防辐射硅岩机械方块)
 ote.tm.nfg.mode.0=无线模式启动
 ote.tm.nfg.mode.1=无线模式关闭
+ote.fluid.gen.1=原子分离助燃剂
+ote.fluid.gen.2=超维度等离子助燃剂
 
 #BBPF
 ote.bbpf.0=§d§l老登的传奇造物 - 超维度憋憋锻炉

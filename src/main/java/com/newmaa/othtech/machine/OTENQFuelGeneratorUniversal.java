@@ -186,20 +186,20 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
         if (tag.getString("pipe")
             .equals("1")) {
             currentTip.add(
-                EnumChatFormatting.BOLD + "需求催化剂"
+                EnumChatFormatting.BOLD + "otht.waila.gen.requireFluid"
                     + EnumChatFormatting.RESET
                     + ": "
                     + EnumChatFormatting.AQUA
-                    + "原子分离助燃剂"
+                    + "ote.fluid.gen.1"
                     + EnumChatFormatting.RESET);
         } else if (tag.getString("pipe")
             .equals("2")) {
                 currentTip.add(
-                    EnumChatFormatting.BOLD + "需求催化剂"
+                    EnumChatFormatting.BOLD + "otht.waila.gen.requireFluid"
                         + EnumChatFormatting.RESET
                         + ": "
                         + EnumChatFormatting.AQUA
-                        + "超维度等离子助燃剂"
+                        + "ote.fluid.gen.2"
                         + EnumChatFormatting.RESET);
             }
     }
