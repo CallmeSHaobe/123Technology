@@ -70,18 +70,18 @@ public class OTEMegaNQFuelFactory extends OTHTTMultiMachineBaseEM implements ICo
     }
 
     public int mode = 0;
-    private static int tier = -1;
+    private int tier = -1;
 
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
-        aNBT.setInteger("mTier", tier);
+        aNBT.setInteger("mTier", this.tier);
         aNBT.setInteger("mode", this.mode);
         super.saveNBTData(aNBT);
     }
 
     @Override
     public void loadNBTData(final NBTTagCompound aNBT) {
-        tier = aNBT.getInteger("mTier");
+        this.tier = aNBT.getInteger("mTier");
         this.mode = aNBT.getInteger("mode");
         super.loadNBTData(aNBT);
 
@@ -94,7 +94,7 @@ public class OTEMegaNQFuelFactory extends OTHTTMultiMachineBaseEM implements ICo
         final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
         if (tileEntity != null) {
             String Mode = GTUtility.formatNumbers(mode);
-            String OC = GTUtility.formatNumbers(tier);
+            String OC = GTUtility.formatNumbers(this.tier);
             tag.setString("Tier", Mode);
             tag.setString("OC", OC);
             tag.setString("Parallel", String.valueOf(maxParallel));
@@ -130,12 +130,12 @@ public class OTEMegaNQFuelFactory extends OTHTTMultiMachineBaseEM implements ICo
     public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
         if (getBaseMetaTileEntity().isServerSide()) {
-            if (mode < 1 && tier == 4) {
-                mode++;
+            if (this.mode < 1 && this.tier == 4) {
+                this.mode++;
             } else {
-                mode = 0;
+                this.mode = 0;
             }
-            switch (mode) {
+            switch (this.mode) {
                 case 0 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.mnf.mode.0"));
                 case 1 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.mnf.mode.1"));
             }
@@ -164,16 +164,16 @@ public class OTEMegaNQFuelFactory extends OTHTTMultiMachineBaseEM implements ICo
     }
 
     public int getParallel() {
-        if (tier == 1) {
+        if (this.tier == 1) {
             return 16;
         }
-        if (tier == 2) {
+        if (this.tier == 2) {
             return 32;
         }
-        if (tier == 3) {
+        if (this.tier == 3) {
             return 64;
         }
-        if (tier == 4) {
+        if (this.tier == 4) {
             return 256;
         }
         return 0;
@@ -615,7 +615,7 @@ public class OTEMegaNQFuelFactory extends OTHTTMultiMachineBaseEM implements ICo
                     withChannel(
                         "coil",
                         ofBlocksTiered(
-                            OTEMegaNQFuelFactory::getCoilTier,
+                            this::getCoilTier,
                             ImmutableList.of(
                                 Pair.of(Loaders.FRF_Coil_1, 0),
                                 Pair.of(Loaders.FRF_Coil_2, 1),
@@ -640,20 +640,25 @@ public class OTEMegaNQFuelFactory extends OTHTTMultiMachineBaseEM implements ICo
     // private static final Block[] coils = new Block[] { Loaders.FRF_Coil_1, Loaders.FRF_Coil_2, Loaders.FRF_Coil_3,
     // Loaders.FRF_Coil_4 };
 
-    public static int getCoilTier(Block block, int meta) {
+    public int getCoilTier(Block block, int meta) {
         if (block == Loaders.FRF_Coil_1) {
-            return tier = 1;
+            this.tier = 1;
+            return 1;
         }
         if (block == Loaders.FRF_Coil_2) {
-            return tier = 2;
+            this.tier = 2;
+            return 2;
         }
         if (block == Loaders.FRF_Coil_3) {
-            return tier = 3;
+            this.tier = 3;
+            return 3;
         }
         if (block == Loaders.FRF_Coil_4) {
-            return tier = 4;
+            this.tier = 4;
+            return 4;
         }
-        return tier = -1;
+        this.tier = -1;
+        return 0;
     }
 
     // public int getTier() {
