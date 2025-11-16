@@ -15,7 +15,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -610,117 +609,34 @@ public class OTEMegaNQFuelFactory extends OTHTTMultiMachineBaseEM implements ICo
                         .buildAndChain(ofBlock(Loaders.FRF_Casings, 0)))
                 .addElement('A', ofBlock(Loaders.fieldRestrictingGlass, 0))
                 .addElement('G', ofFrame(Materials.NaquadahAlloy))
-                .addElement(
-                    'B',
-                    withChannel(
-                        "coil",
-                        ofBlocksTiered(
-                            this::getCoilTier,
-                            ImmutableList.of(
-                                Pair.of(Loaders.FRF_Coil_1, 0),
-                                Pair.of(Loaders.FRF_Coil_2, 1),
-                                Pair.of(Loaders.FRF_Coil_3, 2),
-                                Pair.of(Loaders.FRF_Coil_4, 3)),
-                            -1,
-                            (t, meta) -> tier = meta,
-                            t -> tier)))
-                // .addElement(
-                // 'B',
-                // ofChain(
-                // onElementPass(x -> ++x.cnt[0], ofFieldCoil(0)),
-                // onElementPass(x -> ++x.cnt[1], ofFieldCoil(1)),
-                // onElementPass(x -> ++x.cnt[2], ofFieldCoil(2)),
-                // onElementPass(x -> ++x.cnt[3], ofFieldCoil(3))))
+                .addElement('B', withChannel("coil", ofBlocksTiered((block, meta) -> {
+                    if (block == Loaders.FRF_Coil_1) return 1;
+                    if (block == Loaders.FRF_Coil_2) return 2;
+                    if (block == Loaders.FRF_Coil_3) return 3;
+                    if (block == Loaders.FRF_Coil_4) return 4;
+                    return null; // 对于不认识的方块返回null
+                },
+                    ImmutableList.of(
+                        Pair.of(Loaders.FRF_Coil_1, 0),
+                        Pair.of(Loaders.FRF_Coil_2, 1),
+                        Pair.of(Loaders.FRF_Coil_3, 2),
+                        Pair.of(Loaders.FRF_Coil_4, 3)),
+                    -1,
+                    (t, meta) -> t.tier = meta,
+                    OTEMegaNQFuelFactory::getTierInstance)))
                 .build();
 
         }
         return STRUCTURE_DEFINITION;
     }
 
-    // private static final Block[] coils = new Block[] { Loaders.FRF_Coil_1, Loaders.FRF_Coil_2, Loaders.FRF_Coil_3,
-    // Loaders.FRF_Coil_4 };
-
-    public int getCoilTier(Block block, int meta) {
-        if (block == Loaders.FRF_Coil_1) {
-            this.tier = 1;
-            return 1;
-        }
-        if (block == Loaders.FRF_Coil_2) {
-            this.tier = 2;
-            return 2;
-        }
-        if (block == Loaders.FRF_Coil_3) {
-            this.tier = 3;
-            return 3;
-        }
-        if (block == Loaders.FRF_Coil_4) {
-            this.tier = 4;
-            return 4;
-        }
-        this.tier = -1;
-        return 0;
+    public Integer getTierInstance() {
+        return this.tier;
     }
 
-    // public int getTier() {
-    // for (int i = 0; i < 4; i++) {
-    // if (cnt[i] == 560) {
-    // tier = i + 1;
-    // return i;
-    // }
-    // }
-    // tier = -1;
-    // return -1;
-    // }
-
-    // public static <T> IStructureElement<T> ofFieldCoil(int aIndex) {
-    // return new IStructureElement<>() {
-    //
-    // @Override
-    // public boolean check(T t, World world, int x, int y, int z) {
-    // Block block = world.getBlock(x, y, z);
-    // return block.equals(coils[aIndex]);
-    // }
-    //
-    // @Override
-    // public boolean spawnHint(T t, World world, int x, int y, int z, ItemStack trigger) {
-    // StructureLibAPI.hintParticle(world, x, y, z, coils[getIndex(trigger)], 0);
-    // return true;
-    // }
-    //
-    // private int getIndex(ItemStack trigger) {
-    // int s = trigger.stackSize;
-    // if (s > 4 || s <= 0) s = 4;
-    // return s - 1;
-    // }
-    //
-    // @Override
-    // public boolean placeBlock(T t, World world, int x, int y, int z, ItemStack trigger) {
-    // return world.setBlock(x, y, z, coils[getIndex(trigger)], 0, 3);
-    // }
-    //
-    // @Override
-    // public BlocksToPlace getBlocksToPlace(T t, World world, int x, int y, int z, ItemStack trigger,
-    // AutoPlaceEnvironment env) {
-    // return BlocksToPlace.create(coils[getIndex(trigger)], 0);
-    // }
-    //
-    // @Override
-    // public PlaceResult survivalPlaceBlock(T t, World world, int x, int y, int z, ItemStack trigger,
-    // AutoPlaceEnvironment env) {
-    // if (check(t, world, x, y, z)) return PlaceResult.SKIP;
-    // return StructureUtility.survivalPlaceBlock(
-    // coils[getIndex(trigger)],
-    // 0,
-    // world,
-    // x,
-    // y,
-    // z,
-    // env.getSource(),
-    // env.getActor(),
-    // env.getChatter());
-    // }
-    // };
-    // }
+    public int getTier() {
+        return this.tier;
+    }
 
     // spotless:off
     // structure copied from compactFusionReactor

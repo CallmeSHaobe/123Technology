@@ -19,7 +19,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -33,7 +32,6 @@ import net.minecraftforge.fluids.FluidStack;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import com.google.common.collect.ImmutableList;
 import com.gtnewhorizon.structurelib.alignment.constructable.IConstructable;
@@ -47,10 +45,7 @@ import com.newmaa.othtech.machine.machineclass.OTHTTMultiMachineBaseEM;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
-import gregtech.api.metatileentity.implementations.MTEHatch;
-import gregtech.api.metatileentity.implementations.MTEHatchDynamo;
 import gregtech.api.metatileentity.implementations.MTEHatchInput;
-import gregtech.api.metatileentity.implementations.MTEHatchMuffler;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
@@ -65,7 +60,6 @@ import gregtech.common.tileentities.machines.MTEHatchInputME;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
-import tectech.thing.metaTileEntity.hatch.MTEHatchDynamoMulti;
 import tectech.thing.metaTileEntity.multi.base.INameFunction;
 import tectech.thing.metaTileEntity.multi.base.IStatusFunction;
 import tectech.thing.metaTileEntity.multi.base.LedStatus;
@@ -291,7 +285,6 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
                 heatingTicks++;
                 isStoppingSafe = true;
             } else if (isStoppingSafe) isStoppingSafe = false;
-            addAutoEnergy();
         }
         return true;
     }
@@ -382,116 +375,9 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
         return survivalBuildPiece(mName, stackSize, 2, 2, 0, elementBudget, env, false, true);
     }
 
-    @Override
-    public void stopMachine() {
-        // Reset the counter for heating, so that it works again when the machine restarts
-        heatingTicks = 0;
-        running_time = 0;
-        super.stopMachine();
-    }
-
     private boolean isStoppingSafe;
     private int heatingTicks;
     protected final int HEATING_TIMER = SECOND * 10;
-
-    void addAutoEnergy() {
-        long exEU = this.getPowerFlow(); // 直接使用功率流，不再乘以效率
-
-        // 分配能量到所有可用的动力仓
-        if (!addEnergyOutputMultipleDynamos(exEU, false)) {
-            // 如果能量无法完全输出，停止机器
-            if (!isStoppingSafe) {
-                stopMachine();
-            }
-        }
-    }
-
-    // 添加能量输出到多个动力仓的方法
-    public boolean addEnergyOutputMultipleDynamos(long totalEU, boolean aAllowMixedVoltageDynamos) {
-        // check positive
-        if (totalEU < 0) totalEU = -totalEU;
-        // to store free capacity of dynamo hatch
-        long freeCapacity;
-
-        // 检查普通动力仓
-        for (MTEHatchDynamo tHatch : validMTEList(mDynamoHatches)) {
-            freeCapacity = tHatch.maxEUStore() - tHatch.getBaseMetaTileEntity()
-                .getStoredEU();
-            if (freeCapacity > 0) {
-                if (totalEU > freeCapacity) {
-                    tHatch.setEUVar(tHatch.maxEUStore());
-                    totalEU -= freeCapacity;
-                } else {
-                    tHatch.setEUVar(
-                        tHatch.getBaseMetaTileEntity()
-                            .getStoredEU() + totalEU);
-                    return true;
-                }
-            }
-        }
-
-        // 检查多安仓
-        for (MTEHatchDynamoMulti tHatch : validMTEList(eDynamoMulti)) {
-            freeCapacity = tHatch.maxEUStore() - tHatch.getBaseMetaTileEntity()
-                .getStoredEU();
-            if (freeCapacity > 0) {
-                if (totalEU > freeCapacity) {
-                    tHatch.setEUVar(tHatch.maxEUStore());
-                    totalEU -= freeCapacity;
-                } else {
-                    tHatch.setEUVar(
-                        tHatch.getBaseMetaTileEntity()
-                            .getStoredEU() + totalEU);
-                    return true;
-                }
-            }
-        }
-
-        // 如果还有剩余能量，返回false
-        return totalEU == 0;
-    }
-
-    public final boolean addMuffler(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
-        if (aTileEntity == null) {
-            return false;
-        } else {
-            IMetaTileEntity aMetaTileEntity = aTileEntity.getMetaTileEntity();
-            if (aMetaTileEntity instanceof MTEHatchMuffler) {
-                ((MTEHatch) aMetaTileEntity).updateTexture(aBaseCasingIndex);
-                return this.mMufflerHatches.add((MTEHatchMuffler) aMetaTileEntity);
-            }
-        }
-        return false;
-    }
-
-    public final boolean addInputHatch(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
-        if (aTileEntity == null) {
-            return false;
-        } else {
-            IMetaTileEntity aMetaTileEntity = aTileEntity.getMetaTileEntity();
-            if (aMetaTileEntity instanceof MTEHatchInput) {
-                ((MTEHatch) aMetaTileEntity).updateTexture(aBaseCasingIndex);
-                return this.mInputHatches.add((MTEHatchInput) aMetaTileEntity);
-            }
-        }
-        return false;
-    }
-
-    public final boolean addDynamoHatch(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
-        if (aTileEntity == null) {
-            return false;
-        } else {
-            IMetaTileEntity aMetaTileEntity = aTileEntity.getMetaTileEntity();
-            if (aMetaTileEntity instanceof MTEHatchDynamo) {
-                ((MTEHatch) aMetaTileEntity).updateTexture(aBaseCasingIndex);
-                return this.mDynamoHatches.add((MTEHatchDynamo) aMetaTileEntity);
-            } else if (aMetaTileEntity instanceof MTEHatchDynamoMulti) {
-                ((MTEHatch) aMetaTileEntity).updateTexture(aBaseCasingIndex);
-                return this.eDynamoMulti.add((MTEHatchDynamoMulti) aMetaTileEntity);
-            }
-        }
-        return false;
-    }
 
     @Override
     public String[] getStructureDescription(ItemStack stackSize) {
@@ -532,16 +418,19 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
                         .dot(4)
                         .casingIndex(((BlockCasings8) sBlockCasings8).getTextureIndex(10))
                         .buildAndChain(sBlockCasings8, 10))
-                .addElement(
-                    'P',
-                    withChannel(
-                        "pipe",
-                        ofBlocksTiered(
-                            this::getPipeTier,
-                            ImmutableList.of(Pair.of(sBlockCasings2, 15), Pair.of(sBlockCasings9, 14)),
-                            -1,
-                            (t, meta) -> t.pipeTier = meta,
-                            OTENQFuelGeneratorUniversal::getPipeTierInstance)))
+                .addElement('P', withChannel("pipe", ofBlocksTiered((block, meta) -> {
+                    if (block == null) return null;
+                    if (block == sBlockCasings2 && meta == 15) {
+                        return 1;
+                    } else if (block == sBlockCasings9 && meta == 14) {
+                        return 2;
+                    }
+                    return null;
+                },
+                    ImmutableList.of(Pair.of(sBlockCasings2, 15), Pair.of(sBlockCasings9, 14)),
+                    -1,
+                    (t, meta) -> t.pipeTier = meta,
+                    OTENQFuelGeneratorUniversal::getPipeTierInstance)))
                 .addElement('C', ofBlock(sBlockCasings6, 8))
                 .addElement('G', ofBlock(sBlockCasings2, 4))
                 .addElement('I', ofBlock(sBlockCasings8, 4))
@@ -560,9 +449,13 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
         }
     }
 
-    public Integer getPipeTierInstance() {
+    public int getPipeTierInstance() {
         return this.pipeTier;
     }
+
+    public int getPipeTier() {
+        return this.pipeTier;
+    }// 可以没用但是不能没有,lol
 
     @Override
     public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
@@ -579,20 +472,6 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
     }
 
     private static IStructureDefinition<OTENQFuelGeneratorUniversal> STRUCTURE_DEFINITION = null;
-
-    @Nullable
-    protected Integer getPipeTier(Block block, int meta) {
-        if (block == null) return null;
-
-        if (block == sBlockCasings2 && meta == 15) {
-            this.pipeTier = 1; // 使用 this.pipeTier 设置当前实例的值
-            return 1;
-        } else if (block == sBlockCasings9 && meta == 14) {
-            this.pipeTier = 2; // 使用 this.pipeTier 设置当前实例的值
-            return 2;
-        }
-        return null;
-    }
 
     private static final String[] description = new String[] {
         EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.nfg.0") + ":",
