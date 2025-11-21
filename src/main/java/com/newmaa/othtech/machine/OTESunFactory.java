@@ -86,11 +86,11 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
     @Override
     public String getMachineModeName(int mode) {
         return switch (mode) {
-            case 0 -> "巨型PCB工厂模式";
-            case 1 -> "贴片工坊模式";
-            case 2 -> "NMD晶圆厂模式";
-            case 3 -> "原件批发者模式";
-            default -> "mode";
+            case 0 -> translateToLocal("ote.sf.mode.1");
+            case 1 -> translateToLocal("ote.sf.mode.2");
+            case 2 -> translateToLocal("ote.sf.mode.3");
+            case 3 -> translateToLocal("ote.sf.mode.4");
+            default -> translateToLocal("ote.sf.mode.unknown");
         };
     }
 

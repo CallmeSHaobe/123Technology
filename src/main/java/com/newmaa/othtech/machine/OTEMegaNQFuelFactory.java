@@ -34,6 +34,7 @@ import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructa
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
+import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
 import com.newmaa.othtech.machine.machineclass.OTHTTMultiMachineBaseEM;
 
 import cpw.mods.fml.relauncher.Side;
@@ -180,7 +181,7 @@ public class OTEMegaNQFuelFactory extends OTHTTMultiMachineBaseEM implements ICo
 
     @Override
     protected ProcessingLogic createProcessingLogic() {
-        return new ProcessingLogic() {
+        return new OTHProcessingLogic() {
 
             @NotNull
             @Override

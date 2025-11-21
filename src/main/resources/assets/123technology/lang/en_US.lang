@@ -1,164 +1,666 @@
-MetaItemOTH.0.name=Irdiosamarium Dust
+#translate by DeepSeek,I hope someone can help to fix the mistakes of the translation.
+#MetaItems
+MetaItemOTH.0.name=Iridium Osmium Samarium Alloy Powder
 tt.123=§7IrOsSm☆
-MetaItemOTH.1.name=NeI Dust
-tt.nei=NeI合金粉
-MetaItemOTH.2.name=Bone Dust
+MetaItemOTH.1.name=NeI Alloy Powder
+tt.nei=NeI
+MetaItemOTH.2.name=Ashes
 tt.snas=SnAs
-MetaItemOTH.3.name=Bluedog Ingot
+MetaItemOTH.3.name=Blue Dog Ingot
 tt.dog=Dog
-MetaItemOTH.5.name=SnAs
-MetaItemOTH.6.name=§5Casimir Board
-MetaItemOTH.7.name=§5Transcendent-Circuit Board
-MetaItemOTH.8.name=§5Paradox Eliminator
+MetaItemOTH.5.name=Eel Shreds
+MetaItemOTH.6.name=§5Casimir Substrate
+MetaItemOTH.7.name=§5Spacetime Circuit Board
+MetaItemOTH.8.name=§5Paradox Nullifier
 MetaItemOTH.9.name=§5Genesis Information Injector
-MetaItemOTH.10.name=§5Space-time energy receiver
+MetaItemOTH.10.name=§5Spacetime Energy Receiver
 MetaItemOTH.11.name=§5Casimir Fins
-MetaItemOTH.12.name=§5Superdimensional Casimir generator
-MetaItemOTH.13.name=§a§lIsaMill NanoBees
-MetaItemOTH.14.name=§7§lEtherMagnetization NanoBees
-MetaItemOTH.15.name=§4Enqing
+MetaItemOTH.12.name=§5Hyperdimensional Casimir Generator
+MetaItemOTH.13.name=§a§lIsa Grinding Nanoswarm
+MetaItemOTH.14.name=§7§lAether Magnetized Nanoswarm
+MetaItemOTH.15.name=§4Favor
 MetaItemOTH.16.name=§5Micro Casimir Generator
-MetaItemOTH.17.name=§5Spacetime Transformation Hive
-MetaItemOTH.18.name=Extreme Prism
-MetaItemOTH.19.name=Mechanical Singularity
+MetaItemOTH.17.name=§5Spacetime Metamorphosis Hive
+MetaItemOTH.18.name=Final Prism
+MetaItemOTH.19.name=Machine Singularity
 MetaItemOTH.20.name=§7Cosmic SoC
-MetaItemOTH.21.name=§5Inf Cosmic SoC
-MetaItemOTH.22.name=§3General SoC
-MetaItemOTH.23.name=§5Long-range remote sensor
-MetaItemOTH.25.name=§4Sliced Brains
-MetaItemOTH.26.name=§4Packed Sliced Brains
-IsaMillModule.1.name=§aNeI Grinder complex
-IsaMillModule.2.name=§aIrdiosamarium Grinder complex
-IsaMillModule.3.name=§cHypogen Grinder complex
-IsaMillModule.4.name=§7Eternal Grinder complex
-tt.boardCasimir=§aA plate capable of being implanted with Casimir fins, with almost no interaction with the outside world, the end of spacetime?
-tt.boardTrans=§aA miniature space that contains the past, present, and future, and contains infinite possibilities
-tt.capTrans=§aA chip with infinite storage inside can contain all the paradoxes brought by time in the same space and time.
-tt.dioTrans=§aFor preventing information pollution in multidimensional spacetime, each spacetime is unilaterally injected with a stream of information when it is formed. This is the unique fire of Genesis.
-tt.energyHatchSpacetime=§aFor general transcendent circuits, limited calculations can be performed through external energy input
-tt.finCasimir=§aPairs of fins that are so tiny that they are the most basic unit of space and time can draw endless energy from the vacuum quantum ocean. *Watch out for vacuum decay!
-tt.induTrans=§aConventional energy supply cannot easily break through the limitations of super-dimensions, so it is necessary to integrate a micro device that can simultaneously power different time and space.
-tt.beeISA=§7The final formal of Nano Beeyonds
-tt.beeMag=§6The Nano Beeyonds is buzzing
-tt.itemEnqing=§e§lLight is emitted from the eyes, Supporting the §4§lFactory of Enqing§e§l
-tt.leCasimir=§aA modular power supply that extends its fins into the multidimensional universe to absorb energy. It is an essential component for high-level transcendent circuits.
-tt.resTrans=§aThe device that encapsulates the generation of multi-dimensional space-time provides the basis for multi-dimensional space-time for the calculation of massive space-time annealing
-tt.glassSingularity=§5§l「Emit Life Dissociation Rainbow」
-tt.machineSingularity=§a§lCompressed into the size of a palm.
-tt.socCosmic=§4§oThe Milky Way galaxy stretched motionless across the sky, as if §b§l§ofrozen§4§o. ...
-tt.socInf=§7§k//§9§lGive life to time, and civilization to years. §7§k//
-tt.socNor=§c§lAll in one.
-tt.transTrans=§aBreak through the limitations of distance and time within any encapsulated space and make hyper-dimensional communication possible
-tt.neiISA=Look the NEI
-tt.IOS=We love you, the Irdiosamarium
-tt.HYP=Cant be broken
-tt.SPE=Milling the past and the future
-tt.brains=He is still beating
-tt.slicedBrains=I am therefore I think.
-tt.wrapBrains=You have to imagine that the brain inside the circuit board is happy.
+MetaItemOTH.21.name=§5Paradox Infinite SoC
+MetaItemOTH.22.name=§3Universal SoC
+MetaItemOTH.23.name=§5Ultra-Range Telemetry Unit
+MetaItemOTH.25.name=§4Sliced Brain
+MetaItemOTH.26.name=§4Encapsulated Sliced Brain
+MetaItemOTH.64.name=Antimony Stardust
+IsaMillModule.1.name=§aNeI Alloy Grinder Complex
+IsaMillModule.2.name=§aIrOsSm Alloy Grinder Complex
+IsaMillModule.3.name=§cHypergen Grinder Complex
+IsaMillModule.4.name=§7Eternal Grinder Complex
+tt.boardCasimir=§aA substrate capable of implanting Casimir fins, almost no interaction with the external world. The end of spacetime?
+tt.boardTrans=§aA miniature space containing past, present, future, and infinite possibilities.
+tt.capTrans=§aA chip with infinite storage capacity, capable of containing all paradoxes brought by time in a single spacetime.
+tt.dioTrans=§aTo prevent information pollution from multidimensional spacetimes, each spacetime is unilaterally injected with an information stream upon formation. This is the unique light of Genesis.
+tt.energyHatchSpacetime=§aFor general spacetime circuits, limited computation can also be performed via external energy input.
+tt.finCasimir=§aPairs of tiny fins reaching the fundamental units of spacetime, capable of drawing endless energy from the vacuum quantum ocean. *Beware of vacuum decay!
+tt.induTrans=§aConventional power supply cannot easily break through hyperdimensional limits, thus requiring a miniaturized device that can power different spacetimes simultaneously.
+tt.beeISA=§7Nanoswarm§a's ultimate form...
+tt.beeMag=§6The swarm buzzes...
+tt.itemEnqing=§e§lEyes shining with light.... Provides laser source support for the §4§lSun Factory§e§l
+tt.leCasimir=§aA modular power source that extends fins into the interdimensional void to draw energy, an essential component for high-level spacetime circuits.
+tt.resTrans=§aAn encapsulated multidimensional spacetime generation device, providing the multidimensional spacetime foundation for the massive spacetime annealing required during computation.
+tt.glassSingularity=§5§l「Emit Life-Dissolving Rainbow」
+tt.machineSingularity=§a§lCompressed to palm size.
+tt.socCosmic=§4§oThe Milky Way's star river lies motionless across the firmament, as if §b§l§ofrozen§4§o....
+tt.socInf=§7§k//§9§lGive life to time, give civilization to the years.§7§k//
+tt.socNor=§c§lAll is One...
+tt.transTrans=§aBreaks through the limitations of distance and time within any encapsulated space, making hyperdimensional communication possible.
+tt.neiISA=Check NEI..
+tt.HYP=Indestructible..
+tt.SPE=Grinding past, present, and future
+tt.brains=It's still beating...
+tt.slicedBrains=I think, therefore I am.
+tt.wrapBrains=You must imagine, the brain in the circuit board is happy.
+tt.ani=99.8% Antimony Content
 
+#Tab
+itemGroup.tabothtech=Trash Creative Tab ~123Technology
 
-
-
-
-
-
-
-
-
-
-
-
-item.itemZhangww.name=Weiwei bean milk
+#Normal Items
+item.sl.name.p0=Solar Lighter
+item.sl.name.p1=Veteran Player Exclusive
+tt.sl.0=Light dispels all darkness
+tt.br.0=Am I still alive...?
+tt.br.1=Was I ever alive...?
+tt.br.2=I think, therefore I am.
+tt.br.3=It looks like it's still beating...
+tt.br.4=The first brain, where does it come from..?
+tt.br.5=You know, one must pay some price for doing such things.
+tt.lb.0=Full and satisfied
+tt.tst.0=§7Oh Tustin, oh Tustin, with you life is wonderful and worry-free~
+tt.ww.0=§b§lThis is GTNH, listen to Falling Mustur
+tt.690.0=§z§lOne shot to destroy a carrier battle group
+tt.690.1=§4Warning: Thrower bears consequences. Will cause large-scale explosion.
+item.itemZhangww.name=Weiwei Soy Milk
 item.ingotHotDog.name=Hot Dog Ingot
 item.itemLeekBox.name=Leek Box
-item.Dasima.name=Dasima Pickaxe
-item.ShikanokoNoko.name=ShikanokoNoko's weapon
-otht.recipe.MegaIsaForge=§5§l§nIsa mill - the maker of laodengs
-otht.recipe.OTEMegaQFT=§c§lDirac inverter
-itemGroup.tabothtech=123Technology
-GT5U.gui.text.nowater=§4Shut down due to the loss of EBF temperature or the loss of pyrotheum.
-GT5U.gui.text.HeatErr=§4Shut down due to the loss of EBF temperature.
-GT5U.gui.text.nolava=§4Shut down due to the loss of cryotheum
-GT5U.gui.text.noEnqing=§bShut down due to the loss of enqings
-GT5U.gui.text.voltage=§bShut down due to the energy hatch voltage tier
-GT5U.gui.text.nohatch=§4Shut down due to an existing energy hatch.
-otht.recipe.EVACannon=§l§6EVA专用改造阳电子炮GT
-otht.evaCannon=%s 被阳电子炮轰炸至灰
-otht.recipe.SINOPEC=§l§aSINOPEC
-otht.recipe.TSSF=§l§cTangshan Steel Factory
-otht.recipe.MEEC=§l§4Soul Devouring Prison
-GT5U.gui.text.casingErr=§4Shut down due to the casing tier
-GT5U.gui.text.tierMill=§4Shut down due to the miller
-GT5U.gui.text.glassErr=§4Shut down due to the glass tier
-GT5U.gui.text.nofb=§4Shut down due to the needing losing
-otht.recipe.MegaPCB=§4§lMega PCB Factory
-otht.recipe.MegaPCB_A=§4§lSMD Factory
-otht.recipe.MegaPCB_B=§4§lNMD Wafer Factory
-otht.recipe.MegaPCB_C=§4§lComponent Aggregator
-item.itemSunLighter.name=§c§oSunlighter
-for.bees.species.weiwei=§c§mWeiwei
-for.bees.species.gate=§b§mStargate
-for.bees.species.hyp=§4Hypogen
-for.bees.species.glas=Glass
-for.bees.species.jiucai=Leek box
-for.bees.species.ironoth=Iron block
-for.bees.species.chg=g§al§ba§es§cs
-for.bees.species.shengxi=§d§n§l§oShengxi
-for.bees.species.enqing=§4§lEnqing
-oth.comb.hypogen=Hypogen comb
-oth.comb.chromaticglass=Chromatic glass comb
-oth.comb.glass=Glass comb
-entity.123Technology.DogYellow.name=§eYellow dog
-entity.123Technology.CustomPlayer.name=§4RK-800-01
-item.itemNukeThrowable.name=GTX690
-item.itemRecord.name=§aIrdiosamarium
-item.record.PRK_A.desc=보천보전자악단 - 공격전이다
-item.record.PRK_B.desc=보천보전자악단 - 천리마 달린다
-item.record.EVA_A.desc=高橋 洋子 - 残酷な天使のテーゼ
-item.record.EVA_B.desc=ARIANNE - Komm, süsser Tod
+item.Dasima.name=Dasima's Pickaxe
+item.ShikanokoNoko.name=Shikanoko Noko's Special Weapon
+otht.recipe.MegaIsaForge=§5§l§nIsa Forge - Laodeng Maker
+otht.recipe.OTEMegaQFT=§c§lDirac Inversion
+item.itemSunLighter.name=§c§oSolar Lighter
+item.itemNukeThrowable.name=GTX690 Tactical Nuclear Graphics Card
+item.itemRecord.name=§eIrOsSm Record
+item.record.PRK_A.desc=Botyop Electronic Ensemble - Attack
+item.record.PRK_B.desc=Botyop Electronic Ensemble - The Chollima Gallops
+item.record.EVA_A.desc=Yoko Takahashi - A Cruel Angel's Thesis
+item.record.EVA_B.desc=ARIANNE - Komm, süsser Tod (Come, Sweet Death)
 item.record.EVA_C.desc=Claire - Fly Me To The Moon
 item.record.NGG_U.desc=Rick Astley - Never Gonna Give You Up
-item.itemTST.name=TST Burger
+item.itemTST.name=TST Little Burger
+item.TallHatLaodeng.name=White Christmas Hat (For Laodengs)
+item.BrainsHuman.name=§nHuman Brain
+
+#Bee
+for.bees.species.weiwei=§c§mWeiwei Soy Milk
+for.bees.species.gate=§b§mStargate
+for.bees.species.hyp=§4Hypergen
+for.bees.species.glas=Glass
+for.bees.species.jiucai=Leek Box
+for.bees.species.ironoth=Iron Block
+for.bees.species.chg=§aColored §bGlass
+for.bees.species.shengxi=§d§n§l§oVitality
+for.bees.species.enqing=§4§lEnqing
+oth.comb.hypogen=Hypergen Comb
+oth.comb.chromaticglass=Chromatic Glass Comb
+oth.comb.glass=Glass Comb
+
+#Entities
+entity.123Technology.DogYellow.name=§eYellow Dog
+entity.123Technology.CustomPlayer.name=§4Self-Replicant
+
+#Blocks
+tile.modelTallHat.name=White Christmas Hat (Block)
 tile.modelAyanami.name=Ayanami Rei
 tile.modelAsuka.name=Asuka Langley Soryu
+tile.AntimoniaStone.name=Antimony Stone
+tile.AntimoniaDirt.name=Antimony Dirt
+tile.AntimoniaGrass.name=Antimony Grass Block
+tile.AquaRegia.name=Aqua Regia
+tile.LCL.name=LCL
+
+#BW Generated
 fluid.FluidGalaxy.name=Molten Galaxy
-fluid.FluidVoid.name=Void
-fluid.MoltenStar.name=Molten Star
-fluid.FUELA.name=§dHNRF-OTHT
-fluid.FUELA_DE.name=§dHNRF-OTHT (Exhausted)
-fluid.PromoterZPM.name=Atom separation promoter
-fluid.PromoterUEV.name=DTP Promoter
-item.IrOsSm.name=Irdiosamarium
-fluid.IrOsSm.name=Irdiosamarium
-bw.werkstoff.12320.name=Irdiosamarium
+fluid.FluidVoid.name=Void Entropy Flow
+fluid.MoltenStar.name=Molten Stardust
+fluid.FUELA.name=§dHigh Octane Super Silicone Rocket Fuel
+fluid.FUELA_DE.name=§dDepleted High Octane Super Silicone Rocket Fuel
+fluid.PromoterZPM.name=Atomic Separation Promoter
+fluid.PromoterUEV.name=Hyperdimensional Plasma Promoter
+fluid.HCl10.name=Super Hydrochloric Acid
+fluid.HCl100.name=Extreme Hydrochloric Acid
+fluid.HCl1000.name=Strange Hydrochloric Acid
+fluid.HCl10000.name=Magic Hydrochloric Acid
+fluid.HCl100000.name=Final Hydrochloric Acid
+item.IrOsSm.name=IrOsSm
+fluid.IrOsSm.name=IrOsSm
+bw.werkstoff.12320.name=IrOsSm
 LCL=L.C.L
-otht.nei.isa.1=§aNeed NEI Grinder, Recipe Tier 1
-otht.nei.isa.2=§aNeed Irdiosamarium Grinder, Recipe Tier 2
-otht.nei.isa.3=§aNeed Hypogen Grinder, Recipe Tier 3
-otht.nei.isa.4=§aNeed Eternal Grinder, Recipe Tier 4
-otht.recipe.COC=§c§lEPIC COCC Terminator T123
-otht.recipe.WoodenFusionReactor=§b§lWooden Compressed Fusion Reactor Mk.0
-otht.recipe.MISA=§2§lIsa Factory
-otht.recipe.NQF=Compressed Naquadah Fuel Factory
-otht.recipe.fuel.nq=§7§lUniversal Naquadah Generator
-otht.recipe.MCA=Mega Circuit AssemblerLine
-otht.recipe.AE2=Singularity Maker
-otht.recipe.BIN=Bin
+
+#Galaxy
+planet.Antimonia=§oAntimonia - Antimony Star
+planet.Ross123b=§oRoss123b - Antimony Ross
+star.starAntimonia=§0Antimony Hole
+solarsystem.antimoniaSystem=Antimony Star System
+death.attack.Acid=Although this may be unscientific, %1$s was killed by Aqua Regia
+
+#Machine_ToolTips
+oth.tm.pollution=§cNote: If power trips and reports "Cannot exhaust pollution", try placing multiple Muffler Hatches
+
+#Machine_Construction
+otht.con=Construction Details
+
+#Machine_TT
+ote.tt.exc.0=Time Cost
+
+#Machine_Name
+ote.tn.mnio=Ultimate Compressed Mega Processing Factory
+ote.tn.mifo=Divine Isa Forge
+ote.tn.inf=Deity Wireless Energy Hatch (123)
+ote.tn.leg=Legendary Wireless Energy Hatch (123)
+ote.tn.max=MAX 1,048,576A Wireless Energy Hatch (123)
+ote.tn.long=Divine General · Miracle and magic are not free~ I'm such a fool · Noodles hard with extra salted vegetables, double minced garlic and oil, plus leek box~ Peerless under heaven and earth, world-destroying, invincible diamond cannon · Crude · Primitive · Stable · Advanced · Alien · Perfect · Primordial · Chaotic · Final Annihilation~ Wireless Energy Hatch();
+ote.tn.mqft=Dirac Tide
+ote.tn.mebf=Mega Blazing Blast Furnace
+ote.tn.fz=Mega Gelid Cryo Freezer
+ote.tn.sinopec=Sinopec Integrated Factory
+ote.tn.chem=RhPd Mysterious Chemical Plant
+ote.tn.ts=Tangshan Steel Mill
+ote.tn.eec=Soul Devouring Prison
+ote.tn.sf=Red Sun General Favor Parts Factory
+ote.tn.lca=Large Circuit Assembler
+ote.tn.cocc=Epic Coke Oven T123
+ote.tn.wfr=Compressed Wood Fusion Reactor Mk 0
+ote.tn.misa=Isa Processing Integrated Factory OTH
+ote.tn.food=Food Generator
+ote.tn.nfg=Universal Silicone Fuel Engine
+ote.tn.mat=Mini Active Transformer
+ote.tn.mnf=Compressed Silicone Fuel Refinery
+ote.tn.mca=Advanced High Energy Circuit Assembly Line
+ote.tn.lb=Peerless Skill Trash Can
+ote.tn.eio=Ender IO Complex
+ote.tn.exc=Awesome Heat Exchanger
+ote.tn.gd=Dragon's Grave
+ote.tn.ft=Alien Fishery
+ote.tn.pump=Space Drill Module MK-123
+ote.tn.s9in1=Small Steam Processing Factory
+ote.tn.bee=Beeyonds Home
+ote.tn.bbpf=Hyperdimensional Biebie Plasma Forge
+
+#Machine_Addition
+GT5U.gui.text.nowater=§4Machine shoooootdown due to Blazing Heat or Furnace Temperature
+GT5U.gui.text.HeatErr=§4Machine shoooootdown due to insufficient furnace temperature
+GT5U.gui.text.nolava=§4Machine shoooootdown due to Gelid Cryo
+GT5U.gui.text.noEnqing=§bMachine shoooootdown due to insufficient Enqing
+GT5U.gui.text.voltage=§bMachine shoooootdown due to insufficient Energy Hatch voltage
+GT5U.gui.text.nohatch=§4Wireless mode shoooootdown due to presence of Energy Hatch
+otht.recipe.EVACannon=§l§6EVA Custom Positron Rifle GT
+otht.evaCannon=%s was blasted to ashes by the positron rifle
+otht.recipe.SINOPEC=§l§aSinopec
+otht.recipe.TSSF=§l§cTangshan Steel Mill
+otht.recipe.MEEC=§l§4Soul Devouring Prison
+GT5U.gui.text.casingErr=§4Machine shoooootdown due to insufficient casing tier
+GT5U.gui.text.tierMill=§4Machine shoooootdown due to insufficiently hard grinder
+GT5U.gui.text.glassErr=§4Machine shoooootdown due to insufficient glass tier
+GT5U.gui.text.nofb=§4Machine shoooootdown due to Laodeng trying to use Space Assembly without Star Matrix
+otht.recipe.MegaPCB=§4§lMega PCB Factory
+otht.recipe.MegaPCB_A=§4§lSMD Workshop
+otht.recipe.MegaPCB_B=§4§lNMD Wafer Fab
+otht.recipe.MegaPCB_C=§4§lComponent Aggregator
+otht.nei.isa.1=§aGrinding requires NeI Alloy Grinder Complex, recipe tier 1
+otht.nei.isa.2=§aGrinding requires IrOsSm Alloy Grinder Complex, recipe tier 2
+otht.nei.isa.3=§aGrinding requires Hypergen Grinder Complex, recipe tier 3
+otht.nei.isa.4=§aGrinding requires Eternal Grinder Complex, recipe tier 4
+otht.recipe.COC=§c§lEpic Coke Oven T123
+otht.recipe.WoodenFusionReactor=§b§lCompressed Wood Fusion Reactor Mk 0
+otht.recipe.MISA=§2§lIsa Integrated Factory
+otht.recipe.NQF=Compressed Silicone Fuel Refinery
+otht.recipe.fuel.nq=§7§lUniversal Silicone Fuel Engine
+otht.recipe.MCA=Advanced High Energy Circuit Assembly Line
+otht.recipe.AE2=Singularity Producer
+otht.recipe.BIN=Trash Can
 otht.recipe.RCY=Recycler
-otht.recipe.EIO=§lEIO Complex
-otht.recipe.EXH=§4SuperNB Heat Exchanger
-item.BrainsHuman.name=§nBrains
-item.itemAmulet.name=DSS Collar
-death.attack.amulet_explosion=%1$s has be killed by DSS collar
+otht.recipe.EIO=§lEnder IO Complex
+otht.recipe.EXH=§4Awesome Heat Exchange
+otht.recipe.steam.pump=Steam 9-in-1 - Water Pump
+
+#Machine_Waila
+otht.waila.wirelesseu=Current Wireless EU Consumption
+otht.waila.gen=Current Power Generation
+otht.waila.bonus.speed=Current Time Multiplier
+otht.waila.mode=Current Mode
+otht.waila.123=Currently has IrOsSm Alloy Powder inserted
+otht.waila.bin.input=Current Singularity Mode Total Item Input
+otht.waila.tier=Current Machine Tier
+otht.waila.isa.tier=Current Isa Tier
+otht.waila.oc.amount=Current Overclock Count
+otht.waila.bonus.output=Current Output Multiplier
+otht.waila.gen.wire=Current Wired Generation
+otht.waila.gen.wireless=Current Wireless Generation
+otht.waila.mode.wireless=Wireless Mode Currently Enabled
+otht.waila.eff=Current Generation Efficiency
+otht.waila.gen.plasma=Current Plasma Output per kL
+otht.waila.tier.steam=Current Steam Tier
+otht.waila.tier.pipe=Current Pipe Tier
+otht.waila.gen.requireFluid=Requires Catalyst
+
+#9in1
+oth.tm.mnio.0=§c§lLaodeng's Ultimate Creation - 9-in-1 (Mega Processing Factory)
+oth.tm.mnio.1=§a15 modes total. Use Screwdriver to switch category, use Programming Circuits 20 21 22 to switch internal modes.
+oth.tm.mnio.2=§aMetal Category: Compressor, Lathe, Electric Magnetizer
+oth.tm.mnio.3=§aFluid Category: Fermenter, Fluid Extractor, Extractor
+oth.tm.mnio.4=§aMisc Category: Laser Engraver, Autoclave, Fluid Solidifier
+oth.tm.mnio.5=§aIsa Category: Isa Mill, Industrial Flotation Plant, Vacuum Dryer
+oth.tm.mnio.6=§aCol Category: Molecular Reassembler, Brewery, Fluid Heater
+oth.tm.mnio.7=§bParallel time cost formula from a certain §9Ice Fairy
+oth.tm.mnio.8=§bVoltage tier increase by 1, parallel -9, minimum 9, default 64.
+oth.tm.mnio.9=§bRecipe Time = NEI Time * (1 + (Energy Hatch Tier * 16%))
+oth.tm.mnio.10=§bEU Consumption: (1 / Coil Tier) * 0.1, minimum 0.01
+oth.tm.mnio.11=§bHypergen Coil unlocks stable black hole, Electrum Flux Alloy Coil unlocks HIP
+oth.tm.mnio.12=§bPerforms lossless overclocking.
+oth.tm.mnio.13=§e9-in-1, we revere you! ---Sukune_News
+ote.tm.m9in1.mode.0=Compress-Lathe-Magnetize (Metal)
+ote.tm.m9in1.mode.1=Ferment-Fluid Extract-Extract (Fluid)
+ote.tm.m9in1.mode.2=Laser Engrave-Autoclave-Fluid Solidify (Misc)
+ote.tm.m9in1.mode.3=Isa-Float-Vacuum Dry (Isa)
+ote.tm.m9in1.mode.4=Molecular-Brew-Fluid Heat (Col)
+ote.cm.mnio.0=1 - Muffler Hatch, Energy Hatch, Input/Output Bus, Input/Output Hatch : Replace Multi-Machine Casing, supports TecTech Energy Hatch.
+ote.cm.mnio.1=God said, "Let there be light," and there was 9-in-1.
+ote.cm.mnio.2=There are no two suns in the sky; 9-in-1 is the only sun in our hearts.
+
+#EIO
+ote.tm.eio.0=§lZhongdeng's Ultimate Creation - Ender IO Complex
+ote.tm.eio.1=The souls of monsters shall finally be liberated.
+ote.tm.eio.2=Is this the charm of industrialization..?
+ote.tm.eio.3=Using advanced EU-based machines to replace RF machines is a great advancement.
+ote.tm.eio.4=Processes recipes for some EIO machines, like Head Assembler, Soul Binder, etc.
+ote.tm.eio.5=Performs lossless overclocking, default parallel 64.
+ote.tm.eio.6=Screwdriver right-click to enable Spawner Binding Mode, fixed consumption 114 EU/t, time cost 100 ticks.
+ote.cm.eio.0=1 - Input/Output Bus, Input/Output Hatch, Energy Hatch : Replace Soularium Block, supports TecTech Energy Hatch.
+ote.tm.eio.mode.0=Spawner Binding Mode Active
+ote.tm.eio.mode.1=Spawner Binding Mode Inactive
+
+#EpicCoccOven
+ote.tm.cocc.0=§d§nXiaodeng's Ultimate Creation, Zhongdeng's Hope, Laodeng's Unattainable Dream - Epic Coke Oven
+ote.tm.cocc.1=§n§cNever underestimate the power of Xiaodeng...
+ote.tm.cocc.2=§oThe true ultimate machine, no exorbitant cost, no messy mechanics(
+ote.tm.cocc.3=§oAll it does is burn specific materials into coke.
+ote.tm.cocc.4=§eConversion Ratio: Diamond(dust)->Coke 1:1024, Coal(dust)->Coke 1:16, Dirt->Coke 1:1 (How is this done?)
+ote.tm.cocc.5=§eTime: 1800 * 20ticks - (Coal Output / 5)ticks, Power: 0 EU/t
+ote.tm.cocc.6=§c§lNote: Machine pollution too high: If power trips reporting "Cannot exhaust pollution", try placing multiple Muffler Hatches.
+ote.cm.cocc.0=1 - Input/Output Bus, Input/Output Hatch, Muffler Hatch : Replace Deoxidized Steel Machine Casing.
+
+#Fishtorio
+ote.tm.ft.0=§lLaodeng's Ultimate Creation - Alien Fishery
+ote.tm.ft.1=§bPraise the great creator Dr.Jumping! Without her universal formula 'Lord = 6', how could Laodengs ever have the chance to use such a machine?
+ote.tm.ft.2=§bSpecific fishing principle: The Jumping Identity solves the uncertainty problem inherent in dimension blocks, making the establishment of small dimensions inside the fishery possible. Various 'fish' will be caught by the Cuttlefish God inside the fishery.
+ote.tm.ft.3='Fish' includes fish, walruses, leek boxes, Cetus Algae, Cubic Fish, Mossy Stone Bricks, etc. *Maybe can use Antimony Star dimension blocks, but consequences自负.
+ote.tm.ft.4=Performs lossless overclocking, Glass Tier determines Energy Hatch Tier.
+ote.tm.ft.5=Main block requires a Dimension Block.
+ote.tm.ft.6=Random output, oh the dreaded gacha. LOL.
+ote.cm.ft.0=1 - Input/Output Bus, Input/Output Hatch, Energy Hatch : Replace Fishery Machine Casing, supports TecTech Energy Hatch.
+
+#FoodGenerator
+ote.tm.food.0=Just a generator.
+ote.tm.food.1=No more worrying about eating too much.
+ote.tm.food.2=Fengkuang Di burns all the food.
+ote.tm.food.3=Power: Food Hunger Value^2 * Coil Tier * Machine Casing Tier * 2, Max Generation 1A MAX/t, 64 parallel, can burn up to one stack of identical food at a time.
+ote.tm.food.4=§c§lNote: Machine pollution too high: If power trips reporting "Cannot exhaust pollution", try placing multiple Muffler Hatches.
+ote.tm.food.5=Praise the great rich lady Safari_xiu! Without her, there would be no 123 today LOL.
+ote.cm.food.0=1 - Input/Output Bus, Input/Output Hatch, Muffler Hatch : Replace Deoxidized Steel Machine Casing.
+ote.cm.food.1=2 - Dynamo Hatch : Replace rear Deoxidized Steel Machine Casing.
+
+#Dragon Grave
+ote.tm.gd.0=§c§lLaodeng's Ultimate Creation - Black Dragon Tamer (New Dragon Research Aggregation Device)
+ote.tm.gd.1=§e§oDragon Research stacked thousands of times, industrial progress for the first time.
+ote.tm.gd.2=§c§oPraise the NHU God, the Egg Machine is about to start...
+ote.tm.gd.3=Tier 3 Machine Casing unlocks lossless overclocking.
+ote.tm.gd.4=Parallel = Machine Casing Tier * 128, highest tier unlocks int parallel.
+ote.tm.gd.5=§eTime Multiplier = 1 - 0.05 * Coil Tier
+ote.tm.gd.6=§eMachine Casing Tier limits executable recipe tier.
+ote.tm.gd.7=§eWhen changing structure, re-place the main block to detect structure.
+ote.cm.gd.0=1 - Energy Hatch, Input/Output Bus, Input/Output Hatch : Replace Silicone Polymer Machine Casing, supports TecTech Energy Hatch.
+
+#Heat Exchanger
+ote.tm.exc.0=The True Heat Devourer - Vacuum Cryo Heat Exchanger
+ote.tm.exc.1=Recycles waste heat from hot ingot smelting into supercritical steam.
+ote.tm.exc.2=Theoretically recovers 50% of the EU from hot ingot freezer recipes.
+ote.tm.exc.3=Does physics still exist?
+ote.tm.exc.4=Power: 123 EU/t, time cost use main block parameters to adjust.
+ote.cm.exc.0=1 - Input/Output Bus, Input/Output Hatch, Energy Hatch : Replace Tungstensteel Machine Casing, supports TecTech Energy Hatch.
+
+#IMBA EBF
+ote.tm.imba.0=§lSuper OP Blast Furnace
+ote.tm.imba.1=§6§lNo Power Consumption!
+ote.tm.imba.2=§6§lint Parallel!
+ote.tm.imba.3=§6§lAny job finishes in 10 ticks!
+ote.tm.imba.4=§6§lBuilt-in neutron star! No upper furnace temperature limit!
+ote.tm.imba.5=§1§oA favor from the EOHBUF author.
+ote.tm.imba.6=§6"Legend says a god designed this machine while drunk and forgot to delete it upon waking. Thus, it descended to the mortal world."
+ote.tm.imba.7=§4§lPerformance? Maxed out! Cost? Suspiciously low!
+ote.tm.imba.8=§cYou might even wonder, 'Wow, is this really allowed to be built?'
+ote.tm.imba.9=§9With it, resource scarcity, inefficiency, power shortage simply don't exist. It not only lets you dominate the server, §mbut also lets you spam 'hahaha' in the group chat!!
+ote.tm.imba.10=§6It's not a tool, it's a player's dream, a DEV's nightmare!
+ote.cm.imba.0=Too OP.
+
+#Laoba
+ote.tm.chem.0=§e§lLaodeng's Ultimate Creation - RhPd Reaction Vessel (Chemical Reactor & Chemical Plant)
+ote.tm.chem.1=§l§a    Full!    
+ote.tm.chem.2=Chemical Plant Mode: Time = NEI Time * (1 - Coil Tier * 0.15), min time multiplier 0.1; Parallel 16, no catalyst consumption, lossy overclocking.
+ote.tm.chem.3=Large Chemical Reactor Mode: Time = NEI Time * (1 - Coil Tier * 0.1), min time multiplier 0.1; Unlimited parallel, lossless overclocking.
+ote.tm.chem.4=Glass Tier determines Chemical Plant Tier, Chemical Plant Tier == Glass Channel Tier - 3.
+ote.tm.chem.5=If structure doesn't form, re-place main block.
+ote.tm.chem.6=If recipe doesn't run, place a regular Input Bus and set all Input Bus programming circuits to the same value.
+ote.tm.chem.7=Insert IrOsSm Alloy Powder into main block to unlock Chemical Plant lossless overclocking and parallel limit.
+ote.cm.chem.0=1 - Input/Output Bus, Input/Output Hatch, Energy Hatch : Replace Rhodium-Plated Palladium Machine Casing, supports TecTech Energy Hatch.
+ote.tm.chem.mode.0=Chemical Plant Mode
+ote.tm.chem.mode.1=Large Chemical Reactor Mode
+
+#Bin
+ote.tm.bin.0=Trash Can | Recycler | AE Singularity Producer | Neutronium Compressor
+ote.tm.bin.1=Destroy everything, is that all?
+ote.tm.bin.2=Supports ME Input series, Screwdriver to switch mode, Wire Cutter to switch time cost.
+ote.tm.bin.3=Recycler Mode power is parallel * 30 EU/t.
+ote.tm.bin.4=In Recycler Mode, Voltage Tier + 1, Parallel + 2560, fixed output of 50% scrap of input item quantity.
+ote.tm.bin.5=In Singularity Producer Mode, parallel is 1, produces one singularity per 256000 any items.
+ote.tm.bin.6=In Neutronium Compressor Mode, performs lossy overclocking, parallel 256.
+ote.tm.bin.12=Structure center.
+ote.tm.bin.13=0x Deoxidized Steel Machine Casing (minimum).
+ote.tm.bin.14=Any Input Bus, Input Hatch, Output Bus, Energy Hatch, Dynamo Hatch.
+ote.cm.bin.0=1 - Input/Output Bus, Input Hatch, Energy Hatch, Dynamo Hatch.
+ote.tm.bin.mode.0=Trash Can Mode
+ote.tm.bin.mode.1=Recycler Mode
+ote.tm.bin.mode.2=AE Singularity Producer Mode
+ote.tm.bin.mode.3=Neutronium Compressor Mode
+
+#LCA
+ote.tm.lca.0=§e§lLight Industry Plan - Large Circuit Assembler
+ote.tm.lca.1=§lPlain and simple...
+ote.tm.lca.2=Energy Hatch Tier limits recipe tier.
+ote.tm.lca.3=§q§lUpgrade Electronic Unit Machine Casing for a more §4§lcool§q§l appearance (§e§lThis is just so cooooool and useful!§q§l)
+ote.tm.lca.4=Speed + 123%
+ote.tm.lca.5=Performs lossless overclocking.
+ote.tm.lca.6=Structure is not complicated at all!
+ote.cm.lca.0=1 - Muffler Hatch, Energy Hatch : Replace Precision Machine Casing, supports TecTech Energy Hatch.
+ote.cm.lca.1=2 - Output Hatch, Output Bus.
+ote.cm.lca.2=3 - Input Hatch, Input Bus.
+ote.cm.lca.3=Details for reference only because I can't write hatch position restrictions LOL.
+
+#MCA
+ote.tm.mca.0=§d§lThe Ultimate Secret of Circuit Assembly - Advanced High Energy Circuit Assembly Line
+ote.tm.mca.1=§qCheap and useful circuit assembly facility, inherits the original circuit assembly packaging mechanism, but directly supports assemblies.
+ote.tm.mca.2=§q§o"Is it a bit too OP?"
+ote.tm.mca.3=§bGlass Tier determines its appearance. If structure doesn't form, re-place main block.
+ote.tm.mca.4=Default parallel 128. Voltage Tier increase by 1, parallel + 16.
+ote.tm.mca.5=Insert UEV Field Generator into main block to unlock lossless overclocking.
+ote.cm.mca.0=1 - Input/Output Bus, Input/Output Hatch, Energy Hatch : Replace Deoxidized Steel Machine Casing, supports TecTech Energy Hatch.
+
+#pump
+ote.tm.pump.0=Space Drill Module
+ote.tm.pump.1=Adds Space Drill functionality to Space Elevator.
+ote.tm.pump.2=§lI am Pleasant Goat!
+ote.tm.pump.3=Receives power directly from Space Elevator, does not use Energy Hatch.
+ote.tm.pump.4=Set planet and gas type determine output fluid.
+ote.tm.pump.5=Lock output hatch to prevent overflow destruction.
+ote.tm.pump.6=§9Operating Voltage: §aMAX Max Parallel per Recipe: §c123123
+ote.tm.pump.7=Can process up to §e5§r different recipes simultaneously.
+ote.tm.pump.8=Requires §6MK-V§r or higher acceleration track.
+ote.tm.pump.9=Space Elevator Base Machine Casing.
+ote.tm.pump.10=Any Space Elevator Base Machine Casing.
+ote.tm.pump.11=§b§lAuthor:§lBiebie Master--HuimaoX
+
+#MEBF
+ote.tm.mebf.1=§lLaodeng's Ultimate Creation - Industrial Blast Furnace
+ote.tm.mebf.2=§b  EU Consumption: 90%
+ote.tm.mebf.3=§b  Speed + 120%
+ote.tm.mebf.4=§6  Does not consume Blazing Pyrotheum, but Input Hatch must have at least 123 * 1000L Blazing Pyrotheum to run.
+ote.tm.mebf.5=§l 「Blazing Pyrotheum, you only need a few thousand and then it's obsolete」---Modified Wind Brother Quote
+ote.tm.mebf.6=Please note glass tier requirement.
+ote.tm.mebf.7=Checks for presence of Blazing Pyrotheum in Input Hatch during structure check.
+ote.tm.mebf.0=§lLaodeng's Ultimate Creation - Industrial Blast Furnace
+ote.cm.mebf.0=1 - Muffler Hatch, Energy Hatch, Input/Output Bus, Input/Output Hatch : Replace Blazing Blast Furnace Casing, supports TecTech Energy Hatch, has glass restriction (Really!)
+
+#EEC
+ote.tm.eec.0=§e§lLaodeng's Ultimate Creation - Soul Devouring Prison (Industrial Slaughterhouse)
+ote.tm.eec.1=§l§4"The Bodhisattva Avalokiteshvara, practicing deep Prajna Paramita, clearly saw the emptiness of all five aggregates, transcending all suffering."
+ote.tm.eec.2=§l§4Advanced tech control prevents this machine from connecting to Blood Magic rituals, automatically destroys all enchanted and durability-damaged gear.
+ote.tm.eec.3=§n§bThe charm of industrialization......?
+ote.tm.eec.4=Parallel: 134217728, Fixed Power: 64A MAX, Fortune Level 64.
+ote.tm.eec.5=Note: Multiblock structure has too many blocks, cannot preview structure.
+ote.tm.eec.6=Stats: Soul Sand * 2200, Botmium Alloy Block * 1493, Radioactive Silicone Alloy Machine Casing * 12309
+ote.tm.eec.7=Obsidian * 611, Steel Frame * 169, Deoxidized Steel Machine Casing * 100
+ote.tm.eec.8=Boron Glass Series Block * 240, Space Elevator Support Structure Block * 918, Molecular Machine Casing * 2271
+ote.tm.eec.9=Quantum Glass * 1101, Containment Field Generator * 44, Shadow Iron Bars * 111
+ote.tm.eec.10=Dimension Bridge Machine Casing * 233, Dimension Infusion Machine Casing * 241, Spacetime Warp Machine Casing * 32
+ote.cm.eec.0=1 - Muffler Hatch, Energy Hatch, Input/Output Bus, Input/Output Hatch : Replace Blazing Blast Furnace Casing, supports TecTech Energy Hatch, has glass restriction (Really!)
+
+#Freezer
+ote.tm.fz.0=§lLaodeng's Ultimate Creation - Vacuum Freezer
+ote.tm.fz.1=§b  EU Consumption: 100%
+ote.tm.fz.2=§b  Speed + 100%
+ote.tm.fz.3=§b  Parallel: 1024
+ote.tm.fz.4=§6  Does not consume Gelid Cryotheum, but Input Hatch must have at least 123 * 1000L Gelid Cryotheum to run.
+ote.tm.fz.5=§q§l「The Giant Cryotheum tier is awkward. Above it is the TST Freezer, below it is the vanilla cube. Giant Cryotheum is stuck in the middle, can't go up or down.」
+ote.cm.fz.0=1 - Muffler Hatch, Energy Hatch, Input/Output Bus, Input/Output Hatch : Replace Gelid Cryo Casing, supports TecTech Energy Hatch.
+ote.cm.fz.1=You actually built it?
+
+#MegaIsaFactory
+ote.tm.misa.0=§2§lIsa Lord's Ultimate Creation - Isa Integrated Factory
+ote.tm.misa.1=§oThe magical Isa series, merging trash and chemical products into one, isn't that amazing?
+ote.tm.misa.2=§oClick the machine main block in NEI to get an all-in-one masterpiece...
+ote.tm.misa.3=§dMany Laodengs' favorite one-stop solution: threw away the messy processes, just to save some TPS.
+ote.tm.misa.4=Performs lossless overclocking.
+ote.tm.misa.5=Time Multiplier: 1 / Coil Tier
+ote.tm.misa.6=Power Multiplier: Glass Tier ^ -0.1
+ote.tm.misa.7='Grinder Complex' item determines the recipe tier the machine can execute.
+ote.tm.misa.8=§aAnd even has §4unexpected§a surprises hehe...
+ote.cm.misa.0=1 - Muffler Hatch, Energy Hatch, Input/Output Bus, Input/Output Hatch : Replace Isa Machine Casing, supports TecTech Energy Hatch.
+ote.cm.misa.1=2 - Muffler Hatch, replace Vacuum Furnace Casing.
+
+#MegaIsaForge
+ote.tm.mifo.0=§b§lLaodeng's Ultimate Creation - Divine Isa Machine (Laodeng Maker & Space Assembler)
+ote.tm.mifo.1=§c§l'I rejected the §4Blood Magic's favor§c and the §eBee's sweetness'
+ote.tm.mifo.2=§dIsa Lord Certified
+ote.tm.mifo.3=§7Unimaginable speed and parallel.
+ote.tm.mifo.4=Time = NEI Time * { 1 / {Voltage Tier^[(Glass Tier / 2)+1]}^(1/3)}
+ote.tm.mifo.5=§qInsert Star Matrix into main block to unlock Space Assembly Mode.
+ote.cm.mifo.0=1 - Muffler Hatch, Energy Hatch, Input/Output Bus, Input/Output Hatch : Replace Ultimate Molecular Machine Casing, supports TecTech Energy Hatch.
+ote.tm.mifo.mode.0=Isa Forge Mode
+ote.tm.mifo.mode.1=Space Assembly Mode
+
+#MegaNqFF
+ote.tm.mnf.0=§z§lEpic Machine that Instakills Eight Giant Vapes - Compressed Silicone Fuel Refinery
+ote.tm.mnf.1=§l§oDonut Happy Plus Series
+ote.tm.mnf.2=Higher tier coils allow more parallel and acceleration:
+ote.tm.mnf.3=Tier 1 Coil: 16 parallel, overclock once; Tier 2 Coil: 32 parallel, overclock twice;
+ote.tm.mnf.4=Tier 3 Coil: 64 parallel, overclock thrice; Tier 4 Coil: 256 parallel, overclock four times.
+ote.tm.mnf.5=Tier 4 Coil unlocks §cunique recipe pool.
+ote.tm.mnf.6=§bScrewdriver to switch mode, §cunique recipe pool§b allows higher-tier single-step recipes.
+ote.cm.mnf.0=1 - Muffler Hatch, Energy Hatch, Input/Output Bus, Input/Output Hatch : Replace Silicone Fuel Refinery Casing, supports TecTech Energy Hatch.
+ote.tm.mnf.mode.0=Silicone Fuel Refinery Mode
+ote.tm.mnf.mode.1=Compressed Silicone Fuel Refinery Mode
+ote.tm.mnf.parallel.max=Max Parallel
+
+#MQFT
+ote.tm.mqft.0=§e§lAnother Creation of Laodengs - §b「Dirac Inverter」
+ote.tm.mqft.1=§b§lManipulation of virtual particles stirs up waves in the quantum sea...
+ote.tm.mqft.2=§dProvides basic materials, allowing complex chemical and physical processes to be completed in one step.
+ote.tm.mqft.3=§dRelies on virtual particles in the quantum sea, output can exceed input scale.
+ote.tm.mqft.4=§d*Mass is still conserved, just converted from virtual to real particles.
+ote.tm.mqft.5=Dirac Inversion Mode has unexpected surprises.
+ote.tm.mqft.6=§9Time Dilation Field Generator each tier reduces recipe time by 10%.
+ote.tm.mqft.7=§9Stabilization Field Generator tier <6, output unchanged.
+ote.tm.mqft.8=§9Stabilization Field Generator tier ≤8, ≥6, output doubled.
+ote.tm.mqft.9=§9Stabilization Field Generator tier ≥9, output tripled.
+ote.cm.mqft.0=1 - Energy Hatch, Input/Output Bus, Input/Output Hatch : Replace Molecular Machine Casing, supports TecTech Energy Hatch.
+
+#MAT
+ote.tm.mat.0=Zhongdeng's Mini Nuke : Mini Active Transformer
+ote.tm.mat.1=Due to outdated IV tech, destroying the main block while conducting energy will still cause explosion, loss unchanged.
+ote.tm.mat.2=Will it really be useful?
+ote.tm.mat.3=Is Samarium enough? Should be enough? Come on! Try Mini!
+ote.tm.mat.4=Please do not use Extreme High Current Laser Hatch, otherwise the active might break.
+ote.tm.mat.5=§c§lWarning: Explosion is Dragon Pile-style, power proportional to input! Disable in config on servers!
+ote.tm.mat.6=Structure center.
+ote.tm.mat.7=0x Super Machine Casing (minimum).
+ote.tm.mat.8=Any Energy Hatch, Laser Target Hatch.
+ote.tm.mat.9=Any Dynamo Hatch, Laser Source Hatch.
+ote.cm.mat.0=1 - Energy Hatch, Dynamo Hatch or Laser Hatch : Replace Super Machine Casing.
+
+#NqFuelGU
+ote.tm.nfg.0=Tonghua's Dream
+ote.tm.nfg.1= §l§4"Not enough power, right? -v-"
+ote.tm.nfg.2=Upgraded version of Tonghua, can support Silicone Fuel, but cannot use traditional fuel ~ Truly clean energy.
+ote.tm.nfg.3=Time cost determined by main block parameters, unit tick, wireless mode actual power is total generation / time(tick).
+ote.tm.nfg.4=Same design as Tonghua, but also has large silicone bonuses (Really?)
+ote.tm.nfg.5=Consumes all fuel and promoter in input hatch at once.
+ote.tm.nfg.6=Thanks to the great IrOsSm, all output power will be tripled.
+ote.tm.nfg.7=Tier 2 Pipe Casing unlocks wireless mode, use Screwdriver to enable.
+ote.tm.nfg.8=§aHigher tier structure requires higher tier §cpromoter§a, Tier 1: Atomic Separation Promoter, Tier 2: Hyperdimensional Plasma Promoter.
+ote.tm.nfg.9=§aEfficiency increases with runtime, +1% per second, max always 1230%.
+ote.tm.nfg.10=Calculation: Total Power = Fuel Amount * Output Coefficient(3) * Efficiency * Fuel Output Power * Recipe Time.
+ote.tm.nfg.12=§aNote: If set time cost < 20 ticks, efficiency will not accumulate.
+ote.tm.nfg.13=§4You know what will happen.
+ote.tm.nfg.14=§eWarning: Forcing wired mode with high-tier silicone fuel will cause the power meter to spin backwards :<.
+ote.tm.nfg.15=§cSupports TecTech Multi-Amp Dynamo Hatch, Laser Hatch, but please try to use 1,073,741,824A Laser Hatch directly connected to capacitor bank.
+ote.tm.nfg.16=Power Kun(generator).
+ote.cm.nfg.0=4 - Dynamo Hatch or Laser Hatch : Replace Anti-Radiation Silicone Machine Casing, supports TecTech Dynamo Hatch.
+ote.cm.nfg.1=3 - Input Hatch Output Hatch : Replace Anti-Radiation Silicone Machine Casing.
+ote.cm.nfg.2=2 - Muffler Hatch (Decoration : Replace Anti-Radiation Silicone Machine Casing).
+ote.tm.nfg.mode.0=Wireless Mode Active
+ote.tm.nfg.mode.1=Wireless Mode Inactive
+ote.fluid.gen.1=Atomic Separation Promoter
+ote.fluid.gen.2=Hyperdimensional Plasma Promoter
 
 #BBPF
-ote.bbpf.0=§d§lLaodeng's legend Machine  - BB PlasmaForge
-ote.bbpf.1="§cMake DTPF useful again!-V-"
-ote.bbpf.2=§lParallel: 1230 + coilTier *1230
-ote.bbpf.3=There will be no more catalyst residue
-ote.bbpf.4=§a§mInsert§cHyperdimensional Calibration Matrix§r§a§m to enable PerfectOC/Int Parallel processing and unlock Wireless Mode§r
-ote.bbpf.5=Turn Wireless Mode
-ote.bbpf.6=§cSupport Tectech Energy/Laser Hatches
-ote.bbpf.wireless.off=Something seems locked(Wireless off)
-ote.bbpf.wireless.on=The Machine seems unlock something....(Wireless on)
+ote.bbpf.0=§d§lLaodeng's Legendary Creation - Hyperdimensional Biebie Forge
+ote.bbpf.1="§cSo the DTPF without catalyst reduction is this good -V-"
+ote.bbpf.2=§lParallel Formula: 1230 + Coil Tier * 1230
+ote.bbpf.3="Mom doesn't have to worry about catalyst residue anymore"
+ote.bbpf.4=§aInsert §cHyperdimensional Calibration Matrix§r§a to enable lossless overclocking/Int parallel + unlock wireless mode.
+ote.bbpf.5=Toggle Wireless Mode.
+ote.bbpf.6=If wireless power is insufficient, input materials will directly §cannihilate.
+ote.bbpf.7=§cSupports Multi-Amp Hatch/TecTech Laser/Energy Hatch.
+ote.bbpf.wireless.off=This machine's power is sealed (Wireless Off).
+ote.bbpf.wireless.on=This machine unleashes its full power (Wireless On).
+
+#computer
+ote.calc.rank=Computer Case
+ote.computer.name=§l§uAlien§c Quantum Supercomputer§r
+ote.computer.hint.0=1 - Base Hatch, Optical Interface, or Electronic Computer Machine Casing
+ote.computer.hint.1=2 - Computer Case or Super Machine Casing
+ote.computer.hint.2=3 - Coolant Input Hatch or Computer Heat Vent
+ote.computer.desc=You need it to process the string of numbers above.
+ote.computer.cfgi.0=Overclock Ratio
+ote.computer.cfgi.1=Overvoltage Ratio
+ote.computer.cfgo.1=Generate Computation
+ote.computer.desc.0=§l§uAlien§c Quantum Supercomputer
+ote.computer.desc.1=Used to generate Computation (and heat).
+ote.computer.desc.2=Galactic computation power in the palm of your hand.
+ote.computer.coolant=Requires Super Coolant to operate. Formula: Coolant Required: (Computation / 50) × Overclock^1.2 × Overvoltage^0.6 L/tick"
+ote.computer.coolantinput=Any Input Hatch (Coolant Input Hatch)
+ote.computer.info.coolant_usage=Coolant Consumption: %s
+ote.computer.desc.coolant.01=§c[§lCoolant System]§r Coolant input supports §cME Input Hatch§r!
+ote.computer.noliquid=Insufficient Super Coolant, cannot compute.
+ote.computer.output.x2=§cDue to Biebie God's favor, all output computation is doubled,§r§l please note coolant consumption.
+ote.computer.recipe=Alien Computer Usable Component Recipes
+
+#SINOPEC
+ote.tm.sinopec.0=§q§lHeavy Industry Plan - Sinopec Integrated Factory
+ote.tm.sinopec.1=§l§aThe final destination of black gold...
+ote.tm.sinopec.2=§lOne-stop solution.
+ote.tm.sinopec.3=Coil Tier < 10: Time Multiplier = 1 - Coil Tier * 0.1, ≥10 fixed at 0.1.
+ote.tm.sinopec.4=Insert IrOsSm Alloy Powder into main block to unlock lossless overclocking and parallel limit, default parallel 64.
+ote.cm.sinopec.0=1 - Muffler Hatch, Energy Hatch, Input/Output Bus, Input/Output Hatch : Replace Tungstensteel Machine Casing, supports TecTech Energy Hatch.
+ote.cm.sinopec.1=2 - Muffler Hatch : Chimney top center machine casing, actually can be placed next to main block too.
+
+#SunFactory
+ote.tm.sf.0=§c§lLaodeng's Legendary Creation - Mega PCB Factory | SMD Workshop | NMD Wafer Fab | Component Aggregator
+ote.tm.sf.1=§e§lMain! Body! Southbound!
+ote.tm.sf.2=§5Cutting-edge high-tech megastructure imported from a mysterious northern country on a certain peninsula.
+ote.tm.sf.3=§5Utilizes the power of 「Enqing」 to transform raw materials into circuit board components in one step.
+ote.tm.sf.4=§5Possesses a fearsome yield rate and flawless precision.
+ote.tm.sf.5=§aConsumes Enqing to operate: 1t/each.
+ote.tm.sf.6=Set recipe NEI output multiplier in config, default 1.5, rounded.
+ote.tm.sf.7=§bInsert a Nanoswarm into main block, gain acceleration based on stack size (log2(swarm count), floor decimal).
+ote.tm.sf.8=§bCarbon Nanoswarm -- -2%
+ote.tm.sf.9=§bSpacetime Nanoswarm -- 30%
+ote.tm.sf.10=§bEternal Nanoswarm -- 75%
+ote.tm.sf.11=§bUniversium Nanoswarm -- 150%
+ote.tm.sf.12=sfg Channel = 0 unlocks PCB Factory.
+ote.tm.sf.13=sfg Channel = 2 unlocks SMD Workshop.
+ote.tm.sf.14=sfg Channel = 5 unlocks NMD Wafer Fab.
+ote.tm.sf.15=sfg Channel = 8 unlocks Component Aggregator.
+ote.tm.sf.16=If structure doesn't form after changing field generator, pls re-place controller. Use machine GUI buttons to switch mode.
+ote.sf.mode.1=PCB Factory Mode
+ote.sf.mode.2=SMD Workshop Mode
+ote.sf.mode.3=NMD Wafer Fab Mode
+ote.sf.mode.4=Component Aggregator Mode
+ote.sf.mode.unknown=Unknown Mode
+ote.cm.sf.0=1 - Energy Hatch, Input/Output Bus, Input/Output Hatch : Replace Ultimate Molecular Machine Casing, supports TecTech Energy Hatch.
+
+#TangShan
+ote.tm.ts.0=§e§lHeavy Industry Plan - Tangshan Steel Mill
+ote.tm.ts.1=§l§8Endless black smoke continuously billows from the chimneys.
+ote.tm.ts.2=§l§8The inevitable path of industrialization......
+ote.tm.ts.3=§l§8One-stop solution for various steel-related alloys: GTPP / GT5U, and some BW.
+ote.tm.ts.4=Normal Time Multiplier: 1 / Coil Tier.
+ote.tm.ts.5=Wireless Time = 240s / Programming Circuit ID ^ 2)
+ote.tm.ts.6=Wireless EU Consumption = Power * Time * Programming Circuit ID ^ 2
+ote.tm.ts.7=Please note furnace temperature requirement.
+ote.tm.ts.8=Screwdriver to toggle wireless mode.
+ote.tm.ts.9=Non-wireless mode performs lossless overclocking.
+ote.tm.ts.10=
+ote.cm.ts.0=1 - Muffler Hatch, Energy Hatch, Input/Output Bus, Input/Output Hatch : Replace Deoxidized Steel Machine Casing, supports TecTech Energy Hatch.
+ote.cm.ts.1=2 - Muffler Hatch : Replace Deoxidized Steel Machine Casing (on chimney, actually can be placed next to main block too).
+
+#WoodenFusion
+ote.tm.wfr.0=§c§lThe Final Fantasy of the Steam Age - Steam Fusion Reactor
+ote.tm.wfr.1=§b§oAll it does, through some unknowable means, is convert steam into Hydrogen Plasma.
+ote.tm.wfr.2=EU Consumption: 0, Time: (Input Steam Amount(L) / 1000) * 20sec, higher tier steam reduces runtime.
+ote.tm.wfr.3=Time: Normal Steam - 100%, Superheated Steam: 50%, Supercritical Steam: 10%.
+ote.tm.wfr.4=Output: Normal Steam - 1000L / 1L Hydrogen Plasma, Superheated Steam: 1000L / 10L Hydrogen Plasma, Supercritical Steam: 1000L / 100L Hydrogen Plasma.
+ote.cm.wfr.0=1 - Input/Output Hatch : Replace Stone Bricks.
+
+#Steam 9in1
+ote.tm.s9in1.mode.0=Water Pump-Alloy Smelter-Extract (metalProcess0)
+ote.tm.s9in1.mode.1=Ore Wash-Pulverize-Forge (oreProcess0)
+ote.tm.s9in1.mode.2=Compress-Mix-Centrifuge (metalProcess1)
+ote.tm.s9in1.0=§lAnother Miracle of the Steam Age - Steam 9-in-1
+ote.tm.s9in1.1=§7§o§nLegend has it that on the ancient NH continent, there was a tale of a mysterious machine.
+ote.tm.s9in1.2=§7§o§nWith this machine, whether Xiaodeng, Zhongdeng, Laodeng, or Newdeng, Olddeng, all could reach new miraculous heights unattainable by others.
+ote.tm.s9in1.3=§7§o§nBut one day, the terrible creator: Drum Master XXL, discovered that machine and destroyed it.
+ote.tm.s9in1.4=§7§o§nIn response, creator Drum Master released a new batch of performance machines, perhaps not a bad thing.
+ote.tm.s9in1.5=§7§o§nBut the Laodengs blessed by the mysterious machine will forever remember its legend and pass down the fine tradition of parallel +2.
+ote.tm.s9in1.6=§7§o§nYOU. You, Laodeng, hope after hearing this freshly made-up story, you will forever remember the great 9-in-1 God and his parallel +2~UwUb.
+ote.tm.s9in1.7=§l§bThe 9-in-1 of the Steam Age, what a remarkable inheritance!
+ote.tm.s9in1.8=§cCan run nine recipe pools. Single machine uses Programming Circuits 20 21 22 to switch internal recipe pool based on category, category switched with Screwdriver.
+ote.tm.s9in1.9=Category 1: §cWater Pump-Alloy Smelter-Extract (Name: metalProcess0),
+ote.tm.s9in1.10=Category 2: §cOre Wash-Pulverize-Forge (Name: oreProcess0),
+ote.tm.s9in1.11=Category 3: §cCompress-Mix-Centrifuge (Name: metalProcess1),
+ote.tm.s9in1.12=Default parallel 16, time cost 85% of NEI recipe time. If recipe doesn't run, try disabling input isolation. Supports advanced input/output bus/hatch.
+ote.tm.s9in1.13=Simply too Biebie.
+ote.cm.s9in1.0=1 - Muffler Hatch, Steam Input Hatch, Input/Output Bus, Input/Output Hatch : Replace Copper Plated Brick.
+ote.cm.s9in1.1=Is this the Steam Age?.
+ote.cm.s9in1.2=There are no two suns in the sky; 9-in-1 is the only sun in our hearts.
+#Water Factory
+
+#Beeyonds
+ote.tm.bee.0=§aBeedeng's Primary Creation - Beeyonds Home (Large Industrial Apiary)
+ote.tm.bee.1=An HV Large Apiary. #Really only for bees!
+ote.tm.bee.2=Seriously, why not use Industrial Apiaries :)
+ote.cm.bee.0=1 - Energy Hatch, Dynamo Hatch or Laser Hatch, Input/Output Bus/Hatch: Replace Plastic Concrete Block.
+
+#WTFHatch
+ote.tm.wtf.0=Stores energy in a global network.
+ote.tm.wtf.1=Does not connect to wires. This block can draw EU from the network.
+ote.tm.wtf.2=No need to worry about energy overflow.
+ote.tm.wtf.3=Ignore one hundred words here,LOL.
+ote.tm.wtf.4=Just a joke, don't use if buggy, hehe.  
