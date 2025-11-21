@@ -599,6 +599,11 @@ ote.tm.sf.13=sfg信道 = 2 解锁贴片工坊
 ote.tm.sf.14=sfg信道 = 5 解锁NMD晶圆厂
 ote.tm.sf.15=sfg信道 = 8 解锁元件聚合者
 ote.tm.sf.16=更换力场后结构不成型请重放主机, 使用机器GUI按钮配置机器模式
+ote.sf.mode.1=PCB工厂模式
+ote.sf.mode.2=贴片工坊模式
+ote.sf.mode.3=NMD晶圆厂模式
+ote.sf.mode.4=元件聚合者模式
+ote.sf.mode.unknown=未知模式
 ote.cm.sf.0=1 - 能源仓, 输入输出总线, 输入输出仓 : 替换终极分子机械方块, 支持TecTech能源仓
 
 #TangShan
