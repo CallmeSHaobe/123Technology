@@ -587,6 +587,7 @@ ote.tm.sf.1=§e§lMain! Body! Southbound!
 ote.tm.sf.2=§5Cutting-edge high-tech megastructure imported from a mysterious northern country on a certain peninsula.
 ote.tm.sf.3=§5Utilizes the power of 「Enqing」 to transform raw materials into circuit board components in one step.
 ote.tm.sf.4=§5Possesses a fearsome yield rate and flawless precision.
+ote.tm.sf.attention=§c§lAttention: Enqing input is not allow to use ME crafting buffer!
 ote.tm.sf.5=§aConsumes Enqing to operate: 1t/each.
 ote.tm.sf.6=Set recipe NEI output multiplier in config, default 1.5, rounded.
 ote.tm.sf.7=§bInsert a Nanoswarm into main block, gain acceleration based on stack size (log2(swarm count), floor decimal).

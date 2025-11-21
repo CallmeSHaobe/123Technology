@@ -17,6 +17,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -51,6 +53,8 @@ import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
+import gregtech.api.util.shutdown.ShutDownReason;
+import gregtech.api.util.shutdown.ShutDownReasonRegistry;
 import gregtech.common.items.MetaGeneratedItem03;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
@@ -164,11 +168,16 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
             endRecipeProcessing();
         } else {
             endRecipeProcessing();
-            stopMachine();
+            stopMachine(ShutDownReasonRegistry.outOfStuff(translateToLocal("for.bees.species.enqing"), 1));
             return false;
         }
 
         return super.onRunningTick(aStack);
+    }
+
+    @Override
+    public void stopMachine(@Nonnull ShutDownReason reason) {
+        super.stopMachine(reason);
     }
 
     @Override
@@ -2486,6 +2495,7 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
             .addInfo(translateToLocal("ote.tm.sf.3"))
             .addInfo(translateToLocal("ote.tm.sf.4"))
             .addInfo(translateToLocal("ote.tm.sf.5"))
+            .addInfo(translateToLocal("ote.tm.sf.attention"))
             .addInfo(translateToLocal("ote.tm.sf.6"))
             .addSeparator()
             .addInfo(translateToLocal("ote.tm.sf.7"))
