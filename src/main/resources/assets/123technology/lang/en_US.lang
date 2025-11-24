@@ -249,7 +249,7 @@ otht.waila.eff=Current Generation Efficiency
 otht.waila.gen.plasma=Current Plasma Output per kL
 otht.waila.tier.steam=Current Steam Tier
 otht.waila.tier.pipe=Current Pipe Tier
-otht.waila.gen.requireFluid=Requires Catalyst
+otht.waila.gen.requirefluid=Requires Catalyst
 
 #9in1
 oth.tm.mnio.0=§c§lLaodeng's Ultimate Creation - 9-in-1 (Mega Processing Factory)

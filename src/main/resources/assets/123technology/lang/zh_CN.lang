@@ -249,7 +249,7 @@ otht.waila.eff=当前发电效率
 otht.waila.gen.plasma=当前等离子每千升产出
 otht.waila.tier.steam=当前蒸汽等级
 otht.waila.tier.pipe=当前管道等级
-otht.waila.gen.requireFluid=需求催化剂
+otht.waila.gen.requirefluid=需求催化剂
 
 #9in1
 oth.tm.mnio.0=§c§l老登的终极造物 - 九合一 (巨型加工厂)
