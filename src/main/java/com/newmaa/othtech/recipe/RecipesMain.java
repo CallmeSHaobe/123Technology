@@ -346,7 +346,6 @@ public class RecipesMain implements IRecipePool {
             .duration(4 * 20)
             .eut(TierEU.IV)
             .addTo(Assem);
-
         // 二硫化碳
         GTValues.RA.stdBuilder()
             .itemInputs(

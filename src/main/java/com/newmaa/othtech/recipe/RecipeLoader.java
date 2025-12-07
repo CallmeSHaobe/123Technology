@@ -44,6 +44,7 @@ public class RecipeLoader {
                 .duration(60 * 20)
                 .eut(TierEU.UMV)
                 .addTo(RecipeMaps.assemblerRecipes);
+
         }
         for (IRecipePool recipePool : recipePools) {
             recipePool.loadRecipes();
