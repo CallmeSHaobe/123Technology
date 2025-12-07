@@ -22,24 +22,27 @@ import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import net.minecraft.block.Block;
+import net.minecraft.block.BlockBeacon;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntityBeacon;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import org.jetbrains.annotations.NotNull;
 
+import com.gtnewhorizon.structurelib.StructureLibAPI;
+import com.gtnewhorizon.structurelib.structure.AutoPlaceEnvironment;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
+import com.gtnewhorizon.structurelib.structure.IStructureElement;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
-import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
 import com.newmaa.othtech.utils.Utils;
-import com.newmaa.othtech.utils.modsEnum;
 
 import bartworks.API.BorosilicateGlass;
 import gregtech.api.enums.HeatingCoilLevel;
@@ -188,14 +191,13 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
 
     @Override
     protected ProcessingLogic createProcessingLogic() {
-        return new OTHProcessingLogic() {
+        return new ProcessingLogic() {
 
             private ItemStack lastCircuit = null;
 
             @NotNull
             @Override
             public CheckRecipeResult process() {
-
                 setEuModifier(getEuModifier());
                 setSpeedBonus(getSpeedBonus());
                 setOverclock(isEnablePerfectOverclock() ? 4 : 2, 4);
@@ -233,6 +235,7 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
             }
 
         }.enablePerfectOverclock()
+            .setUnlimitedTierSkips()
             .setMaxParallelSupplier(this::getMaxParallelRecipes);
 
     }
@@ -376,11 +379,46 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
                 .addElement(
                     'B',
                     withChannel("coil", ofCoil(OTEMegaNineInOne::setCoilLevel, OTEMegaNineInOne::getCoilLevel)))
-                .addElement(
-                    'F',
-                    ofChain(
-                        modsEnum.ET_Futurum.isModLoaded() ? ofBlockAnyMeta(Block.getBlockFromName("etfuturum:beacon"))
-                            : ofBlockAnyMeta(Blocks.beacon)))
+                .addElement('F', new IStructureElement<>() {
+
+                    private final BlocksToPlace cached = BlocksToPlace.create(Blocks.beacon, 0);
+
+                    @Override
+                    public boolean check(OTEMegaNineInOne oteMegaNineInOne, World world, int x, int y, int z) {
+                        // in fact, we only need it is a beacon
+                        // so it also can be chisel's beacon...?
+                        return world.getBlock(x, y, z) instanceof BlockBeacon
+                            && world.getTileEntity(x, y, z) instanceof TileEntityBeacon;
+                    }
+
+                    @Override
+                    public boolean couldBeValid(OTEMegaNineInOne oteMegaNineInOne, World world, int x, int y, int z,
+                        ItemStack trigger) {
+                        // no side effect
+                        return check(oteMegaNineInOne, world, x, y, z);
+                    }
+
+                    @Override
+                    public boolean spawnHint(OTEMegaNineInOne oteMegaNineInOne, World world, int x, int y, int z,
+                        ItemStack trigger) {
+                        StructureLibAPI.hintParticle(world, x, y, z, Blocks.beacon, 0);
+                        return true;
+                    }
+
+                    @Override
+                    public boolean placeBlock(OTEMegaNineInOne oteMegaNineInOne, World world, int x, int y, int z,
+                        ItemStack trigger) {
+                        world.setBlock(x, y, z, Blocks.beacon, 0, 2);
+                        if (check(oteMegaNineInOne, world, x, y, z)) return true;
+                        else return world.setBlockToAir(x, y, z);
+                    }
+
+                    @Override
+                    public BlocksToPlace getBlocksToPlace(OTEMegaNineInOne oteMegaNineInOne, World world, int x, int y,
+                        int z, ItemStack trigger, AutoPlaceEnvironment env) {
+                        return cached;
+                    }
+                })
                 .build();
 
         }
