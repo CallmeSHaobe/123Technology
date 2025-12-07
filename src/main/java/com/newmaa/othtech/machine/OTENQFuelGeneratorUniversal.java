@@ -180,20 +180,20 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
         if (tag.getString("pipe")
             .equals("1")) {
             currentTip.add(
-                EnumChatFormatting.BOLD + "otht.waila.gen.requireFluid"
+                EnumChatFormatting.BOLD + translateToLocal("otht.waila.gen.requirefluid")
                     + EnumChatFormatting.RESET
                     + ": "
                     + EnumChatFormatting.AQUA
-                    + "ote.fluid.gen.1"
+                    + translateToLocal("ote.fluid.gen.1")
                     + EnumChatFormatting.RESET);
         } else if (tag.getString("pipe")
             .equals("2")) {
                 currentTip.add(
-                    EnumChatFormatting.BOLD + "otht.waila.gen.requireFluid"
+                    EnumChatFormatting.BOLD + translateToLocal("otht.waila.gen.requirefluid")
                         + EnumChatFormatting.RESET
                         + ": "
                         + EnumChatFormatting.AQUA
-                        + "ote.fluid.gen.2"
+                        + translateToLocal("ote.fluid.gen.2")
                         + EnumChatFormatting.RESET);
             }
     }
