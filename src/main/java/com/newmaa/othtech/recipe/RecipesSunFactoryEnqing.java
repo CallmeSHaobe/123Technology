@@ -1552,6 +1552,22 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .duration(256 * 20 * 8)
             .eut(TierEU.UMV)
             .addTo(UNI);
+        // Dyson Sphere module
+        RecipeBuilder.builder()
+            .itemOutputs(setStackSize(GTModHandler.getModItem(GTNHIntergalactic.ID, "item.DysonSwarmParts"), 256 * a))
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(7),
+                ItemList.Cover_SolarPanel_UV.get(4),
+                setStackSize(ItemList.Sensor_UEV.get(1), 4),
+                setStackSize(ItemList.Emitter_UEV.get(1), 4),
+                GTModHandler.getModItem(ModIDs.G_T_N_H_INTERGALACTIC, "item.DysonSwarmParts", 16, 3),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UEV, 1), 4 * 16),
+                setStackSize(OTHItemList.dustIrOsSmM.get(64), 16 * 16),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.wireGt01, Materials.SuperconductorUMV, 1), 10 * 16))
+            .fluidInputs(new FluidStack(sb, 123123))
+            .duration(256 * 10 * 8)
+            .eut(TierEU.UMV)
+            .addTo(UNI);
 
     }
 }
