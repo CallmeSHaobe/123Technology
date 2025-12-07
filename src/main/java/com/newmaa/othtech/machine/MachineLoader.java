@@ -3,6 +3,7 @@ package com.newmaa.othtech.machine;
 import static net.minecraft.util.StatCollector.translateToLocal;
 
 import com.newmaa.othtech.common.OTHItemList;
+import com.newmaa.othtech.machine.hatch.OTEHatchRack;
 import com.newmaa.othtech.machine.hatch.OTEWTFHatch;
 
 import gregtech.api.enums.TierEU;
@@ -159,6 +160,22 @@ public class MachineLoader {
             .set(new MTEHatchDynamoTunnel(IDs + 54, "UXV Laser 1073DY", "UXV 1,073,741,824A 激光源仓", 13, AMPS));
         OTHItemList.UXVB
             .set(new MTEHatchEnergyTunnel(IDs + 55, "UXV Laser 1073EN", "UXV 1,073,741,824A 激光靶仓", 13, AMPS));
+
+        OTHItemList.SteamNeinInOne
+            .set(new OTEMiniSteamNineInOne(IDs + 57, "SteamNineInOne", translateToLocal("ote.tn.s9in1")));
+        OTHItemList.Beeyonds.set(new OTEBeeyonds(IDs + 58, "IndustrialBeeHouse", translateToLocal("ote.tn.bee")));
+        OTHItemList.OTEBBPlasmaForge
+            .set(new OTEBBPlasmaForge(IDs + 59, "OTEBBPlasmaForge", translateToLocal("ote.tn.bbpf")));
+        OTHItemList.OTEComputer.set(new OTEComputer(IDs + 60, "OTEComputer", translateToLocal("ote.computer.name")));
+        OTHItemList.OTEHatchRack
+            .set(new OTEHatchRack(IDs + 61, "OTEHatchRack", translateToLocal("ote.calc.rank"), 11).getStackForm(1L));
+        // 模型错位,已无言
+        // OTHItemList.OTEHatchRack.set(
+        // new OTEHatchRack(IDs + 114514, "OTESuperHatchRack", translateToLocal("ote.super.calc.rank"), 1, true)
+        // .getStackForm(1L));
+
+        // bug的元凶:没有run()
+        OTEHatchRack.run();
         // TODO FUTURE
 
     }

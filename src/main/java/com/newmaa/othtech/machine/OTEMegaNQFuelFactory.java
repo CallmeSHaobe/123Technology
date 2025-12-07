@@ -1,8 +1,8 @@
 package com.newmaa.othtech.machine;
 
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
-import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofChain;
-import static com.gtnewhorizon.structurelib.structure.StructureUtility.onElementPass;
+import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlocksTiered;
+import static com.gtnewhorizon.structurelib.structure.StructureUtility.withChannel;
 import static com.newmaa.othtech.common.recipemap.Recipemaps.NQF;
 import static goodgenerator.api.recipe.GoodGeneratorRecipeMaps.naquadahFuelRefineFactoryRecipes;
 import static gregtech.api.enums.HatchElement.InputHatch;
@@ -15,7 +15,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -26,17 +25,16 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 
-import com.gtnewhorizon.structurelib.StructureLibAPI;
+import com.google.common.collect.ImmutableList;
 import com.gtnewhorizon.structurelib.alignment.constructable.IConstructable;
 import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructable;
-import com.gtnewhorizon.structurelib.structure.AutoPlaceEnvironment;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
-import com.gtnewhorizon.structurelib.structure.IStructureElement;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
-import com.gtnewhorizon.structurelib.structure.StructureUtility;
+import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
 import com.newmaa.othtech.machine.machineclass.OTHTTMultiMachineBaseEM;
 
 import cpw.mods.fml.relauncher.Side;
@@ -72,7 +70,7 @@ public class OTEMegaNQFuelFactory extends OTHTTMultiMachineBaseEM implements ICo
     }
 
     public int mode = 0;
-    public int tier = -1;
+    private int tier = -1;
 
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
@@ -96,9 +94,10 @@ public class OTEMegaNQFuelFactory extends OTHTTMultiMachineBaseEM implements ICo
         final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
         if (tileEntity != null) {
             String Mode = GTUtility.formatNumbers(mode);
-            String OC = GTUtility.formatNumbers(tier);
+            String OC = GTUtility.formatNumbers(this.tier);
             tag.setString("Tier", Mode);
             tag.setString("OC", OC);
+            tag.setString("Parallel", String.valueOf(maxParallel));
         }
     }
 
@@ -114,6 +113,12 @@ public class OTEMegaNQFuelFactory extends OTHTTMultiMachineBaseEM implements ICo
                 + tag.getString("Tier")
                 + EnumChatFormatting.RESET);
         currentTip.add(
+            translateToLocal("ote.tm.mnf.parallel.max") + EnumChatFormatting.RESET
+                + ": "
+                + EnumChatFormatting.GOLD
+                + tag.getString("Parallel")
+                + EnumChatFormatting.RESET);
+        currentTip.add(
             translateToLocal("otht.waila.oc.amount") + EnumChatFormatting.RESET
                 + ": "
                 + EnumChatFormatting.GOLD
@@ -125,12 +130,12 @@ public class OTEMegaNQFuelFactory extends OTHTTMultiMachineBaseEM implements ICo
     public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
         if (getBaseMetaTileEntity().isServerSide()) {
-            if (mode < 1 && tier == 4) {
-                mode++;
+            if (this.mode < 1 && this.tier == 4) {
+                this.mode++;
             } else {
-                mode = 0;
+                this.mode = 0;
             }
-            switch (mode) {
+            switch (this.mode) {
                 case 0 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.mnf.mode.0"));
                 case 1 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.mnf.mode.1"));
             }
@@ -155,28 +160,28 @@ public class OTEMegaNQFuelFactory extends OTHTTMultiMachineBaseEM implements ICo
 
     @Override
     public boolean checkMachine_EM(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
-        cnt[0] = 0;
-        cnt[1] = 0;
-        cnt[2] = 0;
-        cnt[3] = 0;
-        return structureCheck_EM(mName, horizontalOffSet, verticalOffSet, depthOffSet) && getTier() != -1;
+        return structureCheck_EM(mName, horizontalOffSet, verticalOffSet, depthOffSet);
     }
 
     public int getParallel() {
-        int pa;
-        switch (tier) {
-            case 4 -> pa = 256;
-            case 3 -> pa = 64;
-            case 2 -> pa = 32;
-            case 1 -> pa = 16;
-            default -> pa = 0;
+        if (this.tier == 1) {
+            return 16;
         }
-        return pa;
+        if (this.tier == 2) {
+            return 32;
+        }
+        if (this.tier == 3) {
+            return 64;
+        }
+        if (this.tier == 4) {
+            return 256;
+        }
+        return 0;
     }
 
     @Override
     protected ProcessingLogic createProcessingLogic() {
-        return new ProcessingLogic() {
+        return new OTHProcessingLogic() {
 
             @NotNull
             @Override
@@ -197,12 +202,18 @@ public class OTEMegaNQFuelFactory extends OTHTTMultiMachineBaseEM implements ICo
                 if (recipe.mSpecialValue > tier) {
                     return CheckRecipeResultRegistry.insufficientMachineTier(recipe.mSpecialValue);
                 }
-                maxParallel = getParallel();
                 lEUt = processingLogic.getCalculatedEut() * processingLogic.getCurrentParallels();
                 return CheckRecipeResultRegistry.SUCCESSFUL;
             }
 
-        }.setOverclock(4.0, 4.0);
+        }.setOverclock(4.0, 4.0)
+            .setMaxParallelSupplier(this::getMaxParallelRecipes);
+    }
+
+    @Override
+    public int getMaxParallelRecipes() {
+        maxParallel = getParallel();
+        return maxParallel;
     }
 
     @Override
@@ -599,82 +610,33 @@ public class OTEMegaNQFuelFactory extends OTHTTMultiMachineBaseEM implements ICo
                         .buildAndChain(ofBlock(Loaders.FRF_Casings, 0)))
                 .addElement('A', ofBlock(Loaders.fieldRestrictingGlass, 0))
                 .addElement('G', ofFrame(Materials.NaquadahAlloy))
-                .addElement(
-                    'B',
-                    ofChain(
-                        onElementPass(x -> ++x.cnt[0], ofFieldCoil(0)),
-                        onElementPass(x -> ++x.cnt[1], ofFieldCoil(1)),
-                        onElementPass(x -> ++x.cnt[2], ofFieldCoil(2)),
-                        onElementPass(x -> ++x.cnt[3], ofFieldCoil(3))))
+                .addElement('B', withChannel("coil", ofBlocksTiered((block, meta) -> {
+                    if (block == Loaders.FRF_Coil_1) return 1;
+                    if (block == Loaders.FRF_Coil_2) return 2;
+                    if (block == Loaders.FRF_Coil_3) return 3;
+                    if (block == Loaders.FRF_Coil_4) return 4;
+                    return null; // 对于不认识的方块返回null
+                },
+                    ImmutableList.of(
+                        Pair.of(Loaders.FRF_Coil_1, 0),
+                        Pair.of(Loaders.FRF_Coil_2, 1),
+                        Pair.of(Loaders.FRF_Coil_3, 2),
+                        Pair.of(Loaders.FRF_Coil_4, 3)),
+                    -1,
+                    (t, meta) -> t.tier = meta,
+                    OTEMegaNQFuelFactory::getTierInstance)))
                 .build();
 
         }
         return STRUCTURE_DEFINITION;
     }
 
-    private final int[] cnt = new int[] { 0, 0, 0, 0 };
-    private static final Block[] coils = new Block[] { Loaders.FRF_Coil_1, Loaders.FRF_Coil_2, Loaders.FRF_Coil_3,
-        Loaders.FRF_Coil_4 };
-
-    public int getTier() {
-        for (int i = 0; i < 4; i++) {
-            if (cnt[i] == 560) {
-                tier = i + 1;
-                return i;
-            }
-        }
-        tier = -1;
-        return -1;
+    public Integer getTierInstance() {
+        return this.tier;
     }
 
-    public static <T> IStructureElement<T> ofFieldCoil(int aIndex) {
-        return new IStructureElement<>() {
-
-            @Override
-            public boolean check(T t, World world, int x, int y, int z) {
-                Block block = world.getBlock(x, y, z);
-                return block.equals(coils[aIndex]);
-            }
-
-            @Override
-            public boolean spawnHint(T t, World world, int x, int y, int z, ItemStack trigger) {
-                StructureLibAPI.hintParticle(world, x, y, z, coils[getIndex(trigger)], 0);
-                return true;
-            }
-
-            private int getIndex(ItemStack trigger) {
-                int s = trigger.stackSize;
-                if (s > 4 || s <= 0) s = 4;
-                return s - 1;
-            }
-
-            @Override
-            public boolean placeBlock(T t, World world, int x, int y, int z, ItemStack trigger) {
-                return world.setBlock(x, y, z, coils[getIndex(trigger)], 0, 3);
-            }
-
-            @Override
-            public BlocksToPlace getBlocksToPlace(T t, World world, int x, int y, int z, ItemStack trigger,
-                AutoPlaceEnvironment env) {
-                return BlocksToPlace.create(coils[getIndex(trigger)], 0);
-            }
-
-            @Override
-            public PlaceResult survivalPlaceBlock(T t, World world, int x, int y, int z, ItemStack trigger,
-                AutoPlaceEnvironment env) {
-                if (check(t, world, x, y, z)) return PlaceResult.SKIP;
-                return StructureUtility.survivalPlaceBlock(
-                    coils[getIndex(trigger)],
-                    0,
-                    world,
-                    x,
-                    y,
-                    z,
-                    env.getSource(),
-                    env.getActor(),
-                    env.getChatter());
-            }
-        };
+    public int getTier() {
+        return this.tier;
     }
 
     // spotless:off
