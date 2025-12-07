@@ -22,6 +22,10 @@ BOXplusplus(?) luomolhx
 
 kevenzh HuimaoX czqwq
 
+翻译 :
+
+English ： Strata-su & czqwq
+
 感谢老登登们。
 ## **机器内容**
 ***

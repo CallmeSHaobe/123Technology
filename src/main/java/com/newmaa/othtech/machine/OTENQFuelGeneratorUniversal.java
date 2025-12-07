@@ -184,7 +184,7 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
                     + EnumChatFormatting.RESET
                     + ": "
                     + EnumChatFormatting.AQUA
-                    + "ote.fluid.gen.1"
+                    + translateToLocal("ote.fluid.gen.1")
                     + EnumChatFormatting.RESET);
         } else if (tag.getString("pipe")
             .equals("2")) {
@@ -193,7 +193,7 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
                         + EnumChatFormatting.RESET
                         + ": "
                         + EnumChatFormatting.AQUA
-                        + "ote.fluid.gen.2"
+                        + translateToLocal("ote.fluid.gen.2")
                         + EnumChatFormatting.RESET);
             }
     }

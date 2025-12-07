@@ -348,19 +348,6 @@ public class RecipesMain implements IRecipePool {
             .duration(4 * 20)
             .eut(TierEU.IV)
             .addTo(Assem);
-        // 78water
-        GTValues.RA.stdBuilder()
-            .itemOutputs(GTModHandler.getModItem("miscutils", "item.BasicGenericChemItem", 1, 30))
-            .fluidInputs(FluidRegistry.getFluidStack("molten.shirabon", 92160))
-            .itemInputs(
-                GTUtility.getIntegratedCircuit(10),
-                GTModHandler.getModItem("miscutils", "item.BasicAgrichemItem", 1, 13),
-                GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedlens", 64, 25),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 4054),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 32722))
-            .duration(60 * 20)
-            .eut(TierEU.UMV)
-            .addTo(Assem);
         // 二硫化碳
         GTValues.RA.stdBuilder()
             .itemInputs(
@@ -1040,14 +1027,14 @@ public class RecipesMain implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.plateSuperdense, Materials.Neutronium, 64),
                 GTOreDictUnificator.get(OrePrefixes.plateSuperdense, Materials.Neutronium, 64),
                 GTOreDictUnificator.get(OrePrefixes.plateSuperdense, Materials.Iridium, 64),
-                BWMaterials.IrOsSm.get(OrePrefixes.plateDouble, 64),
+                BWMaterials.IrOsSm.get(OrePrefixes.plate, 64),
                 OTHItemList.dustLookNEIM.get(64),
                 OTHItemList.dustLookNEIM.get(64),
-                BWMaterials.IrOsSm.get(OrePrefixes.plateDouble, 64),
-                BWMaterials.IrOsSm.get(OrePrefixes.plateDouble, 64),
+                BWMaterials.IrOsSm.get(OrePrefixes.plate, 64),
+                BWMaterials.IrOsSm.get(OrePrefixes.plate, 64),
                 OTHItemList.dustLookNEIM.get(64),
                 OTHItemList.dustLookNEIM.get(64),
-                BWMaterials.IrOsSm.get(OrePrefixes.plateDouble, 64),
+                BWMaterials.IrOsSm.get(OrePrefixes.plate, 64),
                 GTOreDictUnificator.get(OrePrefixes.plateSuperdense, Materials.Iridium, 64),
                 GTOreDictUnificator.get(OrePrefixes.plateSuperdense, Materials.Neutronium, 64),
                 GTOreDictUnificator.get(OrePrefixes.plateSuperdense, Materials.Neutronium, 64),
@@ -1379,7 +1366,7 @@ public class RecipesMain implements IRecipePool {
         // Steam 9in1
         addCraftingRecipe(
             OTHItemList.SteamNeinInOne.get(1),
-            new Object[] { "ABC", "DEF", "GHI", 'A', getGM(31041, 1), 'B', getGM(31041, 1), 'C', getGM(31078, 1), 'D',
+            new Object[] { "ABC", "DEF", "GHI", 'A', getGM(31041, 1), 'B', getGM(101, 1), 'C', getGM(31078, 1), 'D',
                 getGM(31080, 1), 'E', getGM(31085, 1), 'F', getGM(31082, 1), 'G', getGM(31083, 1), 'H', getGM(31084, 1),
                 'I', getGM(23540, 1) });
     }

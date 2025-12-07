@@ -1,5 +1,7 @@
 package com.newmaa.othtech;
 
+import static com.newmaa.othtech.machine.OTEFireRocketAssembler.loadRender;
+
 import net.minecraft.client.model.ModelBiped;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.client.model.IModelCustom;
@@ -43,7 +45,7 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void init(FMLInitializationEvent event) {
         super.init(event);
-
+        loadRender();
         // 注册 itemModelAyanamiRender 渲染器
         new ItemModelAyanamiRender();
 
