@@ -96,8 +96,7 @@ public class MachineLoader {
         OTHItemList.OTEGraveDragon.set(new OTEGraveDragon(IDs - 4, "GraveDragon", translateToLocal("ote.tn.gd")));
         OTHItemList.FISH.set(new OTEFishtorio(IDs - 5, "Fishtorio", translateToLocal("ote.tn.ft")));
         // TODO FUTURE
-        OTHItemList.NASA
-            .set(new OTEFireRocketAssembler(IDs + 60, "FireRocketAssembler", translateToLocal("ote.tn.nasa")));
+
 
         // Lasers
 
@@ -172,7 +171,8 @@ public class MachineLoader {
         // bug的元凶:没有run()
         OTEHatchRack.run();
         // TODO FUTURE
-
+        OTHItemList.NASA
+            .set(new OTEFireRocketAssembler(IDs + 62, "FireRocketAssembler", translateToLocal("ote.tn.nasa")));
     }
 
     public static void loadMachinePostInit() {
