@@ -346,19 +346,6 @@ public class RecipesMain implements IRecipePool {
             .duration(4 * 20)
             .eut(TierEU.IV)
             .addTo(Assem);
-        // 78water
-        GTValues.RA.stdBuilder()
-            .itemOutputs(GTModHandler.getModItem("miscutils", "item.BasicGenericChemItem", 1, 30))
-            .fluidInputs(FluidRegistry.getFluidStack("molten.shirabon", 92160))
-            .itemInputs(
-                GTUtility.getIntegratedCircuit(10),
-                GTModHandler.getModItem("miscutils", "item.BasicAgrichemItem", 1, 13),
-                GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedlens", 64, 25),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 4054),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 32722))
-            .duration(60 * 20)
-            .eut(TierEU.UMV)
-            .addTo(Assem);
         // 二硫化碳
         GTValues.RA.stdBuilder()
             .itemInputs(
