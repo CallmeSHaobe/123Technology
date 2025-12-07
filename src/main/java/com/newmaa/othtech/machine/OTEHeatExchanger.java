@@ -22,6 +22,7 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
+import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
 import com.newmaa.othtech.machine.machineclass.OTHTTMultiMachineBaseEM;
 
 import gregtech.api.GregTechAPI;
@@ -57,7 +58,7 @@ public class OTEHeatExchanger extends OTHTTMultiMachineBaseEM implements ISurviv
     Parameters.Group.ParameterIn time;
     private static final IStatusFunction<OTEHeatExchanger> timeSTATUES = (base, p) -> LedStatus
         .fromLimitsInclusiveOuterBoundary(p.get(), 1, 2, 1000, 114514);
-    private static final INameFunction<OTEHeatExchanger> timeName = (base, p) -> GCCoreUtil.translate("ote.tt.0");
+    private static final INameFunction<OTEHeatExchanger> timeName = (base, p) -> GCCoreUtil.translate("ote.tt.exc.0");
 
     @Override
     protected void parametersInstantiation_EM() {
@@ -79,7 +80,14 @@ public class OTEHeatExchanger extends OTHTTMultiMachineBaseEM implements ISurviv
 
     @Override
     protected ProcessingLogic createProcessingLogic() {
-        return new ProcessingLogic() {
+        return new OTHProcessingLogic() {
+
+            @NotNull
+            @Override
+            public CheckRecipeResult process() {
+                setOverclock(1, 8);
+                return super.process();
+            }
 
             @NotNull
             @Override
