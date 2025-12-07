@@ -31,5 +31,6 @@ public class BWMaterials implements Runnable {
             gf.addPrefix(prefix);
         }
         gf.removePrefix(OrePrefixes.ore);
+        gf.removePrefix(OrePrefixes.dust);
     }
 }

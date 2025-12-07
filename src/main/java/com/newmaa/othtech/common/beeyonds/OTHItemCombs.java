@@ -1,5 +1,6 @@
 package com.newmaa.othtech.common.beeyonds;
 
+import static com.newmaa.othtech.utils.Utils.setStackSize;
 import static gregtech.api.enums.Mods.*;
 
 import java.util.List;
@@ -26,6 +27,7 @@ import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTUtility;
+import gtPlusPlus.api.recipe.GTPPRecipeMaps;
 
 public class OTHItemCombs extends Item {
 
@@ -104,9 +106,11 @@ public class OTHItemCombs extends Item {
     public static void initCombsRecipes() {
         // HYPOGEN COMB FOR DTPF RECIPES
         RecipeBuilder.builder()
-            .itemInputs(GTUtility.getIntegratedCircuit(17), OTHCombTypes.HYPOGEN.getStackForType(1))
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
+                OTHCombTypes.HYPOGEN.getStackForType(1),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Neutronium, 1), 40))
             .fluidInputs(
-                FluidRegistry.getFluidStack("molten.neutronium", 5760),
                 FluidRegistry.getFluidStack("molten.quantum", 5760),
                 FluidRegistry.getFluidStack("molten.infinity", 1440),
                 FluidRegistry.getFluidStack("exciteddtrc", 1000))
@@ -121,9 +125,9 @@ public class OTHItemCombs extends Item {
             .itemInputs(
                 GTUtility.getIntegratedCircuit(17),
                 OTHCombTypes.HYPOGEN.getStackForType(1),
-                GTModHandler.getModItem("miscutils", "MU-metaitem.01", 0, 32100))
+                GTModHandler.getModItem("miscutils", "MU-metaitem.01", 0, 32100),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Neutronium, 1), 40))
             .fluidInputs(
-                Materials.CosmicNeutronium.getMolten(5760),
                 FluidRegistry.getFluidStack("molten.quantum", 5760),
                 FluidRegistry.getFluidStack("molten.infinity", 1440),
                 FluidRegistry.getFluidStack("exciteddtec", 1000))
@@ -138,9 +142,9 @@ public class OTHItemCombs extends Item {
             .itemInputs(
                 GTUtility.getIntegratedCircuit(17),
                 OTHCombTypes.HYPOGEN.getStackForType(1),
-                GTModHandler.getModItem("miscutils", "MU-metaitem.01", 0, 32100))
+                GTModHandler.getModItem("miscutils", "MU-metaitem.01", 0, 32100),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Neutronium, 1), 80))
             .fluidInputs(
-                Materials.CosmicNeutronium.getMolten(11520),
                 FluidRegistry.getFluidStack("molten.quantum", 5760),
                 FluidRegistry.getFluidStack("molten.infinity", 1440),
                 FluidRegistry.getFluidStack("exciteddtsc", 1000))
@@ -156,7 +160,6 @@ public class OTHItemCombs extends Item {
             .itemInputs(
                 GTUtility.getIntegratedCircuit(17),
                 OTHCombTypes.HYPOGEN.getStackForType(4),
-                GTModHandler.getModItem("miscutils", "item.itemBufferCore10", 0),
                 GTModHandler.getModItem(NewHorizonsCoreMod.ID, "tile.Quantinum", 4),
                 GTModHandler.getModItem("miscutils", "MU-metaitem.01", 3, 32105))
             .itemOutputs(GTModHandler.getModItem(GTPlusPlus.ID, "blockBlockAstralTitanium", 4))
@@ -177,7 +180,6 @@ public class OTHItemCombs extends Item {
             .itemInputs(
                 GTUtility.getIntegratedCircuit(17),
                 OTHCombTypes.HYPOGEN.getStackForType(2),
-                GTModHandler.getModItem("miscutils", "item.itemBufferCore10", 0),
                 GTModHandler.getModItem(NewHorizonsCoreMod.ID, "tile.Quantinum", 2),
                 GTModHandler.getModItem("miscutils", "MU-metaitem.01", 2, 32105))
             .itemOutputs(GTModHandler.getModItem(GTPlusPlus.ID, "blockBlockAstralTitanium", 2))
@@ -196,10 +198,11 @@ public class OTHItemCombs extends Item {
             .addTo(RecipeMaps.plasmaForgeRecipes);
         // BYD CHROMATIC GLASS
         RecipeBuilder.builder()
-            .itemInputs(GTUtility.getIntegratedCircuit(17), OTHCombTypes.CHROMATICGLASS.getStackForType(4))
-            .fluidInputs(
-                FluidRegistry.getFluidStack("exciteddtcc", 156040),
-                FluidRegistry.getFluidStack("molten.glass", 36864))
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
+                OTHCombTypes.CHROMATICGLASS.getStackForType(4),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Glass, 1), 256))
+            .fluidInputs(FluidRegistry.getFluidStack("exciteddtcc", 156040))
             .fluidOutputs(
                 FluidRegistry.getFluidStack("molten.chromaticglass", 36864),
                 FluidRegistry.getFluidStack("dimensionallytranscendentresidue", 19505))
@@ -208,10 +211,11 @@ public class OTHItemCombs extends Item {
             .duration(150 / 4 * 20)
             .addTo(RecipeMaps.plasmaForgeRecipes);
         RecipeBuilder.builder()
-            .itemInputs(GTUtility.getIntegratedCircuit(17), OTHCombTypes.CHROMATICGLASS.getStackForType(4))
-            .fluidInputs(
-                FluidRegistry.getFluidStack("exciteddtpc", 61059),
-                FluidRegistry.getFluidStack("molten.glass", 73728))
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
+                OTHCombTypes.CHROMATICGLASS.getStackForType(4),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Glass, 1), 512))
+            .fluidInputs(FluidRegistry.getFluidStack("exciteddtpc", 61059))
             .fluidOutputs(
                 FluidRegistry.getFluidStack("molten.chromaticglass", 73728),
                 FluidRegistry.getFluidStack("dimensionallytranscendentresidue", 15264))
@@ -220,10 +224,11 @@ public class OTHItemCombs extends Item {
             .duration(75 * 20 / 4)
             .addTo(RecipeMaps.plasmaForgeRecipes);
         RecipeBuilder.builder()
-            .itemInputs(GTUtility.getIntegratedCircuit(17), OTHCombTypes.CHROMATICGLASS.getStackForType(4))
-            .fluidInputs(
-                FluidRegistry.getFluidStack("exciteddtrc", 26350),
-                FluidRegistry.getFluidStack("molten.glass", 147456))
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
+                OTHCombTypes.CHROMATICGLASS.getStackForType(4),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Glass, 1), 1024))
+            .fluidInputs(FluidRegistry.getFluidStack("exciteddtrc", 26350))
             .fluidOutputs(
                 FluidRegistry.getFluidStack("molten.chromaticglass", 147456),
                 FluidRegistry.getFluidStack("dimensionallytranscendentresidue", 13175))
@@ -232,10 +237,11 @@ public class OTHItemCombs extends Item {
             .duration(187)
             .addTo(RecipeMaps.plasmaForgeRecipes);
         RecipeBuilder.builder()
-            .itemInputs(GTUtility.getIntegratedCircuit(17), OTHCombTypes.CHROMATICGLASS.getStackForType(4))
-            .fluidInputs(
-                FluidRegistry.getFluidStack("exciteddtec", 11116),
-                FluidRegistry.getFluidStack("molten.glass", 294912))
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
+                OTHCombTypes.CHROMATICGLASS.getStackForType(4),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Glass, 1), 2048))
+            .fluidInputs(FluidRegistry.getFluidStack("exciteddtec", 11116))
             .fluidOutputs(
                 FluidRegistry.getFluidStack("molten.chromaticglass", 294912),
                 FluidRegistry.getFluidStack("dimensionallytranscendentresidue", 11116))
@@ -256,7 +262,7 @@ public class OTHItemCombs extends Item {
             .itemInputs(
                 GTUtility.getIntegratedCircuit(17),
                 OTHCombTypes.CHROMATICGLASS.getStackForType(1),
-                GTOreDictUnificator.get(OrePrefixes.dust, Materials.Glass, 32),
+                new ItemStack(Blocks.glass, 32),
                 GTModHandler.getModItem("miscutils", "MU-metaitem.01", 0, 32105))
             .itemOutputs(GTModHandler.getModItem(GTPlusPlus.ID, "itemDustChromaticGlass", 2))
             .duration(75 * 20)
@@ -270,6 +276,13 @@ public class OTHItemCombs extends Item {
             .eut(TierEU.HV)
             .duration(20 * 20)
             .addTo(RecipeMaps.centrifugeRecipes);
+        RecipeBuilder.builder()
+            .itemInputs(OTHCombTypes.NORMALGLASS.getStackForType(1))
+            .itemOutputs(new ItemStack(Blocks.glass, 1), GTModHandler.getModItem(Forestry.ID, "honeyDrop", 1))
+            .outputChances(100, 25)
+            .eut(TierEU.HV)
+            .duration(20 * 20)
+            .addTo(GTPPRecipeMaps.centrifugeNonCellRecipes);
     }
 
 }

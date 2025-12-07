@@ -5,6 +5,7 @@ import java.util.Comparator;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.recipemap.formatter.MISASpecialValueFormatter;
 import com.newmaa.othtech.common.recipemap.recipeMapFrontends.OTH_GeneralFrontend;
+import com.newmaa.othtech.common.recipemap.recipeMapFrontends.OTH_GeneralFrontendFireRocket;
 
 import goodgenerator.client.GUI.GGUITextures;
 import goodgenerator.loader.Loaders;
@@ -211,5 +212,15 @@ public class Recipemaps {
         .neiHandlerInfo(
             builder -> builder.setDisplayStack(OTHItemList.SteamNeinInOne.get(1))
                 .setMaxRecipesPerPage(4))
+        .build();
+    public static final RecipeMap<OTH_RecipeMapBackend> NASA = RecipeMapBuilder
+        .of("otht.recipe.nasa", OTH_RecipeMapBackend::new)
+        .maxIO(70, 1, 7, 3)
+        .useSpecialSlot()
+        .dontUseProgressBar()
+        .frontend(OTH_GeneralFrontendFireRocket::new)
+        .neiHandlerInfo(
+            builder -> builder.setDisplayStack(OTHItemList.NASA.get(1))
+                .setMaxRecipesPerPage(1))
         .build();
 }
