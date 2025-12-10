@@ -249,7 +249,7 @@ otht.waila.eff=Current Generation Efficiency
 otht.waila.gen.plasma=Current Plasma Output per kL
 otht.waila.tier.steam=Current Steam Tier
 otht.waila.tier.pipe=Current Pipe Tier
-otht.waila.gen.requireFluid=Requires Catalyst
+otht.waila.gen.requirefluid=Requires Catalyst
 
 #9in1
 oth.tm.mnio.0=§c§lLaodeng's Ultimate Creation - 9-in-1 (Mega Processing Factory)
@@ -264,7 +264,7 @@ oth.tm.mnio.8=§bVoltage tier increase by 1, parallel -9, minimum 9, default 64.
 oth.tm.mnio.9=§bRecipe Time = NEI Time * (1 + (Energy Hatch Tier * 16%))
 oth.tm.mnio.10=§bEU Consumption: (1 / Coil Tier) * 0.1, minimum 0.01
 oth.tm.mnio.11=§bHypergen Coil unlocks stable black hole, Electrum Flux Alloy Coil unlocks HIP
-oth.tm.mnio.12=§bPerforms lossless overclocking.
+oth.tm.mnio.12=§bPerforms Perfect OC.
 oth.tm.mnio.13=§e9-in-1, we revere you! ---Sukune_News
 ote.tm.m9in1.mode.0=Compress-Lathe-Magnetize (Metal)
 ote.tm.m9in1.mode.1=Ferment-Fluid Extract-Extract (Fluid)
@@ -281,7 +281,7 @@ ote.tm.eio.1=The souls of monsters shall finally be liberated.
 ote.tm.eio.2=Is this the charm of industrialization..?
 ote.tm.eio.3=Using advanced EU-based machines to replace RF machines is a great advancement.
 ote.tm.eio.4=Processes recipes for some EIO machines, like Head Assembler, Soul Binder, etc.
-ote.tm.eio.5=Performs lossless overclocking, default parallel 64.
+ote.tm.eio.5=Performs Perfect OC, default parallel 64.
 ote.tm.eio.6=Screwdriver right-click to enable Spawner Binding Mode, fixed consumption 114 EU/t, time cost 100 ticks.
 ote.cm.eio.0=1 - Input/Output Bus, Input/Output Hatch, Energy Hatch : Replace Soularium Block, supports TecTech Energy Hatch.
 ote.tm.eio.mode.0=Spawner Binding Mode Active
@@ -302,7 +302,7 @@ ote.tm.ft.0=§lLaodeng's Ultimate Creation - Alien Fishery
 ote.tm.ft.1=§bPraise the great creator Dr.Jumping! Without her universal formula 'Lord = 6', how could Laodengs ever have the chance to use such a machine?
 ote.tm.ft.2=§bSpecific fishing principle: The Jumping Identity solves the uncertainty problem inherent in dimension blocks, making the establishment of small dimensions inside the fishery possible. Various 'fish' will be caught by the Cuttlefish God inside the fishery.
 ote.tm.ft.3='Fish' includes fish, walruses, leek boxes, Cetus Algae, Cubic Fish, Mossy Stone Bricks, etc. *Maybe can use Antimony Star dimension blocks, but consequences自负.
-ote.tm.ft.4=Performs lossless overclocking, Glass Tier determines Energy Hatch Tier.
+ote.tm.ft.4=Performs Perfect OC, Glass Tier determines Energy Hatch Tier.
 ote.tm.ft.5=Main block requires a Dimension Block.
 ote.tm.ft.6=Random output, oh the dreaded gacha. LOL.
 ote.cm.ft.0=1 - Input/Output Bus, Input/Output Hatch, Energy Hatch : Replace Fishery Machine Casing, supports TecTech Energy Hatch.
@@ -321,7 +321,7 @@ ote.cm.food.1=2 - Dynamo Hatch : Replace rear Deoxidized Steel Machine Casing.
 ote.tm.gd.0=§c§lLaodeng's Ultimate Creation - Black Dragon Tamer (New Dragon Research Aggregation Device)
 ote.tm.gd.1=§e§oDragon Research stacked thousands of times, industrial progress for the first time.
 ote.tm.gd.2=§c§oPraise the NHU God, the Egg Machine is about to start...
-ote.tm.gd.3=Tier 3 Machine Casing unlocks lossless overclocking.
+ote.tm.gd.3=Tier 3 Machine Casing unlocks Perfect OC.
 ote.tm.gd.4=Parallel = Machine Casing Tier * 128, highest tier unlocks int parallel.
 ote.tm.gd.5=§eTime Multiplier = 1 - 0.05 * Coil Tier
 ote.tm.gd.6=§eMachine Casing Tier limits executable recipe tier.
@@ -354,11 +354,11 @@ ote.cm.imba.0=Too OP.
 ote.tm.chem.0=§e§lLaodeng's Ultimate Creation - RhPd Reaction Vessel (Chemical Reactor & Chemical Plant)
 ote.tm.chem.1=§l§a    Full!    
 ote.tm.chem.2=Chemical Plant Mode: Time = NEI Time * (1 - Coil Tier * 0.15), min time multiplier 0.1; Parallel 16, no catalyst consumption, lossy overclocking.
-ote.tm.chem.3=Large Chemical Reactor Mode: Time = NEI Time * (1 - Coil Tier * 0.1), min time multiplier 0.1; Unlimited parallel, lossless overclocking.
+ote.tm.chem.3=Large Chemical Reactor Mode: Time = NEI Time * (1 - Coil Tier * 0.1), min time multiplier 0.1; Unlimited parallel, Perfect OC.
 ote.tm.chem.4=Glass Tier determines Chemical Plant Tier, Chemical Plant Tier == Glass Channel Tier - 3.
 ote.tm.chem.5=If structure doesn't form, re-place main block.
 ote.tm.chem.6=If recipe doesn't run, place a regular Input Bus and set all Input Bus programming circuits to the same value.
-ote.tm.chem.7=Insert IrOsSm Alloy Powder into main block to unlock Chemical Plant lossless overclocking and parallel limit.
+ote.tm.chem.7=Insert IrOsSm Alloy Powder into main block to unlock Chemical Plant Perfect OC and parallel limit.
 ote.cm.chem.0=1 - Input/Output Bus, Input/Output Hatch, Energy Hatch : Replace Rhodium-Plated Palladium Machine Casing, supports TecTech Energy Hatch.
 ote.tm.chem.mode.0=Chemical Plant Mode
 ote.tm.chem.mode.1=Large Chemical Reactor Mode
@@ -370,7 +370,7 @@ ote.tm.bin.2=Supports ME Input series, Screwdriver to switch mode, Wire Cutter t
 ote.tm.bin.3=Recycler Mode power is parallel * 30 EU/t.
 ote.tm.bin.4=In Recycler Mode, Voltage Tier + 1, Parallel + 2560, fixed output of 50% scrap of input item quantity.
 ote.tm.bin.5=In Singularity Producer Mode, parallel is 1, produces one singularity per 256000 any items.
-ote.tm.bin.6=In Neutronium Compressor Mode, performs lossy overclocking, parallel 256.
+ote.tm.bin.6=In Neutronium Compressor Mode, performs normal OC, parallel 256.
 ote.tm.bin.12=Structure center.
 ote.tm.bin.13=0x Deoxidized Steel Machine Casing (minimum).
 ote.tm.bin.14=Any Input Bus, Input Hatch, Output Bus, Energy Hatch, Dynamo Hatch.
@@ -386,7 +386,7 @@ ote.tm.lca.1=§lPlain and simple...
 ote.tm.lca.2=Energy Hatch Tier limits recipe tier.
 ote.tm.lca.3=§q§lUpgrade Electronic Unit Machine Casing for a more §4§lcool§q§l appearance (§e§lThis is just so cooooool and useful!§q§l)
 ote.tm.lca.4=Speed + 123%
-ote.tm.lca.5=Performs lossless overclocking.
+ote.tm.lca.5=Performs Perfect OC.
 ote.tm.lca.6=Structure is not complicated at all!
 ote.cm.lca.0=1 - Muffler Hatch, Energy Hatch : Replace Precision Machine Casing, supports TecTech Energy Hatch.
 ote.cm.lca.1=2 - Output Hatch, Output Bus.
@@ -399,7 +399,7 @@ ote.tm.mca.1=§qCheap and useful circuit assembly facility, inherits the origina
 ote.tm.mca.2=§q§o"Is it a bit too OP?"
 ote.tm.mca.3=§bGlass Tier determines its appearance. If structure doesn't form, re-place main block.
 ote.tm.mca.4=Default parallel 128. Voltage Tier increase by 1, parallel + 16.
-ote.tm.mca.5=Insert UEV Field Generator into main block to unlock lossless overclocking.
+ote.tm.mca.5=Insert UEV Field Generator into main block to unlock Perfect OC.
 ote.cm.mca.0=1 - Input/Output Bus, Input/Output Hatch, Energy Hatch : Replace Deoxidized Steel Machine Casing, supports TecTech Energy Hatch.
 
 #pump
@@ -456,7 +456,7 @@ ote.tm.misa.0=§2§lIsa Lord's Ultimate Creation - Isa Integrated Factory
 ote.tm.misa.1=§oThe magical Isa series, merging trash and chemical products into one, isn't that amazing?
 ote.tm.misa.2=§oClick the machine main block in NEI to get an all-in-one masterpiece...
 ote.tm.misa.3=§dMany Laodengs' favorite one-stop solution: threw away the messy processes, just to save some TPS.
-ote.tm.misa.4=Performs lossless overclocking.
+ote.tm.misa.4=Performs Perfect OC.
 ote.tm.misa.5=Time Multiplier: 1 / Coil Tier
 ote.tm.misa.6=Power Multiplier: Glass Tier ^ -0.1
 ote.tm.misa.7='Grinder Complex' item determines the recipe tier the machine can execute.
@@ -544,7 +544,7 @@ ote.bbpf.0=§d§lLaodeng's Legendary Creation - Hyperdimensional Biebie Forge
 ote.bbpf.1="§cSo the DTPF without catalyst reduction is this good -V-"
 ote.bbpf.2=§lParallel Formula: 1230 + Coil Tier * 1230
 ote.bbpf.3="Mom doesn't have to worry about catalyst residue anymore"
-ote.bbpf.4=§aInsert §cHyperdimensional Calibration Matrix§r§a to enable lossless overclocking/Int parallel + unlock wireless mode.
+ote.bbpf.4=§aInsert §cHyperdimensional Calibration Matrix§r§a to enable Perfect OC/int parallel + unlock wireless mode.
 ote.bbpf.5=Toggle Wireless Mode.
 ote.bbpf.6=If wireless power is insufficient, input materials will directly §cannihilate.
 ote.bbpf.7=§cSupports Multi-Amp Hatch/TecTech Laser/Energy Hatch.
@@ -577,7 +577,7 @@ ote.tm.sinopec.0=§q§lHeavy Industry Plan - Sinopec Integrated Factory
 ote.tm.sinopec.1=§l§aThe final destination of black gold...
 ote.tm.sinopec.2=§lOne-stop solution.
 ote.tm.sinopec.3=Coil Tier < 10: Time Multiplier = 1 - Coil Tier * 0.1, ≥10 fixed at 0.1.
-ote.tm.sinopec.4=Insert IrOsSm Alloy Powder into main block to unlock lossless overclocking and parallel limit, default parallel 64.
+ote.tm.sinopec.4=Insert IrOsSm Alloy Powder into main block to unlock Perfect OC and parallel limit, default parallel 64.
 ote.cm.sinopec.0=1 - Muffler Hatch, Energy Hatch, Input/Output Bus, Input/Output Hatch : Replace Tungstensteel Machine Casing, supports TecTech Energy Hatch.
 ote.cm.sinopec.1=2 - Muffler Hatch : Chimney top center machine casing, actually can be placed next to main block too.
 
@@ -587,6 +587,7 @@ ote.tm.sf.1=§e§lMain! Body! Southbound!
 ote.tm.sf.2=§5Cutting-edge high-tech megastructure imported from a mysterious northern country on a certain peninsula.
 ote.tm.sf.3=§5Utilizes the power of 「Enqing」 to transform raw materials into circuit board components in one step.
 ote.tm.sf.4=§5Possesses a fearsome yield rate and flawless precision.
+ote.tm.sf.attention=§c§lAttention: Enqing input is not allow to use ME crafting buffer!
 ote.tm.sf.5=§aConsumes Enqing to operate: 1t/each.
 ote.tm.sf.6=Set recipe NEI output multiplier in config, default 1.5, rounded.
 ote.tm.sf.7=§bInsert a Nanoswarm into main block, gain acceleration based on stack size (log2(swarm count), floor decimal).
@@ -616,7 +617,7 @@ ote.tm.ts.5=Wireless Time = 240s / Programming Circuit ID ^ 2)
 ote.tm.ts.6=Wireless EU Consumption = Power * Time * Programming Circuit ID ^ 2
 ote.tm.ts.7=Please note furnace temperature requirement.
 ote.tm.ts.8=Screwdriver to toggle wireless mode.
-ote.tm.ts.9=Non-wireless mode performs lossless overclocking.
+ote.tm.ts.9=Non-wireless mode performs Perfect OC.
 ote.tm.ts.10=
 ote.cm.ts.0=1 - Muffler Hatch, Energy Hatch, Input/Output Bus, Input/Output Hatch : Replace Deoxidized Steel Machine Casing, supports TecTech Energy Hatch.
 ote.cm.ts.1=2 - Muffler Hatch : Replace Deoxidized Steel Machine Casing (on chimney, actually can be placed next to main block too).

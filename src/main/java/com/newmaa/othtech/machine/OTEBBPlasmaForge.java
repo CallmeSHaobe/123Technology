@@ -83,7 +83,7 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
     @Override
     public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
         super.onPostTick(aBaseMetaTileEntity, aTick);
-        if (aTick % 300 == 0) {
+        if (aTick % 20 == 0) {
             // if check structure true then continue
             if (checkMachine(aBaseMetaTileEntity, null)) {
                 ItemStack aGuiStack = this.getControllerSlot();
@@ -100,9 +100,6 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
     }
 
     // 老大哥锻炉,老大哥的恩情还不完
-    protected float getSpeedBonus() {
-        return 1;
-    }
 
     @Override
     public int getMaxParallelRecipes() {
@@ -544,6 +541,20 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
         return RecipeMaps.plasmaForgeRecipes;
     }
 
+    protected float getEuModifier() {
+        if (getCoilTier() == 14) {
+            return 0.01F;
+        }
+        return 1.0F - (getCoilTier() - 1) * 0.08F;
+    }
+
+    protected float getSpeedBonus() {
+        if (getCoilTier() == 14) {
+            return 0.01F;
+        }
+        return 1.0F - (getCoilTier() - 1) * 0.08F;
+    }
+
     @Override
     protected ProcessingLogic createProcessingLogic() {
         return new OTHProcessingLogic() {
@@ -553,11 +564,23 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
                 return super.setSpeedBonus(getSpeedBonus());
             }
 
+            @Override
+            public ProcessingLogic setEuModifier(double EuModifier) {
+                return super.setEuModifier(getEuModifier());
+            }
+
+            private float getEuModifier() {
+                if (getCoilTier() == 14) {
+                    return 0.01F;
+                }
+                return 1.0F - (getCoilTier() - 1) * 0.08F;
+            }
+
             private float getSpeedBonus() {
                 if (getCoilTier() == 14) {
-                    return 0.1F;
+                    return 0.01F;
                 }
-                return 1 - getCoilTier() * 0.5F;
+                return 1.0F - (getCoilTier() - 1) * 0.08F;
             }
 
             @Nonnull
@@ -566,17 +589,7 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
                 overclockCalculator = super.createOverclockCalculator(recipe).setRecipeHeat(recipe.mSpecialValue)
                     .setMachineHeat(mHeatingCapacity);
 
-                if (MLevel == 1 && !isWirelessMode && !mEnergyHatches.isEmpty()) {
-                    // 获取能源仓的总功率
-                    long totalPowerCapacity = getTotalPowerCapacity();
-                    // 获取配方基础功耗
-                    long baseEUt = recipe.mEUt;
-
-                    int maxOverclocks = calculateMaxOverclocks(baseEUt, totalPowerCapacity);
-
-                    overclockCalculator = overclockCalculator.setMaxOverclocks(maxOverclocks);
-
-                } else if (MLevel >= 2) {
+                if (MLevel >= 2) {
                     overclockCalculator = overclockCalculator.enablePerfectOC();
                 }
 
@@ -588,29 +601,12 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
                 if (failure) {
                     return SimpleCheckRecipeResult.ofFailure("nohatch");
                 }
+                setSpeedBonus(getSpeedBonus());
+                setEuModifier(getEuModifier());
+                setOverclock(isEnablePerfectOverclock() ? 4 : 2, 4);
 
                 if (recipe.mSpecialValue > mHeatingCapacity) {
                     return CheckRecipeResultRegistry.insufficientHeat(recipe.mSpecialValue);
-                }
-
-                if (MLevel == 1 && !isWirelessMode && !mEnergyHatches.isEmpty()) {
-                    long totalPowerCapacity = getTotalPowerCapacity();
-                    long baseEUt = recipe.mEUt;
-
-                    if (isWirelessMode) {
-                        BigInteger requiredEnergy = BigInteger.valueOf(recipe.mEUt)
-                            .multiply(BigInteger.valueOf(recipe.mDuration));
-
-                        if (!addEUToGlobalEnergyMap(ownerUUID, requiredEnergy.multiply(NEGATIVE_ONE))) {
-                            return CheckRecipeResultRegistry.insufficientPower(requiredEnergy.longValue());
-                        }
-
-                        addEUToGlobalEnergyMap(ownerUUID, requiredEnergy);
-                    }
-                    int maxOverclocks = calculateMaxOverclocks(baseEUt, totalPowerCapacity);
-                    if (maxOverclocks <= 0) {
-                        return CheckRecipeResultRegistry.insufficientPower(totalPowerCapacity);
-                    }
                 }
 
                 return CheckRecipeResultRegistry.SUCCESSFUL;
@@ -634,19 +630,6 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
         return totalCapacity;
     }
 
-    private int calculateMaxOverclocks(long baseEUt, long totalPowerCapacity) {
-        int maxOverclocks = 0;
-        long currentEUt = baseEUt;
-
-        // 每次超频功耗翻倍，计算在不超过总功率的前提下能超频多少次
-        while (currentEUt * 2 <= totalPowerCapacity && maxOverclocks < 10) { // 限制最大超频次数为10
-            currentEUt *= 2;
-            maxOverclocks++;
-        }
-
-        return maxOverclocks;
-    }
-
     // 获取实际能耗使用情况
     protected long getActualEnergyUsage() {
         if (isWirelessMode) {
@@ -667,6 +650,8 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
         setCoilLevel(HeatingCoilLevel.None);
         mEnergyHatches.clear();
         mExoticEnergyHatches.clear();
+        mInputHatches.clear();
+        mInputBusses.clear();
 
         if (!checkPiece(STRUCTURE_PIECE_MAIN, 23, 5, 20)) {
             return false;
@@ -685,48 +670,6 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
         // All structure checks passed, return true.
         return true;
     }
-    // if (isWirelessMode) {
-    // mMaxProgresstime = (int) 6.4 * 20;
-    // } else mMaxProgresstime = processingLogic.getDuration();
-
-    // // Item input bus check.
-    // if (mInputBusses.size() > max_input_bus) return false;
-    //
-    // // Item output bus check.
-    // if (mOutputBusses.size() > max_output_bus) return false;
-    //
-    // // Fluid input hatch check.
-    // if (mInputHatches.size() > max_input_hatch) return false;
-    //
-    // // Fluid output hatch check.
-    // if (mOutputHatches.size() > max_output_hatch) return false;
-    //
-    // // If there is more than 1 TT energy hatch, the structure check will fail.
-    // // If there is a TT hatch and a normal hatch, the structure check will fail.
-    // if (!mExoticEnergyHatches.isEmpty()) {
-    // if (!mEnergyHatches.isEmpty()) return false;
-    // if (mExoticEnergyHatches.size() > 1) return false;
-    // }
-    //
-    // // If there is 0 or more than 2 energy hatches structure check will fail.
-    // if (!mEnergyHatches.isEmpty()) {
-    // if (mEnergyHatches.size() > 2) return false;
-    //
-    // // Check will also fail if energy hatches are not of the same tier.
-    // byte tier_of_hatch = mEnergyHatches.get(0).mTier;
-    // for (MTEHatchEnergy energyHatch : mEnergyHatches) {
-    // if (energyHatch.mTier != tier_of_hatch) {
-    // return false;
-    // }
-    // }
-    // }
-    //
-    // // If there are no energy hatches or TT energy hatches, structure will fail to form.
-    // if ((mEnergyHatches.isEmpty()) && (mExoticEnergyHatches.isEmpty())) return false;
-    //
-    // // Maintenance hatch not required but left for compatibility.
-    // // Don't allow more than 1, no free casing spam!
-    // if (mMaintenanceHatches.size() > 1) return false;
 
     @NotNull
     @Override
@@ -734,20 +677,22 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
         setupProcessingLogic(processingLogic);
 
         CheckRecipeResult result = doCheckRecipe();
-        // inputs are consumed at this point
-        updateSlots();
         if (!result.wasSuccessful()) return result;
 
         if (isWirelessMode) {
-            BigInteger costingWirelessEUTemp = BigInteger.valueOf(processingLogic.getCalculatedEut())
-                .multiply(BigInteger.valueOf(processingLogic.getDuration()));
+            // 在并行计算完成后获取最终值
+            long actualEUt = Math.abs(processingLogic.getCalculatedEut());
+            long actualDuration = processingLogic.getDuration();
+
+            BigInteger costingWirelessEUTemp = BigInteger.valueOf(actualEUt)
+                .multiply(BigInteger.valueOf(actualDuration));
+
             costingWirelessEU = GTUtility.formatNumbers(costingWirelessEUTemp);
             if (!addEUToGlobalEnergyMap(ownerUUID, costingWirelessEUTemp.multiply(NEGATIVE_ONE))) {
                 return CheckRecipeResultRegistry.insufficientPower(costingWirelessEUTemp.longValue());
             }
 
-            // set progress time a fixed value
-            mMaxProgresstime = 128;
+            mMaxProgresstime = processingLogic.getDuration();
             mOutputItems = processingLogic.getOutputItems();
             mOutputFluids = processingLogic.getOutputFluids();
         } else {
@@ -756,10 +701,42 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
             mOutputFluids = processingLogic.getOutputFluids();
             lEUt = -processingLogic.getCalculatedEut();
         }
-        mEfficiency = 10000;
-        mEfficiencyIncrease = 10000;
+
         return result;
     }
+
+    // @NotNull
+    // @Override
+    // public CheckRecipeResult checkProcessing() {
+    // setupProcessingLogic(processingLogic);
+    //
+    // CheckRecipeResult result = doCheckRecipe();
+    // // inputs are consumed at this point
+    // updateSlots();
+    // if (!result.wasSuccessful()) return result;
+    //
+    // if (isWirelessMode) {
+    // BigInteger costingWirelessEUTemp = BigInteger.valueOf(processingLogic.getCalculatedEut())
+    // .multiply(BigInteger.valueOf(processingLogic.getDuration()));
+    // costingWirelessEU = GTUtility.formatNumbers(costingWirelessEUTemp);
+    // if (!addEUToGlobalEnergyMap(ownerUUID, costingWirelessEUTemp.multiply(NEGATIVE_ONE))) {
+    // return CheckRecipeResultRegistry.insufficientPower(costingWirelessEUTemp.longValue());
+    // }
+    //
+    // // set progress time a fixed value
+    // mMaxProgresstime = 128;
+    // mOutputItems = processingLogic.getOutputItems();
+    // mOutputFluids = processingLogic.getOutputFluids();
+    // } else {
+    // mMaxProgresstime = processingLogic.getDuration();
+    // mOutputItems = processingLogic.getOutputItems();
+    // mOutputFluids = processingLogic.getOutputFluids();
+    // lEUt = -processingLogic.getCalculatedEut();
+    // }
+    // mEfficiency = 10000;
+    // mEfficiencyIncrease = 10000;
+    // return result;
+    // }
 
     @Override
     public void onFirstTick(IGregTechTileEntity aBaseMetaTileEntity) {

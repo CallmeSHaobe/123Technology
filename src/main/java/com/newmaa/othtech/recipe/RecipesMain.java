@@ -24,6 +24,7 @@ import static gregtech.api.recipe.RecipeMaps.fluidExtractionRecipes;
 import static gregtech.api.util.GTModHandler.addCraftingRecipe;
 import static gregtech.api.util.GTModHandler.getModItem;
 import static gregtech.api.util.GTRecipeBuilder.HOURS;
+import static gregtech.api.util.GTRecipeBuilder.INGOTS;
 import static gregtech.api.util.GTRecipeBuilder.SECONDS;
 import static gregtech.api.util.GTRecipeConstants.*;
 import static tectech.thing.CustomItemList.eM_Power;
@@ -42,6 +43,7 @@ import com.newmaa.othtech.common.materials.BWLiquids;
 import com.newmaa.othtech.common.materials.BWMaterials;
 import com.newmaa.othtech.utils.RecipeBuilder;
 
+import bartworks.common.loaders.ItemRegistry;
 import goodgenerator.loader.Loaders;
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
@@ -123,13 +125,13 @@ public class RecipesMain implements IRecipePool {
         // isaforgea
         TTRecipeAdder.addResearchableAssemblylineRecipe(
             getGM(IDs + 24, 1),
-            (int) 409600000,
+            409600000,
             32000,
-            (int) 123123123,
+            123123123,
             514,
             new Object[] { OTHItemList.beeISAM.get(64), getGM(IDs + 24, 64), getGM(1004, 64), getGM(13532, 64),
-                new Object[] { OrePrefixes.circuit.get(Materials.Cosmic), 64 },
-                new Object[] { OrePrefixes.circuit.get(Materials.Cosmic), 64 },
+                new Object[] { OrePrefixes.circuit.get(Materials.UXV), 64 },
+                new Object[] { OrePrefixes.circuit.get(Materials.UXV), 64 },
                 CustomItemList.SpacetimeCompressionFieldGeneratorTier0.get(32),
                 CustomItemList.TimeAccelerationFieldGeneratorTier0.get(32),
                 CustomItemList.StabilisationFieldGeneratorTier0.get(32),
@@ -166,7 +168,7 @@ public class RecipesMain implements IRecipePool {
             256,
             new Object[] { getGM(31151, 64), GTModHandler.getModItem("miscutils", "gtplusplus.blockcasings.5", 64, 10),
                 GTModHandler.getModItem("miscutils", "gtplusplus.blockcasings.5", 64, 14),
-                new Object[] { OrePrefixes.circuit.get(Materials.Cosmic), 64 },
+                new Object[] { OrePrefixes.circuit.get(Materials.UXV), 64 },
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 32417),
                 GTModHandler.getModItem("dreamcraft", "item.MysteriousCrystalLens", 64),
                 OTHItemList.dustIrOsSmM.get(64), OTHItemList.dustLookNEIM.get(64),
@@ -194,9 +196,9 @@ public class RecipesMain implements IRecipePool {
                 getGM(31028, 64),
                 getGM(995, 64),
                 ItemList.Robot_Arm_LuV.get(16),
-                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Superconductor, 64))
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UV, 64))
             .metadata(PRECISE_ASSEMBLER_CASING_TIER, 1)
-            .fluidInputs(new FluidStack(FluidRegistry.getFluidID("molten.indalloy140"), 128 * 144))
+            .fluidInputs(FluidRegistry.getFluidStack("molten.indalloy140", 128 * 144))
 
             .duration(123 * 20)
             .eut(32000)
@@ -1096,6 +1098,44 @@ public class RecipesMain implements IRecipePool {
             .eut(RECIPE_UEV)
             .duration(600 * 20)
             .addTo(AssemblyLine);
+        // OTEComputer
+        GTValues.RA.stdBuilder()
+            .metadata(RESEARCH_ITEM, OTHItemList.OTEHatchRack.get(1))
+            .metadata(SCANNING, new Scanning((24 * HOURS) / 2, RECIPE_UV))
+            .itemInputs(
+                GTUtility.copyAmount(8, ItemRegistry.megaMachines[1]),
+                CustomItemList.Machine_Multi_Computer.get(8),
+                CustomItemList.Machine_Multi_Switch_Adv.get(8),
+                CustomItemList.DATApipe.get(64),
+                CustomItemList.dataOut_Hatch.get(1),
+                GTModHandler.getModItem("OpenComputers", "item", 32, 103),
+                GTModHandler.getModItem("OpenComputers", "item", 32, 103),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UV, 64),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UHV, 32))
+            .fluidInputs(
+                FluidRegistry.getFluidStack("ic2uumatter", 10000),
+                FluidRegistry.getFluidStack("ic2coolant", 10000),
+                (Materials.Infinity.getMolten(144 * 32)),
+                Materials.Cryotheum.getFluid(64000))
+            .itemOutputs(OTHItemList.OTEComputer.get(1))
+            .eut(RECIPE_UHV)
+            .duration(120 * 20)
+            .addTo(AssemblyLine);
+        // HatchRack
+        GTValues.RA.stdBuilder()
+            .itemInputs(
+                CustomItemList.eM_Computer_Bus.get(4),
+                ItemList.Hatch_Input_Bus_UV.get(1),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UV, 2),
+                CustomItemList.DATApipe.get(16),
+                ItemList.Electric_Motor_UV.get(4),
+                GTModHandler.getModItem("IC2", "reactorVentDiamond", 4))
+            .itemOutputs(OTHItemList.OTEHatchRack.get(1))
+            .fluidInputs(Materials.Iridium.getMolten(9 * INGOTS))
+            .requiresCleanRoom()
+            .duration(40 * SECONDS)
+            .eut(TierEU.RECIPE_ZPM)
+            .addTo(assemblerRecipes);
         // MINI NUKE
         RecipeBuilder.builder()
             .itemOutputs(OTHItemList.AF.get(1))

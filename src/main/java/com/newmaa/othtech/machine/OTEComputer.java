@@ -3,7 +3,6 @@ package com.newmaa.othtech.machine;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlockUnlocalizedName;
 import static gregtech.api.GregTechAPI.sBlockCasings10;
-import static gregtech.api.GregTechAPI.sBlockCasings8;
 import static gregtech.api.GregTechAPI.sBlockGlass1;
 import static gregtech.api.enums.GTValues.V;
 import static gregtech.api.enums.HatchElement.Energy;
@@ -12,6 +11,7 @@ import static gregtech.api.enums.HatchElement.InputHatch;
 import static gregtech.api.enums.HatchElement.Maintenance;
 import static gregtech.api.recipe.RecipeMaps.quantumComputerFakeRecipes;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
+import static gregtech.api.util.GTStructureUtility.chainAllGlasses;
 import static gregtech.api.util.GTUtility.validMTEList;
 import static net.minecraft.util.StatCollector.translateToLocal;
 import static tectech.thing.casing.TTCasingsContainer.sBlockCasingsTT;
@@ -119,7 +119,7 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
             STRUCTURE_DEFINITION = StructureDefinition.<OTEComputer>builder()
                 .addShape(STRUCTURE_PIECE_MAIN, shapeMain)
                 .addElement('A', ofBlock(sBlockCasings10, 9))
-                .addElement('B', ofBlock(sBlockCasings8, 14))
+                .addElement('B', chainAllGlasses())
                 .addElement(
                     'C',
                     OTEComputer.RackHatchElement.INSTANCE
@@ -147,9 +147,7 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
                 .addElement('G', ofBlock(sBlockGlass1, 1))
                 .addElement('I', ofBlock(BlockQuantumGlass.INSTANCE, 0))
                 .addElement('H', ofBlockUnlocalizedName("chisel", "futura", 2))
-                .addElement(
-                    'J',
-                    ofBlockUnlocalizedName("appliedenergistics2", "tile.BlockSingularityCraftingStorage", 0))
+                .addElement('J', ofBlockUnlocalizedName("appliedenergistics2", "tile.BlockAdvancedCraftingStorage", 3))
                 .addElement('L', ofBlockUnlocalizedName("appliedenergistics2", "tile.BlockAdvancedCraftingUnit", 3))
 
                 // A -> ofBlock...(gt.blockcasings10, 9, ...);
