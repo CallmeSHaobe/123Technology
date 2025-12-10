@@ -1115,7 +1115,7 @@ public class RecipesMain implements IRecipePool {
             .fluidInputs(
                 FluidRegistry.getFluidStack("ic2uumatter", 10000),
                 FluidRegistry.getFluidStack("ic2coolant", 10000),
-                (Materials.Infinity.getMolten(144 * 32)),
+                Materials.Infinity.getMolten(144 * 32),
                 Materials.Cryotheum.getFluid(64000))
             .itemOutputs(OTHItemList.OTEComputer.get(1))
             .eut(RECIPE_UHV)
