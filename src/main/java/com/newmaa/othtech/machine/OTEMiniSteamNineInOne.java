@@ -538,19 +538,13 @@ public class OTEMiniSteamNineInOne extends MTESteamMultiBase<OTEMiniSteamNineInO
             return 0;
         }
 
-
-        @Override
+        /* @Override
         public boolean supportsVoidProtection() {
             return true;
-        }
+        } */
 
         @Override
         public boolean supportsInputSeparation() {
-            return true;
-        }
-
-        @Override
-        public boolean supportsSingleRecipeLocking() {
             return true;
         }
 
