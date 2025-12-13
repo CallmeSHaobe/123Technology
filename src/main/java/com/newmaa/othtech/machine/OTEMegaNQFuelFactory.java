@@ -619,9 +619,9 @@ public class OTEMegaNQFuelFactory extends OTHTTMultiMachineBaseEM implements ICo
                 },
                     ImmutableList.of(
                         Pair.of(Loaders.FRF_Coil_1, 0),
-                        Pair.of(Loaders.FRF_Coil_2, 1),
-                        Pair.of(Loaders.FRF_Coil_3, 2),
-                        Pair.of(Loaders.FRF_Coil_4, 3)),
+                        Pair.of(Loaders.FRF_Coil_2, 0),
+                        Pair.of(Loaders.FRF_Coil_3, 0),
+                        Pair.of(Loaders.FRF_Coil_4, 0)),
                     -1,
                     (t, meta) -> t.tier = meta,
                     OTEMegaNQFuelFactory::getTierInstance)))
