@@ -111,7 +111,7 @@ public class RecipesMegaISAForge implements IRecipePool {
                 GTModHandler.getModItem("tectech", "gt.spacetime_compression_field_generator", 0, 2),
                 ItemList.Field_Generator_UXV.get(1))
             .fluidInputs(new FluidStack(FluidRegistry.getFluid("molten.cosmicneutronium"), 5760))
-            .fluidOutputs(new FluidStack(FluidRegistry.getFluid("molten.whitedwarfmatter"), 576))
+            .fluidOutputs(new FluidStack(FluidRegistry.getFluid("molten.whitedwarfmatter"), 57600))
 
             .duration(40000)
             .eut(2000000000)
@@ -122,7 +122,7 @@ public class RecipesMegaISAForge implements IRecipePool {
                 GTModHandler.getModItem("tectech", "gt.spacetime_compression_field_generator", 0, 5),
                 ItemList.Field_Generator_UXV.get(2))
             .fluidInputs(new FluidStack(FluidRegistry.getFluid("molten.cosmicneutronium"), 5760))
-            .fluidOutputs(new FluidStack(FluidRegistry.getFluid("molten.blackdwarfmatter"), 576))
+            .fluidOutputs(new FluidStack(FluidRegistry.getFluid("molten.blackdwarfmatter"), 57600))
 
             .duration(80000)
             .eut(2000000000)
@@ -420,10 +420,10 @@ public class RecipesMegaISAForge implements IRecipePool {
             .itemInputs(
                 OTHItemList.beeISAM.get(0),
                 ItemList.Field_Generator_MAX.get(0),
+                GTModHandler.getModItem("dreamcraft", "item.StargateShieldingFoil", 0),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 0, 4143),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, 15411),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, 15415),
-                GTModHandler.getModItem("dreamcraft", "item.StargateShieldingFoil", 1),
                 GTModHandler.getModItem("dreamcraft", "item.StargateCrystalDust", 64))
             .fluidInputs(FluidRegistry.getFluidStack("phononmedium", 256000))
             .fluidOutputs(FluidRegistry.getFluidStack("quarkgluonplasma", 3690000))
