@@ -1,4 +1,3 @@
-
 name: Release tagged build
 
 on:
@@ -9,6 +8,29 @@ permissions:
   contents: write
 
 jobs:
+  # 1. 原有的构建和发布作业（复用社区工作流）
   release-tags:
     uses: GTNewHorizons/GTNH-Actions-Workflows/.github/workflows/release-tags.yml@master
     secrets: inherit
+
+  # 2. 新增的静态文件发布作业
+  release-static-file:
+    # 关键：设置依赖，确保本作业在 release-tags 作业成功完成后才运行
+    needs: release-tags
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Publish Static File to Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "libs/123Technology_Musics.zip"
+          # 使用相同的标签，确保更新的是同一个发布
+          tag: ${{ github.ref_name }}
+          # 核心：允许更新已存在的 Release，这样才能追加文件
+          allowUpdates: true
+          # 建议首次测试时设为 true，在 Actions 和 Releases 页面检查合并效果
+          draft: false
