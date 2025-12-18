@@ -13,3 +13,20 @@ jobs:
     with:
       timeout: 180
     secrets: inherit
+
+  release-static-file:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. 检出代码（这是关键，否则工作流无法访问你的 music.zip 文件）
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Publish Static File to Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "libs/123Technology_Musics.zip"
+          tag: ${{ github.ref_name }}
+
+
