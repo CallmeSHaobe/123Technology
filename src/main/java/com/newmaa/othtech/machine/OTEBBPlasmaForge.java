@@ -2,7 +2,6 @@ package com.newmaa.othtech.machine;
 
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.withChannel;
-import static com.newmaa.othtech.utils.Utils.NEGATIVE_ONE;
 import static gregtech.api.GregTechAPI.*;
 import static gregtech.api.enums.GTValues.VN;
 import static gregtech.api.enums.HatchElement.*;
@@ -14,6 +13,7 @@ import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static gregtech.api.util.GTStructureUtility.ofCoil;
 import static gregtech.api.util.GTUtility.validMTEList;
 import static gregtech.common.misc.WirelessNetworkManager.addEUToGlobalEnergyMap;
+import static gregtech.common.misc.WirelessNetworkManager.getUserEU;
 import static net.minecraft.util.StatCollector.translateToLocal;
 import static tectech.thing.casing.TTCasingsContainer.sBlockCasingsTT;
 
@@ -69,6 +69,7 @@ import gregtech.api.recipe.check.SimpleCheckRecipeResult;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTRecipe;
+import gregtech.api.util.GTRecipeConstants;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.api.util.OverclockCalculator;
@@ -158,6 +159,7 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
             logic.setAvailableVoltage(Long.MAX_VALUE);
             logic.setAvailableAmperage(1);
             logic.setAmperageOC(false);
+            logic.setUnlimitedTierSkips();
         } else {
             super.setProcessingLogicPower(logic);
         }
@@ -559,6 +561,9 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
     protected ProcessingLogic createProcessingLogic() {
         return new OTHProcessingLogic() {
 
+            BigInteger recipeEU;
+            BigInteger finalConsumption = BigInteger.ZERO;
+
             @Override
             public ProcessingLogic setSpeedBonus(double speedModifier) {
                 return super.setSpeedBonus(getSpeedBonus());
@@ -605,32 +610,116 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
                 setEuModifier(getEuModifier());
                 setOverclock(isEnablePerfectOverclock() ? 4 : 2, 4);
 
+                // 加热检查
                 if (recipe.mSpecialValue > mHeatingCapacity) {
                     return CheckRecipeResultRegistry.insufficientHeat(recipe.mSpecialValue);
                 }
 
+                // 无线模式能量检查
+                if (isWirelessMode) {
+                    // 1. 获取用户可用能量
+                    BigInteger availableEU = getUserEU(ownerUUID);
+
+                    // 2. 获取能量乘数并计算单配方能量
+                    long multiplier = recipe.getMetadataOrDefault(GTRecipeConstants.EU_MULTIPLIER, 1);
+                    recipeEU = BigInteger.valueOf(multiplier * recipe.mEUt * recipe.mDuration);
+
+                    // 3. 检查是否有足够能量处理至少一个配方
+                    if (availableEU.compareTo(recipeEU) < 0) {
+                        finalConsumption = BigInteger.ZERO;
+                        return CheckRecipeResultRegistry.insufficientStartupPower(recipeEU);
+                    }
+
+                    // 4. 计算基于能量的最大并行数
+                    int energyBasedParallel = availableEU.divide(recipeEU)
+                        .min(BigInteger.valueOf(Integer.MAX_VALUE))
+                        .intValue();
+
+                    // 5. 取机器最大并行数和能量并行数的较小值
+                    maxParallel = Math.min(energyBasedParallel, maxParallel);
+
+                    // 6. 再次检查
+                    if (maxParallel <= 0) {
+                        finalConsumption = BigInteger.ZERO;
+                        return CheckRecipeResultRegistry.insufficientStartupPower(recipeEU);
+                    }
+
+                    // 7. 计算总能量需求（用于信息显示）
+                    BigInteger TotalEU = recipeEU.multiply(BigInteger.valueOf(maxParallel));
+                    costingWirelessEU = GTUtility.formatNumbers(TotalEU);
+                }
+
+                return CheckRecipeResultRegistry.SUCCESSFUL;
+            }
+
+            // @Override
+            // protected @Nonnull CheckRecipeResult validateRecipe(@Nonnull GTRecipe recipe) {
+            // if (failure) {
+            // return SimpleCheckRecipeResult.ofFailure("nohatch");
+            // }
+            // setSpeedBonus(getSpeedBonus());
+            // setEuModifier(getEuModifier());
+            // setOverclock(isEnablePerfectOverclock() ? 4 : 2, 4);
+            //
+            // // 加热检查
+            // if (recipe.mSpecialValue > mHeatingCapacity) {
+            // return CheckRecipeResultRegistry.insufficientHeat(recipe.mSpecialValue);
+            // }
+            // if (isWirelessMode) {
+            // BigInteger availableEU = getUserEU(ownerUUID);
+            // long multiplier = recipe.getMetadataOrDefault(GTRecipeConstants.EU_MULTIPLIER, 1);
+            // recipeEU = BigInteger.valueOf(multiplier * recipe.mEUt * recipe.mDuration);
+            // // 计算能量允许的并行数
+            // BigInteger energyBasedParallel = availableEU.divide(recipeEU);
+            // // 取能量允许的并行数和机器最大并行数的最小值
+            // maxParallel = energyBasedParallel.min(BigInteger.valueOf(maxParallel)).intValue();
+            // if (maxParallel <= 0) {
+            // finalConsumption = BigInteger.ZERO;
+            // return CheckRecipeResultRegistry.insufficientStartupPower(recipeEU);
+            // }
+            // }
+
+            // // 无线模式能量检查
+            // if (isWirelessMode) {
+            // BigInteger availableEU = getUserEU(ownerUUID);
+            // long multiplier = recipe.getMetadataOrDefault(GTRecipeConstants.EU_MULTIPLIER, 1);
+            // maxParallel = availableEU.divide(recipeEU)
+            // .min(BigInteger.valueOf(maxParallel))
+            // .intValue();
+            // recipeEU = BigInteger.valueOf(multiplier * recipe.mEUt * recipe.mDuration);
+            // BigInteger TotalEU = BigInteger.valueOf(maxParallel).multiply(recipeEU);
+            // if (availableEU.compareTo(TotalEU) < 0) {
+            // finalConsumption = BigInteger.ZERO;
+            // return CheckRecipeResultRegistry.insufficientStartupPower(recipeEU);
+            // }
+            //// maxParallel = availableEU.divide(recipeEU)
+            //// .min(BigInteger.valueOf(maxParallel))
+            //// .intValue();
+            //
+            // }
+            //
+            // return CheckRecipeResultRegistry.SUCCESSFUL;
+            // }
+
+            @NotNull
+            @Override
+            protected CheckRecipeResult onRecipeStart(@Nonnull GTRecipe recipe) {
+                // 无线模式下，在配方开始时扣除能量
+                if (isWirelessMode) {
+                    finalConsumption = recipeEU.multiply(BigInteger.valueOf(-calculatedParallels));
+                    costingWirelessEU = GTUtility.formatNumbers(finalConsumption.abs());
+                    // 从无线网络扣除能量
+                    if (!addEUToGlobalEnergyMap(ownerUUID, finalConsumption)) {
+                        return CheckRecipeResultRegistry.insufficientStartupPower(finalConsumption);
+                    }
+                    // 能量已一次性扣除，设置 EU/t 为 0
+                    overwriteCalculatedEut(0);
+                }
                 return CheckRecipeResultRegistry.SUCCESSFUL;
             }
         }.setMaxParallelSupplier(this::getMaxParallelRecipes);
     }
 
-    private long getTotalPowerCapacity() {
-        long totalCapacity = 0;
-        for (MTEHatch hatch : mEnergyHatches) {
-            // 获取单个能源仓的功率容量（电压 * 安培）
-            long hatchCapacity = 0;
-            if (hatch.getBaseMetaTileEntity() != null) {
-                hatchCapacity = hatch.getBaseMetaTileEntity()
-                    .getInputVoltage()
-                    * hatch.getBaseMetaTileEntity()
-                        .getInputAmperage();
-            }
-            totalCapacity += hatchCapacity;
-        }
-        return totalCapacity;
-    }
-
-    // 获取实际能耗使用情况
     protected long getActualEnergyUsage() {
         if (isWirelessMode) {
             // 无线模式使用无线网络能量
@@ -661,10 +750,10 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
 
         // Heat capacity of coils used on multi. No free heat from extra EU!
         mHeatingCapacity = (int) getCoilLevel().getHeat();
+
+        // 无线模式下不允许能源仓
         if (isWirelessMode && (!mEnergyHatches.isEmpty() || !mExoticEnergyHatches.isEmpty())) {
-            this.failure = true;
-        } else {
-            this.failure = false;
+            return false;
         }
 
         // All structure checks passed, return true.
@@ -679,64 +768,18 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
         CheckRecipeResult result = doCheckRecipe();
         if (!result.wasSuccessful()) return result;
 
-        if (isWirelessMode) {
-            // 在并行计算完成后获取最终值
-            long actualEUt = Math.abs(processingLogic.getCalculatedEut());
-            long actualDuration = processingLogic.getDuration();
+        // 从 processingLogic 获取结果
+        mMaxProgresstime = processingLogic.getDuration();
+        mOutputItems = processingLogic.getOutputItems();
+        mOutputFluids = processingLogic.getOutputFluids();
 
-            BigInteger costingWirelessEUTemp = BigInteger.valueOf(actualEUt)
-                .multiply(BigInteger.valueOf(actualDuration));
-
-            costingWirelessEU = GTUtility.formatNumbers(costingWirelessEUTemp);
-            if (!addEUToGlobalEnergyMap(ownerUUID, costingWirelessEUTemp.multiply(NEGATIVE_ONE))) {
-                return CheckRecipeResultRegistry.insufficientPower(costingWirelessEUTemp.longValue());
-            }
-
-            mMaxProgresstime = processingLogic.getDuration();
-            mOutputItems = processingLogic.getOutputItems();
-            mOutputFluids = processingLogic.getOutputFluids();
-        } else {
-            mMaxProgresstime = processingLogic.getDuration();
-            mOutputItems = processingLogic.getOutputItems();
-            mOutputFluids = processingLogic.getOutputFluids();
+        // 设置能量消耗（无线模式下已设为0，有线模式下正常设置）
+        if (!isWirelessMode) {
             lEUt = -processingLogic.getCalculatedEut();
         }
 
         return result;
     }
-
-    // @NotNull
-    // @Override
-    // public CheckRecipeResult checkProcessing() {
-    // setupProcessingLogic(processingLogic);
-    //
-    // CheckRecipeResult result = doCheckRecipe();
-    // // inputs are consumed at this point
-    // updateSlots();
-    // if (!result.wasSuccessful()) return result;
-    //
-    // if (isWirelessMode) {
-    // BigInteger costingWirelessEUTemp = BigInteger.valueOf(processingLogic.getCalculatedEut())
-    // .multiply(BigInteger.valueOf(processingLogic.getDuration()));
-    // costingWirelessEU = GTUtility.formatNumbers(costingWirelessEUTemp);
-    // if (!addEUToGlobalEnergyMap(ownerUUID, costingWirelessEUTemp.multiply(NEGATIVE_ONE))) {
-    // return CheckRecipeResultRegistry.insufficientPower(costingWirelessEUTemp.longValue());
-    // }
-    //
-    // // set progress time a fixed value
-    // mMaxProgresstime = 128;
-    // mOutputItems = processingLogic.getOutputItems();
-    // mOutputFluids = processingLogic.getOutputFluids();
-    // } else {
-    // mMaxProgresstime = processingLogic.getDuration();
-    // mOutputItems = processingLogic.getOutputItems();
-    // mOutputFluids = processingLogic.getOutputFluids();
-    // lEUt = -processingLogic.getCalculatedEut();
-    // }
-    // mEfficiency = 10000;
-    // mEfficiencyIncrease = 10000;
-    // return result;
-    // }
 
     @Override
     public void onFirstTick(IGregTechTileEntity aBaseMetaTileEntity) {
@@ -771,14 +814,16 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
         long voltage = getAverageInputVoltage();
         long amps = getMaxInputAmps();
 
-        return new String[] {
+        List<String> infoData = new ArrayList<>();
+        infoData.add(
             EnumChatFormatting.STRIKETHROUGH + "------------"
                 + EnumChatFormatting.RESET
                 + " "
                 + StatCollector.translateToLocal("GT5U.infodata.critical_info")
                 + " "
                 + EnumChatFormatting.STRIKETHROUGH
-                + "------------",
+                + "------------");
+        infoData.add(
             StatCollector.translateToLocal("GT5U.multiblock.Progress") + ": "
                 + EnumChatFormatting.GREEN
                 + GTUtility.formatNumbers(mProgresstime)
@@ -787,21 +832,36 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
                 + EnumChatFormatting.YELLOW
                 + GTUtility.formatNumbers(mMaxProgresstime)
                 + EnumChatFormatting.RESET
-                + "t",
-            StatCollector.translateToLocal("GT5U.multiblock.energy") + ": "
-                + EnumChatFormatting.GREEN
-                + GTUtility.formatNumbers(storedEnergy)
-                + EnumChatFormatting.RESET
-                + " EU / "
-                + EnumChatFormatting.YELLOW
-                + GTUtility.formatNumbers(maxEnergy)
-                + EnumChatFormatting.RESET
-                + " EU",
+                + "t");
+
+        // 无线模式显示无线能量消耗
+        if (isWirelessMode) {
+            infoData.add(
+                StatCollector.translateToLocal("otht.waila.wirelesseu") + ": "
+                    + EnumChatFormatting.YELLOW
+                    + costingWirelessEU
+                    + EnumChatFormatting.RESET
+                    + " EU (total)");
+        } else {
+            infoData.add(
+                StatCollector.translateToLocal("GT5U.multiblock.energy") + ": "
+                    + EnumChatFormatting.GREEN
+                    + GTUtility.formatNumbers(storedEnergy)
+                    + EnumChatFormatting.RESET
+                    + " EU / "
+                    + EnumChatFormatting.YELLOW
+                    + GTUtility.formatNumbers(maxEnergy)
+                    + EnumChatFormatting.RESET
+                    + " EU");
+        }
+
+        infoData.add(
             StatCollector.translateToLocal("GT5U.multiblock.usage") + ": "
                 + EnumChatFormatting.RED
                 + GTUtility.formatNumbers(getActualEnergyUsage())
                 + EnumChatFormatting.RESET
-                + " EU/t",
+                + " EU/t");
+        infoData.add(
             StatCollector.translateToLocal("GT5U.multiblock.mei") + ": "
                 + EnumChatFormatting.YELLOW
                 + GTUtility.formatNumbers(voltage)
@@ -815,13 +875,16 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
                 + ": "
                 + EnumChatFormatting.YELLOW
                 + VN[GTUtility.getTier(voltage)]
-                + EnumChatFormatting.RESET,
+                + EnumChatFormatting.RESET);
+        infoData.add(
             StatCollector.translateToLocal("GT5U.EBF.heat") + ": "
                 + EnumChatFormatting.GREEN
                 + GTUtility.formatNumbers(mHeatingCapacity)
                 + EnumChatFormatting.RESET
-                + " K",
-            EnumChatFormatting.STRIKETHROUGH + "-----------------------------------------" };
+                + " K");
+        infoData.add(EnumChatFormatting.STRIKETHROUGH + "-----------------------------------------");
+
+        return infoData.toArray(new String[0]);
     }
 
     @Override
@@ -933,16 +996,23 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
     public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
         if (getMLevel() >= 2) {
-            if (this.mEnergyHatches.isEmpty() && this.mExoticEnergyHatches.isEmpty()) {
-                isWirelessMode = !isWirelessMode;
+            // 切换前检查结构
+            if (checkMachine(getBaseMetaTileEntity(), null)) {
+                if (this.mEnergyHatches.isEmpty() && this.mExoticEnergyHatches.isEmpty()) {
+                    isWirelessMode = !isWirelessMode;
+                    if (isWirelessMode) {
+                        GTUtility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("ote.bbpf.wireless.on"));
+                    } else {
+                        GTUtility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("ote.bbpf.wireless.off"));
+                    }
+                } else {
+                    isWirelessMode = false;
+                    GTUtility
+                        .sendChatToPlayer(aPlayer, StatCollector.translateToLocal("ote.bbpf.wireless.energyhatch"));
+                }
             } else {
-                isWirelessMode = false;
+                GTUtility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("ote.bbpf.wireless.invalid"));
             }
-        }
-        if (isWirelessMode) {
-            GTUtility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("ote.bbpf.wireless.on"));
-        } else {
-            GTUtility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("ote.bbpf.wireless.off"));
         }
     }
 }
