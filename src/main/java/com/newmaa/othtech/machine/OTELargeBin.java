@@ -468,8 +468,8 @@ public class OTELargeBin extends OTHMultiMachineBase<OTELargeBin> implements ICo
         super.getWailaNBTData(player, tile, tag, world, x, y, z);
         final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
         if (tileEntity != null) {
-            String Mode = GTUtility.formatNumbers(mode);
-            tag.setString("mode", Mode);
+            String Mode = GTUtility.formatNumbers(this.mode);
+            tag.setString("Mode", Mode);
             tag.setLong("MM", mSA);
             tag.setInteger("Tier", Tier);
         }
@@ -484,7 +484,7 @@ public class OTELargeBin extends OTHMultiMachineBase<OTELargeBin> implements ICo
             translateToLocal("otht.waila.mode") + EnumChatFormatting.RESET
                 + ": "
                 + EnumChatFormatting.GOLD
-                + tag.getString("mode")
+                + tag.getString("Mode")
                 + EnumChatFormatting.RESET);
         currentTip.add(
             translateToLocal("otht.waila.bin.input") + EnumChatFormatting.RESET
@@ -525,9 +525,11 @@ public class OTELargeBin extends OTHMultiMachineBase<OTELargeBin> implements ICo
             @NotNull
             @Override
             protected CheckRecipeResult validateRecipe(@NotNull GTRecipe recipe) {
-                return super.validateRecipe(recipe);
+                setSpeedBonus(getSpeedBonus());
+                setEuModifier(getEuModifier());
+                return CheckRecipeResultRegistry.SUCCESSFUL;
             }
-        };
+        }.setMaxParallelSupplier(this::getMaxParallelRecipes);
     }
 
     @Override
@@ -548,21 +550,18 @@ public class OTELargeBin extends OTHMultiMachineBase<OTELargeBin> implements ICo
     @Override
     @NotNull
     public CheckRecipeResult checkProcessing() {
-
         setupProcessingLogic(processingLogic);
 
         if (mode == 3) {
             CheckRecipeResult result = doCheckRecipe();
-            result = postCheckRecipe(result, processingLogic);
-            updateSlots();
-            if (!result.wasSuccessful()) return result;
-
             mEfficiency = 10000;
             mEfficiencyIncrease = 10000;
-            mMaxProgresstime = getBaseProgressingTick();
+            // mMaxProgresstime = getBaseProgressingTick();
+            mMaxProgresstime = processingLogic.getDuration();
             mOutputItems = processingLogic.getOutputItems();
             mOutputFluids = processingLogic.getOutputFluids();
             setEnergyUsage(processingLogic);
+            return result;
         }
         if (mode == 0) {
             mEUt = 0;
