@@ -201,7 +201,7 @@ public class OTEMiniSteamNineInOne extends MTESteamMultiBase<OTEMiniSteamNineInO
 
     @Override
     public int getMaxParallelRecipes() {
-        return 16;
+        return 256;
     }
 
     @Override
