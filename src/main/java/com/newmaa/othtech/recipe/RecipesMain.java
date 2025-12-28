@@ -63,6 +63,7 @@ import gregtech.api.util.recipe.Scanning;
 import gregtech.common.items.CombType;
 import gregtech.loaders.misc.GTBees;
 import gtPlusPlus.api.recipe.GTPPRecipeMaps;
+import gtPlusPlus.xmod.gregtech.api.enums.GregtechItemList;
 import tectech.recipe.TTRecipeAdder;
 import tectech.thing.CustomItemList;
 
@@ -100,6 +101,12 @@ public class RecipesMain implements IRecipePool {
         // .eut(123123)
         // .duration(8100)
         // .addTo(GTRecipeConstants.AssemblyLine);
+        GTModHandler.addCraftingRecipe(
+            OTHItemList.LargeSteamHatch.get(1),
+            new Object[] { "ABA", "BXB", "ABA", 'A', GTOreDictUnificator.get(OrePrefixes.plate, Materials.Steel, 1L),
+                'B', GregtechItemList.Hatch_Input_Steam.get(1), 'X',
+                GTOreDictUnificator.get(OrePrefixes.gem, Materials.NetherStar, 1L) });
+
         TTRecipeAdder.addResearchableAssemblylineRecipe(
             ItemList.Field_Generator_EV.get(1),
             (int) TierEU.UV,

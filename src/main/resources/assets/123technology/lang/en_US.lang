@@ -665,3 +665,7 @@ ote.tm.wtf.1=Does not connect to wires. This block can draw EU from the network.
 ote.tm.wtf.2=No need to worry about energy overflow.
 ote.tm.wtf.3=Ignore one hundred words here,LOL.
 ote.tm.wtf.4=Just a joke, don't use if buggy, hehe.  
+
+#custom_hatch
+ote.tm.largesteamhatch.name=Large Steam Input Hatch
+ote.tm.largesteamhatch.desc=§l§oused to input large amounts of steam
