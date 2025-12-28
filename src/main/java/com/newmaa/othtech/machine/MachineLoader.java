@@ -6,7 +6,9 @@ import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.machine.hatch.OTEHatchRack;
 import com.newmaa.othtech.machine.hatch.OTEWTFHatch;
 
+import gregtech.api.enums.Materials;
 import gregtech.api.enums.TierEU;
+import gtPlusPlus.xmod.gregtech.api.metatileentity.implementations.base.MTEHatchCustomFluidBase;
 import tectech.thing.metaTileEntity.hatch.MTEHatchDynamoMulti;
 import tectech.thing.metaTileEntity.hatch.MTEHatchDynamoTunnel;
 import tectech.thing.metaTileEntity.hatch.MTEHatchEnergyMulti;
@@ -29,6 +31,17 @@ public class MachineLoader {
                 translateToLocal("ote.tn.inf"),
                 14,
                 2147483647));
+
+        OTHItemList.LargeSteamHatch.set(
+            new MTEHatchCustomFluidBase(
+                Materials.Steam.getGas(1)
+                    .getFluid(), // Fluid to restrict hatch to
+                123123123, // Capacity
+                IDs + 63, // ID
+                "LargeSteamHatch",
+                translateToLocal("ote.tm.largesteamhatch.name"),
+                0 // Casing texture
+            ).getStackForm(1L));
 
         OTHItemList.legendary_WirelessHatch.set(
             new MTEHatchWirelessMulti(

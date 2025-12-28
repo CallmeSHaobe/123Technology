@@ -668,4 +668,6 @@ ote.tm.wtf.2=不用小心能量溢出.
 ote.tm.wtf.3=此处省略一百字.
 ote.tm.wtf.4=只是个玩笑 有bug别用 嘻嘻.
 
-
+#custom_hatch
+ote.tm.largesteamhatch.name=大型蒸汽输入仓
+ote.tm.largesteamhatch.desc=用于输入大量蒸汽的仓室
