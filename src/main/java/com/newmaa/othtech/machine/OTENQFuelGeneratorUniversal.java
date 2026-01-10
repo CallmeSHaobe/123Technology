@@ -12,6 +12,7 @@ import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static gregtech.api.util.GTUtility.validMTEList;
 import static gregtech.common.misc.WirelessNetworkManager.addEUToGlobalEnergyMap;
 import static net.minecraft.util.StatCollector.translateToLocal;
+import static tectech.thing.metaTileEntity.multi.base.TTMultiblockBase.HatchElement.DynamoMulti;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -413,7 +414,7 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
                         .buildAndChain(sBlockCasings8, 10))
                 .addElement(
                     'E',
-                    buildHatchAdder(OTENQFuelGeneratorUniversal.class).atLeast(Energy.or(ExoticEnergy))
+                    buildHatchAdder(OTENQFuelGeneratorUniversal.class).atLeast(Dynamo.or(DynamoMulti))
                         .adder(OTENQFuelGeneratorUniversal::addToMachineList)
                         .dot(4)
                         .casingIndex(((BlockCasings8) sBlockCasings8).getTextureIndex(10))
