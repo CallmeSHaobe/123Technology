@@ -12,6 +12,7 @@ import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static gregtech.api.util.GTUtility.validMTEList;
 import static gregtech.common.misc.WirelessNetworkManager.addEUToGlobalEnergyMap;
 import static net.minecraft.util.StatCollector.translateToLocal;
+import static tectech.thing.metaTileEntity.multi.base.TTMultiblockBase.HatchElement.DynamoMulti;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -45,6 +46,7 @@ import com.newmaa.othtech.machine.machineclass.OTHTTMultiMachineBaseEM;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
+import gregtech.api.metatileentity.implementations.MTEHatchDynamo;
 import gregtech.api.metatileentity.implementations.MTEHatchInput;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.check.CheckRecipeResult;
@@ -60,6 +62,7 @@ import gregtech.common.tileentities.machines.MTEHatchInputME;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
+import tectech.thing.metaTileEntity.hatch.MTEHatchDynamoMulti;
 import tectech.thing.metaTileEntity.multi.base.INameFunction;
 import tectech.thing.metaTileEntity.multi.base.IStatusFunction;
 import tectech.thing.metaTileEntity.multi.base.LedStatus;
@@ -142,7 +145,7 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
                 + EnumChatFormatting.GOLD
                 + tag.getString("bonus")
                 + EnumChatFormatting.GOLD
-                + "EU/t"
+                + "EU"
                 + EnumChatFormatting.RESET);
         currentTip.add(
             EnumChatFormatting.BOLD + translateToLocal("otht.waila.gen.wireless")
@@ -151,7 +154,7 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
                 + EnumChatFormatting.GOLD
                 + tag.getString("costingWirelessEU")
                 + EnumChatFormatting.GOLD
-                + "EU"
+                + "EU/t"
                 + EnumChatFormatting.RESET);
         currentTip.add(
             EnumChatFormatting.BOLD + translateToLocal("otht.waila.tier.pipe")
@@ -279,12 +282,15 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
 
     @Override
     public boolean onRunningTick(ItemStack stack) {
-        if (this.getBaseMetaTileEntity()
+        if (this.getBaseMetaTileEntity() != null && this.getBaseMetaTileEntity()
             .isServerSide()) {
             if (heatingTicks < HEATING_TIMER) {
                 heatingTicks++;
                 isStoppingSafe = true;
             } else if (isStoppingSafe) isStoppingSafe = false;
+            if (!isWirelessMode) {
+                addAutoEnergy();
+            }
         }
         return true;
     }
@@ -375,9 +381,74 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
         return survivalBuildPiece(mName, stackSize, 2, 2, 0, elementBudget, env, false, true);
     }
 
+    @Override
+    public void stopMachine() {
+        // Reset the counter for heating, so that it works again when the machine restarts
+        heatingTicks = 0;
+        running_time = 0;
+        super.stopMachine();
+    }
+
     private boolean isStoppingSafe;
     private int heatingTicks;
     protected final int HEATING_TIMER = SECOND * 10;
+
+    void addAutoEnergy() {
+        long exEU = this.getPowerFlow(); // 直接使用功率流，不再乘以效率
+
+        // 分配能量到所有可用的动力仓
+        if (!addEnergyOutputMultipleDynamos(exEU, false)) {
+            // 如果能量无法完全输出，停止机器
+            if (!isStoppingSafe) {
+                stopMachine();
+            }
+        }
+    }
+
+    // 添加能量输出到多个动力仓的方法
+    public boolean addEnergyOutputMultipleDynamos(long totalEU, boolean aAllowMixedVoltageDynamos) {
+        // check positive
+        if (totalEU < 0) totalEU = -totalEU;
+        // to store free capacity of dynamo hatch
+        long freeCapacity;
+
+        // 检查普通动力仓
+        for (MTEHatchDynamo tHatch : validMTEList(mDynamoHatches)) {
+            freeCapacity = tHatch.maxEUStore() - tHatch.getBaseMetaTileEntity()
+                .getStoredEU();
+            if (freeCapacity > 0) {
+                if (totalEU > freeCapacity) {
+                    tHatch.setEUVar(tHatch.maxEUStore());
+                    totalEU -= freeCapacity;
+                } else {
+                    tHatch.setEUVar(
+                        tHatch.getBaseMetaTileEntity()
+                            .getStoredEU() + totalEU);
+                    return true;
+                }
+            }
+        }
+
+        // 检查多安仓
+        for (MTEHatchDynamoMulti tHatch : validMTEList(eDynamoMulti)) {
+            freeCapacity = tHatch.maxEUStore() - tHatch.getBaseMetaTileEntity()
+                .getStoredEU();
+            if (freeCapacity > 0) {
+                if (totalEU > freeCapacity) {
+                    tHatch.setEUVar(tHatch.maxEUStore());
+                    totalEU -= freeCapacity;
+                } else {
+                    tHatch.setEUVar(
+                        tHatch.getBaseMetaTileEntity()
+                            .getStoredEU() + totalEU);
+                    return true;
+                }
+            }
+        }
+
+        // 如果还有剩余能量，返回false
+        return totalEU == 0;
+    }
 
     @Override
     public String[] getStructureDescription(ItemStack stackSize) {
@@ -413,7 +484,7 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
                         .buildAndChain(sBlockCasings8, 10))
                 .addElement(
                     'E',
-                    buildHatchAdder(OTENQFuelGeneratorUniversal.class).atLeast(Energy.or(ExoticEnergy))
+                    buildHatchAdder(OTENQFuelGeneratorUniversal.class).atLeast(Dynamo.or(DynamoMulti))
                         .adder(OTENQFuelGeneratorUniversal::addToMachineList)
                         .dot(4)
                         .casingIndex(((BlockCasings8) sBlockCasings8).getTextureIndex(10))

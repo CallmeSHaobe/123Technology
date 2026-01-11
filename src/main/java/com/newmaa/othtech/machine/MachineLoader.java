@@ -82,10 +82,10 @@ public class MachineLoader {
             .set(new OTEWoodenFusionReactor(IDs + 20, "WoodFusionReactor", translateToLocal("ote.tn.wfr")));
 
         OTHItemList.GTTEEnergyULV
-            .set(new MTEHatchEnergyMulti(IDs + 21, "HVEnergy", "HV 1073741824A 能源仓", 3, 1073741824));
+            .set(new MTEHatchEnergyMulti(IDs + 21, "HVEnergy", translateToLocal("ote.en.hv"), 3, 1073741824));
 
         OTHItemList.GTTEDynamoULV
-            .set(new MTEHatchDynamoMulti(IDs + 22, "HVDynamo", "HV 2147483647A 动力仓", 3, 2147483647));
+            .set(new MTEHatchDynamoMulti(IDs + 22, "HVDynamo", translateToLocal("ote.dy.hv"), 3, 2147483647));
 
         OTHItemList.ImbaBlastFurnace.set(new OTEIMBABlastFurnace(IDs + 23, "IMBABlastFurnace"));
 
@@ -113,58 +113,70 @@ public class MachineLoader {
 
         final int AMPS = 1073741824;
 
-        OTHItemList.LVA.set(new MTEHatchDynamoTunnel(IDs + 30, "LV Laser 1073DY", "LV 1,073,741,824A 激光源仓", 1, AMPS));
-        OTHItemList.LVB.set(new MTEHatchEnergyTunnel(IDs + 31, "LV Laser 1073EN", "LV 1,073,741,824A 激光靶仓", 1, AMPS));
+        OTHItemList.LVA
+            .set(new MTEHatchDynamoTunnel(IDs + 30, "LV Laser 1073DY", translateToLocal("ote.la.lva"), 1, AMPS));
+        OTHItemList.LVB
+            .set(new MTEHatchEnergyTunnel(IDs + 31, "LV Laser 1073EN", translateToLocal("ote.la.lvb"), 1, AMPS));
 
-        OTHItemList.MVA.set(new MTEHatchDynamoTunnel(IDs + 32, "MV Laser 1073DY", "MV 1,073,741,824A 激光源仓", 2, AMPS));
-        OTHItemList.MVB.set(new MTEHatchEnergyTunnel(IDs + 33, "MV Laser 1073EN", "MV 1,073,741,824A 激光靶仓", 2, AMPS));
+        OTHItemList.MVA
+            .set(new MTEHatchDynamoTunnel(IDs + 32, "MV Laser 1073DY", translateToLocal("ote.la.mva"), 2, AMPS));
+        OTHItemList.MVB
+            .set(new MTEHatchEnergyTunnel(IDs + 33, "MV Laser 1073EN", translateToLocal("ote.la.mvb"), 2, AMPS));
 
-        OTHItemList.HVA.set(new MTEHatchDynamoTunnel(IDs + 34, "HV Laser 1073DY", "HV 1,073,741,824A 激光源仓", 3, AMPS));
-        OTHItemList.HVB.set(new MTEHatchEnergyTunnel(IDs + 35, "HV Laser 1073EN", "HV 1,073,741,824A 激光靶仓", 3, AMPS));
+        OTHItemList.HVA
+            .set(new MTEHatchDynamoTunnel(IDs + 34, "HV Laser 1073DY", translateToLocal("ote.la.hva"), 3, AMPS));
+        OTHItemList.HVB
+            .set(new MTEHatchEnergyTunnel(IDs + 35, "HV Laser 1073EN", translateToLocal("ote.la.hvb"), 3, AMPS));
 
-        OTHItemList.EVA.set(new MTEHatchDynamoTunnel(IDs + 36, "EV Laser 1073DY", "EV 1,073,741,824A 激光源仓", 4, AMPS));
-        OTHItemList.EVB.set(new MTEHatchEnergyTunnel(IDs + 37, "EV Laser 1073EN", "EV 1,073,741,824A 激光靶仓", 4, AMPS));
+        OTHItemList.EVA
+            .set(new MTEHatchDynamoTunnel(IDs + 36, "EV Laser 1073DY", translateToLocal("ote.la.eva"), 4, AMPS));
+        OTHItemList.EVB
+            .set(new MTEHatchEnergyTunnel(IDs + 37, "EV Laser 1073EN", translateToLocal("ote.la.evb"), 4, AMPS));
 
-        OTHItemList.IVA.set(new MTEHatchDynamoTunnel(IDs + 38, "IV Laser 1073DY", "IV 1,073,741,824A 激光源仓", 5, AMPS));
-        OTHItemList.IVB.set(new MTEHatchEnergyTunnel(IDs + 39, "IV Laser 1073EN", "IV 1,073,741,824A 激光靶仓", 5, AMPS));
+        OTHItemList.IVA
+            .set(new MTEHatchDynamoTunnel(IDs + 38, "IV Laser 1073DY", translateToLocal("ote.la.iva"), 5, AMPS));
+        OTHItemList.IVB
+            .set(new MTEHatchEnergyTunnel(IDs + 39, "IV Laser 1073EN", translateToLocal("ote.la.ivb"), 5, AMPS));
 
         OTHItemList.LUVA
-            .set(new MTEHatchDynamoTunnel(IDs + 40, "LUV Laser 1073DY", "LUV 1,073,741,824A 激光源仓", 6, AMPS));
+            .set(new MTEHatchDynamoTunnel(IDs + 40, "LUV Laser 1073DY", translateToLocal("ote.la.luv"), 6, AMPS));
         OTHItemList.LUVB
-            .set(new MTEHatchEnergyTunnel(IDs + 41, "LUV Laser 1073EN", "LUV 1,073,741,824A 激光靶仓", 6, AMPS));
+            .set(new MTEHatchEnergyTunnel(IDs + 41, "LUV Laser 1073EN", translateToLocal("ote.la.luvb"), 6, AMPS));
 
         OTHItemList.ZPMA
-            .set(new MTEHatchDynamoTunnel(IDs + 42, "ZPM Laser 1073DY", "ZPM 1,073,741,824A 激光源仓", 7, AMPS));
+            .set(new MTEHatchDynamoTunnel(IDs + 42, "ZPM Laser 1073DY", translateToLocal("ote.la.zpm"), 7, AMPS));
         OTHItemList.ZPMB
-            .set(new MTEHatchEnergyTunnel(IDs + 43, "ZPM Laser 1073EN", "ZPM 1,073,741,824A 激光靶仓", 7, AMPS));
+            .set(new MTEHatchEnergyTunnel(IDs + 43, "ZPM Laser 1073EN", translateToLocal("ote.la.zpmb"), 7, AMPS));
 
-        OTHItemList.UVA.set(new MTEHatchDynamoTunnel(IDs + 44, "UV Laser 1073DY", "UV 1,073,741,824A 激光源仓", 8, AMPS));
-        OTHItemList.UVB.set(new MTEHatchEnergyTunnel(IDs + 45, "UV Laser 1073EN", "UV 1,073,741,824A 激光靶仓", 8, AMPS));
+        OTHItemList.UVA
+            .set(new MTEHatchDynamoTunnel(IDs + 44, "UV Laser 1073DY", translateToLocal("ote.la.uv"), 8, AMPS));
+        OTHItemList.UVB
+            .set(new MTEHatchEnergyTunnel(IDs + 45, "UV Laser 1073EN", translateToLocal("ote.la.uvb"), 8, AMPS));
 
         OTHItemList.UHVA
-            .set(new MTEHatchDynamoTunnel(IDs + 46, "UHV Laser 1073DY", "UHV 1,073,741,824A 激光源仓", 9, AMPS));
+            .set(new MTEHatchDynamoTunnel(IDs + 46, "UHV Laser 1073DY", translateToLocal("ote.la.uhv"), 9, AMPS));
         OTHItemList.UHVB
-            .set(new MTEHatchEnergyTunnel(IDs + 47, "UHV Laser 1073EN", "UHV 1,073,741,824A 激光靶仓", 9, AMPS));
+            .set(new MTEHatchEnergyTunnel(IDs + 47, "UHV Laser 1073EN", translateToLocal("ote.la.uhvb"), 9, AMPS));
 
         OTHItemList.UEVA
-            .set(new MTEHatchDynamoTunnel(IDs + 48, "UEV Laser 1073DY", "UEV 1,073,741,824A 激光源仓", 10, AMPS));
+            .set(new MTEHatchDynamoTunnel(IDs + 48, "UEV Laser 1073DY", translateToLocal("ote.la.uev"), 10, AMPS));
         OTHItemList.UEVB
-            .set(new MTEHatchEnergyTunnel(IDs + 49, "UEV Laser 1073EN", "UEV 1,073,741,824A 激光靶仓", 10, AMPS));
+            .set(new MTEHatchEnergyTunnel(IDs + 49, "UEV Laser 1073EN", translateToLocal("ote.la.uevb"), 10, AMPS));
 
         OTHItemList.UIVA
-            .set(new MTEHatchDynamoTunnel(IDs + 50, "UIV Laser 1073DY", "UIV 1,073,741,824A 激光源仓", 11, AMPS));
+            .set(new MTEHatchDynamoTunnel(IDs + 50, "UIV Laser 1073DY", translateToLocal("ote.la.uiv"), 11, AMPS));
         OTHItemList.UIVB
-            .set(new MTEHatchEnergyTunnel(IDs + 51, "UIV Laser 1073EN", "UIV 1,073,741,824A 激光靶仓", 11, AMPS));
+            .set(new MTEHatchEnergyTunnel(IDs + 51, "UIV Laser 1073EN", translateToLocal("ote.la.uivb"), 11, AMPS));
 
         OTHItemList.UMVA
-            .set(new MTEHatchDynamoTunnel(IDs + 52, "UMV Laser 1073DY", "UMV 1,073,741,824A 激光源仓", 12, AMPS));
+            .set(new MTEHatchDynamoTunnel(IDs + 52, "UMV Laser 1073DY", translateToLocal("ote.la.umv"), 12, AMPS));
         OTHItemList.UMVB
-            .set(new MTEHatchEnergyTunnel(IDs + 53, "UMV Laser 1073EN", "UMV 1,073,741,824A 激光靶仓", 12, AMPS));
+            .set(new MTEHatchEnergyTunnel(IDs + 53, "UMV Laser 1073EN", translateToLocal("ote.la.umvb"), 12, AMPS));
 
         OTHItemList.UXVA
-            .set(new MTEHatchDynamoTunnel(IDs + 54, "UXV Laser 1073DY", "UXV 1,073,741,824A 激光源仓", 13, AMPS));
+            .set(new MTEHatchDynamoTunnel(IDs + 54, "UXV Laser 1073DY", translateToLocal("ote.la.uxv"), 13, AMPS));
         OTHItemList.UXVB
-            .set(new MTEHatchEnergyTunnel(IDs + 55, "UXV Laser 1073EN", "UXV 1,073,741,824A 激光靶仓", 13, AMPS));
+            .set(new MTEHatchEnergyTunnel(IDs + 55, "UXV Laser 1073EN", translateToLocal("ote.la.uxvb"), 13, AMPS));
 
         OTHItemList.SteamNeinInOne
             .set(new OTEMiniSteamNineInOne(IDs + 57, "SteamNineInOne", translateToLocal("ote.tn.s9in1")));
