@@ -672,3 +672,31 @@ ote.tm.largesteamhatch.desc=§l§oused to input large amounts of steam
 ote.en.hv=HV 1073741824A Energy Hatch
 ote.dy.hv=HV 2147483647A Dynamo Hatch
 
+
+#Laser Hatches
+ote.la.lva=LV 1,073,741,824A Laser Source Hatch
+ote.la.lvb=LV 1,073,741,824A Laser Target Hatch
+ote.la.mva=MV 1,073,741,824A Laser Source Hatch
+ote.la.mvb=MV 1,073,741,824A Laser Target Hatch
+ote.la.hva=HV 1,073,741,824A Laser Source Hatch
+ote.la.hvb=HV 1,073,741,824A Laser Target Hatch
+ote.la.eva=EV 1,073,741,824A Laser Source Hatch
+ote.la.evb=EV 1,073,741,824A Laser Target Hatch
+ote.la.iva=IV 1,073,741,824A Laser Source Hatch
+ote.la.ivb=IV 1,073,741,824A Laser Target Hatch
+ote.la.luv=LUV 1,073,741,824A Laser Source Hatch
+ote.la.luvb=LUV 1,073,741,824A Laser Target Hatch
+ote.la.zpm=ZPM 1,073,741,824A Laser Source Hatch
+ote.la.zpmb=ZPM 1,073,741,824A Laser Target Hatch
+ote.la.uv=UV 1,073,741,824A Laser Source Hatch
+ote.la.uvb=UV 1,073,741,824A Laser Target Hatch
+ote.la.uhv=UHV 1,073,741,824A Laser Source Hatch
+ote.la.uhvb=UHV 1,073,741,824A Laser Target Hatch
+ote.la.uev=UEV 1,073,741,824A Laser Source Hatch
+ote.la.uevb=UEV 1,073,741,824A Laser Target Hatch
+ote.la.uiv=UIV 1,073,741,824A Laser Source Hatch
+ote.la.uivb=UIV 1,073,741,824A Laser Target Hatch
+ote.la.umv=UMV 1,073,741,824A Laser Source Hatch
+ote.la.umvb=UMV 1,073,741,824A Laser Target Hatch
+ote.la.uxv=UXV 1,073,741,824A Laser Source Hatch
+ote.la.uxvb=UXV 1,073,741,824A Laser Target Hatch
