@@ -9,6 +9,7 @@ import static gregtech.api.enums.HatchElement.OutputHatch;
 import static gregtech.api.enums.Textures.BlockIcons.*;
 import static gregtech.api.enums.TickTime.*;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
+import static gregtech.api.util.GTUtility.filterValidMTEs;
 import static gregtech.api.util.GTUtility.validMTEList;
 import static gregtech.common.misc.WirelessNetworkManager.addEUToGlobalEnergyMap;
 import static net.minecraft.util.StatCollector.translateToLocal;
@@ -145,7 +146,7 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
                 + EnumChatFormatting.GOLD
                 + tag.getString("bonus")
                 + EnumChatFormatting.GOLD
-                + "EU"
+                + "EU/t"
                 + EnumChatFormatting.RESET);
         currentTip.add(
             EnumChatFormatting.BOLD + translateToLocal("otht.waila.gen.wireless")
@@ -154,7 +155,7 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
                 + EnumChatFormatting.GOLD
                 + tag.getString("costingWirelessEU")
                 + EnumChatFormatting.GOLD
-                + "EU/t"
+                + "EU"
                 + EnumChatFormatting.RESET);
         currentTip.add(
             EnumChatFormatting.BOLD + translateToLocal("otht.waila.tier.pipe")
@@ -277,20 +278,77 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
             this.updateSlots();
             return CheckRecipeResultRegistry.GENERATING;
         }
+        this.setPowerFlow(0);
         return CheckRecipeResultRegistry.NO_FUEL_FOUND;
+    }
+
+    @Override
+    public boolean addEnergyOutput_EM(long EU, long Amperes) {
+        return addEnergyOutput_EM(EU, Amperes, true);
+    }
+
+    public boolean addEnergyOutput_EM(long EU, long Amperes, boolean allowMixedVoltages) {
+        if (EU < 0) {
+            EU = -EU;
+        }
+        if (Amperes < 0) {
+            Amperes = -Amperes;
+        }
+        long euVar = EU * Amperes;
+        long diff;
+        for (MTEHatchDynamo tHatch : filterValidMTEs(mDynamoHatches)) {
+            if (tHatch.maxEUOutput() < euVar && !allowMixedVoltages) {
+                explodeMultiblock();
+            }
+            diff = tHatch.maxEUStore() - tHatch.getBaseMetaTileEntity()
+                .getStoredEU();
+            if (diff > 0) {
+                if (euVar <= diff) {
+                    tHatch.setEUVar(
+                        tHatch.getBaseMetaTileEntity()
+                            .getStoredEU() + euVar);
+                    return true;
+                }
+                tHatch.setEUVar(tHatch.maxEUStore());
+                euVar -= diff;
+            }
+        }
+        for (MTEHatchDynamoMulti tHatch : filterValidMTEs(eDynamoMulti)) {
+            if (tHatch.maxEUOutput() < euVar && !allowMixedVoltages) {
+                explodeMultiblock();
+            }
+            long maxStore = tHatch.maxEUStore();
+            long storedEU = tHatch.getBaseMetaTileEntity()
+                .getStoredEU();
+            diff = maxStore - storedEU;
+            if (diff > 0) {
+                if (euVar <= diff) {
+                    tHatch.setEUVar(
+                        tHatch.getBaseMetaTileEntity()
+                            .getStoredEU() + euVar);
+                    return true;
+                }
+                tHatch.setEUVar(tHatch.maxEUStore());
+                euVar -= diff;
+            }
+        }
+        return false;
     }
 
     @Override
     public boolean onRunningTick(ItemStack stack) {
         if (this.getBaseMetaTileEntity() != null && this.getBaseMetaTileEntity()
             .isServerSide()) {
+            long euPerTick = getPowerFlow();
+            if (this.getBaseMetaTileEntity()
+                .isActive() && !isWirelessMode
+                && euPerTick > 0) {
+                addEnergyOutput_EM(euPerTick, 1);
+            }
             if (heatingTicks < HEATING_TIMER) {
                 heatingTicks++;
                 isStoppingSafe = true;
             } else if (isStoppingSafe) isStoppingSafe = false;
-            if (!isWirelessMode) {
-                addAutoEnergy();
-            }
         }
         return true;
     }
@@ -381,74 +439,9 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
         return survivalBuildPiece(mName, stackSize, 2, 2, 0, elementBudget, env, false, true);
     }
 
-    @Override
-    public void stopMachine() {
-        // Reset the counter for heating, so that it works again when the machine restarts
-        heatingTicks = 0;
-        running_time = 0;
-        super.stopMachine();
-    }
-
     private boolean isStoppingSafe;
     private int heatingTicks;
     protected final int HEATING_TIMER = SECOND * 10;
-
-    void addAutoEnergy() {
-        long exEU = this.getPowerFlow(); // 直接使用功率流，不再乘以效率
-
-        // 分配能量到所有可用的动力仓
-        if (!addEnergyOutputMultipleDynamos(exEU, false)) {
-            // 如果能量无法完全输出，停止机器
-            if (!isStoppingSafe) {
-                stopMachine();
-            }
-        }
-    }
-
-    // 添加能量输出到多个动力仓的方法
-    public boolean addEnergyOutputMultipleDynamos(long totalEU, boolean aAllowMixedVoltageDynamos) {
-        // check positive
-        if (totalEU < 0) totalEU = -totalEU;
-        // to store free capacity of dynamo hatch
-        long freeCapacity;
-
-        // 检查普通动力仓
-        for (MTEHatchDynamo tHatch : validMTEList(mDynamoHatches)) {
-            freeCapacity = tHatch.maxEUStore() - tHatch.getBaseMetaTileEntity()
-                .getStoredEU();
-            if (freeCapacity > 0) {
-                if (totalEU > freeCapacity) {
-                    tHatch.setEUVar(tHatch.maxEUStore());
-                    totalEU -= freeCapacity;
-                } else {
-                    tHatch.setEUVar(
-                        tHatch.getBaseMetaTileEntity()
-                            .getStoredEU() + totalEU);
-                    return true;
-                }
-            }
-        }
-
-        // 检查多安仓
-        for (MTEHatchDynamoMulti tHatch : validMTEList(eDynamoMulti)) {
-            freeCapacity = tHatch.maxEUStore() - tHatch.getBaseMetaTileEntity()
-                .getStoredEU();
-            if (freeCapacity > 0) {
-                if (totalEU > freeCapacity) {
-                    tHatch.setEUVar(tHatch.maxEUStore());
-                    totalEU -= freeCapacity;
-                } else {
-                    tHatch.setEUVar(
-                        tHatch.getBaseMetaTileEntity()
-                            .getStoredEU() + totalEU);
-                    return true;
-                }
-            }
-        }
-
-        // 如果还有剩余能量，返回false
-        return totalEU == 0;
-    }
 
     @Override
     public String[] getStructureDescription(ItemStack stackSize) {
