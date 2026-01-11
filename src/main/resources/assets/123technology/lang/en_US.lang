@@ -669,3 +669,6 @@ ote.tm.wtf.4=Just a joke, don't use if buggy, hehe.
 #custom_hatch
 ote.tm.largesteamhatch.name=Large Steam Input Hatch
 ote.tm.largesteamhatch.desc=§l§oused to input large amounts of steam
+ote.en.hv=HV 1073741824A Energy Hatch
+ote.dy.hv=HV 2147483647A Dynamo Hatch
+

@@ -82,10 +82,10 @@ public class MachineLoader {
             .set(new OTEWoodenFusionReactor(IDs + 20, "WoodFusionReactor", translateToLocal("ote.tn.wfr")));
 
         OTHItemList.GTTEEnergyULV
-            .set(new MTEHatchEnergyMulti(IDs + 21, "HVEnergy", "HV 1073741824A 能源仓", 3, 1073741824));
+            .set(new MTEHatchEnergyMulti(IDs + 21, "HVEnergy", translateToLocal("ote.en.hv"), 3, 1073741824));
 
         OTHItemList.GTTEDynamoULV
-            .set(new MTEHatchDynamoMulti(IDs + 22, "HVDynamo", "HV 2147483647A 动力仓", 3, 2147483647));
+            .set(new MTEHatchDynamoMulti(IDs + 22, "HVDynamo", translateToLocal("ote.dy.hv"), 3, 2147483647));
 
         OTHItemList.ImbaBlastFurnace.set(new OTEIMBABlastFurnace(IDs + 23, "IMBABlastFurnace"));
 

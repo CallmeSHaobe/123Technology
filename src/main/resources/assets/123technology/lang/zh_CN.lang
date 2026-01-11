@@ -671,3 +671,5 @@ ote.tm.wtf.4=只是个玩笑 有bug别用 嘻嘻.
 #custom_hatch
 ote.tm.largesteamhatch.name=大型蒸汽输入仓
 ote.tm.largesteamhatch.desc=用于输入大量蒸汽的仓室
+ote.en.hv=HV 1073741824A 能源仓
+ote.dy.hv=HV 2147483647A 动力仓
