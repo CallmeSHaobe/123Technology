@@ -193,7 +193,6 @@ public class MachineLoader {
 
         // bug的元凶:没有run()
         OTEHatchRack.run();
-        // TODO FUTURE
         OTHItemList.NASA
             .set(new OTEFireRocketAssembler(IDs + 62, "FireRocketAssembler", translateToLocal("ote.tn.nasa")));
     }
