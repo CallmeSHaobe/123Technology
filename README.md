@@ -1,16 +1,38 @@
-# **123Technology**
-不再是没活硬整。
+<h1 align="center"> 123Technology</h1>
 
-一些参考来自TST。
+<h3 align="center">GTNH</h3>
 
-千万记得更新lang文件 ， 否则tooltip会有很大错误 。
+[英文readme | English Version Readme here](README.en.md)
 
-有关于123的TT机器爆炸, 可在配置文件内控制
+## 关于此Mod
 
-材质来源 ： JulianChum  ABKQPO  LyeeR
+添加了一些额外内容有关GTNH的 , 含有梗内容 .
 
-部分结构来源 ：JulianChum LyeeR 商陆 Tmeex
+欢迎老登们提出新想法 憋憋.
 
+若注意到了某些bug , 请报告到Issues里 .
+
+一些参考来自Twist Space Technology 等其他私货模组 .
+
+千万记得更新lang文件 , 否则tooltip会有很大错误 .
+
+有关于123Technology的TT机器爆炸 , 可在配置文件内控制 .
+
+为规避mod命名导致的一些奇怪bug , mod的文件名通常是OTHTechnology .
+
+切勿改动. 若因此出现bug概不负责 .
+
+ModID 仍为123Technology .
+
+## 感谢这些老登们
+
+材质来源 ：
+
+JulianChum  ABKQPO  LyeeR
+
+部分结构来源 ：
+
+JulianChum LyeeR 商陆 Tmeex
 
 代码支持 ：
 
@@ -24,10 +46,10 @@ kevenzh HuimaoX czqwq
 
 翻译 :
 
-English ： Strata-su & czqwq
+英文 ： Strata-su & czqwq
 
 感谢老登登们。
-## **机器内容**
+## **机器内容** (不太全, 也懒得写了. 建议游戏内查看.)
 ***
 ### 神之艾萨锻炉：神之艾萨锻炉 & 太空组装模块
 默认为神之艾萨锻炉模式，在主机中塞入星阵以解锁太空组装模式。
