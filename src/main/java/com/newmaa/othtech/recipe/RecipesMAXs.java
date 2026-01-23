@@ -178,6 +178,15 @@ public class RecipesMAXs implements IRecipePool {
             .eut(TierEU.MAX)
             .addTo(Assembler);
         GTValues.RA.stdBuilder()
+            .itemOutputs(GTOreDictUnificator.get(OrePrefixes.wrapCircuit, Materials.MAX, 1))
+            .itemInputs(
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.MAX, 16),
+                GTUtility.getIntegratedCircuit(16))
+            .fluidInputs(FluidRegistry.getFluidStack("molten.solderingalloy", 72))
+            .duration(30 * 20)
+            .eut(TierEU.LV)
+            .addTo(Assembler);
+        GTValues.RA.stdBuilder()
             .fluidInputs(
                 new FluidStack(FluidRegistry.getFluidID("molten.universium"), 128 * 144),
                 Materials.Hydrogen.getPlasma(16000))
