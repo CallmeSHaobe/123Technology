@@ -3,6 +3,7 @@ package com.newmaa.othtech.machine;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
 import static gregtech.api.enums.HatchElement.*;
+import static gregtech.api.util.GTStructureUtility.activeCoils;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static gregtech.api.util.GTStructureUtility.ofCoil;
 import static net.minecraft.util.StatCollector.translateToLocal;
@@ -44,6 +45,7 @@ import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.api.util.OverclockCalculator;
+import gregtech.common.misc.GTStructureChannels;
 import gtPlusPlus.core.block.ModBlocks;
 import gtPlusPlus.core.util.minecraft.FluidUtils;
 import gtPlusPlus.xmod.gregtech.common.blocks.textures.TexturesGtBlock;
@@ -71,6 +73,8 @@ public class OTEMegaEBFGTpp extends OTHMultiMachineBase<OTEMegaEBFGTpp> {
     public int getCoilTier() {
         return Utils.getCoilTier(coilLevel);
     }
+
+    private int mHeatingCapacity = 0;
 
     private byte glassTier;
     private boolean lava = false;
@@ -130,9 +134,9 @@ public class OTEMegaEBFGTpp extends OTHMultiMachineBase<OTEMegaEBFGTpp> {
             @Override
             protected OverclockCalculator createOverclockCalculator(@NotNull GTRecipe recipe) {
                 return super.createOverclockCalculator(recipe).setHeatOC(true)
+                    .setMachineHeat(mHeatingCapacity)
                     .setHeatDiscount(true)
-                    .setRecipeHeat(recipe.mSpecialValue)
-                    .setMachineHeat((int) getCoilLevel().getHeat());
+                    .setRecipeHeat(recipe.mSpecialValue);
             }
 
             @NotNull
@@ -150,6 +154,7 @@ public class OTEMegaEBFGTpp extends OTHMultiMachineBase<OTEMegaEBFGTpp> {
 
     @Override
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
+        this.mHeatingCapacity = 0;
         if (!this.checkPiece("main", 7, 17, 0) || this.getCoilLevel() == HeatingCoilLevel.None) return false;
         if (this.glassTier < 8) {
             for (MTEHatch hatch : this.mExoticEnergyHatches) {
@@ -169,6 +174,7 @@ public class OTEMegaEBFGTpp extends OTHMultiMachineBase<OTEMegaEBFGTpp> {
         if (checkForWater()) {
             this.lava = true;
         }
+        this.mHeatingCapacity = ((int) getCoilLevel().getHeat());
         return true;
     }
 
@@ -249,7 +255,8 @@ public class OTEMegaEBFGTpp extends OTHMultiMachineBase<OTEMegaEBFGTpp> {
                         .buildAndChain(ofBlock(ModBlocks.blockCasings3Misc, 11)))
                 .addElement(
                     'C',
-                    withChannel("coil", ofCoil(OTEMegaEBFGTpp::setCoilLevel, OTEMegaEBFGTpp::getCoilLevel)))
+                    GTStructureChannels.HEATING_COIL
+                        .use(activeCoils(ofCoil(OTEMegaEBFGTpp::setCoilLevel, OTEMegaEBFGTpp::getCoilLevel))))
                 .addElement(
                     'D',
                     buildHatchAdder(OTEMegaEBFGTpp.class).atLeast(Muffler)
@@ -382,6 +389,7 @@ public class OTEMegaEBFGTpp extends OTHMultiMachineBase<OTEMegaEBFGTpp> {
             .addOutputHatch("AnyOutputHatch", 1)
             .addEnergyHatch("AnyEnergyHatch", 1)
             .addMufflerHatch("AnyMufflerHatch", 2)
+            .addSubChannelUsage(GTStructureChannels.HEATING_COIL)
             .toolTipFinisher("§a123Technology - EBF");
         return tt;
     }
