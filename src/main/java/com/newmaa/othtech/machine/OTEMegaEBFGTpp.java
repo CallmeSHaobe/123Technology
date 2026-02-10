@@ -8,6 +8,8 @@ import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static gregtech.api.util.GTStructureUtility.ofCoil;
 import static net.minecraft.util.StatCollector.translateToLocal;
 
+import java.util.ArrayList;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
@@ -45,6 +47,7 @@ import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.api.util.OverclockCalculator;
+import gregtech.api.util.ParallelHelper;
 import gregtech.common.misc.GTStructureChannels;
 import gtPlusPlus.core.block.ModBlocks;
 import gtPlusPlus.core.util.minecraft.FluidUtils;
@@ -137,6 +140,34 @@ public class OTEMegaEBFGTpp extends OTHMultiMachineBase<OTEMegaEBFGTpp> {
                     .setMachineHeat(mHeatingCapacity)
                     .setHeatDiscount(true)
                     .setRecipeHeat(recipe.mSpecialValue);
+            }
+
+            @NotNull
+            @Override
+            protected ParallelHelper createParallelHelper(@NotNull GTRecipe recipe) {
+                // Filter out pyrotheum from fluid inputs - it should not be consumed
+                ArrayList<FluidStack> filteredFluids = new ArrayList<>();
+                FluidStack pyrotheum = FluidUtils.getFluidStack("pyrotheum", 1);
+                
+                if (inputFluids != null) {
+                    for (FluidStack fluid : inputFluids) {
+                        if (fluid != null && !fluid.isFluidEqual(pyrotheum)) {
+                            filteredFluids.add(fluid);
+                        }
+                    }
+                }
+                
+                return new ParallelHelper().setRecipe(recipe)
+                    .setItemInputs(inputItems)
+                    .setFluidInputs(filteredFluids.toArray(new FluidStack[0]))
+                    .setAvailableEUt(availableVoltage * availableAmperage)
+                    .setMachine(machine, protectItems, protectFluids)
+                    .setRecipeLocked(recipeLockableMachine, isRecipeLocked)
+                    .setMaxParallel(maxParallel)
+                    .setEUtModifier(euModifier)
+                    .enableBatchMode(batchSize)
+                    .setConsumption(true)
+                    .setOutputCalculation(true);
             }
 
             @NotNull

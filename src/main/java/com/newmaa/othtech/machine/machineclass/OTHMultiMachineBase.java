@@ -319,6 +319,45 @@ public abstract class OTHMultiMachineBase<T extends OTHMultiMachineBase<T>> exte
     }
 
     /**
+     * Override getStoredFluids to include ME Input Hatches.
+     * This ensures ME hatches are properly included for recipe matching and consumption.
+     *
+     * @return ArrayList of all fluid stacks from input hatches, including ME hatches.
+     */
+    @Override
+    public ArrayList<FluidStack> getStoredFluids() {
+        ArrayList<FluidStack> rList = new ArrayList<>();
+        Map<Fluid, FluidStack> inputsFromME = new HashMap<>();
+        for (MTEHatchInput tHatch : GTUtility.filterValidMTEs(mInputHatches)) {
+            setHatchRecipeMap(tHatch);
+            if (tHatch instanceof MTEHatchMultiInput multiInputHatch) {
+                for (FluidStack tFluid : multiInputHatch.getStoredFluid()) {
+                    if (tFluid != null) {
+                        rList.add(tFluid);
+                    }
+                }
+            } else if (tHatch instanceof MTEHatchInputME meHatch) {
+                for (FluidStack fluidStack : meHatch.getStoredFluids()) {
+                    if (fluidStack != null) {
+                        // Prevent the same fluid from different ME hatches from being recognized
+                        inputsFromME.put(fluidStack.getFluid(), fluidStack);
+                    }
+                }
+            } else {
+                if (tHatch.getFillableStack() != null) {
+                    rList.add(tHatch.getFillableStack());
+                }
+            }
+        }
+
+        if (!inputsFromME.isEmpty()) {
+            rList.addAll(inputsFromME.values());
+        }
+
+        return rList;
+    }
+
+    /**
      * Forced get all input fluids, include all Dual Input Hatch slot.
      *
      * @return ArrayList of all fluid stacks, contains fluid stacks in Crafting Input Hatch.

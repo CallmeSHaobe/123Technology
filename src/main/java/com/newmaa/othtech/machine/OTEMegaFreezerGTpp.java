@@ -5,6 +5,8 @@ import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static net.minecraft.util.StatCollector.translateToLocal;
 
+import java.util.ArrayList;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
@@ -35,6 +37,7 @@ import gregtech.api.recipe.check.SimpleCheckRecipeResult;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.MultiblockTooltipBuilder;
+import gregtech.api.util.ParallelHelper;
 import gtPlusPlus.api.recipe.GTPPRecipeMaps;
 import gtPlusPlus.core.block.ModBlocks;
 import gtPlusPlus.core.util.minecraft.FluidUtils;
@@ -97,6 +100,34 @@ public class OTEMegaFreezerGTpp extends OTHMultiMachineBase<OTEMegaFreezerGTpp> 
             protected CheckRecipeResult validateRecipe(@NotNull GTRecipe recipe) {
                 return checkForLava() ? CheckRecipeResultRegistry.SUCCESSFUL
                     : SimpleCheckRecipeResult.ofFailure("nolava");
+            }
+
+            @NotNull
+            @Override
+            protected ParallelHelper createParallelHelper(@NotNull GTRecipe recipe) {
+                // Filter out cryotheum from fluid inputs - it should not be consumed
+                ArrayList<FluidStack> filteredFluids = new ArrayList<>();
+                FluidStack cryotheum = FluidUtils.getFluidStack("cryotheum", 1);
+                
+                if (inputFluids != null) {
+                    for (FluidStack fluid : inputFluids) {
+                        if (fluid != null && !fluid.isFluidEqual(cryotheum)) {
+                            filteredFluids.add(fluid);
+                        }
+                    }
+                }
+                
+                return new ParallelHelper().setRecipe(recipe)
+                    .setItemInputs(inputItems)
+                    .setFluidInputs(filteredFluids.toArray(new FluidStack[0]))
+                    .setAvailableEUt(availableVoltage * availableAmperage)
+                    .setMachine(machine, protectItems, protectFluids)
+                    .setRecipeLocked(recipeLockableMachine, isRecipeLocked)
+                    .setMaxParallel(maxParallel)
+                    .setEUtModifier(euModifier)
+                    .enableBatchMode(batchSize)
+                    .setConsumption(true)
+                    .setOutputCalculation(true);
             }
 
             @NotNull
