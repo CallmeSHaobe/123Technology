@@ -55,6 +55,8 @@ import gtPlusPlus.xmod.gregtech.common.blocks.textures.TexturesGtBlock;
 
 public class OTEMegaEBFGTpp extends OTHMultiMachineBase<OTEMegaEBFGTpp> {
 
+    private static final FluidStack PYROTHEUM = FluidUtils.getFluidStack("pyrotheum", 1);
+
     public OTEMegaEBFGTpp(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
     }
@@ -147,11 +149,10 @@ public class OTEMegaEBFGTpp extends OTHMultiMachineBase<OTEMegaEBFGTpp> {
             protected ParallelHelper createParallelHelper(@NotNull GTRecipe recipe) {
                 // Filter out pyrotheum from fluid inputs - it should not be consumed
                 ArrayList<FluidStack> filteredFluids = new ArrayList<>();
-                FluidStack pyrotheum = FluidUtils.getFluidStack("pyrotheum", 1);
                 
                 if (inputFluids != null) {
                     for (FluidStack fluid : inputFluids) {
-                        if (fluid != null && !fluid.isFluidEqual(pyrotheum)) {
+                        if (fluid != null && !fluid.isFluidEqual(PYROTHEUM)) {
                             filteredFluids.add(fluid);
                         }
                     }
@@ -235,7 +236,7 @@ public class OTEMegaEBFGTpp extends OTHMultiMachineBase<OTEMegaEBFGTpp> {
     public boolean checkForWater() {
         if (this.getStoredFluids() != null) {
             for (FluidStack stored : this.getStoredFluids()) {
-                if (stored.isFluidEqual(FluidUtils.getFluidStack("pyrotheum", 1))) {
+                if (stored.isFluidEqual(PYROTHEUM)) {
                     if (stored.amount >= 123 * 1000) {
                         return true;
                     }

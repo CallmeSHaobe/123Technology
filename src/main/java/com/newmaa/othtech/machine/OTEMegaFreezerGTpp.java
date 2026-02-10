@@ -45,6 +45,8 @@ import gtPlusPlus.xmod.gregtech.common.blocks.textures.TexturesGtBlock;
 
 public class OTEMegaFreezerGTpp extends OTHMultiMachineBase<OTEMegaFreezerGTpp> {
 
+    private static final FluidStack CRYOTHEUM = FluidUtils.getFluidStack("cryotheum", 1);
+
     public OTEMegaFreezerGTpp(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
     }
@@ -107,11 +109,10 @@ public class OTEMegaFreezerGTpp extends OTHMultiMachineBase<OTEMegaFreezerGTpp> 
             protected ParallelHelper createParallelHelper(@NotNull GTRecipe recipe) {
                 // Filter out cryotheum from fluid inputs - it should not be consumed
                 ArrayList<FluidStack> filteredFluids = new ArrayList<>();
-                FluidStack cryotheum = FluidUtils.getFluidStack("cryotheum", 1);
                 
                 if (inputFluids != null) {
                     for (FluidStack fluid : inputFluids) {
-                        if (fluid != null && !fluid.isFluidEqual(cryotheum)) {
+                        if (fluid != null && !fluid.isFluidEqual(CRYOTHEUM)) {
                             filteredFluids.add(fluid);
                         }
                     }
@@ -174,7 +175,7 @@ public class OTEMegaFreezerGTpp extends OTHMultiMachineBase<OTEMegaFreezerGTpp> 
     public boolean checkForLava() {
         if (this.getStoredFluids() != null) {
             for (FluidStack stored : this.getStoredFluids()) {
-                if (stored.isFluidEqual(FluidUtils.getFluidStack("cryotheum", 1))) {
+                if (stored.isFluidEqual(CRYOTHEUM)) {
                     if (stored.amount >= 123 * 1000) {
                         return true;
                     }
