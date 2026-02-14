@@ -455,9 +455,9 @@ public class OTEMiniSteamNineInOne extends MTESteamMultiBase<OTEMiniSteamNineInO
                         buildHatchAdder(OTEMiniSteamNineInOne.class)
                             .atLeast(
                                 SteamHatchElement.InputBus_Steam,
+                                SteamHatchElement.OutputBus_Steam,
                                 InputHatch,
                                 InputBus,
-                                SteamHatchElement.OutputBus_Steam,
                                 OutputHatch,
                                 OutputBus,
                                 Muffler)
