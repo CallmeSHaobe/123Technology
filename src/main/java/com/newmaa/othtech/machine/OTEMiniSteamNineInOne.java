@@ -18,7 +18,6 @@ import static net.minecraft.util.StatCollector.translateToLocal;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 import java.util.stream.Stream;
 
 import javax.annotation.Nonnull;
@@ -261,11 +260,6 @@ public class OTEMiniSteamNineInOne extends MTESteamMultiBase<OTEMiniSteamNineInO
 
     @Override
     public int getTierRecipes() {
-        return 2;
-    }
-
-    @Override
-    public int getThemeTier() {
         return 2;
     }
 
