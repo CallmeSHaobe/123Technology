@@ -37,6 +37,7 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
+import com.newmaa.othtech.machine.machineclass.OTHSteamMultiBase;
 import com.newmaa.othtech.utils.RecipeBuilder;
 
 import gregtech.api.GregTechAPI;
@@ -59,10 +60,9 @@ import gregtech.common.blocks.BlockCasings1;
 import gtPlusPlus.api.recipe.GTPPRecipeMaps;
 import gtPlusPlus.xmod.gregtech.api.metatileentity.implementations.MTEHatchSteamBusInput;
 import gtPlusPlus.xmod.gregtech.api.metatileentity.implementations.base.MTEHatchCustomFluidBase;
-import gtPlusPlus.xmod.gregtech.api.metatileentity.implementations.base.MTESteamMultiBase;
 import gtPlusPlus.xmod.gregtech.common.blocks.textures.TexturesGtBlock;
 
-public class OTEMiniSteamNineInOne extends MTESteamMultiBase<OTEMiniSteamNineInOne> implements ISurvivalConstructable {
+public class OTEMiniSteamNineInOne extends OTHSteamMultiBase<OTEMiniSteamNineInOne> implements ISurvivalConstructable {
 
     public OTEMiniSteamNineInOne(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
@@ -452,8 +452,19 @@ public class OTEMiniSteamNineInOne extends MTESteamMultiBase<OTEMiniSteamNineInO
 
         @Override
         public boolean supportsInputSeparation() {
-            return true;
+            return false;
         }
+
+     @Override
+     public boolean isInputSeparationEnabled() {
+        return true;
+     }
+
+    @Override
+    public boolean getDefaultInputSeparationMode() {
+        return true;
+    }
+
 
         @Override
         public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
