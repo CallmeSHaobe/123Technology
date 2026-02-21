@@ -148,11 +148,7 @@ public class OTELaoBaChemicalReactor extends OTHMultiMachineBase<OTELaoBaChemica
 
     @Override
     protected boolean isEnablePerfectOverclock() {
-        if (mode == 0 & !$123) {
-            return false;
-        } else {
-            return true;
-        }
+        return !(mode == 0 & !$123);
     }
 
     public int getMaxParallelRecipes() {
@@ -189,7 +185,7 @@ public class OTELaoBaChemicalReactor extends OTHMultiMachineBase<OTELaoBaChemica
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        if (mode == 0) return GTPPRecipeMaps.chemicalPlantRecipes;
+        if (this.mode == 0) return GTPPRecipeMaps.chemicalPlantRecipes;
         return RecipeMaps.multiblockChemicalReactorRecipes;
     }
 
