@@ -1,5 +1,7 @@
 <h1 align="center"> 123Technology</h1>
-
+<p align="center">
+  <img src="docs/assets/IrOsSm_logo.svg" alt="123Technology Logo" width="128" height="128">
+</p>
 <h3 align="center">GTNH</h3>
 
 [英文readme | English Version Readme here](README.en.md)
