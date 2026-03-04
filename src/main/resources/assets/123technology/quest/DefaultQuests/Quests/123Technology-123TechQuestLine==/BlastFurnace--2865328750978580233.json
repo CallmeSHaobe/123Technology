@@ -2,7 +2,7 @@
   "properties:10": {
     "betterquesting:10": {
       "autoClaim:1": 0,
-      "desc:8": "§b§l【Tier 4 - EV 极高压 (2048 EU/t)】§r\n§a【Tier 4 EV】IMBA 超模高炉§r\n不耗电！int 并行！任何配方 10 tick 完成！\n内置一颗中子星！炉温无上限！\n来自 EOHBUF 作者的眷顾——成本低到怀疑人生！\n只要有它，资源匮乏、效率低下、能量不足统统不存在。\n传说中，神明在喝醉后设计了一台机器，醒来后却忘了删掉它...",
+      "desc:8": "§4§l【Tier 13 - UXV 超绝缘压 IV (536870912 EU/t)】§r\n§a【Tier 13 UXV】IMBA 超模高炉§r\n不耗电！int 并行！任何配方 10 tick 完成！\n配方：艾萨锻炉（ISA Forge）中制作，耗电UXV级（536870912 EU/t）。\n内置一颗中子星！炉温无上限！\n来自 EOHBUF 作者的眷顾——成本低到怀疑人生！\n只要有它，资源匮乏、效率低下、能量不足统统不存在。\n传说中，神明在喝醉后设计了一台机器，醒来后却忘了删掉它...",
       "globalShare:1": 0,
       "icon:10": {
         "Count:3": 1,
@@ -13,7 +13,7 @@
       "isMain:1": 0,
       "isSilent:1": 0,
       "lockedProgress:1": 0,
-      "name:8": "【Tier 4 EV】IMBA 超模高炉",
+      "name:8": "【Tier 13 UXV】IMBA 超模高炉",
       "questLogic:8": "AND",
       "repeatTime:3": -1,
       "repeat_relative:1": 1,

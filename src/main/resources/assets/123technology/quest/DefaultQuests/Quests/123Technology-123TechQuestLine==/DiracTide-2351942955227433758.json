@@ -2,7 +2,7 @@
   "properties:10": {
     "betterquesting:10": {
       "autoClaim:1": 0,
-      "desc:8": "§e§l【Tier 8 - UV 终极压 (524288 EU/t)】§r\n§a【Tier 8 UV】狄拉克潮汐（Mega QFT）§r\n对虚粒子的操控在量子之海中掀起了滔天巨浪...\n以物理学家狄拉克命名的量子场论处理机（Mega QFT 123T UV 强化版）。\n提供基础原料，可让复杂化学/物理过程一步到位完成。\n时间膨胀场发生器每提升一级减少 10% 配方时间。\n稳定力场发生器等级 >=6 时产量翻倍；狄拉克逆变模式有意想不到的惊喜。",
+      "desc:8": "§4§l【Tier 13 - UXV 超绝缘压 IV (536870912 EU/t)】§r\n§a【Tier 13 UXV】狄拉克潮汐（Mega QFT）§r\n对虚粒子的操控在量子之海中掀起了滔天巨浪...\n配方：装配线制作，需UXV级电路、时空材料（molten.spacetime），耗电约 123,123,123 EU/t。\n以物理学家狄拉克命名的量子场论处理机（Mega QFT 123T UXV 强化版）。\n提供基础原料，可让复杂化学/物理过程一步到位完成。\n时间膨胀场发生器每提升一级减少 10% 配方时间。\n稳定力场发生器等级 >=6 时产量翻倍；狄拉克逆变模式有意想不到的惊喜。",
       "globalShare:1": 0,
       "icon:10": {
         "Count:3": 1,
@@ -13,7 +13,7 @@
       "isMain:1": 0,
       "isSilent:1": 0,
       "lockedProgress:1": 0,
-      "name:8": "【Tier 8 UV】狄拉克潮汐（Mega QFT）",
+      "name:8": "【Tier 13 UXV】狄拉克潮汐（Mega QFT）",
       "questLogic:8": "AND",
       "repeatTime:3": -1,
       "repeat_relative:1": 1,

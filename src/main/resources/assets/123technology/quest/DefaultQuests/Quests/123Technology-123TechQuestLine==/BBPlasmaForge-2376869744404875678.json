@@ -2,7 +2,7 @@
   "properties:10": {
     "betterquesting:10": {
       "autoClaim:1": 0,
-      "desc:8": "§9§l【Tier 9 - UHV 超终极压 (2097152 EU/t)】§r\n§a【Tier 9 UHV】超维度憋憋锻炉§r\n憋憋（BB）主题的超维度等离子锻炉——顶级金属加工机器。\n能在超高温等离子环境中进行极端材料处理。\n可处理常规方法无法完成的特殊合金配方，是 UHV 终极金属加工机器。",
+      "desc:8": "§1§l【Tier 10 - UEV 超绝缘压 (8388608 EU/t)】§r\n§a【Tier 10 UEV】超维度憋憋锻炉§r\n憋憋（BB）主题的超维度等离子锻炉——顶级金属加工机器。\n配方：装配线制作，需UEV电动机/活塞/泵/机器人臂、无限线圈、UEV场发生器，耗电UEV级。\n能在超高温等离子环境中进行极端材料处理。\n可处理常规方法无法完成的特殊合金配方，是 UEV 终极金属加工机器。",
       "globalShare:1": 0,
       "icon:10": {
         "Count:3": 1,
@@ -13,7 +13,7 @@
       "isMain:1": 0,
       "isSilent:1": 0,
       "lockedProgress:1": 0,
-      "name:8": "【Tier 9 UHV】超维度憋憋锻炉",
+      "name:8": "【Tier 10 UEV】超维度憋憋锻炉",
       "questLogic:8": "AND",
       "repeatTime:3": -1,
       "repeat_relative:1": 1,

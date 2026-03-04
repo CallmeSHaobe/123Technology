@@ -2,7 +2,7 @@
   "properties:10": {
     "betterquesting:10": {
       "autoClaim:1": 0,
-      "desc:8": "§c§l【Tier 6 - LuV 低超压 (32768 EU/t)】§r\n§a【Tier 6 LuV】神之艾萨锻炉§r\n艾萨领主认证——神级速度与并行。\n耗时 = NEI耗时 * { 1 / {电压等级^[(玻璃等级/2)+1]}^(1/3) }\n主机放入星阵可解锁太空组装模式。\n是大规模矿石研磨处理的终极解决方案之一。",
+      "desc:8": "§4§l【Tier 13 - UXV 超绝缘压 IV (536870912 EU/t)】§r\n§a【Tier 13 UXV】神之艾萨锻炉§r\n艾萨领主认证——神级速度与并行。\n配方：装配线制作，需UXV级电路（Materials.UXV）、时空压缩场发生器（TecTech UXV方块）、\nUMV场发生器、永恒奇点等极端材料。\n结构同样需要戴森球组件（sBlockCasingsDyson），为 UXV 阶段方可建造。\n耗时 = NEI耗时 * { 1 / {电压等级^[(玻璃等级/2)+1]}^(1/3) }\n主机放入星阵可解锁太空组装模式。\n是大规模矿石研磨处理的终极解决方案之一。",
       "globalShare:1": 0,
       "icon:10": {
         "Count:3": 1,
@@ -13,7 +13,7 @@
       "isMain:1": 0,
       "isSilent:1": 0,
       "lockedProgress:1": 0,
-      "name:8": "【Tier 6 LuV】神之艾萨锻炉",
+      "name:8": "【Tier 13 UXV】神之艾萨锻炉",
       "questLogic:8": "AND",
       "repeatTime:3": -1,
       "repeat_relative:1": 1,

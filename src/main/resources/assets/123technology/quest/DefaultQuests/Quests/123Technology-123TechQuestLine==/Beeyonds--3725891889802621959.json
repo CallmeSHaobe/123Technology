@@ -2,7 +2,7 @@
   "properties:10": {
     "betterquesting:10": {
       "autoClaim:1": 0,
-      "desc:8": "§6§l【Tier 3 - HV 高压 (512 EU/t)】§r\n§a【Tier 3 HV】Beeyonds 之家§r\n为 Beeyonds 蜜蜂模组提供的工业级多方块蜂房。\n可容纳并自动化管理大量蜜蜂，提升蜜蜂育种和产出效率。\n将蜜蜂系统融入工业生产线，是蜂蜜/蜡/特殊产物量产的关键设施。",
+      "desc:8": "§6§l【Tier 3 - HV 高压 (512 EU/t)】§r\n§a【Tier 3 HV】Beeyonds 之家§r\n为 Beeyonds 蜜蜂模组提供的工业级多方块蜂房。\n结构：GT基础机械外壳、钢化石、玻璃、草地、黑曜石组成，HV阶段即可建造。\n可容纳并自动化管理大量蜜蜂，提升蜜蜂育种和产出效率。\n将蜜蜂系统融入工业生产线，是蜂蜜/蜡/特殊产物量产的关键设施。",
       "globalShare:1": 0,
       "icon:10": {
         "Count:3": 1,

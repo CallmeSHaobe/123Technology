@@ -2,7 +2,7 @@
   "properties:10": {
     "betterquesting:10": {
       "autoClaim:1": 0,
-      "desc:8": "§c§l【Tier 6 - LuV 低超压 (32768 EU/t)】§r\n§a【Tier 6 LuV】迷你有源变压器§r\n小型化的有源变压器，用于电压等级的高效转换。\n相比标准变压器体积更小、部署更灵活。\n适合 LuV+ 阶段需要精细调控能量输出的场合。",
+      "desc:8": "§e§l【Tier 8 - UV 终极压 (524288 EU/t)】§r\n§a【Tier 8 UV】迷你有源变压器§r\n小型化的有源变压器，可在各电压等级之间高效升降压。\n配方：组装机分档制作，从LV至UXV各档均有对应配方。\n相比标准变压器体积更小、部署更灵活，适合对空间有要求的场景。\n从UV阶段开始能体现出最佳的能量转换优势。",
       "globalShare:1": 0,
       "icon:10": {
         "Count:3": 1,
@@ -13,7 +13,7 @@
       "isMain:1": 0,
       "isSilent:1": 0,
       "lockedProgress:1": 0,
-      "name:8": "【Tier 6 LuV】迷你有源变压器",
+      "name:8": "【Tier 8 UV】迷你有源变压器",
       "questLogic:8": "AND",
       "repeatTime:3": -1,
       "repeat_relative:1": 1,

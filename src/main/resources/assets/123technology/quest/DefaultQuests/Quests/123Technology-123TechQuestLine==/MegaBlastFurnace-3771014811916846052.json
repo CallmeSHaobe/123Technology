@@ -2,7 +2,7 @@
   "properties:10": {
     "betterquesting:10": {
       "autoClaim:1": 0,
-      "desc:8": "§5§l【Tier 5 - IV 绝缘压 (8192 EU/t)】§r\n§a【Tier 5 IV】巨型炽焱高炉§r\nGTPP 巨型高炉的 123T IV 强化版本，专注大规模冶炼。\n特殊模式：不消耗烈焰之炽焱，但输入仓必须有 >=123*1000L 烈焰之炽焱才可运行。\n参数：EU 消耗 90%，速度 +120%，并行 2048。\n请注意玻璃等级要求；污染过高时请放置消声仓。",
+      "desc:8": "§e§l【Tier 8 - UV 终极压 (524288 EU/t)】§r\n§a【Tier 8 UV】巨型炽焱高炉§r\nGTPP 巨型高炉的 123T 强化版本，专注大规模冶炼。\n配方：组装机制作，需LuV场发生器、UV级电路（Superconductor），耗电约32000 EU/t。\n特殊模式：不消耗烈焰之炽焱，但输入仓必须有 >=123*1000L 烈焰之炽焱才可运行。\n参数：EU 消耗 90%，速度 +120%，并行 2048。\n请注意玻璃等级要求；污染过高时请放置消声仓。",
       "globalShare:1": 0,
       "icon:10": {
         "Count:3": 1,
@@ -13,7 +13,7 @@
       "isMain:1": 0,
       "isSilent:1": 0,
       "lockedProgress:1": 0,
-      "name:8": "【Tier 5 IV】巨型炽焱高炉",
+      "name:8": "【Tier 8 UV】巨型炽焱高炉",
       "questLogic:8": "AND",
       "repeatTime:3": -1,
       "repeat_relative:1": 1,

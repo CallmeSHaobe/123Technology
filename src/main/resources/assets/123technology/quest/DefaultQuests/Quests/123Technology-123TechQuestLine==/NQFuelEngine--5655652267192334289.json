@@ -2,7 +2,7 @@
   "properties:10": {
     "betterquesting:10": {
       "autoClaim:1": 0,
-      "desc:8": "§d§l【Tier 7 - ZPM 零点模 (131072 EU/t)】§r\n§a【Tier 7 ZPM】通用硅岩燃料引擎§r\n以硅岩（Naquadah）燃料驱动的通用型大型多方块发电机。\n支持多种硅岩燃料变体，发电量达到 ZPM 级别。\n是后期游戏中最高效的能源供应机器之一。\n与压缩硅岩燃料精炼厂配合使用，构建完整的硅岩能源体系。",
+      "desc:8": "§e§l【Tier 8 - UV 终极压 (524288 EU/t)】§r\n§a【Tier 8 UV】通用硅岩燃料引擎§r\n以硅岩（Naquadah）燃料驱动的通用型大型多方块发电机。\n配方：装配线制作，需ZPM机械外壳、ZPM电动机/泵/场发生器，以及UV级电路（Superconductor）。\n支持多种硅岩燃料变体，发电量达到 UV+ 级别。\n是后期游戏中最高效的能源供应机器之一。\n与压缩硅岩燃料精炼厂配合使用，构建完整的硅岩能源体系。",
       "globalShare:1": 0,
       "icon:10": {
         "Count:3": 1,
@@ -13,7 +13,7 @@
       "isMain:1": 0,
       "isSilent:1": 0,
       "lockedProgress:1": 0,
-      "name:8": "【Tier 7 ZPM】通用硅岩燃料引擎",
+      "name:8": "【Tier 8 UV】通用硅岩燃料引擎",
       "questLogic:8": "AND",
       "repeatTime:3": -1,
       "repeat_relative:1": 1,

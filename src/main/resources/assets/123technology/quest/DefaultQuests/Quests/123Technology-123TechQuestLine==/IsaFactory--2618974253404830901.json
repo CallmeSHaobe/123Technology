@@ -2,7 +2,7 @@
   "properties:10": {
     "betterquesting:10": {
       "autoClaim:1": 0,
-      "desc:8": "§d§l【Tier 7 - ZPM 零点模 (131072 EU/t)】§r\n§a【Tier 7 ZPM】艾萨处理集成工厂 OTH§r\n神奇的艾萨系列，将垃圾和化工产品融为一体。\n许多老登们最喜欢的一步到位：扔掉乱七八糟的流程，节约 TPS。\n执行无损超频；耗时倍率=1/线圈等级；耗电倍率=玻璃等级^-0.1。\n研磨器复合体决定机器执行的配方等级（仅是一个物品）。\n还拥有意想不到的惊喜！",
+      "desc:8": "§f§l【Tier 12 - UMV 超绝缘压 III (134217728 EU/t)】§r\n§a【Tier 12 UMV】艾萨处理集成工厂 OTH§r\n神奇的艾萨系列，将垃圾和化工产品融为一体。\n配方：大型化学反应釜（多方块）中制作，耗电 123,123,123 EU/t，需UMV级能源仓。\n许多老登们最喜欢的一步到位：扔掉乱七八糟的流程，节约 TPS。\n执行无损超频；耗时倍率=1/线圈等级；耗电倍率=玻璃等级^-0.1。\n研磨器复合体决定机器执行的配方等级（仅是一个物品）。\n还拥有意想不到的惊喜！",
       "globalShare:1": 0,
       "icon:10": {
         "Count:3": 1,
@@ -13,7 +13,7 @@
       "isMain:1": 0,
       "isSilent:1": 0,
       "lockedProgress:1": 0,
-      "name:8": "【Tier 7 ZPM】艾萨处理集成工厂 OTH",
+      "name:8": "【Tier 12 UMV】艾萨处理集成工厂 OTH",
       "questLogic:8": "AND",
       "repeatTime:3": -1,
       "repeat_relative:1": 1,

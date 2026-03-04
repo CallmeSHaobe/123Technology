@@ -2,7 +2,7 @@
   "properties:10": {
     "betterquesting:10": {
       "autoClaim:1": 0,
-      "desc:8": "§9§l【Tier 9 - UHV 超终极压 (2097152 EU/t)】§r\n§a【Tier 9 UHV】噬魂监狱（Mega EEC）§r\n巨型极端能量管道（EEC）的 123T UHV 强化版本。\n「噬魂」之名源于其恐怖的能量消耗——请确保有充足的能量供应！\n专为超高能量等级配方设计，能量效率惊人。\n是 UHV 阶段最顶级的能量处理多方块机器之一。",
+      "desc:8": "§5§l【Tier 11 - UIV 超绝缘压 II (33554432 EU/t)】§r\n§a【Tier 11 UIV】噬魂监狱（Mega EEC）§r\n巨型极端能量管道（EEC）的 123T UIV 强化版本。\n配方：装配线制作，需UEV机器人臂、UIV级TecTech光学电路（Optical），耗电UIV级。\n研究素材为原版EEC，需扫描解锁。\n「噬魂」之名源于其恐怖的能量消耗——请确保有充足的能量供应！\n专为超高能量等级配方设计，能量效率惊人。",
       "globalShare:1": 0,
       "icon:10": {
         "Count:3": 1,
@@ -13,7 +13,7 @@
       "isMain:1": 0,
       "isSilent:1": 0,
       "lockedProgress:1": 0,
-      "name:8": "【Tier 9 UHV】噬魂监狱（Mega EEC）",
+      "name:8": "【Tier 11 UIV】噬魂监狱（Mega EEC）",
       "questLogic:8": "AND",
       "repeatTime:3": -1,
       "repeat_relative:1": 1,
