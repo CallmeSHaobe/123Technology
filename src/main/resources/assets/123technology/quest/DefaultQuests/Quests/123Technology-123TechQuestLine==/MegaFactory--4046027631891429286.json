@@ -1,0 +1,55 @@
+{
+  "properties:10": {
+    "betterquesting:10": {
+      "autoClaim:1": 0,
+      "desc:8": "§9§l【Tier 9 - UHV 超终极压 (2097152 EU/t)】§r\n§a【Tier 9 UHV】终极压缩巨型加工厂§r\n123T 核心旗舰机器——终极压缩巨型加工厂。\n集成十五种工业加工模式（螺丝刀切换类，编程电路20/21/22切换内部模式）:\n  Metal 类: 压缩机、车床、电力磁化机\n  Fluid 类: 发酵槽、流体提取机、提取机\n  Misc  类: 激光蚀刻机、高压釜、流体固化机\n  Isa   类: 艾萨研磨机、工业浮选机、真空干燥炉\n  Col   类: 分子重组仪、酿造室、流体加热机\n并行公式：电压等级提高一级并行-2，最低9，默认256。",
+      "globalShare:1": 0,
+      "icon:10": {
+        "Count:3": 1,
+        "Damage:2": 23520,
+        "OreDict:8": "",
+        "id:8": "gregtech:gt.blockmachines"
+      },
+      "isMain:1": 0,
+      "isSilent:1": 0,
+      "lockedProgress:1": 0,
+      "name:8": "【Tier 9 UHV】终极压缩巨型加工厂",
+      "questLogic:8": "AND",
+      "repeatTime:3": -1,
+      "repeat_relative:1": 1,
+      "simultaneous:1": 0,
+      "snd_complete:8": "random.levelup",
+      "snd_update:8": "random.levelup",
+      "taskLogic:8": "AND",
+      "visibility:8": "NORMAL"
+    }
+  },
+  "questIDHigh:4": -4046027631891429286,
+  "questIDLow:4": -5885043488198819751,
+  "rewards:9": {},
+  "tasks:9": {
+    "0:10": {
+      "autoConsume:1": 0,
+      "consume:1": 0,
+      "groupDetect:1": 1,
+      "ignoreNBT:1": 1,
+      "index:3": 0,
+      "partialMatch:1": 1,
+      "requiredItems:9": {
+        "0:10": {
+          "Count:3": 1,
+          "Damage:2": 23520,
+          "OreDict:8": "",
+          "id:8": "gregtech:gt.blockmachines"
+        }
+      },
+      "taskID:8": "bq_standard:retrieval"
+    }
+  },
+  "preRequisites:9": {
+    "0:10": {
+      "questIDHigh:4": 7722944585155103069,
+      "questIDLow:4": -9190758031382520942
+    }
+  }
+}

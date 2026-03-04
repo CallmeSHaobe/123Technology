@@ -1,0 +1,49 @@
+{
+  "properties:10": {
+    "betterquesting:10": {
+      "autoClaim:1": 0,
+      "desc:8": "§2§l【Tier 0.5 - 蒸汽时代 (Steam Age)】§r\n§a【欢迎】123Technology 机器指引§r\n欢迎来到 123Technology 模组！\n\n本任务线按照 GTNH 电压阶段分类介绍本模组所有多方块机器：\n  Tier 0.5 -- 蒸汽时代（Steam）\n  Tier 2   -- MV  中压  (128 EU/t)\n  Tier 3   -- HV  高压  (512 EU/t)\n  Tier 4   -- EV  极高压 (2048 EU/t)\n  Tier 5   -- IV  绝缘压 (8192 EU/t)\n  Tier 6   -- LuV 低超压 (32768 EU/t)\n  Tier 7   -- ZPM 零点模 (131072 EU/t)\n  Tier 8   -- UV  终极压 (524288 EU/t)\n  Tier 9   -- UHV 超终极压 (2097152 EU/t)\n  Tier 10  -- UEV 超绝缘压 (8388608 EU/t)\n\n任务要求：持有对应机器即可完成，不消耗物品。\n祝游戏愉快！憋憋～",
+      "globalShare:1": 0,
+      "icon:10": {
+        "Count:3": 1,
+        "Damage:2": 23577,
+        "OreDict:8": "",
+        "id:8": "gregtech:gt.blockmachines"
+      },
+      "isMain:1": 1,
+      "isSilent:1": 0,
+      "lockedProgress:1": 0,
+      "name:8": "【欢迎】123Technology 机器指引",
+      "questLogic:8": "AND",
+      "repeatTime:3": -1,
+      "repeat_relative:1": 1,
+      "simultaneous:1": 0,
+      "snd_complete:8": "random.levelup",
+      "snd_update:8": "random.levelup",
+      "taskLogic:8": "AND",
+      "visibility:8": "NORMAL"
+    }
+  },
+  "questIDHigh:4": 7722944585155103069,
+  "questIDLow:4": -9190758031382520942,
+  "rewards:9": {},
+  "tasks:9": {
+    "0:10": {
+      "autoConsume:1": 0,
+      "consume:1": 0,
+      "groupDetect:1": 1,
+      "ignoreNBT:1": 1,
+      "index:3": 0,
+      "partialMatch:1": 1,
+      "requiredItems:9": {
+        "0:10": {
+          "Count:3": 1,
+          "Damage:2": 23577,
+          "OreDict:8": "",
+          "id:8": "gregtech:gt.blockmachines"
+        }
+      },
+      "taskID:8": "bq_standard:retrieval"
+    }
+  }
+}

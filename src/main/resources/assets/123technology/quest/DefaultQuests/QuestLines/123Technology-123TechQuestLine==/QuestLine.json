@@ -1,0 +1,19 @@
+{
+  "properties:10": {
+    "betterquesting:10": {
+      "bg_image:8": "",
+      "bg_size:3": 256,
+      "desc:8": "123Technology Mod 机器任务线\n按制作阶段分类介绍本模组所有多方块机器",
+      "icon:10": {
+        "Count:3": 1,
+        "Damage:2": 23520,
+        "OreDict:8": "",
+        "id:8": "gregtech:gt.blockmachines"
+      },
+      "name:8": "123Technology",
+      "visibility:8": "NORMAL"
+    }
+  },
+  "questLineIDHigh:4": 3630150074513574271,
+  "questLineIDLow:4": -7072631871726141045
+}

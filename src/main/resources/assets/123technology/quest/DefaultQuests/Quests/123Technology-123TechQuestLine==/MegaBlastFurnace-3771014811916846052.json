@@ -1,0 +1,55 @@
+{
+  "properties:10": {
+    "betterquesting:10": {
+      "autoClaim:1": 0,
+      "desc:8": "§5§l【Tier 5 - IV 绝缘压 (8192 EU/t)】§r\n§a【Tier 5 IV】巨型炽焱高炉§r\nGTPP 巨型高炉的 123T IV 强化版本，专注大规模冶炼。\n特殊模式：不消耗烈焰之炽焱，但输入仓必须有 >=123*1000L 烈焰之炽焱才可运行。\n参数：EU 消耗 90%，速度 +120%，并行 2048。\n请注意玻璃等级要求；污染过高时请放置消声仓。",
+      "globalShare:1": 0,
+      "icon:10": {
+        "Count:3": 1,
+        "Damage:2": 23527,
+        "OreDict:8": "",
+        "id:8": "gregtech:gt.blockmachines"
+      },
+      "isMain:1": 0,
+      "isSilent:1": 0,
+      "lockedProgress:1": 0,
+      "name:8": "【Tier 5 IV】巨型炽焱高炉",
+      "questLogic:8": "AND",
+      "repeatTime:3": -1,
+      "repeat_relative:1": 1,
+      "simultaneous:1": 0,
+      "snd_complete:8": "random.levelup",
+      "snd_update:8": "random.levelup",
+      "taskLogic:8": "AND",
+      "visibility:8": "NORMAL"
+    }
+  },
+  "questIDHigh:4": 3771014811916846052,
+  "questIDLow:4": -7360681353306524962,
+  "rewards:9": {},
+  "tasks:9": {
+    "0:10": {
+      "autoConsume:1": 0,
+      "consume:1": 0,
+      "groupDetect:1": 1,
+      "ignoreNBT:1": 1,
+      "index:3": 0,
+      "partialMatch:1": 1,
+      "requiredItems:9": {
+        "0:10": {
+          "Count:3": 1,
+          "Damage:2": 23527,
+          "OreDict:8": "",
+          "id:8": "gregtech:gt.blockmachines"
+        }
+      },
+      "taskID:8": "bq_standard:retrieval"
+    }
+  },
+  "preRequisites:9": {
+    "0:10": {
+      "questIDHigh:4": 7722944585155103069,
+      "questIDLow:4": -9190758031382520942
+    }
+  }
+}
