@@ -2,7 +2,7 @@
   "properties:10": {
     "betterquesting:10": {
       "autoClaim:1": 0,
-      "desc:8": "§4§l【Tier 13 - UXV 超绝缘压 IV (536870912 EU/t)】§r\n§a【Tier 13 UXV】红日之将军恩情配件厂§r\n主！体！南！下！\n从某半岛神秘北方国家引进的尖端高科技巨构。\n配方：装配线制作，需UMV机器人臂、UXV级TecTech宇宙电路（Cosmic），耗电UXV级。\n利用「恩情」的力量将原材料一步转化为电路板所需材料。\n消耗恩情运行：1t/个；配方产出倍率可在配置文件中调整（默认 1.5，四舍五入）。\n主机放入一团蜂群可获得加速（加速=log2(蜂群数量)，向下取整）。\n开机时播放特殊音效（可在配置文件中关闭）。",
+      "desc:8": "§f§l【Tier 12 - UMV 超绝缘压 III (134217728 EU/t)】§r\n§a【Tier 12 UMV】红日之将军恩情配件厂§r\n主！体！南！下！\n从某半岛神秘北方国家引进的尖端高科技巨构。\n配方：装配线制作，需UMV挤压机（EXTRUDER_UMV，UMV阶段）×64、UMV机器人臂×64、UMV场发生器×64。\n还需要：宇宙电路（UXV级，UMV阶段可制作，遵循「提前一阶」规律）×64×2，耗电UXV级。\n装配线在UMV阶段可用两倍UMV仓升压一档（UXV配方），使UMV阶段即可制作。\n消耗恩情运行：1t/个；配方产出倍率可在配置文件中调整（默认 1.5，四舍五入）。\n主机放入一团蜂群可获得加速（加速=log2(蜂群数量)，向下取整）。",
       "globalShare:1": 0,
       "icon:10": {
         "Count:3": 1,
@@ -13,7 +13,7 @@
       "isMain:1": 0,
       "isSilent:1": 0,
       "lockedProgress:1": 0,
-      "name:8": "【Tier 13 UXV】红日之将军恩情配件厂",
+      "name:8": "【Tier 12 UMV】红日之将军恩情配件厂",
       "questLogic:8": "AND",
       "repeatTime:3": -1,
       "repeat_relative:1": 1,

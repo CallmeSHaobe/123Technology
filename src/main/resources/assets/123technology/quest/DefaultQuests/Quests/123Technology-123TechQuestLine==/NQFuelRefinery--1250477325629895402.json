@@ -2,7 +2,7 @@
   "properties:10": {
     "betterquesting:10": {
       "autoClaim:1": 0,
-      "desc:8": "§1§l【Tier 10 - UEV 超绝缘压 (8388608 EU/t)】§r\n§a【Tier 10 UEV】压缩硅岩燃料精炼厂§r\n专门生产高纯度硅岩燃料的大型精炼厂。\n配方：装配线制作，需UHV场发生器、宇宙中子素相关材料，耗电UEV级（8388608 EU/t）。\n将原始硅岩材料经多步骤精炼，转化为各级硅岩燃料液体。\n与通用硅岩燃料引擎搭配，构成完整的硅岩能源生产链条。\n是 UEV+ 阶段高功率发电体系的上游核心设施。",
+      "desc:8": "§9§l【Tier 9 - UHV 超终极压 (2097152 EU/t)】§r\n§a【Tier 9 UHV】压缩硅岩燃料精炼厂§r\n专门生产高纯度硅岩燃料的大型精炼厂。\n配方：装配线制作，需UHV场发生器（UV阶段即可制作），耗电UEV级。\n装配线在UHV阶段可用两倍UHV仓升压一档（UEV配方），使UHV阶段即可制作。\n将原始硅岩材料经多步骤精炼，转化为各级硅岩燃料液体。\n与通用硅岩燃料引擎搭配，构成完整的硅岩能源生产链条。",
       "globalShare:1": 0,
       "icon:10": {
         "Count:3": 1,
@@ -13,7 +13,7 @@
       "isMain:1": 0,
       "isSilent:1": 0,
       "lockedProgress:1": 0,
-      "name:8": "【Tier 10 UEV】压缩硅岩燃料精炼厂",
+      "name:8": "【Tier 9 UHV】压缩硅岩燃料精炼厂",
       "questLogic:8": "AND",
       "repeatTime:3": -1,
       "repeat_relative:1": 1,

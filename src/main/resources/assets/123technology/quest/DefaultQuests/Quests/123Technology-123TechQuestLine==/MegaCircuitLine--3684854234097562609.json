@@ -2,7 +2,7 @@
   "properties:10": {
     "betterquesting:10": {
       "autoClaim:1": 0,
-      "desc:8": "§9§l【Tier 9 - UHV 超终极压 (2097152 EU/t)】§r\n§a【Tier 9 UHV】进阶高能电路装配线§r\n超大规模电路装配线，专为 UHV+ 阶段高等级电路批量生产设计。\n配方：装配线制作，需UV机器人臂/电动机/泵，UHV级电路（Infinite），耗电UHV级。\n研究素材为大型电路组装机（LCA），需扫描解锁。\n支持大量高级电路装配配方的并行加工。\n后期游戏对 UHV/UIV 级别电路的需求量极为庞大，此机器是生产核心。\n线圈等级决定加工速度与并行上限。",
+      "desc:8": "§e§l【Tier 8 - UV  终极压  (524288 EU/t)】§r\n§a【Tier 8 UV】进阶高能电路装配线§r\n超大规模电路装配线，专为 UV+ 阶段高等级电路批量生产设计。\n配方：装配线制作，需大型电路组装机×64、电路装配线×64，UV级机器人臂/电动机/泵/场发生器。\n还需要：Infinite级电路（UHV电路，UV阶段可制作）、Neutronium齿轮，耗电UHV级。\n装配线在UV阶段可以两倍ZPM能量仓升压一档（UHV配方），使UV阶段即可制作。\n线圈等级决定加工速度与并行上限。",
       "globalShare:1": 0,
       "icon:10": {
         "Count:3": 1,
@@ -13,7 +13,7 @@
       "isMain:1": 0,
       "isSilent:1": 0,
       "lockedProgress:1": 0,
-      "name:8": "【Tier 9 UHV】进阶高能电路装配线",
+      "name:8": "【Tier 8 UV】进阶高能电路装配线",
       "questLogic:8": "AND",
       "repeatTime:3": -1,
       "repeat_relative:1": 1,
