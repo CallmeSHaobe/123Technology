@@ -1,0 +1,55 @@
+{
+  "properties:10": {
+    "betterquesting:10": {
+      "autoClaim:1": 0,
+      "desc:8": "§e§l【Tier 8 - UV  终极压  (524288 EU/t)】§r\n§a【Tier 8 UV】进阶高能电路装配线§r\n超大规模电路装配线，专为 UV+ 阶段高等级电路批量生产设计。\n配方：装配线制作，需大型电路组装机×64、电路装配线×64，UV级机器人臂/电动机/泵/场发生器。\n还需要：Infinite级电路（UHV电路，UV阶段可制作）、Neutronium齿轮，耗电UHV级。\n装配线在UV阶段可以两倍ZPM能量仓升压一档（UHV配方），使UV阶段即可制作。\n线圈等级决定加工速度与并行上限。",
+      "globalShare:1": 0,
+      "icon:10": {
+        "Count:3": 1,
+        "Damage:2": 23549,
+        "OreDict:8": "",
+        "id:8": "gregtech:gt.blockmachines"
+      },
+      "isMain:1": 0,
+      "isSilent:1": 0,
+      "lockedProgress:1": 0,
+      "name:8": "【Tier 8 UV】进阶高能电路装配线",
+      "questLogic:8": "AND",
+      "repeatTime:3": -1,
+      "repeat_relative:1": 1,
+      "simultaneous:1": 0,
+      "snd_complete:8": "random.levelup",
+      "snd_update:8": "random.levelup",
+      "taskLogic:8": "AND",
+      "visibility:8": "NORMAL"
+    }
+  },
+  "questIDHigh:4": -3684854234097562609,
+  "questIDLow:4": -4955210135313349437,
+  "rewards:9": {},
+  "tasks:9": {
+    "0:10": {
+      "autoConsume:1": 0,
+      "consume:1": 0,
+      "groupDetect:1": 1,
+      "ignoreNBT:1": 1,
+      "index:3": 0,
+      "partialMatch:1": 1,
+      "requiredItems:9": {
+        "0:10": {
+          "Count:3": 1,
+          "Damage:2": 23549,
+          "OreDict:8": "",
+          "id:8": "gregtech:gt.blockmachines"
+        }
+      },
+      "taskID:8": "bq_standard:retrieval"
+    }
+  },
+  "preRequisites:9": {
+    "0:10": {
+      "questIDHigh:4": 7722944585155103069,
+      "questIDLow:4": -9190758031382520942
+    }
+  }
+}

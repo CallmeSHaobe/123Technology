@@ -34,6 +34,11 @@ public class Config {
         tier_Ross123b = configuration.getInt("OTHTechnology : 锑罗斯登陆需求等级(Tier)", "不憋憋", 1, 1, 10, "笑笑");
         is_Enqing_Song_Play = configuration
             .getBoolean("OTHTechnology : 开启将军工厂的开机音效, true为是, false为否", "A", is_Enqing_Song_Play, "A");
+        enableQuestInjection = configuration.getBoolean(
+            "OTHTechnology : 开启123Technology任务线注入(需要BetterQuesting), true为是, false为否",
+            "A",
+            enableQuestInjection,
+            "A");
         if (configuration.hasChanged()) {
             configuration.save();
         }
@@ -48,4 +53,5 @@ public class Config {
     public static int tier_Antimonia = 4;
     public static int tier_Ross123b = 1;
     public static boolean is_Enqing_Song_Play = true;
+    public static boolean enableQuestInjection = true;
 }

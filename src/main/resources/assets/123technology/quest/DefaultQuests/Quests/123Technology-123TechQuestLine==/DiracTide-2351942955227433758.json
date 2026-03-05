@@ -1,0 +1,55 @@
+{
+  "properties:10": {
+    "betterquesting:10": {
+      "autoClaim:1": 0,
+      "desc:8": "§4§l【Tier 13 - UXV 超绝缘压 IV (536870912 EU/t)】§r\n§a【Tier 13 UXV】狄拉克潮汐（Mega QFT）§r\n对虚粒子的操控在量子之海中掀起了滔天巨浪...\n配方：装配线制作，需UXV级电路、时空材料（molten.spacetime），耗电约 123,123,123 EU/t。\n以物理学家狄拉克命名的量子场论处理机（Mega QFT 123T UXV 强化版）。\n提供基础原料，可让复杂化学/物理过程一步到位完成。\n时间膨胀场发生器每提升一级减少 10% 配方时间。\n稳定力场发生器等级 >=6 时产量翻倍；狄拉克逆变模式有意想不到的惊喜。",
+      "globalShare:1": 0,
+      "icon:10": {
+        "Count:3": 1,
+        "Damage:2": 23526,
+        "OreDict:8": "",
+        "id:8": "gregtech:gt.blockmachines"
+      },
+      "isMain:1": 0,
+      "isSilent:1": 0,
+      "lockedProgress:1": 0,
+      "name:8": "【Tier 13 UXV】狄拉克潮汐（Mega QFT）",
+      "questLogic:8": "AND",
+      "repeatTime:3": -1,
+      "repeat_relative:1": 1,
+      "simultaneous:1": 0,
+      "snd_complete:8": "random.levelup",
+      "snd_update:8": "random.levelup",
+      "taskLogic:8": "AND",
+      "visibility:8": "NORMAL"
+    }
+  },
+  "questIDHigh:4": 2351942955227433758,
+  "questIDLow:4": -7141659559578836810,
+  "rewards:9": {},
+  "tasks:9": {
+    "0:10": {
+      "autoConsume:1": 0,
+      "consume:1": 0,
+      "groupDetect:1": 1,
+      "ignoreNBT:1": 1,
+      "index:3": 0,
+      "partialMatch:1": 1,
+      "requiredItems:9": {
+        "0:10": {
+          "Count:3": 1,
+          "Damage:2": 23526,
+          "OreDict:8": "",
+          "id:8": "gregtech:gt.blockmachines"
+        }
+      },
+      "taskID:8": "bq_standard:retrieval"
+    }
+  },
+  "preRequisites:9": {
+    "0:10": {
+      "questIDHigh:4": 7722944585155103069,
+      "questIDLow:4": -9190758031382520942
+    }
+  }
+}
