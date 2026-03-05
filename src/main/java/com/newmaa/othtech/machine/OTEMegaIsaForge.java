@@ -112,9 +112,8 @@ public class OTEMegaIsaForge extends OTHMultiMachineBase<OTEMegaIsaForge> {
 
     protected void updatetier() {
         ItemStack aGuiStack = this.getControllerSlot();
-        isUnlocked = aGuiStack != null && GTUtility.areStacksEqual(
-            aGuiStack,
-            GTModHandler.getModItem("tectech", "item.tm.itemAstralArrayFabricator", 1));
+        isUnlocked = aGuiStack != null && GTUtility
+            .areStacksEqual(aGuiStack, GTModHandler.getModItem("tectech", "item.tm.itemAstralArrayFabricator", 1));
     }
 
     @Override
