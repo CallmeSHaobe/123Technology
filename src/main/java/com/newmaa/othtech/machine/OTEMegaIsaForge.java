@@ -62,13 +62,13 @@ public class OTEMegaIsaForge extends OTHMultiMachineBase<OTEMegaIsaForge> {
 
     private byte mode = 0;
 
-    boolean $123 = false;
+    private boolean isUnlocked = false;
     private byte glassTier = 0;
 
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
         super.saveNBTData(aNBT);
-        aNBT.setBoolean("$123", $123);
+        aNBT.setBoolean("isUnlocked", isUnlocked);
         aNBT.setInteger("mode", mode);
         aNBT.setByte("glassTier", glassTier);
 
@@ -77,7 +77,7 @@ public class OTEMegaIsaForge extends OTHMultiMachineBase<OTEMegaIsaForge> {
     @Override
     public void loadNBTData(final NBTTagCompound aNBT) {
         super.loadNBTData(aNBT);
-        $123 = aNBT.getBoolean("123");
+        isUnlocked = aNBT.getBoolean("isUnlocked");
         mode = aNBT.getByte("mode");
         glassTier = aNBT.getByte("glassTier");
 
@@ -110,19 +110,10 @@ public class OTEMegaIsaForge extends OTHMultiMachineBase<OTEMegaIsaForge> {
         return Arrays.asList(Recipemaps.MegaIsaForge, IGRecipeMaps.spaceAssemblerRecipes);
     }
 
-    @Override
-    public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
-        super.onPostTick(aBaseMetaTileEntity, aTick);
-        if (aTick % 20 == 0 && !$123) {
-            ItemStack aGuiStack = this.getControllerSlot();
-            if (aGuiStack != null) {
-                if (GTUtility.areStacksEqual(
-                    aGuiStack,
-                    GTModHandler.getModItem("tectech", "item.tm.itemAstralArrayFabricator", 1))) {
-                    this.$123 = true;
-                }
-            }
-        }
+    protected void updatetier() {
+        ItemStack aGuiStack = this.getControllerSlot();
+        isUnlocked = aGuiStack != null && GTUtility
+            .areStacksEqual(aGuiStack, GTModHandler.getModItem("tectech", "item.tm.itemAstralArrayFabricator", 1));
     }
 
     @Override
@@ -141,7 +132,7 @@ public class OTEMegaIsaForge extends OTHMultiMachineBase<OTEMegaIsaForge> {
 
             @Override
             protected @NotNull CheckRecipeResult validateRecipe(@NotNull GTRecipe recipe) {
-                return $123 == false && mode == 1 ? SimpleCheckRecipeResult.ofFailure("nofb")
+                return !isUnlocked && mode == 1 ? SimpleCheckRecipeResult.ofFailure("nofb")
                     : CheckRecipeResultRegistry.SUCCESSFUL;
             }
 
@@ -154,7 +145,7 @@ public class OTEMegaIsaForge extends OTHMultiMachineBase<OTEMegaIsaForge> {
     public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
         if (getBaseMetaTileEntity().isServerSide()) {
-            if (mode < 1 & $123) {
+            if (mode < 1 && isUnlocked) {
                 mode++;
             } else {
                 mode = 0;
@@ -173,9 +164,17 @@ public class OTEMegaIsaForge extends OTHMultiMachineBase<OTEMegaIsaForge> {
 
     @Override
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
+        updatetier();
         repairMachine();
         return checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet);
 
+    }
+
+    @NotNull
+    @Override
+    public CheckRecipeResult checkProcessing() {
+        updatetier();
+        return super.checkProcessing();
     }
 
     @Override

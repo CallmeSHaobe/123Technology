@@ -65,7 +65,7 @@ public class OTELaoBaChemicalReactor extends OTHMultiMachineBase<OTELaoBaChemica
         super(aName);
     }
 
-    private boolean $123 = false;
+    private boolean isUnlocked = false;
 
     private byte mode = 0;
     public byte glassTier = 0;
@@ -84,24 +84,16 @@ public class OTELaoBaChemicalReactor extends OTHMultiMachineBase<OTELaoBaChemica
         return Utils.getCoilTier(coilLevel);
     }
 
-    @Override
-    public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
-        super.onPostTick(aBaseMetaTileEntity, aTick);
-        if (aTick % 20 == 0 && !$123) {
-            ItemStack aGuiStack = this.getControllerSlot();
-            if (aGuiStack != null) {
-                if (GTUtility
-                    .areStacksEqual(aGuiStack, GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 0))) {
-                    this.$123 = true;
-                }
-            }
-        }
+    protected void updatetier() {
+        ItemStack aGuiStack = this.getControllerSlot();
+        isUnlocked = aGuiStack != null
+            && GTUtility.areStacksEqual(aGuiStack, GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 0));
     }
 
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
         super.saveNBTData(aNBT);
-        aNBT.setBoolean("$123", $123);
+        aNBT.setBoolean("isUnlocked", isUnlocked);
         aNBT.setByte("glassTier", glassTier);
         aNBT.setByte("mode", mode);
     }
@@ -109,7 +101,7 @@ public class OTELaoBaChemicalReactor extends OTHMultiMachineBase<OTELaoBaChemica
     @Override
     public void loadNBTData(final NBTTagCompound aNBT) {
         super.loadNBTData(aNBT);
-        $123 = aNBT.getBoolean("123");
+        isUnlocked = aNBT.getBoolean("isUnlocked");
         glassTier = aNBT.getByte("glassTier");
         mode = aNBT.getByte("mode");
     }
@@ -120,7 +112,7 @@ public class OTELaoBaChemicalReactor extends OTHMultiMachineBase<OTELaoBaChemica
         super.getWailaNBTData(player, tile, tag, world, x, y, z);
         final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
         if (tileEntity != null) {
-            tag.setBoolean("123Processing", $123);
+            tag.setBoolean("123Processing", isUnlocked);
         }
         if (tileEntity != null) {
             tag.setInteger("Mode", mode);
@@ -148,11 +140,15 @@ public class OTELaoBaChemicalReactor extends OTHMultiMachineBase<OTELaoBaChemica
 
     @Override
     protected boolean isEnablePerfectOverclock() {
-        return !(mode == 0 & !$123);
+        if (mode == 0 && !isUnlocked) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public int getMaxParallelRecipes() {
-        if (mode == 0 && !$123) {
+        if (mode == 0 && !isUnlocked) {
             return 16;
         } else {
             return Integer.MAX_VALUE;
@@ -222,10 +218,18 @@ public class OTELaoBaChemicalReactor extends OTHMultiMachineBase<OTELaoBaChemica
 
     @Override
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
+        updatetier();
         repairMachine();
         coilLevel = HeatingCoilLevel.None;
         return checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet);
 
+    }
+
+    @NotNull
+    @Override
+    public CheckRecipeResult checkProcessing() {
+        updatetier();
+        return super.checkProcessing();
     }
 
     @Override

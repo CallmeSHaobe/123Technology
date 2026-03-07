@@ -55,7 +55,6 @@ import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.util.GTModHandler;
-import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.common.blocks.BlockCasings1;
@@ -524,10 +523,11 @@ public class OTELargeBin extends OTHMultiMachineBase<OTELargeBin> implements ICo
 
             @NotNull
             @Override
-            protected CheckRecipeResult validateRecipe(@NotNull GTRecipe recipe) {
+            public CheckRecipeResult process() {
                 setSpeedBonus(getSpeedBonus());
                 setEuModifier(getEuModifier());
-                return CheckRecipeResultRegistry.SUCCESSFUL;
+                setOverclock(isEnablePerfectOverclock() ? 4 : 2, 4);
+                return super.process();
             }
         }.setMaxParallelSupplier(this::getMaxParallelRecipes);
     }
@@ -554,9 +554,11 @@ public class OTELargeBin extends OTHMultiMachineBase<OTELargeBin> implements ICo
 
         if (mode == 3) {
             CheckRecipeResult result = doCheckRecipe();
+            result = postCheckRecipe(result, processingLogic);
+            updateSlots();
+            if (!result.wasSuccessful()) return result;
             mEfficiency = 10000;
             mEfficiencyIncrease = 10000;
-            // mMaxProgresstime = getBaseProgressingTick();
             mMaxProgresstime = processingLogic.getDuration();
             mOutputItems = processingLogic.getOutputItems();
             mOutputFluids = processingLogic.getOutputFluids();
