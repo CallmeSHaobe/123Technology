@@ -4,13 +4,15 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
@@ -19,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.Objects;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -28,7 +29,9 @@ import gregtech.api.enums.Mods;
 public class QuestLoader {
 
     private static final String MOD_RESOURCE_ID = "123technology";
-    private static final String QUEST_LINE_ORDER_KEY = "123TechQuestLine==: 123Technology";
+    // Base64URL encoding of questLineIDHigh/Low from QuestLine.json (matches UuidConverter.encodeUuid format).
+    // QuestLinesOrder.txt lines must start with the 24-char URL-safe Base64 UUID, not the directory name.
+    private static final String QUEST_LINE_ORDER_KEY = "MmDiQmi9SX-d2PbI-qhBiw==: 123Technology";
 
     private static final File CONFIG_ORDER_FILE = new File(
         "config/" + Mods.BetterQuesting.ID + "/DefaultQuests/QuestLinesOrder.txt");
@@ -39,7 +42,8 @@ public class QuestLoader {
         try {
             syncQuestLinesOrder();
             copyDefaultQuestsFromJar();
-        } catch (IOException e) {
+        } catch (Exception e) {
+            System.err.println("[QuestLoader-123T] Quest injection failed: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -47,34 +51,49 @@ public class QuestLoader {
     public static void syncQuestLinesOrder() throws IOException {
         List<String> lines = readFileLines();
 
-        if (lines.contains(QUEST_LINE_ORDER_KEY)) {
+        // Remove any stale entry from a previous broken version of this mod.
+        boolean removed = lines.removeIf(l -> l.startsWith("123TechQuestLine=="));
+
+        if (!removed && lines.contains(QUEST_LINE_ORDER_KEY)) {
             System.out.println("[QuestLoader-123T] QuestLinesOrder.txt is already up-to-date.");
             return;
         }
 
-        lines.add(QUEST_LINE_ORDER_KEY);
+        if (!lines.contains(QUEST_LINE_ORDER_KEY)) {
+            lines.add(QUEST_LINE_ORDER_KEY);
+        }
         writeFileLines(lines);
-        System.out.println("[QuestLoader-123T] Appended " + QUEST_LINE_ORDER_KEY + " to QuestLinesOrder.txt.");
+        System.out.println("[QuestLoader-123T] Updated QuestLinesOrder.txt with key: " + QUEST_LINE_ORDER_KEY);
     }
 
     public static void copyDefaultQuestsFromJar() throws IOException {
-        String path = Objects.requireNonNull(
-            QuestLoader.class.getResource(
-                "/" + QuestLoader.class.getName()
-                    .replace('.', '/') + ".class"))
-            .toString();
-
-        if (!path.startsWith("jar:file:")) {
-            System.out.println("[QuestLoader-123T] Not running from a jar file: " + path);
+        // Use getProtectionDomain().getCodeSource().getLocation() so that URI decoding
+        // handles spaces and special characters in the mod path correctly.
+        URL codeSourceUrl;
+        try {
+            codeSourceUrl = QuestLoader.class.getProtectionDomain()
+                .getCodeSource()
+                .getLocation();
+        } catch (SecurityException e) {
+            System.out.println("[QuestLoader-123T] Unable to get code source location: " + e.getMessage());
             return;
         }
 
-        String jarPath = path.substring("jar:file:".length(), path.indexOf("!"));
-        File jarFile = new File(jarPath);
+        if (codeSourceUrl == null) {
+            System.out.println("[QuestLoader-123T] Code source URL is null (dev environment?)");
+            return;
+        }
+
+        File jarFile;
+        try {
+            jarFile = new File(codeSourceUrl.toURI());
+        } catch (URISyntaxException e) {
+            throw new IOException("Failed to resolve jar path from URL: " + codeSourceUrl, e);
+        }
 
         if (!jarFile.exists() || !jarFile.getName()
             .endsWith(".jar")) {
-            System.out.println("[QuestLoader-123T] Resolved jar path not found: " + jarPath);
+            System.out.println("[QuestLoader-123T] Not running from a jar file: " + jarFile);
             return;
         }
 
