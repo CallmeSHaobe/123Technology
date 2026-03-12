@@ -2,7 +2,7 @@
   "properties:10": {
     "betterquesting:10": {
       "autoClaim:1": 0,
-      "desc:8": "§e§l【Tier 8 - UV  终极压  (524288 EU/t)】§r\n§a【Tier 8 UV】异星量子超级计算机§r\n来自异星文明的量子级超级计算机，生成算力（Computing Power）。\n配方：装配线制作，需TecTech多方块计算机/高级开关、UV级+UHV级电路（均可在UV阶段制作）。\n还需要：Infinity流体、超冷却液、UU物质，耗电UHV级；装配线升压使UV阶段可制作。\n冷却液需求公式：(算力/50) × 超频^1.2 × 超压^0.6 L/tick\n需持续消耗大量超级冷却液和电力才能运行；冷却液不足时机器将停止工作。",
+      "desc:8": "§a【Tier 8 UV】异星量子超级计算机§r\n来自异星文明的量子级超级计算机，生成算力（Computing Power）。\n冷却液需求公式：(算力/50) × 超频^1.2 × 超压^0.6 L/tick\n需持续消耗大量超级冷却液和电力才能运行；冷却液不足时机器将停止工作。",
       "globalShare:1": 0,
       "icon:10": {
         "Count:3": 1,
