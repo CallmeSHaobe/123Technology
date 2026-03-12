@@ -14,9 +14,11 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.security.CodeSource;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.ProtectionDomain;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
@@ -29,9 +31,10 @@ import gregtech.api.enums.Mods;
 public class QuestLoader {
 
     private static final String MOD_RESOURCE_ID = "123technology";
-    // Base64URL encoding of questLineIDHigh/Low from QuestLine.json (matches UuidConverter.encodeUuid format).
-    // QuestLinesOrder.txt lines must start with the 24-char URL-safe Base64 UUID, not the directory name.
-    private static final String QUEST_LINE_ORDER_KEY = "MmDiQmi9SX-d2PbI-qhBiw==: 123Technology";
+    // URL-safe Base64 encoding of (questLineIDHigh, questLineIDLow) from QuestLine.json.
+    // Must be a valid 24-char Base64URL UUID as required by UuidConverter.decodeUuid().
+    private static final String QUEST_LINE_UUID = "MmDiQmi9SX-d2PbI-qhBiw==";
+    private static final String QUEST_LINE_ORDER_KEY = QUEST_LINE_UUID + ": 123Technology";
 
     private static final File CONFIG_ORDER_FILE = new File(
         "config/" + Mods.BetterQuesting.ID + "/DefaultQuests/QuestLinesOrder.txt");
@@ -40,21 +43,42 @@ public class QuestLoader {
 
     public static void registry() {
         try {
-            syncQuestLinesOrder();
-            copyDefaultQuestsFromJar();
+            // IMPORTANT: copy quest files first, then inject the order key.
+            // Injecting the key without the corresponding QuestLine.json causes
+            // BetterQuesting to store a null IQuestLine entry, which crashes the
+            // quest-book GUI with NullPointerException at refreshChapterVisibility.
+            boolean filesCopied = copyDefaultQuestsFromJar();
+            syncQuestLinesOrder(filesCopied);
         } catch (Exception e) {
             System.err.println("[QuestLoader-123T] Quest injection failed: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
-    public static void syncQuestLinesOrder() throws IOException {
+    /**
+     * Injects or removes our quest line order key depending on whether quest files are present.
+     *
+     * @param injectKey true  → ensure our UUID key is in the file (files are confirmed present)
+     *                  false → remove our UUID key if present (files unavailable; prevents null
+     *                  IQuestLine entry in BetterQuesting which causes NPE in the quest-book GUI)
+     */
+    public static void syncQuestLinesOrder(boolean injectKey) throws IOException {
         List<String> lines = readFileLines();
 
-        // Remove any stale entry from a previous broken version of this mod.
-        boolean removed = lines.removeIf(l -> l.startsWith("123TechQuestLine=="));
+        // Always remove the old broken key written by earlier versions of this mod.
+        boolean removedStale = lines.removeIf(l -> l.startsWith("123TechQuestLine=="));
 
-        if (!removed && lines.contains(QUEST_LINE_ORDER_KEY)) {
+        if (!injectKey) {
+            // Files aren't available — also remove our new key to prevent a null IQuestLine entry.
+            boolean removedNew = lines.removeIf(l -> l.startsWith(QUEST_LINE_UUID));
+            if (removedStale || removedNew) {
+                writeFileLines(lines);
+                System.out.println("[QuestLoader-123T] Removed stale quest order keys (files unavailable).");
+            }
+            return;
+        }
+
+        if (!removedStale && lines.contains(QUEST_LINE_ORDER_KEY)) {
             System.out.println("[QuestLoader-123T] QuestLinesOrder.txt is already up-to-date.");
             return;
         }
@@ -66,35 +90,18 @@ public class QuestLoader {
         System.out.println("[QuestLoader-123T] Updated QuestLinesOrder.txt with key: " + QUEST_LINE_ORDER_KEY);
     }
 
-    public static void copyDefaultQuestsFromJar() throws IOException {
-        // Use getProtectionDomain().getCodeSource().getLocation() so that URI decoding
-        // handles spaces and special characters in the mod path correctly.
-        URL codeSourceUrl;
-        try {
-            codeSourceUrl = QuestLoader.class.getProtectionDomain()
-                .getCodeSource()
-                .getLocation();
-        } catch (SecurityException e) {
-            System.out.println("[QuestLoader-123T] Unable to get code source location: " + e.getMessage());
-            return;
-        }
-
-        if (codeSourceUrl == null) {
-            System.out.println("[QuestLoader-123T] Code source URL is null (dev environment?)");
-            return;
-        }
-
-        File jarFile;
-        try {
-            jarFile = new File(codeSourceUrl.toURI());
-        } catch (URISyntaxException e) {
-            throw new IOException("Failed to resolve jar path from URL: " + codeSourceUrl, e);
-        }
-
-        if (!jarFile.exists() || !jarFile.getName()
-            .endsWith(".jar")) {
-            System.out.println("[QuestLoader-123T] Not running from a jar file: " + jarFile);
-            return;
+    /**
+     * Copies quest resource files from the mod jar into the BetterQuesting DefaultQuests directory.
+     *
+     * @return true if the jar was found and files were managed (even if all were already up-to-date);
+     *         false if not running from a jar (e.g. dev environment) — caller should not inject the
+     *         order key in this case.
+     */
+    public static boolean copyDefaultQuestsFromJar() throws IOException {
+        File jarFile = resolveJarFile();
+        if (jarFile == null) {
+            System.out.println("[QuestLoader-123T] Not running from a jar file — skipping quest copy.");
+            return false;
         }
 
         try (JarFile jar = new JarFile(jarFile)) {
@@ -128,6 +135,61 @@ public class QuestLoader {
                     }
                 }
             }
+        }
+        return true;
+    }
+
+    /**
+     * Resolves the jar file containing this class using two independent methods.
+     * <ol>
+     *   <li>ProtectionDomain / CodeSource — direct, works in most Forge production setups.</li>
+     *   <li>Class resource URL — reliable fallback that also handles percent-encoded paths
+     *       (e.g. spaces in the mods folder path).</li>
+     * </ol>
+     *
+     * @return the jar {@link File}, or {@code null} if not running from a jar.
+     */
+    private static File resolveJarFile() {
+        // Method 1: getProtectionDomain().getCodeSource().getLocation()
+        try {
+            ProtectionDomain pd = QuestLoader.class.getProtectionDomain();
+            if (pd != null) {
+                CodeSource cs = pd.getCodeSource();
+                if (cs != null) {
+                    URL loc = cs.getLocation();
+                    if (loc != null) {
+                        try {
+                            File f = new File(loc.toURI());
+                            if (f.isFile() && f.getName()
+                                .endsWith(".jar")) {
+                                return f;
+                            }
+                        } catch (URISyntaxException ignored) {}
+                    }
+                }
+            }
+        } catch (Exception ignored) {}
+
+        // Method 2: class resource URL with proper URI percent-decode
+        URL classUrl = QuestLoader.class.getResource(
+            "/" + QuestLoader.class.getName()
+                .replace('.', '/') + ".class");
+        if (classUrl == null) return null;
+
+        String urlStr = classUrl.toString();
+        if (!urlStr.startsWith("jar:file:")) return null;
+
+        int bangIdx = urlStr.indexOf("!/");
+        if (bangIdx < 0) return null;
+
+        try {
+            // "jar:file:/path/to/mod.jar!/..." → parse "file:/path/to/mod.jar" as URI
+            // so that percent-encoded characters (e.g. %20) are decoded correctly.
+            File f = new File(new URI(urlStr.substring("jar:".length(), bangIdx)));
+            return (f.isFile() && f.getName()
+                .endsWith(".jar")) ? f : null;
+        } catch (URISyntaxException e) {
+            return null;
         }
     }
 
