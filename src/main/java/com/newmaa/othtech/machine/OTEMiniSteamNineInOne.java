@@ -13,21 +13,17 @@ import static gregtech.api.enums.HatchElement.OutputHatch;
 import static gregtech.api.enums.ItemList.Circuit_Integrated;
 import static gregtech.api.enums.Textures.BlockIcons.MACHINE_BRONZE_SIDE;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
-import static gregtech.api.util.GTUtility.filterValidMTEs;
 import static gregtech.api.util.GTUtility.validMTEList;
 import static net.minecraft.util.StatCollector.translateToLocal;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 import java.util.stream.Stream;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatComponentTranslation;
@@ -41,20 +37,17 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
+import com.newmaa.othtech.machine.machineclass.OTHSteamMultiBase;
 import com.newmaa.othtech.utils.RecipeBuilder;
 
 import gregtech.api.GregTechAPI;
 import gregtech.api.enums.Materials;
 import gregtech.api.interfaces.ITexture;
-import gregtech.api.interfaces.metatileentity.IItemLockable;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.logic.ProcessingLogic;
 import gregtech.api.metatileentity.implementations.MTEHatch;
 import gregtech.api.metatileentity.implementations.MTEHatchInputBus;
-import gregtech.api.metatileentity.implementations.MTEHatchOutput;
-import gregtech.api.metatileentity.implementations.MTEHatchOutputBus;
-import gregtech.api.metatileentity.implementations.MTEHatchVoidBus;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.recipe.check.CheckRecipeResult;
@@ -64,14 +57,12 @@ import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.common.blocks.BlockCasings1;
-import gregtech.common.tileentities.machines.MTEHatchOutputBusME;
 import gtPlusPlus.api.recipe.GTPPRecipeMaps;
 import gtPlusPlus.xmod.gregtech.api.metatileentity.implementations.MTEHatchSteamBusInput;
 import gtPlusPlus.xmod.gregtech.api.metatileentity.implementations.base.MTEHatchCustomFluidBase;
-import gtPlusPlus.xmod.gregtech.api.metatileentity.implementations.base.MTESteamMultiBase;
 import gtPlusPlus.xmod.gregtech.common.blocks.textures.TexturesGtBlock;
 
-public class OTEMiniSteamNineInOne extends MTESteamMultiBase<OTEMiniSteamNineInOne> implements ISurvivalConstructable {
+public class OTEMiniSteamNineInOne extends OTHSteamMultiBase<OTEMiniSteamNineInOne> implements ISurvivalConstructable {
 
     public OTEMiniSteamNineInOne(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
@@ -113,90 +104,6 @@ public class OTEMiniSteamNineInOne extends MTESteamMultiBase<OTEMiniSteamNineInO
         super.loadNBTData(aNBT);
         this.mInternalMode = aNBT.getInteger("mInternalMode");
 
-    }
-
-    @Override
-    public boolean addOutput(ItemStack aStack) {
-        if (GTUtility.isStackInvalid(aStack)) return false;
-        aStack = GTUtility.copyOrNull(aStack);
-
-        final List<MTEHatchOutputBus> validBusses = filterValidMTEs(mOutputBusses);
-        if (dumpItem(validBusses, aStack, true, false)) return true;
-        if (dumpItem(validBusses, aStack, false, false)) return true;
-
-        boolean outputSuccess = true;
-        final List<MTEHatchOutput> filteredHatches = filterValidMTEs(mOutputHatches);
-        while (outputSuccess && aStack.stackSize > 0) {
-            outputSuccess = false;
-            ItemStack single = aStack.splitStack(1);
-            for (MTEHatchOutput tHatch : filteredHatches) {
-                if (!outputSuccess && tHatch.outputsItems()) {
-                    if (tHatch.getBaseMetaTileEntity()
-                        .addStackToSlot(1, single)) outputSuccess = true;
-                }
-            }
-        }
-        return outputSuccess;
-    }
-
-    public ArrayList<ItemStack> getStoredOutputs() {
-        ArrayList<ItemStack> rList = new ArrayList<>();
-        for (MTEHatchOutputBus tHatch : validMTEList(mOutputBusses)) {
-            IGregTechTileEntity baseMetaTileEntity = tHatch.getBaseMetaTileEntity();
-            for (int i = baseMetaTileEntity.getSizeInventory() - 1; i >= 0; i--) {
-                rList.add(baseMetaTileEntity.getStackInSlot(i));
-            }
-        }
-        return rList;
-    }
-
-    @Override
-    public List<ItemStack> getItemOutputSlots(ItemStack[] toOutput) {
-        List<ItemStack> ret = new ArrayList<>();
-        for (final MTEHatch tBus : validMTEList(mOutputBusses)) {
-            if (!(tBus instanceof MTEHatchOutputBusME meBus)) {
-                final IInventory tBusInv = tBus.getBaseMetaTileEntity();
-                for (int i = 0; i < tBusInv.getSizeInventory(); i++) {
-                    final ItemStack stackInSlot = tBus.getStackInSlot(i);
-
-                    if (stackInSlot == null && tBus instanceof IItemLockable lockable && lockable.isLocked()) {
-                        // getItemOutputSlots is only used to calculate free room for the purposes of parallels and
-                        // void protection. We can use a fake item stack here without creating weirdness in the output
-                        // bus' actual inventory.
-                        assert lockable.getLockedItem() != null;
-                        ItemStack fakeItemStack = lockable.getLockedItem()
-                            .copy();
-                        fakeItemStack.stackSize = 0;
-                        ret.add(fakeItemStack);
-                    } else {
-                        ret.add(stackInSlot);
-                    }
-                }
-            } else {
-                if (meBus.isLocked() && meBus.canAcceptItem()) {
-                    for (ItemStack stack : meBus.getLockedItems()) {
-                        ItemStack fakeItemStack = stack.copy();
-                        fakeItemStack.stackSize = 65;
-                        ret.add(fakeItemStack);
-                    }
-                }
-            }
-        }
-        return ret;
-    }
-
-    @Override
-    public List<ItemStack> getVoidOutputSlots() {
-        List<ItemStack> ret = new ArrayList<>();
-        for (final MTEHatch tBus : validMTEList(mOutputBusses)) {
-            if (tBus instanceof MTEHatchVoidBus vBus && vBus.isLocked()) {
-                for (ItemStack lockedItem : vBus.getLockedItems()) {
-                    if (lockedItem == null) continue;
-                    ret.add(lockedItem.copy());
-                }
-            }
-        }
-        return ret;
     }
 
     @Override
@@ -287,7 +194,7 @@ public class OTEMiniSteamNineInOne extends MTESteamMultiBase<OTEMiniSteamNineInO
                 return CheckRecipeResultRegistry.SUCCESSFUL;
             }
 
-        }.setMaxParallelSupplier(this::getMaxParallelRecipes);
+        }.setMaxParallelSupplier(this::getTrueParallel);
 
     }
 
@@ -455,9 +362,9 @@ public class OTEMiniSteamNineInOne extends MTESteamMultiBase<OTEMiniSteamNineInO
                         buildHatchAdder(OTEMiniSteamNineInOne.class)
                             .atLeast(
                                 SteamHatchElement.InputBus_Steam,
+                                SteamHatchElement.OutputBus_Steam,
                                 InputHatch,
                                 InputBus,
-                                SteamHatchElement.OutputBus_Steam,
                                 OutputHatch,
                                 OutputBus,
                                 Muffler)
@@ -545,8 +452,19 @@ public class OTEMiniSteamNineInOne extends MTESteamMultiBase<OTEMiniSteamNineInO
 
         @Override
         public boolean supportsInputSeparation() {
-            return true;
+            return false;
         }
+
+     @Override
+     public boolean isInputSeparationEnabled() {
+        return true;
+     }
+
+    @Override
+    public boolean getDefaultInputSeparationMode() {
+        return true;
+    }
+
 
         @Override
         public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {

@@ -81,26 +81,17 @@ import tectech.thing.gui.TecTechUITextures;
 
 public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> implements ISurvivalConstructable {
 
-    @Override
-    public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
-        super.onPostTick(aBaseMetaTileEntity, aTick);
-        if (aTick % 20 == 0) {
-            // if check structure true then continue
-            if (checkMachine(aBaseMetaTileEntity, null)) {
-                ItemStack aGuiStack = this.getControllerSlot();
-                if (aGuiStack != null) {
-                    if (GTUtility
-                        .areStacksEqual(aGuiStack, GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32758))) {
-                        this.MLevel = 2;
-                    }
-                } else {
-                    this.MLevel = 1;
-                }
+    // 老大哥锻炉,老大哥的恩情还不完
+    protected void updatetier() {
+        ItemStack aGuiStack = this.getControllerSlot();
+        if (aGuiStack != null) {
+            if (GTUtility.areStacksEqual(aGuiStack, GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32758))) {
+                this.MLevel = 2;
             }
+        } else {
+            this.MLevel = 1;
         }
     }
-
-    // 老大哥锻炉,老大哥的恩情还不完
 
     @Override
     public int getMaxParallelRecipes() {
@@ -733,6 +724,7 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
     @Override
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
         // Reset heating capacity.
+        updatetier();
         mHeatingCapacity = 0;
 
         // Get heating capacity from coils in structure.
@@ -763,6 +755,7 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
     @NotNull
     @Override
     public CheckRecipeResult checkProcessing() {
+        updatetier();
         setupProcessingLogic(processingLogic);
 
         CheckRecipeResult result = doCheckRecipe();

@@ -23,5 +23,9 @@ pluginManagement {
 }
 
 plugins {
+<<<<<<< BlueDog_NewMachines
     id 'com.gtnewhorizons.gtnhsettingsconvention' version '1.0.51'
+=======
+    id("com.gtnewhorizons.gtnhsettingsconvention") version("2.0.7")
+>>>>>>> main
 }
