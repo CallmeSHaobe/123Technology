@@ -203,6 +203,7 @@ GT5U.gui.text.nolava=§4机器因凛冰而憋憋
 GT5U.gui.text.noEnqing=§b机器因为恩情不足而憋憋
 GT5U.gui.text.voltage=§b机器因能源仓电压不足而憋憋
 GT5U.gui.text.nohatch=§4无线模式因为存在能源仓而憋憋
+GT5U.gui.text.bin_tier_low=§4结构等级不足！回收机模式需要二级结构，AE奇点制造机模式需要三级结构，中子态素压缩机模式需要四级结构。请升级结构后再使用该模式。
 otht.recipe.EVACannon=§l§6EVA专用改造阳电子炮GT
 otht.evaCannon=%s 被阳电子炮轰炸至灰
 otht.recipe.SINOPEC=§l§a中国石化

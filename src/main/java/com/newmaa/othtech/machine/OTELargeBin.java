@@ -54,6 +54,7 @@ import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
+import gregtech.api.recipe.check.SimpleCheckRecipeResult;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
@@ -84,43 +85,36 @@ public class OTELargeBin extends OTHMultiMachineBase<OTELargeBin> implements ICo
     @Override
     public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
         repairMachine();
-        if (Tier >= 5) {
-            Tier = 0;
-        }
+        Tier = Math.max(1, Math.min(4, Tier));
         return Tier == 1 ? checkPiece(Tier1, 2, 3, 1)
             : Tier == 2 ? checkPiece(Tier2, 4, 9, 2)
-                : Tier == 3 ? checkPiece(Tier3, 7, 18, 3)
-                    : Tier == 4 ? checkPiece(Tier4, 9, 27, 1) : checkPiece(Tier1, 2, 3, 1);
+                : Tier == 3 ? checkPiece(Tier3, 7, 18, 3) : checkPiece(Tier4, 9, 27, 1);
 
     }
 
     @Override
     public void construct(ItemStack stackSize, boolean hintsOnly) {
         repairMachine();
-        Tier = stackSize.stackSize;
+        Tier = Math.max(1, Math.min(4, stackSize.stackSize));
         if (Tier == 1) {
             buildPiece(Tier1, stackSize, hintsOnly, 2, 3, 1);
         } else if (Tier == 2) {
             buildPiece(Tier2, stackSize, hintsOnly, 4, 9, 2);
         } else if (Tier == 3) {
             buildPiece(Tier3, stackSize, hintsOnly, 7, 18, 3);
-        } else if (Tier == 4) {
-            buildPiece(Tier4, stackSize, hintsOnly, 9, 27, 1);
         } else {
-            buildPiece(Tier1, stackSize, hintsOnly, 2, 3, 1);
+            buildPiece(Tier4, stackSize, hintsOnly, 9, 27, 1);
         }
     }
 
     @Override
     public int survivalConstruct(ItemStack stackSize, int elementBudget, IItemSource source, EntityPlayerMP actor) {
         if (mMachine) return -1;
-        Tier = stackSize.stackSize;
+        Tier = Math.max(1, Math.min(4, stackSize.stackSize));
         return Tier == 1 ? survivalBuildPiece(Tier1, stackSize, 2, 3, 1, elementBudget, source, actor, false, true)
             : Tier == 2 ? survivalBuildPiece(Tier2, stackSize, 4, 9, 2, elementBudget, source, actor, false, true)
                 : Tier == 3 ? survivalBuildPiece(Tier3, stackSize, 7, 18, 3, elementBudget, source, actor, false, true)
-                    : Tier == 4
-                        ? survivalBuildPiece(Tier4, stackSize, 9, 27, 1, elementBudget, source, actor, false, true)
-                        : survivalBuildPiece(Tier1, stackSize, 2, 3, 1, elementBudget, source, actor, false, true);
+                    : survivalBuildPiece(Tier4, stackSize, 9, 27, 1, elementBudget, source, actor, false, true);
     }
 
     @Override
@@ -455,10 +449,9 @@ public class OTELargeBin extends OTHMultiMachineBase<OTELargeBin> implements ICo
     public void loadNBTData(final NBTTagCompound aNBT) {
         this.mode = aNBT.getInteger("mode");
         mSA = aNBT.getInteger("MSA");
-        Tier = aNBT.getInteger("Tier");
+        Tier = Math.max(1, Math.min(4, aNBT.getInteger("Tier")));
         progressingTickIndex = aNBT.getByte("progressingTickIndex");
         super.loadNBTData(aNBT);
-
     }
 
     @Override
@@ -552,6 +545,10 @@ public class OTELargeBin extends OTHMultiMachineBase<OTELargeBin> implements ICo
     public CheckRecipeResult checkProcessing() {
         setupProcessingLogic(processingLogic);
 
+        if (mode >= Tier) {
+            return SimpleCheckRecipeResult.ofFailure("bin_tier_low");
+        }
+
         if (mode == 3) {
             CheckRecipeResult result = doCheckRecipe();
             result = postCheckRecipe(result, processingLogic);
@@ -565,64 +562,87 @@ public class OTELargeBin extends OTHMultiMachineBase<OTELargeBin> implements ICo
             setEnergyUsage(processingLogic);
             return result;
         }
+
         if (mode == 0) {
-            mEUt = 0;
-            mMaxProgresstime = getBaseProgressingTick();
             ItemStack[] itemStack = getStoredInputsNoSeparation().toArray(new ItemStack[0]);
             FluidStack[] fluidStack = getStoredFluids().toArray(new FluidStack[0]);
-            if (getStoredInputsNoSeparation() != null) {
-                for (ItemStack item : itemStack) {
-                    item.stackSize -= item.stackSize;
-                }
-            }
-            if (getStoredFluids() != null) {
-                for (FluidStack fluid : fluidStack) {
-                    fluid.amount -= fluid.amount;
-                }
-            }
-
-        } else if (mode == 1) {
-            mMaxProgresstime = getBaseProgressingTick();
-            int a;
-            ItemStack[] itemStack = getStoredInputsNoSeparation().toArray(new ItemStack[0]);
+            boolean hasInput = false;
             for (ItemStack item : itemStack) {
+                if (item != null && item.stackSize > 0) {
+                    hasInput = true;
+                    item.stackSize = 0;
+                }
+            }
+            for (FluidStack fluid : fluidStack) {
+                if (fluid != null && fluid.amount > 0) {
+                    hasInput = true;
+                    fluid.amount = 0;
+                }
+            }
+            if (!hasInput) {
+                return CheckRecipeResultRegistry.NO_RECIPE;
+            }
+            mEUt = 0;
+            mMaxProgresstime = getBaseProgressingTick();
+            mEfficiency = 10000;
+            mEfficiencyIncrease = 10000;
+            return CheckRecipeResultRegistry.SUCCESSFUL;
+        }
+
+        if (mode == 1) {
+            ItemStack[] itemStack = getStoredInputsNoSeparation().toArray(new ItemStack[0]);
+            boolean hasInput = false;
+            for (ItemStack item : itemStack) {
+                if (item == null || item.stackSize <= 0) continue;
+                hasInput = true;
+                int a;
                 if (item.stackSize <= getMaxParallelRecipes()) {
                     a = item.stackSize;
-                    mEUt = (30 * a);
-                    item.stackSize -= item.stackSize;
-                    mOutputItems = new ItemStack[] {
-                        setStackSize(ItemList.IC2_Scrap.get(1), (int) Math.floor(a * 0.5)) };
+                    item.stackSize = 0;
                 } else {
                     a = getMaxParallelRecipes();
-                    mEUt = (30 * a);
-                    item.stackSize -= getMaxParallelRecipes();
-                    mOutputItems = new ItemStack[] {
-                        setStackSize(ItemList.IC2_Scrap.get(1), (int) Math.floor(a * 0.5)) };
+                    item.stackSize -= a;
                 }
+                mEUt = 30 * a;
+                mOutputItems = new ItemStack[] { setStackSize(ItemList.IC2_Scrap.get(1), (int) Math.floor(a * 0.5)) };
             }
-        } else if (mode == 2) {
+            if (!hasInput) {
+                return CheckRecipeResultRegistry.NO_RECIPE;
+            }
             mMaxProgresstime = getBaseProgressingTick();
+            mEfficiency = 10000;
+            mEfficiencyIncrease = 10000;
+            return CheckRecipeResultRegistry.SUCCESSFUL;
+        }
+
+        if (mode == 2) {
             ItemStack[] itemStack = getStoredInputsNoSeparation().toArray(new ItemStack[0]);
+            boolean hasInput = false;
             for (ItemStack item : itemStack) {
+                if (item == null || item.stackSize <= 0) continue;
+                hasInput = true;
                 if (item.stackSize >= 256000) {
                     mSA += 256000;
                     item.stackSize -= 256000;
-                    if (mSA >= 256000) {
-                        mOutputItems = new ItemStack[] {
-                            GTModHandler.getModItem(AppliedEnergistics2.ID, "item.ItemMultiMaterial", 1, 47) };
-                        mSA -= 256000;
-                    }
                 } else {
                     mSA += item.stackSize;
-                    item.stackSize -= item.stackSize;
-                    if (mSA >= 256000) {
-                        mOutputItems = new ItemStack[] {
-                            GTModHandler.getModItem(AppliedEnergistics2.ID, "item.ItemMultiMaterial", 1, 47) };
-                        mSA -= 256000;
-                    }
+                    item.stackSize = 0;
+                }
+                if (mSA >= 256000) {
+                    mOutputItems = new ItemStack[] {
+                        GTModHandler.getModItem(AppliedEnergistics2.ID, "item.ItemMultiMaterial", 1, 47) };
+                    mSA -= 256000;
                 }
             }
+            if (!hasInput) {
+                return CheckRecipeResultRegistry.NO_RECIPE;
+            }
+            mMaxProgresstime = getBaseProgressingTick();
+            mEfficiency = 10000;
+            mEfficiencyIncrease = 10000;
+            return CheckRecipeResultRegistry.SUCCESSFUL;
         }
+
         return CheckRecipeResultRegistry.NO_RECIPE;
     }
 
@@ -630,38 +650,15 @@ public class OTELargeBin extends OTHMultiMachineBase<OTELargeBin> implements ICo
     public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
         if (getBaseMetaTileEntity().isServerSide()) {
-            if (mode < Tier - 1) {
-                mode++;
-            } else {
-                mode = 0;
-            }
+            mode = (mode + 1) % 4;
             switch (mode) {
                 case 0 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.bin.mode.0"));
                 case 1 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.bin.mode.1"));
                 case 2 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.bin.mode.2"));
                 case 3 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.bin.mode.3"));
             }
-            /*
-             * GTUtility.sendChatToPlayer(
-             * aPlayer,
-             * StatCollector.translateToLocal(
-             * mode == 0 ? "垃圾桶模式"
-             * : mode == 1 ? "回收机模式" : mode == 2 ? "AE奇点制造机模式" : mode == 3 ? "中子态素压缩机模式" : "Null"));
-             */
         }
     }
-
-    // 蓝狗你干嘛啊,写debug代码还不删-v-
-    // @Override
-    // public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
-    // super.onPostTick(aBaseMetaTileEntity, aTick);
-    // if (aTick % 20 == 0) {
-    // ItemStack aGuiStack = this.getControllerSlot();
-    // if (aGuiStack != null) {
-    // Tier = aGuiStack.getItemDamage();
-    // }
-    // }
-    // }
 
     protected int getBaseProgressingTick() {
         return progressingTick[progressingTickIndex];
