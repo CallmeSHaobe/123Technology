@@ -202,6 +202,7 @@ GT5U.gui.text.nolava=§4Machine shoooootdown due to Gelid Cryo
 GT5U.gui.text.noEnqing=§bMachine shoooootdown due to insufficient Enqing
 GT5U.gui.text.voltage=§bMachine shoooootdown due to insufficient Energy Hatch voltage
 GT5U.gui.text.nohatch=§4Wireless mode shoooootdown due to presence of Energy Hatch
+GT5U.gui.text.bin_tier_low=§4Structure tier insufficient. Mode 1(Recycler) requires Tier 2, Mode 2(AE Singularity) requires Tier 3, Mode 3(Neutronium Compressor) requires Tier 4. Please upgrade the structure.
 otht.recipe.EVACannon=§l§6EVA Custom Positron Rifle GT
 otht.evaCannon=%s was blasted to ashes by the positron rifle
 otht.recipe.SINOPEC=§l§aSinopec
