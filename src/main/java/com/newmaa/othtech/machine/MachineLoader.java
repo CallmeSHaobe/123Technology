@@ -193,9 +193,9 @@ public class MachineLoader {
         // bug的元凶:没有run()
         OTEHatchRack.run();
         OTHItemList.NASA
-            .set(new OTEFireRocketAssembler(IDs + 62, "FireRocketAssembler", translateToLocal("ote.tn.nasa")));
+            .set(new OTEFireRocketAssembler(IDs + 62, "FireRocketAssembler", translateToLocal("ote.tn.nasa"))); // 模型错位,已无言
         OTHItemList.MegaThermalCentrifuge
-            .set(new OTEMegaThermalCentrifuge(IDs + 64, "MegaThermalCentrifuge", translateToLocal("ote.tn.mtc"))); // 模型错位,已无言
+            .set(new OTEMegaThermalCentrifuge(IDs + 64, "MegaThermalCentrifuge", translateToLocal("ote.tn.mtc")));
 
     }
 
