@@ -1,0 +1,55 @@
+{
+  "properties:10": {
+    "betterquesting:10": {
+      "autoClaim:1": 0,
+      "desc:8": "§a【Tier 6 LuV】唐山炼钢厂§r\n无数黑烟从烟囱冒出，工业化的必由之路...\n以工业重镇唐山命名的大型炼钢集成机器。\n一步到位地生产各种钢铁相关合金：GTPP / GT5U，以及部分 BartWorks 合金。\n集成高炉与电弧炉功能，大幅减少独立多方块建造数量。\n是 LuV 阶段大规模金属冶炼的核心设施。",
+      "globalShare:1": 0,
+      "icon:10": {
+        "Count:3": 1,
+        "Damage:2": 23535,
+        "OreDict:8": "",
+        "id:8": "gregtech:gt.blockmachines"
+      },
+      "isMain:1": 0,
+      "isSilent:1": 0,
+      "lockedProgress:1": 0,
+      "name:8": "【Tier 6 LuV】唐山炼钢厂",
+      "questLogic:8": "AND",
+      "repeatTime:3": -1,
+      "repeat_relative:1": 1,
+      "simultaneous:1": 0,
+      "snd_complete:8": "random.levelup",
+      "snd_update:8": "random.levelup",
+      "taskLogic:8": "AND",
+      "visibility:8": "NORMAL"
+    }
+  },
+  "questIDHigh:4": -717211484021964706,
+  "questIDLow:4": -6949489574718365391,
+  "rewards:9": {},
+  "tasks:9": {
+    "0:10": {
+      "autoConsume:1": 0,
+      "consume:1": 0,
+      "groupDetect:1": 1,
+      "ignoreNBT:1": 1,
+      "index:3": 0,
+      "partialMatch:1": 1,
+      "requiredItems:9": {
+        "0:10": {
+          "Count:3": 1,
+          "Damage:2": 23535,
+          "OreDict:8": "",
+          "id:8": "gregtech:gt.blockmachines"
+        }
+      },
+      "taskID:8": "bq_standard:retrieval"
+    }
+  },
+  "preRequisites:9": {
+    "0:10": {
+      "questIDHigh:4": 7722944585155103069,
+      "questIDLow:4": -9190758031382520942
+    }
+  }
+}
