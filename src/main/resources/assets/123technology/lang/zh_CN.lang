@@ -662,6 +662,15 @@ ote.tm.bee.1=一个HV的大型蜂箱. #真的只能养蜂!
 ote.tm.bee.2=说真的, 为什么不用工业蜂箱呢:)
 ote.cm.bee.0=1 - 能源仓, 动力仓或者激光仓, 输入输出总线/仓: 替换塑料混凝土方块
 
+#MegaThermalCentrifuge
+ote.tn.mtc=乌拉尔山脉热分离厂
+ote.tm.mtc.0=§l苏维埃的终极造物 - 巨型热力离心机
+ote.tm.mtc.1=§b  EU消耗: 100%
+ote.tm.mtc.2=§b  速度 + 100%
+ote.tm.mtc.3=§b  并行: 1024
+ote.tm.mtc.4=§6  使用GT++热处理机械方块搭建结构
+ote.tm.mtc.5=§l 「乌拉尔山脉的钢铁洪流不会停歇，矿石在离心烈焰中化为祖国的养料」
+
 #WTFHatch
 ote.tm.wtf.0=将能量存储于全局网络中, 上限为2^(2^31)EU.
 ote.tm.wtf.1=不连接导线. 此方块可以从网络中抽取EU.

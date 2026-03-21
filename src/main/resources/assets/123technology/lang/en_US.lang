@@ -661,6 +661,16 @@ ote.tm.bee.1=An HV Large Apiary. #Really only for bees!
 ote.tm.bee.2=Seriously, why not use Industrial Apiaries :)
 ote.cm.bee.0=1 - Energy Hatch, Dynamo Hatch or Laser Hatch, Input/Output Bus/Hatch: Replace Plastic Concrete Block.
 
+
+#MegaThermalCentrifuge
+ote.tn.mtc=Ural Mountains Thermal Separation Plant
+ote.tm.mtc.0=§lThe Ultimate Soviet Creation - Mega Thermal Centrifuge
+ote.tm.mtc.1=§b  EU Cost: 100%
+ote.tm.mtc.2=§b  Speed + 100%
+ote.tm.mtc.3=§b  Parallel: 1024
+ote.tm.mtc.4=§6  Uses GT++ Thermal Processing Casings for structure
+ote.tm.mtc.5=§l "The steel torrent of the Urals never ceases — ores are forged into the Motherland's lifeblood in the centrifugal inferno"
+
 #WTFHatch
 ote.tm.wtf.0=Stores energy in a global network.
 ote.tm.wtf.1=Does not connect to wires. This block can draw EU from the network.

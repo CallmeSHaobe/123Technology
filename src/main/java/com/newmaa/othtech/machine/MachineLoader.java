@@ -186,7 +186,6 @@ public class MachineLoader {
         OTHItemList.OTEComputer.set(new OTEComputer(IDs + 60, "OTEComputer", translateToLocal("ote.computer.name")));
         OTHItemList.OTEHatchRack
             .set(new OTEHatchRack(IDs + 61, "OTEHatchRack", translateToLocal("ote.calc.rank"), 11).getStackForm(1L));
-        // 模型错位,已无言
         // OTHItemList.OTEHatchRack.set(
         // new OTEHatchRack(IDs + 114514, "OTESuperHatchRack", translateToLocal("ote.super.calc.rank"), 1, true)
         // .getStackForm(1L));
@@ -195,6 +194,9 @@ public class MachineLoader {
         OTEHatchRack.run();
         OTHItemList.NASA
             .set(new OTEFireRocketAssembler(IDs + 62, "FireRocketAssembler", translateToLocal("ote.tn.nasa")));
+        OTHItemList.MegaThermalCentrifuge
+            .set(new OTEMegaThermalCentrifuge(IDs + 64, "MegaThermalCentrifuge", translateToLocal("ote.tn.mtc"))); // 模型错位,已无言
+
     }
 
     public static void loadMachinePostInit() {
