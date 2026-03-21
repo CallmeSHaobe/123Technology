@@ -136,7 +136,8 @@ public enum OTHItemList {
     OTEBBPlasmaForge,
     OTEComputer,
     OTEHatchRack,
-    LargeSteamHatch;
+    LargeSteamHatch,
+    MegaThermalCentrifuge; // 乌拉尔山脉热分离厂 - 巨热力离心
 
     private boolean mHasNotBeenSet;
     private boolean mDeprecated;

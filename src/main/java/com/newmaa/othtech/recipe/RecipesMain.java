@@ -423,6 +423,20 @@ public class RecipesMain implements IRecipePool {
                 new ItemStack(Items.redstone, 1), 'C',
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.NetherQuartz, 1), 'D',
                 GTModHandler.getModItem("Railcraft", "firestone.raw", 1) });
+        // 乌拉尔山脉热分离厂 - 巨型热力离心机
+        GTValues.RA.stdBuilder()
+            .itemOutputs(getGM(IDs + 64, 1))
+            .itemInputs(
+                getGM(849, 64), // GT++ Industrial Thermal Centrifuge × 64 x 3
+                getGM(849, 64),
+                getGM(849, 64),
+                ItemList.Electric_Piston_LuV.get(16),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Superconductor, 64),
+                GTUtility.getIntegratedCircuit(17))
+            .fluidInputs(new FluidStack(FluidRegistry.getFluidID("molten.indalloy140"), 123 * 144))
+            .duration(123 * 20)
+            .eut(32000)
+            .addTo(Assem);
         // HV Hatches
         TTRecipeAdder.addResearchableAssemblylineRecipe(
             getGM(43, 1),
