@@ -41,7 +41,10 @@ public class CommonProxy {
 
     // postInit "Handle interaction with other mods, complete your setup based on this." (Remove if not needed)
     public void postInit(FMLPostInitializationEvent event) {
-
+        // TODO with the galacticgreg Modcontainer
+        /*
+         * new GTWorldGenLoader().run();
+         */
     }
 
     // register server commands in this event handler (Remove if not needed)

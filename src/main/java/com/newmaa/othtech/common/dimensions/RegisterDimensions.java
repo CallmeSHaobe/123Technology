@@ -50,6 +50,5 @@ public class RegisterDimensions {
         planetRoss123b.setDimensionInfo(ID_DIM + 1, WorldProviderRoss123b.class);
         GalaxyRegistry.registerPlanet(planetRoss123b);
         GalacticraftRegistry.registerTeleportType(WorldProviderRoss123b.class, new WorldProviderRoss123b());
-
     }
 }
