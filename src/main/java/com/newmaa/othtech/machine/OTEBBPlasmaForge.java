@@ -462,7 +462,7 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
                     'D',
                     withChannel("coil", ofCoil(OTEBBPlasmaForge::setCoilLevel, OTEBBPlasmaForge::getCoilLevel)))
                 .addElement('E', ofBlock(sBlockCasingsTT, 7))
-                .addElement('F', ofBlock(sBlockCasingsTT, 9))
+                .addElement('F', ofBlock(sBlockCasingsTT, 8))
                 .addElement('G', ofBlock(BlockQuantumGlass.INSTANCE, 0))
                 .build();
         }

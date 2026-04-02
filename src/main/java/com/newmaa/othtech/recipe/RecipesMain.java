@@ -27,7 +27,9 @@ import static gregtech.api.util.GTRecipeBuilder.HOURS;
 import static gregtech.api.util.GTRecipeBuilder.INGOTS;
 import static gregtech.api.util.GTRecipeBuilder.SECONDS;
 import static gregtech.api.util.GTRecipeConstants.*;
+import static tectech.thing.CustomItemList.eM_Hollow;
 import static tectech.thing.CustomItemList.eM_Power;
+import static tectech.thing.CustomItemList.eM_Spacetime;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -1119,6 +1121,36 @@ public class RecipesMain implements IRecipePool {
             .eut(RECIPE_UEV)
             .duration(600 * 20)
             .addTo(AssemblyLine);
+        // spacetime-casing
+        GTValues.RA.stdBuilder()
+            .metadata(RESEARCH_ITEM, GTModHandler.getModItem(GTPlusPlus.ID, "particleBase", 1, 14))
+            .metadata(SCANNING, new Scanning(Integer.MAX_VALUE, RECIPE_UXV))
+            .itemInputs(
+                GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.CosmicNeutronium, 64),
+                GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.CosmicNeutronium, 64),
+                GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.CosmicNeutronium, 64),
+                GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.CosmicNeutronium, 64),
+                eM_Hollow.get(4),
+                GTModHandler.getModItem("eternalsingularity", "eternal_singularity", 2),
+                GTModHandler.getModItem(GTPlusPlus.ID, "particleBase", 2, 14),
+                GTModHandler.getModItem(GTPlusPlus.ID, "particleBase", 2, 14),
+                GTModHandler.getModItem(TecTech.ID, "tile.quantumGlass", 4),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UXV, 32),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UMV, 48),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UIV, 64),
+                GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Neutronium, 64),
+                GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Neutronium, 64),
+                GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Neutronium, 64),
+                GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Neutronium, 64))
+            .itemOutputs(eM_Spacetime.get(1))
+            .fluidInputs(
+                MaterialsUEVplus.MagnetohydrodynamicallyConstrainedStarMatter.getMolten(INGOTS * 1024),
+                Materials.Infinity.getMolten(INGOTS * 1024),
+                MaterialsUEVplus.SpaceTime.getFluid(INGOTS * 256))
+            .duration(114514 * 20)
+            .eut(RECIPE_UMV)
+            .addTo(AssemblyLine);
+
         // OTEComputer
         GTValues.RA.stdBuilder()
             .metadata(RESEARCH_ITEM, OTHItemList.OTEHatchRack.get(1))
