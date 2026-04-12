@@ -1,0 +1,55 @@
+{
+  "properties:10": {
+    "betterquesting:10": {
+      "autoClaim:1": 0,
+      "desc:8": "§a【Tier 6 LuV】巨型凛冰冷冻机§r\nGTPP 巨型冷冻机的 123T 强化版本。\n特殊模式：不消耗极寒之凛冰，但输入仓必须有 >=123*1000L 凛冰才可运行。\n参数：EU 消耗 100%，速度 +100%，并行 1024。\n大规模液态金属与冷冻材料生产不可或缺的机器。",
+      "globalShare:1": 0,
+      "icon:10": {
+        "Count:3": 1,
+        "Damage:2": 23528,
+        "OreDict:8": "",
+        "id:8": "gregtech:gt.blockmachines"
+      },
+      "isMain:1": 0,
+      "isSilent:1": 0,
+      "lockedProgress:1": 0,
+      "name:8": "【Tier 6 LuV】巨型凛冰冷冻机",
+      "questLogic:8": "AND",
+      "repeatTime:3": -1,
+      "repeat_relative:1": 1,
+      "simultaneous:1": 0,
+      "snd_complete:8": "random.levelup",
+      "snd_update:8": "random.levelup",
+      "taskLogic:8": "AND",
+      "visibility:8": "NORMAL"
+    }
+  },
+  "questIDHigh:4": 8443499639976053383,
+  "questIDLow:4": -8860423100944769451,
+  "rewards:9": {},
+  "tasks:9": {
+    "0:10": {
+      "autoConsume:1": 0,
+      "consume:1": 0,
+      "groupDetect:1": 1,
+      "ignoreNBT:1": 1,
+      "index:3": 0,
+      "partialMatch:1": 1,
+      "requiredItems:9": {
+        "0:10": {
+          "Count:3": 1,
+          "Damage:2": 23528,
+          "OreDict:8": "",
+          "id:8": "gregtech:gt.blockmachines"
+        }
+      },
+      "taskID:8": "bq_standard:retrieval"
+    }
+  },
+  "preRequisites:9": {
+    "0:10": {
+      "questIDHigh:4": 7722944585155103069,
+      "questIDLow:4": -9190758031382520942
+    }
+  }
+}

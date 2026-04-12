@@ -22,6 +22,7 @@ import com.newmaa.othtech.common.dimensions.RegisterDimensions;
 import com.newmaa.othtech.common.materials.MaterialsLoader;
 import com.newmaa.othtech.common.recipemap.NEIRecipeMaps;
 import com.newmaa.othtech.event.EventPlayerDied;
+import com.newmaa.othtech.loader.QuestLoader;
 import com.newmaa.othtech.machine.MachineLoader;
 import com.newmaa.othtech.recipe.RecipeLoader;
 
@@ -138,6 +139,9 @@ public class OTHTechnology {
     @Mod.EventHandler
     public void earlyGame(FMLPreInitializationEvent event) {
         Config.synchronizeConfiguration(event.getSuggestedConfigurationFile());
+        if (gregtech.api.enums.Mods.BetterQuesting.isModLoaded() && Config.enableQuestInjection) {
+            QuestLoader.registry();
+        }
     }
 
     @Mod.EventHandler
