@@ -85,7 +85,7 @@ public class ChunkProviderRoss123b extends ChunkProviderSpaceLakes {
         Random rand = new Random(world.getSeed() + (chunkX * 341873128712L) + (chunkZ * 132897987541L));
         buildingMapGen.generateStructuresInChunk(this.world, rand, chunkX, chunkZ);
         int roadWidth = 5;
-        int spacingBlocks = 40 + roadWidth; // 大楼 + 道路间隔
+        int spacingBlocks = 40 + roadWidth;
         boolean roadX = ((worldX % spacingBlocks + spacingBlocks) % spacingBlocks) < roadWidth;
         boolean roadZ = ((worldZ % spacingBlocks + spacingBlocks) % spacingBlocks) < roadWidth;
         if (roadX || roadZ) {

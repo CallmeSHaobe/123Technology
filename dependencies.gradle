@@ -1,7 +1,7 @@
 
 elytraModpackVersion {
     // 在这配置的gtnh版本 用于自动拉取依赖版本
-    gtnhVersion = "2.8.0"
+    gtnhVersion = "2.8.4"
     // 是否不缓存拉取的依赖清单文件
     manifestNoCache = false
     // 是否自动为输出的jar添加 `gtnhVersion` 后缀
@@ -21,8 +21,7 @@ dependencies {
     implementation(gtnhDev("Avaritia"))
     implementation(gtnhDev("Avaritiaddons"))
     implementation(gtnhDev("neiaddons"))
-    implementation('com.github.GTNewHorizons:Binnie:2.5.16:dev')
-//    implementation(gtnhDev("Binnie"))
+    implementation(gtnhDev("Binnie"))
     implementation(gtnhDev("BloodMagic"))
     implementation(gtnhDev("Botania"))
     implementation(gtnhDev("Draconic-Evolution"))
@@ -53,6 +52,11 @@ dependencies {
 
     configurations.configureEach {
         exclude group: 'com.github.GTNewHorizons', module: 'Baubles'
+    }
+    configurations.all {
+        resolutionStrategy {
+            force "com.github.GTNewHorizons:GTNHLib:0.7.10"
+        }
     }
 
 }

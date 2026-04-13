@@ -1,0 +1,55 @@
+{
+  "properties:10": {
+    "betterquesting:10": {
+      "autoClaim:1": 0,
+      "desc:8": "§a【Tier 4 EV】集成式火箭装配车间§r\n专为火箭（含义双关）设计的大型一体化装配车间。\n结构：IC2合金块、GT机械外壳（T3）、GT标准框架等，EV阶段可建造。\n集成火箭零件制造与最终组装流程，简化太空探索前期准备。\n支持各型火箭及矿石无人机的批量生产，是进入 EV 星际探索阶段的起点。\n§c该机器还未完成",
+      "globalShare:1": 0,
+      "icon:10": {
+        "Count:3": 1,
+        "Damage:2": 23582,
+        "OreDict:8": "",
+        "id:8": "gregtech:gt.blockmachines"
+      },
+      "isMain:1": 0,
+      "isSilent:1": 0,
+      "lockedProgress:1": 0,
+      "name:8": "【Tier 4 EV】集成式火箭装配车间",
+      "questLogic:8": "AND",
+      "repeatTime:3": -1,
+      "repeat_relative:1": 1,
+      "simultaneous:1": 0,
+      "snd_complete:8": "random.levelup",
+      "snd_update:8": "random.levelup",
+      "taskLogic:8": "AND",
+      "visibility:8": "NORMAL"
+    }
+  },
+  "questIDHigh:4": 2203467160277829399,
+  "questIDLow:4": -6642027989660614325,
+  "rewards:9": {},
+  "tasks:9": {
+    "0:10": {
+      "autoConsume:1": 0,
+      "consume:1": 0,
+      "groupDetect:1": 1,
+      "ignoreNBT:1": 1,
+      "index:3": 0,
+      "partialMatch:1": 1,
+      "requiredItems:9": {
+        "0:10": {
+          "Count:3": 1,
+          "Damage:2": 23582,
+          "OreDict:8": "",
+          "id:8": "gregtech:gt.blockmachines"
+        }
+      },
+      "taskID:8": "bq_standard:retrieval"
+    }
+  },
+  "preRequisites:9": {
+    "0:10": {
+      "questIDHigh:4": 7722944585155103069,
+      "questIDLow:4": -9190758031382520942
+    }
+  }
+}

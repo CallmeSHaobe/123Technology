@@ -203,6 +203,7 @@ GT5U.gui.text.nolava=§4机器因凛冰而憋憋
 GT5U.gui.text.noEnqing=§b机器因为恩情不足而憋憋
 GT5U.gui.text.voltage=§b机器因能源仓电压不足而憋憋
 GT5U.gui.text.nohatch=§4无线模式因为存在能源仓而憋憋
+GT5U.gui.text.bin_tier_low=§4结构等级不足！回收机模式需要二级结构，AE奇点制造机模式需要三级结构，中子态素压缩机模式需要四级结构。请升级结构后再使用该模式。
 otht.recipe.EVACannon=§l§6EVA专用改造阳电子炮GT
 otht.evaCannon=%s 被阳电子炮轰炸至灰
 otht.recipe.SINOPEC=§l§a中国石化
@@ -660,6 +661,15 @@ ote.tm.bee.0=§aBee登们的初级造物 - Beeyonds之家(大型工业蜂箱)
 ote.tm.bee.1=一个HV的大型蜂箱. #真的只能养蜂!
 ote.tm.bee.2=说真的, 为什么不用工业蜂箱呢:)
 ote.cm.bee.0=1 - 能源仓, 动力仓或者激光仓, 输入输出总线/仓: 替换塑料混凝土方块
+
+#MegaThermalCentrifuge
+ote.tn.mtc=乌拉尔山脉热分离厂
+ote.tm.mtc.0=§l苏维埃的终极造物 - 巨型热力离心机
+ote.tm.mtc.1=§b  EU消耗: 100%
+ote.tm.mtc.2=§b  速度 + 100%
+ote.tm.mtc.3=§b  并行: 1024
+ote.tm.mtc.4=§6  使用GT++热处理机械方块搭建结构
+ote.tm.mtc.5=§l 「乌拉尔山脉的钢铁洪流不会停歇，矿石在离心烈焰中化为祖国的养料」
 
 #WTFHatch
 ote.tm.wtf.0=将能量存储于全局网络中, 上限为2^(2^31)EU.
