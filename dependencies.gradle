@@ -36,6 +36,7 @@ dependencies {
     implementation(gtnhDev("ThaumicEnergistics"))
     implementation(gtnhDev("Universal-Singularities"))
     implementation(gtnhDev("WitcheryExtras"))
+    implementation(gtnhDev("BetterQuesting"))
 
     implementation('thaumcraft:Thaumcraft:1.7.10-4.2.3.5:dev')
     implementation('com.github.GTNewHorizons:worldedit-gtnh:v0.0.8:dev')
