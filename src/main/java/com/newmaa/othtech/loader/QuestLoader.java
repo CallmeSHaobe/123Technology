@@ -58,7 +58,7 @@ public class QuestLoader {
     /**
      * Injects or removes our quest line order key depending on whether quest files are present.
      *
-     * @param injectKey true  → ensure our UUID key is in the file (files are confirmed present)
+     * @param injectKey true → ensure our UUID key is in the file (files are confirmed present)
      *                  false → remove our UUID key if present (files unavailable; prevents null
      *                  IQuestLine entry in BetterQuesting which causes NPE in the quest-book GUI)
      */
@@ -142,9 +142,9 @@ public class QuestLoader {
     /**
      * Resolves the jar file containing this class using two independent methods.
      * <ol>
-     *   <li>ProtectionDomain / CodeSource — direct, works in most Forge production setups.</li>
-     *   <li>Class resource URL — reliable fallback that also handles percent-encoded paths
-     *       (e.g. spaces in the mods folder path).</li>
+     * <li>ProtectionDomain / CodeSource — direct, works in most Forge production setups.</li>
+     * <li>Class resource URL — reliable fallback that also handles percent-encoded paths
+     * (e.g. spaces in the mods folder path).</li>
      * </ol>
      *
      * @return the jar {@link File}, or {@code null} if not running from a jar.
