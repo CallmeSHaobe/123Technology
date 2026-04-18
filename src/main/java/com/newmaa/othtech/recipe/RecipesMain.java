@@ -1182,7 +1182,7 @@ public class RecipesMain implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UV, 2),
                 CustomItemList.DATApipe.get(16),
                 ItemList.Electric_Motor_UV.get(4),
-                GTModHandler.getModItem("IC2", "reactorVentDiamond", 4))
+                GTModHandler.getModItem("IC2", "reactorVentDiamond", 4, 1))
             .itemOutputs(OTHItemList.OTEHatchRack.get(1))
             .fluidInputs(Materials.Iridium.getMolten(9 * INGOTS))
             .requiresCleanRoom()
