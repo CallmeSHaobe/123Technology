@@ -1146,7 +1146,7 @@ public class RecipesMain implements IRecipePool {
             .fluidInputs(
                 MaterialsUEVplus.MagnetohydrodynamicallyConstrainedStarMatter.getMolten(INGOTS * 1024),
                 Materials.Infinity.getMolten(INGOTS * 1024),
-                MaterialsUEVplus.SpaceTime.getFluid(INGOTS * 256))
+                MaterialsUEVplus.SpaceTime.getMolten(INGOTS * 256))
             .duration(114514 * 20)
             .eut(RECIPE_UMV)
             .addTo(AssemblyLine);

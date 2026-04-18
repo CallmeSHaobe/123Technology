@@ -1,4 +1,4 @@
-package com.newmaa.othtech.loader;
+package com.newmaa.othtech.quest;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
