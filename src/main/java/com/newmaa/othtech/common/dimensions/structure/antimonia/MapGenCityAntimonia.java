@@ -48,8 +48,8 @@ public class MapGenCityAntimonia extends MapGenStructure {
 
     @Override
     protected boolean canSpawnStructureAtCoords(int i, int j) {
-        final byte numChunks = 4;
-        final byte offsetChunks = 2;
+        final byte numChunks = 16;
+        final byte offsetChunks = 10;
         final int oldi = i;
         final int oldj = j;
 

@@ -74,9 +74,9 @@ public class StructureComponentCitySolar extends StructureComponentCity {
             0,
             7,
             blockAdvSolarPanel,
-            3,
+            2,
             blockAdvSolarPanel,
-            3,
+            2,
             false);
         this.fillWithMetadataBlocks(
             par1World,
@@ -88,9 +88,9 @@ public class StructureComponentCitySolar extends StructureComponentCity {
             0,
             7,
             blockAdvSolarPanel,
-            3,
+            2,
             blockAdvSolarPanel,
-            3,
+            2,
             false);
         this.fillWithMetadataBlocks(
             par1World,
@@ -102,9 +102,9 @@ public class StructureComponentCitySolar extends StructureComponentCity {
             0,
             7,
             blockAdvSolarPanel,
-            3,
+            2,
             blockAdvSolarPanel,
-            3,
+            2,
             false);
         this.fillWithMetadataBlocks(
             par1World,
@@ -116,9 +116,9 @@ public class StructureComponentCitySolar extends StructureComponentCity {
             0,
             7,
             blockAdvSolarPanel,
-            3,
+            2,
             blockAdvSolarPanel,
-            3,
+            2,
             false);
         this.fillWithMetadataBlocks(
             par1World,

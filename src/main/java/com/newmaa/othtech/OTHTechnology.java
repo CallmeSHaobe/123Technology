@@ -22,8 +22,8 @@ import com.newmaa.othtech.common.dimensions.RegisterDimensions;
 import com.newmaa.othtech.common.materials.MaterialsLoader;
 import com.newmaa.othtech.common.recipemap.NEIRecipeMaps;
 import com.newmaa.othtech.event.EventPlayerDied;
-import com.newmaa.othtech.loader.QuestLoader;
 import com.newmaa.othtech.machine.MachineLoader;
+import com.newmaa.othtech.quest.QuestLoader;
 import com.newmaa.othtech.recipe.RecipeLoader;
 
 import codechicken.nei.api.API;
