@@ -345,7 +345,7 @@ public class RecipesMegaISAForge implements IRecipePool {
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32180), 2048),
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32181), 2048),
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32184), 2048),
-                setStackSize(GTModHandler.getModItem("IC2", "reactorVentDiamond", 1), 48),
+                setStackSize(GTModHandler.getModItem("IC2", "reactorVentDiamond", 1, 1), 48),
                 GTOreDictUnificator.get(OrePrefixes.pipeTiny, Materials.Copper, 16))
             .fluidInputs(
                 FluidRegistry.getFluidStack("molten.solderingalloy", 4096),
