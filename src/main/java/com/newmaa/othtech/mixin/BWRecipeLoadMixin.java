@@ -1,4 +1,4 @@
-package com.newmaa.othtech.Mixins;
+package com.newmaa.othtech.mixin;
 
 import static bartworks.API.recipe.BartWorksRecipeMaps.circuitAssemblyLineRecipes;
 import static com.newmaa.othtech.common.recipemap.Recipemaps.MegaCAL;

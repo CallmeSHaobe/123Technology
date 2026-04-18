@@ -56,7 +56,7 @@ CI runs automatically on pushes and PRs to `master`/`main` via `.github/workflow
 - **Recipes** are loaded in `RecipeLoader` during `FMLLoadCompleteEvent`.
 - **Items and blocks** are declared in `common/OTHItemList.java` as enum entries.
 - The project uses **modern Java syntax** (Java 8–17 via [Jabel](https://github.com/bsideup/jabel)) while targeting JVM 8 bytecode.
-- **Mixins** must reside in the `com.newmaa.othtech.Mixins` package.
+- **Mixins** must reside in the `com.newmaa.othtech.mixin` package.
 - Spotless (Google Java Format) and Checkstyle (no wildcard imports) are enforced — run `./gradlew spotlessApply` to auto-format before committing.
 
 ## Key Dependencies
