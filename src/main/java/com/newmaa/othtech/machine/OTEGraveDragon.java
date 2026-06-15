@@ -87,7 +87,7 @@ public class OTEGraveDragon extends OTHMultiMachineBase<OTEGraveDragon> {
                     buildHatchAdder(OTEGraveDragon.class)
                         .atLeast(InputBus, InputHatch, OutputBus, OutputHatch, Energy.or(ExoticEnergy))
                         .casingIndex(CASING_INDEX)
-                        .dot(1)
+                        .hint(1)
                         .buildAndChain(BlockLoader.defcCasingBlock, 7))
                 .build();
         }

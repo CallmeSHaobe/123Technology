@@ -15,7 +15,7 @@ import com.newmaa.othtech.common.materials.BWLiquids;
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
-import gregtech.api.enums.MaterialsUEVplus;
+import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMap;
@@ -28,20 +28,20 @@ import tectech.recipe.TTRecipeAdder;
 public class RecipesMAXs implements IRecipePool {
 
     public static ItemStack getMM(int amount, OrePrefixes orePrefixes) {
-        return GTOreDictUnificator.get(orePrefixes, MaterialsUEVplus.MagMatter, amount);
+        return GTOreDictUnificator.get(orePrefixes, Materials.MagMatter, amount);
     }
 
     public static ItemStack getET(int amount, OrePrefixes orePrefixes) {
-        return GTOreDictUnificator.get(orePrefixes, MaterialsUEVplus.Eternity, amount);
+        return GTOreDictUnificator.get(orePrefixes, Materials.Eternity, amount);
     }
 
     public static ItemStack getMC(int amount, OrePrefixes orePrefixes) {
         return GTOreDictUnificator
-            .get(orePrefixes, MaterialsUEVplus.MagnetohydrodynamicallyConstrainedStarMatter, amount);
+            .get(orePrefixes, Materials.MagnetohydrodynamicallyConstrainedStarMatter, amount);
     }
 
     public static ItemStack getUN(int amount, OrePrefixes orePrefixes) {
-        return GTOreDictUnificator.get(orePrefixes, MaterialsUEVplus.Universium, amount);
+        return GTOreDictUnificator.get(orePrefixes, Materials.Universium, amount);
     }
 
     @Override
@@ -64,8 +64,8 @@ public class RecipesMAXs implements IRecipePool {
                 getMM(16, OrePrefixes.wireFine), getMM(16, OrePrefixes.wireFine), getMM(16, OrePrefixes.wireFine),
                 getMM(16, OrePrefixes.wireFine), getMM(16, OrePrefixes.wireFine), getMM(16, OrePrefixes.wireFine),
                 getMM(16, OrePrefixes.wireFine), getMM(16, OrePrefixes.wireFine), setStackSize(coil, 8),
-                getNanites(4, MaterialsUEVplus.Universium), getNanites(4, MaterialsUEVplus.WhiteDwarfMatter),
-                getNanites(4, MaterialsUEVplus.BlackDwarfMatter) },
+                getNanites(4, Materials.Universium), getNanites(4, Materials.WhiteDwarfMatter),
+                getNanites(4, Materials.BlackDwarfMatter) },
             new FluidStack[] { BWLiquids.Void.getFluidOrGas(16000), BWLiquids.Stars.getFluidOrGas(144 * 16),
                 new FluidStack(UIVsc, 5760), new FluidStack(UMVsc, 5760) },
             ItemList.Electric_Motor_MAX.get(1),
@@ -100,7 +100,7 @@ public class RecipesMAXs implements IRecipePool {
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 15300),
                 GTModHandler.getModItem("tectech", "gt.blockcasingsTT", 16), getUN(64, OrePrefixes.wireFine),
                 getMC(4, OrePrefixes.plateDense), new Object[] { OrePrefixes.circuit.get(Materials.Cosmic), 64 },
-                getNanites(4, MaterialsUEVplus.Eternity), ItemList.Circuit_Chip_QPIC.get(32), ItemList.UHV_Coil.get(64),
+                getNanites(4, Materials.Eternity), ItemList.Circuit_Chip_QPIC.get(32), ItemList.UHV_Coil.get(64),
                 ItemList.Electric_Pump_MAX.get(1), ItemList.Reactor_Coolant_Sp_6.get(1),
                 ItemList.Reactor_Coolant_Sp_6.get(1), ItemList.Reactor_Coolant_Sp_6.get(1),
                 ItemList.Reactor_Coolant_Sp_6.get(1) },

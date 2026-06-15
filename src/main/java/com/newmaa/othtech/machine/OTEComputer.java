@@ -23,6 +23,7 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
+import gregtech.api.interfaces.IIconContainer;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -90,8 +91,8 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
 
     private final ArrayList<MTEHatchWirelessComputationOutput> eWirelessComputationOutputs = new ArrayList<>();
 
-    private static Textures.BlockIcons.CustomIcon ScreenOFF;
-    private static Textures.BlockIcons.CustomIcon ScreenON;
+    private static IIconContainer ScreenOFF;
+    private static IIconContainer ScreenON;
     private static IStructureDefinition<OTEComputer> STRUCTURE_DEFINITION = null;
     private static final String STRUCTURE_PIECE_MAIN = "main";
     private final int horizontalOffSet = 3;
@@ -135,12 +136,12 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
                             WirelessComputationHatchElement.INSTANCE.or(HatchElement.OutputData),
                             InputHatch)
                         .casingIndex(BlockGTCasingsTT.textureOffset + 1)
-                        .dot(1)
+                        .hint(1)
                         .buildAndChain(ofBlock(TTCasingsContainer.sBlockCasingsTT, 1)))
                 .addElement(
                     'E',
                     buildHatchAdder(OTEComputer.class).atLeast(InputHatch)
-                        .dot(2)
+                        .hint(2)
                         .casingIndex(BlockGTCasingsTT.textureOffset + 2)
                         .buildAndChain(sBlockCasingsTT, 2))
                 .addElement('F', ofBlock(sBlockCasingsTT, 3))
@@ -272,7 +273,7 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
     }
 
     @Override
-    public boolean checkMachine_EM(IGregTechTileEntity iGregTechTileEntity, ItemStack itemStack) {
+    public boolean checkMachine(IGregTechTileEntity iGregTechTileEntity, ItemStack itemStack) {
         eRacks.clear();
         if (!getBaseMetaTileEntity().isActive()) {
             this.eAvailableData = 0;
@@ -531,10 +532,10 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
     public void registerIcons(IIconRegister aBlockIconRegister) {
         super.registerIcons(aBlockIconRegister);
         if (ScreenOFF == null) {
-            ScreenOFF = new Textures.BlockIcons.CustomIcon("iconsets/EM_COMPUTER");
+            ScreenOFF = Textures.BlockIcons.custom("iconsets/EM_COMPUTER");
         }
         if (ScreenON == null) {
-            ScreenON = new Textures.BlockIcons.CustomIcon("iconsets/EM_COMPUTER_ACTIVE");
+            ScreenON = Textures.BlockIcons.custom("iconsets/EM_COMPUTER_ACTIVE");
         }
     }
 

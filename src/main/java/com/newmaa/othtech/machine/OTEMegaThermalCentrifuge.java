@@ -174,7 +174,7 @@ public class OTEMegaThermalCentrifuge extends OTHMultiMachineBase<OTEMegaThermal
                     buildHatchAdder(OTEMegaThermalCentrifuge.class)
                         .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch, Muffler)
                         .adder(OTEMegaThermalCentrifuge::addToMachineList)
-                        .dot(1)
+                        .hint(1)
                         .casingIndex(TAE.GTPP_INDEX(16))
                         .buildAndChain(ofBlock(ModBlocks.blockCasings2Misc, 0)))
 

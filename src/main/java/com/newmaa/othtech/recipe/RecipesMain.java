@@ -50,7 +50,7 @@ import goodgenerator.loader.Loaders;
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
-import gregtech.api.enums.MaterialsUEVplus;
+import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMap;
@@ -158,9 +158,9 @@ public class RecipesMain implements IRecipePool {
                 GTModHandler.getModItem("miscutils", "MU-metaitem.01", 0, 32140),
                 getGM(31027, 64),
                 getGM(31028, 64),
-                getNanites(4, MaterialsUEVplus.WhiteDwarfMatter),
-                getNanites(4, MaterialsUEVplus.BlackDwarfMatter),
-                getNanites(4, MaterialsUEVplus.Universium))
+                getNanites(4, Materials.WhiteDwarfMatter),
+                getNanites(4, Materials.BlackDwarfMatter),
+                getNanites(4, Materials.Universium))
             .itemOutputs(OTHItemList.beeISAM.get(1))
             .fluidInputs(new FluidStack(songyou, 256000))
             .duration(500 * 20)
@@ -1115,7 +1115,7 @@ public class RecipesMain implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.wireGt04, Materials.SuperconductorUEV, 64))
             .fluidInputs(
                 Materials.SuperCoolant.getFluid(123123),
-                (MaterialsUEVplus.TranscendentMetal.getMolten(114514)),
+                (Materials.TranscendentMetal.getMolten(114514)),
                 (Materials.Infinity.getMolten(144 * 1024)))
             .itemOutputs(OTHItemList.OTEBBPlasmaForge.get(1))
             .eut(RECIPE_UEV)
@@ -1144,9 +1144,9 @@ public class RecipesMain implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Neutronium, 64))
             .itemOutputs(eM_Spacetime.get(1))
             .fluidInputs(
-                MaterialsUEVplus.MagnetohydrodynamicallyConstrainedStarMatter.getMolten(INGOTS * 1024),
+                Materials.MagnetohydrodynamicallyConstrainedStarMatter.getMolten(INGOTS * 1024),
                 Materials.Infinity.getMolten(INGOTS * 1024),
-                MaterialsUEVplus.SpaceTime.getMolten(INGOTS * 256))
+                Materials.SpaceTime.getMolten(INGOTS * 256))
             .duration(114514 * 20)
             .eut(RECIPE_UMV)
             .addTo(AssemblyLine);
@@ -1272,13 +1272,13 @@ public class RecipesMain implements IRecipePool {
         GTValues.RA.stdBuilder()
             .itemInputsUnsafe(
                 ItemList.SpaceElevatorModulePumpT3.get(4),
-                GTOreDictUnificator.get(OrePrefixes.frameGt, MaterialsUEVplus.Universium, 8),
+                GTOreDictUnificator.get(OrePrefixes.frameGt, Materials.Universium, 8),
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UXV, 16),
                 ItemList.Electric_Pump_MAX.get(8),
-                GTOreDictUnificator.get(OrePrefixes.gearGt, MaterialsUEVplus.Universium, 8),
-                GTOreDictUnificator.get(OrePrefixes.screw, MaterialsUEVplus.BlackDwarfMatter, 64),
-                GTOreDictUnificator.get(OrePrefixes.plateDouble, MaterialsUEVplus.Universium, 16))
-            .fluidInputs(MaterialsUEVplus.DimensionallyShiftedSuperfluid.getFluid(9216))
+                GTOreDictUnificator.get(OrePrefixes.gearGt, Materials.Universium, 8),
+                GTOreDictUnificator.get(OrePrefixes.screw, Materials.BlackDwarfMatter, 64),
+                GTOreDictUnificator.get(OrePrefixes.plateDouble, Materials.Universium, 16))
+            .fluidInputs(Materials.DimensionallyShiftedSuperfluid.getFluid(9216))
             .itemOutputs(OTHItemList.SpaceElevatorModulePumpT4.get(1))
             .duration(123 * 20)
             .eut(TierEU.RECIPE_UXV)
@@ -1293,12 +1293,12 @@ public class RecipesMain implements IRecipePool {
             new Object[] { ItemList.OilDrillInfinite.get(64),
                 new ItemStack(ItemList.PlanetaryGasSiphonCasing.getItem(), 64),
                 CustomItemList.enderLinkFluidCover.get(64), CustomItemList.enderLinkFluidCover.get(64),
-                GTOreDictUnificator.get(OrePrefixes.frameGt, MaterialsUEVplus.Universium, 4),
+                GTOreDictUnificator.get(OrePrefixes.frameGt, Materials.Universium, 4),
                 new Object[] { OrePrefixes.circuit.get(Materials.UXV), 16 }, ItemList.Electric_Pump_MAX.get(8),
-                GTOreDictUnificator.get(OrePrefixes.gearGt, MaterialsUEVplus.Universium, 4),
-                GTOreDictUnificator.get(OrePrefixes.screw, MaterialsUEVplus.BlackDwarfMatter, 64) },
-            new FluidStack[] { MaterialsUEVplus.DimensionallyShiftedSuperfluid.getFluid(9216),
-                MaterialsUEVplus.Universium.getMolten(2304) },
+                GTOreDictUnificator.get(OrePrefixes.gearGt, Materials.Universium, 4),
+                GTOreDictUnificator.get(OrePrefixes.screw, Materials.BlackDwarfMatter, 64) },
+            new FluidStack[] { Materials.DimensionallyShiftedSuperfluid.getFluid(9216),
+                Materials.Universium.getMolten(2304) },
             OTHItemList.SpaceElevatorModulePumpT4.getInternalStack_unsafe(),
             123 * 20,
             (int) TierEU.RECIPE_UXV);

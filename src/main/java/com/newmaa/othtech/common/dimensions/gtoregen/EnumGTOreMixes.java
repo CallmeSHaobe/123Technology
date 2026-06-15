@@ -3,7 +3,7 @@ package com.newmaa.othtech.common.dimensions.gtoregen;
 import static com.newmaa.othtech.common.dimensions.gtoregen.EnumDimensionDefOTH.DimNames.ANTIMONIA;
 import static galacticgreg.api.enums.DimensionDef.*;
 
-import galacticgreg.WorldgenOreLayerSpace;
+import galacticgreg.WorldGeneratorSpace;
 import gregtech.api.enums.Materials;
 import gregtech.common.OreMixBuilder;
 import gregtech.common.WorldgenGTOreLayer;
@@ -31,7 +31,7 @@ public enum EnumGTOreMixes {
         return new WorldgenGTOreLayer(this.oreMixBuilder);
     }
 
-    public WorldgenOreLayerSpace addGaGregOreLayer() {
-        return new WorldgenOreLayerSpace(this.oreMixBuilder);
+    public WorldGeneratorSpace addGaGregOreLayer() {
+        return new WorldGeneratorSpace();
     }
 }

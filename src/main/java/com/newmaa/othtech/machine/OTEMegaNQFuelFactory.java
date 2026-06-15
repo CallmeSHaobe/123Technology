@@ -606,7 +606,7 @@ public class OTEMegaNQFuelFactory extends OTHTTMultiMachineBaseEM implements ICo
                     buildHatchAdder(OTEMegaNQFuelFactory.class).atLeast(InputHatch, OutputHatch)
                         .adder(OTEMegaNQFuelFactory::addToMachineList)
                         .casingIndex(179)
-                        .dot(1)
+                        .hint(1)
                         .buildAndChain(ofBlock(Loaders.FRF_Casings, 0)))
                 .addElement('A', ofBlock(Loaders.fieldRestrictingGlass, 0))
                 .addElement('G', ofFrame(Materials.NaquadahAlloy))

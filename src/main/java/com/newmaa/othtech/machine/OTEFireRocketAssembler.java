@@ -220,7 +220,7 @@ public class OTEFireRocketAssembler extends OTHMultiMachineBase<OTEFireRocketAss
                     buildHatchAdder(OTEFireRocketAssembler.class)
                         .atLeast(OutputBus, InputBus, InputHatch, OutputHatch, Energy.or(ExoticEnergy))
                         .adder(OTEFireRocketAssembler::addToMachineList)
-                        .dot(1)
+                        .hint(1)
                         .casingIndex(210)
                         .buildAndChain(sBlockReinforced, 2))
                 .build();

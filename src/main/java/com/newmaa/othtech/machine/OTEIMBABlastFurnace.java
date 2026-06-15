@@ -68,7 +68,7 @@ public class OTEIMBABlastFurnace extends MTEElectricBlastFurnace {
                     return false;
                 }))
                 .casingIndex(CASING_INDEX)
-                .dot(1)
+                .hint(1)
                 .buildAndChain(GregTechAPI.sBlockCasings1, CASING_INDEX))
         .addElement(
             'm', // 消音舱口
@@ -81,7 +81,7 @@ public class OTEIMBABlastFurnace extends MTEElectricBlastFurnace {
             buildHatchAdder(MTEElectricBlastFurnace.class)
                 .atLeast(InputHatch, OutputHatch, InputBus, OutputBus, Maintenance)
                 .casingIndex(CASING_INDEX)
-                .dot(1)
+                .hint(1)
                 .buildAndChain(GregTechAPI.sBlockCasings1, CASING_INDEX))
         .build();
 

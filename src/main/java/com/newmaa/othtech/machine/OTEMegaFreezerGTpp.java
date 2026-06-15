@@ -179,7 +179,7 @@ public class OTEMegaFreezerGTpp extends OTHMultiMachineBase<OTEMegaFreezerGTpp> 
                     buildHatchAdder(OTEMegaFreezerGTpp.class)
                         .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch, Muffler)
                         .adder(OTEMegaFreezerGTpp::addToMachineList)
-                        .dot(1)
+                        .hint(1)
                         .casingIndex(TAE.getIndexFromPage(2, 10))
                         .buildAndChain(ofBlock(ModBlocks.blockCasings3Misc, 10)))
 

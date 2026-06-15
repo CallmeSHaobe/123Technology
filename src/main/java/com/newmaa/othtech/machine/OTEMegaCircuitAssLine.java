@@ -241,7 +241,7 @@ public class OTEMegaCircuitAssLine extends OTHMultiMachineBase<OTEMegaCircuitAss
                     'D',
                     buildHatchAdder(OTEMegaCircuitAssLine.class).atLeast(OutputBus)
                         .adder(OTEMegaCircuitAssLine::addToMachineList)
-                        .dot(2)
+                        .hint(2)
                         .casingIndex(((BlockCasings2) GregTechAPI.sBlockCasings2).getTextureIndex(0))
                         .buildAndChain(sBlockCasings2, 0))
                 .addElement(
@@ -249,7 +249,7 @@ public class OTEMegaCircuitAssLine extends OTHMultiMachineBase<OTEMegaCircuitAss
                     buildHatchAdder(OTEMegaCircuitAssLine.class)
                         .atLeast(Energy.or(ExoticEnergy), InputBus, InputHatch, OutputHatch)
                         .adder(OTEMegaCircuitAssLine::addToMachineList)
-                        .dot(1)
+                        .hint(1)
                         .casingIndex(((BlockCasings2) GregTechAPI.sBlockCasings2).getTextureIndex(0))
                         .buildAndChain(sBlockCasings2, 0))
                 .build();

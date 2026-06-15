@@ -300,7 +300,7 @@ public class OTELaoBaChemicalReactor extends OTHMultiMachineBase<OTELaoBaChemica
                     buildHatchAdder(OTELaoBaChemicalReactor.class)
                         .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch)
                         .adder(OTELaoBaChemicalReactor::addToMachineList)
-                        .dot(1)
+                        .hint(1)
                         .casingIndex(CASING_TEXTURE_ID)
                         .buildAndChain(sBlockCasings8, 6))
                 .build();

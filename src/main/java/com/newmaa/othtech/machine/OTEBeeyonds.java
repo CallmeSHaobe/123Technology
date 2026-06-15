@@ -112,7 +112,7 @@ public class OTEBeeyonds extends OTHTTMultiMachineBaseEM implements IConstructab
             buildHatchAdder(OTEBeeyonds.class)
                 .atLeast(InputBus, OutputBus, InputHatch, OutputHatch, Energy.or(ExoticEnergy))
                 .adder(OTEBeeyonds::addToMachineList)
-                .dot(1)
+                .hint(1)
                 .casingIndex(210)
                 .buildAndChain(sBlockReinforced, 2))
         .build();

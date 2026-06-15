@@ -242,7 +242,7 @@ public class OTEWoodenFusionReactor extends OTHMultiMachineBase<OTEWoodenFusionR
                     'D',
                     buildHatchAdder(OTEWoodenFusionReactor.class).atLeast(InputHatch, OutputHatch)
                         .adder(OTEWoodenFusionReactor::addToMachineList)
-                        .dot(1)
+                        .hint(1)
                         .casingIndex(getTextureIndex())
                         .buildAndChain(Blocks.stonebrick, 0))
                 .addElement('A', ofBlock(Blocks.glass, 0))

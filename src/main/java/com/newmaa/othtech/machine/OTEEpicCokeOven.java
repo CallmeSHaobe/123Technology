@@ -209,7 +209,7 @@ public class OTEEpicCokeOven extends OTHMultiMachineBase<OTEEpicCokeOven> {
                     buildHatchAdder(OTEEpicCokeOven.class)
                         .atLeast(InputBus, OutputBus, InputHatch, OutputHatch, Muffler)
                         .adder(OTEEpicCokeOven::addToMachineList)
-                        .dot(1)
+                        .hint(1)
                         .casingIndex(((BlockCasings2) GregTechAPI.sBlockCasings2).getTextureIndex(0))
                         .buildAndChain(sBlockCasings2, 0))
                 .addElement('B', ofFrame(Materials.Steel))
@@ -1390,12 +1390,12 @@ public class OTEEpicCokeOven extends OTHMultiMachineBase<OTEEpicCokeOven> {
         return new OTEEpicCokeOven(this.mName);
     }
 
-    private static Textures.BlockIcons.CustomIcon ScreenON;
+    private static IIconContainer ScreenON;
 
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister aBlockIconRegister) {
-        ScreenON = new Textures.BlockIcons.CustomIcon("iconsets/GODFORGE_CONTROLLER");
+        ScreenON = Textures.BlockIcons.custom("iconsets/GODFORGE_CONTROLLER");
         super.registerIcons(aBlockIconRegister);
     }
 

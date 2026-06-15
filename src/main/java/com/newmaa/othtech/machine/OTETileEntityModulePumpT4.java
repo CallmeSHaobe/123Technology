@@ -181,7 +181,7 @@ public abstract class OTETileEntityModulePumpT4 extends TileEntityModuleBase {
         return state;
     }
 
-    protected static Textures.BlockIcons.CustomIcon engraving;
+    protected static IIconContainer engraving;
 
     @Override
     public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection facing,
@@ -201,7 +201,7 @@ public abstract class OTETileEntityModulePumpT4 extends TileEntityModuleBase {
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister aBlockIconRegister) {
-        engraving = new Textures.BlockIcons.CustomIcon("iconsets/OVERLAY_SIDE_PUMP_MODULE");
+        engraving = Textures.BlockIcons.custom("iconsets/OVERLAY_SIDE_PUMP_MODULE");
         super.registerIcons(aBlockIconRegister);
     }
 

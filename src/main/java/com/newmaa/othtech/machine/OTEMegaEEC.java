@@ -248,7 +248,7 @@ public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> {
                     buildHatchAdder(OTEMegaEEC.class)
                         .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch)
                         .adder(OTEMegaEEC::addToMachineList)
-                        .dot(1)
+                        .hint(1)
                         .casingIndex(12)
                         .buildAndChain(sBlockCasings1, 12))
                 .addElement('D', ofBlock(sBlockCasings1, 13))

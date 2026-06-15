@@ -61,7 +61,7 @@ import com.newmaa.othtech.utils.modsEnum;
 
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
-import gregtech.api.enums.MaterialsUEVplus;
+import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMap;
@@ -309,7 +309,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 Materials.CosmicNeutronium.getDust(32),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.SuperconductorUIVBase, 1), 176),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.SuperconductorUMVBase, 1), 176))
-            .fluidInputs(MaterialsUEVplus.SpaceTime.getMolten(32 * 667))
+            .fluidInputs(Materials.SpaceTime.getMolten(32 * 667))
             .itemOutputs(
                 setStackSize(GTModHandler.getModItem(modsEnum.TwistSpaceTechnology.ID, "MetaItem01", 1, 30), 2048 * a))
 

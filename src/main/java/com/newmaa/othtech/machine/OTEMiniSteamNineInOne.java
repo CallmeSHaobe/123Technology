@@ -357,7 +357,7 @@ public class OTEMiniSteamNineInOne extends OTHSteamMultiBase<OTEMiniSteamNineInO
                     'H',
                     ofChain(
                         buildSteamInput(OTEMiniSteamNineInOne.class).casingIndex(10)
-                            .dot(1)
+                            .hint(1)
                             .build(),
                         buildHatchAdder(OTEMiniSteamNineInOne.class)
                             .atLeast(
@@ -369,7 +369,7 @@ public class OTEMiniSteamNineInOne extends OTHSteamMultiBase<OTEMiniSteamNineInO
                                 OutputBus,
                                 Muffler)
                             .casingIndex(10)
-                            .dot(1)
+                            .hint(1)
                             .buildAndChain(),
                         ofBlock(sBlockCasings1, 10)))
                 .build();

@@ -416,7 +416,7 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
                     buildHatchAdder(OTESunFactory.class)
                         .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch)
                         .adder(OTESunFactory::addToMachineList)
-                        .dot(1)
+                        .hint(1)
                         .casingIndex(1024 + 12)
                         .buildAndChain(sBlockCasingsTT, 12))
                 .build();

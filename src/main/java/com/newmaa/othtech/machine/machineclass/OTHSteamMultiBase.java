@@ -19,6 +19,7 @@ import java.util.Optional;
 
 import javax.annotation.Nonnull;
 
+import com.newmaa.othtech.OTHTechnology;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -27,6 +28,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
 
 import org.apache.commons.lang3.ArrayUtils;
+import com.newmaa.othtech.OTHTechnology;
 import org.jetbrains.annotations.Nullable;
 
 import com.gtnewhorizons.modularui.api.screen.ModularWindow;
@@ -206,12 +208,12 @@ public abstract class OTHSteamMultiBase<T extends OTHSteamMultiBase<T>> extends 
     @Override
     public boolean addToMachineList(final IGregTechTileEntity aTileEntity, final int aBaseCasingIndex) {
         if (aTileEntity == null) {
-            log("Invalid IGregTechTileEntity");
+            OTHTechnology.LOG.debug("Invalid IGregTechTileEntity");
             return false;
         }
         final IMetaTileEntity aMetaTileEntity = aTileEntity.getMetaTileEntity();
         if (aMetaTileEntity == null) {
-            log("Invalid IMetaTileEntity");
+            OTHTechnology.LOG.debug("Invalid IMetaTileEntity");
             return false;
         }
 
@@ -219,17 +221,17 @@ public abstract class OTHSteamMultiBase<T extends OTHSteamMultiBase<T>> extends 
         boolean aDidAdd = false;
 
         if (aMetaTileEntity instanceof MTEHatchCustomFluidBase) {
-            log("Adding Steam Input Hatch");
+            OTHTechnology.LOG.debug("Adding Steam Input Hatch");
             aDidAdd = addToMachineListInternal(mSteamInputFluids, aMetaTileEntity, aBaseCasingIndex);
         } else if (aMetaTileEntity instanceof MTEHatchSteamBusInput) {
-            log(
+            OTHTechnology.LOG.debug(
                 "Trying to set recipe map. Type: "
                     + (getRecipeMap() != null ? getRecipeMap().unlocalizedName : "Null"));
             this.resetRecipeMapForHatch(aTileEntity, getRecipeMap());
-            log("Adding Steam Input Bus");
+            OTHTechnology.LOG.debug("Adding Steam Input Bus");
             aDidAdd = addToMachineListInternal(mSteamInputs, aMetaTileEntity, aBaseCasingIndex);
         } else if (aMetaTileEntity instanceof MTEHatchSteamBusOutput || aMetaTileEntity instanceof MTEHatchVoidBus) {
-            log("Adding Steam Output Bus");
+            OTHTechnology.LOG.debug("Adding Steam Output Bus");
             aDidAdd = addToMachineListInternal(mSteamOutputs, aMetaTileEntity, aBaseCasingIndex);
         } else if (aMetaTileEntity instanceof MTEHatchInput)
             aDidAdd = addToMachineListInternal(mInputHatches, aMetaTileEntity, aBaseCasingIndex);

@@ -75,7 +75,7 @@ public class OTEMiniActiveTransformer extends OTHTTMultiMachineBaseEM
             buildHatchAdder(OTEMiniActiveTransformer.class)
                 .atLeast(Energy, HatchElement.EnergyMulti, Dynamo, HatchElement.DynamoMulti)
                 .casingIndex(BlockGTCasingsTT.textureOffset)
-                .dot(1)
+                .hint(1)
                 .buildAndChain(onElementPass(t -> t.casingCount++, ofBlock(TTCasingsContainer.sBlockCasingsTT, 0))))
         .build();
 

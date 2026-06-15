@@ -482,21 +482,21 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
                     'M',
                     buildHatchAdder(OTENQFuelGeneratorUniversal.class).atLeast(Muffler)
                         .adder(OTENQFuelGeneratorUniversal::addToMachineList)
-                        .dot(2)
+                        .hint(2)
                         .casingIndex(((BlockCasings8) sBlockCasings8).getTextureIndex(10))
                         .buildAndChain(sBlockCasings8, 10))
                 .addElement(
                     'S',
                     buildHatchAdder(OTENQFuelGeneratorUniversal.class).atLeast(InputHatch, OutputHatch)
                         .adder(OTENQFuelGeneratorUniversal::addToMachineList)
-                        .dot(3)
+                        .hint(3)
                         .casingIndex(((BlockCasings8) sBlockCasings8).getTextureIndex(10))
                         .buildAndChain(sBlockCasings8, 10))
                 .addElement(
                     'E',
                     buildHatchAdder(OTENQFuelGeneratorUniversal.class).atLeast(Dynamo.or(DynamoMulti))
                         .adder(OTENQFuelGeneratorUniversal::addToMachineList)
-                        .dot(4)
+                        .hint(4)
                         .casingIndex(((BlockCasings8) sBlockCasings8).getTextureIndex(10))
                         .buildAndChain(sBlockCasings8, 10))
                 .addElement('P', withChannel("pipe", ofBlocksTiered((block, meta) -> {

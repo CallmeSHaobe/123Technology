@@ -244,7 +244,7 @@ public class OTEEIO extends OTHMultiMachineBase<OTEEIO> {
                     buildHatchAdder(OTEEIO.class)
                         .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch)
                         .adder(OTEEIO::addToMachineList)
-                        .dot(1)
+                        .hint(1)
                         .casingIndex(((BlockCasings2) GregTechAPI.sBlockCasings2).getTextureIndex(0))
                         .buildAndChain(EnderIO.blockIngotStorage, 7))
                 .build();

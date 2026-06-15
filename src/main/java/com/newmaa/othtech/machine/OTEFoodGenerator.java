@@ -11,6 +11,7 @@ import static net.minecraft.util.StatCollector.translateToLocal;
 import java.util.List;
 import java.util.Objects;
 
+import gregtech.api.interfaces.IIconContainer;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -178,7 +179,7 @@ public class OTEFoodGenerator extends OTHTTMultiMachineBaseEM implements IConstr
     }
 
     @Override
-    public boolean checkMachine_EM(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
+    public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
         repairMachine();
         return checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet);
 
@@ -287,7 +288,7 @@ public class OTEFoodGenerator extends OTHTTMultiMachineBaseEM implements IConstr
                     buildHatchAdder(OTEFoodGenerator.class)
                         .atLeast(InputBus, OutputBus, InputHatch, OutputHatch, Muffler)
                         .adder(OTEFoodGenerator::addToMachineList)
-                        .dot(1)
+                        .hint(1)
                         .casingIndex(((BlockCasings2) GregTechAPI.sBlockCasings2).getTextureIndex(0))
                         .buildAndChain(sBlockCasings2, 0))
                 .addElement(
@@ -325,7 +326,7 @@ public class OTEFoodGenerator extends OTHTTMultiMachineBaseEM implements IConstr
                     'F',
                     buildHatchAdder(OTEFoodGenerator.class).atLeast(Dynamo)
                         .adder(OTEFoodGenerator::addToMachineList)
-                        .dot(2)
+                        .hint(2)
                         .casingIndex(((BlockCasings1) GregTechAPI.sBlockCasings1).getTextureIndex(9))
                         .buildAndChain(sBlockCasings2, 0))
                 .addElement('G', ofBlock(Blocks.iron_block, 0))
@@ -487,12 +488,12 @@ public class OTEFoodGenerator extends OTHTTMultiMachineBaseEM implements IConstr
         return true;
     }
 
-    private static Textures.BlockIcons.CustomIcon ScreenON;
+    private static IIconContainer ScreenON;
 
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister aBlockIconRegister) {
-        ScreenON = new Textures.BlockIcons.CustomIcon("123technology:iconSetOTH/LEEK");
+        ScreenON = Textures.BlockIcons.custom("123technology:iconSetOTH/LEEK");
         super.registerIcons(aBlockIconRegister);
     }
 

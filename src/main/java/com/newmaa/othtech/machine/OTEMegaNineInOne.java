@@ -371,7 +371,7 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
                             Maintenance,
                             Energy.or(ExoticEnergy))
                         .adder(OTEMegaNineInOne::addToMachineList)
-                        .dot(1)
+                        .hint(1)
                         .casingIndex(getTextureIndex())
                         .buildAndChain(ModBlocks.blockCasings3Misc, 2))
                 .addElement('A', BorosilicateGlass.ofBoroGlass(3))

@@ -147,11 +147,11 @@ public class OTELargeCircuitAssembler extends OTHMultiMachineBase<OTELargeCircui
         } else return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(id) };
     }
 
-    private static final IIconContainer textureFontOn = new Textures.BlockIcons.CustomIcon("iconsets/OVERLAY_QTANK");
-    private static final IIconContainer textureFontOn_Glow = new Textures.BlockIcons.CustomIcon(
+    private static final IIconContainer textureFontOn = Textures.BlockIcons.custom("iconsets/OVERLAY_QTANK");
+    private static final IIconContainer textureFontOn_Glow = Textures.BlockIcons.custom(
         "iconsets/OVERLAY_QTANK_GLOW");
-    private static final IIconContainer textureFontOff = new Textures.BlockIcons.CustomIcon("iconsets/OVERLAY_QCHEST");
-    private static final IIconContainer textureFontOff_Glow = new Textures.BlockIcons.CustomIcon(
+    private static final IIconContainer textureFontOff = Textures.BlockIcons.custom("iconsets/OVERLAY_QCHEST");
+    private static final IIconContainer textureFontOff_Glow = Textures.BlockIcons.custom(
         "iconsets/OVERLAY_QCHEST_GLOW");
 
     @Override
@@ -262,21 +262,21 @@ public class OTELargeCircuitAssembler extends OTHMultiMachineBase<OTELargeCircui
                     buildHatchAdder(OTELargeCircuitAssembler.class).atLeast(Energy.or(ExoticEnergy), Muffler)
                         .adder(OTELargeCircuitAssembler::addToMachineList)
                         .casingIndex(CASING_INDEX)
-                        .dot(1)
+                        .hint(1)
                         .buildAndChain(c))
                 .addElement(
                     'G',
                     buildHatchAdder(OTELargeCircuitAssembler.class).atLeast(OutputHatch, OutputBus)
                         .adder(OTELargeCircuitAssembler::addToMachineList)
                         .casingIndex(CASING_INDEX)
-                        .dot(2)
+                        .hint(2)
                         .buildAndChain(c))
                 .addElement(
                     'F',
                     buildHatchAdder(OTELargeCircuitAssembler.class).atLeast(InputBus, InputHatch)
                         .adder(OTELargeCircuitAssembler::addToMachineList)
                         .casingIndex(CASING_INDEX)
-                        .dot(3)
+                        .hint(3)
                         .buildAndChain(c))
                 .build();
         }

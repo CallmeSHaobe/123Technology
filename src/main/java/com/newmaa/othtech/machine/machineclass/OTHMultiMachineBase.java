@@ -58,10 +58,10 @@ import gregtech.api.metatileentity.implementations.MTEHatchMultiInput;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.threads.RunnableSound;
-import gregtech.api.util.GTUtility;
 import gregtech.client.GTSoundLoop;
 import gregtech.common.tileentities.machines.IDualInputHatch;
 import gregtech.common.tileentities.machines.IDualInputInventory;
+import gregtech.api.util.GTUtility;
 import gregtech.common.tileentities.machines.MTEHatchInputBusME;
 import gregtech.common.tileentities.machines.MTEHatchInputME;
 import mcp.mobius.waila.api.IWailaConfigHandler;
@@ -391,30 +391,30 @@ public abstract class OTHMultiMachineBase<T extends OTHMultiMachineBase<T>> exte
         return new String[] {
             /* 1 */ StatCollector.translateToLocal("GT5U.multiblock.Progress") + ": "
                 + EnumChatFormatting.GREEN
-                + GTUtility.formatNumbers(mProgresstime / 20)
+                + mProgresstime / 20
                 + EnumChatFormatting.RESET
                 + " s / "
                 + EnumChatFormatting.YELLOW
-                + GTUtility.formatNumbers(mMaxProgresstime / 20)
+                + mMaxProgresstime / 20
                 + EnumChatFormatting.RESET
                 + " s",
             /* 2 */ StatCollector.translateToLocal("GT5U.multiblock.energy") + ": "
                 + EnumChatFormatting.GREEN
-                + GTUtility.formatNumbers(storedEnergy)
+                + storedEnergy
                 + EnumChatFormatting.RESET
                 + " EU / "
                 + EnumChatFormatting.YELLOW
-                + GTUtility.formatNumbers(maxEnergy)
+                + maxEnergy
                 + EnumChatFormatting.RESET
                 + " EU",
             /* 3 */ StatCollector.translateToLocal("GT5U.multiblock.usage") + ": "
                 + EnumChatFormatting.RED
-                + GTUtility.formatNumbers(getActualEnergyUsage())
+                + getActualEnergyUsage()
                 + EnumChatFormatting.RESET
                 + " EU/t",
             /* 4 */ StatCollector.translateToLocal("GT5U.multiblock.mei") + ": "
                 + EnumChatFormatting.YELLOW
-                + GTUtility.formatNumbers(voltage)
+                + voltage
                 + EnumChatFormatting.RESET
                 + " EU/t(*"
                 + amps

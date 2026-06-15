@@ -335,7 +335,7 @@ public class OTETangShanSteelFactory extends OTHMultiMachineBase<OTETangShanStee
                     buildHatchAdder(OTETangShanSteelFactory.class)
                         .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch)
                         .adder(OTETangShanSteelFactory::addToMachineList)
-                        .dot(1)
+                        .hint(1)
                         .casingIndex(((BlockCasings2) GregTechAPI.sBlockCasings2).getTextureIndex(0))
                         .buildAndChain(sBlockCasings2, 0))
                 .addElement('D', ofBlock(sBlockCasings2, 11))
@@ -383,7 +383,7 @@ public class OTETangShanSteelFactory extends OTHMultiMachineBase<OTETangShanStee
                     'Y',
                     buildHatchAdder(OTETangShanSteelFactory.class).atLeast(Muffler)
                         .adder(OTETangShanSteelFactory::addToMachineList)
-                        .dot(2)
+                        .hint(2)
                         .casingIndex(((BlockCasings2) GregTechAPI.sBlockCasings2).getTextureIndex(0))
                         .buildAndChain(sBlockCasings2, 0))
                 .addElement('Z', ofFrame(Materials.Steel))

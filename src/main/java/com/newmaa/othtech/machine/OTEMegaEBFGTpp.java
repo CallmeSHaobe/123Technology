@@ -250,7 +250,7 @@ public class OTEMegaEBFGTpp extends OTHMultiMachineBase<OTEMegaEBFGTpp> {
                     buildHatchAdder(OTEMegaEBFGTpp.class)
                         .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch)
                         .adder(OTEMegaEBFGTpp::addToMachineList)
-                        .dot(1)
+                        .hint(1)
                         .casingIndex(TAE.getIndexFromPage(2, 11))
                         .buildAndChain(ofBlock(ModBlocks.blockCasings3Misc, 11)))
                 .addElement(
@@ -261,7 +261,7 @@ public class OTEMegaEBFGTpp extends OTHMultiMachineBase<OTEMegaEBFGTpp> {
                     'D',
                     buildHatchAdder(OTEMegaEBFGTpp.class).atLeast(Muffler)
                         .adder(OTEMegaEBFGTpp::addToMachineList)
-                        .dot(2)
+                        .hint(2)
                         .casingIndex(TAE.getIndexFromPage(2, 11))
                         .buildAndChain(ofBlock(ModBlocks.blockCasings3Misc, 11)))
                 .build();

@@ -178,7 +178,7 @@ public class OTEHeatExchanger extends OTHTTMultiMachineBaseEM implements ISurviv
                     buildHatchAdder(OTEHeatExchanger.class)
                         .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch)
                         .adder(OTEHeatExchanger::addToMachineList)
-                        .dot(1)
+                        .hint(1)
                         .casingIndex(48)
                         .buildAndChain(sBlockCasings4, 0))
                 .build();

@@ -2,8 +2,8 @@ package com.newmaa.othtech.machine.machineclass;
 
 import static gregtech.api.enums.GTValues.V;
 
-import com.brandon3055.brandonscore.common.handlers.ProcessHandler;
 import com.brandon3055.draconicevolution.common.tileentities.multiblocktiles.reactor.ReactorExplosion;
+import com.brandon3055.draconicevolution.common.utils.handlers.ProcessHandler;
 import com.newmaa.othtech.Config;
 
 import gregtech.api.interfaces.ISecondaryDescribable;

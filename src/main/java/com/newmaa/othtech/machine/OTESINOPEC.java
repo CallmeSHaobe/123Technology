@@ -259,14 +259,14 @@ public class OTESINOPEC extends OTHMultiMachineBase<OTESINOPEC> {
                     buildHatchAdder(OTESINOPEC.class)
                         .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch)
                         .adder(OTESINOPEC::addToMachineList)
-                        .dot(1)
+                        .hint(1)
                         .casingIndex(48)
                         .buildAndChain(sBlockCasings4, 0))
                 .addElement(
                     'O',
                     buildHatchAdder(OTESINOPEC.class).atLeast(Muffler)
                         .adder(OTESINOPEC::addToMachineList)
-                        .dot(2)
+                        .hint(2)
                         .casingIndex(48)
                         .buildAndChain(sBlockCasings4, 0))
                 .build();

@@ -384,7 +384,7 @@ public class OTEMegaQFT extends OTHMultiMachineBase<OTEMegaQFT> {
                     buildHatchAdder(OTEMegaQFT.class)
                         .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch, Muffler)
                         .adder(OTEMegaQFT::addToMachineList)
-                        .dot(1)
+                        .hint(1)
                         .casingIndex(1024 + 12)
                         .buildAndChain(GregTechAPI.sBlockCasings8, 3))
                 .addElement('B', ofBlock(sBlockCasingsBA0, 10))

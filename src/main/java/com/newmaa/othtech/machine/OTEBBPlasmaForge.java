@@ -455,7 +455,7 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
                     buildHatchAdder(OTEBBPlasmaForge.class)
                         .atLeast(InputHatch, OutputHatch, InputBus, OutputBus, Energy.or(ExoticEnergy), Maintenance)
                         .casingIndex(DIM_INJECTION_CASING)
-                        .dot(1)
+                        .hint(1)
                         .buildAndChain(sBlockCasings1, 13))
                 .addElement('C', ofBlock(sBlockCasings1, 14))
                 .addElement(

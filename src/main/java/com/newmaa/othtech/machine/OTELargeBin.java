@@ -403,25 +403,25 @@ public class OTELargeBin extends OTHMultiMachineBase<OTELargeBin> implements ICo
         .addElement(
             'A',
             buildHatchAdder(OTELargeBin.class).atLeast(InputBus, InputHatch, Energy.or(ExoticEnergy), Dynamo, OutputBus)
-                .dot(1)
+                .hint(1)
                 .casingIndex(((BlockCasings2) sBlockCasings2).getTextureIndex(0))
                 .buildAndChain(sBlockCasings2, 0))
         .addElement(
             'Y',
             buildHatchAdder(OTELargeBin.class).atLeast(InputBus, InputHatch, Energy.or(ExoticEnergy), Dynamo, OutputBus)
-                .dot(1)
+                .hint(1)
                 .casingIndex(((BlockCasings4) sBlockCasings4).getTextureIndex(2))
                 .buildAndChain(sBlockCasings4, 2))
         .addElement(
             'M',
             buildHatchAdder(OTELargeBin.class).atLeast(InputBus, InputHatch, Energy.or(ExoticEnergy), Dynamo, OutputBus)
-                .dot(1)
+                .hint(1)
                 .casingIndex(((BlockCasings4) sBlockCasings4).getTextureIndex(0))
                 .buildAndChain(sBlockCasings4, 0))
         .addElement(
             'N',
             buildHatchAdder(OTELargeBin.class).atLeast(InputBus, InputHatch, Energy.or(ExoticEnergy), Dynamo, OutputBus)
-                .dot(1)
+                .hint(1)
                 .casingIndex(((BlockCasings1) sBlockCasings1).getTextureIndex(12))
                 .buildAndChain(sBlockCasings1, 12))
         .addElement('Z', ofBlock(sBlockCasings3, 10))
@@ -722,14 +722,14 @@ public class OTELargeBin extends OTHMultiMachineBase<OTELargeBin> implements ICo
         return tt;
     }
 
-    protected static Textures.BlockIcons.CustomIcon ScreenOFF;
-    protected static Textures.BlockIcons.CustomIcon ScreenON;
+    protected static IIconContainer ScreenOFF;
+    protected static IIconContainer ScreenON;
 
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister aBlockIconRegister) {
-        ScreenOFF = new Textures.BlockIcons.CustomIcon("iconsets/EM_CONTROLLER");
-        ScreenON = new Textures.BlockIcons.CustomIcon("iconsets/EM_CONTROLLER_ACTIVE");
+        ScreenOFF = Textures.BlockIcons.custom("iconsets/EM_CONTROLLER");
+        ScreenON = Textures.BlockIcons.custom("iconsets/EM_CONTROLLER_ACTIVE");
         super.registerIcons(aBlockIconRegister);
     }
 

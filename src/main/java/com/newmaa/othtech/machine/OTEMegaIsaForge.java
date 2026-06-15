@@ -248,7 +248,7 @@ public class OTEMegaIsaForge extends OTHMultiMachineBase<OTEMegaIsaForge> {
                     buildHatchAdder(OTEMegaIsaForge.class)
                         .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch, Muffler)
                         .adder(OTEMegaIsaForge::addToMachineList)
-                        .dot(1)
+                        .hint(1)
                         .casingIndex(1024 + 12)
                         .buildAndChain(sBlockCasingsTT, 12))
                 .build();

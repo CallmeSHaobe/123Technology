@@ -260,7 +260,7 @@ public class OTEMegaIsaFactory extends OTHMultiMachineBase<OTEMegaIsaFactory> {
                     'L',
                     buildHatchAdder(OTEMegaIsaFactory.class).atLeast(Muffler)
                         .adder(OTEMegaIsaFactory::addToMachineList)
-                        .dot(2)
+                        .hint(2)
                         .casingIndex(TAE.getIndexFromPage(3, 10))
                         .buildAndChain(ModBlocks.blockCasings4Misc, 10))
                 .addElement(
@@ -268,7 +268,7 @@ public class OTEMegaIsaFactory extends OTHMultiMachineBase<OTEMegaIsaFactory> {
                     buildHatchAdder(OTEMegaIsaFactory.class)
                         .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch)
                         .adder(OTEMegaIsaFactory::addToMachineList)
-                        .dot(1)
+                        .hint(1)
                         .casingIndex(TAE.GTPP_INDEX(2))
                         .buildAndChain(ModBlocks.blockCasings5Misc, 0))
                 .build();
