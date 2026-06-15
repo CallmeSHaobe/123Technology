@@ -712,3 +712,5 @@ ote.la.umv=UMV 1,073,741,824A Laser Source Hatch
 ote.la.umvb=UMV 1,073,741,824A Laser Target Hatch
 ote.la.uxv=UXV 1,073,741,824A Laser Source Hatch
 ote.la.uxvb=UXV 1,073,741,824A Laser Target Hatch
+
+oth.clone.whereami=where am i?

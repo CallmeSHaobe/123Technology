@@ -18,6 +18,8 @@ import com.newmaa.othtech.common.item.ItemLoader;
 
 import gtPlusPlus.core.item.ModItems;
 
+import static net.minecraft.util.StatCollector.translateToLocal;
+
 public class EntityFakePlayer extends EntityCreature implements IMobInfoProvider {
 
     private static final int DATAWATCHER_ID_SITTING = 20;
@@ -65,7 +67,7 @@ public class EntityFakePlayer extends EntityCreature implements IMobInfoProvider
         // 每100 ticks（5秒）随机切换状态
         if (!this.worldObj.isRemote && this.sitCooldown-- <= 0) {
             if (this.rand.nextInt(5) == 0) { // 20%概率触发
-                sendMessageToAll("我在哪里?");
+                sendMessageToAll(translateToLocal("oth.clone.whereami"));
                 this.setSitting(!this.isSitting());
                 this.sitCooldown = 100 + this.rand.nextInt(100); // 5-10秒冷却
             }

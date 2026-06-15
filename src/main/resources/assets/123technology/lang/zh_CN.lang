@@ -711,3 +711,5 @@ ote.la.umv=UMV 1,073,741,824A 激光源仓
 ote.la.umvb=UMV 1,073,741,824A 激光靶仓
 ote.la.uxv=UXV 1,073,741,824A 激光源仓
 ote.la.uxvb=UXV 1,073,741,824A 激光靶仓
+
+oth.clone.whereami=我在哪里?
