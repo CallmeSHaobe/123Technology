@@ -12,6 +12,7 @@ import static net.minecraft.util.StatCollector.translateToLocal;
 
 import java.util.List;
 
+import gregtech.api.structure.error.StructureError;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -116,7 +117,7 @@ public class OTEMegaIsaFactory extends OTHMultiMachineBase<OTEMegaIsaFactory> {
         super.getWailaNBTData(player, tile, tag, world, x, y, z);
         final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
         if (tileEntity != null) {
-            String bonus = GTUtility.formatNumbers(tierMill);
+            String bonus = GTUtility.formatShortenedLong(tierMill);
             tag.setString("tierMill", bonus);
         }
     }
@@ -160,14 +161,9 @@ public class OTEMegaIsaFactory extends OTHMultiMachineBase<OTEMegaIsaFactory> {
 
         }.setMaxParallelSupplier(this::getMaxParallelRecipes);
     }
-
     @Override
-    public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
-
-        repairMachine();
-
-        return checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet);
-
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
+        if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;repairMachine();
     }
 
     @Override

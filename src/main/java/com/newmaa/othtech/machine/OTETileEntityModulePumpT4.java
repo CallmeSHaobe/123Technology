@@ -4,7 +4,11 @@ import static gregtech.api.enums.GTValues.VP;
 import static net.minecraft.util.StatCollector.translateToLocal;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import gregtech.api.interfaces.IIconContainer;
+import gregtech.api.structure.error.StructureError;
+import gregtech.common.tileentities.machines.outputme.MTEHatchOutputME;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
@@ -30,7 +34,6 @@ import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.api.util.ParallelHelper;
-import gregtech.common.tileentities.machines.MTEHatchOutputME;
 import gtnhintergalactic.recipe.SpacePumpingRecipes;
 import gtnhintergalactic.tile.multi.elevator.TileEntitySpaceElevator;
 import gtnhintergalactic.tile.multi.elevatormodules.TileEntityModuleBase;
@@ -109,8 +112,8 @@ public abstract class OTETileEntityModulePumpT4 extends TileEntityModuleBase {
                 if (!hasMeOutputHatch && !eSafeVoid) {
                     for (MTEHatchOutput output : mOutputHatches) {
                         if (output.mFluid != null && output.mFluid.getFluid() != null
-                            && output.getLockedFluidName() != null
-                            && output.getLockedFluidName()
+                            && output.getLockedFluid().getName() != null
+                            && output.getLockedFluid().getName()
                                 .equals(
                                     fluid.getFluid()
                                         .getName())
@@ -167,18 +170,15 @@ public abstract class OTETileEntityModulePumpT4 extends TileEntityModuleBase {
     }
 
     @Override
-    public boolean checkMachine_EM(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
-        boolean state = super.checkMachine_EM(aBaseMetaTileEntity, aStack);
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
+        super.checkMachine(aBaseMetaTileEntity, aStack, errors);
         hasMeOutputHatch = false;
-        if (state) {
             for (MTEHatchOutput output : mOutputHatches) {
                 if (output instanceof MTEHatchOutputME) {
                     hasMeOutputHatch = true;
                     break;
                 }
             }
-        }
-        return state;
     }
 
     protected static IIconContainer engraving;

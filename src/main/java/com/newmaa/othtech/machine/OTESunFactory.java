@@ -1,6 +1,7 @@
 package com.newmaa.othtech.machine;
 
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
+import static com.gtnewhorizon.gtnhlib.util.numberformatting.NumberFormatUtil.formatNumber;
 import static com.newmaa.othtech.Config.is_Enqing_Song_Play;
 import static com.newmaa.othtech.utils.Utils.metaItemEqual;
 import static gregtech.api.GregTechAPI.*;
@@ -13,12 +14,14 @@ import static net.minecraft.util.StatCollector.translateToLocal;
 import static tectech.thing.casing.TTCasingsContainer.StabilisationFieldGenerators;
 import static tectech.thing.casing.TTCasingsContainer.sBlockCasingsTT;
 
+import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.Nonnull;
 
+import gregtech.api.structure.error.StructureError;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -201,7 +204,7 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
         super.getWailaNBTData(player, tile, tag, world, x, y, z);
         final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
         if (tileEntity != null) {
-            BYDS = GTUtility.formatNumbers(getSpeedBonus());
+            BYDS = formatNumber(getSpeedBonus());
             tag.setString("speedBonus", BYDS);
 
         }
@@ -323,10 +326,9 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
     }
 
     @Override
-    public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
+        if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
         repairMachine();
-        return checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet);
-
     }
 
     @Override

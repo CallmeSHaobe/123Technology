@@ -14,6 +14,7 @@ import static net.minecraft.util.StatCollector.translateToLocal;
 import java.util.Arrays;
 import java.util.List;
 
+import gregtech.api.structure.error.StructureError;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
@@ -176,18 +177,17 @@ public class OTELargeCircuitAssembler extends OTHMultiMachineBase<OTELargeCircui
     private static IStructureDefinition<OTELargeCircuitAssembler> STRUCTURE_DEFINITION = null;
 
     @Override
-    public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
         repairMachine();
         this.casingTier = -2;
         this.machineLimitedVoltage = -1L;
-        var res = checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet);
+        var res = checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors);
         if (res) {
             this.machineLimitedVoltage = GTValues.V[checkEnergyHatchTier()];
             if (casingTier >= 0) {
                 reUpdate(Math.max(CASING_INDEX, CASING_INDEX + casingTier));
             }
         }
-        return res;
     }
 
     private final List<List<? extends MTEHatch>> hatchList = Arrays.asList(

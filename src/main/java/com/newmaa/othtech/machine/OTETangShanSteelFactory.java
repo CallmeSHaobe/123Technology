@@ -19,6 +19,7 @@ import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
+import gregtech.api.structure.error.StructureError;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -233,7 +234,7 @@ public class OTETangShanSteelFactory extends OTHMultiMachineBase<OTETangShanStee
             BigInteger costingWirelessEUTemp = BigInteger.valueOf(processingLogic.getCalculatedEut())
                 .multiply(BigInteger.valueOf(processingLogic.getDuration()))
                 .multiply(c.pow(2));
-            costingWirelessEU = GTUtility.formatNumbers(costingWirelessEUTemp);
+            costingWirelessEU = GTUtility.scientificFormat(costingWirelessEUTemp);
             if (!addEUToGlobalEnergyMap(ownerUUID, costingWirelessEUTemp.multiply(NEGATIVE_ONE))) {
                 return CheckRecipeResultRegistry.insufficientPower(costingWirelessEUTemp.longValue());
             }
@@ -270,11 +271,10 @@ public class OTETangShanSteelFactory extends OTHMultiMachineBase<OTETangShanStee
     }
 
     @Override
-    public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
-        repairMachine();
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
+        if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
         coilLevel = HeatingCoilLevel.None;
-        return checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet);
-
+        repairMachine();
     }
 
     @Override

@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import gregtech.api.structure.error.StructureError;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -93,8 +94,8 @@ public class OTEMegaNQFuelFactory extends OTHTTMultiMachineBaseEM implements ICo
         super.getWailaNBTData(player, tile, tag, world, x, y, z);
         final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
         if (tileEntity != null) {
-            String Mode = GTUtility.formatNumbers(mode);
-            String OC = GTUtility.formatNumbers(this.tier);
+            String Mode = GTUtility.formatShortenedLong(mode);
+            String OC = GTUtility.formatShortenedLong(this.tier);
             tag.setString("Tier", Mode);
             tag.setString("OC", OC);
             tag.setString("Parallel", String.valueOf(maxParallel));
@@ -159,8 +160,9 @@ public class OTEMegaNQFuelFactory extends OTHTTMultiMachineBaseEM implements ICo
     }
 
     @Override
-    public boolean checkMachine_EM(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
-        return structureCheck_EM(mName, horizontalOffSet, verticalOffSet, depthOffSet);
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
+        if (!checkPiece(mName, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
+        repairMachine();
     }
 
     public int getParallel() {
@@ -217,8 +219,9 @@ public class OTEMegaNQFuelFactory extends OTHTTMultiMachineBaseEM implements ICo
     }
 
     @Override
-    public void construct(ItemStack itemStack, boolean hintsOnly) {
-        structureBuild_EM(mName, horizontalOffSet, verticalOffSet, depthOffSet, itemStack, hintsOnly);
+    public void construct(ItemStack stackSize, boolean hintsOnly) {
+        repairMachine();
+        buildPiece(mName, stackSize, hintsOnly, horizontalOffSet, verticalOffSet, depthOffSet);
     }
 
     @Override

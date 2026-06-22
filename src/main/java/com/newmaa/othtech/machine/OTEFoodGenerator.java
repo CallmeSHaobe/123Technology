@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Objects;
 
 import gregtech.api.interfaces.IIconContainer;
+import gregtech.api.structure.error.StructureError;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -103,7 +104,7 @@ public class OTEFoodGenerator extends OTHTTMultiMachineBaseEM implements IConstr
         super.getWailaNBTData(player, tile, tag, world, x, y, z);
         final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
         if (tileEntity != null) {
-            String bonus = GTUtility.formatNumbers(mEUt);
+            String bonus = GTUtility.formatShortenedLong(mEUt);
             tag.setString("bonus", bonus);
         }
     }
@@ -179,10 +180,9 @@ public class OTEFoodGenerator extends OTHTTMultiMachineBaseEM implements IConstr
     }
 
     @Override
-    public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
+        if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
         repairMachine();
-        return checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet);
-
     }
 
     @Override

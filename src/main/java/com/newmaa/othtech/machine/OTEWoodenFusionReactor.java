@@ -9,6 +9,8 @@ import static net.minecraft.util.StatCollector.translateToLocal;
 
 import java.util.List;
 
+import com.gtnewhorizon.gtnhlib.util.numberformatting.NumberFormatUtil;
+import gregtech.api.structure.error.StructureError;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -85,9 +87,9 @@ public class OTEWoodenFusionReactor extends OTHMultiMachineBase<OTEWoodenFusionR
         super.getWailaNBTData(player, tile, tag, world, x, y, z);
         final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
         if (tileEntity != null) {
-            String tier = GTUtility.formatNumbers(TierSteam);
-            String pla = GTUtility.formatNumbers(amountPlasma);
-            String bonus = GTUtility.formatNumbers(getSpeedBonus());
+            String tier = GTUtility.formatShortenedLong(TierSteam);
+            String pla = GTUtility.formatShortenedLong(amountPlasma);
+            String bonus = NumberFormatUtil.formatNumber(getSpeedBonus());
             tag.setString("Tier", tier);
             tag.setString("PlasmaAmount", pla);
             tag.setString("bonus", bonus);
@@ -187,10 +189,9 @@ public class OTEWoodenFusionReactor extends OTHMultiMachineBase<OTEWoodenFusionR
     }
 
     @Override
-    public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
+        if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
         repairMachine();
-        return checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet);
-
     }
 
     @Override

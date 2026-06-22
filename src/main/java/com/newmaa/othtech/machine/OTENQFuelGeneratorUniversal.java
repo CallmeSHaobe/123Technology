@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import gregtech.api.structure.error.StructureError;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -127,7 +128,7 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
         super.getWailaNBTData(player, tile, tag, world, x, y, z);
         final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
         if (tileEntity != null) {
-            String bonus = GTUtility.formatNumbers(getPowerFlow());
+            String bonus = GTUtility.formatShortenedLong(getPowerFlow());
             tag.setString("bonus", bonus);
             tag.setBoolean("WM", isWirelessMode);
             tag.setString("costingWirelessEU", costingWirelessEU);
@@ -261,7 +262,7 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
                     .multiply(BigDecimal.valueOf(recipe.mDuration))
                     .divide(BigDecimal.valueOf(100), 0, RoundingMode.DOWN)
                     .toBigInteger();
-                costingWirelessEU = GTUtility.formatNumbers(costingWirelessEUTemp);
+                costingWirelessEU = GTUtility.scientificFormat(costingWirelessEUTemp);
                 if (!addEUToGlobalEnergyMap(ownerUUID, costingWirelessEUTemp)) {
                     return CheckRecipeResultRegistry.INTERNAL_ERROR;
                 }
@@ -410,17 +411,23 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
     }
 
     @Override
-    public boolean checkMachine_EM(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
         for (final MTEHatchInput tHatch : validMTEList(mInputHatches)) {
             if (tHatch instanceof MTEHatchInputME) {
-                return false;
+                return;
             }
         }
         if (this.pipeTier != 2) {
             this.isWirelessMode = false;
         }
+        checkPiece(mName, 2, 2, 0, errors);
+        repairMachine();
+    }
+    @Override
+    public void construct(ItemStack stackSize, boolean hintsOnly) {
+        repairMachine();
+        buildPiece(mName, stackSize, hintsOnly, 2, 2, 0);
 
-        return structureCheck_EM(mName, 2, 2, 0);
     }
 
     protected final List<MTEHatchInput> mMiddleInputHatches = new ArrayList<>();
@@ -445,10 +452,6 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
         }
     }
 
-    @Override
-    public void construct(ItemStack stackSize, boolean hintsOnly) {
-        structureBuild_EM(mName, 2, 2, 0, stackSize, hintsOnly);
-    }
 
     @Override
     public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {

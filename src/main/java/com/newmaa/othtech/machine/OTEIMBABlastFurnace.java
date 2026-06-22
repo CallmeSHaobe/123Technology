@@ -9,6 +9,7 @@ import static net.minecraft.util.StatCollector.translateToLocal;
 
 import javax.annotation.Nonnull;
 
+import gregtech.api.structure.error.StructureError;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -30,6 +31,8 @@ import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.api.util.OverclockCalculator;
 import gregtech.api.util.ParallelHelper;
 import gregtech.common.tileentities.machines.multi.MTEElectricBlastFurnace;
+
+import java.util.List;
 
 public class OTEIMBABlastFurnace extends MTEElectricBlastFurnace {
 
@@ -137,16 +140,14 @@ public class OTEIMBABlastFurnace extends MTEElectricBlastFurnace {
     }
 
     @Override
-    public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
         this.mHeatingCapacity = 0;
         setCoilLevel(HeatingCoilLevel.None);
         mMufflerHatches.clear();
-        if (!checkPiece(STRUCTURE_PIECE_MAIN, 2, 3, 0)) return false;
-        if (getCoilLevel() == HeatingCoilLevel.None) return false;
-        if (mMaintenanceHatches.size() != 1) return false;
+        if (!checkPiece(STRUCTURE_PIECE_MAIN, 2, 3, 0, errors)) return;
+        if (getCoilLevel() == HeatingCoilLevel.None) return;
+        if (mMaintenanceHatches.size() != 1) return;
         this.mHeatingCapacity = 20001;
-
-        return true;
     }
 
     @Override

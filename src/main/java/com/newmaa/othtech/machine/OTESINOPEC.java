@@ -22,6 +22,7 @@ import static net.minecraft.util.StatCollector.translateToLocal;
 import java.util.List;
 import java.util.Objects;
 
+import gregtech.api.structure.error.StructureError;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -174,13 +175,11 @@ public class OTESINOPEC extends OTHMultiMachineBase<OTESINOPEC> {
     }
 
     @Override
-    public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
         updatetier();
         repairMachine();
         coilLevel = HeatingCoilLevel.None;
-
-        return checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet);
-
+        checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors);
     }
 
     @NotNull

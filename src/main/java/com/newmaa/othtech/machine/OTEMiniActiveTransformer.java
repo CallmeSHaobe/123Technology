@@ -7,6 +7,7 @@ import static gregtech.api.enums.HatchElement.Energy;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static net.minecraft.util.StatCollector.translateToLocal;
 
+import gregtech.api.structure.error.StructureError;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
@@ -33,22 +34,24 @@ import tectech.thing.casing.TTCasingsContainer;
 import tectech.thing.metaTileEntity.multi.base.TTMultiblockBase;
 import tectech.thing.metaTileEntity.multi.base.render.TTRenderedExtendedFacingTexture;
 
+import java.util.List;
+
 public class OTEMiniActiveTransformer extends OTHTTMultiMachineBaseEM
     implements IConstructable, ISurvivalConstructable {
 
     private boolean grace = false;
 
     @Override
-    public boolean checkMachine_EM(IGregTechTileEntity iGregTechTileEntity, ItemStack itemStack) {
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
+        repairMachine();
         casingCount = 0;
-        if (structureCheck_EM("main", 0, 1, 0) && casingCount >= 0) {
+        if (!checkPiece("main", 0, 1, 0, errors)) return;
+        if (checkPiece("main", 0, 1, 0, errors) && casingCount >= 0 ) {
             grace = true;
-            return true;
         } else if (grace) {
             grace = false;
-            return true;
         }
-        return false;
+        return;
     }
 
     @Override
@@ -198,7 +201,9 @@ public class OTEMiniActiveTransformer extends OTHTTMultiMachineBaseEM
 
     @Override
     public void construct(ItemStack stackSize, boolean hintsOnly) {
-        structureBuild_EM("main", 0, 1, 0, stackSize, hintsOnly);
+        repairMachine();
+        buildPiece("main", stackSize, hintsOnly, 0, 1, 0);
+
     }
 
     @Override

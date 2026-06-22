@@ -8,6 +8,7 @@ import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static gregtech.api.util.GTStructureUtility.ofCoil;
 import static net.minecraft.util.StatCollector.translateToLocal;
 
+import gregtech.api.structure.error.StructureError;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
@@ -49,6 +50,8 @@ import gregtech.common.misc.GTStructureChannels;
 import gtPlusPlus.core.block.ModBlocks;
 import gtPlusPlus.core.util.minecraft.FluidUtils;
 import gtPlusPlus.xmod.gregtech.common.blocks.textures.TexturesGtBlock;
+
+import java.util.List;
 
 public class OTEMegaEBFGTpp extends OTHMultiMachineBase<OTEMegaEBFGTpp> {
 
@@ -153,21 +156,21 @@ public class OTEMegaEBFGTpp extends OTHMultiMachineBase<OTEMegaEBFGTpp> {
     }
 
     @Override
-    public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
         this.mHeatingCapacity = 0;
-        if (!this.checkPiece("main", 7, 17, 0) || this.getCoilLevel() == HeatingCoilLevel.None) return false;
+        if (!this.checkPiece(STRUCTURE_PIECE_MAIN, 7, 17, 0, errors)|| this.getCoilLevel() == HeatingCoilLevel.None) return;
         if (this.glassTier < 8) {
             for (MTEHatch hatch : this.mExoticEnergyHatches) {
                 if (hatch.getConnectionType() == MTEHatch.ConnectionType.LASER) {
-                    return false;
+                    return;
                 }
                 if (this.glassTier < hatch.mTier) {
-                    return false;
+                    return;
                 }
             }
             for (MTEHatchEnergy mEnergyHatch : this.mEnergyHatches) {
                 if (this.glassTier < mEnergyHatch.mTier) {
-                    return false;
+                    return;
                 }
             }
         }
@@ -175,7 +178,6 @@ public class OTEMegaEBFGTpp extends OTHMultiMachineBase<OTEMegaEBFGTpp> {
             this.lava = true;
         }
         this.mHeatingCapacity = ((int) getCoilLevel().getHeat());
-        return true;
     }
 
     @Override
@@ -204,7 +206,7 @@ public class OTEMegaEBFGTpp extends OTHMultiMachineBase<OTEMegaEBFGTpp> {
     public boolean checkForWater() {
         if (this.getStoredFluids() != null) {
             for (FluidStack stored : this.getStoredFluids()) {
-                if (stored.isFluidEqual(FluidUtils.getFluidStack("pyrotheum", 1))) {
+                if (stored.isFluidEqual(FluidUtils.getWildcardFluidStack("pyrotheum", 1))) {
                     if (stored.amount >= 123 * 1000) {
                         return true;
                     }

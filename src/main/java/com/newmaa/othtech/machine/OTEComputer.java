@@ -24,6 +24,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import gregtech.api.interfaces.IIconContainer;
+import gregtech.api.structure.error.StructureError;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -273,7 +274,7 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
     }
 
     @Override
-    public boolean checkMachine(IGregTechTileEntity iGregTechTileEntity, ItemStack itemStack) {
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
         eRacks.clear();
         if (!getBaseMetaTileEntity().isActive()) {
             this.eAvailableData = 0;
@@ -282,10 +283,8 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
             rack.getBaseMetaTileEntity()
                 .setActive(false);
         }
-        if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet)) {
-            return false;
-        }
-        return true;
+        if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
+        repairMachine();
     }
 
     @Override
