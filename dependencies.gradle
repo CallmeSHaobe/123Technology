@@ -5,7 +5,7 @@ elytraModpackVersion {
     // 是否不缓存拉取的依赖清单文件
     manifestNoCache = false
     // 是否自动为输出的jar添加 `gtnhVersion` 后缀
-    attachManifestVersionToJar = true
+    attachManifestVersionToJar = false
 }
 
 dependencies {
@@ -41,7 +41,7 @@ dependencies {
 
     // runtime
     runtimeOnlyNonPublishable(gtnhDev("BetterP2P"))
-    runtimeOnlyNonPublishable(gtnhDev("Chisel"))
+    runtimeOnlyNonPublishable rfg.deobf(files("libs/chisel-2.17.27-GTNH.jar"))
     runtimeOnlyNonPublishable(gtnhDev("StructureLib"))
     runtimeOnlyNonPublishable(gtnhDev("BlockRenderer6343")) { transitive = false }
 

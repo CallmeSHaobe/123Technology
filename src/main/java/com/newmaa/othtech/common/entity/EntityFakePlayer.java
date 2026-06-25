@@ -1,8 +1,9 @@
 package com.newmaa.othtech.common.entity;
 
+import static net.minecraft.util.StatCollector.translateToLocal;
+
 import java.util.ArrayList;
 
-import gtPlusPlus.core.item.food.BaseItemMetaFood;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
@@ -17,16 +18,13 @@ import com.kuba6000.mobsinfo.api.MobDrop;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.item.ItemLoader;
 
-import gtPlusPlus.core.item.ModItems;
-
-import static net.minecraft.util.StatCollector.translateToLocal;
+import gtPlusPlus.core.item.food.BaseItemMetaFood;
 
 public class EntityFakePlayer extends EntityCreature implements IMobInfoProvider {
 
     private static final int DATAWATCHER_ID_SITTING = 20;
     private int sitCooldown = 0;
     public static BaseItemMetaFood itemMetaFood;
-
 
     public EntityFakePlayer(World world) {
         super(world);

@@ -15,7 +15,6 @@ import com.newmaa.othtech.utils.RecipeBuilder;
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
-import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMap;
@@ -71,7 +70,7 @@ public class RecipesCircuit implements IRecipePool {
             .itemOutputs(OTHItemList.transTransM.get(4))
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Universium, 4),
-                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Cosmic, 2),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.MAX, 2),
                 GTOreDictUnificator.get(OrePrefixes.nanite, Materials.TranscendentMetal, 64),
                 CustomItemList.SpacetimeCompressionFieldGeneratorTier6.get(4),
                 ItemList.Field_Generator_UXV.get(1),
@@ -85,7 +84,7 @@ public class RecipesCircuit implements IRecipePool {
             .itemOutputs(OTHItemList.induTransM.get(4))
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.MagMatter, 4),
-                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Cosmic, 2),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.MAX, 2),
                 OTHItemList.beeISAM.get(64),
                 OTHItemList.leCasimirM.get(16),
                 getAstralArray(1))
@@ -98,7 +97,7 @@ public class RecipesCircuit implements IRecipePool {
             .itemOutputs(OTHItemList.resTransM.get(4))
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.SpaceTime, 16),
-                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Exotic, 4),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UXV, 4),
                 GTOreDictUnificator.get(OrePrefixes.nanite, Materials.Glowstone, 64),
                 GTOreDictUnificator.get(OrePrefixes.wireGt01, Materials.SuperconductorUMV, 64),
                 GTOreDictUnificator.get(OrePrefixes.wireGt01, Materials.SuperconductorUMV, 64),
@@ -111,7 +110,7 @@ public class RecipesCircuit implements IRecipePool {
         GTValues.RA.stdBuilder()
             .itemOutputs(OTHItemList.dioTransM.get(4))
             .itemInputs(
-                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Cosmic, 2),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.MAX, 2),
                 OTHItemList.beeISAM.get(16),
                 CustomItemList.TimeAccelerationFieldGeneratorTier5.get(4),
                 ItemList.Field_Generator_UXV.get(1),
@@ -140,8 +139,7 @@ public class RecipesCircuit implements IRecipePool {
                 OTHItemList.beeISAM.get(4),
                 OTHItemList.beeMagM.get(4),
                 OTHItemList.boardCasimirM.get(8),
-                GTOreDictUnificator
-                    .get(OrePrefixes.foil, Materials.MagnetohydrodynamicallyConstrainedStarMatter, 32),
+                GTOreDictUnificator.get(OrePrefixes.foil, Materials.WhiteDwarfMatter, 32),
                 GTOreDictUnificator.get(OrePrefixes.foil, Materials.TranscendentMetal, 48),
                 GTOreDictUnificator.get(OrePrefixes.foil, Materials.TranscendentMetal, 48),
                 GTOreDictUnificator.get(OrePrefixes.foil, Materials.MagMatter, 32),
@@ -155,15 +153,13 @@ public class RecipesCircuit implements IRecipePool {
         GTValues.RA.stdBuilder()
             .itemOutputs(OTHItemList.boardCasimirM.get(16))
             .itemInputs(
-                GTOreDictUnificator
-                    .get(OrePrefixes.itemCasing, Materials.MagnetohydrodynamicallyConstrainedStarMatter, 64),
-                GTOreDictUnificator
-                    .get(OrePrefixes.wireFine, Materials.MagnetohydrodynamicallyConstrainedStarMatter, 64))
+                GTOreDictUnificator.get(OrePrefixes.itemCasing, Materials.WhiteDwarfMatter, 64),
+                GTOreDictUnificator.get(OrePrefixes.wireFine, Materials.WhiteDwarfMatter, 64))
             .fluidInputs(
                 Materials.ExcitedDTSC.getFluid(64 * 144),
                 BWLiquids.Stars.getFluidOrGas(8 * 144),
                 Materials.MagMatter.getMolten(64 * 144),
-                Materials.MagnetohydrodynamicallyConstrainedStarMatter.getMolten(64 * 144),
+                Materials.WhiteDwarfMatter.getMolten(64 * 144),
                 Materials.Universium.getMolten(64 * 144),
                 Materials.SpaceTime.getMolten(64 * 144))
             .duration(128 * 20)
@@ -236,8 +232,7 @@ public class RecipesCircuit implements IRecipePool {
         GTValues.RA.stdBuilder()
             .itemOutputs(ItemList.Circuit_TranscendentMainframe.get(1))
             .itemInputs(
-                GTOreDictUnificator
-                    .get(OrePrefixes.frameGt, Materials.MagnetohydrodynamicallyConstrainedStarMatter, 2),
+                GTOreDictUnificator.get(OrePrefixes.frameGt, Materials.WhiteDwarfMatter, 2),
                 ItemList.Circuit_TranscendentComputer.get(2),
                 OTHItemList.induTransM.get(16),
                 OTHItemList.dioTransM.get(16),
@@ -257,8 +252,7 @@ public class RecipesCircuit implements IRecipePool {
                 GTUtility.getIntegratedCircuit(17),
                 OTHItemList.capTransM.get(16),
                 OTHItemList.energyHatchSpacetimeM.get(4),
-                GTOreDictUnificator
-                    .get(OrePrefixes.wireFine, Materials.MagnetohydrodynamicallyConstrainedStarMatter, 64))
+                GTOreDictUnificator.get(OrePrefixes.wireFine, Materials.WhiteDwarfMatter, 64))
             .fluidInputs(BWLiquids.Stars.getFluidOrGas(10 * 144))
             .duration(64 * 20)
             .eut(TierEU.MAX)

@@ -102,24 +102,24 @@ public class OTHItemID extends GTUtility.ItemId {
     }
 
     @Override
-    protected Item item() {
+    public Item item() {
         return item;
     }
 
     @Override
-    protected int metaData() {
+    public int metaData() {
         return metaData;
     }
 
     @Nullable
     @Override
-    protected NBTTagCompound nbt() {
+    public NBTTagCompound nbt() {
         return nbt;
     }
 
     @Nullable
     @Override
-    protected Integer stackSize() {
+    public Integer stackSize() {
         // todo
         return null;
     }

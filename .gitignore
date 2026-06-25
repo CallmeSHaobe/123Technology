@@ -1,6 +1,7 @@
 .gradle
 .settings
 /.idea/
+/tmp/
 /.vscode/
 /run/
 /build/

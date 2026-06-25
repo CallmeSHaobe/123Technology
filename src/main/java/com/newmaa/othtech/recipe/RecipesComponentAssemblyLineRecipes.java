@@ -16,7 +16,6 @@ import goodgenerator.api.recipe.GoodGeneratorRecipeMaps;
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
-import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMap;
@@ -211,11 +210,8 @@ public class RecipesComponentAssemblyLineRecipes implements IRecipePool {
             4096,
             (int) TierEU.UMV,
             123,
-            new Object[] {
-                GTOreDictUnificator
-                    .get(OrePrefixes.frameGt, Materials.MagnetohydrodynamicallyConstrainedStarMatter, 1),
-                StargateShieldingFoil.getIS(2),
-                GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.MagMatter, 12),
+            new Object[] { GTOreDictUnificator.get(OrePrefixes.frameGt, Materials.WhiteDwarfMatter, 1),
+                StargateShieldingFoil.get(2), GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.MagMatter, 12),
                 GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Universium, 12),
                 ItemList.Robot_Arm_MAX.get(8), ItemList.Electric_Piston_MAX.get(10),
                 ItemList.Electric_Motor_MAX.get(16),
@@ -223,10 +219,9 @@ public class RecipesComponentAssemblyLineRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.gearGtSmall, Materials.Universium, 16),
                 GTOreDictUnificator.get(OrePrefixes.gearGt, Materials.Universium, 4),
                 GTOreDictUnificator.get(OrePrefixes.gearGtSmall, Materials.Universium, 16), getAstralArray(2),
-                setStackSize(coil, 64), OTHItemList.machineSingularityM.get(12),
-                getNanites(64, Materials.Universium), getNanites(64, Materials.Eternity) },
-            new FluidStack[] { Materials.Universium.getMolten(114000),
-                Materials.WhiteDwarfMatter.getMolten(514000),
+                setStackSize(coil, 64), OTHItemList.machineSingularityM.get(12), getNanites(64, Materials.Universium),
+                getNanites(64, Materials.Eternity) },
+            new FluidStack[] { Materials.Universium.getMolten(114000), Materials.WhiteDwarfMatter.getMolten(514000),
                 Materials.BlackDwarfMatter.getMolten(191000), Materials.RawStarMatter.getMolten(9810) },
             GTModHandler.getModItem("GoodGenerator", "componentAssemblylineCasing", 1, 13),
             2460,

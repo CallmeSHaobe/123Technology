@@ -3,26 +3,17 @@ package com.newmaa.othtech.machine.machineclass;
 import static gregtech.api.enums.GTValues.V;
 import static gregtech.api.metatileentity.BaseTileEntity.TOOLTIP_DELAY;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
-import static gregtech.api.util.GTUtility.filterValidMTEs;
 import static gregtech.api.util.GTUtility.validMTEList;
-import static mcp.mobius.waila.api.SpecialChars.GREEN;
-import static mcp.mobius.waila.api.SpecialChars.RED;
-import static mcp.mobius.waila.api.SpecialChars.RESET;
 import static net.minecraft.util.StatCollector.translateToLocalFormatted;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import javax.annotation.Nonnull;
 
-import gregtech.api.structure.error.StructureError;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -34,9 +25,6 @@ import com.gtnewhorizons.modularui.api.screen.UIBuildContext;
 import com.gtnewhorizons.modularui.common.widget.DrawableWidget;
 import com.gtnewhorizons.modularui.common.widget.FakeSyncWidget;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import gregtech.GTMod;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.SteamVariant;
 import gregtech.api.enums.Textures;
@@ -44,25 +32,20 @@ import gregtech.api.gui.modularui.CircularGaugeDrawable;
 import gregtech.api.gui.modularui.GTUITextures;
 import gregtech.api.interfaces.IHatchElement;
 import gregtech.api.interfaces.ITexture;
-import gregtech.api.interfaces.metatileentity.IItemLockable;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.interfaces.tileentity.IOverclockDescriptionProvider;
 import gregtech.api.logic.ProcessingLogic;
 import gregtech.api.metatileentity.implementations.MTEBasicMachine;
-import gregtech.api.metatileentity.implementations.MTEHatch;
 import gregtech.api.metatileentity.implementations.MTEHatchInput;
 import gregtech.api.metatileentity.implementations.MTEHatchInputBus;
-import gregtech.api.metatileentity.implementations.MTEHatchOutput;
-import gregtech.api.metatileentity.implementations.MTEHatchOutputBus;
-import gregtech.api.metatileentity.implementations.MTEHatchVoidBus;
 import gregtech.api.objects.overclockdescriber.OverclockDescriber;
 import gregtech.api.objects.overclockdescriber.SteamOverclockDescriber;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
+import gregtech.api.structure.error.StructureError;
 import gregtech.api.util.GTUtility;
-import gregtech.api.util.GTWaila;
 import gregtech.api.util.HatchElementBuilder;
 import gregtech.api.util.IGTHatchAdder;
 import gregtech.api.util.shutdown.ShutDownReasonRegistry;
@@ -70,13 +53,10 @@ import gregtech.common.tileentities.machines.IDualInputHatch;
 import gregtech.common.tileentities.machines.IDualInputInventory;
 import gregtech.common.tileentities.machines.IDualInputInventoryWithPattern;
 import gregtech.common.tileentities.machines.MTEHatchCraftingInputME;
-import gtPlusPlus.xmod.gregtech.api.enums.GregtechItemList;
 import gtPlusPlus.xmod.gregtech.api.metatileentity.implementations.MTEHatchSteamBusInput;
 import gtPlusPlus.xmod.gregtech.api.metatileentity.implementations.MTEHatchSteamBusOutput;
 import gtPlusPlus.xmod.gregtech.api.metatileentity.implementations.base.GTPPMultiBlockBase;
 import gtPlusPlus.xmod.gregtech.api.metatileentity.implementations.base.MTEHatchCustomFluidBase;
-import mcp.mobius.waila.api.IWailaConfigHandler;
-import mcp.mobius.waila.api.IWailaDataAccessor;
 
 public abstract class OTHSteamMultiBase<T extends OTHSteamMultiBase<T>> extends GTPPMultiBlockBase<T>
     implements IOverclockDescriptionProvider {
@@ -496,62 +476,61 @@ public abstract class OTHSteamMultiBase<T extends OTHSteamMultiBase<T>> extends 
                 .setSize(18, 4));
     }
 
-    /*@Override
-    public void getWailaBody(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor,
-        IWailaConfigHandler config) {
-        final NBTTagCompound tag = accessor.getNBTData();
-
-        if (tag.getBoolean("incompleteStructure")) {
-            currentTip
-                .add(RED + StatCollector.translateToLocalFormatted("GT5U.waila.multiblock.status.incomplete") + RESET);
-        }
-        String efficiency = RESET + StatCollector
-            .translateToLocalFormatted("GT5U.waila.multiblock.status.efficiency", tag.getFloat("efficiency"));
-        if (tag.getBoolean("hasProblems")) {
-            currentTip
-                .add(RED + StatCollector.translateToLocal("GT5U.waila.multiblock.status.has_problem") + efficiency);
-        } else if (!tag.getBoolean("incompleteStructure")) {
-            currentTip
-                .add(GREEN + StatCollector.translateToLocal("GT5U.waila.multiblock.status.running_fine") + efficiency);
-        }
-
-        boolean isActive = tag.getBoolean("isActive");
-        if (isActive) {
-            long actualEnergyUsage = tag.getLong("energyUsage");
-            if (actualEnergyUsage > 0) {
-                currentTip.add(
-                    StatCollector
-                        .translateToLocalFormatted("GTPP.waila.steam.use", formatNumbers(actualEnergyUsage * 20)));
-            }
-        }
-        currentTip.add(
-            GTWaila.getMachineProgressString(
-                isActive,
-                tag.getBoolean("isAllowedToWork"),
-                tag.getInteger("maxProgress"),
-                tag.getInteger("progress")));
-        // Show ns on the tooltip
-        if (GTMod.proxy.wailaAverageNS && tag.hasKey("averageNS")) {
-            int tAverageTime = tag.getInteger("averageNS");
-            currentTip.add(
-                StatCollector
-                    .translateToLocalFormatted("GT5U.waila.multiblock.status.cpu_load", formatNumbers(tAverageTime)));
-        }
-        super.getMTEWailaBody(itemStack, currentTip, accessor, config);
-    }
-
-    protected static String getSteamTierTextForWaila(NBTTagCompound tag) {
-        int tierMachine = tag.getInteger("tierMachine");
-        String tierMachineText;
-        if (tierMachine == 1) {
-            tierMachineText = "Basic";
-        } else if (tierMachine == 2) {
-            tierMachineText = "High Pressure";
-        } else {
-            tierMachineText = String.valueOf(tierMachine);
-        }
-        return tierMachineText;
-    }*/
+    /*
+     * @Override
+     * public void getWailaBody(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor,
+     * IWailaConfigHandler config) {
+     * final NBTTagCompound tag = accessor.getNBTData();
+     * if (tag.getBoolean("incompleteStructure")) {
+     * currentTip
+     * .add(RED + StatCollector.translateToLocalFormatted("GT5U.waila.multiblock.status.incomplete") + RESET);
+     * }
+     * String efficiency = RESET + StatCollector
+     * .translateToLocalFormatted("GT5U.waila.multiblock.status.efficiency", tag.getFloat("efficiency"));
+     * if (tag.getBoolean("hasProblems")) {
+     * currentTip
+     * .add(RED + StatCollector.translateToLocal("GT5U.waila.multiblock.status.has_problem") + efficiency);
+     * } else if (!tag.getBoolean("incompleteStructure")) {
+     * currentTip
+     * .add(GREEN + StatCollector.translateToLocal("GT5U.waila.multiblock.status.running_fine") + efficiency);
+     * }
+     * boolean isActive = tag.getBoolean("isActive");
+     * if (isActive) {
+     * long actualEnergyUsage = tag.getLong("energyUsage");
+     * if (actualEnergyUsage > 0) {
+     * currentTip.add(
+     * StatCollector
+     * .translateToLocalFormatted("GTPP.waila.steam.use", formatNumbers(actualEnergyUsage * 20)));
+     * }
+     * }
+     * currentTip.add(
+     * GTWaila.getMachineProgressString(
+     * isActive,
+     * tag.getBoolean("isAllowedToWork"),
+     * tag.getInteger("maxProgress"),
+     * tag.getInteger("progress")));
+     * // Show ns on the tooltip
+     * if (GTMod.proxy.wailaAverageNS && tag.hasKey("averageNS")) {
+     * int tAverageTime = tag.getInteger("averageNS");
+     * currentTip.add(
+     * StatCollector
+     * .translateToLocalFormatted("GT5U.waila.multiblock.status.cpu_load", formatNumbers(tAverageTime)));
+     * }
+     * super.getMTEWailaBody(itemStack, currentTip, accessor, config);
+     * }
+     * protected static String getSteamTierTextForWaila(NBTTagCompound tag) {
+     * int tierMachine = tag.getInteger("tierMachine");
+     * String tierMachineText;
+     * if (tierMachine == 1) {
+     * tierMachineText = "Basic";
+     * } else if (tierMachine == 2) {
+     * tierMachineText = "High Pressure";
+     * } else {
+     * tierMachineText = String.valueOf(tierMachine);
+     * }
+     * return tierMachineText;
+     * }
+     */
 
     protected static <T extends OTHSteamMultiBase<T>> HatchElementBuilder<T> buildSteamInput(Class<T> typeToken) {
         return buildHatchAdder(typeToken).adder(OTHSteamMultiBase::addToMachineList)
@@ -610,9 +589,9 @@ public abstract class OTHSteamMultiBase<T extends OTHSteamMultiBase<T>> extends 
     public boolean getDefaultHasMaintenanceChecks() {
         return false;
     }
+
     @Override
     public void checkHatch(List<StructureError> errors) {
         super.checkHatch(errors);
-        checkEnergyHatch(errors);
     }
 }

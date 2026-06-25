@@ -24,7 +24,6 @@ import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
-import gregtech.api.structure.error.StructureError;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -68,6 +67,7 @@ import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.recipe.check.SimpleCheckRecipeResult;
 import gregtech.api.render.TextureFactory;
+import gregtech.api.structure.error.StructureError;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTRecipeConstants;
@@ -982,18 +982,17 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
     public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
         if (getMLevel() >= 2) {
-                if (this.mEnergyHatches.isEmpty() && this.mExoticEnergyHatches.isEmpty()) {
-                    isWirelessMode = !isWirelessMode;
-                    if (isWirelessMode) {
-                        GTUtility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("ote.bbpf.wireless.on"));
-                    } else {
-                        GTUtility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("ote.bbpf.wireless.off"));
-                    }
+            if (this.mEnergyHatches.isEmpty() && this.mExoticEnergyHatches.isEmpty()) {
+                isWirelessMode = !isWirelessMode;
+                if (isWirelessMode) {
+                    GTUtility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("ote.bbpf.wireless.on"));
                 } else {
-                    isWirelessMode = false;
-                    GTUtility
-                        .sendChatToPlayer(aPlayer, StatCollector.translateToLocal("ote.bbpf.wireless.energyhatch"));
+                    GTUtility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("ote.bbpf.wireless.off"));
                 }
+            } else {
+                isWirelessMode = false;
+                GTUtility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("ote.bbpf.wireless.energyhatch"));
+            }
             {
                 GTUtility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("ote.bbpf.wireless.invalid"));
             }

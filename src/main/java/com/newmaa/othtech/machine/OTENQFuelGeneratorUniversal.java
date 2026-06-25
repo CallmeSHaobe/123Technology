@@ -23,7 +23,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-import gregtech.api.structure.error.StructureError;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -57,6 +56,7 @@ import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.recipe.maps.FuelBackend;
 import gregtech.api.render.TextureFactory;
+import gregtech.api.structure.error.StructureError;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
@@ -423,6 +423,7 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
         checkPiece(mName, 2, 2, 0, errors);
         repairMachine();
     }
+
     @Override
     public void construct(ItemStack stackSize, boolean hintsOnly) {
         repairMachine();
@@ -451,7 +452,6 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
             }
         }
     }
-
 
     @Override
     public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {

@@ -7,7 +7,8 @@ import static gregtech.api.enums.HatchElement.Energy;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static net.minecraft.util.StatCollector.translateToLocal;
 
-import gregtech.api.structure.error.StructureError;
+import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
@@ -28,13 +29,12 @@ import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.SimpleCheckRecipeResult;
+import gregtech.api.structure.error.StructureError;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import tectech.thing.casing.BlockGTCasingsTT;
 import tectech.thing.casing.TTCasingsContainer;
 import tectech.thing.metaTileEntity.multi.base.TTMultiblockBase;
 import tectech.thing.metaTileEntity.multi.base.render.TTRenderedExtendedFacingTexture;
-
-import java.util.List;
 
 public class OTEMiniActiveTransformer extends OTHTTMultiMachineBaseEM
     implements IConstructable, ISurvivalConstructable {
@@ -46,7 +46,7 @@ public class OTEMiniActiveTransformer extends OTHTTMultiMachineBaseEM
         repairMachine();
         casingCount = 0;
         if (!checkPiece("main", 0, 1, 0, errors)) return;
-        if (checkPiece("main", 0, 1, 0, errors) && casingCount >= 0 ) {
+        if (checkPiece("main", 0, 1, 0, errors) && casingCount >= 0) {
             grace = true;
         } else if (grace) {
             grace = false;

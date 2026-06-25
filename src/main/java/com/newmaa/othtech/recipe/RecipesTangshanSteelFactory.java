@@ -8,7 +8,6 @@ import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.utils.RecipeBuilder;
 
 import gregtech.api.enums.Materials;
-import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMap;
@@ -999,9 +998,7 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
         // Six-Phased Copper
         RecipeBuilder.builder()
             .itemOutputs(
-                setStackSize(
-                    GTOreDictUnificator.get(OrePrefixes.ingot, Materials.SixPhasedCopper, 1),
-                    64000 * 72))
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.ingot, Materials.SixPhasedCopper, 1), 64000 * 72))
             .itemInputs(
                 setStackSize(GTModHandler.getModItem("Avaritia", "Singularity", 1, 5), 64000 * 8),
                 setStackSize(GTModHandler.getModItem("miscutils", "itemDustCelestialTungsten", 1), 64000 * 72),

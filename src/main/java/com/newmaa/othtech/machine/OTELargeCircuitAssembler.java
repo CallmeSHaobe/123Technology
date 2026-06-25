@@ -14,7 +14,6 @@ import static net.minecraft.util.StatCollector.translateToLocal;
 import java.util.Arrays;
 import java.util.List;
 
-import gregtech.api.structure.error.StructureError;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
@@ -50,6 +49,7 @@ import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.recipe.check.SimpleCheckRecipeResult;
 import gregtech.api.render.TextureFactory;
+import gregtech.api.structure.error.StructureError;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.common.tileentities.machines.IDualInputHatch;
@@ -149,11 +149,10 @@ public class OTELargeCircuitAssembler extends OTHMultiMachineBase<OTELargeCircui
     }
 
     private static final IIconContainer textureFontOn = Textures.BlockIcons.custom("iconsets/OVERLAY_QTANK");
-    private static final IIconContainer textureFontOn_Glow = Textures.BlockIcons.custom(
-        "iconsets/OVERLAY_QTANK_GLOW");
+    private static final IIconContainer textureFontOn_Glow = Textures.BlockIcons.custom("iconsets/OVERLAY_QTANK_GLOW");
     private static final IIconContainer textureFontOff = Textures.BlockIcons.custom("iconsets/OVERLAY_QCHEST");
-    private static final IIconContainer textureFontOff_Glow = Textures.BlockIcons.custom(
-        "iconsets/OVERLAY_QCHEST_GLOW");
+    private static final IIconContainer textureFontOff_Glow = Textures.BlockIcons
+        .custom("iconsets/OVERLAY_QCHEST_GLOW");
 
     @Override
     public byte getUpdateData() {

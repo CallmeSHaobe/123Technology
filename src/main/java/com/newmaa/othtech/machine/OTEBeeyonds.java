@@ -8,7 +8,8 @@ import static gregtech.api.enums.Textures.BlockIcons.*;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static net.minecraft.util.StatCollector.translateToLocal;
 
-import gregtech.api.structure.error.StructureError;
+import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -26,17 +27,15 @@ import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.render.TextureFactory;
+import gregtech.api.structure.error.StructureError;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import tectech.thing.metaTileEntity.multi.base.TTMultiblockBase;
 
-import java.util.List;
-
 public class OTEBeeyonds extends OTHTTMultiMachineBaseEM implements IConstructable, ISurvivalConstructable {
-
 
     @Override
     public void checkMachine(IGregTechTileEntity iGregTechTileEntity, ItemStack itemStack,
-                             List<StructureError> errors) {
+        List<StructureError> errors) {
         if (!checkPiece("main", 0, 1, 0, errors)) return;
         checkHasEnergyHatch(errors);
         checkHasMaintenanceHatch(errors);
@@ -191,7 +190,6 @@ public class OTEBeeyonds extends OTHTTMultiMachineBaseEM implements IConstructab
     public void construct(ItemStack stackSize, boolean hintsOnly) {
         buildPiece("main", stackSize, hintsOnly, 0, 1, 0);
     }
-
 
     @Override
     public int survivalConstruct(ItemStack stackSize, int elementBudget, IItemSource source, EntityPlayerMP actor) {

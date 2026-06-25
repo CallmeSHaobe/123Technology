@@ -15,7 +15,6 @@ import com.newmaa.othtech.common.materials.BWLiquids;
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
-import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMap;
@@ -36,8 +35,7 @@ public class RecipesMAXs implements IRecipePool {
     }
 
     public static ItemStack getMC(int amount, OrePrefixes orePrefixes) {
-        return GTOreDictUnificator
-            .get(orePrefixes, Materials.MagnetohydrodynamicallyConstrainedStarMatter, amount);
+        return GTOreDictUnificator.get(orePrefixes, Materials.WhiteDwarfMatter, amount);
     }
 
     public static ItemStack getUN(int amount, OrePrefixes orePrefixes) {
@@ -99,7 +97,7 @@ public class RecipesMAXs implements IRecipePool {
                 GTModHandler.getModItem("GoodGenerator", "compactFusionCoil", 16, 2),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 15300),
                 GTModHandler.getModItem("tectech", "gt.blockcasingsTT", 16), getUN(64, OrePrefixes.wireFine),
-                getMC(4, OrePrefixes.plateDense), new Object[] { OrePrefixes.circuit.get(Materials.Cosmic), 64 },
+                getMC(4, OrePrefixes.plateDense), new Object[] { OrePrefixes.circuit.get(Materials.MAX), 64 },
                 getNanites(4, Materials.Eternity), ItemList.Circuit_Chip_QPIC.get(32), ItemList.UHV_Coil.get(64),
                 ItemList.Electric_Pump_MAX.get(1), ItemList.Reactor_Coolant_Sp_6.get(1),
                 ItemList.Reactor_Coolant_Sp_6.get(1), ItemList.Reactor_Coolant_Sp_6.get(1),
@@ -122,7 +120,8 @@ public class RecipesMAXs implements IRecipePool {
                 GTModHandler.getModItem("GoodGenerator", "compactFusionCoil", 64, 4),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 16, 15300),
                 GTModHandler.getModItem("tectech", "gt.blockcasingsTT", 64), getMM(64, OrePrefixes.wireFine),
-                getMC(64, OrePrefixes.plateDense), new Object[] { OrePrefixes.circuit.get(Materials.Transcendent), 64 },
+                getMC(64, OrePrefixes.plateDense),
+                new Object[] { OrePrefixes.circuit.get(Materials.TranscendentMetal), 64 },
                 ItemList.EnergisedTesseract.get(64), GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23524),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23524),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23524),
@@ -289,9 +288,9 @@ public class RecipesMAXs implements IRecipePool {
                 GTModHandler.getModItem("tectech", "gt.time_acceleration_field_generator", 2, 8),
                 GTModHandler.getModItem("tectech", "gt.stabilisation_field_generator", 2, 8),
                 ItemList.Electric_Motor_MAX.get(2), ItemList.Electric_Piston_MAX.get(1),
-                new Object[] { OrePrefixes.circuit.get(Materials.Transcendent), 2 },
-                new Object[] { OrePrefixes.circuit.get(Materials.Exotic), 4 },
-                new Object[] { OrePrefixes.circuit.get(Materials.Cosmic), 8 },
+                new Object[] { OrePrefixes.circuit.get(Materials.TranscendentMetal), 2 },
+                new Object[] { OrePrefixes.circuit.get(Materials.UXV), 4 },
+                new Object[] { OrePrefixes.circuit.get(Materials.MAX), 8 },
                 GTModHandler.getModItem("gregtech", "gt.blockcasings5", 8, 13),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 4, 4139),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 4, 4585),
@@ -311,7 +310,7 @@ public class RecipesMAXs implements IRecipePool {
                 ItemList.Electric_Motor_MAX.get(1), GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 17143),
                 GTModHandler.getModItem("tectech", "gt.stabilisation_field_generator", 2, 8),
                 OTHItemList.glassSingularityM.get(4), GTModHandler.getModItem("dreamcraft", "item.ChromaticLens", 64),
-                new Object[] { OrePrefixes.circuit.get(Materials.Transcendent), 4 },
+                new Object[] { OrePrefixes.circuit.get(Materials.TranscendentMetal), 4 },
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 29143),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 29143),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 29139),
@@ -335,7 +334,7 @@ public class RecipesMAXs implements IRecipePool {
                 ItemList.Electric_Motor_MAX.get(1), GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 23143),
                 GTModHandler.getModItem("tectech", "gt.stabilisation_field_generator", 2, 8),
                 OTHItemList.glassSingularityM.get(4), GTModHandler.getModItem("dreamcraft", "item.ChromaticLens", 64),
-                new Object[] { OrePrefixes.circuit.get(Materials.Transcendent), 4 },
+                new Object[] { OrePrefixes.circuit.get(Materials.TranscendentMetal), 4 },
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 29143),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 29143),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 29139),
@@ -359,7 +358,7 @@ public class RecipesMAXs implements IRecipePool {
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 12, 17143),
                 OTHItemList.machineSingularityM.get(4), OTHItemList.glassSingularityM.get(4),
                 GTModHandler.getModItem("eternalsingularity", "eternal_singularity", 4), ItemList.Emitter_MAX.get(4),
-                new Object[] { OrePrefixes.circuit.get(Materials.Transcendent), 8 },
+                new Object[] { OrePrefixes.circuit.get(Materials.TranscendentMetal), 8 },
                 GTModHandler.getModItem("gregtech", "gt.metaitem.02", 64, 19143),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.02", 64, 19143),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.02", 64, 19143),

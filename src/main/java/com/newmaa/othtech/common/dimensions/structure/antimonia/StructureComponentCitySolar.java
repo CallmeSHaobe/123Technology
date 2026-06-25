@@ -129,9 +129,9 @@ public class StructureComponentCitySolar extends StructureComponentCity {
             0,
             0,
             8,
-            TungstensteelPlatedReinforcedStone,
+            TungstensteelPlatedReinforcedStone.block,
             0,
-            TungstensteelPlatedReinforcedStone,
+            TungstensteelPlatedReinforcedStone.block,
             0,
             false);
         this.fillWithMetadataBlocks(
@@ -143,9 +143,9 @@ public class StructureComponentCitySolar extends StructureComponentCity {
             6,
             0,
             8,
-            TungstensteelPlatedReinforcedStone,
+            TungstensteelPlatedReinforcedStone.block,
             0,
-            TungstensteelPlatedReinforcedStone,
+            TungstensteelPlatedReinforcedStone.block,
             0,
             false);
         this.fillWithMetadataBlocks(
@@ -157,9 +157,9 @@ public class StructureComponentCitySolar extends StructureComponentCity {
             12,
             0,
             8,
-            TungstensteelPlatedReinforcedStone,
+            TungstensteelPlatedReinforcedStone.block,
             0,
-            TungstensteelPlatedReinforcedStone,
+            TungstensteelPlatedReinforcedStone.block,
             0,
             false);
         this.fillWithMetadataBlocks(
@@ -171,9 +171,9 @@ public class StructureComponentCitySolar extends StructureComponentCity {
             11,
             0,
             0,
-            TungstensteelPlatedReinforcedStone,
+            TungstensteelPlatedReinforcedStone.block,
             0,
-            TungstensteelPlatedReinforcedStone,
+            TungstensteelPlatedReinforcedStone.block,
             0,
             false);
         this.fillWithMetadataBlocks(
@@ -185,9 +185,9 @@ public class StructureComponentCitySolar extends StructureComponentCity {
             11,
             0,
             8,
-            TungstensteelPlatedReinforcedStone,
+            TungstensteelPlatedReinforcedStone.block,
             0,
-            TungstensteelPlatedReinforcedStone,
+            TungstensteelPlatedReinforcedStone.block,
             0,
             false);
         this.fillWithMetadataBlocks(
