@@ -3,6 +3,7 @@ package com.newmaa.othtech.recipe;
 import static com.newmaa.othtech.common.recipemap.Recipemaps.AE2;
 import static com.newmaa.othtech.common.recipemap.Recipemaps.RCY;
 import static com.newmaa.othtech.recipe.RecipesComponentAssemblyLineRecipes.getNanites;
+import static com.newmaa.othtech.utils.Utils.hasNullItem;
 import static com.newmaa.othtech.utils.Utils.setStackSize;
 import static goodgenerator.api.recipe.GoodGeneratorRecipeMaps.preciseAssemblerRecipes;
 import static gregtech.api.enums.Mods.*;
@@ -168,33 +169,41 @@ public class RecipesMain implements IRecipePool {
             .addTo(Nan);
 
         // Mega recipesQFTRecipes
-        TTRecipeAdder.addResearchableAssemblylineRecipe(
-            getGM(31151, 1),
-            512000000,
-            4096,
-            123123123,
-            256,
-            new Object[] { getGM(31151, 64), GTModHandler.getModItem("miscutils", "gtplusplus.blockcasings.5", 64, 10),
-                GTModHandler.getModItem("miscutils", "gtplusplus.blockcasings.5", 64, 14),
-                new Object[] { OrePrefixes.circuit.get(Materials.UXV), 64 },
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 32417),
-                GTModHandler.getModItem("dreamcraft", "item.MysteriousCrystalLens", 64),
-                OTHItemList.dustIrOsSmM.get(64), OTHItemList.dustLookNEIM.get(64),
-                GTModHandler.getModItem("appliedenergistics2", "item.ItemExtremeStorageCell.Singularity", 1),
-                GTModHandler.getModItem("appliedenergistics2", "item.ItemExtremeStorageCell.Singularity", 1),
-                GTModHandler.getModItem("appliedenergistics2", "item.ItemExtremeStorageCell.Singularity", 1),
-                GTModHandler.getModItem("miscutils", "MU-metaitem.01", 64, 32105),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 32429),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 32428),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 32427),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 4581), },
-            new FluidStack[] { new FluidStack(FluidRegistry.getFluidID("molten.spacetime"), 36000000),
-                new FluidStack(FluidRegistry.getFluidID("exciteddtsc"), 256000),
-                new FluidStack(FluidRegistry.getFluidID("plasma.neptunium"), 256000),
-                new FluidStack(FluidRegistry.getFluidID("plasma.fermium"), 256000) },
-            getGM(23526, 1),
-            1234 * 20,
-            123123123);
+        ItemStack megaQftResearch = getGM(31151, 1);
+        ItemStack megaQftOutput = getGM(23526, 1);
+        Object[] megaQftInputs = new Object[] { getGM(31151, 64),
+            GTModHandler.getModItem("miscutils", "gtplusplus.blockcasings.5", 64, 10),
+            GTModHandler.getModItem("miscutils", "gtplusplus.blockcasings.5", 64, 14),
+            new Object[] { OrePrefixes.circuit.get(Materials.UXV), 64 },
+            GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 32417),
+            GTModHandler.getModItem("dreamcraft", "item.MysteriousCrystalLens", 64), OTHItemList.dustIrOsSmM.get(64),
+            OTHItemList.dustLookNEIM.get(64),
+            GTModHandler.getModItem("appliedenergistics2", "item.ItemExtremeStorageCell.Singularity", 1),
+            GTModHandler.getModItem("appliedenergistics2", "item.ItemExtremeStorageCell.Singularity", 1),
+            GTModHandler.getModItem("appliedenergistics2", "item.ItemExtremeStorageCell.Singularity", 1),
+            GTModHandler.getModItem("miscutils", "MU-metaitem.01", 64, 32105),
+            GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 32429),
+            GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 32428),
+            GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 32427),
+            GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 4581), };
+        if (hasNullItem(megaQftInputs) || megaQftResearch == null || megaQftOutput == null) {
+            OTHTechnology.LOG.error("Skipping Quantum Force Transformer recipe due to null items");
+        } else {
+            TTRecipeAdder.addResearchableAssemblylineRecipe(
+                megaQftResearch,
+                512000000,
+                4096,
+                123123123,
+                256,
+                megaQftInputs,
+                new FluidStack[] { new FluidStack(FluidRegistry.getFluidID("molten.spacetime"), 36000000),
+                    new FluidStack(FluidRegistry.getFluidID("exciteddtsc"), 256000),
+                    new FluidStack(FluidRegistry.getFluidID("plasma.neptunium"), 256000),
+                    new FluidStack(FluidRegistry.getFluidID("plasma.fermium"), 256000) },
+                megaQftOutput,
+                1234 * 20,
+                123123123);
+        }
         // 9in1
         GTValues.RA.stdBuilder()
             .itemOutputs(getGM(23520, 1))

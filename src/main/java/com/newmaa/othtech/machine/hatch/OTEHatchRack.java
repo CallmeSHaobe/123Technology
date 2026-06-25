@@ -18,15 +18,10 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.util.ForgeDirection;
 
-import org.jetbrains.annotations.NotNull;
-
-import com.gtnewhorizons.modularui.api.math.Pos2d;
-import com.gtnewhorizons.modularui.api.screen.ModularWindow;
-import com.gtnewhorizons.modularui.api.screen.UIBuildContext;
-import com.gtnewhorizons.modularui.common.internal.wrapper.BaseSlot;
-import com.gtnewhorizons.modularui.common.widget.DrawableWidget;
-import com.gtnewhorizons.modularui.common.widget.FakeSyncWidget;
-import com.gtnewhorizons.modularui.common.widget.SlotWidget;
+import com.cleanroommc.modularui.factory.PosGuiData;
+import com.cleanroommc.modularui.screen.ModularPanel;
+import com.cleanroommc.modularui.screen.UISettings;
+import com.cleanroommc.modularui.value.sync.PanelSyncManager;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.recipe.RecipesOTEFakeQuantumComputerData;
 
@@ -37,27 +32,26 @@ import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.IIconContainer;
 import gregtech.api.interfaces.ITexture;
-import gregtech.api.interfaces.modularui.IAddGregtechLogo;
-import gregtech.api.interfaces.modularui.IAddUIWidgets;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.implementations.MTEHatch;
+import gregtech.api.modularui2.GTGuiTheme;
+import gregtech.api.modularui2.GTGuiThemes;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GTModHandler;
 import gregtech.mixin.interfaces.accessors.EntityPlayerMPAccessor;
 import tectech.TecTech;
 import tectech.loader.ConfigHandler;
-import tectech.thing.gui.TecTechUITextures;
 import tectech.util.CommonValues;
 import tectech.util.TTUtility;
 
 /**
  * Created by Tec on 03.04.2017.
  */
-public class OTEHatchRack extends MTEHatch implements IAddGregtechLogo, IAddUIWidgets {
+public class OTEHatchRack extends MTEHatch {
 
     private static IIconContainer EM_R;
-    private static @NotNull IIconContainer EM_R_ACTIVE;
+    private static IIconContainer EM_R_ACTIVE;
     private float overClock = 1, overVolt = 1;
     private static final Map<String, RackComponent> componentBinds = new HashMap<>();
 
@@ -225,54 +219,24 @@ public class OTEHatchRack extends MTEHatch implements IAddGregtechLogo, IAddUIWi
         return count;
     }
 
+    // region MUI2 GUI
+
     @Override
-    public void addGregTechLogo(ModularWindow.Builder builder) {
-        builder.widget(
-            new DrawableWidget().setDrawable(TecTechUITextures.PICTURE_TECTECH_LOGO)
-                .setSize(18, 18)
-                .setPos(151, 63));
+    protected boolean useMui2() {
+        return true;
     }
 
     @Override
-    public void addUIWidgets(ModularWindow.Builder builder, UIBuildContext buildContext) {
-        builder.widget(
-            new DrawableWidget().setDrawable(TecTechUITextures.PICTURE_HEAT_SINK)
-                .setPos(46, 17)
-                .setSize(84, 60));
-
-        Pos2d[] positions = new Pos2d[] { new Pos2d(68, 27), new Pos2d(90, 27), new Pos2d(68, 49), new Pos2d(90, 49), };
-        for (int i = 0; i < positions.length; i++) {
-            builder.widget(new SlotWidget(new BaseSlot(inventoryHandler, i) {
-
-                @Override
-                public int getSlotStackLimit() {
-                    return 1;
-                }
-
-                @Override
-                public boolean isEnabled() {
-                    return !getBaseMetaTileEntity().isActive();
-                }
-            }).setBackground(getGUITextureSet().getItemSlot(), TecTechUITextures.OVERLAY_SLOT_RACK)
-                .setPos(positions[i]));
-
-            builder.widget(
-                new DrawableWidget().setDrawable(TecTechUITextures.BUTTON_STANDARD_LIGHT_16x16)
-                    .setPos(152, 24)
-                    .setSize(16, 16))
-                .widget(
-                    new DrawableWidget()
-                        .setDrawable(
-                            () -> getBaseMetaTileEntity().isActive() ? TecTechUITextures.OVERLAY_BUTTON_POWER_SWITCH_ON
-                                : TecTechUITextures.OVERLAY_BUTTON_POWER_SWITCH_DISABLED)
-                        .setPos(152, 24)
-                        .setSize(16, 16))
-                .widget(
-                    new FakeSyncWidget.BooleanSyncer(
-                        () -> getBaseMetaTileEntity().isActive(),
-                        val -> getBaseMetaTileEntity().setActive(val)));
-        }
+    protected GTGuiTheme getGuiTheme() {
+        return GTGuiThemes.TECTECH_STANDARD;
     }
+
+    @Override
+    public ModularPanel buildUI(PosGuiData data, PanelSyncManager syncManager, UISettings uiSettings) {
+        return new OTEHatchRackGui(this).build(data, syncManager, uiSettings);
+    }
+
+    // endregion
 
     public static void run() { // 20k heat cap max!
 
@@ -305,9 +269,25 @@ public class OTEHatchRack extends MTEHatch implements IAddGregtechLogo, IAddUIWi
             new RackComponent(ItemList.Circuit_OpticalComputer.get(1), 2400, 22, -1f, true); // UEV
             new RackComponent(ItemList.Circuit_OpticalMainframe.get(1), 2600, 20, -1f, true); // UIV
 
-            new RackComponent(getModItem(NewHorizonsCoreMod.ID, "item.PikoCircuit", 1), 2600, 12, -1f, true); // UMV
-            new RackComponent(getModItem(NewHorizonsCoreMod.ID, "item.QuantumCircuit", 1), 3200, 10, -1f, true); // UXV
-            new RackComponent(OTHItemList.NukeThrowable.get(1), 123123, 114514, -1f, true);
+            ItemStack pikoCircuit = getModItem(NewHorizonsCoreMod.ID, "PikoCircuit", 1);
+            if (pikoCircuit != null) {
+                new RackComponent(pikoCircuit, 2600, 12, -1f, true); // UMV
+            }
+
+            ItemStack quantumCircuit = getModItem(NewHorizonsCoreMod.ID, "QuantumCircuit", 1);
+            if (quantumCircuit != null) {
+                new RackComponent(quantumCircuit, 3200, 10, -1f, true); // UXV
+            }
+
+            ItemStack planckCircuit = getModItem(NewHorizonsCoreMod.ID, "PlanckCircuit", 1);
+            if (planckCircuit != null) {
+                new RackComponent(planckCircuit, 3600, 8, -1f, true); // MAX
+            }
+
+            ItemStack nukeStack = OTHItemList.NukeThrowable.get(1);
+            if (nukeStack != null) {
+                new RackComponent(nukeStack, 123123, 114514, -1f, true);
+            }
         }
 
         if (OpenComputers.isModLoaded()) {
@@ -316,9 +296,20 @@ public class OTEHatchRack extends MTEHatch implements IAddGregtechLogo, IAddUIWi
                 new RackComponent(apuT3Stack, 1200, 42, -1f, true); // APU T3
             }
 
-            new RackComponent(getModItem(OpenComputers.ID, "item", 1, 43), 800, 46, -1f, true); // CPU T3
-            new RackComponent(getModItem(OpenComputers.ID, "item", 1, 10), 1000, 44, -1f, true); // GPU T3
-            new RackComponent(getModItem(OpenComputers.ID, "item", 1, 103), 2400, 40, -1f, true); // APU Creative
+            ItemStack cpuT3Stack = getModItem(OpenComputers.ID, "item", 1, 43);
+            if (cpuT3Stack != null) {
+                new RackComponent(cpuT3Stack, 800, 46, -1f, true); // CPU T3
+            }
+
+            ItemStack gpuT3Stack = getModItem(OpenComputers.ID, "item", 1, 10);
+            if (gpuT3Stack != null) {
+                new RackComponent(gpuT3Stack, 1000, 44, -1f, true); // GPU T3
+            }
+
+            ItemStack apuCreativeStack = getModItem(OpenComputers.ID, "item", 1, 103);
+            if (apuCreativeStack != null) {
+                new RackComponent(apuCreativeStack, 2400, 40, -1f, true); // APU Creative
+            }
         }
     }
 
@@ -330,6 +321,12 @@ public class OTEHatchRack extends MTEHatch implements IAddGregtechLogo, IAddUIWi
 
         RackComponent(ItemStack is, float computation, float heatConstant, float coolConstant, boolean subZero) {
             this(TTUtility.getUniqueIdentifier(is), computation, heatConstant, coolConstant, subZero);
+
+            if (is == null) {
+                TecTech.LOGGER
+                    .warn("Attempted to register a null ItemStack in RackComponent — skipping recipe registration.");
+                return;
+            }
 
             GTValues.RA.stdBuilder()
                 .itemInputs(is)
@@ -348,7 +345,11 @@ public class OTEHatchRack extends MTEHatch implements IAddGregtechLogo, IAddUIWi
             this.heatConstant = heatConstant;
             this.coolConstant = coolConstant;
             this.subZero = subZero;
-            componentBinds.put(unlocalizedName, this);
+
+            if (unlocalizedName != null) {
+                componentBinds.put(unlocalizedName, this);
+            }
+
             if (ConfigHandler.debug.DEBUG_MODE) {
                 TecTech.LOGGER.info("Component registered: " + unlocalizedName);
             }
@@ -356,6 +357,8 @@ public class OTEHatchRack extends MTEHatch implements IAddGregtechLogo, IAddUIWi
 
         @Override
         public int compareTo(RackComponent o) {
+            if (unlocalizedName == null) return o.unlocalizedName == null ? 0 : -1;
+            if (o.unlocalizedName == null) return 1;
             return unlocalizedName.compareTo(o.unlocalizedName);
         }
 

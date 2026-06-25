@@ -2,6 +2,7 @@ package com.newmaa.othtech.machine;
 
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlockUnlocalizedName;
+import static com.newmaa.othtech.recipe.RecipesMain.OTEquantumComputerFakeRecipes;
 import static gregtech.api.GregTechAPI.sBlockCasings10;
 import static gregtech.api.GregTechAPI.sBlockGlass1;
 import static gregtech.api.enums.GTValues.V;
@@ -9,7 +10,6 @@ import static gregtech.api.enums.HatchElement.Energy;
 import static gregtech.api.enums.HatchElement.ExoticEnergy;
 import static gregtech.api.enums.HatchElement.InputHatch;
 import static gregtech.api.enums.HatchElement.Maintenance;
-import static gregtech.api.recipe.RecipeMaps.quantumComputerFakeRecipes;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static gregtech.api.util.GTStructureUtility.chainAllGlasses;
 import static gregtech.api.util.GTUtility.validMTEList;
@@ -257,7 +257,7 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        return quantumComputerFakeRecipes;
+        return OTEquantumComputerFakeRecipes;
     }
 
     @Override

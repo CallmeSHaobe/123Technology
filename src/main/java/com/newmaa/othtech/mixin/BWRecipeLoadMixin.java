@@ -14,7 +14,7 @@ import bartworks.system.material.CircuitGeneration.CircuitImprintLoader;
 @Mixin(value = CircuitImprintLoader.class, remap = false)
 public class BWRecipeLoadMixin {
 
-    @Inject(method = "run", at = @At("TAIL"))
+    @Inject(method = "makeCraftingRecipes", at = @At("TAIL"))
     private static void oth$methodHandle(CallbackInfo ci) {
         MegaCAL.getBackend()
             .clearRecipes();

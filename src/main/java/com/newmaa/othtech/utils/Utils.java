@@ -298,6 +298,22 @@ public final class Utils {
         return number > Integer.MAX_VALUE - margin ? Integer.MAX_VALUE - margin : (int) number;
     }
 
+    /**
+     * Recursively checks an Object array for null ItemStacks or nested null items.
+     * Used to validate recipe inputs before passing to TTRecipeAdder.
+     */
+    public static boolean hasNullItem(Object... items) {
+        if (items == null) return true;
+        for (Object item : items) {
+            if (item == null) return true;
+            if (item instanceof ItemStack && isStackInvalid((ItemStack) item)) return true;
+            if (item instanceof Object[]) {
+                if (hasNullItem((Object[]) item)) return true;
+            }
+        }
+        return false;
+    }
+
     public static ItemStack[] sortNoNullArray(ItemStack... itemStacks) {
         if (itemStacks == null) return null;
         List<ItemStack> list = new ArrayList<>();

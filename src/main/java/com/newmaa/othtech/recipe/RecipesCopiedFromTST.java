@@ -1,7 +1,12 @@
 package com.newmaa.othtech.recipe;
 
+import static com.newmaa.othtech.utils.Utils.hasNullItem;
+
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+
+import com.newmaa.othtech.OTHTechnology;
 
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
@@ -36,37 +41,41 @@ public class RecipesCopiedFromTST implements IRecipePool {
             .duration(300 * 20)
             .addTo(Assembler);
         // 时空扭曲机械方块
-        TTRecipeAdder.addResearchableAssemblylineRecipe(
-            GTModHandler.getModItem("tectech", "gt.blockcasingsTT", 1, 12),
-            (int) 81920,
-            256,
-            (int) 2097152,
-            64,
-            new Object[] { GTModHandler.getModItem("tectech", "gt.blockcasingsTT", 4, 8),
-                ItemList.Field_Generator_UEV.get(64), GTModHandler.getModItem("tectech", "gt.blockcasingsTT", 8, 7),
-                GTModHandler.getModItem("dreamcraft", "item.HighEnergyFlowCircuit", 4),
-                ItemList.Field_Generator_UEV.get(24), GTModHandler.getModItem("gregtech", "gt.blockcasings2", 24, 9),
-                GTModHandler.getModItem("gregtech", "gt.blockcasings2", 24, 5),
-                new Object[] { OrePrefixes.circuit.get(Materials.UHV), 64 },
-                GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.CosmicNeutronium, 64),
-                GTModHandler.getModItem("miscutils", "particleBase", 2, 14),
-                GTModHandler.getModItem("miscutils", "particleBase", 2, 14),
-                GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.CosmicNeutronium, 64),
-                GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.CosmicNeutronium, 64),
-                GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Neutronium, 64),
-                GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Neutronium, 64),
-                GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.CosmicNeutronium, 64)
-
-            },
-            new FluidStack[] { FluidRegistry.getFluidStack("molten.mutatedlivingsolder", 147456),
-                FluidRegistry.getFluidStack("ic2uumatter", 64000),
-                FluidRegistry.getFluidStack("molten.osmiridium", 36864),
-                FluidRegistry.getFluidStack("molten.superconductoruevbase", 4608) },
-            GTModHandler.getModItem("tectech", "gt.blockcasingsTT", 1, 9),
-            512 * 20,
-            1966080
-
-        );
+        ItemStack ultimateMolecularResearch = GTModHandler.getModItem("tectech", "gt.blockcasingsTT", 1, 12);
+        ItemStack ultimateMolecularOutput = GTModHandler.getModItem("tectech", "gt.blockcasingsTT", 1, 9);
+        Object[] ultimateMolecularInputs = new Object[] { GTModHandler.getModItem("tectech", "gt.blockcasingsTT", 4, 8),
+            ItemList.Field_Generator_UEV.get(64), GTModHandler.getModItem("tectech", "gt.blockcasingsTT", 8, 7),
+            GTModHandler.getModItem("dreamcraft", "item.HighEnergyFlowCircuit", 4),
+            ItemList.Field_Generator_UEV.get(24), GTModHandler.getModItem("gregtech", "gt.blockcasings2", 24, 9),
+            GTModHandler.getModItem("gregtech", "gt.blockcasings2", 24, 5),
+            new Object[] { OrePrefixes.circuit.get(Materials.UHV), 64 },
+            GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.CosmicNeutronium, 64),
+            GTModHandler.getModItem("miscutils", "particleBase", 2, 14),
+            GTModHandler.getModItem("miscutils", "particleBase", 2, 14),
+            GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.CosmicNeutronium, 64),
+            GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.CosmicNeutronium, 64),
+            GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Neutronium, 64),
+            GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Neutronium, 64),
+            GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.CosmicNeutronium, 64) };
+        if (hasNullItem(ultimateMolecularInputs) || ultimateMolecularResearch == null
+            || ultimateMolecularOutput == null) {
+            OTHTechnology.LOG.error("Skipping Ultimate Molecular Casing recipe due to null items");
+        } else {
+            TTRecipeAdder.addResearchableAssemblylineRecipe(
+                ultimateMolecularResearch,
+                (int) 81920,
+                256,
+                (int) 2097152,
+                64,
+                ultimateMolecularInputs,
+                new FluidStack[] { FluidRegistry.getFluidStack("molten.mutatedlivingsolder", 147456),
+                    FluidRegistry.getFluidStack("ic2uumatter", 64000),
+                    FluidRegistry.getFluidStack("molten.osmiridium", 36864),
+                    FluidRegistry.getFluidStack("molten.superconductoruevbase", 4608) },
+                ultimateMolecularOutput,
+                512 * 20,
+                1966080);
+        }
         // 传输机械方块
         TTRecipeAdder.addResearchableAssemblylineRecipe(
             GTModHandler.getModItem("tectech", "gt.blockcasingsTT", 1, 9),
