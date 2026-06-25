@@ -124,21 +124,36 @@ public class OTEHatchRack extends MTEHatch {
         return 1;
     }
 
+    public boolean isValidItem(ItemStack itemStack) {
+        return componentBinds.containsKey(TTUtility.getUniqueIdentifier(itemStack));
+    }
+
+    @Override
+    public boolean isItemValidForSlot(int index, ItemStack itemStack) {
+        return isValidItem(itemStack) && super.isItemValidForSlot(index, itemStack);
+    }
+
     @Override
     public boolean allowPullStack(IGregTechTileEntity aBaseMetaTileEntity, int aIndex, ForgeDirection side,
         ItemStack aStack) {
+        if (aBaseMetaTileEntity.isActive()) {
+            return false;
+        }
         return side == aBaseMetaTileEntity.getFrontFacing();
     }
 
     @Override
     public boolean allowPutStack(IGregTechTileEntity aBaseMetaTileEntity, int aIndex, ForgeDirection side,
         ItemStack aStack) {
-        return side == aBaseMetaTileEntity.getFrontFacing();
+        if (aBaseMetaTileEntity.isActive()) {
+            return false;
+        }
+        return side == aBaseMetaTileEntity.getFrontFacing() && isValidItem(aStack);
     }
 
     @Override
     public int getSizeInventory() {
-        return mInventory.length;
+        return getBaseMetaTileEntity().isActive() ? 0 : mInventory.length;
     }
 
     @Override

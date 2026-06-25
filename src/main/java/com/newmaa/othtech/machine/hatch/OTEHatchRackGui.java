@@ -4,41 +4,34 @@ import static net.minecraft.util.StatCollector.translateToLocal;
 import static net.minecraft.util.StatCollector.translateToLocalFormatted;
 
 import com.cleanroommc.modularui.drawable.DynamicDrawable;
-import com.cleanroommc.modularui.factory.PosGuiData;
 import com.cleanroommc.modularui.screen.ModularPanel;
-import com.cleanroommc.modularui.screen.UISettings;
 import com.cleanroommc.modularui.value.sync.BooleanSyncValue;
 import com.cleanroommc.modularui.value.sync.PanelSyncManager;
+import com.cleanroommc.modularui.widget.ParentWidget;
 import com.cleanroommc.modularui.widgets.layout.Flow;
 import com.cleanroommc.modularui.widgets.slot.ItemSlot;
 
 import gregtech.api.modularui2.GTGuiTextures;
-import gregtech.api.modularui2.GTGuis;
+import gregtech.common.gui.modularui.hatch.base.MTEHatchBaseGui;
 import gregtech.common.modularui2.widget.builder.ItemSlotGridBuilder;
 
 /**
  * MUI2 GUI for {@link OTEHatchRack}. Modelled after {@code MTEHatchRackGui} from upstream.
  */
-public class OTEHatchRackGui {
-
-    private final OTEHatchRack machine;
+public class OTEHatchRackGui extends MTEHatchBaseGui<OTEHatchRack> {
 
     public OTEHatchRackGui(OTEHatchRack machine) {
-        this.machine = machine;
+        super(machine);
     }
 
-    public ModularPanel build(PosGuiData guiData, PanelSyncManager syncManager, UISettings uiSettings) {
-        BooleanSyncValue isActiveSyncer = new BooleanSyncValue(
-            () -> machine.getBaseMetaTileEntity()
-                .isActive());
-        syncManager.syncValue("isActive", isActiveSyncer);
+    @Override
+    protected ParentWidget<?> createContentSection(ModularPanel panel, PanelSyncManager syncManager) {
+        BooleanSyncValue isActiveSyncer = syncManager.findSyncHandler("isActive", BooleanSyncValue.class);
 
-        ModularPanel panel = GTGuis.mteTemplatePanelBuilder(machine, guiData, syncManager, uiSettings)
-            .doesBindPlayerInventory(false)
-            .build();
+        ParentWidget<?> parent = super.createContentSection(panel, syncManager);
 
         // Central decoration: heat sink picture
-        panel.child(
+        parent.child(
             GTGuiTextures.TT_PICTURE_HEAT_SINK.asWidget()
                 .size(84, 60)
                 .center());
@@ -65,10 +58,10 @@ public class OTEHatchRackGui {
                                         isActiveSyncer.getBoolValue() ? "tt.gui.text.hatch.status.active"
                                             : "tt.gui.text.hatch.status.inactive")))));
 
-        panel.child(statusColumn);
+        parent.child(statusColumn);
 
-        // Input slots (2x2 grid)
-        panel.child(
+        // Input slots (2x2 grid) — blocked when machine is active
+        parent.child(
             new ItemSlotGridBuilder(machine.inventoryHandler, syncManager).size(2)
                 .itemSlotSupplier(() -> new ItemSlot().backgroundOverlay(GTGuiTextures.TT_OVERLAY_SLOT_RACK))
                 .filter(stack -> !isActiveSyncer.getBoolValue())
@@ -76,6 +69,17 @@ public class OTEHatchRackGui {
                 .center()
                 .minElementMargin(2));
 
-        return panel;
+        return parent;
+    }
+
+    @Override
+    public void registerSyncValues(PanelSyncManager syncManager) {
+        super.registerSyncValues(syncManager);
+        syncManager.syncValue("isActive", new BooleanSyncValue(baseMetaTileEntity::isActive));
+    }
+
+    @Override
+    protected boolean supportsBottomRowOverlap() {
+        return true;
     }
 }
