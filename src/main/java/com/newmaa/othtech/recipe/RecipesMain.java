@@ -176,7 +176,7 @@ public class RecipesMain implements IRecipePool {
             GTModHandler.getModItem("miscutils", "gtplusplus.blockcasings.5", 64, 14),
             new Object[] { OrePrefixes.circuit.get(Materials.UXV), 64 },
             GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 32417),
-            GTModHandler.getModItem("dreamcraft", "item.MysteriousCrystalLens", 64), OTHItemList.dustIrOsSmM.get(64),
+            GTModHandler.getModItem("dreamcraft", "MysteriousCrystalLens", 64), OTHItemList.dustIrOsSmM.get(64),
             OTHItemList.dustLookNEIM.get(64),
             GTModHandler.getModItem("appliedenergistics2", "item.ItemExtremeStorageCell.Singularity", 1),
             GTModHandler.getModItem("appliedenergistics2", "item.ItemExtremeStorageCell.Singularity", 1),
@@ -360,8 +360,7 @@ public class RecipesMain implements IRecipePool {
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 555),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 505),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 515),
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 275),
-                GTModHandler.getModItem("miscutils", "blockProjectBench", 1))
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 275))
             .duration(4 * 20)
             .eut(TierEU.IV)
             .addTo(Assem);
@@ -1237,10 +1236,10 @@ public class RecipesMain implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.pipeHuge, Materials.Infinity, 16),
                 GTOreDictUnificator.get(OrePrefixes.pipeHuge, Materials.Infinity, 16),
                 GTModHandler.getModItem(GoodGenerator.ID, "advancedRadiationProtectionPlate", 64),
-                GTModHandler.getModItem(NewHorizonsCoreMod.ID, "item.RadoxPolymerLens", 64),
+                GTModHandler.getModItem(NewHorizonsCoreMod.ID, "RadoxPolymerLens", 64),
                 ItemList.Circuit_Wafer_QPIC.get(64),
                 GTOreDictUnificator.get(OrePrefixes.bolt, Materials.Thulium, 64),
-                GTModHandler.getModItem(NewHorizonsCoreMod.ID, "item.RadoxPolymerLens", 64))
+                GTModHandler.getModItem(NewHorizonsCoreMod.ID, "RadoxPolymerLens", 64))
             .fluidInputs(
                 Materials.CosmicNeutronium.getMolten(92160),
                 FluidRegistry.getFluidStack("molten.mutatedlivingsolder", 114514),

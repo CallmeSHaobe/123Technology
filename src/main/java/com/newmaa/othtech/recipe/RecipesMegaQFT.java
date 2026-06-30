@@ -215,7 +215,7 @@ public class RecipesMegaQFT implements IRecipePool {
             .eut(TierEU.MAX)
             .addTo(MQFT);
         GTValues.RA.stdBuilder()
-            .itemOutputs(GTModHandler.getModItem("dreamcraft", "item.PicoWafer", 64))
+            .itemOutputs(GTModHandler.getModItem("dreamcraft", "PicoWafer", 64))
             .itemInputs(
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 4, 32722),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 2387),

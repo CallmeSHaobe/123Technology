@@ -45,8 +45,8 @@ public class RecipesCopiedFromTST implements IRecipePool {
         ItemStack ultimateMolecularOutput = GTModHandler.getModItem("tectech", "gt.blockcasingsTT", 1, 9);
         Object[] ultimateMolecularInputs = new Object[] { GTModHandler.getModItem("tectech", "gt.blockcasingsTT", 4, 8),
             ItemList.Field_Generator_UEV.get(64), GTModHandler.getModItem("tectech", "gt.blockcasingsTT", 8, 7),
-            GTModHandler.getModItem("dreamcraft", "item.HighEnergyFlowCircuit", 4),
-            ItemList.Field_Generator_UEV.get(24), GTModHandler.getModItem("gregtech", "gt.blockcasings2", 24, 9),
+            GTModHandler.getModItem("dreamcraft", "HighEnergyFlowCircuit", 4), ItemList.Field_Generator_UEV.get(24),
+            GTModHandler.getModItem("gregtech", "gt.blockcasings2", 24, 9),
             GTModHandler.getModItem("gregtech", "gt.blockcasings2", 24, 5),
             new Object[] { OrePrefixes.circuit.get(Materials.UHV), 64 },
             GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.CosmicNeutronium, 64),

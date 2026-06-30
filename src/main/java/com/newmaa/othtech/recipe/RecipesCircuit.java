@@ -154,7 +154,7 @@ public class RecipesCircuit implements IRecipePool {
             .itemOutputs(OTHItemList.boardCasimirM.get(16))
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.itemCasing, Materials.WhiteDwarfMatter, 64),
-                GTOreDictUnificator.get(OrePrefixes.wireFine, Materials.WhiteDwarfMatter, 64))
+                GTOreDictUnificator.get(OrePrefixes.foil, Materials.WhiteDwarfMatter, 64))
             .fluidInputs(
                 Materials.ExcitedDTSC.getFluid(64 * 144),
                 BWLiquids.Stars.getFluidOrGas(8 * 144),
@@ -252,7 +252,7 @@ public class RecipesCircuit implements IRecipePool {
                 GTUtility.getIntegratedCircuit(17),
                 OTHItemList.capTransM.get(16),
                 OTHItemList.energyHatchSpacetimeM.get(4),
-                GTOreDictUnificator.get(OrePrefixes.wireFine, Materials.WhiteDwarfMatter, 64))
+                GTOreDictUnificator.get(OrePrefixes.foil, Materials.WhiteDwarfMatter, 64))
             .fluidInputs(BWLiquids.Stars.getFluidOrGas(10 * 144))
             .duration(64 * 20)
             .eut(TierEU.MAX)

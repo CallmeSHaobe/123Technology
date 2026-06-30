@@ -1361,9 +1361,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Emerald, 1), 1024),
                 GTUtility.getIntegratedCircuit(24))
             .itemOutputs(
-                setStackSize(
-                    GTModHandler.getModItem("dreamcraft", "item.EngineeringProcessorItemAdvEmeraldCore", a),
-                    1024))
+                setStackSize(GTModHandler.getModItem("dreamcraft", "EngineeringProcessorItemAdvEmeraldCore", a), 1024))
 
             .duration(114 * 20)
             .eut(TierEU.IV)
@@ -1484,7 +1482,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.StainlessSteel, 1), 18 * 256),
                 setStackSize(new ItemStack(Blocks.chest, 1), 18 * 256),
                 setStackSize(GTModHandler.getModItem("eternalsingularity", "eternal_singularity", 1), 256),
-                GTModHandler.getModItem("dreamcraft", "item.EngineeringProcessorItemAdvEmeraldCore", 1))
+                GTModHandler.getModItem("dreamcraft", "EngineeringProcessorItemAdvEmeraldCore", 1))
 
             .duration(256 * 20 * 5)
             .eut(TierEU.UV)

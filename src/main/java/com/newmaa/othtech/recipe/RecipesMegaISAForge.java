@@ -45,7 +45,7 @@ public class RecipesMegaISAForge implements IRecipePool {
                 GTModHandler.getModItem("miscutils", "itemDustGermanium", 64),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 2044),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 2073),
-                GTModHandler.getModItem("dreamcraft", "item.LapotronDust", 64))
+                GTModHandler.getModItem("dreamcraft", "LapotronDust", 64))
             .fluidOutputs(new FluidStack(FluidRegistry.getFluid("molten.quantum"), 114))
 
             .eut(TierEU.RECIPE_MAX)
@@ -319,8 +319,8 @@ public class RecipesMegaISAForge implements IRecipePool {
             .fluidInputs(FluidRegistry.getFluidStack("molten.solderingalloy", Integer.MAX_VALUE))
             .itemInputs(
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 12730), Integer.MAX_VALUE),
-                setStackSize(GTModHandler.getModItem("dreamcraft", "item.StargateShieldingFoil", 1), 114514),
-                setStackSize(GTModHandler.getModItem("dreamcraft", "item.StargateFramePart", 1), 114514),
+                setStackSize(GTModHandler.getModItem("dreamcraft", "StargateShieldingFoil", 1), 114514),
+                setStackSize(GTModHandler.getModItem("dreamcraft", "StargateFramePart", 1), 114514),
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 15411), 123123123),
                 setStackSize(new ItemStack(ItemLoader.itemLeekBox, 1), Integer.MAX_VALUE),
                 setStackSize(new ItemStack(ItemLoader.itemZhangww, 1), Integer.MAX_VALUE),
@@ -420,11 +420,11 @@ public class RecipesMegaISAForge implements IRecipePool {
             .itemInputs(
                 OTHItemList.beeISAM.get(0),
                 ItemList.Field_Generator_MAX.get(0),
-                GTModHandler.getModItem("dreamcraft", "item.StargateShieldingFoil", 0),
+                GTModHandler.getModItem("dreamcraft", "StargateShieldingFoil", 0),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 0, 4143),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, 15411),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, 15415),
-                GTModHandler.getModItem("dreamcraft", "item.StargateCrystalDust", 64))
+                GTModHandler.getModItem("dreamcraft", "StargateCrystalDust", 64))
             .fluidInputs(FluidRegistry.getFluidStack("phononmedium", 256000))
             .fluidOutputs(FluidRegistry.getFluidStack("quarkgluonplasma", 3690000))
             .duration(123 * 20)
