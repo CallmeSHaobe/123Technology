@@ -56,6 +56,7 @@ import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.recipe.maps.FuelBackend;
 import gregtech.api.render.TextureFactory;
+import gregtech.api.structure.error.StructureError;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
@@ -127,7 +128,7 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
         super.getWailaNBTData(player, tile, tag, world, x, y, z);
         final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
         if (tileEntity != null) {
-            String bonus = GTUtility.formatNumbers(getPowerFlow());
+            String bonus = GTUtility.formatShortenedLong(getPowerFlow());
             tag.setString("bonus", bonus);
             tag.setBoolean("WM", isWirelessMode);
             tag.setString("costingWirelessEU", costingWirelessEU);
@@ -261,7 +262,7 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
                     .multiply(BigDecimal.valueOf(recipe.mDuration))
                     .divide(BigDecimal.valueOf(100), 0, RoundingMode.DOWN)
                     .toBigInteger();
-                costingWirelessEU = GTUtility.formatNumbers(costingWirelessEUTemp);
+                costingWirelessEU = GTUtility.scientificFormat(costingWirelessEUTemp);
                 if (!addEUToGlobalEnergyMap(ownerUUID, costingWirelessEUTemp)) {
                     return CheckRecipeResultRegistry.INTERNAL_ERROR;
                 }
@@ -410,17 +411,24 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
     }
 
     @Override
-    public boolean checkMachine_EM(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
         for (final MTEHatchInput tHatch : validMTEList(mInputHatches)) {
             if (tHatch instanceof MTEHatchInputME) {
-                return false;
+                return;
             }
         }
         if (this.pipeTier != 2) {
             this.isWirelessMode = false;
         }
+        checkPiece(mName, 2, 2, 0, errors);
+        repairMachine();
+    }
 
-        return structureCheck_EM(mName, 2, 2, 0);
+    @Override
+    public void construct(ItemStack stackSize, boolean hintsOnly) {
+        repairMachine();
+        buildPiece(mName, stackSize, hintsOnly, 2, 2, 0);
+
     }
 
     protected final List<MTEHatchInput> mMiddleInputHatches = new ArrayList<>();
@@ -443,11 +451,6 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
                 setResultIfFailure(aware.endRecipeProcessing(this));
             }
         }
-    }
-
-    @Override
-    public void construct(ItemStack stackSize, boolean hintsOnly) {
-        structureBuild_EM(mName, 2, 2, 0, stackSize, hintsOnly);
     }
 
     @Override
@@ -482,21 +485,21 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
                     'M',
                     buildHatchAdder(OTENQFuelGeneratorUniversal.class).atLeast(Muffler)
                         .adder(OTENQFuelGeneratorUniversal::addToMachineList)
-                        .dot(2)
+                        .hint(2)
                         .casingIndex(((BlockCasings8) sBlockCasings8).getTextureIndex(10))
                         .buildAndChain(sBlockCasings8, 10))
                 .addElement(
                     'S',
                     buildHatchAdder(OTENQFuelGeneratorUniversal.class).atLeast(InputHatch, OutputHatch)
                         .adder(OTENQFuelGeneratorUniversal::addToMachineList)
-                        .dot(3)
+                        .hint(3)
                         .casingIndex(((BlockCasings8) sBlockCasings8).getTextureIndex(10))
                         .buildAndChain(sBlockCasings8, 10))
                 .addElement(
                     'E',
                     buildHatchAdder(OTENQFuelGeneratorUniversal.class).atLeast(Dynamo.or(DynamoMulti))
                         .adder(OTENQFuelGeneratorUniversal::addToMachineList)
-                        .dot(4)
+                        .hint(4)
                         .casingIndex(((BlockCasings8) sBlockCasings8).getTextureIndex(10))
                         .buildAndChain(sBlockCasings8, 10))
                 .addElement('P', withChannel("pipe", ofBlocksTiered((block, meta) -> {

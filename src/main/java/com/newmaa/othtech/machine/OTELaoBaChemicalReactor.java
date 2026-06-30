@@ -47,6 +47,7 @@ import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.recipe.check.SimpleCheckRecipeResult;
 import gregtech.api.render.TextureFactory;
+import gregtech.api.structure.error.StructureError;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTUtility;
@@ -217,12 +218,11 @@ public class OTELaoBaChemicalReactor extends OTHMultiMachineBase<OTELaoBaChemica
     }
 
     @Override
-    public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
         updatetier();
         repairMachine();
         coilLevel = HeatingCoilLevel.None;
-        return checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet);
-
+        if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
     }
 
     @NotNull
@@ -300,7 +300,7 @@ public class OTELaoBaChemicalReactor extends OTHMultiMachineBase<OTELaoBaChemica
                     buildHatchAdder(OTELaoBaChemicalReactor.class)
                         .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch)
                         .adder(OTELaoBaChemicalReactor::addToMachineList)
-                        .dot(1)
+                        .hint(1)
                         .casingIndex(CASING_TEXTURE_ID)
                         .buildAndChain(sBlockCasings8, 6))
                 .build();

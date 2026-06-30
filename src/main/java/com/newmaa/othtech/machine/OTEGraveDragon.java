@@ -41,6 +41,7 @@ import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.render.TextureFactory;
+import gregtech.api.structure.error.StructureError;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gtPlusPlus.core.block.ModBlocks;
@@ -87,7 +88,7 @@ public class OTEGraveDragon extends OTHMultiMachineBase<OTEGraveDragon> {
                     buildHatchAdder(OTEGraveDragon.class)
                         .atLeast(InputBus, InputHatch, OutputBus, OutputHatch, Energy.or(ExoticEnergy))
                         .casingIndex(CASING_INDEX)
-                        .dot(1)
+                        .hint(1)
                         .buildAndChain(BlockLoader.defcCasingBlock, 7))
                 .build();
         }
@@ -207,10 +208,9 @@ public class OTEGraveDragon extends OTHMultiMachineBase<OTEGraveDragon> {
     }
 
     @Override
-    public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
+        if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
         repairMachine();
-        return checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet);
-
     }
 
     @Override

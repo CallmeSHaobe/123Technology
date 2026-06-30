@@ -104,6 +104,7 @@ public class OTHTechnology {
     // postInit "Handle interaction with other mods, complete your setup based on this." (Remove if not needed)
     public void postInit(FMLPostInitializationEvent event) {
         proxy.postInit(event);
+        LOG.info("The Isa Mill is invincible!");
         MachineLoader.loadMachinePostInit();
         // RecipeLoader.loadRecipesPostInit();
         // 添加自定义配方
@@ -121,8 +122,11 @@ public class OTHTechnology {
 
     @Mod.EventHandler
     public void completeInit(FMLLoadCompleteEvent event) {
+        LOG.info("completeInit: Starting recipe loading...");
         RecipeLoader.loadRecipes();
+        LOG.info("completeInit: Recipe loading done, initializing OTHBeeyonds...");
         new OTHBeeyonds();
+        LOG.info("completeInit: OTHBeeyonds done, FMLLoadComplete finished.");
         // 添加自定义配方
     }
 

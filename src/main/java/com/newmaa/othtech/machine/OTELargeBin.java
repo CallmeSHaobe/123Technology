@@ -46,6 +46,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.SoundResource;
 import gregtech.api.enums.Textures;
+import gregtech.api.interfaces.IIconContainer;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
@@ -55,6 +56,7 @@ import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.recipe.check.SimpleCheckRecipeResult;
+import gregtech.api.structure.error.StructureError;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
@@ -83,13 +85,13 @@ public class OTELargeBin extends OTHMultiMachineBase<OTELargeBin> implements ICo
     }
 
     @Override
-    public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
         repairMachine();
         Tier = Math.max(1, Math.min(4, Tier));
-        return Tier == 1 ? checkPiece(Tier1, 2, 3, 1)
-            : Tier == 2 ? checkPiece(Tier2, 4, 9, 2)
-                : Tier == 3 ? checkPiece(Tier3, 7, 18, 3) : checkPiece(Tier4, 9, 27, 1);
-
+        if (Tier == 1 && !checkPiece(Tier1, 2, 3, 1, errors)) return;
+        if (Tier == 2 && !checkPiece(Tier2, 4, 9, 2, errors)) return;
+        if (Tier == 3 && !checkPiece(Tier3, 7, 18, 3, errors)) return;
+        if (Tier == 4 && !checkPiece(Tier4, 9, 27, 1, errors)) return;
     }
 
     @Override
@@ -403,25 +405,25 @@ public class OTELargeBin extends OTHMultiMachineBase<OTELargeBin> implements ICo
         .addElement(
             'A',
             buildHatchAdder(OTELargeBin.class).atLeast(InputBus, InputHatch, Energy.or(ExoticEnergy), Dynamo, OutputBus)
-                .dot(1)
+                .hint(1)
                 .casingIndex(((BlockCasings2) sBlockCasings2).getTextureIndex(0))
                 .buildAndChain(sBlockCasings2, 0))
         .addElement(
             'Y',
             buildHatchAdder(OTELargeBin.class).atLeast(InputBus, InputHatch, Energy.or(ExoticEnergy), Dynamo, OutputBus)
-                .dot(1)
+                .hint(1)
                 .casingIndex(((BlockCasings4) sBlockCasings4).getTextureIndex(2))
                 .buildAndChain(sBlockCasings4, 2))
         .addElement(
             'M',
             buildHatchAdder(OTELargeBin.class).atLeast(InputBus, InputHatch, Energy.or(ExoticEnergy), Dynamo, OutputBus)
-                .dot(1)
+                .hint(1)
                 .casingIndex(((BlockCasings4) sBlockCasings4).getTextureIndex(0))
                 .buildAndChain(sBlockCasings4, 0))
         .addElement(
             'N',
             buildHatchAdder(OTELargeBin.class).atLeast(InputBus, InputHatch, Energy.or(ExoticEnergy), Dynamo, OutputBus)
-                .dot(1)
+                .hint(1)
                 .casingIndex(((BlockCasings1) sBlockCasings1).getTextureIndex(12))
                 .buildAndChain(sBlockCasings1, 12))
         .addElement('Z', ofBlock(sBlockCasings3, 10))
@@ -460,7 +462,7 @@ public class OTELargeBin extends OTHMultiMachineBase<OTELargeBin> implements ICo
         super.getWailaNBTData(player, tile, tag, world, x, y, z);
         final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
         if (tileEntity != null) {
-            String Mode = GTUtility.formatNumbers(this.mode);
+            String Mode = GTUtility.formatShortenedLong(this.mode);
             tag.setString("Mode", Mode);
             tag.setLong("MM", mSA);
             tag.setInteger("Tier", Tier);
@@ -722,14 +724,14 @@ public class OTELargeBin extends OTHMultiMachineBase<OTELargeBin> implements ICo
         return tt;
     }
 
-    protected static Textures.BlockIcons.CustomIcon ScreenOFF;
-    protected static Textures.BlockIcons.CustomIcon ScreenON;
+    protected static IIconContainer ScreenOFF;
+    protected static IIconContainer ScreenON;
 
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister aBlockIconRegister) {
-        ScreenOFF = new Textures.BlockIcons.CustomIcon("iconsets/EM_CONTROLLER");
-        ScreenON = new Textures.BlockIcons.CustomIcon("iconsets/EM_CONTROLLER_ACTIVE");
+        ScreenOFF = Textures.BlockIcons.custom("iconsets/EM_CONTROLLER");
+        ScreenON = Textures.BlockIcons.custom("iconsets/EM_CONTROLLER_ACTIVE");
         super.registerIcons(aBlockIconRegister);
     }
 

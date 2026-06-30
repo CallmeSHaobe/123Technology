@@ -55,6 +55,7 @@ import gregtech.api.logic.ProcessingLogic;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.render.TextureFactory;
+import gregtech.api.structure.error.StructureError;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import mcp.mobius.waila.api.IWailaConfigHandler;
@@ -174,13 +175,11 @@ public class OTESINOPEC extends OTHMultiMachineBase<OTESINOPEC> {
     }
 
     @Override
-    public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
         updatetier();
         repairMachine();
         coilLevel = HeatingCoilLevel.None;
-
-        return checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet);
-
+        checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors);
     }
 
     @NotNull
@@ -259,14 +258,14 @@ public class OTESINOPEC extends OTHMultiMachineBase<OTESINOPEC> {
                     buildHatchAdder(OTESINOPEC.class)
                         .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch)
                         .adder(OTESINOPEC::addToMachineList)
-                        .dot(1)
+                        .hint(1)
                         .casingIndex(48)
                         .buildAndChain(sBlockCasings4, 0))
                 .addElement(
                     'O',
                     buildHatchAdder(OTESINOPEC.class).atLeast(Muffler)
                         .adder(OTESINOPEC::addToMachineList)
-                        .dot(2)
+                        .hint(2)
                         .casingIndex(48)
                         .buildAndChain(sBlockCasings4, 0))
                 .build();

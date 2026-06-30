@@ -4,6 +4,7 @@ import static gregtech.api.enums.GTValues.VP;
 import static net.minecraft.util.StatCollector.translateToLocal;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.ItemStack;
@@ -22,15 +23,17 @@ import com.gtnewhorizons.modularui.common.widget.TextWidget;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import gregtech.api.enums.Textures;
+import gregtech.api.interfaces.IIconContainer;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.metatileentity.implementations.MTEHatchOutput;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
+import gregtech.api.structure.error.StructureError;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.api.util.ParallelHelper;
-import gregtech.common.tileentities.machines.MTEHatchOutputME;
+import gregtech.common.tileentities.machines.outputme.MTEHatchOutputME;
 import gtnhintergalactic.recipe.SpacePumpingRecipes;
 import gtnhintergalactic.tile.multi.elevator.TileEntitySpaceElevator;
 import gtnhintergalactic.tile.multi.elevatormodules.TileEntityModuleBase;
@@ -109,8 +112,10 @@ public abstract class OTETileEntityModulePumpT4 extends TileEntityModuleBase {
                 if (!hasMeOutputHatch && !eSafeVoid) {
                     for (MTEHatchOutput output : mOutputHatches) {
                         if (output.mFluid != null && output.mFluid.getFluid() != null
-                            && output.getLockedFluidName() != null
-                            && output.getLockedFluidName()
+                            && output.getLockedFluid()
+                                .getName() != null
+                            && output.getLockedFluid()
+                                .getName()
                                 .equals(
                                     fluid.getFluid()
                                         .getName())
@@ -167,21 +172,18 @@ public abstract class OTETileEntityModulePumpT4 extends TileEntityModuleBase {
     }
 
     @Override
-    public boolean checkMachine_EM(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
-        boolean state = super.checkMachine_EM(aBaseMetaTileEntity, aStack);
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
+        super.checkMachine(aBaseMetaTileEntity, aStack, errors);
         hasMeOutputHatch = false;
-        if (state) {
-            for (MTEHatchOutput output : mOutputHatches) {
-                if (output instanceof MTEHatchOutputME) {
-                    hasMeOutputHatch = true;
-                    break;
-                }
+        for (MTEHatchOutput output : mOutputHatches) {
+            if (output instanceof MTEHatchOutputME) {
+                hasMeOutputHatch = true;
+                break;
             }
         }
-        return state;
     }
 
-    protected static Textures.BlockIcons.CustomIcon engraving;
+    protected static IIconContainer engraving;
 
     @Override
     public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection facing,
@@ -201,7 +203,7 @@ public abstract class OTETileEntityModulePumpT4 extends TileEntityModuleBase {
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister aBlockIconRegister) {
-        engraving = new Textures.BlockIcons.CustomIcon("iconsets/OVERLAY_SIDE_PUMP_MODULE");
+        engraving = Textures.BlockIcons.custom("iconsets/OVERLAY_SIDE_PUMP_MODULE");
         super.registerIcons(aBlockIconRegister);
     }
 

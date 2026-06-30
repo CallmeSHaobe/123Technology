@@ -12,6 +12,7 @@ import static net.minecraft.util.StatCollector.translateToLocal;
 import static tectech.thing.casing.TTCasingsContainer.sBlockCasingsTT;
 
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
@@ -54,6 +55,7 @@ import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.recipe.check.SimpleCheckRecipeResult;
 import gregtech.api.render.TextureFactory;
+import gregtech.api.structure.error.StructureError;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
@@ -174,10 +176,9 @@ public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> {
     }
 
     @Override
-    public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
+        if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
         repairMachine();
-        return checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet);
-
     }
 
     @Override
@@ -248,7 +249,7 @@ public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> {
                     buildHatchAdder(OTEMegaEEC.class)
                         .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch)
                         .adder(OTEMegaEEC::addToMachineList)
-                        .dot(1)
+                        .hint(1)
                         .casingIndex(12)
                         .buildAndChain(sBlockCasings1, 12))
                 .addElement('D', ofBlock(sBlockCasings1, 13))

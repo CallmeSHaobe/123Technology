@@ -12,7 +12,6 @@ import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
 import gregtech.api.interfaces.IRecipeMap;
 import gregtech.api.recipe.RecipeMaps;
-import gtPlusPlus.api.recipe.GTPPRecipeMaps;
 
 public class RecipesFreezerRecipes implements IRecipePool {
 
@@ -39,6 +38,6 @@ public class RecipesFreezerRecipes implements IRecipePool {
 
             .duration(2000)
             .eut(TierEU.RECIPE_UEV)
-            .addTo(GTPPRecipeMaps.advancedFreezerRecipes);
+            .addTo(RecipeMaps.vacuumFreezerRecipes);
     }
 }

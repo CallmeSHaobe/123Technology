@@ -1,23 +1,22 @@
 
 elytraModpackVersion {
     // 在这配置的gtnh版本 用于自动拉取依赖版本
-    gtnhVersion = "2.8.4"
+    gtnhVersion = "2.9.0-beta-1"
     // 是否不缓存拉取的依赖清单文件
     manifestNoCache = false
     // 是否自动为输出的jar添加 `gtnhVersion` 后缀
-    attachManifestVersionToJar = true
+    attachManifestVersionToJar = false
 }
 
 dependencies {
     implementation(gtnhDev("GT5-Unofficial"))
-    implementation(gtnhDev("NewHorizonsCoreMod"))
+    implementation("com.github.GTNewHorizons:NewHorizonsCoreMod:2.8.284:dev")
     implementation(gtnhDev("Mobs-Info"))
     implementation(gtnhDev("Infernal-Mobs"))
     implementation(gtnhDev("Galaxy-Space-GTNH"))
     implementation(gtnhDev("SGCraft"))
     implementation(gtnhDev("twilightforest"))
     implementation(gtnhDev("AE2FluidCraft-Rework"))
-    implementation(gtnhDev("ae2stuff"))
     implementation(gtnhDev("Avaritia"))
     implementation(gtnhDev("Avaritiaddons"))
     implementation(gtnhDev("neiaddons"))
@@ -31,31 +30,42 @@ dependencies {
     implementation(gtnhDev("MagicBees"))
     implementation(gtnhDev("NotEnoughItems"))
     implementation(gtnhDev("OpenComputers"))
-    implementation(gtnhDev("supersolarpanels"))
     implementation(gtnhDev("ThaumicEnergistics"))
     implementation(gtnhDev("Universal-Singularities"))
-    implementation(gtnhDev("WitcheryExtras"))
     implementation(gtnhDev("BetterQuesting"))
+    implementation(gtnhDev("supersolarpanels"))
+    implementation(rfg.deobf('curse.maven:advsolar-362768:2885953'))
+    implementation ("net.industrial-craft:industrialcraft-2:2.2.828-experimental:dev")
+    runtimeOnlyNonPublishable(rfg.deobf("curse.maven:BiomesOPlenty-220318:2499612"))
+    implementation(deobfCurse('witchery-69673:2234410'))
+    implementation(gtnhDev("WitcheryExtras"))
 
-    implementation('thaumcraft:Thaumcraft:1.7.10-4.2.3.5:dev')
+    implementation("thaumcraft:Thaumcraft:1.7.10-4.2.3.5:dev")
     implementation('com.github.GTNewHorizons:worldedit-gtnh:v0.0.8:dev')
 
     // runtime
     runtimeOnlyNonPublishable(gtnhDev("BetterP2P"))
-    runtimeOnlyNonPublishable(gtnhDev("Chisel"))
+    runtimeOnlyNonPublishable rfg.deobf(files("libs/chisel-2.17.27-GTNH.jar"))
     runtimeOnlyNonPublishable(gtnhDev("StructureLib"))
     runtimeOnlyNonPublishable(gtnhDev("BlockRenderer6343")) { transitive = false }
 
     annotationProcessor('com.google.auto.value:auto-value:1.10.1')
     implementation('com.google.auto.value:auto-value-annotations:1.10.1')
 
+    // jvmDowngrader
+    compileOnly("javax.xml.bind:jaxb-api:2.3.1")
+    compileOnly("org.jetbrains:annotations:26.0.1")
+    compileOnly("org.projectlombok:lombok:1.18.42") { transitive = false }
+    annotationProcessor("org.projectlombok:lombok:1.18.42")
+
 
     configurations.configureEach {
         exclude group: 'com.github.GTNewHorizons', module: 'Baubles'
     }
+
     configurations.all {
         resolutionStrategy {
-            force "com.github.GTNewHorizons:GTNHLib:0.7.10"
+            force "com.github.GTNewHorizons:GTNHLib:0.11.11"
         }
     }
 

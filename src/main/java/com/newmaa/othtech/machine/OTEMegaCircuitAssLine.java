@@ -51,6 +51,7 @@ import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.render.TextureFactory;
+import gregtech.api.structure.error.StructureError;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
@@ -170,10 +171,10 @@ public class OTEMegaCircuitAssLine extends OTHMultiMachineBase<OTEMegaCircuitAss
     }
 
     @Override
-    public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
+        if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
         updatetier();
-        return checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet);
-
+        repairMachine();
     }
 
     @Override
@@ -241,7 +242,7 @@ public class OTEMegaCircuitAssLine extends OTHMultiMachineBase<OTEMegaCircuitAss
                     'D',
                     buildHatchAdder(OTEMegaCircuitAssLine.class).atLeast(OutputBus)
                         .adder(OTEMegaCircuitAssLine::addToMachineList)
-                        .dot(2)
+                        .hint(2)
                         .casingIndex(((BlockCasings2) GregTechAPI.sBlockCasings2).getTextureIndex(0))
                         .buildAndChain(sBlockCasings2, 0))
                 .addElement(
@@ -249,7 +250,7 @@ public class OTEMegaCircuitAssLine extends OTHMultiMachineBase<OTEMegaCircuitAss
                     buildHatchAdder(OTEMegaCircuitAssLine.class)
                         .atLeast(Energy.or(ExoticEnergy), InputBus, InputHatch, OutputHatch)
                         .adder(OTEMegaCircuitAssLine::addToMachineList)
-                        .dot(1)
+                        .hint(1)
                         .casingIndex(((BlockCasings2) GregTechAPI.sBlockCasings2).getTextureIndex(0))
                         .buildAndChain(sBlockCasings2, 0))
                 .build();

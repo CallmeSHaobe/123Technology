@@ -59,10 +59,15 @@ public class OTHBeeyonds {
     public static OTHItemCombs combs;
 
     public OTHBeeyonds() {
+        GTMod.GT_FML_LOGGER.info("OTHBeeyonds: Creating OTHItemCombs...");
         combs = new OTHItemCombs();
+        GTMod.GT_FML_LOGGER.info("OTHBeeyonds: Item created, initializing comb recipes...");
         OTHItemCombs.initCombsRecipes();
+        GTMod.GT_FML_LOGGER.info("OTHBeeyonds: Comb recipes done, setting up alleles...");
         setupOTHAlleles();
+        GTMod.GT_FML_LOGGER.info("OTHBeeyonds: Alleles done, initializing bees...");
         OTHBeeDefinition.initBees();
+        GTMod.GT_FML_LOGGER.info("OTHBeeyonds: Bees initialized, constructor done.");
     }
 
     private static void setupOTHAlleles() {

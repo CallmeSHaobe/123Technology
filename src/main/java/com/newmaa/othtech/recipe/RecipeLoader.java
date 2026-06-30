@@ -4,6 +4,7 @@ import static com.newmaa.othtech.Config.is_EggMachine_Recipes_For_NHU;
 
 import net.minecraftforge.fluids.FluidRegistry;
 
+import com.newmaa.othtech.OTHTechnology;
 import com.newmaa.othtech.machine.OTEMiniSteamNineInOne;
 import com.newmaa.othtech.utils.modsEnum;
 
@@ -23,9 +24,13 @@ public class RecipeLoader {
             new RecipesTangshanSteelFactory(), new RecipesSunFactoryEnqing(), new RecipesEpicCokeOvenFake(),
             new RecipesWoodenFusionReactor(), new RecipesMISA(), new RecipesNaquadah(), new RecipesEIO(),
             new RecipesEXH(), new RecipesNewWetware(), new RecipesAntimonia(), new RecipesNASA() };
+        OTHTechnology.LOG.info("RecipeLoader: Loading OTEMiniSteamNineInOne recipes...");
         OTEMiniSteamNineInOne.loadRecipes();
+        OTHTechnology.LOG.info("RecipeLoader: OTEMiniSteamNineInOne done.");
         if (!modsEnum.TwistSpaceTechnology.isModLoaded()) {
+            OTHTechnology.LOG.info("RecipeLoader: Loading RecipesCopiedFromTST...");
             new RecipesCopiedFromTST().loadRecipes();
+            OTHTechnology.LOG.info("RecipeLoader: RecipesCopiedFromTST done.");
         }
         if (modsEnum.NHUtilities.isModLoaded() && is_EggMachine_Recipes_For_NHU) {
             new RecipesDE().loadRecipes();
@@ -46,8 +51,13 @@ public class RecipeLoader {
                 .addTo(RecipeMaps.assemblerRecipes);
 
         }
+        int idx = 0;
         for (IRecipePool recipePool : recipePools) {
+            String poolName = recipePool.getClass()
+                .getSimpleName();
+            OTHTechnology.LOG.info("RecipeLoader: [{}/{}] Loading {}...", ++idx, recipePools.length, poolName);
             recipePool.loadRecipes();
+            OTHTechnology.LOG.info("RecipeLoader: [{}/{}] {} done.", idx, recipePools.length, poolName);
         }
 
     }

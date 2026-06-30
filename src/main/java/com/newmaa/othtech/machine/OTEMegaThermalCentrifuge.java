@@ -5,6 +5,8 @@ import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static net.minecraft.util.StatCollector.translateToLocal;
 
+import java.util.List;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
@@ -31,6 +33,7 @@ import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.render.TextureFactory;
+import gregtech.api.structure.error.StructureError;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gtPlusPlus.core.block.ModBlocks;
 import gtPlusPlus.xmod.gregtech.common.blocks.textures.TexturesGtBlock;
@@ -121,9 +124,9 @@ public class OTEMegaThermalCentrifuge extends OTHMultiMachineBase<OTEMegaThermal
     // ===================== Structure =====================
 
     @Override
-    public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
+        if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
         repairMachine();
-        return checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet);
     }
 
     @Override
@@ -174,7 +177,7 @@ public class OTEMegaThermalCentrifuge extends OTHMultiMachineBase<OTEMegaThermal
                     buildHatchAdder(OTEMegaThermalCentrifuge.class)
                         .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch, Muffler)
                         .adder(OTEMegaThermalCentrifuge::addToMachineList)
-                        .dot(1)
+                        .hint(1)
                         .casingIndex(TAE.GTPP_INDEX(16))
                         .buildAndChain(ofBlock(ModBlocks.blockCasings2Misc, 0)))
 

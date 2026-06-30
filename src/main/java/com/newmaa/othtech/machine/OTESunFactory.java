@@ -1,5 +1,6 @@
 package com.newmaa.othtech.machine;
 
+import static com.gtnewhorizon.gtnhlib.util.numberformatting.NumberFormatUtil.formatNumber;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
 import static com.newmaa.othtech.Config.is_Enqing_Song_Play;
 import static com.newmaa.othtech.utils.Utils.metaItemEqual;
@@ -51,6 +52,7 @@ import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.render.TextureFactory;
+import gregtech.api.structure.error.StructureError;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.api.util.shutdown.ShutDownReason;
@@ -201,7 +203,7 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
         super.getWailaNBTData(player, tile, tag, world, x, y, z);
         final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
         if (tileEntity != null) {
-            BYDS = GTUtility.formatNumbers(getSpeedBonus());
+            BYDS = formatNumber(getSpeedBonus());
             tag.setString("speedBonus", BYDS);
 
         }
@@ -323,10 +325,9 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
     }
 
     @Override
-    public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
+        if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
         repairMachine();
-        return checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet);
-
     }
 
     @Override
@@ -416,7 +417,7 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
                     buildHatchAdder(OTESunFactory.class)
                         .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch)
                         .adder(OTESunFactory::addToMachineList)
-                        .dot(1)
+                        .hint(1)
                         .casingIndex(1024 + 12)
                         .buildAndChain(sBlockCasingsTT, 12))
                 .build();

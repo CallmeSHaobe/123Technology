@@ -16,7 +16,6 @@ import bartworks.system.material.WerkstoffLoader;
 import goodgenerator.items.GGMaterial;
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
-import gregtech.api.enums.MaterialsUEVplus;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMaps;
@@ -63,7 +62,7 @@ public class RecipesNaquadah implements IRecipePool {
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 10022), 192),
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 10023), 1024),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.DraconiumAwakened, 1), 1024),
-                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, MaterialsUEVplus.TranscendentMetal, 1), 64),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.TranscendentMetal, 1), 64),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Bedrockium, 1), 1024),
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 10001), 25600),
                 setStackSize(GTModHandler.getModItem("miscutils", "itemDustChromaticGlass", 1), 1440))
@@ -86,7 +85,7 @@ public class RecipesNaquadah implements IRecipePool {
                 setStackSize(GGMaterial.atomicSeparationCatalyst.get(OrePrefixes.dust, 1), 192),
                 setStackSize(GGMaterial.orundum.get(OrePrefixes.dust, 1), 1024),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.DraconiumAwakened, 1), 1024),
-                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, MaterialsUEVplus.TranscendentMetal, 1), 64),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.TranscendentMetal, 1), 64),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Bedrockium, 1), 1024),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tritanium, 1), 32 * 3),
                 setStackSize(MaterialsElements.STANDALONE.ASTRAL_TITANIUM.getDust(1), 192),
@@ -109,7 +108,7 @@ public class RecipesNaquadah implements IRecipePool {
                 setStackSize(GGMaterial.atomicSeparationCatalyst.get(OrePrefixes.dust, 1), 192),
                 setStackSize(GGMaterial.orundum.get(OrePrefixes.dust, 1), 1024),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.DraconiumAwakened, 1), 1024),
-                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, MaterialsUEVplus.TranscendentMetal, 1), 64),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.TranscendentMetal, 1), 64),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Bedrockium, 1), 1024),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tritanium, 1), 48 * 3),
                 setStackSize(MaterialsElements.STANDALONE.CELESTIAL_TUNGSTEN.getDust(1), 192),

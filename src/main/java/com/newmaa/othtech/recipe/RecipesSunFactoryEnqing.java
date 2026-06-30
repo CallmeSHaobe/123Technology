@@ -61,7 +61,6 @@ import com.newmaa.othtech.utils.modsEnum;
 
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
-import gregtech.api.enums.MaterialsUEVplus;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMap;
@@ -236,9 +235,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
         RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(23),
-                setStackSize(
-                    GTOreDictUnificator.get(OrePrefixes.dust, Materials.Longasssuperconductornameforuvwire, 1),
-                    300),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.SuperconductorUV, 1), 300),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Neutronium, 1), 300),
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32076), 64),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Iron, 1), 59),
@@ -254,9 +251,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
         RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(24),
-                setStackSize(
-                    GTOreDictUnificator.get(OrePrefixes.dust, Materials.Longasssuperconductornameforuvwire, 1),
-                    300),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.SuperconductorUV, 1), 300),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Neutronium, 1), 300),
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32076), 64),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Iron, 1), 59),
@@ -309,7 +304,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 Materials.CosmicNeutronium.getDust(32),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.SuperconductorUIVBase, 1), 176),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.SuperconductorUMVBase, 1), 176))
-            .fluidInputs(MaterialsUEVplus.SpaceTime.getMolten(32 * 667))
+            .fluidInputs(Materials.SpaceTime.getMolten(32 * 667))
             .itemOutputs(
                 setStackSize(GTModHandler.getModItem(modsEnum.TwistSpaceTechnology.ID, "MetaItem01", 1, 30), 2048 * a))
 
@@ -320,7 +315,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
         // Yellow
         RecipeBuilder.builder()
             .itemInputs(
-                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Plastic, 1), 217),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Polyethylene, 1), 217),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tantalum, 1), 58),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 1), 32),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Platinum, 1), 32),
@@ -343,7 +338,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .addTo(SMD);
         RecipeBuilder.builder()
             .itemInputs(
-                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Plastic, 1), 217),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Polyethylene, 1), 217),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tantalum, 1), 58),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 1), 32),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Platinum, 1), 32),
@@ -415,20 +410,13 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
         RecipeBuilder.builder()
             .itemInputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 1), 83),
-                setStackSize(
-                    GTOreDictUnificator.get(
-                        OrePrefixes.dust,
-                        Materials.Tetraindiumditindibariumtitaniumheptacoppertetrakaidekaoxid,
-                        1),
-                    72),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.CosmicNeutronium, 1), 72),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Draconium, 1), 32),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Naquadria, 1), 32),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.BlackPlutonium, 1), 32),
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 10105), 32),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Osmium, 1), 31),
-                setStackSize(
-                    GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tetranaquadahdiindiumhexaplatiumosminid, 1),
-                    28),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Infinity, 1), 28),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tritanium, 1), 16),
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 10102), 8),
                 setStackSize(GTModHandler.getModItem("miscutils", "itemDustPikyonium64B", 1), 16),
@@ -450,20 +438,13 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
         RecipeBuilder.builder()
             .itemInputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 1), 83),
-                setStackSize(
-                    GTOreDictUnificator.get(
-                        OrePrefixes.dust,
-                        Materials.Tetraindiumditindibariumtitaniumheptacoppertetrakaidekaoxid,
-                        1),
-                    72),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.CosmicNeutronium, 1), 72),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Draconium, 1), 32),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Naquadria, 1), 32),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.BlackPlutonium, 1), 32),
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 10105), 32),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Osmium, 1), 31),
-                setStackSize(
-                    GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tetranaquadahdiindiumhexaplatiumosminid, 1),
-                    28),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Infinity, 1), 28),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tritanium, 1), 16),
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 10102), 8),
                 setStackSize(GTModHandler.getModItem("miscutils", "itemDustPikyonium64B", 1), 16),
@@ -486,20 +467,13 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
         RecipeBuilder.builder()
             .itemInputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 1), 83),
-                setStackSize(
-                    GTOreDictUnificator.get(
-                        OrePrefixes.dust,
-                        Materials.Tetraindiumditindibariumtitaniumheptacoppertetrakaidekaoxid,
-                        1),
-                    72),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.CosmicNeutronium, 1), 72),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Draconium, 1), 32),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Naquadria, 1), 32),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.BlackPlutonium, 1), 32),
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedingot", 1, 10105), 32),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Osmium, 1), 31),
-                setStackSize(
-                    GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tetranaquadahdiindiumhexaplatiumosminid, 1),
-                    28),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Infinity, 1), 28),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tritanium, 1), 16),
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedingot", 1, 10102), 8),
                 setStackSize(GTModHandler.getModItem("miscutils", "itemIngotPikyonium64B", 1), 16),
@@ -523,20 +497,13 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
         RecipeBuilder.builder()
             .itemInputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 1), 83),
-                setStackSize(
-                    GTOreDictUnificator.get(
-                        OrePrefixes.dust,
-                        Materials.Tetraindiumditindibariumtitaniumheptacoppertetrakaidekaoxid,
-                        1),
-                    72),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.CosmicNeutronium, 1), 72),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Draconium, 1), 32),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Naquadria, 1), 32),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.BlackPlutonium, 1), 32),
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedingot", 1, 10105), 32),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Osmium, 1), 31),
-                setStackSize(
-                    GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tetranaquadahdiindiumhexaplatiumosminid, 1),
-                    28),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Infinity, 1), 28),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tritanium, 1), 16),
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedingot", 1, 10102), 8),
                 setStackSize(GTModHandler.getModItem("miscutils", "itemIngotPikyonium64B", 1), 16),
@@ -1394,9 +1361,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Emerald, 1), 1024),
                 GTUtility.getIntegratedCircuit(24))
             .itemOutputs(
-                setStackSize(
-                    GTModHandler.getModItem("dreamcraft", "item.EngineeringProcessorItemAdvEmeraldCore", a),
-                    1024))
+                setStackSize(GTModHandler.getModItem("dreamcraft", "EngineeringProcessorItemAdvEmeraldCore", a), 1024))
 
             .duration(114 * 20)
             .eut(TierEU.IV)
@@ -1408,14 +1373,9 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Lead, 1), 36),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Aluminium, 1), 24),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Silver, 1), 20),
-                setStackSize(GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Data, 1), 16),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UHV, 1), 16),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.plate, Materials.Obsidian, 1), 16),
-                setStackSize(
-                    GTOreDictUnificator.get(
-                        OrePrefixes.dust,
-                        Materials.Tetraindiumditindibariumtitaniumheptacoppertetrakaidekaoxid,
-                        1),
-                    12),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.CosmicNeutronium, 1), 12),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.StainlessSteel, 1), 9 * 64),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Lapis, 1), 8 * 64),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Diamond, 1), 8 * 64),
@@ -1512,8 +1472,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Bedrockium, 1), 144 * 256),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Draconium, 1), 144 * 256),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Diamond, 1), 144 * 256),
-                setStackSize(GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Bio, 1), 90 * 256),
-                setStackSize(GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Superconductor, 1), 48 * 256),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.circuit, Materials.ZPM, 1), 90 * 256),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UHV, 1), 48 * 256),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Americium, 1), 54 * 256),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.CosmicNeutronium, 1), 54 * 256),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Infinity, 1), 54 * 256),
@@ -1522,7 +1482,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.StainlessSteel, 1), 18 * 256),
                 setStackSize(new ItemStack(Blocks.chest, 1), 18 * 256),
                 setStackSize(GTModHandler.getModItem("eternalsingularity", "eternal_singularity", 1), 256),
-                GTModHandler.getModItem("dreamcraft", "item.EngineeringProcessorItemAdvEmeraldCore", 1))
+                GTModHandler.getModItem("dreamcraft", "EngineeringProcessorItemAdvEmeraldCore", 1))
 
             .duration(256 * 20 * 5)
             .eut(TierEU.UV)
@@ -1537,7 +1497,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Infinity, 1), 8 * 256),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Diamond, 1), 8 * 256),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Naquadria, 1), 32 * 256),
-                setStackSize(GTOreDictUnificator.get(OrePrefixes.circuit, Materials.Bio, 1), 6 * 256),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.circuit, Materials.ZPM, 1), 6 * 256),
                 setStackSize(OTHItemList.dustIrOsSmM.get(64), 16 * 256),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.wireGt02, Materials.SuperconductorUHV, 1), 26 * 256),
                 setStackSize(GTModHandler.getModItem("gregtech", "Photonically Prepared Wafer", 1), 4 * 256))

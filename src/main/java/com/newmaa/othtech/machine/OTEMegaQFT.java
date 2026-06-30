@@ -44,6 +44,7 @@ import gregtech.api.logic.ProcessingLogic;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.render.TextureFactory;
+import gregtech.api.structure.error.StructureError;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gtPlusPlus.core.block.ModBlocks;
@@ -134,7 +135,7 @@ public class OTEMegaQFT extends OTHMultiMachineBase<OTEMegaQFT> {
         super.getWailaNBTData(player, tile, tag, world, x, y, z);
         final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
         if (tileEntity != null) {
-            plier = GTUtility.formatNumbers(multiplier);
+            plier = GTUtility.formatShortenedLong(multiplier);
             tag.setString("multiplier", plier);
 
         }
@@ -257,12 +258,10 @@ public class OTEMegaQFT extends OTHMultiMachineBase<OTEMegaQFT> {
         }
     }
 
-
     @Override
-    public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
+        if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
         repairMachine();
-        return checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet);
-
     }
 
     @Override
@@ -384,7 +383,7 @@ public class OTEMegaQFT extends OTHMultiMachineBase<OTEMegaQFT> {
                     buildHatchAdder(OTEMegaQFT.class)
                         .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch, Muffler)
                         .adder(OTEMegaQFT::addToMachineList)
-                        .dot(1)
+                        .hint(1)
                         .casingIndex(1024 + 12)
                         .buildAndChain(GregTechAPI.sBlockCasings8, 3))
                 .addElement('B', ofBlock(sBlockCasingsBA0, 10))

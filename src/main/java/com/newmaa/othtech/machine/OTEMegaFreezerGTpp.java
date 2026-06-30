@@ -5,6 +5,8 @@ import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static net.minecraft.util.StatCollector.translateToLocal;
 
+import java.util.List;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
@@ -29,13 +31,14 @@ import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.logic.ProcessingLogic;
 import gregtech.api.recipe.RecipeMap;
+import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.recipe.check.SimpleCheckRecipeResult;
 import gregtech.api.render.TextureFactory;
+import gregtech.api.structure.error.StructureError;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.MultiblockTooltipBuilder;
-import gtPlusPlus.api.recipe.GTPPRecipeMaps;
 import gtPlusPlus.core.block.ModBlocks;
 import gtPlusPlus.core.util.minecraft.FluidUtils;
 import gtPlusPlus.xmod.gregtech.common.blocks.textures.TexturesGtBlock;
@@ -79,7 +82,7 @@ public class OTEMegaFreezerGTpp extends OTHMultiMachineBase<OTEMegaFreezerGTpp> 
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        return GTPPRecipeMaps.advancedFreezerRecipes;
+        return RecipeMaps.vacuumFreezerRecipes;
 
     }
 
@@ -112,9 +115,9 @@ public class OTEMegaFreezerGTpp extends OTHMultiMachineBase<OTEMegaFreezerGTpp> 
     }
 
     @Override
-    public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
+        if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
         repairMachine();
-        return checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet);
     }
 
     @Override
@@ -143,7 +146,7 @@ public class OTEMegaFreezerGTpp extends OTHMultiMachineBase<OTEMegaFreezerGTpp> 
     public boolean checkForLava() {
         if (this.getStoredFluids() != null) {
             for (FluidStack stored : this.getStoredFluids()) {
-                if (stored.isFluidEqual(FluidUtils.getFluidStack("cryotheum", 1))) {
+                if (stored.isFluidEqual(FluidUtils.getWildcardFluidStack("cryotheum", 1))) {
                     if (stored.amount >= 123 * 1000) {
                         return true;
                     }
@@ -179,7 +182,7 @@ public class OTEMegaFreezerGTpp extends OTHMultiMachineBase<OTEMegaFreezerGTpp> 
                     buildHatchAdder(OTEMegaFreezerGTpp.class)
                         .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch, Muffler)
                         .adder(OTEMegaFreezerGTpp::addToMachineList)
-                        .dot(1)
+                        .hint(1)
                         .casingIndex(TAE.getIndexFromPage(2, 10))
                         .buildAndChain(ofBlock(ModBlocks.blockCasings3Misc, 10)))
 

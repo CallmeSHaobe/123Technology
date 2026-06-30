@@ -44,6 +44,7 @@ import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.recipe.check.SimpleCheckRecipeResult;
 import gregtech.api.render.TextureFactory;
+import gregtech.api.structure.error.StructureError;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
@@ -116,7 +117,7 @@ public class OTEMegaIsaFactory extends OTHMultiMachineBase<OTEMegaIsaFactory> {
         super.getWailaNBTData(player, tile, tag, world, x, y, z);
         final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
         if (tileEntity != null) {
-            String bonus = GTUtility.formatNumbers(tierMill);
+            String bonus = GTUtility.formatShortenedLong(tierMill);
             tag.setString("tierMill", bonus);
         }
     }
@@ -162,12 +163,9 @@ public class OTEMegaIsaFactory extends OTHMultiMachineBase<OTEMegaIsaFactory> {
     }
 
     @Override
-    public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
-
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
+        if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
         repairMachine();
-
-        return checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet);
-
     }
 
     @Override
@@ -260,7 +258,7 @@ public class OTEMegaIsaFactory extends OTHMultiMachineBase<OTEMegaIsaFactory> {
                     'L',
                     buildHatchAdder(OTEMegaIsaFactory.class).atLeast(Muffler)
                         .adder(OTEMegaIsaFactory::addToMachineList)
-                        .dot(2)
+                        .hint(2)
                         .casingIndex(TAE.getIndexFromPage(3, 10))
                         .buildAndChain(ModBlocks.blockCasings4Misc, 10))
                 .addElement(
@@ -268,7 +266,7 @@ public class OTEMegaIsaFactory extends OTHMultiMachineBase<OTEMegaIsaFactory> {
                     buildHatchAdder(OTEMegaIsaFactory.class)
                         .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch)
                         .adder(OTEMegaIsaFactory::addToMachineList)
-                        .dot(1)
+                        .hint(1)
                         .casingIndex(TAE.GTPP_INDEX(2))
                         .buildAndChain(ModBlocks.blockCasings5Misc, 0))
                 .build();

@@ -7,6 +7,8 @@ import static gregtech.api.enums.HatchElement.Energy;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static net.minecraft.util.StatCollector.translateToLocal;
 
+import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
@@ -27,6 +29,7 @@ import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.SimpleCheckRecipeResult;
+import gregtech.api.structure.error.StructureError;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import tectech.thing.casing.BlockGTCasingsTT;
 import tectech.thing.casing.TTCasingsContainer;
@@ -39,16 +42,16 @@ public class OTEMiniActiveTransformer extends OTHTTMultiMachineBaseEM
     private boolean grace = false;
 
     @Override
-    public boolean checkMachine_EM(IGregTechTileEntity iGregTechTileEntity, ItemStack itemStack) {
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
+        repairMachine();
         casingCount = 0;
-        if (structureCheck_EM("main", 0, 1, 0) && casingCount >= 0) {
+        if (!checkPiece("main", 0, 1, 0, errors)) return;
+        if (checkPiece("main", 0, 1, 0, errors) && casingCount >= 0) {
             grace = true;
-            return true;
         } else if (grace) {
             grace = false;
-            return true;
         }
-        return false;
+        return;
     }
 
     @Override
@@ -75,7 +78,7 @@ public class OTEMiniActiveTransformer extends OTHTTMultiMachineBaseEM
             buildHatchAdder(OTEMiniActiveTransformer.class)
                 .atLeast(Energy, HatchElement.EnergyMulti, Dynamo, HatchElement.DynamoMulti)
                 .casingIndex(BlockGTCasingsTT.textureOffset)
-                .dot(1)
+                .hint(1)
                 .buildAndChain(onElementPass(t -> t.casingCount++, ofBlock(TTCasingsContainer.sBlockCasingsTT, 0))))
         .build();
 
@@ -198,7 +201,9 @@ public class OTEMiniActiveTransformer extends OTHTTMultiMachineBaseEM
 
     @Override
     public void construct(ItemStack stackSize, boolean hintsOnly) {
-        structureBuild_EM("main", 0, 1, 0, stackSize, hintsOnly);
+        repairMachine();
+        buildPiece("main", stackSize, hintsOnly, 0, 1, 0);
+
     }
 
     @Override

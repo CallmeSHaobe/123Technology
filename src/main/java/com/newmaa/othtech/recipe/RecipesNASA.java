@@ -47,173 +47,192 @@ public class RecipesNASA implements IRecipePool {
         final ItemStack g = ItemList.Field_Generator_LV.get(1);
         final ItemStack d = GTOreDictUnificator.get(OrePrefixes.toolHeadDrill, Materials.Titanium, 1);
         final Fluid i140 = FluidRegistry.getFluid("molten.indalloy140");
-        // rocket
-        GTRecipeBuilder.builder()
-            .itemInputs(
-                f,
-                f,
-                f,
-                f,
-                f,
-                f,
-                f,
-                f,
-                f,
-                f,
-                f,
-                f,
-                f,
-                f,
-                f,
-                f,
-                f,
-                f,
-                f,
-                f,
-                f,
-                f,
-                f,
-                f,
-                f,
-                f,
-                f,
-                f,
-                f,
-                f,
-                f,
-                n,
-                f,
-                f,
-                f,
-                f,
-                f,
-                p,
-                l,
-                p,
-                f,
-                f,
-                f,
-                f,
-                p,
-                c,
-                p,
-                f,
-                f,
-                f,
-                f,
-                p,
-                sf1,
-                p,
-                f,
-                f,
-                f,
-                f1,
-                p,
-                sf1,
-                p,
-                f1,
-                f,
-                f,
-                f1,
-                f,
-                e,
-                f,
-                f1,
-                f)
-            .itemOutputs(GTModHandler.getModItem(GalacticraftCore.ID, "item.spaceship", 1, 0))
-            .eut(100)
-            .duration(100)
-            .special(GTModHandler.getModItem(NewHorizonsCoreMod.ID, "item.SchematicsTier1", 0, 0))
-            .addTo(NASA);
-        // drone
-        GTRecipeBuilder.builder()
-            .itemInputs(
-                f,
-                f,
-                f,
-                f,
-                f,
-                f,
-                f,
-                f,
-                f,
-                f,
-                f,
-                f,
-                f,
-                f,
-                f,
-                f,
-                s,
-                d,
-                a,
-                f,
-                f,
-                f,
-                f,
-                p,
-                p,
-                p,
-                f,
-                f,
-                f,
-                p,
-                f,
-                f,
-                f,
-                p,
-                f,
-                f,
-                p,
-                f,
-                c,
-                f,
-                p,
-                f,
-                f,
-                p,
-                f,
-                g,
-                f,
-                p,
-                f,
-                f,
-                p,
-                f,
-                f,
-                f,
-                p,
-                f,
-                f,
-                f,
-                p,
-                p,
-                p,
-                f,
-                f,
-                f,
-                f,
-                e,
-                f,
-                e,
-                f,
-                f)
-            .itemOutputs(GTModHandler.getModItem(GTNHIntergalactic.ID, "item.MiningDrone", 1, 0))
-            .eut(100)
-            .duration(100)
-            .special(GTModHandler.getModItem(NewHorizonsCoreMod.ID, "item.SchematicsTier1", 0, 0))
-            .addTo(NASA);
+
+        // Only register NASA recipes if the required mods are present
+        ItemStack schematic = GTModHandler.getModItem(GalacticraftCore.ID, "item.SchematicsTier1", 0, 0);
+        boolean hasSchematic = schematic != null;
+        ItemStack rocketOutput = GTModHandler.getModItem(GalacticraftCore.ID, "item.spaceship", 1, 0);
+        ItemStack droneOutput = GTModHandler.getModItem(GTNHIntergalactic.ID, "item.MiningDrone", 1, 0);
+        ItemStack platingOutput = p != null ? new ItemStack(p.getItem(), 64) : null;
+
+        // rocket: exactly 70 item inputs to match maxIO(70, 1, 7, 3)
+        if (hasSchematic && rocketOutput != null
+            && n != null
+            && p != null
+            && l != null
+            && c != null
+            && sf1 != null
+            && f1 != null
+            && e != null) {
+            GTRecipeBuilder.builder()
+                .itemInputs(
+                    f,
+                    f,
+                    f,
+                    f,
+                    f,
+                    f,
+                    f,
+                    f,
+                    f,
+                    f,
+                    f,
+                    f,
+                    f,
+                    f,
+                    f,
+                    f,
+                    f,
+                    f,
+                    f,
+                    f,
+                    f,
+                    f,
+                    f,
+                    f,
+                    f,
+                    f,
+                    f,
+                    f,
+                    f,
+                    f,
+                    f,
+                    n,
+                    f,
+                    f,
+                    f,
+                    f,
+                    f,
+                    p,
+                    l,
+                    p,
+                    f,
+                    f,
+                    f,
+                    f,
+                    p,
+                    c,
+                    p,
+                    f,
+                    f,
+                    f,
+                    f,
+                    p,
+                    sf1,
+                    p,
+                    f,
+                    f,
+                    f,
+                    f1,
+                    p,
+                    sf1,
+                    p,
+                    f1,
+                    f,
+                    f,
+                    f1,
+                    f,
+                    e,
+                    f,
+                    f1,
+                    f)
+                .itemOutputs(rocketOutput)
+                .eut(100)
+                .duration(100)
+                .special(schematic)
+                .addTo(NASA);
+            // drone: exactly 70 item inputs
+            GTRecipeBuilder.builder()
+                .itemInputs(
+                    f,
+                    f,
+                    f,
+                    f,
+                    f,
+                    f,
+                    f,
+                    f,
+                    f,
+                    f,
+                    f,
+                    f,
+                    f,
+                    f,
+                    f,
+                    f,
+                    s,
+                    d,
+                    a,
+                    f,
+                    f,
+                    f,
+                    f,
+                    p,
+                    p,
+                    p,
+                    f,
+                    f,
+                    f,
+                    p,
+                    f,
+                    f,
+                    f,
+                    p,
+                    f,
+                    f,
+                    p,
+                    f,
+                    c,
+                    f,
+                    p,
+                    f,
+                    f,
+                    p,
+                    f,
+                    g,
+                    f,
+                    p,
+                    f,
+                    f,
+                    p,
+                    f,
+                    f,
+                    f,
+                    p,
+                    f,
+                    f,
+                    f,
+                    p,
+                    p,
+                    p,
+                    f,
+                    f,
+                    f,
+                    f,
+                    e,
+                    f,
+                    e,
+                    f,
+                    f)
+                .itemOutputs(droneOutput)
+                .eut(100)
+                .duration(100)
+                .special(schematic)
+                .addTo(NASA);
+        }
         // plating
-        GTRecipeBuilder.builder()
-            .itemInputsUnsafe(
-                Materials.Bronze.getPlates(48 * 3),
-                Materials.Aluminium.getPlates(48 * 3),
-                Materials.Steel.getPlates(48 * 3))
-            .itemOutputs(new ItemStack(p.getItem(), 64))
-            .fluidInputs(new FluidStack(i140, 144))
-            .special(GTModHandler.getModItem(NewHorizonsCoreMod.ID, "item.SchematicsTier1", 0, 0))
-            .duration(240)
-            .eut(1920)
-            .addTo(NASA);
+        if (hasSchematic && platingOutput != null) {
+            GTRecipeBuilder.builder()
+                .itemInputsUnsafe(
+                    Materials.Bronze.getPlates(48 * 3),
+                    Materials.Aluminium.getPlates(48 * 3),
+                    Materials.Steel.getPlates(48 * 3))
+                .itemOutputs(platingOutput)
+                .fluidInputs(new FluidStack(i140, 144))
+                .special(schematic)
+                .duration(240)
+                .eut(1920)
+                .addTo(NASA);
+        }
     }
 }

@@ -1,5 +1,7 @@
 package com.newmaa.othtech.common.entity;
 
+import static net.minecraft.util.StatCollector.translateToLocal;
+
 import java.util.ArrayList;
 
 import net.minecraft.entity.EntityCreature;
@@ -16,12 +18,13 @@ import com.kuba6000.mobsinfo.api.MobDrop;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.item.ItemLoader;
 
-import gtPlusPlus.core.item.ModItems;
+import gtPlusPlus.core.item.food.BaseItemMetaFood;
 
 public class EntityFakePlayer extends EntityCreature implements IMobInfoProvider {
 
     private static final int DATAWATCHER_ID_SITTING = 20;
     private int sitCooldown = 0;
+    public static BaseItemMetaFood itemMetaFood;
 
     public EntityFakePlayer(World world) {
         super(world);
@@ -36,7 +39,7 @@ public class EntityFakePlayer extends EntityCreature implements IMobInfoProvider
         }
         int extraDrops = this.rand.nextInt(8 + lootingModifier);
         for (int i = 0; i < extraDrops; ++i) {
-            this.dropItem(ModItems.itemMetaFood, 36);
+            this.dropItem(itemMetaFood, 36);
         }
     }
 
@@ -65,7 +68,7 @@ public class EntityFakePlayer extends EntityCreature implements IMobInfoProvider
         // 每100 ticks（5秒）随机切换状态
         if (!this.worldObj.isRemote && this.sitCooldown-- <= 0) {
             if (this.rand.nextInt(5) == 0) { // 20%概率触发
-                sendMessageToAll("我在哪里?");
+                sendMessageToAll(translateToLocal("oth.clone.whereami"));
                 this.setSitting(!this.isSitting());
                 this.sitCooldown = 100 + this.rand.nextInt(100); // 5-10秒冷却
             }
@@ -86,7 +89,7 @@ public class EntityFakePlayer extends EntityCreature implements IMobInfoProvider
             .withChance(1.0d);
         c1.clampChance();
         drops.add(c1);
-        var c2 = MobDrop.create(new ItemStack(ModItems.itemMetaFood, 36, 0))
+        var c2 = MobDrop.create(new ItemStack(itemMetaFood, 36, 0))
             .withType(MobDrop.DropType.Normal)
             .withChance(0.8d);
         c2.clampChance();

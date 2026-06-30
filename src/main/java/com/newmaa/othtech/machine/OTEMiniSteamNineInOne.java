@@ -18,6 +18,7 @@ import static net.minecraft.util.StatCollector.translateToLocal;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Stream;
 
 import javax.annotation.Nonnull;
@@ -53,6 +54,7 @@ import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.render.TextureFactory;
+import gregtech.api.structure.error.StructureError;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
@@ -264,13 +266,11 @@ public class OTEMiniSteamNineInOne extends OTHSteamMultiBase<OTEMiniSteamNineInO
     }
 
     @Override
-    public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
-        if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet)) return false;
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
+        if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
         if (mCountCasing >= 0 && checkHatches()) {
             updateHatchTexture();
-            return true;
         }
-        return false;
     }
 
     @Override
@@ -357,7 +357,7 @@ public class OTEMiniSteamNineInOne extends OTHSteamMultiBase<OTEMiniSteamNineInO
                     'H',
                     ofChain(
                         buildSteamInput(OTEMiniSteamNineInOne.class).casingIndex(10)
-                            .dot(1)
+                            .hint(1)
                             .build(),
                         buildHatchAdder(OTEMiniSteamNineInOne.class)
                             .atLeast(
@@ -369,7 +369,7 @@ public class OTEMiniSteamNineInOne extends OTHSteamMultiBase<OTEMiniSteamNineInO
                                 OutputBus,
                                 Muffler)
                             .casingIndex(10)
-                            .dot(1)
+                            .hint(1)
                             .buildAndChain(),
                         ofBlock(sBlockCasings1, 10)))
                 .build();

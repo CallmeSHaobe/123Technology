@@ -49,6 +49,7 @@ import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.recipe.check.SimpleCheckRecipeResult;
 import gregtech.api.render.TextureFactory;
+import gregtech.api.structure.error.StructureError;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.common.tileentities.machines.IDualInputHatch;
@@ -147,12 +148,11 @@ public class OTELargeCircuitAssembler extends OTHMultiMachineBase<OTELargeCircui
         } else return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(id) };
     }
 
-    private static final IIconContainer textureFontOn = new Textures.BlockIcons.CustomIcon("iconsets/OVERLAY_QTANK");
-    private static final IIconContainer textureFontOn_Glow = new Textures.BlockIcons.CustomIcon(
-        "iconsets/OVERLAY_QTANK_GLOW");
-    private static final IIconContainer textureFontOff = new Textures.BlockIcons.CustomIcon("iconsets/OVERLAY_QCHEST");
-    private static final IIconContainer textureFontOff_Glow = new Textures.BlockIcons.CustomIcon(
-        "iconsets/OVERLAY_QCHEST_GLOW");
+    private static final IIconContainer textureFontOn = Textures.BlockIcons.custom("iconsets/OVERLAY_QTANK");
+    private static final IIconContainer textureFontOn_Glow = Textures.BlockIcons.custom("iconsets/OVERLAY_QTANK_GLOW");
+    private static final IIconContainer textureFontOff = Textures.BlockIcons.custom("iconsets/OVERLAY_QCHEST");
+    private static final IIconContainer textureFontOff_Glow = Textures.BlockIcons
+        .custom("iconsets/OVERLAY_QCHEST_GLOW");
 
     @Override
     public byte getUpdateData() {
@@ -176,18 +176,17 @@ public class OTELargeCircuitAssembler extends OTHMultiMachineBase<OTELargeCircui
     private static IStructureDefinition<OTELargeCircuitAssembler> STRUCTURE_DEFINITION = null;
 
     @Override
-    public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
         repairMachine();
         this.casingTier = -2;
         this.machineLimitedVoltage = -1L;
-        var res = checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet);
+        var res = checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors);
         if (res) {
             this.machineLimitedVoltage = GTValues.V[checkEnergyHatchTier()];
             if (casingTier >= 0) {
                 reUpdate(Math.max(CASING_INDEX, CASING_INDEX + casingTier));
             }
         }
-        return res;
     }
 
     private final List<List<? extends MTEHatch>> hatchList = Arrays.asList(
@@ -262,21 +261,21 @@ public class OTELargeCircuitAssembler extends OTHMultiMachineBase<OTELargeCircui
                     buildHatchAdder(OTELargeCircuitAssembler.class).atLeast(Energy.or(ExoticEnergy), Muffler)
                         .adder(OTELargeCircuitAssembler::addToMachineList)
                         .casingIndex(CASING_INDEX)
-                        .dot(1)
+                        .hint(1)
                         .buildAndChain(c))
                 .addElement(
                     'G',
                     buildHatchAdder(OTELargeCircuitAssembler.class).atLeast(OutputHatch, OutputBus)
                         .adder(OTELargeCircuitAssembler::addToMachineList)
                         .casingIndex(CASING_INDEX)
-                        .dot(2)
+                        .hint(2)
                         .buildAndChain(c))
                 .addElement(
                     'F',
                     buildHatchAdder(OTELargeCircuitAssembler.class).atLeast(InputBus, InputHatch)
                         .adder(OTELargeCircuitAssembler::addToMachineList)
                         .casingIndex(CASING_INDEX)
-                        .dot(3)
+                        .hint(3)
                         .buildAndChain(c))
                 .build();
         }

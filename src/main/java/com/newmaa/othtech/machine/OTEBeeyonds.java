@@ -8,6 +8,8 @@ import static gregtech.api.enums.Textures.BlockIcons.*;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static net.minecraft.util.StatCollector.translateToLocal;
 
+import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -25,24 +27,19 @@ import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.render.TextureFactory;
+import gregtech.api.structure.error.StructureError;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import tectech.thing.metaTileEntity.multi.base.TTMultiblockBase;
 
 public class OTEBeeyonds extends OTHTTMultiMachineBaseEM implements IConstructable, ISurvivalConstructable {
 
-    private boolean grace = false;
-
     @Override
-    public boolean checkMachine_EM(IGregTechTileEntity iGregTechTileEntity, ItemStack itemStack) {
-        casingCount = 0;
-        if (structureCheck_EM("main", 0, 1, 0) && casingCount >= 0) {
-            grace = true;
-            return true;
-        } else if (grace) {
-            grace = false;
-            return true;
-        }
-        return false;
+    public void checkMachine(IGregTechTileEntity iGregTechTileEntity, ItemStack itemStack,
+        List<StructureError> errors) {
+        if (!checkPiece("main", 0, 1, 0, errors)) return;
+        checkHasEnergyHatch(errors);
+        checkHasMaintenanceHatch(errors);
+        checkHasOutputBus(errors);
     }
 
     @Override
@@ -51,8 +48,6 @@ public class OTEBeeyonds extends OTHTTMultiMachineBaseEM implements IConstructab
             aBaseMetaTileEntity.disableWorking();
         }
     }
-
-    private int casingCount = 0;
 
     // region structure
     private static final String[] description = new String[] {
@@ -112,7 +107,7 @@ public class OTEBeeyonds extends OTHTTMultiMachineBaseEM implements IConstructab
             buildHatchAdder(OTEBeeyonds.class)
                 .atLeast(InputBus, OutputBus, InputHatch, OutputHatch, Energy.or(ExoticEnergy))
                 .adder(OTEBeeyonds::addToMachineList)
-                .dot(1)
+                .hint(1)
                 .casingIndex(210)
                 .buildAndChain(sBlockReinforced, 2))
         .build();
@@ -193,7 +188,7 @@ public class OTEBeeyonds extends OTHTTMultiMachineBaseEM implements IConstructab
 
     @Override
     public void construct(ItemStack stackSize, boolean hintsOnly) {
-        structureBuild_EM("main", 11, 20, 1, stackSize, hintsOnly);
+        buildPiece("main", stackSize, hintsOnly, 0, 1, 0);
     }
 
     @Override

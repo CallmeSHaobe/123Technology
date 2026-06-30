@@ -51,6 +51,7 @@ import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.render.TextureFactory;
+import gregtech.api.structure.error.StructureError;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
@@ -93,8 +94,8 @@ public class OTEMegaNQFuelFactory extends OTHTTMultiMachineBaseEM implements ICo
         super.getWailaNBTData(player, tile, tag, world, x, y, z);
         final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
         if (tileEntity != null) {
-            String Mode = GTUtility.formatNumbers(mode);
-            String OC = GTUtility.formatNumbers(this.tier);
+            String Mode = GTUtility.formatShortenedLong(mode);
+            String OC = GTUtility.formatShortenedLong(this.tier);
             tag.setString("Tier", Mode);
             tag.setString("OC", OC);
             tag.setString("Parallel", String.valueOf(maxParallel));
@@ -159,8 +160,9 @@ public class OTEMegaNQFuelFactory extends OTHTTMultiMachineBaseEM implements ICo
     }
 
     @Override
-    public boolean checkMachine_EM(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
-        return structureCheck_EM(mName, horizontalOffSet, verticalOffSet, depthOffSet);
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
+        if (!checkPiece(mName, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
+        repairMachine();
     }
 
     public int getParallel() {
@@ -217,8 +219,9 @@ public class OTEMegaNQFuelFactory extends OTHTTMultiMachineBaseEM implements ICo
     }
 
     @Override
-    public void construct(ItemStack itemStack, boolean hintsOnly) {
-        structureBuild_EM(mName, horizontalOffSet, verticalOffSet, depthOffSet, itemStack, hintsOnly);
+    public void construct(ItemStack stackSize, boolean hintsOnly) {
+        repairMachine();
+        buildPiece(mName, stackSize, hintsOnly, horizontalOffSet, verticalOffSet, depthOffSet);
     }
 
     @Override
@@ -606,7 +609,7 @@ public class OTEMegaNQFuelFactory extends OTHTTMultiMachineBaseEM implements ICo
                     buildHatchAdder(OTEMegaNQFuelFactory.class).atLeast(InputHatch, OutputHatch)
                         .adder(OTEMegaNQFuelFactory::addToMachineList)
                         .casingIndex(179)
-                        .dot(1)
+                        .hint(1)
                         .buildAndChain(ofBlock(Loaders.FRF_Casings, 0)))
                 .addElement('A', ofBlock(Loaders.fieldRestrictingGlass, 0))
                 .addElement('G', ofFrame(Materials.NaquadahAlloy))

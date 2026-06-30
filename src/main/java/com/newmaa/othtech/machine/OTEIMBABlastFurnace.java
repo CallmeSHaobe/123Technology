@@ -7,6 +7,8 @@ import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static gregtech.api.util.GTStructureUtility.ofCoil;
 import static net.minecraft.util.StatCollector.translateToLocal;
 
+import java.util.List;
+
 import javax.annotation.Nonnull;
 
 import net.minecraft.item.ItemStack;
@@ -25,6 +27,7 @@ import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.logic.ProcessingLogic;
 import gregtech.api.render.TextureFactory;
+import gregtech.api.structure.error.StructureError;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.api.util.OverclockCalculator;
@@ -68,7 +71,7 @@ public class OTEIMBABlastFurnace extends MTEElectricBlastFurnace {
                     return false;
                 }))
                 .casingIndex(CASING_INDEX)
-                .dot(1)
+                .hint(1)
                 .buildAndChain(GregTechAPI.sBlockCasings1, CASING_INDEX))
         .addElement(
             'm', // 消音舱口
@@ -81,7 +84,7 @@ public class OTEIMBABlastFurnace extends MTEElectricBlastFurnace {
             buildHatchAdder(MTEElectricBlastFurnace.class)
                 .atLeast(InputHatch, OutputHatch, InputBus, OutputBus, Maintenance)
                 .casingIndex(CASING_INDEX)
-                .dot(1)
+                .hint(1)
                 .buildAndChain(GregTechAPI.sBlockCasings1, CASING_INDEX))
         .build();
 
@@ -137,16 +140,14 @@ public class OTEIMBABlastFurnace extends MTEElectricBlastFurnace {
     }
 
     @Override
-    public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
         this.mHeatingCapacity = 0;
         setCoilLevel(HeatingCoilLevel.None);
         mMufflerHatches.clear();
-        if (!checkPiece(STRUCTURE_PIECE_MAIN, 2, 3, 0)) return false;
-        if (getCoilLevel() == HeatingCoilLevel.None) return false;
-        if (mMaintenanceHatches.size() != 1) return false;
+        if (!checkPiece(STRUCTURE_PIECE_MAIN, 2, 3, 0, errors)) return;
+        if (getCoilLevel() == HeatingCoilLevel.None) return;
+        if (mMaintenanceHatches.size() != 1) return;
         this.mHeatingCapacity = 20001;
-
-        return true;
     }
 
     @Override

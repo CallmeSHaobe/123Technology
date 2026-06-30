@@ -2,6 +2,7 @@ package com.newmaa.othtech.recipe;
 
 import static com.newmaa.othtech.recipe.RecipesCircuit.getAstralArray;
 import static com.newmaa.othtech.recipe.RecipesComponentAssemblyLineRecipes.getNanites;
+import static com.newmaa.othtech.utils.Utils.hasNullItem;
 import static com.newmaa.othtech.utils.Utils.setStackSize;
 
 import net.minecraft.item.ItemStack;
@@ -9,13 +10,13 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
+import com.newmaa.othtech.OTHTechnology;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.materials.BWLiquids;
 
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
-import gregtech.api.enums.MaterialsUEVplus;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMap;
@@ -28,20 +29,19 @@ import tectech.recipe.TTRecipeAdder;
 public class RecipesMAXs implements IRecipePool {
 
     public static ItemStack getMM(int amount, OrePrefixes orePrefixes) {
-        return GTOreDictUnificator.get(orePrefixes, MaterialsUEVplus.MagMatter, amount);
+        return GTOreDictUnificator.get(orePrefixes, Materials.MagMatter, amount);
     }
 
     public static ItemStack getET(int amount, OrePrefixes orePrefixes) {
-        return GTOreDictUnificator.get(orePrefixes, MaterialsUEVplus.Eternity, amount);
+        return GTOreDictUnificator.get(orePrefixes, Materials.Eternity, amount);
     }
 
     public static ItemStack getMC(int amount, OrePrefixes orePrefixes) {
-        return GTOreDictUnificator
-            .get(orePrefixes, MaterialsUEVplus.MagnetohydrodynamicallyConstrainedStarMatter, amount);
+        return GTOreDictUnificator.get(orePrefixes, Materials.WhiteDwarfMatter, amount);
     }
 
     public static ItemStack getUN(int amount, OrePrefixes orePrefixes) {
-        return GTOreDictUnificator.get(orePrefixes, MaterialsUEVplus.Universium, amount);
+        return GTOreDictUnificator.get(orePrefixes, Materials.Universium, amount);
     }
 
     @Override
@@ -53,24 +53,32 @@ public class RecipesMAXs implements IRecipePool {
         final RecipeMap<?> Tower = RecipeMaps.distillationTowerRecipes;
         ItemStack coil = GTModHandler.getModItem("gregtech", "gt.blockcasings5", 1, 13);
 
-        TTRecipeAdder.addResearchableAssemblylineRecipe(
-            ItemList.Electric_Motor_UXV.get(1),
-            (int) TierEU.UHV,
-            2048,
-            (int) TierEU.UMV,
-            123,
-            new ItemStack[] { GTModHandler.getModItem("eternalsingularity", "combined_singularity", 1, 15),
-                getUN(16, OrePrefixes.stickLong), getUN(16, OrePrefixes.ring), getUN(16, OrePrefixes.round),
-                getMM(16, OrePrefixes.wireFine), getMM(16, OrePrefixes.wireFine), getMM(16, OrePrefixes.wireFine),
-                getMM(16, OrePrefixes.wireFine), getMM(16, OrePrefixes.wireFine), getMM(16, OrePrefixes.wireFine),
-                getMM(16, OrePrefixes.wireFine), getMM(16, OrePrefixes.wireFine), setStackSize(coil, 8),
-                getNanites(4, MaterialsUEVplus.Universium), getNanites(4, MaterialsUEVplus.WhiteDwarfMatter),
-                getNanites(4, MaterialsUEVplus.BlackDwarfMatter) },
-            new FluidStack[] { BWLiquids.Void.getFluidOrGas(16000), BWLiquids.Stars.getFluidOrGas(144 * 16),
-                new FluidStack(UIVsc, 5760), new FluidStack(UMVsc, 5760) },
-            ItemList.Electric_Motor_MAX.get(1),
-            2460,
-            512000000);
+        ItemStack motorUxvResearch = ItemList.Electric_Motor_UXV.get(1);
+        ItemStack motorUxvOutput = ItemList.Electric_Motor_MAX.get(1);
+        Object[] motorUxvInputs = new ItemStack[] {
+            GTModHandler.getModItem("eternalsingularity", "combined_singularity", 1, 15),
+            getUN(16, OrePrefixes.stickLong), getUN(16, OrePrefixes.ring), getUN(16, OrePrefixes.round),
+            getMM(16, OrePrefixes.wireFine), getMM(16, OrePrefixes.wireFine), getMM(16, OrePrefixes.wireFine),
+            getMM(16, OrePrefixes.wireFine), getMM(16, OrePrefixes.wireFine), getMM(16, OrePrefixes.wireFine),
+            getMM(16, OrePrefixes.wireFine), getMM(16, OrePrefixes.wireFine), setStackSize(coil, 8),
+            getNanites(4, Materials.Universium), getNanites(4, Materials.WhiteDwarfMatter),
+            getNanites(4, Materials.BlackDwarfMatter) };
+        if (hasNullItem(motorUxvInputs) || motorUxvResearch == null || motorUxvOutput == null) {
+            OTHTechnology.LOG.error("Skipping Electric Motor (UXV) recipe due to null items");
+        } else {
+            TTRecipeAdder.addResearchableAssemblylineRecipe(
+                motorUxvResearch,
+                (int) TierEU.UHV,
+                2048,
+                (int) TierEU.UMV,
+                123,
+                motorUxvInputs,
+                new FluidStack[] { BWLiquids.Void.getFluidOrGas(16000), BWLiquids.Stars.getFluidOrGas(144 * 16),
+                    new FluidStack(UIVsc, 5760), new FluidStack(UMVsc, 5760) },
+                motorUxvOutput,
+                2460,
+                512000000);
+        }
 
         GTValues.RA.stdBuilder()
             .itemInputs(getMM(4, OrePrefixes.plateDouble), GTUtility.getIntegratedCircuit(16))
@@ -99,8 +107,8 @@ public class RecipesMAXs implements IRecipePool {
                 GTModHandler.getModItem("GoodGenerator", "compactFusionCoil", 16, 2),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 15300),
                 GTModHandler.getModItem("tectech", "gt.blockcasingsTT", 16), getUN(64, OrePrefixes.wireFine),
-                getMC(4, OrePrefixes.plateDense), new Object[] { OrePrefixes.circuit.get(Materials.Cosmic), 64 },
-                getNanites(4, MaterialsUEVplus.Eternity), ItemList.Circuit_Chip_QPIC.get(32), ItemList.UHV_Coil.get(64),
+                getMC(4, OrePrefixes.plateDense), new Object[] { OrePrefixes.circuit.get(Materials.MAX), 64 },
+                getNanites(4, Materials.Eternity), ItemList.Circuit_Chip_QPIC.get(32), ItemList.UHV_Coil.get(64),
                 ItemList.Electric_Pump_MAX.get(1), ItemList.Reactor_Coolant_Sp_6.get(1),
                 ItemList.Reactor_Coolant_Sp_6.get(1), ItemList.Reactor_Coolant_Sp_6.get(1),
                 ItemList.Reactor_Coolant_Sp_6.get(1) },
@@ -112,32 +120,40 @@ public class RecipesMAXs implements IRecipePool {
             1000,
             2000000000);
 
-        TTRecipeAdder.addResearchableAssemblylineRecipe(
-            GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 286),
-            512000000,
-            131072,
-            (int) TierEU.MAX,
-            262144,
-            new Object[] { GTModHandler.getModItem("gregtech", "gt.blockmachines", 16, 11234),
-                GTModHandler.getModItem("GoodGenerator", "compactFusionCoil", 64, 4),
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 16, 15300),
-                GTModHandler.getModItem("tectech", "gt.blockcasingsTT", 64), getMM(64, OrePrefixes.wireFine),
-                getMC(64, OrePrefixes.plateDense), new Object[] { OrePrefixes.circuit.get(Materials.Transcendent), 64 },
-                ItemList.EnergisedTesseract.get(64), GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23524),
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23524),
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23524),
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23524),
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23524),
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23524),
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23524),
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23524) },
-            new FluidStack[] { new FluidStack(FluidRegistry.getFluidID("cryotheum"), 64000000),
-                new FluidStack(FluidRegistry.getFluidID("molten.mutatedlivingsolder"), 64000000),
-                new FluidStack(FluidRegistry.getFluidID("ic2uumatter"), 64000000),
-                new FluidStack(FluidRegistry.getFluidID("exciteddtsc"), 64000000) },
-            GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 23522),
-            20000,
-            2000000000);
+        ItemStack wirelessMaxResearch = GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 286);
+        ItemStack wirelessMaxOutput = GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 23522);
+        Object[] wirelessMaxInputs = new Object[] { GTModHandler.getModItem("gregtech", "gt.blockmachines", 16, 11234),
+            GTModHandler.getModItem("GoodGenerator", "compactFusionCoil", 64, 4),
+            GTModHandler.getModItem("gregtech", "gt.blockmachines", 16, 15300),
+            GTModHandler.getModItem("tectech", "gt.blockcasingsTT", 64), getMM(64, OrePrefixes.wireFine),
+            getMC(64, OrePrefixes.plateDense),
+            new Object[] { OrePrefixes.circuit.get(Materials.TranscendentMetal), 64 },
+            ItemList.EnergisedTesseract.get(64), GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23524),
+            GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23524),
+            GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23524),
+            GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23524),
+            GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23524),
+            GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23524),
+            GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23524),
+            GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23524) };
+        if (hasNullItem(wirelessMaxInputs) || wirelessMaxResearch == null || wirelessMaxOutput == null) {
+            OTHTechnology.LOG.error("Skipping MAX Wireless Energy Hatch recipe due to null items");
+        } else {
+            TTRecipeAdder.addResearchableAssemblylineRecipe(
+                wirelessMaxResearch,
+                512000000,
+                131072,
+                (int) TierEU.MAX,
+                262144,
+                wirelessMaxInputs,
+                new FluidStack[] { new FluidStack(FluidRegistry.getFluidID("cryotheum"), 64000000),
+                    new FluidStack(FluidRegistry.getFluidID("molten.mutatedlivingsolder"), 64000000),
+                    new FluidStack(FluidRegistry.getFluidID("ic2uumatter"), 64000000),
+                    new FluidStack(FluidRegistry.getFluidID("exciteddtsc"), 64000000) },
+                wirelessMaxOutput,
+                20000,
+                2000000000);
+        }
 
         TTRecipeAdder.addResearchableAssemblylineRecipe(
             GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 15199),
@@ -277,102 +293,130 @@ public class RecipesMAXs implements IRecipePool {
             ItemList.Conveyor_Module_MAX.get(1),
             2460,
             512000000);
-        TTRecipeAdder.addResearchableAssemblylineRecipe(
-            ItemList.Robot_Arm_UXV.get(1),
-            (int) TierEU.UHV,
-            2048,
-            (int) TierEU.UMV,
-            123,
-            new Object[] { GTModHandler.getModItem("gregtech", "gt.metaitem.01", 8, 23143),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.02", 8, 31143),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.02", 16, 20143),
-                GTModHandler.getModItem("tectech", "gt.time_acceleration_field_generator", 2, 8),
-                GTModHandler.getModItem("tectech", "gt.stabilisation_field_generator", 2, 8),
-                ItemList.Electric_Motor_MAX.get(2), ItemList.Electric_Piston_MAX.get(1),
-                new Object[] { OrePrefixes.circuit.get(Materials.Transcendent), 2 },
-                new Object[] { OrePrefixes.circuit.get(Materials.Exotic), 4 },
-                new Object[] { OrePrefixes.circuit.get(Materials.Cosmic), 8 },
-                GTModHandler.getModItem("gregtech", "gt.blockcasings5", 8, 13),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 4, 4139),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 4, 4585),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 4, 4586), },
-            new FluidStack[] { BWLiquids.Void.getFluidOrGas(16000), BWLiquids.Stars.getFluidOrGas(144 * 16),
-                new FluidStack(UIVsc, 5760), new FluidStack(UMVsc, 5760) },
-            ItemList.Robot_Arm_MAX.get(1),
-            2460,
-            512000000);
-        TTRecipeAdder.addResearchableAssemblylineRecipe(
-            ItemList.Sensor_UXV.get(1),
-            (int) TierEU.UHV,
-            2048,
-            (int) TierEU.UMV,
-            123,
-            new Object[] { GTModHandler.getModItem("gregtech", "gt.blockframes", 1, 141),
-                ItemList.Electric_Motor_MAX.get(1), GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 17143),
-                GTModHandler.getModItem("tectech", "gt.stabilisation_field_generator", 2, 8),
-                OTHItemList.glassSingularityM.get(4), GTModHandler.getModItem("dreamcraft", "item.ChromaticLens", 64),
-                new Object[] { OrePrefixes.circuit.get(Materials.Transcendent), 4 },
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 29143),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 29143),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 29139),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 29139),
-                GTModHandler.getModItem("gregtech", "gt.blockcasings5", 16, 13),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 8, 4139),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 8, 4585),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 8, 4586), },
-            new FluidStack[] { BWLiquids.Void.getFluidOrGas(16000), BWLiquids.Stars.getFluidOrGas(144 * 16),
-                new FluidStack(FluidRegistry.getFluidID("spatialfluid"), 64000), new FluidStack(UMVsc, 5760) },
-            ItemList.Sensor_MAX.get(1),
-            2460,
-            512000000);
-        TTRecipeAdder.addResearchableAssemblylineRecipe(
-            ItemList.Emitter_UXV.get(1),
-            (int) TierEU.UHV,
-            2048,
-            (int) TierEU.UMV,
-            123,
-            new Object[] { GTModHandler.getModItem("gregtech", "gt.blockframes", 1, 141),
-                ItemList.Electric_Motor_MAX.get(1), GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 23143),
-                GTModHandler.getModItem("tectech", "gt.stabilisation_field_generator", 2, 8),
-                OTHItemList.glassSingularityM.get(4), GTModHandler.getModItem("dreamcraft", "item.ChromaticLens", 64),
-                new Object[] { OrePrefixes.circuit.get(Materials.Transcendent), 4 },
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 29143),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 29143),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 29139),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 29139),
-                GTModHandler.getModItem("gregtech", "gt.blockcasings5", 16, 13),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 8, 4139),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 8, 4585),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 8, 4586), },
-            new FluidStack[] { BWLiquids.Void.getFluidOrGas(16000), BWLiquids.Stars.getFluidOrGas(144 * 16),
-                new FluidStack(FluidRegistry.getFluidID("temporalfluid"), 64000), new FluidStack(UMVsc, 5760) },
-            ItemList.Emitter_MAX.get(1),
-            2460,
-            512000000);
-        TTRecipeAdder.addResearchableAssemblylineRecipe(
-            ItemList.Field_Generator_UXV.get(1),
-            (int) TierEU.UHV,
-            2048,
-            (int) TierEU.UMV,
-            123,
-            new Object[] { GTModHandler.getModItem("gregtech", "gt.blockframes", 1, 141), getAstralArray(1),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 12, 17143),
-                OTHItemList.machineSingularityM.get(4), OTHItemList.glassSingularityM.get(4),
-                GTModHandler.getModItem("eternalsingularity", "eternal_singularity", 4), ItemList.Emitter_MAX.get(4),
-                new Object[] { OrePrefixes.circuit.get(Materials.Transcendent), 8 },
-                GTModHandler.getModItem("gregtech", "gt.metaitem.02", 64, 19143),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.02", 64, 19143),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.02", 64, 19143),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.02", 64, 19143),
-                GTModHandler.getModItem("gregtech", "gt.blockcasings5", 32, 13),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 24, 4139),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 24, 4585),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 24, 4586), },
-            new FluidStack[] { BWLiquids.Void.getFluidOrGas(16000), BWLiquids.Stars.getFluidOrGas(144 * 16),
-                new FluidStack(FluidRegistry.getFluidID("molten.eternity"), 64000), new FluidStack(UMVsc, 5760) },
-            ItemList.Field_Generator_MAX.get(1),
-            2460,
-            512000000);
+        ItemStack robotArmUxvResearch = ItemList.Robot_Arm_UXV.get(1);
+        ItemStack robotArmUxvOutput = ItemList.Robot_Arm_MAX.get(1);
+        Object[] robotArmUxvInputs = new Object[] { GTModHandler.getModItem("gregtech", "gt.metaitem.01", 8, 23143),
+            GTModHandler.getModItem("gregtech", "gt.metaitem.02", 8, 31143),
+            GTModHandler.getModItem("gregtech", "gt.metaitem.02", 16, 20143),
+            GTModHandler.getModItem("tectech", "gt.time_acceleration_field_generator", 2, 8),
+            GTModHandler.getModItem("tectech", "gt.stabilisation_field_generator", 2, 8),
+            ItemList.Electric_Motor_MAX.get(2), ItemList.Electric_Piston_MAX.get(1),
+            new Object[] { OrePrefixes.circuit.get(Materials.TranscendentMetal), 2 },
+            new Object[] { OrePrefixes.circuit.get(Materials.UXV), 4 },
+            new Object[] { OrePrefixes.circuit.get(Materials.MAX), 8 },
+            GTModHandler.getModItem("gregtech", "gt.blockcasings5", 8, 13),
+            GTModHandler.getModItem("gregtech", "gt.metaitem.03", 4, 4139),
+            GTModHandler.getModItem("gregtech", "gt.metaitem.03", 4, 4585),
+            GTModHandler.getModItem("gregtech", "gt.metaitem.03", 4, 4586), };
+        if (hasNullItem(robotArmUxvInputs) || robotArmUxvResearch == null || robotArmUxvOutput == null) {
+            OTHTechnology.LOG.error("Skipping Robot Arm (UXV) recipe due to null items");
+        } else {
+            TTRecipeAdder.addResearchableAssemblylineRecipe(
+                robotArmUxvResearch,
+                (int) TierEU.UHV,
+                2048,
+                (int) TierEU.UMV,
+                123,
+                robotArmUxvInputs,
+                new FluidStack[] { BWLiquids.Void.getFluidOrGas(16000), BWLiquids.Stars.getFluidOrGas(144 * 16),
+                    new FluidStack(UIVsc, 5760), new FluidStack(UMVsc, 5760) },
+                robotArmUxvOutput,
+                2460,
+                512000000);
+        }
+        ItemStack sensorUxvResearch = ItemList.Sensor_UXV.get(1);
+        ItemStack sensorUxvOutput = ItemList.Sensor_MAX.get(1);
+        Object[] sensorUxvInputs = new Object[] { GTModHandler.getModItem("gregtech", "gt.blockframes", 1, 141),
+            ItemList.Electric_Motor_MAX.get(1), GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 17143),
+            GTModHandler.getModItem("tectech", "gt.stabilisation_field_generator", 2, 8),
+            OTHItemList.glassSingularityM.get(4), GTModHandler.getModItem("dreamcraft", "ChromaticLens", 64),
+            new Object[] { OrePrefixes.circuit.get(Materials.TranscendentMetal), 4 },
+            GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 29143),
+            GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 29143),
+            GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 29139),
+            GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 29139),
+            GTModHandler.getModItem("gregtech", "gt.blockcasings5", 16, 13),
+            GTModHandler.getModItem("gregtech", "gt.metaitem.03", 8, 4139),
+            GTModHandler.getModItem("gregtech", "gt.metaitem.03", 8, 4585),
+            GTModHandler.getModItem("gregtech", "gt.metaitem.03", 8, 4586), };
+        if (hasNullItem(sensorUxvInputs) || sensorUxvResearch == null || sensorUxvOutput == null) {
+            OTHTechnology.LOG.error("Skipping Sensor (UXV) recipe due to null items");
+        } else {
+            TTRecipeAdder.addResearchableAssemblylineRecipe(
+                sensorUxvResearch,
+                (int) TierEU.UHV,
+                2048,
+                (int) TierEU.UMV,
+                123,
+                sensorUxvInputs,
+                new FluidStack[] { BWLiquids.Void.getFluidOrGas(16000), BWLiquids.Stars.getFluidOrGas(144 * 16),
+                    new FluidStack(FluidRegistry.getFluidID("spatialfluid"), 64000), new FluidStack(UMVsc, 5760) },
+                sensorUxvOutput,
+                2460,
+                512000000);
+        }
+        ItemStack emitterUxvResearch = ItemList.Emitter_UXV.get(1);
+        ItemStack emitterUxvOutput = ItemList.Emitter_MAX.get(1);
+        Object[] emitterUxvInputs = new Object[] { GTModHandler.getModItem("gregtech", "gt.blockframes", 1, 141),
+            ItemList.Electric_Motor_MAX.get(1), GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 23143),
+            GTModHandler.getModItem("tectech", "gt.stabilisation_field_generator", 2, 8),
+            OTHItemList.glassSingularityM.get(4), GTModHandler.getModItem("dreamcraft", "ChromaticLens", 64),
+            new Object[] { OrePrefixes.circuit.get(Materials.TranscendentMetal), 4 },
+            GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 29143),
+            GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 29143),
+            GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 29139),
+            GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 29139),
+            GTModHandler.getModItem("gregtech", "gt.blockcasings5", 16, 13),
+            GTModHandler.getModItem("gregtech", "gt.metaitem.03", 8, 4139),
+            GTModHandler.getModItem("gregtech", "gt.metaitem.03", 8, 4585),
+            GTModHandler.getModItem("gregtech", "gt.metaitem.03", 8, 4586), };
+        if (hasNullItem(emitterUxvInputs) || emitterUxvResearch == null || emitterUxvOutput == null) {
+            OTHTechnology.LOG.error("Skipping Emitter (UXV) recipe due to null items");
+        } else {
+            TTRecipeAdder.addResearchableAssemblylineRecipe(
+                emitterUxvResearch,
+                (int) TierEU.UHV,
+                2048,
+                (int) TierEU.UMV,
+                123,
+                emitterUxvInputs,
+                new FluidStack[] { BWLiquids.Void.getFluidOrGas(16000), BWLiquids.Stars.getFluidOrGas(144 * 16),
+                    new FluidStack(FluidRegistry.getFluidID("temporalfluid"), 64000), new FluidStack(UMVsc, 5760) },
+                emitterUxvOutput,
+                2460,
+                512000000);
+        }
+        ItemStack fieldGenUxvResearch = ItemList.Field_Generator_UXV.get(1);
+        ItemStack fieldGenUxvOutput = ItemList.Field_Generator_MAX.get(1);
+        Object[] fieldGenUxvInputs = new Object[] { GTModHandler.getModItem("gregtech", "gt.blockframes", 1, 141),
+            getAstralArray(1), GTModHandler.getModItem("gregtech", "gt.metaitem.01", 12, 17143),
+            OTHItemList.machineSingularityM.get(4), OTHItemList.glassSingularityM.get(4),
+            GTModHandler.getModItem("eternalsingularity", "eternal_singularity", 4), ItemList.Emitter_MAX.get(4),
+            new Object[] { OrePrefixes.circuit.get(Materials.TranscendentMetal), 8 },
+            GTModHandler.getModItem("gregtech", "gt.metaitem.02", 64, 19143),
+            GTModHandler.getModItem("gregtech", "gt.metaitem.02", 64, 19143),
+            GTModHandler.getModItem("gregtech", "gt.metaitem.02", 64, 19143),
+            GTModHandler.getModItem("gregtech", "gt.metaitem.02", 64, 19143),
+            GTModHandler.getModItem("gregtech", "gt.blockcasings5", 32, 13),
+            GTModHandler.getModItem("gregtech", "gt.metaitem.03", 24, 4139),
+            GTModHandler.getModItem("gregtech", "gt.metaitem.03", 24, 4585),
+            GTModHandler.getModItem("gregtech", "gt.metaitem.03", 24, 4586), };
+        if (hasNullItem(fieldGenUxvInputs) || fieldGenUxvResearch == null || fieldGenUxvOutput == null) {
+            OTHTechnology.LOG.error("Skipping Field Generator (UXV) recipe due to null items");
+        } else {
+            TTRecipeAdder.addResearchableAssemblylineRecipe(
+                fieldGenUxvResearch,
+                (int) TierEU.UHV,
+                2048,
+                (int) TierEU.UMV,
+                123,
+                fieldGenUxvInputs,
+                new FluidStack[] { BWLiquids.Void.getFluidOrGas(16000), BWLiquids.Stars.getFluidOrGas(144 * 16),
+                    new FluidStack(FluidRegistry.getFluidID("molten.eternity"), 64000), new FluidStack(UMVsc, 5760) },
+                fieldGenUxvOutput,
+                2460,
+                512000000);
+        }
 
     }
 }

@@ -22,6 +22,7 @@ import net.minecraftforge.fluids.FluidStack;
 
 import org.jetbrains.annotations.NotNull;
 
+import com.gtnewhorizon.gtnhlib.util.numberformatting.NumberFormatUtil;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
@@ -41,6 +42,7 @@ import gregtech.api.logic.ProcessingLogic;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.render.TextureFactory;
+import gregtech.api.structure.error.StructureError;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import mcp.mobius.waila.api.IWailaConfigHandler;
@@ -85,9 +87,9 @@ public class OTEWoodenFusionReactor extends OTHMultiMachineBase<OTEWoodenFusionR
         super.getWailaNBTData(player, tile, tag, world, x, y, z);
         final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
         if (tileEntity != null) {
-            String tier = GTUtility.formatNumbers(TierSteam);
-            String pla = GTUtility.formatNumbers(amountPlasma);
-            String bonus = GTUtility.formatNumbers(getSpeedBonus());
+            String tier = GTUtility.formatShortenedLong(TierSteam);
+            String pla = GTUtility.formatShortenedLong(amountPlasma);
+            String bonus = NumberFormatUtil.formatNumber(getSpeedBonus());
             tag.setString("Tier", tier);
             tag.setString("PlasmaAmount", pla);
             tag.setString("bonus", bonus);
@@ -187,10 +189,9 @@ public class OTEWoodenFusionReactor extends OTHMultiMachineBase<OTEWoodenFusionR
     }
 
     @Override
-    public boolean checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack) {
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
+        if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
         repairMachine();
-        return checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet);
-
     }
 
     @Override
@@ -242,7 +243,7 @@ public class OTEWoodenFusionReactor extends OTHMultiMachineBase<OTEWoodenFusionR
                     'D',
                     buildHatchAdder(OTEWoodenFusionReactor.class).atLeast(InputHatch, OutputHatch)
                         .adder(OTEWoodenFusionReactor::addToMachineList)
-                        .dot(1)
+                        .hint(1)
                         .casingIndex(getTextureIndex())
                         .buildAndChain(Blocks.stonebrick, 0))
                 .addElement('A', ofBlock(Blocks.glass, 0))

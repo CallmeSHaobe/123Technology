@@ -2,6 +2,7 @@ package com.newmaa.othtech.machine;
 
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlockUnlocalizedName;
+import static com.newmaa.othtech.recipe.RecipesMain.OTEquantumComputerFakeRecipes;
 import static gregtech.api.GregTechAPI.sBlockCasings10;
 import static gregtech.api.GregTechAPI.sBlockGlass1;
 import static gregtech.api.enums.GTValues.V;
@@ -9,7 +10,6 @@ import static gregtech.api.enums.HatchElement.Energy;
 import static gregtech.api.enums.HatchElement.ExoticEnergy;
 import static gregtech.api.enums.HatchElement.InputHatch;
 import static gregtech.api.enums.HatchElement.Maintenance;
-import static gregtech.api.recipe.RecipeMaps.quantumComputerFakeRecipes;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static gregtech.api.util.GTStructureUtility.chainAllGlasses;
 import static gregtech.api.util.GTUtility.validMTEList;
@@ -52,6 +52,7 @@ import gregtech.api.enums.Materials;
 import gregtech.api.enums.SoundResource;
 import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.IHatchElement;
+import gregtech.api.interfaces.IIconContainer;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
@@ -60,6 +61,7 @@ import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.recipe.check.SimpleCheckRecipeResult;
+import gregtech.api.structure.error.StructureError;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.IGTHatchAdder;
 import gregtech.api.util.MultiblockTooltipBuilder;
@@ -90,8 +92,8 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
 
     private final ArrayList<MTEHatchWirelessComputationOutput> eWirelessComputationOutputs = new ArrayList<>();
 
-    private static Textures.BlockIcons.CustomIcon ScreenOFF;
-    private static Textures.BlockIcons.CustomIcon ScreenON;
+    private static IIconContainer ScreenOFF;
+    private static IIconContainer ScreenON;
     private static IStructureDefinition<OTEComputer> STRUCTURE_DEFINITION = null;
     private static final String STRUCTURE_PIECE_MAIN = "main";
     private final int horizontalOffSet = 3;
@@ -135,12 +137,12 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
                             WirelessComputationHatchElement.INSTANCE.or(HatchElement.OutputData),
                             InputHatch)
                         .casingIndex(BlockGTCasingsTT.textureOffset + 1)
-                        .dot(1)
+                        .hint(1)
                         .buildAndChain(ofBlock(TTCasingsContainer.sBlockCasingsTT, 1)))
                 .addElement(
                     'E',
                     buildHatchAdder(OTEComputer.class).atLeast(InputHatch)
-                        .dot(2)
+                        .hint(2)
                         .casingIndex(BlockGTCasingsTT.textureOffset + 2)
                         .buildAndChain(sBlockCasingsTT, 2))
                 .addElement('F', ofBlock(sBlockCasingsTT, 3))
@@ -255,7 +257,7 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        return quantumComputerFakeRecipes;
+        return OTEquantumComputerFakeRecipes;
     }
 
     @Override
@@ -272,7 +274,7 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
     }
 
     @Override
-    public boolean checkMachine_EM(IGregTechTileEntity iGregTechTileEntity, ItemStack itemStack) {
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
         eRacks.clear();
         if (!getBaseMetaTileEntity().isActive()) {
             this.eAvailableData = 0;
@@ -281,10 +283,8 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
             rack.getBaseMetaTileEntity()
                 .setActive(false);
         }
-        if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet)) {
-            return false;
-        }
-        return true;
+        if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
+        repairMachine();
     }
 
     @Override
@@ -531,10 +531,10 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
     public void registerIcons(IIconRegister aBlockIconRegister) {
         super.registerIcons(aBlockIconRegister);
         if (ScreenOFF == null) {
-            ScreenOFF = new Textures.BlockIcons.CustomIcon("iconsets/EM_COMPUTER");
+            ScreenOFF = Textures.BlockIcons.custom("iconsets/EM_COMPUTER");
         }
         if (ScreenON == null) {
-            ScreenON = new Textures.BlockIcons.CustomIcon("iconsets/EM_COMPUTER_ACTIVE");
+            ScreenON = Textures.BlockIcons.custom("iconsets/EM_COMPUTER_ACTIVE");
         }
     }
 

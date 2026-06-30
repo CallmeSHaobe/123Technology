@@ -8,7 +8,6 @@ import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.utils.RecipeBuilder;
 
 import gregtech.api.enums.Materials;
-import gregtech.api.enums.MaterialsUEVplus;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMap;
@@ -990,8 +989,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
                 FluidRegistry.getFluidStack("dimensionallytranscendentresidue", 64000 * 10000),
                 FluidRegistry.getFluidStack("plasma.fermium", 448000))
             .itemOutputs(
-                setStackSize(GTOreDictUnificator.get(OrePrefixes.ingot, MaterialsUEVplus.Mellion, 1), 64000 * 63),
-                setStackSize(GTOreDictUnificator.get(OrePrefixes.ingot, MaterialsUEVplus.Creon, 1), 64000 * 63))
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.ingot, Materials.Mellion, 1), 64000 * 63),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.ingot, Materials.Creon, 1), 64000 * 63))
             .specialValue(13500)
             .eut(TierEU.MAX)
             .duration(80 * 512 * 20 * 63)
@@ -999,9 +998,7 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
         // Six-Phased Copper
         RecipeBuilder.builder()
             .itemOutputs(
-                setStackSize(
-                    GTOreDictUnificator.get(OrePrefixes.ingot, MaterialsUEVplus.SixPhasedCopper, 1),
-                    64000 * 72))
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.ingot, Materials.SixPhasedCopper, 1), 64000 * 72))
             .itemInputs(
                 setStackSize(GTModHandler.getModItem("Avaritia", "Singularity", 1, 5), 64000 * 8),
                 setStackSize(GTModHandler.getModItem("miscutils", "itemDustCelestialTungsten", 1), 64000 * 72),
@@ -1009,7 +1006,7 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
                 setStackSize(GTModHandler.getModItem("miscutils", "itemDustHypogen", 1), 64000 * 36),
                 setStackSize(GTModHandler.getModItem("miscutils", "itemDustChromaticGlass", 1), 64000 * 576),
                 setStackSize(GTModHandler.getModItem("miscutils", "itemDustRhugnor", 1), 64000 * 18),
-                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, MaterialsUEVplus.Mellion, 1), 64000 * 72))
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Mellion, 1), 64000 * 72))
             .eut(TierEU.RECIPE_UXV)
             .duration(60 * 72 * 20 * 512)
             .specialValue(13000)
@@ -1022,7 +1019,7 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
                 setStackSize(Materials.Tartarite.getDust(1), 1000 * 2160),
                 setStackSize(Materials.Vanadium.getDust(1), 1000 * 240),
                 setStackSize(Materials.BlackPlutonium.getDust(1), 1000 * 80),
-                setStackSize(MaterialsUEVplus.TranscendentMetal.getDust(1), 1000 * 2160),
+                setStackSize(Materials.TranscendentMetal.getDust(1), 1000 * 2160),
                 setStackSize(Materials.Naquadria.getDust(1), 1000 * 560),
                 setStackSize(Materials.Bedrockium.getDust(1), 1000 * 320),
                 setStackSize(Materials.Infinity.getDust(1), 1000 * 1080),
@@ -1032,7 +1029,7 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.InfusedEarth, 1), 1000 * 180),
                 GTUtility.getIntegratedCircuit(11))
             .fluidInputs(FluidRegistry.getFluidStack("dimensionallytranscendentresidue", 1000 * 1080000))
-            .fluidOutputs(MaterialsUEVplus.MoltenProtoHalkoniteBase.getFluid(1244160000))
+            .fluidOutputs(Materials.MoltenProtoHalkoniteBase.getFluid(1244160000))
 
             .specialValue(10000)
             .eut(TierEU.UEV)
