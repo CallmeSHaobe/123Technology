@@ -10,7 +10,7 @@ elytraModpackVersion {
 
 dependencies {
     implementation(gtnhDev("GT5-Unofficial"))
-    implementation("com.github.GTNewHorizons:NewHorizonsCoreMod:2.8.284:dev")
+    implementation(gtnhDev("NewHorizonsCoreMod"))
     implementation(gtnhDev("Mobs-Info"))
     implementation(gtnhDev("Infernal-Mobs"))
     implementation(gtnhDev("Galaxy-Space-GTNH"))
