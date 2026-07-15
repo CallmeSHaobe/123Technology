@@ -65,7 +65,7 @@ dependencies {
 
     configurations.all {
         resolutionStrategy {
-            force "com.github.GTNewHorizons:GTNHLib:0.11.11"
+            force "com.github.GTNewHorizons:GTNHLib:0.11.14"
         }
     }
 
