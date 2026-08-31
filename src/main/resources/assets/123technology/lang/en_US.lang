@@ -673,6 +673,7 @@ ote.tm.bee.4=Breed mode: insert 2 parent bees (princess/queen/drone). Configure 
 ote.cm.bee.0=1 - Energy Hatch, Dynamo Hatch or Laser Hatch, Input/Output Bus/Hatch: Replace Plastic Concrete Block.
 
 otht.bee.param.mode=Operation Mode (Production / Breed)
+otht.bee.param.eject=Eject Held Bees (also auto-triggered on mode switch; blocked if no output space, nothing is ever destroyed)
 otht.bee.param.outputKind=Breed Output (Queen / Drones x64)
 otht.bee.param.species=Target Species (UID or name, blank = auto)
 otht.bee.param.speed=Trait: Speed

@@ -93,69 +93,77 @@ public class OTEBeeyonds extends OTHTTMultiMachineBaseEM
     private static final int MAX_DRONES_PER_CYCLE = 64;
 
     // region parameters (machine settings panel)
+    // NOTE: Parameter(value, langKey, nbtKey, ...) - langKey MUST be the translateToLocal() key
+    // (the "otht.bee.param.xxx" strings, see en_US.lang) and nbtKey is the short internal save id.
+    // These two used to be swapped on every field below, which made the settings panel show raw
+    // untranslated keys ("mode", "traitSpeed", ...) instead of the proper labels.
     private final EnumParameter<OTHBeeyondsMode> pMode = new EnumParameter<>(
         OTHBeeyondsMode.class,
         OTHBeeyondsMode.PRODUCTION,
-        "mode",
-        "otht.bee.param.mode");
-    private final StringParameter pTargetSpecies = new StringParameter("", "targetSpecies", "otht.bee.param.species");
+        "otht.bee.param.mode",
+        "mode");
+    private final BooleanParameter pEjectHeldBees = new BooleanParameter(
+        false,
+        "otht.bee.param.eject",
+        "ejectHeldBees");
+    private final StringParameter pTargetSpecies = new StringParameter("", "otht.bee.param.species", "targetSpecies");
     private final EnumParameter<OTHBeeyondsOutputKind> pOutputKind = new EnumParameter<>(
         OTHBeeyondsOutputKind.class,
         OTHBeeyondsOutputKind.QUEEN,
-        "outputKind",
-        "otht.bee.param.outputKind");
+        "otht.bee.param.outputKind",
+        "outputKind");
     private final EnumParameter<EnumAllele.Speed> pSpeed = new EnumParameter<>(
         EnumAllele.Speed.class,
         EnumAllele.Speed.NORMAL,
-        "traitSpeed",
-        "otht.bee.param.speed");
+        "otht.bee.param.speed",
+        "traitSpeed");
     private final EnumParameter<EnumAllele.Fertility> pFertility = new EnumParameter<>(
         EnumAllele.Fertility.class,
         EnumAllele.Fertility.NORMAL,
-        "traitFertility",
-        "otht.bee.param.fertility");
+        "otht.bee.param.fertility",
+        "traitFertility");
     private final EnumParameter<EnumAllele.Lifespan> pLifespan = new EnumParameter<>(
         EnumAllele.Lifespan.class,
         EnumAllele.Lifespan.NORMAL,
-        "traitLifespan",
-        "otht.bee.param.lifespan");
+        "otht.bee.param.lifespan",
+        "traitLifespan");
     private final EnumParameter<EnumAllele.Flowering> pFlowering = new EnumParameter<>(
         EnumAllele.Flowering.class,
         EnumAllele.Flowering.AVERAGE,
-        "traitFlowering",
-        "otht.bee.param.flowering");
+        "otht.bee.param.flowering",
+        "traitFlowering");
     private final EnumParameter<EnumAllele.Territory> pTerritory = new EnumParameter<>(
         EnumAllele.Territory.class,
         EnumAllele.Territory.AVERAGE,
-        "traitTerritory",
-        "otht.bee.param.territory");
+        "otht.bee.param.territory",
+        "traitTerritory");
     private final EnumParameter<EnumAllele.Tolerance> pTempTolerance = new EnumParameter<>(
         EnumAllele.Tolerance.class,
         EnumAllele.Tolerance.NONE,
-        "traitTempTolerance",
-        "otht.bee.param.tempTolerance");
+        "otht.bee.param.tempTolerance",
+        "traitTempTolerance");
     private final EnumParameter<EnumAllele.Tolerance> pHumidTolerance = new EnumParameter<>(
         EnumAllele.Tolerance.class,
         EnumAllele.Tolerance.NONE,
-        "traitHumidTolerance",
-        "otht.bee.param.humidTolerance");
+        "otht.bee.param.humidTolerance",
+        "traitHumidTolerance");
     private final BooleanParameter pNocturnal = new BooleanParameter(
         false,
-        "traitNocturnal",
-        "otht.bee.param.nocturnal");
+        "otht.bee.param.nocturnal",
+        "traitNocturnal");
     private final BooleanParameter pTolerantFlyer = new BooleanParameter(
         false,
-        "traitTolerantFlyer",
-        "otht.bee.param.tolerantFlyer");
+        "otht.bee.param.tolerantFlyer",
+        "traitTolerantFlyer");
     private final BooleanParameter pCaveDwelling = new BooleanParameter(
         false,
-        "traitCaveDwelling",
-        "otht.bee.param.caveDwelling");
-    private final StringParameter pEffect = new StringParameter("", "traitEffect", "otht.bee.param.effect");
+        "otht.bee.param.caveDwelling",
+        "traitCaveDwelling");
+    private final StringParameter pEffect = new StringParameter("", "otht.bee.param.effect", "traitEffect");
     private final StringParameter pFlowerProvider = new StringParameter(
         "",
-        "traitFlowerProvider",
-        "otht.bee.param.flowerProvider");
+        "otht.bee.param.flowerProvider",
+        "traitFlowerProvider");
 
     private List<Parameter<?, ?>> mParameters;
     // endregion
@@ -166,11 +174,18 @@ public class OTEBeeyonds extends OTHTTMultiMachineBaseEM
     private ItemStack mParent1;
     private int mBreedProgress = 0;
     private GameProfile mCachedOwner;
+    // the mode the machine is actually operating as; lags pMode until the bees held by the mode
+    // being left have been fully ejected, so a mode switch never silently destroys them
+    private OTHBeeyondsMode mActiveMode = OTHBeeyondsMode.PRODUCTION;
 
     @Override
     public void checkMachine(IGregTechTileEntity iGregTechTileEntity, ItemStack itemStack,
         List<StructureError> errors) {
-        if (!checkPiece("main", 0, 1, 0, errors)) return;
+        // offset must match the '~' hint cell in STRUCTURE_DEFINITION (x=11, y=20, z=1) - same
+        // value survivalConstruct() below already uses. This was previously (0, 1, 0), which made
+        // StructureLib think the controller sat far away from where it actually was, so the
+        // hologram/structure rendered wildly offset from the real controller block.
+        if (!checkPiece("main", 11, 20, 1, errors)) return;
         checkHasEnergyHatch(errors);
         checkHasMaintenanceHatch(errors);
         checkHasOutputBus(errors);
@@ -276,6 +291,7 @@ public class OTEBeeyonds extends OTHTTMultiMachineBaseEM
         }
         aNBT.setTag("othBeeyondsParams", paramTag);
 
+        aNBT.setInteger("othBeeyondsActiveMode", mActiveMode.ordinal());
         aNBT.setInteger("othBeeyondsBreedProgress", mBreedProgress);
         if (mParent0 != null) aNBT.setTag("othBeeyondsParent0", mParent0.writeToNBT(new NBTTagCompound()));
         if (mParent1 != null) aNBT.setTag("othBeeyondsParent1", mParent1.writeToNBT(new NBTTagCompound()));
@@ -299,6 +315,11 @@ public class OTEBeeyonds extends OTHTTMultiMachineBaseEM
         for (Parameter<?, ?> parameter : getParameters()) {
             parameter.loadNBT(paramTag);
         }
+
+        OTHBeeyondsMode[] modes = OTHBeeyondsMode.values();
+        int activeModeOrdinal = aNBT.getInteger("othBeeyondsActiveMode");
+        mActiveMode = activeModeOrdinal >= 0 && activeModeOrdinal < modes.length ? modes[activeModeOrdinal]
+            : OTHBeeyondsMode.PRODUCTION;
 
         mBreedProgress = aNBT.getInteger("othBeeyondsBreedProgress");
         mParent0 = aNBT.hasKey("othBeeyondsParent0")
@@ -370,6 +391,7 @@ public class OTEBeeyonds extends OTHTTMultiMachineBaseEM
     public void initParameters() {
         mParameters = Arrays.asList(
             pMode,
+            pEjectHeldBees,
             pOutputKind,
             pTargetSpecies,
             pSpeed,
@@ -405,11 +427,23 @@ public class OTEBeeyonds extends OTHTTMultiMachineBaseEM
     @Override
     public boolean onRunningTick(ItemStack aStack) {
         if (getBaseMetaTileEntity().isServerSide()) {
-            if (getMode() == OTHBeeyondsMode.PRODUCTION) {
-                tickProduction();
-            } else {
-                tickBreed();
+            OTHBeeyondsMode desired = getMode();
+            if (mActiveMode != desired) {
+                // Switching modes auto-ejects whatever the mode being left is holding. If the
+                // output can't take it all right now, the switch stays blocked (and nothing is
+                // destroyed) until there's room - drainActiveMode() is safe to call every tick.
+                if (drainActiveMode()) {
+                    mActiveMode = desired;
+                }
             }
+            if (mActiveMode == desired) {
+                if (mActiveMode == OTHBeeyondsMode.PRODUCTION) {
+                    tickProduction();
+                } else {
+                    tickBreed();
+                }
+            }
+            handleManualEjectRequest();
         }
         return true;
     }
@@ -422,17 +456,62 @@ public class OTEBeeyonds extends OTHTTMultiMachineBaseEM
         return currentTier() * QUEEN_SLOTS_PER_TIER;
     }
 
+    /**
+     * Ejects everything held by {@link #mActiveMode} (the mode being left on a mode switch, or the
+     * currently active mode for a manual eject). Never destroys a bee: a cell/parent slot is only
+     * cleared once {@code addOutputAtomic} confirms the whole stack made it into an output bus.
+     */
+    private boolean drainActiveMode() {
+        return mActiveMode == OTHBeeyondsMode.PRODUCTION ? ejectAllQueens() : ejectParents();
+    }
+
+    private void handleManualEjectRequest() {
+        if (!pEjectHeldBees.getValue()) return;
+        if (drainActiveMode()) {
+            // fully drained - release the button so it doesn't look permanently pressed
+            pEjectHeldBees.setValue(false);
+        }
+        // otherwise leave it "pressed": it keeps retrying every tick until there's room, without
+        // losing any bee in the meantime.
+    }
+
+    private boolean ejectAllQueens() {
+        boolean allClear = true;
+        for (QueenCell cell : mQueenCells) {
+            if (cell.queenStack == null) continue;
+            if (addOutputAtomic(cell.queenStack)) {
+                cell.queenStack = null;
+            } else {
+                allClear = false;
+            }
+        }
+        if (allClear) mQueenCells.clear();
+        return allClear;
+    }
+
+    private boolean ejectParents() {
+        boolean clear0 = mParent0 == null || addOutputAtomic(mParent0);
+        if (clear0) mParent0 = null;
+        boolean clear1 = mParent1 == null || addOutputAtomic(mParent1);
+        if (clear1) mParent1 = null;
+        if (clear0 && clear1) mBreedProgress = 0;
+        return clear0 && clear1;
+    }
+
     private void tickProduction() {
         int wanted = queenSlotCount();
         while (mQueenCells.size() < wanted) {
             mQueenCells.add(new QueenCell());
         }
+        // Shrink from the end, but only drop a cell once its bee (if any) safely made it into an
+        // output bus - if the output is full, stop shrinking for now instead of voiding the bee.
         while (mQueenCells.size() > wanted) {
-            QueenCell removed = mQueenCells.remove(mQueenCells.size() - 1);
-            if (removed.queenStack != null) {
-                addOutputAtomic(removed.queenStack);
-                removed.queenStack = null;
+            QueenCell last = mQueenCells.get(mQueenCells.size() - 1);
+            if (last.queenStack != null && !addOutputAtomic(last.queenStack)) {
+                break;
             }
+            last.queenStack = null;
+            mQueenCells.remove(mQueenCells.size() - 1);
         }
 
         IBeeRoot root = BeeManager.beeRoot;
@@ -522,12 +601,13 @@ public class OTEBeeyonds extends OTHTTMultiMachineBaseEM
         mParent1 = null;
     }
 
+    /**
+     * Returns both parents to the output when they don't have a valid mutation between them. Uses
+     * the same safe eject as {@link #ejectParents()} - if the output is full, the parents stay held
+     * (and are retried next tick) instead of being voided.
+     */
     private void returnParents() {
-        if (mParent0 != null) addOutputAtomic(mParent0);
-        if (mParent1 != null) addOutputAtomic(mParent1);
-        mParent0 = null;
-        mParent1 = null;
-        mBreedProgress = 0;
+        ejectParents();
     }
 
     private ItemStack pullParentFromInputs(IBeeRoot root) {
@@ -789,7 +869,8 @@ public class OTEBeeyonds extends OTHTTMultiMachineBaseEM
 
     @Override
     public void construct(ItemStack stackSize, boolean hintsOnly) {
-        buildPiece("main", stackSize, hintsOnly, 0, 1, 0);
+        // same (11, 20, 1) offset as checkMachine()/survivalConstruct() - see the comment there.
+        buildPiece("main", stackSize, hintsOnly, 11, 20, 1);
     }
 
     @Override

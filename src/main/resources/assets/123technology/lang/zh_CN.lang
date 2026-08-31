@@ -674,6 +674,7 @@ ote.tm.bee.4=育种模式: 放入2只亲代蜜蜂(公主/女王/雄蜂). 在参�
 ote.cm.bee.0=1 - 能源仓, 动力仓或者激光仓, 输入输出总线/仓: 替换塑料混凝土方块
 
 otht.bee.param.mode=运行模式 (生产 / 育种)
+otht.bee.param.eject=排出已容纳的蜂 (切换模式时也会自动触发; 输出空间不足时会被阻塞, 蜜蜂绝不会被销毁)
 otht.bee.param.outputKind=育种产出 (女王 / 雄蜂x64)
 otht.bee.param.species=目标物种 (UID或名称, 留空=自动)
 otht.bee.param.speed=性状: 速度
