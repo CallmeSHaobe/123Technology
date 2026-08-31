@@ -2,7 +2,7 @@
   "properties:10": {
     "betterquesting:10": {
       "autoClaim:1": 0,
-      "desc:8": "§a【Tier 2 MV】史诗焦炭终结者 T123§r\n小登的终极造物，中登的期盼之物——史诗焦炭炉 T123。\n真正的终极机器，没有高贵的造价，更没有乱七八糟的机制。\n转换比例：钻石(粉)->焦炭 1:1024，煤炭(粉)->焦炭 1:16，土->焦炭 1:1\n耗时: 1800*20 ticks - (煤炭产出/5) ticks，耗电：0 EU/t\n注意：污染过高时请放置消声仓以防止跳电。",
+      "desc:8": "§a【Tier 2 MV】Epic Coke Terminator T123§r\nThe ultimate creation of new players, and the object of mid-tier players' longing — the Epic Coke Oven T123.\nA truly ultimate machine, with no lofty build cost and none of that messy mechanics.\nConversion ratios: diamond (dust) -> coke 1:1024, coal (dust) -> coke 1:16, dirt -> coke 1:1\nTime: 1800*20 ticks - (coal output/5) ticks, power draw: 0 EU/t\nNote: if pollution gets too high, place a muffler hatch to prevent tripping the power.",
       "globalShare:1": 0,
       "icon:10": {
         "Count:3": 1,
@@ -13,7 +13,7 @@
       "isMain:1": 0,
       "isSilent:1": 0,
       "lockedProgress:1": 0,
-      "name:8": "【Tier 2 MV】史诗焦炭终结者 T123",
+      "name:8": "【Tier 2 MV】Epic Coke Terminator T123",
       "questLogic:8": "AND",
       "repeatTime:3": -1,
       "repeat_relative:1": 1,

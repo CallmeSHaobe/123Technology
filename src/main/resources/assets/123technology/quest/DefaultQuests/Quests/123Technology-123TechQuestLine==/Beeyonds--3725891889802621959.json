@@ -2,7 +2,7 @@
   "properties:10": {
     "betterquesting:10": {
       "autoClaim:1": 0,
-      "desc:8": "§a【Tier 3 HV】Beeyonds 之家§r\n为 Beeyonds 蜜蜂模组提供的工业级多方块蜂房。\n结构：GT基础机械外壳、钢化石、玻璃、草地、黑曜石组成，HV阶段即可建造。\n可容纳并自动化管理大量蜜蜂，提升蜜蜂育种和产出效率。\n将蜜蜂系统融入工业生产线，是蜂蜜/蜡/特殊产物量产的关键设施。\n§c该机器还未完成",
+      "desc:8": "§a【Tier 3 HV】Beeyonds Home§r\nAn industrial-scale multiblock apiary for the Beeyonds bee mod.\nStructure: built from GT basic machine casing, hardened stone, glass, grass, and obsidian — buildable as early as the HV tier.\nHouses and automates management of large numbers of bees, boosting breeding and yield efficiency.\nIntegrates the bee system into an industrial production line — a key facility for mass-producing honey, wax, and other special products.\n§bTwo modes (switch in the parameter panel): §aProduction§b runs up to 4x-energy-tier queens in parallel like an Alveary; §aBreed§b takes 2 parent bees, lets you pick the target species and every trait, and after a 20s cycle outputs a pristine queen or up to 64 drones at 300% yield.",
       "globalShare:1": 0,
       "icon:10": {
         "Count:3": 1,
@@ -13,7 +13,7 @@
       "isMain:1": 0,
       "isSilent:1": 0,
       "lockedProgress:1": 0,
-      "name:8": "【Tier 3 HV】Beeyonds 之家",
+      "name:8": "【Tier 3 HV】Beeyonds Home",
       "questLogic:8": "AND",
       "repeatTime:3": -1,
       "repeat_relative:1": 1,

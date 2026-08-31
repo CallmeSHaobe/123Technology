@@ -669,7 +669,25 @@ ote.cm.s9in1.2=天无二日, 九合一便是我们心中唯一的太阳
 ote.tm.bee.0=§aBee登们的初级造物 - Beeyonds之家(大型工业蜂箱)
 ote.tm.bee.1=一个HV的大型蜂箱. #真的只能养蜂!
 ote.tm.bee.2=说真的, 为什么不用工业蜂箱呢:)
+ote.tm.bee.3=生产模式: 最多(4 x 电压等级)只女王蜂并行工作, 类似蜂箱楼. 通过任意输入总线放入女王蜂.
+ote.tm.bee.4=育种模式: 放入2只亲代蜜蜂(公主/女王/雄蜂). 在参数面板中设置目标物种和性状. 20秒一周期, 产出纯种后代, 雄蜂产量300%(最多64只).
 ote.cm.bee.0=1 - 能源仓, 动力仓或者激光仓, 输入输出总线/仓: 替换塑料混凝土方块
+
+otht.bee.param.mode=运行模式 (生产 / 育种)
+otht.bee.param.outputKind=育种产出 (女王 / 雄蜂x64)
+otht.bee.param.species=目标物种 (UID或名称, 留空=自动)
+otht.bee.param.speed=性状: 速度
+otht.bee.param.fertility=性状: 繁殖力
+otht.bee.param.lifespan=性状: 寿命
+otht.bee.param.flowering=性状: 传粉频率
+otht.bee.param.territory=性状: 活动范围
+otht.bee.param.tempTolerance=性状: 温度耐受
+otht.bee.param.humidTolerance=性状: 湿度耐受
+otht.bee.param.nocturnal=性状: 夜行性
+otht.bee.param.tolerantFlyer=性状: 耐雨飞行
+otht.bee.param.caveDwelling=性状: 洞穴栖息
+otht.bee.param.effect=性状: 效果 (等位基因UID, 留空=保持默认)
+otht.bee.param.flowerProvider=性状: 传粉花源 (等位基因UID, 留空=保持默认)
 
 #MegaThermalCentrifuge
 ote.tn.mtc=乌拉尔山脉热分离厂

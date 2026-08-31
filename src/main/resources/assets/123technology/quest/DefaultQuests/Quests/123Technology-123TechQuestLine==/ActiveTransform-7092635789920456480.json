@@ -2,7 +2,7 @@
   "properties:10": {
     "betterquesting:10": {
       "autoClaim:1": 0,
-      "desc:8": "§a【Tier 8 UV】迷你有源变压器§r\n小型化的有源变压器，可在各电压等级之间高效升降压。\n相比标准变压器体积更小、部署更灵活，适合对空间有要求的场景。\n从UV阶段开始能体现出最佳的能量转换优势。",
+      "desc:8": "§a【Tier 8 UV】Mini Active Transformer§r\nA miniaturized active transformer that efficiently steps voltage up or down between tiers.\nSmaller and more flexible to place than a standard transformer, ideal for space-constrained builds.\nIts energy conversion advantage really shines starting from the UV tier.",
       "globalShare:1": 0,
       "icon:10": {
         "Count:3": 1,
@@ -13,7 +13,7 @@
       "isMain:1": 0,
       "isSilent:1": 0,
       "lockedProgress:1": 0,
-      "name:8": "【Tier 8 UV】迷你有源变压器",
+      "name:8": "【Tier 8 UV】Mini Active Transformer",
       "questLogic:8": "AND",
       "repeatTime:3": -1,
       "repeat_relative:1": 1,

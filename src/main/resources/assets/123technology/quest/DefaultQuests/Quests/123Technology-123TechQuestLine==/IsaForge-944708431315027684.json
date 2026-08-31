@@ -2,7 +2,7 @@
   "properties:10": {
     "betterquesting:10": {
       "autoClaim:1": 0,
-      "desc:8": "§a【Tier 13 UXV】神之艾萨锻炉§r\n艾萨领主认证——神级速度与并行。\n结构同样需要戴森球组件（sBlockCasingsDyson），为 UXV 阶段方可建造。\n耗时 = NEI耗时 * { 1 / {电压等级^[(玻璃等级/2)+1]}^(1/3) }\n主机放入星阵可解锁太空组装模式。\n是大规模矿石研磨处理的终极解决方案之一。",
+      "desc:8": "§a【Tier 13 UXV】Godly Isa Forge§r\nCertified by the Lord of Isa — god-tier speed and parallel.\nThe structure likewise requires Dyson Sphere components (sBlockCasingsDyson), and can only be built at the UXV tier.\nTime = NEI time * { 1 / {voltage tier^[(glass tier/2)+1]}^(1/3) }\nPlace a star matrix in the controller to unlock Space Assembly mode.\nOne of the ultimate solutions for large-scale ore grinding.",
       "globalShare:1": 0,
       "icon:10": {
         "Count:3": 1,
@@ -13,7 +13,7 @@
       "isMain:1": 0,
       "isSilent:1": 0,
       "lockedProgress:1": 0,
-      "name:8": "【Tier 13 UXV】神之艾萨锻炉",
+      "name:8": "【Tier 13 UXV】Godly Isa Forge",
       "questLogic:8": "AND",
       "repeatTime:3": -1,
       "repeat_relative:1": 1,

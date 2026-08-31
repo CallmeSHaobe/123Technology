@@ -668,7 +668,25 @@ ote.cm.s9in1.2=There are no two suns in the sky; 9-in-1 is the only sun in our h
 ote.tm.bee.0=§aBeedeng's Primary Creation - Beeyonds Home (Large Industrial Apiary)
 ote.tm.bee.1=An HV Large Apiary. #Really only for bees!
 ote.tm.bee.2=Seriously, why not use Industrial Apiaries :)
+ote.tm.bee.3=Production mode: up to (4 x energy tier) queens work in parallel, Alveary-style. Insert queens via any Input Bus.
+ote.tm.bee.4=Breed mode: insert 2 parent bees (princess/queen/drone). Configure target species and traits in the parameter panel. 20s cycle, pristine offspring, 300% drone yield (up to 64).
 ote.cm.bee.0=1 - Energy Hatch, Dynamo Hatch or Laser Hatch, Input/Output Bus/Hatch: Replace Plastic Concrete Block.
+
+otht.bee.param.mode=Operation Mode (Production / Breed)
+otht.bee.param.outputKind=Breed Output (Queen / Drones x64)
+otht.bee.param.species=Target Species (UID or name, blank = auto)
+otht.bee.param.speed=Trait: Speed
+otht.bee.param.fertility=Trait: Fertility
+otht.bee.param.lifespan=Trait: Lifespan
+otht.bee.param.flowering=Trait: Flowering
+otht.bee.param.territory=Trait: Territory
+otht.bee.param.tempTolerance=Trait: Temperature Tolerance
+otht.bee.param.humidTolerance=Trait: Humidity Tolerance
+otht.bee.param.nocturnal=Trait: Nocturnal
+otht.bee.param.tolerantFlyer=Trait: Tolerant Flyer (Rain)
+otht.bee.param.caveDwelling=Trait: Cave Dwelling
+otht.bee.param.effect=Trait: Effect (allele UID, blank = keep default)
+otht.bee.param.flowerProvider=Trait: Flower Provider (allele UID, blank = keep default)
 
 
 #MegaThermalCentrifuge
