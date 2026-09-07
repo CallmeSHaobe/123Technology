@@ -20,7 +20,7 @@ import forestry.api.genetics.IGenome;
 import forestry.api.genetics.IMutationCondition;
 import forestry.core.genetics.alleles.Allele;
 import forestry.core.utils.StringUtil;
-import gregtech.GTMod;
+import gregtech.GTLoggers;
 import gregtech.api.metatileentity.BaseMetaTileEntity;
 import gregtech.common.items.ItemDrop;
 import gregtech.common.items.ItemPollen;
@@ -59,15 +59,15 @@ public class OTHBeeyonds {
     public static OTHItemCombs combs;
 
     public OTHBeeyonds() {
-        GTMod.GT_FML_LOGGER.info("OTHBeeyonds: Creating OTHItemCombs...");
+        GTLoggers.GT_FML_LOGGER.info("OTHBeeyonds: Creating OTHItemCombs...");
         combs = new OTHItemCombs();
-        GTMod.GT_FML_LOGGER.info("OTHBeeyonds: Item created, initializing comb recipes...");
+        GTLoggers.GT_FML_LOGGER.info("OTHBeeyonds: Item created, initializing comb recipes...");
         OTHItemCombs.initCombsRecipes();
-        GTMod.GT_FML_LOGGER.info("OTHBeeyonds: Comb recipes done, setting up alleles...");
+        GTLoggers.GT_FML_LOGGER.info("OTHBeeyonds: Comb recipes done, setting up alleles...");
         setupOTHAlleles();
-        GTMod.GT_FML_LOGGER.info("OTHBeeyonds: Alleles done, initializing bees...");
+        GTLoggers.GT_FML_LOGGER.info("OTHBeeyonds: Alleles done, initializing bees...");
         OTHBeeDefinition.initBees();
-        GTMod.GT_FML_LOGGER.info("OTHBeeyonds: Bees initialized, constructor done.");
+        GTLoggers.GT_FML_LOGGER.info("OTHBeeyonds: Bees initialized, constructor done.");
     }
 
     private static void setupOTHAlleles() {
@@ -96,10 +96,11 @@ public class OTHBeeyonds {
         machineBoostEffect = new GTEffectMachineBoost();
 
         if (GalaxySpace.isModLoaded() && TwilightForest.isModLoaded()) {
-            GTMod.GT_FML_LOGGER.info("treetwisterEffect: GalaxySpace and TwilightForest loaded, using default impl");
+            GTLoggers.GT_FML_LOGGER
+                .info("treetwisterEffect: GalaxySpace and TwilightForest loaded, using default impl");
             treetwisterEffect = new GTEffectTreeTwister();
         } else {
-            GTMod.GT_FML_LOGGER
+            GTLoggers.GT_FML_LOGGER
                 .info("treetwisterEffect: GalaxySpace or TwilightForest was not loaded, using fallback impl");
             treetwisterEffect = GTAlleleEffect.FORESTRY_BASE_EFFECT;
         }

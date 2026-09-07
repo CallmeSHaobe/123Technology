@@ -33,9 +33,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.MinecraftForge;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.kuba6000.mobsinfo.api.IChanceModifier;
 import com.kuba6000.mobsinfo.api.MobDrop;
 import com.kuba6000.mobsinfo.api.MobRecipe;
@@ -44,12 +41,9 @@ import com.kuba6000.mobsinfo.api.event.PreMobsRegistrationEvent;
 import com.newmaa.othtech.machine.OTEMegaEEC;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import kubatech.Tags;
 import kubatech.config.Config;
 
 public class OTHMobHandlerLoader {
-
-    private static final Logger LOG = LogManager.getLogger(Tags.MODID + "[Mob Handler Loader]");
 
     private static OTHMobHandlerLoader instance = null;
 

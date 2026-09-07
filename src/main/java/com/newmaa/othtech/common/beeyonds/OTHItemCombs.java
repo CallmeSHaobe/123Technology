@@ -27,7 +27,6 @@ import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTUtility;
-import gtPlusPlus.api.recipe.GTPPRecipeMaps;
 
 public class OTHItemCombs extends Item {
 
@@ -282,7 +281,7 @@ public class OTHItemCombs extends Item {
             .outputChances(100, 25)
             .eut(TierEU.HV)
             .duration(20 * 20)
-            .addTo(GTPPRecipeMaps.centrifugeNonCellRecipes);
+            .addTo(RecipeMaps.centrifugeNonCellRecipes);
     }
 
 }

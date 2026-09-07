@@ -52,7 +52,6 @@ import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
-import gtPlusPlus.api.recipe.GTPPRecipeMaps;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 
@@ -182,14 +181,14 @@ public class OTELaoBaChemicalReactor extends OTHMultiMachineBase<OTELaoBaChemica
 
     @Override
     public RecipeMap<?> getRecipeMap() {
-        if (this.mode == 0) return GTPPRecipeMaps.chemicalPlantRecipes;
+        if (this.mode == 0) return RecipeMaps.chemicalPlantRecipes;
         return RecipeMaps.multiblockChemicalReactorRecipes;
     }
 
     @NotNull
     @Override
     public Collection<RecipeMap<?>> getAvailableRecipeMaps() {
-        return Arrays.asList(GTPPRecipeMaps.chemicalPlantRecipes, RecipeMaps.multiblockChemicalReactorRecipes);
+        return Arrays.asList(RecipeMaps.chemicalPlantRecipes, RecipeMaps.multiblockChemicalReactorRecipes);
     }
 
     @Override

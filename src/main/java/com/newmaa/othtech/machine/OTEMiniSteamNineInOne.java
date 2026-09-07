@@ -59,7 +59,6 @@ import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.common.blocks.BlockCasings1;
-import gtPlusPlus.api.recipe.GTPPRecipeMaps;
 import gtPlusPlus.xmod.gregtech.api.metatileentity.implementations.MTEHatchSteamBusInput;
 import gtPlusPlus.xmod.gregtech.api.metatileentity.implementations.base.MTEHatchCustomFluidBase;
 import gtPlusPlus.xmod.gregtech.common.blocks.textures.TexturesGtBlock;
@@ -150,8 +149,8 @@ public class OTEMiniSteamNineInOne extends OTHSteamMultiBase<OTEMiniSteamNineInO
             RecipeMaps.maceratorRecipes,
             RecipeMaps.hammerRecipes,
             RecipeMaps.compressorRecipes,
-            GTPPRecipeMaps.mixerNonCellRecipes,
-            GTPPRecipeMaps.centrifugeNonCellRecipes);
+            RecipeMaps.mixerNonCellRecipes,
+            RecipeMaps.centrifugeNonCellRecipes);
     }
 
     @Override
@@ -216,9 +215,9 @@ public class OTEMiniSteamNineInOne extends OTHSteamMultiBase<OTEMiniSteamNineInO
         } else if (aMode == MODE_COMPRESSOR) {
             return RecipeMaps.compressorRecipes;
         } else if (aMode == MODE_MIXER) {
-            return GTPPRecipeMaps.mixerNonCellRecipes;
+            return RecipeMaps.mixerNonCellRecipes;
         } else if (aMode == MODE_CENTRIFUGE) {
-            return GTPPRecipeMaps.centrifugeNonCellRecipes;
+            return RecipeMaps.centrifugeNonCellRecipes;
         } else return null;
     }
 

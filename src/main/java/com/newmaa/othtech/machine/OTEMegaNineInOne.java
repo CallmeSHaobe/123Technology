@@ -64,7 +64,6 @@ import gregtech.api.structure.error.StructureError;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
-import gtPlusPlus.api.recipe.GTPPRecipeMaps;
 import gtPlusPlus.core.block.ModBlocks;
 import gtPlusPlus.xmod.gregtech.common.blocks.textures.TexturesGtBlock;
 
@@ -183,10 +182,10 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
             RecipeMaps.laserEngraverRecipes,
             RecipeMaps.autoclaveRecipes,
             RecipeMaps.fluidSolidifierRecipes,
-            GTPPRecipeMaps.millingRecipes,
-            GTPPRecipeMaps.flotationCellRecipes,
-            GTPPRecipeMaps.vacuumFurnaceRecipes,
-            GTPPRecipeMaps.molecularTransformerRecipes,
+            RecipeMaps.millingRecipes,
+            RecipeMaps.flotationCellRecipes,
+            RecipeMaps.vacuumFurnaceRecipes,
+            RecipeMaps.molecularTransformerRecipes,
             RecipeMaps.brewingRecipes,
             RecipeMaps.fluidHeaterRecipes);
     }
@@ -262,13 +261,13 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
         } else if (aMode == MODE_FLUIDSOLIDIFY) {
             return RecipeMaps.fluidSolidifierRecipes;
         } else if (aMode == MODE_ISA) {
-            return GTPPRecipeMaps.millingRecipes;
+            return RecipeMaps.millingRecipes;
         } else if (aMode == MODE_FLOAT) {
-            return GTPPRecipeMaps.flotationCellRecipes;
+            return RecipeMaps.flotationCellRecipes;
         } else if (aMode == MODE_VACUUM) {
-            return GTPPRecipeMaps.vacuumFurnaceRecipes;
+            return RecipeMaps.vacuumFurnaceRecipes;
         } else if (aMode == MODE_MOLE) {
-            return GTPPRecipeMaps.molecularTransformerRecipes;
+            return RecipeMaps.molecularTransformerRecipes;
         } else if (aMode == MODE_BREW) {
             return RecipeMaps.brewingRecipes;
         } else if (aMode == MODE_HEAT) {
