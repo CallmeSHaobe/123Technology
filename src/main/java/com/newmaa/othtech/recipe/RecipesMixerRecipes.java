@@ -14,10 +14,10 @@ import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMap;
+import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTUtility;
-import gtPlusPlus.api.recipe.GTPPRecipeMaps;
 
 public class RecipesMixerRecipes implements IRecipePool {
 
@@ -27,7 +27,7 @@ public class RecipesMixerRecipes implements IRecipePool {
         Fluid I = FluidRegistry.getFluid("iodine");
         Fluid Shit = FluidRegistry.getFluid("molten.arcanite");
 
-        final RecipeMap<?> LMixer = GTPPRecipeMaps.mixerNonCellRecipes;
+        final RecipeMap<?> LMixer = RecipeMaps.mixerNonCellRecipes;
         GTValues.RA.stdBuilder()
             .fluidInputs(new FluidStack(Ne, 1000), new FluidStack(I, 1000))
             .fluidOutputs(new FluidStack(Shit, 144))

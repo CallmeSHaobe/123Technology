@@ -64,7 +64,6 @@ import gregtech.api.util.GTUtility;
 import gregtech.api.util.recipe.Scanning;
 import gregtech.common.items.CombType;
 import gregtech.loaders.misc.GTBees;
-import gtPlusPlus.api.recipe.GTPPRecipeMaps;
 import gtPlusPlus.xmod.gregtech.api.enums.GregtechItemList;
 import tectech.recipe.TTRecipeAdder;
 import tectech.thing.CustomItemList;
@@ -1322,7 +1321,7 @@ public class RecipesMain implements IRecipePool {
             .itemOutputs(setStackSize(Materials.SiliconDioxide.getDust(1), 26244), Materials.Carbon.getDust(9))
             .eut(RECIPE_UIV)
             .duration(40)
-            .addTo(GTPPRecipeMaps.centrifugeNonCellRecipes);
+            .addTo(RecipeMaps.centrifugeNonCellRecipes);
         RecipeBuilder.builder()
             .itemInputs(Materials.Bedrockium.getDust(1))
             .itemOutputs(setStackSize(Materials.SiliconDioxide.getDust(1), 26244), Materials.Carbon.getDust(9))

@@ -7,14 +7,14 @@ import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMap;
+import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GTModHandler;
-import gtPlusPlus.api.recipe.GTPPRecipeMaps;
 
 public class RecipesCyclotronRecipes implements IRecipePool {
 
     @Override
     public void loadRecipes() {
-        final RecipeMap<?> CYC = GTPPRecipeMaps.cyclotronRecipes;
+        final RecipeMap<?> CYC = RecipeMaps.cyclotronRecipes;
         GTValues.RA.stdBuilder()
             .itemInputs(
                 ItemList.Sensor_UXV.get(0),

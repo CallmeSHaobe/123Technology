@@ -12,8 +12,8 @@ import net.minecraftforge.fluids.FluidStack;
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.interfaces.IRecipeMap;
+import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GTModHandler;
-import gtPlusPlus.api.recipe.GTPPRecipeMaps;
 import gtPlusPlus.xmod.gregtech.api.enums.GregtechItemList;
 
 public class RecipesQFTRecipes implements IRecipePool {
@@ -25,7 +25,7 @@ public class RecipesQFTRecipes implements IRecipePool {
         Fluid nijiang = FluidRegistry.getFluid("mud.red.slurry");
         Fluid laoda = FluidRegistry.getFluid("molten.helicopter");
 
-        final IRecipeMap qft = GTPPRecipeMaps.quantumForceTransformerRecipes;
+        final IRecipeMap qft = RecipeMaps.quantumForceTransformerRecipes;
 
         // ISA
         GTValues.RA.stdBuilder()

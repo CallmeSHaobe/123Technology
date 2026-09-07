@@ -13,7 +13,6 @@ import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTRecipeBuilder;
-import gtPlusPlus.api.recipe.GTPPRecipeMaps;
 
 public class RecipesAntimonia implements IRecipePool {
 
@@ -57,7 +56,7 @@ public class RecipesAntimonia implements IRecipePool {
             .outputChances(9980, 8800, 4400, 3200, 4200, 5000)
             .eut(250250)
             .duration(123 * 20)
-            .addTo(GTPPRecipeMaps.centrifugeNonCellRecipes);
+            .addTo(RecipeMaps.centrifugeNonCellRecipes);
         RecipeBuilder.builder()
             .itemInputs(GTModHandler.getModItem(OTHTechnology.MODID, "antimoniaDirtBlock", 1))
             .itemOutputs(

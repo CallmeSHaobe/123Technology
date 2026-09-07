@@ -21,7 +21,6 @@ import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
-import gtPlusPlus.api.recipe.GTPPRecipeMaps;
 import gtPlusPlus.core.material.MaterialsElements;
 
 public class RecipesNaquadah implements IRecipePool {
@@ -169,7 +168,7 @@ public class RecipesNaquadah implements IRecipePool {
                 FluidRegistry.getFluidStack("fluid.rocketfuelmixa", 2000))
             .eut(TierEU.RECIPE_ZPM)
             .duration(5)
-            .addTo(GTPPRecipeMaps.mixerNonCellRecipes);
+            .addTo(RecipeMaps.mixerNonCellRecipes);
         RecipeBuilder.builder()
             .fluidInputs(BWLiquids.FUELA_DE.getFluidOrGas(500))
             .itemOutputs(Materials.Naquadah.getDust(2), Materials.Carbon.getDust(48))
@@ -181,7 +180,7 @@ public class RecipesNaquadah implements IRecipePool {
             .itemOutputs(Materials.Naquadah.getDust(2), Materials.Carbon.getDust(48))
             .eut(TierEU.RECIPE_MV)
             .duration(800)
-            .addTo(GTPPRecipeMaps.centrifugeNonCellRecipes);
+            .addTo(RecipeMaps.centrifugeNonCellRecipes);
         // Promoter
         RecipeBuilder.builder()
             .fluidOutputs(BWLiquids.PromoterZPM.getFluidOrGas(800))
@@ -193,7 +192,7 @@ public class RecipesNaquadah implements IRecipePool {
             .eut(114514)
             .duration(5)
             .specialValue(2)
-            .addTo(GTPPRecipeMaps.chemicalPlantRecipes);
+            .addTo(RecipeMaps.chemicalPlantRecipes);
         RecipeBuilder.builder()
             .fluidOutputs(BWLiquids.PromoterUEV.getFluidOrGas(4000))
             .fluidInputs(
