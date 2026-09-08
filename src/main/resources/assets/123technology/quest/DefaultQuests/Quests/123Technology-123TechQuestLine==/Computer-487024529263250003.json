@@ -2,7 +2,7 @@
   "properties:10": {
     "betterquesting:10": {
       "autoClaim:1": 0,
-      "desc:8": "§a【Tier 8 UV】异星量子超级计算机§r\n来自异星文明的量子级超级计算机，生成算力（Computing Power）。\n冷却液需求公式：(算力/50) × 超频^1.2 × 超压^0.6 L/tick\n需持续消耗大量超级冷却液和电力才能运行；冷却液不足时机器将停止工作。",
+      "desc:8": "§a【Tier 8 UV】Alien Quantum Supercomputer§r\nA quantum-tier supercomputer from an alien civilization, generating Computing Power.\nCoolant demand formula: (Computing Power/50) x Overclock^1.2 x Overvoltage^0.6 L/tick\nRequires a steady supply of large amounts of super coolant and power to run; the machine stops working if coolant runs out.",
       "globalShare:1": 0,
       "icon:10": {
         "Count:3": 1,
@@ -13,7 +13,7 @@
       "isMain:1": 0,
       "isSilent:1": 0,
       "lockedProgress:1": 0,
-      "name:8": "【Tier 8 UV】异星量子超级计算机",
+      "name:8": "【Tier 8 UV】Alien Quantum Supercomputer",
       "questLogic:8": "AND",
       "repeatTime:3": -1,
       "repeat_relative:1": 1,

@@ -48,6 +48,7 @@ import com.newmaa.othtech.utils.RecipeBuilder;
 
 import bartworks.common.loaders.ItemRegistry;
 import goodgenerator.loader.Loaders;
+import gregtech.api.GregTechAPI;
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
@@ -1428,6 +1429,21 @@ public class RecipesMain implements IRecipePool {
             new Object[] { "ABC", "DEF", "GHI", 'A', getGM(31041, 1), 'B', getGM(101, 1), 'C', getGM(31078, 1), 'D',
                 getGM(31080, 1), 'E', getGM(31085, 1), 'F', getGM(31082, 1), 'G', getGM(31083, 1), 'H', getGM(31084, 1),
                 'I', getGM(23540, 1) });
+        // Beeyonds Home controller
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.MV, 6),
+                new ItemStack(GregTechAPI.sBlockReinforced, 4, 2),
+                ItemList.Electric_Motor_MV.get(4),
+                ItemList.Robot_Arm_MV.get(2),
+                GTOreDictUnificator.get(OrePrefixes.plateDouble, Materials.StainlessSteel, 8),
+                GTOreDictUnificator.get(OrePrefixes.frameGt, Materials.Aluminium, 1),
+                new ItemStack(Blocks.glass, 16))
+            .fluidInputs(Materials.SolderingAlloy.getMolten(288))
+            .itemOutputs(OTHItemList.Beeyonds.get(1))
+            .duration(40 * 20)
+            .eut(RECIPE_MV)
+            .addTo(assemblerRecipes);
     }
 
     public static final RecipeMap<RecipeMapBackend> OTEquantumComputerFakeRecipes = RecipeMapBuilder

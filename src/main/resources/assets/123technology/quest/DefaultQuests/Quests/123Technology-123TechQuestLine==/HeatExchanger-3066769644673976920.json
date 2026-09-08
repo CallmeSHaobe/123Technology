@@ -2,7 +2,7 @@
   "properties:10": {
     "betterquesting:10": {
       "autoClaim:1": 0,
-      "desc:8": "§a【Tier 7 ZPM】真空冷冻热交换机§r\n真正的热能饕餮——真空冷冻热交换机。\n回收高炉热锭冶炼产生的废热，将其转化为超临界蒸汽。\n耗电：123 EU/t；推荐与巨型高炉或标准 EBF 配套使用。",
+      "desc:8": "§a【Tier 7 ZPM】Vacuum Cryogenic Heat Exchanger§r\nA true glutton for heat energy — the Vacuum Cryogenic Heat Exchanger.\nRecovers waste heat from hot-ingot smelting in the blast furnace and converts it into supercritical steam.\nPower draw: 123 EU/t; recommended for pairing with a Mega Blast Furnace or a standard EBF.",
       "globalShare:1": 0,
       "icon:10": {
         "Count:3": 1,
@@ -13,7 +13,7 @@
       "isMain:1": 0,
       "isSilent:1": 0,
       "lockedProgress:1": 0,
-      "name:8": "【Tier 7 ZPM】真空冷冻热交换机",
+      "name:8": "【Tier 7 ZPM】Vacuum Cryogenic Heat Exchanger",
       "questLogic:8": "AND",
       "repeatTime:3": -1,
       "repeat_relative:1": 1,

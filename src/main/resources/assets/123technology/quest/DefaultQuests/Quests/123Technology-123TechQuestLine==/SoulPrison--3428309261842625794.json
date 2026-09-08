@@ -2,7 +2,7 @@
   "properties:10": {
     "betterquesting:10": {
       "autoClaim:1": 0,
-      "desc:8": "§a【Tier 10 UEV】噬魂监狱（Mega EEC）§r\n巨型极端能量管道（EEC）的 123T 强化版本。\n（czqwq明确确认：UIV光学电路在UEV阶段就能做了）\n「噬魂」之名源于其恐怖的能量消耗——请确保有充足的能量供应！",
+      "desc:8": "§a【Tier 10 UEV】Soul-Devouring Prison (Mega EEC)§r\nThe 123T-enhanced version of the Mega Extreme Energy Conduit (EEC).\n(czqwq has explicitly confirmed: UIV optical circuits can already be made at the UEV tier)\nThe name \"Soul-Devouring\" comes from its terrifying energy consumption — make sure you have an ample power supply!",
       "globalShare:1": 0,
       "icon:10": {
         "Count:3": 1,
@@ -13,7 +13,7 @@
       "isMain:1": 0,
       "isSilent:1": 0,
       "lockedProgress:1": 0,
-      "name:8": "【Tier 10 UEV】噬魂监狱（Mega EEC）",
+      "name:8": "【Tier 10 UEV】Soul-Devouring Prison (Mega EEC)",
       "questLogic:8": "AND",
       "repeatTime:3": -1,
       "repeat_relative:1": 1,

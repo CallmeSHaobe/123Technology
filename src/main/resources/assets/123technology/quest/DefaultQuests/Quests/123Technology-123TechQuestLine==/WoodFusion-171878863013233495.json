@@ -2,7 +2,7 @@
   "properties:10": {
     "betterquesting:10": {
       "autoClaim:1": 0,
-      "desc:8": "§a【Tier 7 ZPM】压缩原木聚变反应堆 Mk 0§r\n以原木为玩笑名的功能完整聚变反应堆（Mk 0 级别）。\n可生产大量等离子体，是高级材料合成的能源基础。\n作为聚变系列的起点（Mk 0），为更高等级的聚变研究奠定基础。\nZPM 阶段核聚变技术的入门机器。",
+      "desc:8": "§a【Tier 7 ZPM】Compressed Log Fusion Reactor Mk 0§r\nA fully functional fusion reactor (Mk 0 tier) with \"log\" as a joke name.\nCan produce large amounts of plasma, forming the energy foundation for advanced material synthesis.\nAs the starting point of the fusion series (Mk 0), it lays the groundwork for higher-tier fusion research.\nThe entry-level machine for nuclear fusion technology at the ZPM tier.",
       "globalShare:1": 0,
       "icon:10": {
         "Count:3": 1,
@@ -13,7 +13,7 @@
       "isMain:1": 0,
       "isSilent:1": 0,
       "lockedProgress:1": 0,
-      "name:8": "【Tier 7 ZPM】压缩原木聚变反应堆 Mk 0",
+      "name:8": "【Tier 7 ZPM】Compressed Log Fusion Reactor Mk 0",
       "questLogic:8": "AND",
       "repeatTime:3": -1,
       "repeat_relative:1": 1,
