@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import com.newmaa.othtech.utils.Utils;
 
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
+import gregtech.api.util.GTLog;
 
 @SuppressWarnings("SpellCheckingInspection")
 public enum OTHItemList {
@@ -203,7 +204,7 @@ public enum OTHItemList {
         sanityCheck();
         // if invalid, return a replacements
         if (Utils.isStackInvalid(mStack)) {
-            System.out.println("Object in the ItemList is null at:");
+            GTLog.conditionalLogger("Object in the ItemList is null at:");
         }
         return Utils.copyAmount(aAmount, mStack);
     }
@@ -212,7 +213,6 @@ public enum OTHItemList {
         if (mHasNotBeenSet)
             throw new IllegalAccessError("The Enum '" + name() + "' has not been set to an Item at this time!");
         if (mDeprecated && !mWarned) {
-            new Exception(this + " is now deprecated").printStackTrace(System.err);
             // warn only once
             mWarned = true;
         }

@@ -1,5 +1,6 @@
 package com.newmaa.othtech;
 
+import static com.newmaa.othtech.CommonProxy.RocketRenderBlock;
 import static com.newmaa.othtech.common.OTHItemList.SpaceElevatorModulePumpT4;
 
 import java.util.HashMap;
@@ -14,15 +15,22 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.newmaa.othtech.common.ItemAndBlockHandler;
+import com.newmaa.othtech.common.OreDictionaryLoader;
 import com.newmaa.othtech.common.beeyonds.OTHBeeyonds;
 import com.newmaa.othtech.common.blocks.antimonia.AntimoniaBlocks;
 import com.newmaa.othtech.common.blocks.fluids.AntimoniaFluids;
 import com.newmaa.othtech.common.blocks.fluids.RossFluids;
+import com.newmaa.othtech.common.blocks.oterender.OTERocketRender;
+import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
 import com.newmaa.othtech.common.dimensions.RegisterDimensions;
+import com.newmaa.othtech.common.dimensions.gtoregen.AntimoniaGTOreVeinReg;
+import com.newmaa.othtech.common.item.ItemLoader;
+import com.newmaa.othtech.common.materials.BWMaterialsLocalization;
 import com.newmaa.othtech.common.materials.MaterialsLoader;
 import com.newmaa.othtech.common.recipemap.NEIRecipeMaps;
 import com.newmaa.othtech.event.EventPlayerDied;
 import com.newmaa.othtech.machine.MachineLoader;
+import com.newmaa.othtech.machine.machineclass.OTHMobHandlerLoader;
 import com.newmaa.othtech.quest.QuestLoader;
 import com.newmaa.othtech.recipe.RecipeLoader;
 
@@ -35,6 +43,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartedEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import gtnhintergalactic.recipe.SpacePumpingRecipes;
@@ -79,6 +88,13 @@ public class OTHTechnology {
     // preInit "Run before anything else. Read your config, create blocks, items, etc, and register them with the
     // GameRegistry." (Remove if not needed)
     public void preInit(FMLPreInitializationEvent event) {
+        new BWMaterialsLocalization().loader();
+        new CreativeTabsLoader(event);
+        new ItemLoader(event);
+        new OreDictionaryLoader(event);
+        OTHMobHandlerLoader.init();
+        GameRegistry.registerTileEntity(OTERocketRender.class, "RocketRender");
+        GameRegistry.registerBlock(RocketRenderBlock, RocketRenderBlock.getUnlocalizedName());
         proxy.preInit(event);
         MaterialsLoader.load();
         ItemAndBlockHandler.INSTANCE.run();
@@ -103,9 +119,10 @@ public class OTHTechnology {
     @Mod.EventHandler
     // postInit "Handle interaction with other mods, complete your setup based on this." (Remove if not needed)
     public void postInit(FMLPostInitializationEvent event) {
+        AntimoniaGTOreVeinReg.register();
         proxy.postInit(event);
         LOG.info("The Isa Mill is invincible!");
-        LOG.info("NewMaa的恩情还不完!");
+        LOG.info("NewMaa的恩情还不完!");// 这个不是我写的。
         MachineLoader.loadMachinePostInit();
         // RecipeLoader.loadRecipesPostInit();
         // 添加自定义配方

@@ -22,6 +22,8 @@ public class RegisterDimensions {
     public static SolarSystem antimoniaSystem;
     public static Star starAntimonia;
     public static final int ID_DIM = 12321;
+    public static final String ANTIMONIA_NAME = "antimonia";
+    public static final String ROSS123B_NAME = "ross123b";
 
     public void init() {
         antimoniaSystem = (new SolarSystem("antimoniaSystem", "milkyWay")).setMapPosition(new Vector3(-0.5, 1.5, 0.0));
