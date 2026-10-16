@@ -1,7 +1,7 @@
 
 elytraModpackVersion {
     // 在这配置的gtnh版本 用于自动拉取依赖版本
-    gtnhVersion = "2.9.0-beta-3"
+    gtnhVersion = "2.9.0-RC-2"
     // 是否不缓存拉取的依赖清单文件
     manifestNoCache = false
     // 是否自动为输出的jar添加 `gtnhVersion` 后缀
@@ -11,7 +11,8 @@ elytraModpackVersion {
 dependencies {
     implementation(gtnhDev("GT5-Unofficial"))
     implementation(gtnhDev("NewHorizonsCoreMod"))
-    implementation(gtnhDev("Mobs-Info"))
+//    implementation(gtnhDev("Mobs-Info"))
+    implementation('com.github.GTNewHorizons:Mobs-Info:0.6.0-GTNH:dev')
     implementation(gtnhDev("Infernal-Mobs"))
     implementation(gtnhDev("Galaxy-Space-GTNH"))
     implementation(gtnhDev("SGCraft"))
@@ -43,6 +44,7 @@ dependencies {
     implementation("thaumcraft:Thaumcraft:1.7.10-4.2.3.5:dev")
     implementation('com.github.GTNewHorizons:worldedit-gtnh:v0.0.8:dev')
 
+
     // runtime
     runtimeOnlyNonPublishable(gtnhDev("BetterP2P"))
     runtimeOnlyNonPublishable rfg.deobf(files("libs/chisel-2.17.27-GTNH.jar"))
@@ -65,7 +67,7 @@ dependencies {
 
     configurations.all {
         resolutionStrategy {
-            force "com.github.GTNewHorizons:GTNHLib:0.11.46"
+            force "com.github.GTNewHorizons:GTNHLib:0.11.53"
         }
     }
 
