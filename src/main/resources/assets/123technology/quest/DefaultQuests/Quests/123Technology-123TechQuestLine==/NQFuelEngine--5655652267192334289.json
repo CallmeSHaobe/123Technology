@@ -2,7 +2,7 @@
   "properties:10": {
     "betterquesting:10": {
       "autoClaim:1": 0,
-      "desc:8": "§a【Tier 7 ZPM】通用硅岩燃料引擎§r\n以硅岩（Naquadah）燃料驱动的通用型大型多方块发电机。\n支持多种硅岩燃料变体，发电量达到 UV+ 级别。\n与压缩硅岩燃料精炼厂配合使用，构建完整的硅岩能源体系。",
+      "desc:8": "§a【Tier 7 ZPM】Universal Naquadah Fuel Engine§r\nA general-purpose large multiblock generator powered by Naquadah fuel.\nSupports multiple Naquadah fuel variants, with power output reaching UV+ levels.\nPair it with the Compressed Naquadah Fuel Refinery to build a complete Naquadah energy system.",
       "globalShare:1": 0,
       "icon:10": {
         "Count:3": 1,
@@ -13,7 +13,7 @@
       "isMain:1": 0,
       "isSilent:1": 0,
       "lockedProgress:1": 0,
-      "name:8": "【Tier 7 ZPM】通用硅岩燃料引擎",
+      "name:8": "【Tier 7 ZPM】Universal Naquadah Fuel Engine",
       "questLogic:8": "AND",
       "repeatTime:3": -1,
       "repeat_relative:1": 1,

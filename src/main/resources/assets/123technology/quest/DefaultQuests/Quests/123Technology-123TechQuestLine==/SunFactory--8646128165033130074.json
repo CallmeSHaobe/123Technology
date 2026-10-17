@@ -2,7 +2,7 @@
   "properties:10": {
     "betterquesting:10": {
       "autoClaim:1": 0,
-      "desc:8": "§a【Tier 12 UMV】红日之将军恩情配件厂§r\n主！体！南！下！\n从某半岛神秘北方国家引进的尖端高科技巨构。\n消耗恩情运行：1t/个；配方产出倍率可在配置文件中调整（默认 1.5，四舍五入）。\n主机放入一团蜂群可获得加速（加速=log2(蜂群数量)，向下取整）。",
+      "desc:8": "§a【Tier 12 UMV】Red Sun General's Grace Component Factory§r\nJuche! Marching! Southward!\nA cutting-edge high-tech megastructure imported from a certain mysterious northern country on a certain peninsula.\nRuns by consuming Grace: 1t each; the recipe output multiplier can be adjusted in the config file (default 1.5, rounded).\nPlace a swarm of bees in the controller for a speed boost (boost = log2(swarm count), rounded down).",
       "globalShare:1": 0,
       "icon:10": {
         "Count:3": 1,
@@ -13,7 +13,7 @@
       "isMain:1": 0,
       "isSilent:1": 0,
       "lockedProgress:1": 0,
-      "name:8": "【Tier 12 UMV】红日之将军恩情配件厂",
+      "name:8": "【Tier 12 UMV】Red Sun General's Grace Component Factory",
       "questLogic:8": "AND",
       "repeatTime:3": -1,
       "repeat_relative:1": 1,

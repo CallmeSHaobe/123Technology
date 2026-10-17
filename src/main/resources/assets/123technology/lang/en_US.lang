@@ -668,7 +668,41 @@ ote.cm.s9in1.2=There are no two suns in the sky; 9-in-1 is the only sun in our h
 ote.tm.bee.0=§aBeedeng's Primary Creation - Beeyonds Home (Large Industrial Apiary)
 ote.tm.bee.1=An HV Large Apiary. #Really only for bees!
 ote.tm.bee.2=Seriously, why not use Industrial Apiaries :)
+ote.tm.bee.3=Production mode: up to (4 x energy tier) queens work in parallel, Alveary-style. Insert queens via any Input Bus.
+ote.tm.bee.4=Breed mode: insert 2 parent bees (princess/queen/drone). Configure target species and traits in the parameter panel. 20s cycle, pristine offspring, 300% drone yield (up to 64).
 ote.cm.bee.0=1 - Energy Hatch, Dynamo Hatch or Laser Hatch, Input/Output Bus/Hatch: Replace Plastic Concrete Block.
+
+otht.quest.beeyonds.name=【Tier 3 HV】Beeyonds Home
+otht.quest.beeyonds.desc=§a【Tier 3 HV】Beeyonds Home§r\nAn industrial-scale multiblock apiary for the Beeyonds bee mod.\nStructure: built from GT basic machine casing, hardened stone, glass, grass, and obsidian — buildable as early as the HV tier.\nHouses and automates management of large numbers of bees, boosting breeding and yield efficiency.\nIntegrates the bee system into an industrial production line — a key facility for mass-producing honey, wax, and other special products.\n§bTwo modes (switch in the parameter panel): §aProduction§b runs up to 4x-energy-tier queens in parallel like an Alveary; §aBreed§b takes 2 parent bees, lets you pick the target species and every trait, and after a 20s cycle outputs a pristine queen or up to 64 drones at 300% yield.
+
+otht.bee.param.mode=Operation Mode
+otht.bee.param.eject=Eject Held Bees
+otht.bee.gui.mode.production=Mode: Production
+otht.bee.gui.mode.breed=Mode: Breed
+otht.bee.gui.eject=Eject Held Bees
+otht.bee.gui.status.production=Production: %d / %d queens active
+otht.bee.gui.status.breed.waiting=Breed: waiting for parents
+otht.bee.gui.status.breed.progress=Breed: %d%% complete
+otht.bee.gui.status.breed.noMutation=Breed: no mutation for this pair - pick a target or eject
+otht.bee.gui.effect.none=Effect: None (mutation default)
+otht.bee.gui.flower.none=Flower: None (mutation default)
+otht.bee.gui.species.none=Target Species: (insert both parents)
+otht.bee.gui.queen.tooltip.producing=Producing %s x%d in %.1fs
+otht.bee.gui.queen.tooltip.noProducts=(no products)
+otht.bee.param.outputKind=Breed Output
+otht.bee.param.species=Target Species
+otht.bee.param.speed=Trait: Speed
+otht.bee.param.fertility=Trait: Fertility
+otht.bee.param.lifespan=Trait: Lifespan
+otht.bee.param.flowering=Trait: Flowering
+otht.bee.param.territory=Trait: Territory
+otht.bee.param.tempTolerance=Trait: Temp. Tolerance
+otht.bee.param.humidTolerance=Trait: Humidity Tolerance
+otht.bee.param.nocturnal=Trait: Nocturnal
+otht.bee.param.tolerantFlyer=Trait: Tolerant Flyer
+otht.bee.param.caveDwelling=Trait: Cave Dwelling
+otht.bee.param.effect=Trait: Effect
+otht.bee.param.flowerProvider=Trait: Flower Provider
 
 
 #MegaThermalCentrifuge

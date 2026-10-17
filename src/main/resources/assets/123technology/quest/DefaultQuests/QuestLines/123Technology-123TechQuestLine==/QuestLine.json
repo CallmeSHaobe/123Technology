@@ -3,7 +3,7 @@
     "betterquesting:10": {
       "bg_image:8": "",
       "bg_size:3": 256,
-      "desc:8": "123Technology Mod 机器任务线\n按制作阶段分类介绍本模组所有多方块机器",
+      "desc:8": "123Technology Mod Machine Quest Line\nIntroduces all the multiblock machines in this mod, organized by crafting stage",
       "icon:10": {
         "Count:3": 1,
         "Damage:2": 0,

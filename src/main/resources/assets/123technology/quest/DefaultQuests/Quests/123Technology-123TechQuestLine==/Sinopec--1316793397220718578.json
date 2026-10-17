@@ -2,7 +2,7 @@
   "properties:10": {
     "betterquesting:10": {
       "autoClaim:1": 0,
-      "desc:8": "§a【Tier 5 IV】中国石化集成工厂§r\n黑金的最终流处...一步到位。\n以中国石化为主题的大型化工集成机器，整合蒸馏/裂解/提炼等流程。\n线圈等级 <10 时耗时倍率 = 1 - 线圈等级*0.1；>=10 时固定为 0.1。\n主机放入铱锇钐合金粉可解锁无损超频及并行限制（默认并行 64）。",
+      "desc:8": "§a【Tier 5 IV】Sinopec Integrated Factory§r\nThe final destination of black gold... done in a single step.\nA large Sinopec-themed integrated chemical machine, combining distillation, cracking, refining, and more into one process.\nAt coil tier <10, time multiplier = 1 - coil tier*0.1; at >=10, it's fixed at 0.1.\nPlace Iridium-Osmium-Samarium alloy dust in the controller to unlock lossless overclocking and lift the parallel cap (default parallel 64).",
       "globalShare:1": 0,
       "icon:10": {
         "Count:3": 1,
@@ -13,7 +13,7 @@
       "isMain:1": 0,
       "isSilent:1": 0,
       "lockedProgress:1": 0,
-      "name:8": "【Tier 5 IV】中国石化集成工厂",
+      "name:8": "【Tier 5 IV】Sinopec Integrated Factory",
       "questLogic:8": "AND",
       "repeatTime:3": -1,
       "repeat_relative:1": 1,

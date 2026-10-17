@@ -2,7 +2,7 @@
   "properties:10": {
     "betterquesting:10": {
       "autoClaim:1": 0,
-      "desc:8": "§a【Tier 0.5 蒸汽】小型蒸汽加工厂§r\n最早可制作的123T多方块机器，在蒸汽时代（Tier 0.5）即可建造。\n集成蒸汽熔炉、蒸汽压缩机、蒸汽锤击等多种蒸汽配方。\n以蒸汽（Steam）驱动，无需任何电力输入，耗电约 4 EU/t 等效。\n是蒸汽时代向低压电时代过渡的核心多方块生产设施。",
+      "desc:8": "§a【Tier 0.5 Steam】Small Steam Processing Plant§r\nThe earliest craftable 123T multiblock machine, buildable as early as the Steam Age (Tier 0.5).\nIntegrates multiple steam recipes such as steam furnace, steam compressor, and steam hammering.\nPowered by steam, requiring no electrical input at all — power draw is roughly equivalent to 4 EU/t.\nThe core multiblock production facility bridging the Steam Age to the Low Voltage electrical age.",
       "globalShare:1": 0,
       "icon:10": {
         "Count:3": 1,
@@ -13,7 +13,7 @@
       "isMain:1": 0,
       "isSilent:1": 0,
       "lockedProgress:1": 0,
-      "name:8": "【Tier 0.5 蒸汽】小型蒸汽加工厂",
+      "name:8": "【Tier 0.5 Steam】Small Steam Processing Plant",
       "questLogic:8": "AND",
       "repeatTime:3": -1,
       "repeat_relative:1": 1,
