@@ -318,7 +318,7 @@ public class RecipesMegaISAForge implements IRecipePool {
             .itemOutputs(setStackSize(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 23543), 1))
             .fluidInputs(FluidRegistry.getFluidStack("molten.solderingalloy", Integer.MAX_VALUE))
             .itemInputs(
-                setStackSize(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 12730), Integer.MAX_VALUE),
+                setStackSize(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 15517), Integer.MAX_VALUE),
                 setStackSize(GTModHandler.getModItem("dreamcraft", "StargateShieldingFoil", 1), 114514),
                 setStackSize(GTModHandler.getModItem("dreamcraft", "StargateFramePart", 1), 114514),
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 15411), 123123123),

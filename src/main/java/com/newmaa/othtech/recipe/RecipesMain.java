@@ -238,9 +238,9 @@ public class RecipesMain implements IRecipePool {
         GTValues.RA.stdBuilder()
             .itemOutputs(getGM(23528, 1))
             .itemInputs(
-                getGM(910, 64),
-                getGM(910, 64),
-                getGM(910, 64),
+                getGM(15565, 64),
+                getGM(15565, 64),
+                getGM(15565, 64),
                 ItemList.Electric_Piston_LuV.get(16),
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UHV, 64),
                 GTUtility.getIntegratedCircuit(17))
@@ -269,7 +269,7 @@ public class RecipesMain implements IRecipePool {
         GTValues.RA.stdBuilder()
             .itemOutputs(getGM(23534, 1))
             .itemInputs(
-                getGM(13366, 2),
+                getGM(15515, 2),
                 getGM(998, 16),
                 ItemList.Electric_Motor_LuV.get(16),
                 ItemList.Electric_Pump_LuV.get(16),
@@ -332,9 +332,9 @@ public class RecipesMain implements IRecipePool {
         GTValues.RA.stdBuilder()
             .itemOutputs(getGM(23535, 1))
             .fluidInputs(FluidRegistry.getFluidStack("molten.solderingalloy", 123 * 144))
-            .itemInputs(
-                getGM(12730, 4),
-                getGM(791, 8),
+            .itemInputsUnsafe(
+                getGM(1000, 64),
+                getGM(15543, 8),
                 getGM(861, 16),
                 ItemList.Sensor_LuV.get(8),
                 ItemList.Electric_Pump_LuV.get(8),
@@ -435,9 +435,9 @@ public class RecipesMain implements IRecipePool {
         GTValues.RA.stdBuilder()
             .itemOutputs(getGM(IDs + 64, 1))
             .itemInputs(
-                getGM(849, 64), // GT++ Industrial Thermal Centrifuge × 64 x 3
-                getGM(849, 64),
-                getGM(849, 64),
+                getGM(15538, 64), // GT++ Industrial Thermal Centrifuge × 64 x 3
+                getGM(15538, 64),
+                getGM(15538, 64),
                 ItemList.Electric_Piston_LuV.get(16),
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UHV, 64),
                 GTUtility.getIntegratedCircuit(17))
@@ -610,7 +610,7 @@ public class RecipesMain implements IRecipePool {
                 GTUtility.getIntegratedCircuit(17),
                 ItemList.Electric_Motor_HV.get(64),
                 ItemList.Casing_HV.get(16),
-                ItemList.LargeSteamTurbine.get(1))
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 15524))
             .duration(123 * 20)
             .eut(123)
             .addTo(Assem);
@@ -987,7 +987,7 @@ public class RecipesMain implements IRecipePool {
             .addTo(Assem);
         // NQF
         GTValues.RA.stdBuilder()
-            .metadata(RESEARCH_ITEM, GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 32001))
+            .metadata(RESEARCH_ITEM, GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 15535))
             .metadata(SCANNING, new Scanning(2400, RECIPE_LuV))
             .itemInputs(
                 ItemList.Casing_ZPM.get(16),
@@ -1002,10 +1002,10 @@ public class RecipesMain implements IRecipePool {
                 new Object[] { OrePrefixes.circuit.get(Materials.UHV), 64 },
                 new Object[] { OrePrefixes.circuit.get(Materials.UHV), 64 },
                 GTOreDictUnificator.get(OrePrefixes.wireGt01, Materials.SuperconductorZPM, 64),
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 32001),
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 12732),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 15535),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 15537),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 1188),
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 32001))
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 15535))
             .fluidInputs(
                 Materials.Naquadria.getMolten(144000),
                 Materials.NaquadahEnriched.getMolten(288000),
@@ -1162,7 +1162,8 @@ public class RecipesMain implements IRecipePool {
             .metadata(RESEARCH_ITEM, OTHItemList.OTEHatchRack.get(1))
             .metadata(SCANNING, new Scanning((24 * HOURS) / 2, RECIPE_UV))
             .itemInputs(
-                GTUtility.copyAmount(8, ItemRegistry.megaMachines[1]),
+                GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 1, 15518),
+//                GTUtility.copyAmount(8, ItemRegistry.megaMachines[1]),
                 CustomItemList.Machine_Multi_Computer.get(8),
                 CustomItemList.Machine_Multi_Switch_Adv.get(8),
                 CustomItemList.DATApipe.get(64),
@@ -1223,7 +1224,7 @@ public class RecipesMain implements IRecipePool {
             .metadata(RESEARCH_ITEM, GTModHandler.getModItem(GoodGenerator.ID, "FRF_Casings", 1))
             .metadata(SCANNING, new Scanning(120, RECIPE_UHV))
             .itemInputs(
-                GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 64, 16999),
+                GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 64, 15536),
                 GTOreDictUnificator.get(OrePrefixes.plateSuperdense, Materials.Naquadah, 64),
                 GTOreDictUnificator.get(OrePrefixes.plateSuperdense, Materials.Naquadria, 64),
                 GTOreDictUnificator.get(OrePrefixes.plateSuperdense, Materials.NaquadahEnriched, 64),
