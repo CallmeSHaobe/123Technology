@@ -230,7 +230,7 @@ zs配方脚本编写请查阅GTTweaker in Github与MineTweaker3 or CraftTweaker�
 
 2.6.x版本支持28x全部版本
 
-建议添加Mod：https://github.com/RetroForge/SkinPort
+~~建议添加Mod：https://github.com/RetroForge/SkinPort~~
 ***
 
 ### 关于模型
