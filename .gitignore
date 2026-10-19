@@ -1,5 +1,9 @@
 .gradle
 .settings
+/HANDOUT.md
+/docs/beeyonds-gui-terminal-box.md
+/docs/mui2-gui-debugging.md
+/docs/mui2-two-mode-gui-patterns.md
 /.idea/
 /tmp/
 /.vscode/

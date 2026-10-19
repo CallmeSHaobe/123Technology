@@ -2,7 +2,7 @@
   "properties:10": {
     "betterquesting:10": {
       "autoClaim:1": 0,
-      "desc:8": "§a【Tier 6 LuV】巨型炽焱高炉§r\nGTPP 巨型高炉的 123T 强化版本，专注大规模冶炼。\n特殊模式：不消耗烈焰之炽焱，但输入仓必须有 >=123*1000L 烈焰之炽焱才可运行。\n参数：EU 消耗 90%，速度 +120%，并行 2048。\n请注意玻璃等级要求；污染过高时请放置消声仓。",
+      "desc:8": "§a【Tier 6 LuV】Mega Blazing Blast Furnace§r\nThe 123T-enhanced version of the GTPP Mega Blast Furnace, focused on large-scale smelting.\nSpecial mode: doesn't consume Blaze's Blazing Flame, but the input hatch must hold >=123*1000L of Blaze's Blazing Flame for it to run.\nParameters: EU consumption 90%, speed +120%, parallel 2048.\nMind the glass tier requirement; place a muffler hatch if pollution gets too high.",
       "globalShare:1": 0,
       "icon:10": {
         "Count:3": 1,
@@ -13,7 +13,7 @@
       "isMain:1": 0,
       "isSilent:1": 0,
       "lockedProgress:1": 0,
-      "name:8": "【Tier 6 LuV】巨型炽焱高炉",
+      "name:8": "【Tier 6 LuV】Mega Blazing Blast Furnace",
       "questLogic:8": "AND",
       "repeatTime:3": -1,
       "repeat_relative:1": 1,

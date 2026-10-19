@@ -669,7 +669,41 @@ ote.cm.s9in1.2=天无二日, 九合一便是我们心中唯一的太阳
 ote.tm.bee.0=§aBee登们的初级造物 - Beeyonds之家(大型工业蜂箱)
 ote.tm.bee.1=一个HV的大型蜂箱. #真的只能养蜂!
 ote.tm.bee.2=说真的, 为什么不用工业蜂箱呢:)
+ote.tm.bee.3=生产模式: 最多(4 x 电压等级)只女王蜂并行工作, 类似蜂箱楼. 通过任意输入总线放入女王蜂.
+ote.tm.bee.4=育种模式: 放入2只亲代蜜蜂(公主/女王/雄蜂). 在参数面板中设置目标物种和性状. 20秒一周期, 产出纯种后代, 雄蜂产量300%(最多64只).
 ote.cm.bee.0=1 - 能源仓, 动力仓或者激光仓, 输入输出总线/仓: 替换塑料混凝土方块
+
+otht.quest.beeyonds.name=【三级 HV】Beeyonds 之家
+otht.quest.beeyonds.desc=§a【Tier 3 HV】Beeyonds 之家§r\n为 Beeyonds 蜜蜂模组提供的工业级多方块蜂房。\n结构：GT基础机械外壳、钢化石、玻璃、草地、黑曜石组成，HV阶段即可建造。\n可容纳并自动化管理大量蜜蜂，提升蜜蜂育种和产出效率。\n将蜜蜂系统融入工业生产线，是蜂蜜/蜡/特殊产物量产的关键设施。\n§b两种模式（在参数面板切换）：§a生产模式§b如同蜂箱楼般并行工作最多4倍能源等级数量的女王蜂；§a育种模式§b放入2只亲代蜜蜂，可自由选择目标物种与每一项性状，20秒周期结束后产出一只纯种女王蜂，或最多64只产量300%的雄蜂。
+
+otht.bee.param.mode=运行模式
+otht.bee.param.eject=排出已容纳的蜂
+otht.bee.gui.mode.production=模式: 生产
+otht.bee.gui.mode.breed=模式: 育种
+otht.bee.gui.eject=排出已容纳的蜂
+otht.bee.gui.status.production=生产中: %d / %d 只女王蜂工作中
+otht.bee.gui.status.breed.waiting=育种: 等待亲代蜜蜂
+otht.bee.gui.status.breed.progress=育种: 完成度 %d%%
+otht.bee.gui.status.breed.noMutation=育种: 这对亲本没有可用突变 - 请选择目标物种或手动弹出
+otht.bee.gui.effect.none=效果: 无(突变默认)
+otht.bee.gui.flower.none=传粉花源: 无(突变默认)
+otht.bee.gui.species.none=目标物种: (需放入两只亲本)
+otht.bee.gui.queen.tooltip.producing=%3$.1f 秒后产出 %1$s x%2$d
+otht.bee.gui.queen.tooltip.noProducts=(无产出)
+otht.bee.param.outputKind=育种产出
+otht.bee.param.species=目标物种
+otht.bee.param.speed=性状: 速度
+otht.bee.param.fertility=性状: 繁殖力
+otht.bee.param.lifespan=性状: 寿命
+otht.bee.param.flowering=性状: 传粉频率
+otht.bee.param.territory=性状: 活动范围
+otht.bee.param.tempTolerance=性状: 温度耐受
+otht.bee.param.humidTolerance=性状: 湿度耐受
+otht.bee.param.nocturnal=性状: 夜行性
+otht.bee.param.tolerantFlyer=性状: 耐雨飞行
+otht.bee.param.caveDwelling=性状: 洞穴栖息
+otht.bee.param.effect=性状: 效果
+otht.bee.param.flowerProvider=性状: 传粉花源
 
 #MegaThermalCentrifuge
 ote.tn.mtc=乌拉尔山脉热分离厂

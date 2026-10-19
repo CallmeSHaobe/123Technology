@@ -2,7 +2,7 @@
   "properties:10": {
     "betterquesting:10": {
       "autoClaim:1": 0,
-      "desc:8": "§a【Tier 6 LuV】巨型凛冰冷冻机§r\nGTPP 巨型冷冻机的 123T 强化版本。\n特殊模式：不消耗极寒之凛冰，但输入仓必须有 >=123*1000L 凛冰才可运行。\n参数：EU 消耗 100%，速度 +100%，并行 1024。\n大规模液态金属与冷冻材料生产不可或缺的机器。",
+      "desc:8": "§a【Tier 6 LuV】Mega Glacial Freezer§r\nThe 123T-enhanced version of the GTPP Mega Freezer.\nSpecial mode: doesn't consume Glacial Deep Freeze, but the input hatch must hold >=123*1000L of Glacial Deep Freeze for it to run.\nParameters: EU consumption 100%, speed +100%, parallel 1024.\nAn indispensable machine for large-scale liquid metal and frozen-material production.",
       "globalShare:1": 0,
       "icon:10": {
         "Count:3": 1,
@@ -13,7 +13,7 @@
       "isMain:1": 0,
       "isSilent:1": 0,
       "lockedProgress:1": 0,
-      "name:8": "【Tier 6 LuV】巨型凛冰冷冻机",
+      "name:8": "【Tier 6 LuV】Mega Glacial Freezer",
       "questLogic:8": "AND",
       "repeatTime:3": -1,
       "repeat_relative:1": 1,

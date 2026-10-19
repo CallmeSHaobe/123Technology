@@ -2,7 +2,7 @@
   "properties:10": {
     "betterquesting:10": {
       "autoClaim:1": 0,
-      "desc:8": "§a【Tier 9 UHV】压缩硅岩燃料精炼厂§r\n专门生产高纯度硅岩燃料的大型精炼厂。\n将原始硅岩材料经多步骤精炼，转化为各级硅岩燃料液体。\n与通用硅岩燃料引擎搭配，构成完整的硅岩能源生产链条。",
+      "desc:8": "§a【Tier 9 UHV】Compressed Naquadah Fuel Refinery§r\nA large refinery dedicated to producing high-purity Naquadah fuel.\nRefines raw Naquadah material through multiple steps, converting it into fuel liquids of every tier.\nPair it with the Universal Naquadah Fuel Engine to form a complete Naquadah energy production chain.",
       "globalShare:1": 0,
       "icon:10": {
         "Count:3": 1,
@@ -13,7 +13,7 @@
       "isMain:1": 0,
       "isSilent:1": 0,
       "lockedProgress:1": 0,
-      "name:8": "【Tier 9 UHV】压缩硅岩燃料精炼厂",
+      "name:8": "【Tier 9 UHV】Compressed Naquadah Fuel Refinery",
       "questLogic:8": "AND",
       "repeatTime:3": -1,
       "repeat_relative:1": 1,

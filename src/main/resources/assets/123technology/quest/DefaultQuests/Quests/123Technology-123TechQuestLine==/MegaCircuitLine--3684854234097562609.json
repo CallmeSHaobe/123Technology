@@ -2,7 +2,7 @@
   "properties:10": {
     "betterquesting:10": {
       "autoClaim:1": 0,
-      "desc:8": "§a【Tier 8 UV】进阶高能电路装配线§r\n超大规模电路装配线，专为 UV+ 阶段高等级电路批量生产设计。\n线圈等级决定加工速度与并行上限。",
+      "desc:8": "§a【Tier 8 UV】Advanced High-Energy Circuit Line§r\nAn ultra-large-scale circuit assembly line, designed specifically for mass-producing high-tier circuits at the UV+ stage.\nCoil tier determines processing speed and the parallel cap.",
       "globalShare:1": 0,
       "icon:10": {
         "Count:3": 1,
@@ -13,7 +13,7 @@
       "isMain:1": 0,
       "isSilent:1": 0,
       "lockedProgress:1": 0,
-      "name:8": "【Tier 8 UV】进阶高能电路装配线",
+      "name:8": "【Tier 8 UV】Advanced High-Energy Circuit Line",
       "questLogic:8": "AND",
       "repeatTime:3": -1,
       "repeat_relative:1": 1,
