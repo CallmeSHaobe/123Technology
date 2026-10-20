@@ -23,7 +23,6 @@ import com.newmaa.othtech.common.blocks.fluids.RossFluids;
 import com.newmaa.othtech.common.blocks.oterender.OTERocketRender;
 import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
 import com.newmaa.othtech.common.dimensions.RegisterDimensions;
-import com.newmaa.othtech.common.dimensions.gtoregen.AntimoniaGTOreVeinReg;
 import com.newmaa.othtech.common.item.ItemLoader;
 import com.newmaa.othtech.common.materials.BWMaterialsLocalization;
 import com.newmaa.othtech.common.materials.MaterialsLoader;
@@ -119,7 +118,6 @@ public class OTHTechnology {
     @Mod.EventHandler
     // postInit "Handle interaction with other mods, complete your setup based on this." (Remove if not needed)
     public void postInit(FMLPostInitializationEvent event) {
-        AntimoniaGTOreVeinReg.register();
         proxy.postInit(event);
         LOG.info("The Isa Mill is invincible!");
         LOG.info("NewMaa的恩情还不完!");// 这个不是我写的。

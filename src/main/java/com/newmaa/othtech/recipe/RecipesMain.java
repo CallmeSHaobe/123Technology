@@ -46,7 +46,6 @@ import com.newmaa.othtech.common.materials.BWLiquids;
 import com.newmaa.othtech.common.materials.BWMaterials;
 import com.newmaa.othtech.utils.RecipeBuilder;
 
-import bartworks.common.loaders.ItemRegistry;
 import goodgenerator.loader.Loaders;
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
@@ -1163,7 +1162,7 @@ public class RecipesMain implements IRecipePool {
             .metadata(SCANNING, new Scanning((24 * HOURS) / 2, RECIPE_UV))
             .itemInputs(
                 GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 1, 15518),
-//                GTUtility.copyAmount(8, ItemRegistry.megaMachines[1]),
+                // GTUtility.copyAmount(8, ItemRegistry.megaMachines[1]),
                 CustomItemList.Machine_Multi_Computer.get(8),
                 CustomItemList.Machine_Multi_Switch_Adv.get(8),
                 CustomItemList.DATApipe.get(64),

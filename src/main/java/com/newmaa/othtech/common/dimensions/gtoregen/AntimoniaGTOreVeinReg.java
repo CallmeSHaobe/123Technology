@@ -1,47 +1,41 @@
 package com.newmaa.othtech.common.dimensions.gtoregen;
 
-import static com.newmaa.othtech.common.dimensions.RegisterDimensions.ANTIMONIA_NAME;
-
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-import gregtech.api.enums.Materials;
-import gregtech.api.enums.StoneType;
-import gregtech.api.interfaces.IOreMaterial;
 import gregtech.common.OreMixBuilder;
 import gregtech.common.WorldgenGTOreLayer;
-import gtneioreplugin.util.DimensionHelper;
 
 public final class AntimoniaGTOreVeinReg {
 
-    private static void registerVein(String name, IOreMaterial material, int weight, int minY, int maxY, int density,
-        int size) {
-        new WorldgenGTOreLayer(
-            new OreMixBuilder().name(name)
-                .enableInDim(ANTIMONIA_NAME)
-                .heightRange(minY, maxY)
-                .weight(weight)
-                .density(density)
-                .size(size)
-                .primary(material)
-                .secondary(material)
-                .inBetween(material)
-                .sporadic(material));
+    // GPT NIUBI
+    private static final List<OreMixBuilder> BUILDERS = new ArrayList<>();
+
+    private static final Set<String> REGISTERED_NAMES = new HashSet<>();
+
+    private AntimoniaGTOreVeinReg() {}
+
+    public static void register(OreMixBuilder builder) {
+        if (builder == null || builder.oreMixName == null) {
+            throw new IllegalArgumentException("Custom vein must have a name");
+        }
+
+        // 避免同一个自定义矿脉重复注册
+        if (!REGISTERED_NAMES.add(builder.oreMixName)) {
+            return;
+        }
+
+        // 保存 Builder，供 NEI 生成显示数据
+        BUILDERS.add(builder);
+
+        // 注册真正的 GT 大矿脉生成器
+        new WorldgenGTOreLayer(builder);
     }
 
-    public static void register() {
-        // ZMY矿脉
-        DimensionHelper.register(
-            "planet.Antimonia",
-            ANTIMONIA_NAME,
-            "Antimonia",
-            "sb",
-            "gtnop.tier.4",
-            Collections.singletonList(StoneType.Stone));
-
-        registerVein("ore.Antimonia.zmy.sb", Materials.Antimony, 110, 20, 100, 5, 28);
-
-        registerVein("ore.Antimonia.zmy.b", Materials.Boron, 110, 20, 100, 5, 28);
-
-        registerVein("ore.Antimonia.zmy.s", Materials.Sulfur, 110, 20, 100, 5, 28);
+    public static List<OreMixBuilder> getBuilders() {
+        return Collections.unmodifiableList(BUILDERS);
     }
 }
