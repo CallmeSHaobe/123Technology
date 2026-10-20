@@ -28,16 +28,25 @@ import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.MinecraftForge;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.kuba6000.mobsinfo.api.DummyWorld;
 import com.kuba6000.mobsinfo.api.IChanceModifier;
+import com.kuba6000.mobsinfo.api.IMobInfoProvider;
 import com.kuba6000.mobsinfo.api.MobDrop;
 import com.kuba6000.mobsinfo.api.MobRecipe;
 import com.kuba6000.mobsinfo.api.event.PostMobRegistrationEvent;
 import com.kuba6000.mobsinfo.api.event.PreMobsRegistrationEvent;
+import com.kuba6000.mobsinfo.loader.MobRecipeLoader;
+import com.newmaa.othtech.common.entity.EntityFakePlayer;
 import com.newmaa.othtech.machine.OTEMegaEEC;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -53,6 +62,12 @@ public class OTHMobHandlerLoader {
     }
 
     public static Map<String, MobEECRecipe> recipeMap = new HashMap<>();
+
+    /** 本模组自己注册、需要在 EEC / mobsinfo 里出现的实体 */
+    private static final List<Class<? extends EntityLiving>> OWN_MOBS = java.util.Collections
+        .singletonList(EntityFakePlayer.class);
+
+    private static final Logger LOG = LogManager.getLogger("123Technology/MobHandler");
 
     public static class MobEECRecipe {
 
@@ -144,6 +159,39 @@ public class OTHMobHandlerLoader {
     @SuppressWarnings("unused")
     public void onPreMobsRegistration(PreMobsRegistrationEvent event) {
         recipeMap.clear();
+        registerOwnMobsIfMissing();
+    }
+
+    /**
+     * 把本模组自己的实体补进 mobsinfo 的 {@code GeneralMobList}。
+     * <p>
+     * mobsinfo 的掉落缓存（{@code config/mobsinfo/MobRecipeLoader.cache}）默认只在「模组集合」变化时失效
+     * （{@code ModAdditionRemoval}，见 {@code ModUtils#getModListVersionForMobDrops(false)}，版本号不参与比较）。
+     * 也就是说老存档里缓存一旦生成，本模组后续新增/修改的实体就永远不会被扫描进去 ——
+     * 表现为 mobsinfo 里看不到该实体，而依赖 mobsinfo 注册事件的 EEC 自然也不会得到配方
+     * （issue #253）。
+     * <p>
+     * {@code PreMobsRegistrationEvent} 在 mobsinfo 开始处理前触发（服务端和客户端两条路径都会 fire），
+     * 在这里补登记等于走和原生扫描完全相同的管线：后续会正常触发 {@code PostMobRegistrationEvent}，
+     * 从而同时修好 mobsinfo 显示与本模组 EEC 的配方表。
+     */
+    private static void registerOwnMobsIfMissing() {
+        for (Class<? extends EntityLiving> clazz : OWN_MOBS) {
+            String mobName = EntityList.classToStringMapping.get(clazz);
+            if (mobName == null || MobRecipeLoader.GeneralMobList.containsKey(mobName)) continue;
+
+            Entity entity = EntityList.createEntityByName(mobName, new DummyWorld());
+            if (!(entity instanceof EntityLiving mob) || !(entity instanceof IMobInfoProvider provider)) continue;
+
+            ArrayList<MobDrop> drops = new ArrayList<>();
+            provider.provideDropsInformation(drops);
+            for (MobDrop drop : drops) drop.clampChance();
+
+            MobRecipe recipe = MobRecipe.generateMobRecipe(mob, mobName, drops);
+            MobRecipeLoader.GeneralMobList.put(mobName, new MobRecipeLoader.GeneralMappedMob(mob, recipe, drops, true));
+
+            LOG.info("Registered own mob {} into mobsinfo (cache did not contain it)", mobName);
+        }
     }
 
     @SubscribeEvent

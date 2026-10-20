@@ -6,13 +6,10 @@
   "target": "@env(DEFAULT)",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "GTOreGenOTHMixin",
     "GTDimDefOTHMixin",
-    "GTNEIDimensionHelperOTHMixin",
     "GTOreLayerHelperOTHMixin",
-    "ItemDimensionDisplayRendererOTHMixin",
-    "BlockDimensionDisplayOTHMixin",
-    "GTOrePrefixOTHMixin"
+    "GTOrePrefixOTHMixin",
+    "ItemDimensionDisplayRendererOTHMixin"
   ],
   "client": [],
   "server": []

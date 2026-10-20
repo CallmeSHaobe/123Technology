@@ -25,6 +25,7 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
+import com.newmaa.othtech.machine.machineclass.EIOSpawnerBinding;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
 
@@ -131,38 +132,20 @@ public class OTEEIO extends OTHMultiMachineBase<OTEEIO> {
             mEUt = 114;
             mMaxProgresstime = 100;
 
-            ItemStack soulVessel = null;
-            ItemStack brokenSpawner = null;
-
-            for (ItemStack soul : getAllStoredInputs()) {
-                if (soul.getItem() == EnderIO.itemSoulVessel) {
-                    soulVessel = soul;
-                    break;
-                }
-            }
-
-            for (ItemStack spawner : getAllStoredInputs()) {
-                if (spawner.getItem() == EnderIO.itemBrokenSpawner) {
-                    brokenSpawner = spawner;
-                    break;
-                }
-            }
+            List<ItemStack> storedInputs = getAllStoredInputs();
+            ItemStack soulVessel = EIOSpawnerBinding.findSoulVessel(storedInputs);
+            ItemStack brokenSpawner = EIOSpawnerBinding.findBrokenSpawner(storedInputs);
 
             if (soulVessel == null || brokenSpawner == null) {
                 return CheckRecipeResultRegistry.NO_RECIPE;
             }
 
-            NBTTagCompound soulTag = soulVessel.getTagCompound();
-            if (soulTag == null || !soulTag.hasKey("id")) {
+            String mobType = EnderIO.itemSoulVessel.getMobTypeFromStack(soulVessel);
+            if (mobType == null || mobType.isEmpty()) {
                 return CheckRecipeResultRegistry.NO_RECIPE;
             }
 
-            String mobType = soulTag.getString("id");
-            ItemStack outputItem = brokenSpawner.copy();
-            NBTTagCompound spawnerTag = new NBTTagCompound();
-            spawnerTag.setString("mobType", mobType);
-            outputItem.setTagCompound(spawnerTag);
-            outputItem.stackSize = 1;
+            ItemStack outputItem = EIOSpawnerBinding.createBoundSpawner(brokenSpawner, mobType);
 
             mOutputItems = new ItemStack[] { outputItem, new ItemStack(EnderIO.itemSoulVessel) };
             soulVessel.stackSize--;

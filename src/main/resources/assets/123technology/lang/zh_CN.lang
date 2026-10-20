@@ -142,6 +142,21 @@ fluid.IrOsSm.name=铱锇钐
 bw.werkstoff.12320.name=铱锇钐
 LCL=L.C.L
 
+#BartWorks Werkstoff 材料名（GT5U 5.09.54+ 的物品名读取 Material.<varName 小写>）
+Material.fluidgalaxy=熔融星系
+Material.fluidvoid=虚空熵流
+Material.moltenstar=星尘熔融
+Material.fuela=§d高辛烷超能硅岩火箭燃料
+Material.fuela_de=§d枯竭的高辛烷超能硅岩火箭燃料
+Material.promoterzpm=原子分离助燃剂
+Material.promoteruev=超维度等离子助燃剂
+Material.hcl10=超盐酸
+Material.hcl100=极盐酸
+Material.hcl1000=奇盐酸
+Material.hcl10000=魔盐酸
+Material.hcl100000=终盐酸
+Material.irossm=铱锇钐
+
 #Galaxy
 otht.tier.0=锑星
 planet.Antimonia=§oAntimonia - 锑星

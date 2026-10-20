@@ -22,10 +22,12 @@ import com.newmaa.othtech.common.blocks.fluids.AntimoniaFluids;
 import com.newmaa.othtech.common.blocks.fluids.RossFluids;
 import com.newmaa.othtech.common.blocks.oterender.OTERocketRender;
 import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
+import com.newmaa.othtech.common.dimensions.OTHDimensionIntegration;
 import com.newmaa.othtech.common.dimensions.RegisterDimensions;
 import com.newmaa.othtech.common.item.ItemLoader;
 import com.newmaa.othtech.common.materials.BWMaterialsLocalization;
 import com.newmaa.othtech.common.materials.MaterialsLoader;
+import com.newmaa.othtech.common.recipemap.MegaCALRecipeLoader;
 import com.newmaa.othtech.common.recipemap.NEIRecipeMaps;
 import com.newmaa.othtech.event.EventPlayerDied;
 import com.newmaa.othtech.machine.MachineLoader;
@@ -45,6 +47,7 @@ import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import gregtech.api.GregTechAPI;
 import gtnhintergalactic.recipe.SpacePumpingRecipes;
 
 @Mod(
@@ -87,6 +90,17 @@ public class OTHTechnology {
     // preInit "Run before anything else. Read your config, create blocks, items, etc, and register them with the
     // GameRegistry." (Remove if not needed)
     public void preInit(FMLPreInitializationEvent event) {
+        // 锑星的 NEI 维度数据与 GT 矿脉注册（替代原 GTNEIDimensionHelperOTHMixin / GTOreGenOTHMixin）
+        OTHDimensionIntegration.registerNEIDimension();
+        OTHDimensionIntegration.scheduleOreVeinRegistration();
+        // 进阶高能电路装配线的配方池：在 FML load complete 阶段（dreamcraft 注册完 CAL 配方之后）
+        // 拷贝 CAL 配方并去掉压印电路需求
+        if (GregTechAPI.sGTCompleteLoad != null) {
+            GregTechAPI.sGTCompleteLoad.add(MegaCALRecipeLoader::load);
+        } else {
+            MegaCALRecipeLoader.load();
+        }
+
         new BWMaterialsLocalization().loader();
         new CreativeTabsLoader(event);
         new ItemLoader(event);

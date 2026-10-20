@@ -145,6 +145,21 @@ fluid.IrOsSm.name=Iridiosamarium
 bw.werkstoff.12320.name=Iridiosamarium
 LCL=L.C.L
 
+#BartWorks Werkstoff material names (GT5U 5.09.54+ item names read Material.<lowercased varName>)
+Material.fluidgalaxy=Molten Galaxy
+Material.fluidvoid=Void Entropy Flow
+Material.moltenstar=Molten Stardust
+Material.fuela=§dHigh Octane Super Naquadah Rocket Fuel
+Material.fuela_de=§dDepleted High Octane Super Naquadah Rocket Fuel
+Material.promoterzpm=Atomic Separation Promoter
+Material.promoteruev=Hyperdimensional Plasma Promoter
+Material.hcl10=Super Hydrochloric Acid
+Material.hcl100=Extreme Hydrochloric Acid
+Material.hcl1000=Strange Hydrochloric Acid
+Material.hcl10000=Magic Hydrochloric Acid
+Material.hcl100000=Final Hydrochloric Acid
+Material.irossm=Iridiosamarium
+
 #Galaxy
 planet.Antimonia=§oAntimonia - Antimony Star
 planet.Ross123b=§oRoss123b - Antimony Ross

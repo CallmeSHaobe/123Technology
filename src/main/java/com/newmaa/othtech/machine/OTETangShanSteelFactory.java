@@ -183,7 +183,9 @@ public class OTETangShanSteelFactory extends OTHMultiMachineBase<OTETangShanStee
             @NotNull
             @Override
             protected CheckRecipeResult validateRecipe(@NotNull GTRecipe recipe) {
-                if (recipe.mSpecialValue > coilLevel.getHeat()) {
+                // 结构尚未检查过时 coilLevel 可能为 null，按“无线圈”处理，避免 NPE
+                HeatingCoilLevel coil = coilLevel == null ? HeatingCoilLevel.None : coilLevel;
+                if (recipe.mSpecialValue > coil.getHeat()) {
                     return SimpleCheckRecipeResult.ofFailure("HeatErr");
                 }
                 setOverclock(isEnablePerfectOverclock() ? 4 : 2, 4);
@@ -272,8 +274,11 @@ public class OTETangShanSteelFactory extends OTHMultiMachineBase<OTETangShanStee
 
     @Override
     public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
-        if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
+        // 必须先重置再扫描：线圈等级是 checkPiece() 扫描结构时由 ofCoil 回调写进 coilLevel 的。
+        // 原来这行写在 checkPiece 之后，会把刚检测到的等级又抹成 None —— heat = 0，
+        // 于是所有需要加热的配方都返回 GT5U.gui.test.recipe_result.HeatErr（issue #252）。
         coilLevel = HeatingCoilLevel.None;
+        if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
         repairMachine();
     }
 
