@@ -22,6 +22,7 @@ import com.newmaa.othtech.common.blocks.fluids.AntimoniaFluids;
 import com.newmaa.othtech.common.blocks.fluids.RossFluids;
 import com.newmaa.othtech.common.blocks.oterender.OTERocketRender;
 import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
+import com.newmaa.othtech.common.dimensions.AntimoniaUndergroundFluids;
 import com.newmaa.othtech.common.dimensions.OTHDimensionIntegration;
 import com.newmaa.othtech.common.dimensions.RegisterDimensions;
 import com.newmaa.othtech.common.item.ItemLoader;
@@ -123,6 +124,7 @@ public class OTHTechnology {
         proxy.init(event);
         MachineLoader.loadMachines();
         new RegisterDimensions().init();
+        AntimoniaUndergroundFluids.register();
         NEIRecipeMaps.IMCSender();
     }
 

@@ -321,10 +321,16 @@ ote.tm.ft.0=§lLaodeng's Ultimate Creation - Alien Fishery
 ote.tm.ft.1=§bPraise the great creator Dr.Jumping! Without her universal formula 'Lord = 6', how could Laodengs ever have the chance to use such a machine?
 ote.tm.ft.2=§bSpecific fishing principle: The Jumping Identity solves the uncertainty problem inherent in dimension blocks, making the establishment of small dimensions inside the fishery possible. Various 'fish' will be caught by the Cuttlefish God inside the fishery.
 ote.tm.ft.3='Fish' includes fish, walruses, leek boxes, Cetus Algae, Cubic Fish, Mossy Stone Bricks, etc. *Maybe can use Antimony Star dimension blocks, but consequences自负.
-ote.tm.ft.4=Performs Perfect OC, Glass Tier determines Energy Hatch Tier.
-ote.tm.ft.5=Main block requires a Dimension Block.
+ote.tm.ft.4=The Dimension Block in the controller slot decides the pool: T0 rolls T0 dimension dusts, T1/T2 and so on
+ote.tm.ft.5=From T2 it also rolls machines and parts of tier N-1: T2->LV, T3->MV, up to T9->UV
 ote.tm.ft.6=Random output, oh the dreaded gacha. LOL.
-ote.cm.ft.0=1 - Input/Output Bus, Input/Output Hatch, Energy Hatch : Replace Fishery Machine Casing, supports TecTech Energy Hatch.
+ote.tm.ft.7=Input 1000 Gratitude for one roll of the whole item pool; one roll every 5 seconds, 1A of the hatch tier
+ote.tm.ft.mode.on=Switched to: Spawner Binding Mode
+ote.tm.ft.mode.off=Switched to: Fishing Mode
+ote.cm.ft.0=1 - Input/Output Bus, Input/Output Hatch, Energy Hatch : Replace Fishery Machine Casing; put the Dimension Block in the controller slot or an input bus
+GT5U.gui.text.recipe_result.ft_no_dim=§4No Dimension Block in the controller slot
+GT5U.gui.text.recipe_result.ft_no_pool=§4Nothing to roll for this dimension tier
+GT5U.gui.text.recipe_result.ft_no_enqing=§4Not enough Gratitude (needs 1000)
 
 #FoodGenerator
 ote.tm.food.0=Just a generator.

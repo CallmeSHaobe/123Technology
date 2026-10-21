@@ -2,6 +2,7 @@ package com.newmaa.othtech.machine;
 
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.*;
 import static gregtech.api.enums.HatchElement.*;
+import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static net.minecraft.util.StatCollector.translateToLocal;
 
 import java.util.List;
@@ -18,25 +19,31 @@ import org.jetbrains.annotations.NotNull;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
+import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.machine.machineclass.EIOSpawnerBinding;
+import com.newmaa.othtech.machine.machineclass.FishtorioLootTable;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 
 import crazypants.enderio.EnderIO;
+import gregtech.api.enums.GTValues;
 import gregtech.api.enums.TAE;
 import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
-import gregtech.api.logic.ProcessingLogic;
+import gregtech.api.metatileentity.implementations.MTEHatchInputBus;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
+import gregtech.api.recipe.check.SimpleCheckRecipeResult;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.structure.error.StructureError;
-import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
+import gregtech.common.tileentities.machines.MTEHatchInputBusME;
+import gtPlusPlus.core.block.ModBlocks;
 import gtPlusPlus.xmod.gregtech.common.blocks.textures.TexturesGtBlock;
+import gtneioreplugin.plugin.item.ItemDimensionDisplay;
 
 public class OTEFishtorio extends OTHMultiMachineBase<OTEFishtorio> {
     // TODO 憋憋渔场.
@@ -50,6 +57,9 @@ public class OTEFishtorio extends OTHMultiMachineBase<OTEFishtorio> {
     }
 
     public boolean mode = false;
+
+    /** 一次全物品池抽奖需要的恩情数量 */
+    private static final int ENQING_PER_FULL_POOL = 1000;
 
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
@@ -84,72 +94,135 @@ public class OTEFishtorio extends OTHMultiMachineBase<OTEFishtorio> {
     }
 
     @Override
-    protected ProcessingLogic createProcessingLogic() {
-
-        return new ProcessingLogic() {
-
-            @NotNull
-            @Override
-            public CheckRecipeResult process() {
-                setSpeedBonus(getSpeedBonus());
-                setOverclock(isEnablePerfectOverclock() ? 4 : 2, 4);
-                return super.process();
-            }
-
-            @NotNull
-            @Override
-            protected CheckRecipeResult validateRecipe(@NotNull GTRecipe recipe) {
-                return CheckRecipeResultRegistry.SUCCESSFUL;
-            }
-
-        }.setMaxParallelSupplier(this::getMaxParallelRecipes);
-    }
-
-    @Override
     @NotNull
     public CheckRecipeResult checkProcessing() {
+        return mode ? doBindSpawner() : doFishing();
+    }
 
-        setupProcessingLogic(processingLogic);
+    /** 捕鱼: 主机槽的维度方块决定抽奖池, 输入 1000 恩情可以改抽全物品池 */
+    @NotNull
+    private CheckRecipeResult doFishing() {
+        boolean fullPool = countEnqing() >= ENQING_PER_FULL_POOL;
+        int tier = 0;
+        List<ItemStack> pool;
 
-        if (!mode) {
-            CheckRecipeResult result = doCheckRecipe();
-            result = postCheckRecipe(result, processingLogic);
-            updateSlots();
-            if (!result.wasSuccessful()) return result;
-
-            mEfficiency = 10000;
-            mEfficiencyIncrease = 10000;
-            mMaxProgresstime = processingLogic.getDuration();
-            mOutputItems = processingLogic.getOutputItems();
-            mOutputFluids = processingLogic.getOutputFluids();
-            setEnergyUsage(processingLogic);
+        if (fullPool) {
+            pool = FishtorioLootTable.allItems();
         } else {
-            mEUt = 114;
-            mMaxProgresstime = 100;
-
-            List<ItemStack> storedInputs = getAllStoredInputs();
-            ItemStack soulVessel = EIOSpawnerBinding.findSoulVessel(storedInputs);
-            ItemStack brokenSpawner = EIOSpawnerBinding.findBrokenSpawner(storedInputs);
-
-            if (soulVessel == null || brokenSpawner == null) {
-                return CheckRecipeResultRegistry.NO_RECIPE;
-            }
-
-            String mobType = EnderIO.itemSoulVessel.getMobTypeFromStack(soulVessel);
-            if (mobType == null || mobType.isEmpty()) {
-                return CheckRecipeResultRegistry.NO_RECIPE;
-            }
-
-            ItemStack outputItem = EIOSpawnerBinding.createBoundSpawner(brokenSpawner, mobType);
-
-            mOutputItems = new ItemStack[] { outputItem, new ItemStack(EnderIO.itemSoulVessel) };
-            soulVessel.stackSize--;
-            brokenSpawner.stackSize--;
-
-            updateSlots();
-            return CheckRecipeResultRegistry.SUCCESSFUL;
+            ItemStack dimensionBlock = findDimensionBlock();
+            if (dimensionBlock == null) return SimpleCheckRecipeResult.ofFailure("ft_no_dim");
+            tier = FishtorioLootTable.dimensionTier(ItemDimensionDisplay.getDimension(dimensionBlock));
+            if (tier < 0) return SimpleCheckRecipeResult.ofFailure("ft_no_dim");
+            pool = FishtorioLootTable.poolForTier(tier);
         }
-        return CheckRecipeResultRegistry.NO_RECIPE;
+
+        if (pool == null || pool.isEmpty()) return SimpleCheckRecipeResult.ofFailure("ft_no_pool");
+        if (fullPool && !consumeEnqing(ENQING_PER_FULL_POOL)) {
+            return SimpleCheckRecipeResult.ofFailure("ft_no_enqing");
+        }
+
+        ItemStack output = pool.get(getBaseMetaTileEntity().getWorld().rand.nextInt(pool.size()))
+            .copy();
+        output.stackSize = Math.min(1 + getBaseMetaTileEntity().getWorld().rand.nextInt(4), output.getMaxStackSize());
+
+        mEUt = (int) -GTValues.V[Math.min(15, Math.max(1, GTUtility.getTier(getMaxInputVoltage())))];
+        mMaxProgresstime = 100;
+        mEfficiency = 10000;
+        mEfficiencyIncrease = 10000;
+        mOutputItems = new ItemStack[] { output };
+        mOutputFluids = null;
+        updateSlots();
+        return CheckRecipeResultRegistry.SUCCESSFUL;
+    }
+
+    @NotNull
+    private CheckRecipeResult doBindSpawner() {
+        // GT 里 mEUt 正数是发电, 消耗必须为负
+        mEUt = -114;
+        mMaxProgresstime = 100;
+        mEfficiency = 10000;
+        mEfficiencyIncrease = 10000;
+        mOutputFluids = null;
+
+        List<ItemStack> storedInputs = getAllStoredInputs();
+        ItemStack soulVessel = EIOSpawnerBinding.findSoulVessel(storedInputs);
+        ItemStack brokenSpawner = EIOSpawnerBinding.findBrokenSpawner(storedInputs);
+
+        if (soulVessel == null || brokenSpawner == null) {
+            return CheckRecipeResultRegistry.NO_RECIPE;
+        }
+
+        String mobType = EnderIO.itemSoulVessel.getMobTypeFromStack(soulVessel);
+        if (mobType == null || mobType.isEmpty()) {
+            return CheckRecipeResultRegistry.NO_RECIPE;
+        }
+
+        ItemStack outputItem = EIOSpawnerBinding.createBoundSpawner(brokenSpawner, mobType);
+
+        mOutputItems = new ItemStack[] { outputItem, new ItemStack(EnderIO.itemSoulVessel) };
+        soulVessel.stackSize--;
+        brokenSpawner.stackSize--;
+
+        updateSlots();
+        return CheckRecipeResultRegistry.SUCCESSFUL;
+    }
+
+    /** 维度方块放主机槽或输入总线都行, 不会被消耗 */
+    private ItemStack findDimensionBlock() {
+        ItemStack controllerSlot = getControllerSlot();
+        if (controllerSlot != null && controllerSlot.getItem() instanceof ItemDimensionDisplay) return controllerSlot;
+
+        for (MTEHatchInputBus bus : GTUtility.filterValidMTEs(mInputBusses)) {
+            if (bus instanceof MTEHatchInputBusME) continue;
+            IGregTechTileEntity tile = bus.getBaseMetaTileEntity();
+            for (int i = 0; i < tile.getSizeInventory(); i++) {
+                ItemStack stack = tile.getStackInSlot(i);
+                if (stack != null && stack.getItem() instanceof ItemDimensionDisplay) return stack;
+            }
+        }
+        return null;
+    }
+
+    private static ItemStack enqing;
+
+    private static ItemStack enqingStack() {
+        if (enqing == null) enqing = OTHItemList.itemEnqingM.get(1);
+        return enqing;
+    }
+
+    private int countEnqing() {
+        ItemStack sample = enqingStack();
+        int count = 0;
+        for (MTEHatchInputBus bus : GTUtility.filterValidMTEs(mInputBusses)) {
+            if (bus instanceof MTEHatchInputBusME) continue;
+            IGregTechTileEntity tile = bus.getBaseMetaTileEntity();
+            for (int i = 0; i < tile.getSizeInventory(); i++) {
+                ItemStack stack = tile.getStackInSlot(i);
+                if (stack != null && GTUtility.areStacksEqual(stack, sample)) count += stack.stackSize;
+            }
+        }
+        return count;
+    }
+
+    /** ME 总线里的东西抹不掉, 所以不计入 */
+    private boolean consumeEnqing(int amount) {
+        ItemStack sample = enqingStack();
+        int left = amount;
+        for (MTEHatchInputBus bus : GTUtility.filterValidMTEs(mInputBusses)) {
+            if (bus instanceof MTEHatchInputBusME) continue;
+            IGregTechTileEntity tile = bus.getBaseMetaTileEntity();
+            for (int i = 0; i < tile.getSizeInventory() && left > 0; i++) {
+                ItemStack stack = tile.getStackInSlot(i);
+                if (stack == null || !GTUtility.areStacksEqual(stack, sample)) continue;
+                int used = Math.min(left, stack.stackSize);
+                left -= used;
+                int remaining = stack.stackSize - used;
+                stack.stackSize = remaining;
+                if (remaining <= 0) tile.setInventorySlotContents(i, null);
+            }
+            if (left <= 0) break;
+        }
+        return left <= 0;
     }
 
     @Override
@@ -191,7 +264,9 @@ public class OTEFishtorio extends OTHMultiMachineBase<OTEFishtorio> {
         } else {
             mode = false;
         }
-        GTUtility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal(mode ? "刷怪笼绑定模式启动" : "刷怪笼绑定模式关闭"));
+        GTUtility.sendChatToPlayer(
+            aPlayer,
+            StatCollector.translateToLocal(mode ? "ote.tm.ft.mode.on" : "ote.tm.ft.mode.off"));
     }
 
     private static final String STRUCTURE_PIECE_MAIN = "main";
@@ -201,8 +276,7 @@ public class OTEFishtorio extends OTHMultiMachineBase<OTEFishtorio> {
     private final int depthOffSet = 0;
     private static IStructureDefinition<OTEFishtorio> STRUCTURE_DEFINITION = null;
     private static final String[] description = new String[] {
-        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":",
-        translateToLocal("1 - 输入输出总线, 输入输出仓, 能源仓 : 替换渔场机械方块, 支持TecTech能源仓") };
+        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.ft.0") };
 
     @Override
     public String[] getStructureDescription(ItemStack stackSize) {
@@ -213,14 +287,24 @@ public class OTEFishtorio extends OTHMultiMachineBase<OTEFishtorio> {
     public IStructureDefinition<OTEFishtorio> getStructureDefinition() {
         if (STRUCTURE_DEFINITION == null) {
             STRUCTURE_DEFINITION = StructureDefinition.<OTEFishtorio>builder()
-                .addShape(STRUCTURE_PIECE_MAIN, transpose(shapeMain))
+                .addShape(STRUCTURE_PIECE_MAIN, shapeMain)
+                .addElement(
+                    'C',
+                    buildHatchAdder(OTEFishtorio.class)
+                        .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch)
+                        .adder(OTEFishtorio::addToMachineList)
+                        .hint(1)
+                        .casingIndex(TAE.GTPP_INDEX(32))
+                        .buildAndChain(ofBlock(ModBlocks.blockCasings3Misc, 0)))
                 .build();
         }
         return STRUCTURE_DEFINITION;
     }
 
-    // Structured by LyeeR
-    private final String[][] shapeMain = new String[][] { {} };
+    /** 7×4×5 的空心壳体, 切片顺序是 [深度][高度][宽度] */
+    private final String[][] shapeMain = new String[][] { { "CCCCCCC", "CCCCCCC", "CCCCCCC", "CCC~CCC" },
+        { "CCCCCCC", "C     C", "C     C", "CCCCCCC" }, { "CCCCCCC", "C     C", "C     C", "CCCCCCC" },
+        { "CCCCCCC", "C     C", "C     C", "CCCCCCC" }, { "CCCCCCC", "CCCCCCC", "CCCCCCC", "CCCCCCC" } };
 
     @Override
     public boolean addToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
@@ -263,6 +347,7 @@ public class OTEFishtorio extends OTHMultiMachineBase<OTEFishtorio> {
             .addInfo(EnumChatFormatting.ITALIC + translateToLocal("ote.tm.ft.3"))
             .addInfo(EnumChatFormatting.WHITE + translateToLocal("ote.tm.ft.4"))
             .addInfo(EnumChatFormatting.WHITE + translateToLocal("ote.tm.ft.5"))
+            .addInfo(EnumChatFormatting.WHITE + translateToLocal("ote.tm.ft.7"))
             .addInfo(translateToLocal("ote.tm.ft.6"))
             .addTecTechHatchInfo()
             .addSeparator()

@@ -323,10 +323,16 @@ ote.tm.ft.0=§l老登的终极造物 - 异星渔场
 ote.tm.ft.1=§b赞美伟大的造物主Dr.Jumping! 如果没有她的万物至理公式'主 = 6', 老登们又怎么可能会有机会用到如此机器呢 ?
 ote.tm.ft.2=§b具体捕鱼原理 : Jumping恒等式解决了维度方块所蕴含的不确定性问题, 从而使得渔场内部小型维度的建立成为可能, 各种'鱼'将会被渔场内部的墨鱼之神所捕捉.
 ote.tm.ft.3='鱼'包括鱼, 海象, 韭菜盒子, 鲸鱼座藻类, 立方休, 苔石墙 etc. *也许可以放入锑星的维度方块, 但后果自负.
-ote.tm.ft.4=执行无损超频, 玻璃等级决定能源仓等级
-ote.tm.ft.5=主机需要放入维度方块
+ote.tm.ft.4=主机槽放入维度方块决定抽奖池: T0 抽 T0 维度矿粉, T1/T2 以此类推
+ote.tm.ft.5=T2 起额外附带 T(N)-1 电压的机器与部件: T2→LV, T3→MV, 一直到 T9→UV
 ote.tm.ft.6=随机产出喔, 可恶的抽卡. 憋憋.
-ote.cm.ft.0=1 - 输入输出总线, 输入输出仓, 能源仓 : 替换渔场机械方块, 支持TecTech能源仓
+ote.tm.ft.7=输入 1000 个恩情可抽一次全物品池; 每 5 秒抽一次, 耗电 1A 对应电压
+ote.tm.ft.mode.on=已切换到: 刷怪笼绑定模式
+ote.tm.ft.mode.off=已切换到: 捕鱼模式
+ote.cm.ft.0=1 - 输入输出总线/仓, 能源仓 : 替换渔场机械方块; 维度方块放主机槽或输入总线
+GT5U.gui.text.recipe_result.ft_no_dim=§4主机槽里没有维度方块
+GT5U.gui.text.recipe_result.ft_no_pool=§4该维度等级没有可抽取的产物
+GT5U.gui.text.recipe_result.ft_no_enqing=§4恩情不足 1000
 
 #FoodGenerator
 ote.tm.food.0=只是一个发电机

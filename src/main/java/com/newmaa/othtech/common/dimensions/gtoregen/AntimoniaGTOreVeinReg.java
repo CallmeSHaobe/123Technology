@@ -30,6 +30,8 @@ public final class AntimoniaGTOreVeinReg {
         register(veinAr());
         register(veinAir());
         register(veinStone());
+        register(veinSteel());
+        register(veinIrOsSm());
     }
 
     public static void register(OreMixBuilder builder) {
@@ -108,6 +110,32 @@ public final class AntimoniaGTOreVeinReg {
             .primary(Materials.GraniteBlack)
             .secondary(Materials.GraniteRed)
             .inBetween(Materials.Basalt)
+            .sporadic(Materials.Stone);
+    }
+
+    private static OreMixBuilder veinSteel() {
+        return new OreMixBuilder().name("otht.vein.se")
+            .enableInDim(ANTIMONIA_NAME)
+            .heightRange(2, 200)
+            .weight(20)
+            .density(30)
+            .size(15)
+            .primary(Materials.Steel)
+            .secondary(Materials.Bronze)
+            .inBetween(Materials.Brass)
+            .sporadic(Materials.Charcoal);
+    }
+
+    private static OreMixBuilder veinIrOsSm() {
+        return new OreMixBuilder().name("otht.vein.ir")
+            .enableInDim(ANTIMONIA_NAME)
+            .heightRange(2, 50)
+            .weight(8)
+            .density(12)
+            .size(10)
+            .primary(Materials.Iridium)
+            .secondary(Materials.Osmium)
+            .inBetween(Materials.Samarium)
             .sporadic(Materials.Stone);
     }
 }

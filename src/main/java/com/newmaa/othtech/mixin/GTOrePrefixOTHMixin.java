@@ -123,5 +123,70 @@ public abstract class GTOrePrefixOTHMixin {
             }
 
         }
+
+        if (material == Materials.Steel) {
+            OrePrefixes prefix = (OrePrefixes) (Object) this;
+
+            if (prefix == OrePrefixes.ore || prefix == OrePrefixes.rawOre
+                || prefix == OrePrefixes.crushed
+                || prefix == OrePrefixes.crushedPurified
+                || prefix == OrePrefixes.crushedCentrifuged
+                || prefix == OrePrefixes.dustImpure
+                || prefix == OrePrefixes.dustPure
+                || prefix == OrePrefixes.dustRefined
+                || prefix == OrePrefixes.dust) {
+
+                cir.setReturnValue(true);
+            }
+
+        }
+        if (material == Materials.Bronze) {
+            OrePrefixes prefix = (OrePrefixes) (Object) this;
+
+            if (prefix == OrePrefixes.ore || prefix == OrePrefixes.rawOre
+                || prefix == OrePrefixes.crushed
+                || prefix == OrePrefixes.crushedPurified
+                || prefix == OrePrefixes.crushedCentrifuged
+                || prefix == OrePrefixes.dustImpure
+                || prefix == OrePrefixes.dustPure
+                || prefix == OrePrefixes.dustRefined
+                || prefix == OrePrefixes.dust) {
+
+                cir.setReturnValue(true);
+            }
+
+        }
+        if (material == Materials.Brass) {
+            OrePrefixes prefix = (OrePrefixes) (Object) this;
+
+            if (prefix == OrePrefixes.ore || prefix == OrePrefixes.rawOre
+                || prefix == OrePrefixes.crushed
+                || prefix == OrePrefixes.crushedPurified
+                || prefix == OrePrefixes.crushedCentrifuged
+                || prefix == OrePrefixes.dustImpure
+                || prefix == OrePrefixes.dustPure
+                || prefix == OrePrefixes.dustRefined
+                || prefix == OrePrefixes.dust) {
+
+                cir.setReturnValue(true);
+            }
+
+        }
+        if (material == Materials.Charcoal) {
+            OrePrefixes prefix = (OrePrefixes) (Object) this;
+
+            if (prefix == OrePrefixes.ore || prefix == OrePrefixes.rawOre
+                || prefix == OrePrefixes.crushed
+                || prefix == OrePrefixes.crushedPurified
+                || prefix == OrePrefixes.crushedCentrifuged
+                || prefix == OrePrefixes.dustImpure
+                || prefix == OrePrefixes.dustPure
+                || prefix == OrePrefixes.dustRefined
+                || prefix == OrePrefixes.dust) {
+
+                cir.setReturnValue(true);
+            }
+
+        }
     }
 }
