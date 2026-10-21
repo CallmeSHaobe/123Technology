@@ -16,6 +16,7 @@ import gregtech.api.recipe.RecipeMapBackend;
 import gregtech.api.recipe.RecipeMapBuilder;
 import gregtech.api.recipe.maps.FluidOnlyFrontend;
 import gregtech.api.recipe.maps.FuelBackend;
+import gregtech.api.recipe.maps.QuantumComputerFrontend;
 import gregtech.nei.formatter.HeatingCoilSpecialValueFormatter;
 import gregtech.nei.formatter.SimpleSpecialValueFormatter;
 
@@ -222,5 +223,16 @@ public class Recipemaps {
         .neiHandlerInfo(
             builder -> builder.setDisplayStack(OTHItemList.NASA.get(1))
                 .setMaxRecipesPerPage(1))
+        .build();
+
+    public static final RecipeMap<RecipeMapBackend> OTEquantumComputerFakeRecipes = RecipeMapBuilder
+        .of("ote.computer.recipe")
+        .maxIO(1, 0, 0, 0)
+        .minInputs(1, 0)
+        .dontUseProgressBar()
+        .frontend(QuantumComputerFrontend::new)
+        .neiHandlerInfo(
+            builder -> builder.setMaxRecipesPerPage(4)
+                .setDisplayStack(OTHItemList.OTEComputer.get(1)))
         .build();
 }

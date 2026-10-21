@@ -45,6 +45,7 @@ import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.structure.error.StructureError;
+import gregtech.api.structure.error.StructureErrors;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.HatchElementBuilder;
 import gregtech.api.util.IGTHatchAdder;
@@ -181,10 +182,41 @@ public abstract class OTHSteamMultiBase<T extends OTHSteamMultiBase<T>> extends 
         return true;
     }
 
+    // 蒸汽专用仓必须先认领，父类 switch 不认识 MTEHatchCustomFluidBase，会先给仓上色再返回 false
     @Override
     public boolean addToMachineList(final IGregTechTileEntity aTileEntity, final int aBaseCasingIndex) {
+        if (addSteamInputFluidHatch(aTileEntity, aBaseCasingIndex)) return true;
+        if (addSteamBusInput(aTileEntity, aBaseCasingIndex)) return true;
+        if (addSteamBusOutput(aTileEntity, aBaseCasingIndex)) return true;
+
         return super.addToMachineList(aTileEntity, aBaseCasingIndex)
             || addExoticEnergyInputToMachineList(aTileEntity, aBaseCasingIndex);
+    }
+
+    /** 锁定蒸汽的流体仓(含GTPP蒸汽仓与本模组大型蒸汽仓)进蒸汽输入列表，只允许一个。 */
+    public boolean addSteamInputFluidHatch(final IGregTechTileEntity aTileEntity, final int aBaseCasingIndex) {
+        if (aTileEntity == null) return false;
+        final IMetaTileEntity aMetaTileEntity = aTileEntity.getMetaTileEntity();
+        if (!(aMetaTileEntity instanceof MTEHatchCustomFluidBase fluidHatch)) return false;
+        if (fluidHatch.mLockedFluid == null || !fluidHatch.mLockedFluid.equals(Materials.Steam.mGas)) return false;
+        if (!mSteamInputFluids.isEmpty()) return false;
+
+        addIfSmartInput(fluidHatch);
+        return addToMachineListInternal(mSteamInputFluids, fluidHatch, aBaseCasingIndex);
+    }
+
+    public boolean addSteamBusInput(final IGregTechTileEntity aTileEntity, final int aBaseCasingIndex) {
+        if (aTileEntity == null) return false;
+        final IMetaTileEntity aMetaTileEntity = aTileEntity.getMetaTileEntity();
+        if (!(aMetaTileEntity instanceof MTEHatchSteamBusInput steamBus)) return false;
+        return addToMachineListInternal(mSteamInputs, steamBus, aBaseCasingIndex);
+    }
+
+    public boolean addSteamBusOutput(final IGregTechTileEntity aTileEntity, final int aBaseCasingIndex) {
+        if (aTileEntity == null) return false;
+        final IMetaTileEntity aMetaTileEntity = aTileEntity.getMetaTileEntity();
+        if (!(aMetaTileEntity instanceof MTEHatchSteamBusOutput steamBus)) return false;
+        return addToMachineListInternal(mSteamOutputs, steamBus, aBaseCasingIndex);
     }
 
     /*
@@ -533,9 +565,29 @@ public abstract class OTHSteamMultiBase<T extends OTHSteamMultiBase<T>> extends 
      */
 
     protected static <T extends OTHSteamMultiBase<T>> HatchElementBuilder<T> buildSteamInput(Class<T> typeToken) {
-        return buildHatchAdder(typeToken).adder(OTHSteamMultiBase::addToMachineList)
+        return buildHatchAdder(typeToken).adder(OTHSteamMultiBase::addSteamInputFluidHatch)
             .hatchIds(31040)
             .shouldReject(t -> !t.mSteamInputFluids.isEmpty());
+    }
+
+    @Override
+    protected void checkHasAnyInput(List<StructureError> errors) {
+        if (mSteamInputs.isEmpty() && mInputHatches.isEmpty() && mInputBusses.isEmpty()) {
+            errors.add(StructureErrors.of("GT5U.gui.text.structure_error.no_input"));
+        }
+    }
+
+    @Override
+    protected void checkHasAnyOutput(List<StructureError> errors) {
+        if (mSteamOutputs.isEmpty() && mOutputHatches.isEmpty() && mOutputBusses.isEmpty()) {
+            errors.add(StructureErrors.of("GT5U.gui.text.structure_error.no_output"));
+        }
+    }
+
+    protected final void checkHasSteamInput(List<StructureError> errors) {
+        if (mSteamInputFluids.isEmpty()) {
+            errors.add(StructureErrors.of("GT5U.gui.text.structure_error.missing_steam_input"));
+        }
     }
 
     protected static OverclockDescriber createOverclockDescriber() {

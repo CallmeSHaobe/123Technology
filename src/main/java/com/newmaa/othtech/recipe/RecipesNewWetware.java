@@ -1,10 +1,12 @@
 package com.newmaa.othtech.recipe;
 
 import static gregtech.api.enums.TierEU.RECIPE_ZPM;
+import static gregtech.api.util.GTRecipeBuilder.SECONDS;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.materials.BWLiquids;
@@ -16,34 +18,28 @@ import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
+import gregtech.api.objects.SubstituteFluidStack;
 import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTRecipeBuilder;
 import gregtech.api.util.GTUtility;
+import gregtech.loaders.postload.recipes.FakeCuttingSpecialInfo;
 
 public class RecipesNewWetware implements IRecipePool {
 
     @Override
     public void loadRecipes() {
-        GTRecipeBuilder.builder()
-            .itemInputs(
-                GTOreDictUnificator.get(OrePrefixes.wireFine, Materials.Osmiridium, 24),
-                OTHItemList.Brains.get(1))
-            .itemOutputs(OTHItemList.slicedBrains.get(4))
-            .fluidInputs(FluidRegistry.getFluidStack("lifeessence", 100))
-            .eut(RECIPE_ZPM)
-            .duration(10 * GTRecipeBuilder.SECONDS)
-            .addTo(RecipeMaps.cutterRecipes);
-        GTRecipeBuilder.builder()
-            .itemInputs(
-                GTOreDictUnificator.get(OrePrefixes.wireFine, Materials.Osmiridium, 24),
-                OTHItemList.Brains.get(1))
-            .itemOutputs(OTHItemList.slicedBrains.get(4))
-            .fluidInputs(Materials.UUMatter.getFluid(400))
-            .eut(RECIPE_ZPM)
-            .duration(10 * GTRecipeBuilder.SECONDS)
-            .addTo(RecipeMaps.cutterRecipes);
+        addSlicedBrainRecipe(
+            GTOreDictUnificator.get(OrePrefixes.wireFine, Materials.Osmiridium, 24),
+            OTHItemList.Brains.get(1),
+            OTHItemList.slicedBrains.get(4),
+            FluidRegistry.getFluidStack("lifeessence", 100));
+        addSlicedBrainRecipe(
+            GTOreDictUnificator.get(OrePrefixes.wireFine, Materials.Osmiridium, 24),
+            OTHItemList.Brains.get(1),
+            OTHItemList.slicedBrains.get(4),
+            Materials.UUMatter.getFluid(400));
 
         GTRecipeBuilder.builder()
             .itemInputs(OTHItemList.slicedBrains.get(16))
@@ -143,8 +139,36 @@ public class RecipesNewWetware implements IRecipePool {
             .fluidInputs(BWLiquids.LCL.getFluidOrGas(64000))
             .requiresCleanRoom()
             .duration(800 * 20)
-            .eut(TierEU.UV)
+            .eut(TierEU.RECIPE_UV)
             .addTo(RecipeMaps.assemblerRecipes);
 
+    }
+
+    /**
+     * 切割机要两份配方: cutterRecipes 给机器用, cutterFakeRecipes 给 NEI 用
+     * (NEI 页读的是 GT 加载期从 cutterRecipes 快照出来的 fake 池, 后加的配方不会自动同步过去)
+     */
+    private static void addSlicedBrainRecipe(ItemStack wire, ItemStack brain, ItemStack output, FluidStack fluid) {
+        if (wire == null || brain == null || output == null || fluid == null) return;
+
+        GTValues.RA.stdBuilder()
+            .itemInputs(wire, brain)
+            .itemOutputs(output)
+            .fluidInputs(fluid)
+            .eut(RECIPE_ZPM)
+            .duration(10 * SECONDS)
+            .addTo(RecipeMaps.cutterRecipes);
+
+        FakeCuttingSpecialInfo specialInfo = new FakeCuttingSpecialInfo();
+        specialInfo.add(fluid, 10 * SECONDS);
+        GTValues.RA.stdBuilder()
+            .itemInputs(wire, brain)
+            .itemOutputs(output)
+            .fluidInputs(new SubstituteFluidStack(fluid))
+            .eut(RECIPE_ZPM)
+            .duration(10 * SECONDS)
+            .special(specialInfo)
+            .fake()
+            .addTo(RecipeMaps.cutterFakeRecipes);
     }
 }

@@ -53,10 +53,7 @@ import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMap;
-import gregtech.api.recipe.RecipeMapBackend;
-import gregtech.api.recipe.RecipeMapBuilder;
 import gregtech.api.recipe.RecipeMaps;
-import gregtech.api.recipe.maps.QuantumComputerFrontend;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTUtility;
@@ -1428,16 +1425,17 @@ public class RecipesMain implements IRecipePool {
             new Object[] { "ABC", "DEF", "GHI", 'A', getGM(31041, 1), 'B', getGM(101, 1), 'C', getGM(31078, 1), 'D',
                 getGM(31080, 1), 'E', getGM(31085, 1), 'F', getGM(31082, 1), 'G', getGM(31083, 1), 'H', getGM(31084, 1),
                 'I', getGM(23540, 1) });
+        // Beeyonds House
+        //
+        RecipeBuilder.builder()
+            .itemInputs(
+                GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 4, 9399),
+                ItemList.AcceleratorMV.get(4),
+                ItemList.Field_Generator_LV.get(4))
+            .itemOutputs(OTHItemList.Beeyonds.get(1))
+            .fluidInputs(Materials.Honey.getFluid(123))
+            .eut(RECIPE_HV)
+            .duration(123 * SECONDS)
+            .addTo(assemblerRecipes);
     }
-
-    public static final RecipeMap<RecipeMapBackend> OTEquantumComputerFakeRecipes = RecipeMapBuilder
-        .of("ote.computer.recipe")
-        .maxIO(1, 0, 0, 0)
-        .minInputs(1, 0)
-        .dontUseProgressBar()
-        .frontend(QuantumComputerFrontend::new)
-        .neiHandlerInfo(
-            builder -> builder.setMaxRecipesPerPage(4)
-                .setDisplayStack(OTHItemList.OTEComputer.get(1)))
-        .build();
 }

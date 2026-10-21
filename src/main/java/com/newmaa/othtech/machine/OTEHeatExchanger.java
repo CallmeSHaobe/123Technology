@@ -88,7 +88,10 @@ public class OTEHeatExchanger extends OTHTTMultiMachineBaseEM implements ISurviv
             @Override
             public CheckRecipeResult process() {
                 setOverclock(1, 8);
-                return super.process();
+                CheckRecipeResult result = super.process();
+                // 读档时那一轮只验算不消耗，判完必须清标记，否则之后永远不消耗输入
+                if (mRunningOnLoad) mRunningOnLoad = false;
+                return result;
             }
 
             @NotNull

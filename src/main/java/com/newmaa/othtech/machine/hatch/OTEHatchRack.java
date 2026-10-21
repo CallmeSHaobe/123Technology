@@ -1,6 +1,6 @@
 package com.newmaa.othtech.machine.hatch;
 
-import static com.newmaa.othtech.recipe.RecipesMain.OTEquantumComputerFakeRecipes;
+import static com.newmaa.othtech.common.recipemap.Recipemaps.OTEquantumComputerFakeRecipes;
 import static gregtech.api.enums.Mods.NewHorizonsCoreMod;
 import static gregtech.api.enums.Mods.OpenComputers;
 import static gregtech.api.util.GTModHandler.getModItem;

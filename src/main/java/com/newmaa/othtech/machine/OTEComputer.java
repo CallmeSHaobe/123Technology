@@ -2,7 +2,7 @@ package com.newmaa.othtech.machine;
 
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlockUnlocalizedName;
-import static com.newmaa.othtech.recipe.RecipesMain.OTEquantumComputerFakeRecipes;
+import static com.newmaa.othtech.common.recipemap.Recipemaps.OTEquantumComputerFakeRecipes;
 import static gregtech.api.GregTechAPI.sBlockCasings10;
 import static gregtech.api.GregTechAPI.sBlockGlass1;
 import static gregtech.api.enums.GTValues.V;

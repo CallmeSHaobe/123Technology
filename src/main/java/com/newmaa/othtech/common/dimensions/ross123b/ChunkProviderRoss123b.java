@@ -1,5 +1,6 @@
 package com.newmaa.othtech.common.dimensions.ross123b;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -12,6 +13,7 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkProvider;
 
+import com.falsepattern.endlessids.mixin.helpers.ChunkBiomeHook;
 import com.google.common.collect.Lists;
 import com.newmaa.othtech.common.blocks.antimonia.AntimoniaBlocks;
 import com.newmaa.othtech.common.blocks.fluids.RossFluids;
@@ -44,10 +46,15 @@ public class ChunkProviderRoss123b extends ChunkProviderSpaceLakes {
             }
         }
 
-        byte[] biomes = chunk.getBiomeArray();
-        byte biomeId = (byte) BiomeGenBaseRoss123b.ross123b.biomeID;
-        for (int i = 0; i < biomes.length; i++) {
-            biomes[i] = biomeId;
+        // EndlessIDs 环境下调用原版 getBiomeArray() 会直接崩, 必须走短数组接口
+        if (chunk instanceof ChunkBiomeHook hook) {
+            short biomeId = (short) BiomeGenBaseRoss123b.ross123b.biomeID;
+            short[] biomes = hook.getBiomeShortArray();
+            if (biomes == null || biomes.length != 256) {
+                biomes = new short[256];
+                hook.setBiomeShortArray(biomes);
+            }
+            Arrays.fill(biomes, biomeId);
         }
 
         chunk.generateSkylightMap();

@@ -227,6 +227,7 @@ GT5U.gui.text.casingErr=§4Machine shoooootdown due to insufficient casing tier
 GT5U.gui.text.tierMill=§4Machine shoooootdown due to insufficiently hard grinder
 GT5U.gui.text.glassErr=§4Machine shoooootdown due to insufficient glass tier
 GT5U.gui.text.nofb=§4Machine shoooootdown due to Laodeng trying to use Space Assembly without Star Matrix
+GT5U.gui.text.bee_needqueen=§4Only queens are accepted here; mate princesses with drones first
 otht.recipe.MegaPCB=§4§lMega PCB Factory
 otht.recipe.MegaPCB_A=§4§lSMD Workshop
 otht.recipe.MegaPCB_B=§4§lNMD Wafer Fab
@@ -254,6 +255,7 @@ otht.waila.gen=Current Power Generation
 otht.waila.bonus.speed=Current Time Multiplier
 otht.waila.mode=Current Mode
 otht.waila.123=Currently has Iridiosamarium Alloy Powder inserted
+otht.waila.perfectoc=Perfect Overclock Currently Enabled
 otht.waila.bin.input=Current Singularity Mode Total Item Input
 otht.waila.tier=Current Machine Tier
 otht.waila.isa.tier=Current Isa Tier
@@ -683,7 +685,16 @@ ote.cm.s9in1.2=There are no two suns in the sky; 9-in-1 is the only sun in our h
 ote.tm.bee.0=§aBeedeng's Primary Creation - Beeyonds Home (Large Industrial Apiary)
 ote.tm.bee.1=An HV Large Apiary. #Really only for bees!
 ote.tm.bee.2=Seriously, why not use Industrial Apiaries :)
-ote.cm.bee.0=1 - Energy Hatch, Dynamo Hatch or Laser Hatch, Input/Output Bus/Hatch: Replace Plastic Concrete Block.
+ote.tm.bee.3=Insert queens to produce continuously, up to 12 slots
+ote.tm.bee.4=Each queen costs 0.5A HV (256 EU/t); 12 queens total 3072 EU/t (about 1.5A EV). Fewer queens run if the energy hatch cannot supply it
+ote.tm.bee.5=Screwdriver toggles Produce/Retrieve mode; Retrieve mode sends stored queens back to the output bus
+ote.tm.bee.6=With all 12 slots filled and an energy hatch above EV, output is multiplied by sqrt(voltage tier)
+ote.waila.bee.stored=Bees Stored
+ote.waila.bee.active=active
+ote.waila.bee.tier=Energy Hatch Tier
+ote.tm.bee.mode.produce=Switched to: Produce Mode
+ote.tm.bee.mode.out=Switched to: Retrieve Mode
+ote.cm.bee.0=1 - Energy Hatch (exactly 1, laser hatches count), Input/Output Bus/Hatch: Replace Plastic Concrete Block.
 
 
 #MegaThermalCentrifuge

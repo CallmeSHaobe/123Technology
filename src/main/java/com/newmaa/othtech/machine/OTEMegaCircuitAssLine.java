@@ -107,7 +107,7 @@ public class OTEMegaCircuitAssLine extends OTHMultiMachineBase<OTEMegaCircuitAss
         super.getWailaNBTData(player, tile, tag, world, x, y, z);
         final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
         if (tileEntity != null) {
-            tag.setBoolean("123Processing", isUnlocked);
+            tag.setBoolean("perfectOC", isUnlocked);
         }
     }
 
@@ -117,10 +117,10 @@ public class OTEMegaCircuitAssLine extends OTHMultiMachineBase<OTEMegaCircuitAss
         super.getWailaBody(itemStack, currentTip, accessor, config);
         final NBTTagCompound tag = accessor.getNBTData();
         currentTip.add(
-            translateToLocal("otht.waila.123") + EnumChatFormatting.RESET
+            translateToLocal("otht.waila.perfectoc") + EnumChatFormatting.RESET
                 + ": "
                 + EnumChatFormatting.GOLD
-                + tag.getString("123Processing")
+                + tag.getBoolean("perfectOC")
                 + EnumChatFormatting.RESET);
     }
 
