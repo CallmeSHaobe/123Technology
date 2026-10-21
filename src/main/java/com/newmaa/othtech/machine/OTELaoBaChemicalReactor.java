@@ -128,7 +128,7 @@ public class OTELaoBaChemicalReactor extends OTHMultiMachineBase<OTELaoBaChemica
             translateToLocal("otht.waila.123") + EnumChatFormatting.RESET
                 + ": "
                 + EnumChatFormatting.GOLD
-                + tag.getString("123Processing")
+                + tag.getBoolean("123Processing")
                 + EnumChatFormatting.RESET);
         currentTip.add(
             translateToLocal("otht.waila.mode") + EnumChatFormatting.RESET

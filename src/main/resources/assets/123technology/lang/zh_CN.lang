@@ -142,7 +142,23 @@ fluid.IrOsSm.name=铱锇钐
 bw.werkstoff.12320.name=铱锇钐
 LCL=L.C.L
 
+#BartWorks Werkstoff 材料名（GT5U 5.09.54+ 的物品名读取 Material.<varName 小写>）
+Material.fluidgalaxy=熔融星系
+Material.fluidvoid=虚空熵流
+Material.moltenstar=星尘熔融
+Material.fuela=§d高辛烷超能硅岩火箭燃料
+Material.fuela_de=§d枯竭的高辛烷超能硅岩火箭燃料
+Material.promoterzpm=原子分离助燃剂
+Material.promoteruev=超维度等离子助燃剂
+Material.hcl10=超盐酸
+Material.hcl100=极盐酸
+Material.hcl1000=奇盐酸
+Material.hcl10000=魔盐酸
+Material.hcl100000=终盐酸
+Material.irossm=铱锇钐
+
 #Galaxy
+otht.tier.0=锑星
 planet.Antimonia=§oAntimonia - 锑星
 planet.Ross123b=§oRoss123b - 锑罗斯
 star.starAntimonia=§0锑洞
@@ -213,6 +229,7 @@ GT5U.gui.text.casingErr=§4机器因外壳等级不够而憋憋
 GT5U.gui.text.tierMill=§4机器因研磨器不够坚硬而憋憋
 GT5U.gui.text.glassErr=§4机器因玻璃等级不够而憋憋
 GT5U.gui.text.nofb=§4机器因老登不放星阵就想用太空组装而憋憋
+GT5U.gui.text.bee_needqueen=§4这台蜂箱只收女王蜂, 公主/雄蜂请先配对成女王
 otht.recipe.MegaPCB=§4§l巨型PCB工厂
 otht.recipe.MegaPCB_A=§4§l贴片工坊
 otht.recipe.MegaPCB_B=§4§lNMD晶圆厂
@@ -240,6 +257,7 @@ otht.waila.gen=当前发电
 otht.waila.bonus.speed=当前耗时倍率
 otht.waila.mode=当前模式
 otht.waila.123=当前是否放入铱锇钐合金粉
+otht.waila.perfectoc=当前是否启用无损超频
 otht.waila.bin.input=当前奇点模式物品输入总量
 otht.waila.tier=当前机器等级
 otht.waila.isa.tier=当前艾萨等级
@@ -305,10 +323,16 @@ ote.tm.ft.0=§l老登的终极造物 - 异星渔场
 ote.tm.ft.1=§b赞美伟大的造物主Dr.Jumping! 如果没有她的万物至理公式'主 = 6', 老登们又怎么可能会有机会用到如此机器呢 ?
 ote.tm.ft.2=§b具体捕鱼原理 : Jumping恒等式解决了维度方块所蕴含的不确定性问题, 从而使得渔场内部小型维度的建立成为可能, 各种'鱼'将会被渔场内部的墨鱼之神所捕捉.
 ote.tm.ft.3='鱼'包括鱼, 海象, 韭菜盒子, 鲸鱼座藻类, 立方休, 苔石墙 etc. *也许可以放入锑星的维度方块, 但后果自负.
-ote.tm.ft.4=执行无损超频, 玻璃等级决定能源仓等级
-ote.tm.ft.5=主机需要放入维度方块
+ote.tm.ft.4=主机槽放入维度方块决定抽奖池: T0 抽 T0 维度矿粉, T1/T2 以此类推
+ote.tm.ft.5=T2 起额外附带 T(N)-1 电压的机器与部件: T2→LV, T3→MV, 一直到 T9→UV
 ote.tm.ft.6=随机产出喔, 可恶的抽卡. 憋憋.
-ote.cm.ft.0=1 - 输入输出总线, 输入输出仓, 能源仓 : 替换渔场机械方块, 支持TecTech能源仓
+ote.tm.ft.7=输入 1000 个恩情可抽一次全物品池; 每 5 秒抽一次, 耗电 1A 对应电压
+ote.tm.ft.mode.on=已切换到: 刷怪笼绑定模式
+ote.tm.ft.mode.off=已切换到: 捕鱼模式
+ote.cm.ft.0=1 - 输入输出总线/仓, 能源仓 : 替换渔场机械方块; 维度方块放主机槽或输入总线
+GT5U.gui.text.recipe_result.ft_no_dim=§4主机槽里没有维度方块
+GT5U.gui.text.recipe_result.ft_no_pool=§4该维度等级没有可抽取的产物
+GT5U.gui.text.recipe_result.ft_no_enqing=§4恩情不足 1000
 
 #FoodGenerator
 ote.tm.food.0=只是一个发电机
@@ -669,7 +693,16 @@ ote.cm.s9in1.2=天无二日, 九合一便是我们心中唯一的太阳
 ote.tm.bee.0=§aBee登们的初级造物 - Beeyonds之家(大型工业蜂箱)
 ote.tm.bee.1=一个HV的大型蜂箱. #真的只能养蜂!
 ote.tm.bee.2=说真的, 为什么不用工业蜂箱呢:)
-ote.cm.bee.0=1 - 能源仓, 动力仓或者激光仓, 输入输出总线/仓: 替换塑料混凝土方块
+ote.tm.bee.3=放入女王蜂即可持续产出, 最多 12 个槽位
+ote.tm.bee.4=每只女王消耗 0.5A HV (256 EU/t), 12 只共 3072 EU/t (约 1.5A EV); 能源仓供不起时按供电量减少运行数量
+ote.tm.bee.5=螺丝刀切换 产出/取回 模式: 取回模式会把存着的女王送回输出总线
+ote.tm.bee.6=12 槽塞满后, 能源仓等级高于 EV 时产出 × √电压等级
+ote.waila.bee.stored=当前蜂数
+ote.waila.bee.active=运行中
+ote.waila.bee.tier=能源仓电压等级
+ote.tm.bee.mode.produce=已切换到: 产出模式
+ote.tm.bee.mode.out=已切换到: 取回模式
+ote.cm.bee.0=1 - 能源仓(恰好1个, 激光仓也算), 输入输出总线/仓: 替换塑料混凝土方块
 
 #MegaThermalCentrifuge
 ote.tn.mtc=乌拉尔山脉热分离厂

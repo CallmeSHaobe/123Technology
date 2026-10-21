@@ -193,6 +193,15 @@ public class OTEMegaNQFuelFactory extends OTHTTMultiMachineBaseEM implements ICo
 
             @NotNull
             @Override
+            public CheckRecipeResult process() {
+                CheckRecipeResult result = super.process();
+                // 读档时那一轮只验算不消耗，判完必须清标记，否则之后永远不消耗输入
+                if (mRunningOnLoad) mRunningOnLoad = false;
+                return result;
+            }
+
+            @NotNull
+            @Override
             protected OverclockCalculator createOverclockCalculator(@NotNull GTRecipe recipe) {
                 int overclockAmount = tier;
                 return super.createOverclockCalculator(recipe).setMaxOverclocks(overclockAmount);

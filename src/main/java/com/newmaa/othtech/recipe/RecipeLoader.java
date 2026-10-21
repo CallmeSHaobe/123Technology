@@ -23,7 +23,7 @@ public class RecipeLoader {
             new RecipesCyclotronRecipes(), new RecipesCircuit(), new RecipesSINOPEC(),
             new RecipesTangshanSteelFactory(), new RecipesSunFactoryEnqing(), new RecipesEpicCokeOvenFake(),
             new RecipesWoodenFusionReactor(), new RecipesMISA(), new RecipesNaquadah(), new RecipesEIO(),
-            new RecipesEXH(), new RecipesNewWetware(), new RecipesAntimonia(), new RecipesNASA() };
+            new RecipesEXH(), new RecipesNewWetware(), new RecipesAntimonia(), new RecipesNASA(), new RecipesOTHOre() };
         OTHTechnology.LOG.info("RecipeLoader: Loading OTEMiniSteamNineInOne recipes...");
         OTEMiniSteamNineInOne.loadRecipes();
         OTHTechnology.LOG.info("RecipeLoader: OTEMiniSteamNineInOne done.");

@@ -171,7 +171,9 @@ public class OTEMegaIsaFactory extends OTHMultiMachineBase<OTEMegaIsaFactory> {
     @Override
     public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
         if (aTick % 20 == 0) {
+            // 先归零再判定，控制器换成别的物品时档位不会残留
             ItemStack controllerSlotItemStack = getControllerSlot();
+            tierMill = 0;
             if (controllerSlotItemStack != null) {
                 if (GTUtility.areStacksEqual(controllerSlotItemStack, OTHItemList.IsaNEI.get(1))) {
                     tierMill = 1;
@@ -182,8 +184,6 @@ public class OTEMegaIsaFactory extends OTHMultiMachineBase<OTEMegaIsaFactory> {
                 } else if (GTUtility.areStacksEqual(controllerSlotItemStack, OTHItemList.ISASPE.get(1))) {
                     tierMill = 4;
                 }
-            } else {
-                tierMill = 0;
             }
         }
         super.onPostTick(aBaseMetaTileEntity, aTick);

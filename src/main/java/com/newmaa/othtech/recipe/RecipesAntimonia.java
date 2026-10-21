@@ -1,7 +1,5 @@
 package com.newmaa.othtech.recipe;
 
-import net.minecraftforge.fluids.FluidRegistry;
-
 import com.newmaa.othtech.OTHTechnology;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.materials.BWLiquids;
@@ -27,7 +25,6 @@ public class RecipesAntimonia implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 16),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Bismuth, 4))
             .fluidOutputs(
-                FluidRegistry.getFluidStack("aquaregiaoth", 400),
                 BWLiquids.HCl10.getFluidOrGas(10000),
                 BWLiquids.HCl100.getFluidOrGas(1000),
                 BWLiquids.HCl1000.getFluidOrGas(100),
@@ -47,7 +44,6 @@ public class RecipesAntimonia implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 16),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Bismuth, 4))
             .fluidOutputs(
-                FluidRegistry.getFluidStack("aquaregiaoth", 400),
                 BWLiquids.HCl10.getFluidOrGas(10000),
                 BWLiquids.HCl100.getFluidOrGas(1000),
                 BWLiquids.HCl1000.getFluidOrGas(100),

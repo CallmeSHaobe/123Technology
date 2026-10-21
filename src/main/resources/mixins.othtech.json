@@ -5,7 +5,12 @@
   "refmap": "mixins.othtech.refmap.json",
   "target": "@env(DEFAULT)",
   "compatibilityLevel": "JAVA_8",
-  "mixins": [],
+  "mixins": [
+    "GTDimDefOTHMixin",
+    "GTOreLayerHelperOTHMixin",
+    "GTOrePrefixOTHMixin",
+    "ItemDimensionDisplayRendererOTHMixin"
+  ],
   "client": [],
   "server": []
 }
