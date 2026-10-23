@@ -3,14 +3,21 @@ package com.newmaa.othtech;
 import static com.newmaa.othtech.machine.OTEFireRocketAssembler.loadRender;
 
 import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.client.model.IModelCustom;
 import net.minecraftforge.common.MinecraftForge;
 
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.dimensions.sky.SkyProviderHandler;
+import com.newmaa.othtech.common.entity.EntityDogBlue;
+import com.newmaa.othtech.common.entity.EntityDogRed;
+import com.newmaa.othtech.common.entity.EntityDogYellow;
 import com.newmaa.othtech.common.entity.EntityFakePlayer;
+import com.newmaa.othtech.common.entity.EntityNukeThrowable;
+import com.newmaa.othtech.common.entity.RenderDogColored;
 import com.newmaa.othtech.common.entity.RenderPlayer;
+import com.newmaa.othtech.common.item.ItemLoader;
 import com.newmaa.othtech.common.item.itemArmor.ItemHelmTallHatRender;
 import com.newmaa.othtech.common.item.itemBlock.ItemModelAsukaRender;
 import com.newmaa.othtech.common.item.itemBlock.ItemModelAyanamiRender;
@@ -56,6 +63,18 @@ public class ClientProxy extends CommonProxy {
 
         registerRenderers();
         RenderingRegistry.registerEntityRenderingHandler(EntityFakePlayer.class, new RenderPlayer());
+        // 三色狗共用 RenderDogColored，只是贴图不同
+        RenderingRegistry
+            .registerEntityRenderingHandler(EntityDogYellow.class, new RenderDogColored(RenderDogColored.YELLOW));
+        RenderingRegistry
+            .registerEntityRenderingHandler(EntityDogRed.class, new RenderDogColored(RenderDogColored.RED));
+        RenderingRegistry
+            .registerEntityRenderingHandler(EntityDogBlue.class, new RenderDogColored(RenderDogColored.BLUE));
+        // 核弹投掷物没有渲染器就会完全隐形（RenderManager 只会沿父类找，EntityThrowable 没有映射）。
+        // RenderSnowball 直接拿物品图标当投射物贴图，飞行中的核弹就看得见了。
+        RenderingRegistry.registerEntityRenderingHandler(
+            EntityNukeThrowable.class,
+            new RenderSnowball(ItemLoader.itemNukeThrowable));
     }
 
     @Override

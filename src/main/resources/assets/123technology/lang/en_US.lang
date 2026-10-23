@@ -755,3 +755,7 @@ ote.la.uxv=UXV 1,073,741,824A Laser Source Hatch
 ote.la.uxvb=UXV 1,073,741,824A Laser Target Hatch
 
 oth.clone.whereami=where am i?
+oth.clone.speak=Clone: who am I--? %s
+entity.123Technology.entityNukeThrowable.name=Nuke Throwable
+entity.123Technology.DogRed.name=§cRed Dog
+entity.123Technology.DogBlue.name=§9Blue Dog

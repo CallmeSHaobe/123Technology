@@ -1,6 +1,7 @@
 package com.newmaa.othtech.common.entity;
 
 import static net.minecraft.util.StatCollector.translateToLocal;
+import static net.minecraft.util.StatCollector.translateToLocalFormatted;
 
 import java.util.ArrayList;
 
@@ -92,7 +93,7 @@ public class EntityFakePlayer extends EntityLiving implements IMobInfoProvider {
         if (!this.worldObj.isRemote && this.sitCooldown-- <= 0) {
             if (this.rand.nextInt(5) == 0) {
                 if (Config.enableFPChating) {
-                    sendMessageToAll(translateToLocal("oth.clone.whereami"));
+                    sendMessageToAll();
                 }
                 this.setSitting(!this.isSitting());
                 this.sitCooldown = 100 + this.rand.nextInt(100); // 5-10秒冷却
@@ -100,10 +101,20 @@ public class EntityFakePlayer extends EntityLiving implements IMobInfoProvider {
         }
     }
 
-    private void sendMessageToAll(String msg) {
-        MinecraftServer.getServer()
-            .getConfigurationManager()
-            .sendChatMsg(new ChatComponentText(EnumChatFormatting.YELLOW + "复制体: " + "我是谁--?" + msg));
+    /**
+     * 全服广播一句「我是谁」。文案走 lang，中英文各自维护。
+     * <p>
+     * 世界卸载的那一下 {@code MinecraftServer.getServer()} 可能是 null（此时 onLivingUpdate 仍会被调到），
+     * 必须判空，否则就是一句台词换一次服务端 NPE。
+     */
+    private void sendMessageToAll() {
+        MinecraftServer server = MinecraftServer.getServer();
+        if (server == null) {
+            return;
+        }
+        String message = translateToLocalFormatted("oth.clone.speak", translateToLocal("oth.clone.whereami"));
+        server.getConfigurationManager()
+            .sendChatMsg(new ChatComponentText(EnumChatFormatting.YELLOW + message));
     }
 
     @Override

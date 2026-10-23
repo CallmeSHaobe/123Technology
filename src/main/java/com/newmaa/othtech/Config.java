@@ -32,6 +32,18 @@ public class Config {
             .getFloat("OTHTechnology : 恩情工厂配方产物倍率(float) , 倍率四舍五入", "不憋憋", 1.5f, 1.0f, 114514f, "不憋憋");
         tier_Antimonia = configuration.getInt("OTHTechnology : 锑星登陆需求等级(Tier)", "不憋憋", 4, 1, 10, "笑笑");
         tier_Ross123b = configuration.getInt("OTHTechnology : 锑罗斯登陆需求等级(Tier)", "不憋憋", 1, 1, 10, "笑笑");
+        enableAntimoniaFarLands = configuration.getBoolean(
+            "OTHTechnology : 锑星边境之地(Far Lands)是否开启, 越过边界坐标后地形会被人为溢出破坏, true为是, false为否",
+            "不憋憋",
+            enableAntimoniaFarLands,
+            "笑笑");
+        farLandsBoundary = configuration.getInt(
+            "OTHTechnology : 锑星边境之地边界坐标(默认12550820, 即噪声坐标顶到2^31的经典far lands)",
+            "不憋憋",
+            farLandsBoundary,
+            1000,
+            Integer.MAX_VALUE,
+            "笑笑");
         is_Enqing_Song_Play = configuration
             .getBoolean("OTHTechnology : 开启将军工厂的开机音效, true为是, false为否", "A", is_Enqing_Song_Play, "A");
         enableQuestInjection = configuration.getBoolean(
@@ -54,6 +66,8 @@ public class Config {
     public static boolean is_EggMachine_Recipes_For_NHU = true;
     public static int tier_Antimonia = 4;
     public static int tier_Ross123b = 1;
+    public static boolean enableAntimoniaFarLands = true;
+    public static int farLandsBoundary = 12_550_820;
     public static boolean is_Enqing_Song_Play = true;
     public static boolean enableQuestInjection = true;
     public static boolean enableFPChating = true;

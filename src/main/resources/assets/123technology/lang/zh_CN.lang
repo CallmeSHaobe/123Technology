@@ -755,3 +755,7 @@ ote.la.uxv=UXV 1,073,741,824A 激光源仓
 ote.la.uxvb=UXV 1,073,741,824A 激光靶仓
 
 oth.clone.whereami=我在哪里?
+oth.clone.speak=复制体: 我是谁--?%s
+entity.123Technology.entityNukeThrowable.name=核弹投掷物
+entity.123Technology.DogRed.name=§c红狗
+entity.123Technology.DogBlue.name=§9蓝狗
