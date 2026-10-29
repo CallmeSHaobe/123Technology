@@ -1,18 +1,21 @@
 package com.newmaa.othtech.machine.machineclass;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
+import com.newmaa.othtech.Config;
+
 import cpw.mods.fml.common.registry.GameData;
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.interfaces.IOreMaterial;
 import gregtech.api.util.GTUtility;
@@ -20,15 +23,17 @@ import gtneioreplugin.util.DimensionHelper;
 import gtneioreplugin.util.GT5OreLayerHelper;
 
 /**
- * 异星渔场的抽奖池: 维度等级 → 该等级所有维度能挖到的矿粉, T2 起再挂上对应电压等级的机器/部件。
+ * 异星渔场的抽奖池: 维度等级 → 该等级所有维度能挖到的矿粉。
  * 另外保留一份全物品池, 供消耗恩情时抽。
  */
 public final class FishtorioLootTable {
 
     private static final Map<Integer, List<ItemStack>> ORE_POOLS = new HashMap<>();
-    private static final Map<Integer, List<ItemStack>> MACHINE_POOLS = new HashMap<>();
-    private static final Map<Integer, List<ItemStack>> TIER_POOLS = new HashMap<>();
     private static List<ItemStack> everything = null;
+
+    /** 全物品池屏蔽的 mod: GTNH核心(dreamcraft) / 通用奇点 / 星门 */
+    private static final Set<String> FULL_POOL_MOD_BLACKLIST = new HashSet<>(
+        Arrays.asList("dreamcraft", "universalsingularities", "sgcraft"));
 
     private FishtorioLootTable() {}
 
@@ -46,17 +51,6 @@ public final class FishtorioLootTable {
         } catch (Throwable ignored) {
             return 0;
         }
-    }
-
-    public static List<ItemStack> poolForTier(int tier) {
-        List<ItemStack> cached = TIER_POOLS.get(tier);
-        if (cached != null) return cached;
-
-        List<ItemStack> result = new ArrayList<>(orePool(tier));
-        result.addAll(machinePool(tier));
-        result = dedupe(result);
-        TIER_POOLS.put(tier, result);
-        return result;
     }
 
     /** 该等级所有维度矿脉里的矿石 → 矿粉 */
@@ -88,22 +82,6 @@ public final class FishtorioLootTable {
         return result;
     }
 
-    /** T2 → LV, T3 → MV … 按显示名里带的电压等级筛物品 */
-    public static List<ItemStack> machinePool(int tier) {
-        if (tier < 2 || tier - 1 >= GTValues.VN.length) return Collections.emptyList();
-        List<ItemStack> cached = MACHINE_POOLS.get(tier);
-        if (cached != null) return cached;
-
-        String token = GTValues.VN[tier - 1];
-        List<ItemStack> result = new ArrayList<>();
-        for (ItemStack stack : allItems()) {
-            String name = displayName(stack);
-            if (name != null && name.contains(token)) result.add(stack);
-        }
-        MACHINE_POOLS.put(tier, result);
-        return result;
-    }
-
     public static List<ItemStack> allItems() {
         if (everything == null) {
             List<ItemStack> collected = new ArrayList<>(8192);
@@ -112,6 +90,7 @@ public final class FishtorioLootTable {
                 for (Object value : GameData.getItemRegistry()
                     .typeSafeIterable()) {
                     if (!(value instanceof Item item)) continue;
+                    if (isFullPoolBlacklisted(item)) continue;
                     try {
                         collected.add(new ItemStack(item, 1, 0));
                     } catch (Throwable ignored) {}
@@ -122,12 +101,49 @@ public final class FishtorioLootTable {
         return everything;
     }
 
-    private static String displayName(ItemStack stack) {
+    /** 按注册名/未本地化名判断物品是否被全物品池屏蔽, 名单见 {@link Config#fishtorioFullPoolItemBlacklist} */
+    private static boolean isFullPoolBlacklisted(Item item) {
+        String registryName = registryName(item);
+        if (registryName != null && isModBlacklisted(registryName)) return true;
+        return isItemNameBlacklisted(registryName, item);
+    }
+
+    private static String registryName(Item item) {
         try {
-            return stack.getDisplayName();
+            Object name = Item.itemRegistry.getNameForObject(item);
+            return name == null ? null : name.toString();
         } catch (Throwable ignored) {
             return null;
         }
+    }
+
+    /** 注册名前缀(modid)是否在整 mod 屏蔽名单里 */
+    private static boolean isModBlacklisted(String registryName) {
+        int separator = registryName.indexOf(':');
+        String modid = (separator < 0 ? registryName : registryName.substring(0, separator)).toLowerCase(Locale.ROOT);
+        return FULL_POOL_MOD_BLACKLIST.contains(modid);
+    }
+
+    /** 注册名或未本地化名包含黑名单子串就屏蔽 */
+    private static boolean isItemNameBlacklisted(String registryName, Item item) {
+        String[] patterns = Config.fishtorioFullPoolItemBlacklist;
+        if (patterns == null || patterns.length == 0) return false;
+
+        String registry = registryName == null ? "" : registryName.toLowerCase(Locale.ROOT);
+        String unlocalized = "";
+        try {
+            String raw = item.getUnlocalizedName();
+            if (raw != null) unlocalized = raw.toLowerCase(Locale.ROOT);
+        } catch (Throwable ignored) {}
+
+        for (String pattern : patterns) {
+            if (pattern == null) continue;
+            String needle = pattern.trim()
+                .toLowerCase(Locale.ROOT);
+            if (needle.isEmpty()) continue;
+            if (registry.contains(needle) || unlocalized.contains(needle)) return true;
+        }
+        return false;
     }
 
     private static List<ItemStack> dedupe(List<ItemStack> stacks) {

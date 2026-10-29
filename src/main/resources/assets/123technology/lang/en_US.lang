@@ -322,11 +322,12 @@ ote.tm.ft.1=§bPraise the great creator Dr.Jumping! Without her universal formul
 ote.tm.ft.2=§bSpecific fishing principle: The Jumping Identity solves the uncertainty problem inherent in dimension blocks, making the establishment of small dimensions inside the fishery possible. Various 'fish' will be caught by the Cuttlefish God inside the fishery.
 ote.tm.ft.3='Fish' includes fish, walruses, leek boxes, Cetus Algae, Cubic Fish, Mossy Stone Bricks, etc. *Maybe can use Antimony Star dimension blocks, but consequences自负.
 ote.tm.ft.4=The Dimension Block in the controller slot decides the pool: T0 rolls T0 dimension dusts, T1/T2 and so on
-ote.tm.ft.5=From T2 it also rolls machines and parts of tier N-1: T2->LV, T3->MV, up to T9->UV
+ote.tm.ft.9=Dimension dust pool parallels = voltage tier^3, still 5 s per run, 1A of the hatch tier per parallel
 ote.tm.ft.6=Random output, oh the dreaded gacha. LOL.
-ote.tm.ft.7=Input 1000 Gratitude for one roll of the whole item pool; one roll every 5 seconds, 1A of the hatch tier
-ote.tm.ft.mode.on=Switched to: Spawner Binding Mode
-ote.tm.ft.mode.off=Switched to: Fishing Mode
+ote.tm.ft.7=Input 1000 Gratitude for one roll of the whole item pool; parallels = voltage tier^1.4, each run always costs only 1000 Gratitude and still 5 s, 1A of the hatch tier per parallel
+ote.tm.ft.8=§cThe whole item pool never yields any item from GTNH Core / Universal Singularities / SG Craft
+ote.tm.ft.10=§cAlso never yields: Creative ME storage/fluid cells, Essentia cells, Deep Dark Portal, Creative Vending Upgrade (editable in config)
+ote.tm.ft.11=§6Supports Multi-Amp and Laser hatches; §coverflow output is voided (always on)
 ote.cm.ft.0=1 - Input/Output Bus, Input/Output Hatch, Energy Hatch : Replace Fishery Machine Casing; put the Dimension Block in the controller slot or an input bus
 GT5U.gui.text.recipe_result.ft_no_dim=§4No Dimension Block in the controller slot
 GT5U.gui.text.recipe_result.ft_no_pool=§4Nothing to roll for this dimension tier

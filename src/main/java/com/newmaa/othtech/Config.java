@@ -53,10 +53,30 @@ public class Config {
             "A");
         enableFPChating = configuration
             .getBoolean("OTHTechnology : 开启123Technology自行复制体复读机功能, true为是, false为否", "A", enableFPChating, "A");
+        fishtorioFullPoolItemBlacklist = configuration.getStringList(
+            "OTHTechnology : 渔场全物品池物品黑名单(匹配 注册名/未本地化名 的子串, 不区分大小写)",
+            "渔场",
+            DEFAULT_FISHTORIO_FULL_POOL_ITEM_BLACKLIST,
+            "默认屏蔽: AE2 创造ME存储元件/创造ME流体存储元件, 源质元件, ExU2 漆黑之门, 储物抽屉 创造模式取出升级.\n" + "改完需要重新进入世界或重启游戏(池子是启动后构建一次并缓存的).");
         if (configuration.hasChanged()) {
             configuration.save();
         }
     }
+
+    /** 渔场全物品池的默认物品黑名单(注册名 / 未本地化名 的子串, 小写匹配) */
+    private static final String[] DEFAULT_FISHTORIO_FULL_POOL_ITEM_BLACKLIST = new String[] {
+        // AE2 创造ME存储元件 (Creative ME Storage Cell)
+        "creativestoragecell",
+        // AE2FC 创造ME流体存储元件 (Creative ME Fluid Storage Cell)
+        "creative_fluid_storage",
+        // 神秘能源 源质元件 (ME Essentia Storage Cell, 含创造版)
+        "essentia.cell", "essentia_cell",
+        // ExU2 漆黑之门 (Deep Dark Portal)
+        "darkportal", "dark_portal",
+        // 储物抽屉 创造模式取出升级 (Creative Vending Upgrade)
+        "upgradecreative", "creativevending", "creative_vending" };
+
+    public static String[] fishtorioFullPoolItemBlacklist = DEFAULT_FISHTORIO_FULL_POOL_ITEM_BLACKLIST;
 
     public static boolean DEFAULT_BATCH_MODE = false;
     public static boolean NEIFrontend = true;

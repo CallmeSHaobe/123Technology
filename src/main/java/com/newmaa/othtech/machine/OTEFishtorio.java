@@ -5,13 +5,16 @@ import static gregtech.api.enums.HatchElement.*;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static net.minecraft.util.StatCollector.translateToLocal;
 
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.Set;
 
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import org.jetbrains.annotations.NotNull;
@@ -20,14 +23,13 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.common.OTHItemList;
-import com.newmaa.othtech.machine.machineclass.EIOSpawnerBinding;
 import com.newmaa.othtech.machine.machineclass.FishtorioLootTable;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 
-import crazypants.enderio.EnderIO;
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.TAE;
 import gregtech.api.enums.Textures;
+import gregtech.api.enums.VoidingMode;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
@@ -56,24 +58,8 @@ public class OTEFishtorio extends OTHMultiMachineBase<OTEFishtorio> {
         super(aName);
     }
 
-    public boolean mode = false;
-
     /** 一次全物品池抽奖需要的恩情数量 */
     private static final int ENQING_PER_FULL_POOL = 1000;
-
-    @Override
-    public void saveNBTData(NBTTagCompound aNBT) {
-        super.saveNBTData(aNBT);
-        aNBT.setBoolean("glassTier", mode);
-
-    }
-
-    @Override
-    public void loadNBTData(final NBTTagCompound aNBT) {
-        super.loadNBTData(aNBT);
-        mode = aNBT.getBoolean("glassTier");
-
-    }
 
     @Override
     protected boolean isEnablePerfectOverclock() {
@@ -93,27 +79,26 @@ public class OTEFishtorio extends OTHMultiMachineBase<OTEFishtorio> {
         return null;
     }
 
+    /** 捕鱼: 主机槽的维度方块决定抽奖池, 输入 1000 恩情可以改抽全物品池 */
     @Override
     @NotNull
     public CheckRecipeResult checkProcessing() {
-        return mode ? doBindSpawner() : doFishing();
-    }
-
-    /** 捕鱼: 主机槽的维度方块决定抽奖池, 输入 1000 恩情可以改抽全物品池 */
-    @NotNull
-    private CheckRecipeResult doFishing() {
         boolean fullPool = countEnqing() >= ENQING_PER_FULL_POOL;
-        int tier = 0;
         List<ItemStack> pool;
+        int parallels;
 
         if (fullPool) {
             pool = FishtorioLootTable.allItems();
+            // 并行 = 电压等级 ^ 1.4, 每并行各抽一次; 恩情按次算, 一次固定只扣 1000
+            parallels = getFullPoolParallels();
         } else {
             ItemStack dimensionBlock = findDimensionBlock();
             if (dimensionBlock == null) return SimpleCheckRecipeResult.ofFailure("ft_no_dim");
-            tier = FishtorioLootTable.dimensionTier(ItemDimensionDisplay.getDimension(dimensionBlock));
+            int tier = FishtorioLootTable.dimensionTier(ItemDimensionDisplay.getDimension(dimensionBlock));
             if (tier < 0) return SimpleCheckRecipeResult.ofFailure("ft_no_dim");
-            pool = FishtorioLootTable.poolForTier(tier);
+            pool = FishtorioLootTable.orePool(tier);
+            // 采矿(维度矿粉池)并行 = 电压等级 ^ 3
+            parallels = getMiningParallels();
         }
 
         if (pool == null || pool.isEmpty()) return SimpleCheckRecipeResult.ofFailure("ft_no_pool");
@@ -121,50 +106,55 @@ public class OTEFishtorio extends OTHMultiMachineBase<OTEFishtorio> {
             return SimpleCheckRecipeResult.ofFailure("ft_no_enqing");
         }
 
-        ItemStack output = pool.get(getBaseMetaTileEntity().getWorld().rand.nextInt(pool.size()))
-            .copy();
-        output.stackSize = Math.min(1 + getBaseMetaTileEntity().getWorld().rand.nextInt(4), output.getMaxStackSize());
+        Random rand = getBaseMetaTileEntity().getWorld().rand;
+        // 同种物品合并后再按最大堆叠拆分, 几千次抽取也不会撑出几千个输出槽位
+        Map<GTUtility.ItemId, ItemStack> types = new LinkedHashMap<>();
+        Map<GTUtility.ItemId, Integer> amounts = new LinkedHashMap<>();
+        for (int i = 0; i < parallels; i++) {
+            ItemStack draw = pool.get(rand.nextInt(pool.size()));
+            GTUtility.ItemId id = GTUtility.ItemId.createNoCopy(draw);
+            types.putIfAbsent(id, draw);
+            amounts.merge(id, Math.min(1 + rand.nextInt(4), Math.max(1, draw.getMaxStackSize())), Integer::sum);
+        }
 
-        mEUt = (int) -GTValues.V[Math.min(15, Math.max(1, GTUtility.getTier(getMaxInputVoltage())))];
+        List<ItemStack> outputs = new ArrayList<>(amounts.size());
+        for (Map.Entry<GTUtility.ItemId, Integer> entry : amounts.entrySet()) {
+            ItemStack sample = types.get(entry.getKey());
+            int remaining = entry.getValue();
+            int max = Math.max(1, sample.getMaxStackSize());
+            while (remaining > 0) {
+                int amount = Math.min(max, remaining);
+                outputs.add(GTUtility.copyAmount(amount, sample));
+                remaining -= amount;
+            }
+        }
+
+        // MTEExtendedPowerMultiBlockBase 只认 lEUt, 写 mEUt 不会真的扣电
+        lEUt = -GTValues.V[getVoltageTier()] * parallels;
+        // 耗时固定, 并行只影响产出与耗电
         mMaxProgresstime = 100;
         mEfficiency = 10000;
         mEfficiencyIncrease = 10000;
-        mOutputItems = new ItemStack[] { output };
+        mOutputItems = outputs.toArray(new ItemStack[0]);
         mOutputFluids = null;
         updateSlots();
         return CheckRecipeResultRegistry.SUCCESSFUL;
     }
 
-    @NotNull
-    private CheckRecipeResult doBindSpawner() {
-        // GT 里 mEUt 正数是发电, 消耗必须为负
-        mEUt = -114;
-        mMaxProgresstime = 100;
-        mEfficiency = 10000;
-        mEfficiencyIncrease = 10000;
-        mOutputFluids = null;
+    /** 能源仓电压等级(1 = LV), 没插仓时按 LV 算 */
+    private int getVoltageTier() {
+        return Math.min(15, Math.max(1, GTUtility.getTier(getMaxInputVoltage())));
+    }
 
-        List<ItemStack> storedInputs = getAllStoredInputs();
-        ItemStack soulVessel = EIOSpawnerBinding.findSoulVessel(storedInputs);
-        ItemStack brokenSpawner = EIOSpawnerBinding.findBrokenSpawner(storedInputs);
+    /** 全物品池并行 = 电压等级 ^ 1.4, 向下取整 */
+    private int getFullPoolParallels() {
+        return Math.max(1, (int) Math.floor(Math.pow(getVoltageTier(), 1.4D)));
+    }
 
-        if (soulVessel == null || brokenSpawner == null) {
-            return CheckRecipeResultRegistry.NO_RECIPE;
-        }
-
-        String mobType = EnderIO.itemSoulVessel.getMobTypeFromStack(soulVessel);
-        if (mobType == null || mobType.isEmpty()) {
-            return CheckRecipeResultRegistry.NO_RECIPE;
-        }
-
-        ItemStack outputItem = EIOSpawnerBinding.createBoundSpawner(brokenSpawner, mobType);
-
-        mOutputItems = new ItemStack[] { outputItem, new ItemStack(EnderIO.itemSoulVessel) };
-        soulVessel.stackSize--;
-        brokenSpawner.stackSize--;
-
-        updateSlots();
-        return CheckRecipeResultRegistry.SUCCESSFUL;
+    /** 采矿(维度矿粉池)并行 = 电压等级 ^ 3 */
+    private int getMiningParallels() {
+        int tier = getVoltageTier();
+        return Math.max(1, tier * tier * tier);
     }
 
     /** 维度方块放主机槽或输入总线都行, 不会被消耗 */
@@ -256,19 +246,6 @@ public class OTEFishtorio extends OTHMultiMachineBase<OTEFishtorio> {
 
     }
 
-    @Override
-    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
-        ItemStack aTool) {
-        if (mode == false) {
-            mode = true;
-        } else {
-            mode = false;
-        }
-        GTUtility.sendChatToPlayer(
-            aPlayer,
-            StatCollector.translateToLocal(mode ? "ote.tm.ft.mode.on" : "ote.tm.ft.mode.off"));
-    }
-
     private static final String STRUCTURE_PIECE_MAIN = "main";
 
     private final int horizontalOffSet = 3;
@@ -291,7 +268,7 @@ public class OTEFishtorio extends OTHMultiMachineBase<OTEFishtorio> {
                 .addElement(
                     'C',
                     buildHatchAdder(OTEFishtorio.class)
-                        .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch)
+                        .atLeast(Energy.or(ExoticEnergy), MultiAmpEnergy, InputBus, OutputBus, InputHatch, OutputHatch)
                         .adder(OTEFishtorio::addToMachineList)
                         .hint(1)
                         .casingIndex(TAE.GTPP_INDEX(32))
@@ -309,35 +286,21 @@ public class OTEFishtorio extends OTHMultiMachineBase<OTEFishtorio> {
     @Override
     public boolean addToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
         return super.addToMachineList(aTileEntity, aBaseCasingIndex)
+            || addMultiAmpEnergyInputToMachineList(aTileEntity, aBaseCasingIndex)
             || addExoticEnergyInputToMachineList(aTileEntity, aBaseCasingIndex);
     }
 
-    /*
-     * @Override
-     * protected MultiblockTooltipBuilder createTooltip() {
-     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-     * tt.addMachineType(EnumChatFormatting.DARK_GREEN + "§l老登的终极造物 - 异星渔场")
-     * .addInfo(EnumChatFormatting.ITALIC + "§b赞美伟大的造物主Dr.Jumping! 如果没有她的万物至理公式'主 = 6', 老登们又怎么可能会有机会用到如此机器呢 ?")
-     * .addInfo(
-     * EnumChatFormatting.ITALIC
-     * + "§b具体捕鱼原理 : Jumping恒等式解决了维度方块所蕴含的不确定性问题, 从而使得渔场内部小型维度的建立成为可能, 各种'鱼'将会被渔场内部的墨鱼之神所捕捉.")
-     * .addInfo(EnumChatFormatting.ITALIC + "'鱼'包括鱼, 海象, 韭菜盒子, 鲸鱼座藻类, 立方休, 苔石墙 etc. *也许可以放入锑星的维度方块, 但后果自负.")
-     * .addInfo(EnumChatFormatting.WHITE + "执行无损超频, 玻璃等级决定能源仓等级")
-     * .addInfo(EnumChatFormatting.WHITE + "主机需要放入维度方块")
-     * .addInfo("随机产出喔, 可恶的抽卡. 憋憋.")
-     * .addTecTechHatchInfo()
-     * .addSeparator()
-     * .addController("渔场")
-     * .beginStructureBlock(7, 4, 5, false)
-     * .addInputBus("AnyInputBus", 1)
-     * .addOutputBus("AnyOutputBus", 1)
-     * .addInputHatch("AnyInputHatch", 1)
-     * .addOutputHatch("AnyOutputHatch", 1)
-     * .addEnergyHatch("AnyEnergyHatch", 1)
-     * .toolTipFinisher("§a123Technology - Fishtorio");
-     * return tt;
-     * }
-     */
+    /** 强制溢出销毁: 只允许 VOID_ALL, 玩家没法切回保护模式 */
+    @Override
+    public Set<VoidingMode> getAllowedVoidingModes() {
+        return EnumSet.of(VoidingMode.VOID_ALL);
+    }
+
+    @Override
+    public VoidingMode getDefaultVoidingMode() {
+        return VoidingMode.VOID_ALL;
+    }
+
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
         final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
@@ -346,10 +309,13 @@ public class OTEFishtorio extends OTHMultiMachineBase<OTEFishtorio> {
             .addInfo(EnumChatFormatting.ITALIC + translateToLocal("ote.tm.ft.2"))
             .addInfo(EnumChatFormatting.ITALIC + translateToLocal("ote.tm.ft.3"))
             .addInfo(EnumChatFormatting.WHITE + translateToLocal("ote.tm.ft.4"))
-            .addInfo(EnumChatFormatting.WHITE + translateToLocal("ote.tm.ft.5"))
+            .addInfo(EnumChatFormatting.WHITE + translateToLocal("ote.tm.ft.9"))
             .addInfo(EnumChatFormatting.WHITE + translateToLocal("ote.tm.ft.7"))
+            .addInfo(translateToLocal("ote.tm.ft.8"))
+            .addInfo(translateToLocal("ote.tm.ft.10"))
             .addInfo(translateToLocal("ote.tm.ft.6"))
-            .addTecTechHatchInfo()
+            .addSupportMultiAmp()
+            .addSupportLaser()
             .addSeparator()
             .addController(translateToLocal("ote.tn.ft"))
             .beginStructureBlock(7, 4, 5, false)
@@ -366,8 +332,6 @@ public class OTEFishtorio extends OTHMultiMachineBase<OTEFishtorio> {
     public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
         return new OTEFishtorio(this.mName);
     }
-
-    private static ITexture CASING_TEXTURE = null;
 
     private int getCasingTextureIndex() {
         return TAE.GTPP_INDEX(32);

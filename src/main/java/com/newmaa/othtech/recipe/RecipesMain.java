@@ -374,7 +374,7 @@ public class RecipesMain implements IRecipePool {
             .itemOutputs(OTHItemList.itemEnqingM.get(1))
 
             .duration(2024 * 20)
-            .eut(194899)
+            .eut(1948)
             .addTo(RecipeMaps.laserEngraverRecipes);
         // SunFactory
         TTRecipeAdder.addResearchableAssemblylineRecipe(
@@ -469,7 +469,7 @@ public class RecipesMain implements IRecipePool {
             512,
             (int) TierEU.HV,
             1048576,
-            new Object[] { getGM(296, 64), getGM(296, 64), getGM(296, 64), getGM(296, 64), getGM(15300, 1),
+            new Object[] { getGM(15239, 64), getGM(15239, 64), getGM(15239, 64), getGM(15239, 64), getGM(15300, 1),
                 getGM(1445, 4), new ItemStack(ItemLoader.itemLeekBox, 64, 0),
                 GTModHandler.getModItem("GoodGenerator", "compactFusionCoil", 16, 2),
                 ItemList.Field_Generator_EV.get(64), new Object[] { OrePrefixes.circuit.get(Materials.IV), 64 },
@@ -1437,5 +1437,35 @@ public class RecipesMain implements IRecipePool {
             .eut(RECIPE_HV)
             .duration(123 * SECONDS)
             .addTo(assemblerRecipes);
+        // 异星渔场主机 (Fishtorio) - 装配线, 扫描仪闪存解锁
+        // 输入顺序: 珠海渔场主机 ×64 / LuV立场发生器 ×16 / LuV传感器 ×4 / 珠海渔场主机 ×64 /
+        // LuV电动马达 ×63 / LuV电动泵 ×48 / LuV电动泵 ×48 / LuV电动马达 ×63 /
+        // 恩情 ×64 / 恩情 ×64 / 韭菜盒子 ×1 / 海象 ×1
+        // 流体顺序: 熔融铱 123KL / 熔融锇 123KL / 熔融钐 123KL / 水 129KL
+        GTValues.RA.stdBuilder()
+            .metadata(RESEARCH_ITEM, ItemList.FishingPort.get(1))
+            .metadata(SCANNING, new Scanning(1200, RECIPE_ZPM))
+            .itemInputs(
+                ItemList.FishingPort.get(64),
+                ItemList.Field_Generator_LuV.get(16),
+                ItemList.Sensor_LuV.get(4),
+                ItemList.FishingPort.get(64),
+                ItemList.Electric_Motor_LuV.get(63),
+                ItemList.Electric_Pump_LuV.get(48),
+                ItemList.Electric_Pump_LuV.get(48),
+                ItemList.Electric_Motor_LuV.get(63),
+                OTHItemList.itemEnqingM.get(64),
+                OTHItemList.itemEnqingM.get(64),
+                OTHItemList.LeekBox.get(1),
+                GTModHandler.getModItem(AE2FluidCraft.ID, "walrus", 1))
+            .fluidInputs(
+                Materials.Iridium.getMolten(123000),
+                Materials.Osmium.getMolten(123000),
+                Materials.Samarium.getMolten(123000),
+                Materials.Water.getFluid(129000))
+            .itemOutputs(OTHItemList.FISH.get(1))
+            .eut(RECIPE_ZPM)
+            .duration(1)
+            .addTo(AssemblyLine);
     }
 }
