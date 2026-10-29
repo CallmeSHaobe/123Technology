@@ -641,6 +641,12 @@ ote.sf.mode.2=贴片工坊模式
 ote.sf.mode.3=NMD晶圆厂模式
 ote.sf.mode.4=元件聚合者模式
 ote.sf.mode.unknown=未知模式
+ote.sf.chat.mode.1=已切换到 §bPCB工厂模式
+ote.sf.chat.mode.2=已切换到 §b贴片工坊模式
+ote.sf.chat.mode.3=已切换到 §bNMD晶圆厂模式
+ote.sf.chat.mode.4=已切换到 §b元件聚合者模式
+# GT 的 zh_CN.lang 缺少这条, 不补的话模式切换按钮的提示会是英文
+GT5U.gui.button.mode_switch=模式切换
 ote.cm.sf.0=1 - 能源仓, 输入输出总线, 输入输出仓 : 替换终极分子机械方块, 支持TecTech能源仓
 
 #TangShan
@@ -755,3 +761,9 @@ ote.la.uxv=UXV 1,073,741,824A 激光源仓
 ote.la.uxvb=UXV 1,073,741,824A 激光靶仓
 
 oth.clone.whereami=我在哪里?
+oth.clone.speak=复制体: 我是谁--?%s
+entity.123Technology.entityNukeThrowable.name=核弹投掷物
+entity.123Technology.DogRed.name=§c红狗
+entity.123Technology.DogBlue.name=§9蓝狗
+#Items
+item.dogSpawnEgg.name=狗刷怪蛋

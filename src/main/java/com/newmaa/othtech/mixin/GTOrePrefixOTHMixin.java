@@ -31,15 +31,7 @@ public abstract class GTOrePrefixOTHMixin {
         if (material == Materials.Chlorine) {
             OrePrefixes prefix = (OrePrefixes) (Object) this;
 
-            if (prefix == OrePrefixes.ore || prefix == OrePrefixes.rawOre
-                || prefix == OrePrefixes.crushed
-                || prefix == OrePrefixes.crushedPurified
-                || prefix == OrePrefixes.crushedCentrifuged
-                || prefix == OrePrefixes.dustImpure
-                || prefix == OrePrefixes.dustPure
-                || prefix == OrePrefixes.dustRefined
-                || prefix == OrePrefixes.dust) {
-
+            if (prefix == OrePrefixes.ore || prefix == OrePrefixes.rawOre) {
                 cir.setReturnValue(true);
             }
         }

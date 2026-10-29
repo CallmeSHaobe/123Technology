@@ -12,6 +12,7 @@ import com.newmaa.othtech.common.item.itemFoods.ItemBrain;
 import com.newmaa.othtech.common.item.itemFoods.ItemLeekBox;
 import com.newmaa.othtech.common.item.itemFoods.ItemTST;
 import com.newmaa.othtech.common.item.itemFoods.ItemZhangww;
+import com.newmaa.othtech.common.item.itemSpawnEgg.ItemDogSpawnEgg;
 import com.newmaa.othtech.common.item.itemTools.Dasima;
 import com.newmaa.othtech.common.item.itemTools.ItemRecord;
 import com.newmaa.othtech.common.item.itemTools.ItemSunLighter;
@@ -40,6 +41,7 @@ public class ItemLoader {
     public static Item RecordNGGU = new ItemRecord("NGG_U");
     public static Item itemBrain = new ItemBrain();
     public static Item itemHelmTallHatLaodeng = new ItemHelmTallHatLaodeng(DIAMOND, 0, "HelmTallHatLaodeng");
+    public static Item dogSpawnEgg = new ItemDogSpawnEgg();
 
     public ItemLoader(FMLPreInitializationEvent event) {
         OTHItemList.Zhangww.set(registryAndCallback(itemZhangww, "itemZhangww"));
@@ -58,6 +60,11 @@ public class ItemLoader {
         OTHItemList.itemTST.set(registryAndCallback(itemTST, "itemTST"));
         OTHItemList.Brains.set(registryAndCallback(itemBrain, "BrainsHuman"));
         OTHItemList.Tallhat.set(registryAndCallback(itemHelmTallHatLaodeng, "HelmTallHatLaodeng"));
+
+        // 三种狗共用一个刷怪蛋物品，靠 metadata 区分（registryAndCallback 里已经 registerItem 过一次）
+        OTHItemList.DogYellowSpawnEgg.set(registryAndCallback(dogSpawnEgg, "dogSpawnEgg"));
+        OTHItemList.DogRedSpawnEgg.set(new ItemStack(dogSpawnEgg, 1, ItemDogSpawnEgg.META_RED));
+        OTHItemList.DogBlueSpawnEgg.set(new ItemStack(dogSpawnEgg, 1, ItemDogSpawnEgg.META_BLUE));
     }
 
     private static ItemStack registryAndCallback(Item item, String name) {

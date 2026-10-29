@@ -7,6 +7,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
+import com.newmaa.othtech.OTHTechnology;
 import com.newmaa.othtech.common.materials.BWLiquids;
 
 import gregtech.GTMod;
@@ -31,7 +32,11 @@ public final class AntimoniaUndergroundFluids {
 
     public static void register() {
         Configuration cfg = GTConfig.undergroundFluidsFile;
-        if (cfg == null || GTMod.proxy == null || GTMod.proxy.mUndergroundOil == null) return;
+        if (cfg == null || GTMod.proxy == null || GTMod.proxy.mUndergroundOil == null) {
+            OTHTechnology.LOG.warn(
+                "[OTHT] GT underground fluid config is not ready, Antimonia fluid wells (HCl / aqua regia) will be missing");
+            return;
+        }
 
         /// 旧版本可能留下了 water 之类的分类, 直接清空, 只按下面这份表重建
         ConfigCategory root = cfg.getCategory(BASE);
@@ -52,11 +57,20 @@ public final class AntimoniaUndergroundFluids {
 
         ConfigCategory category = cfg.getCategory(BASE);
         if (category == null || category.getChildren()
-            .isEmpty()) return;
+            .isEmpty()) {
+            OTHTechnology.LOG
+                .warn("[OTHT] No underground fluid entry was built for Antimonia, fluid wells will be empty");
+            return;
+        }
 
         // GT 只在 preInit 的 getConfig 里重建这张表, 这里直接塞进去才能不重启生效
+        GTUODimension dimension = new GTUODimension(category);
         GTMod.proxy.mUndergroundOil.getDimensionList()
-            .put(DIM_NAME, new GTUODimension(category));
+            .put(DIM_NAME, dimension);
+        OTHTechnology.LOG.info(
+            "[OTHT] Antimonia underground fluid wells registered: {} fluid types",
+            dimension.getFluids()
+                .size());
     }
 
     private static void addFluid(Configuration cfg, String fallbackName, FluidStack stack, int minAmount,
