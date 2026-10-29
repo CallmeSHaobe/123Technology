@@ -242,6 +242,7 @@ otht.recipe.MISA=§2§lIsa Integrated Factory
 otht.recipe.NQF=Compressed Naquadah Fuel Refinery
 otht.recipe.fuel.nq=§7§lUniversal Naquadah Fuel Engine
 otht.recipe.MCA=Advanced High Energy Circuit Assembly Line
+otht.recipe.DeepSeikoBEC=§b§lDeepSeiko Condensate
 otht.recipe.AE2=Singularity Producer
 otht.recipe.BIN=Trash Can
 otht.recipe.RCY=Recycler
@@ -762,9 +763,235 @@ ote.la.uxv=UXV 1,073,741,824A Laser Source Hatch
 ote.la.uxvb=UXV 1,073,741,824A Laser Target Hatch
 
 oth.clone.whereami=where am i?
+
+#DeepSeiko
+MetaItemOTH.24.name=Whale GPU A1
+MetaItemOTH.27.name=Whale GPU A2
+MetaItemOTH.28.name=Whale GPU A3 Full-Power
+MetaItemOTH.29.name=Whale Core Data Hard Drive
+tt.ds.gpu.a1=§b8,000 TFLOPs §7- DeepSeiko server room, also fits the hatch rack
+tt.ds.gpu.a2=§b32,000 TFLOPs §7- DeepSeiko server room, also fits the hatch rack
+tt.ds.gpu.a3=§e128,000 TFLOPs §7- FULL POWER! DeepSeiko server room, also fits the hatch rack
+tt.ds.drive=§c25%% chance to be destroyed on power loss (gone for good)
+item.WhiteRice.name=White Rice
+item.SpoiledRice.name=Spoiled Rice
+tt.ds.rice.0=§bIngredient of the Rice Singularity
+tt.ds.rice.1=§7Compressed into a single point inside a stable black hole
+tt.ds.rice.spoiled.0=§2It went bad...
+tt.ds.rice.spoiled.1=§7Not usable for the Rice Singularity
+tile.dsCasing.0.name=Blubber Casing
+tile.dsCasing.1.name=Blubber Filler Block
+tile.dsCasing.2.name=Baleen Grille
+tile.dsCasing.3.name=Tail Fin Frame
+
+#DeepSeiko machines
+ote.tn.ds=DeepSeiko the Big Fat Fish
+gt.blockmachines.deepseiko.name=DeepSeiko the Big Fat Fish
+ote.tn.dsroom=DeepSeiko Server Room
+ote.tn.stomach=DeepSeiko Stomach
+ote.tn.rack=DeepSeiko Component Rack (T1)
+ote.ds.mode.al=§bSwitched: Assembly Line mode (P0)
+ote.ds.mode.bec=§dSwitched: Condensate mode (needs Condensate Adapter)
+ote.tm.ds.5b=§d■ Condensate: unlock the ultimate upgrade for full performance
+ote.tm.ds.perf2=§7Supports multi-amp energy hatches and laser hatches
+ote.ds.struct.0=Controller: center of the snout tip (structure char ~)
+ote.ds.struct.1=Hatches: the ring of standard slots around the head (structure char H)
+ote.ds.struct.2=Blocks: blubber casing / assembly chamber casing (belly + 7 underside cells) / baleen grille / tail fin frame / condensate adapter
+ote.ds.struct.3=Three rings = three fin channels: Left Fin (time) / Right Fin (space) / Top Fin (stability), level 1~10; one channel must be all same level
+ote.ds.struct.4=The cell right below the controller is a plain hatch slot
+ote.tm.ds.0b=§7Perhaps it can help you a lot?!
+ote.tm.ds.perf=§7Upgrading the structure blocks improves the whole machine: speed, EU and parallel
+ote.tm.ds.hint.b=Baleen Grille (head underside): Input Bus/Hatch
+ote.tm.ds.hint.d=Tail Fin Frame (tail stock underside): Output Bus/Hatch
+ote.tm.ds.hint.e=Back ridge: Energy/Laser Hatches
+ote.tm.dsroom.type=DeepSeiko - Server Room
+ote.tm.dsroom.0=Burn warning: each card has 0.2%%/s chance to burn out (gone for good!)
+ote.tm.dsroom.1=Blackout: each hard drive has 25%% chance to be destroyed (gone for good!)
+ote.tm.dsroom.2=Coolant dry: compute halved, wear x4
+ote.tm.dsroom.hint.e=Energy Hatch (room self power)
+ote.tm.dsroom.hint.f=Input Hatch: Super Coolant
+ote.cm.dsroom.0=3 - Component Rack (back wall center, 12 mainframes + 36 GPUs + 4 drives)
+ote.cm.dsroom.1=Auto-binds the nearest formed DeepSeiko within 128 blocks, one whale one room
+ote.tt.stomach.0=The whale's stomach: only eats white/spoiled rice
+ote.tt.stomach.1=Counted per item (cap 65,536)
+ote.tt.stomach.2=Consumed per batch on request, white rice first
+ote.tt.stomach.3=White Rice
+ote.tt.stomach.4=Spoiled Rice
+ote.tt.rack.0=Server room rack: 12 mainframes + 36 GPUs + 4 hard drives
+ote.tt.rack.1=Component values shared with the hatch rack (one table, two uses)
+ote.tt.rack.2=Whale A1 = 8,000 / A2 = 32,000 / A3 Full-Power = 128,000 TFLOPs
+
+#DeepSeiko v1.3
+ote.tn.rack.t2=DeepSeiko Component Rack (T2)
+ote.tn.rack.t3=DeepSeiko Component Rack (T3)
+ote.tn.nanite=Nanite Containment Cell
+ote.tn.signal=Fullness Signal Hatch
+ote.tt.nanite.0=Insert one nanite (tier 1~10)
+ote.tt.nanite.1=Determines which condensate recipe tiers can run (no speed effect)
+ote.tt.nanite.2=Tier 10 (MagMatter) = runs everything
+ote.tt.signal.0=Outputs the whale's fullness state as redstone
+ote.tt.signal.1=Full (perfect window) = 15, hungry = 0
+ote.tt.signal.2=Redstone signal
+ote.tm.ds.type=Class 2 Condensate Ultimate Weapon
+ote.tm.ds.0=§bA big fat fish from an unknown dimension
+ote.tm.ds.1=§b■ Assembly Line: lossless overclock + no data sticks needed
+ote.tm.ds.2=§b■ Assembly Line: structure block tiers give extra bonuses
+ote.tm.ds.3=§d■ Condensate: only the recipe's own fluids are needed; still BEC point mechanics, but stronger
+ote.tm.ds.4=§d■ Condensate: unlock it in the machine upgrade panel, and raise nanite tier as recipes require
+ote.tm.ds.5=§d■ Condensate: compute cards give extra speed (Optical, Quantum, Planck, D99, D199, D999) ... and 690?!
+ote.tm.ds.6=§cA§6t§et§ae§bn§dt§ci§6o§en §ai§bs §da§cl§6l §ey§ao§bu §dn§ce§6e§ed§a.
+
+#DeepSeiko v1.4 structure
+ote.tm.ds.hint.any=40 standard hatch slots around the head (gold marker): Input/Output Bus, Input/Output Hatch, Energy/Laser Hatch
+tile.dsCasing.4.name=Assembly Chamber Casing
+tile.dsCasing.5.name=Assembly Chamber Casing (UXV)
+tile.dsCasing.6.name=Condensate Adapter
+tile.dsCasing.7.name=Blubber Casing (Light Blue)
+tile.dsCasing.8.name=Blubber Casing (Dark)
+tile.dsCasing.9.name=Left Fin
+tile.dsCasing.10.name=Right Fin
+tile.dsCasing.11.name=Top Fin
+channels.123technology.ds_left_fin=Left fin channel (1 = Left Fin block; 2~10 = Time Dilation Field Generator, Crude~Hongmeng)
+channels.123technology.ds_right_fin=Right fin channel (1 = Right Fin block; 2~10 = Spacetime Compression Field Generator, Crude~Hongmeng)
+channels.123technology.ds_top_fin=Top fin channel (1 = Top Fin block; 2~10 = Stabilisation Field Generator, Crude~Hongmeng)
+
+#DeepSeiko recipe failure messages (SimpleCheckRecipeResult keys are prefixed with GT5U.gui.text.recipe_result.)
+GT5U.gui.text.recipe_result.ds_need_adapter=Condensate mode is locked (spend 4 Condensate Adapters in the Machine Checkup panel)
+GT5U.gui.text.recipe_result.ds_no_stomach=No Stomach hatch detected, cannot feed the whale
+GT5U.gui.text.recipe_result.ds_no_rice=The Stomach is out of rice, whale on strike (needs White Rice)
+GT5U.gui.text.recipe_result.ds_nanite_low=Swarm tier is below this recipe's requirement (upgrade it in the Machine Checkup panel)
+GT5U.gui.text.recipe_result.ds_compute_low=Not enough compute for this recipe (put compute cards in the controller slot)
+
+#DeepSeiko blueprint structure description ("Hint N dot:" prefix is parsed by BlockRenderer6343 highlight, keep the format)
+
+# DeepSeiko GUI dashboard
+ote.ds.gui.line1=Mode: %s | Field tiers T %s · S %s · St %s
+ote.ds.gui.mode.al=Assembly Line
+ote.ds.gui.mode.bec=Condensate
+ote.ds.gui.line2=White rice %s / batch request %s (%s)
+ote.ds.gui.fed=Fed %s
+ote.ds.gui.precise=Precise
+ote.ds.gui.imprecise=Imprecise x0.5
+ote.ds.gui.starving=No rice, on strike!
+ote.ds.gui.noStomach=No stomach hatch
+ote.ds.gui.spoiled=, spoiled %s
+ote.ds.gui.line3=Rack compute %s TFLOPs (%s)
+ote.ds.gui.overheat=Overheated! Compute halved, cards burning fast
+ote.ds.gui.cool=Cooling OK
+ote.ds.gui.probe.rice=White rice/per feed
+ote.ds.gui.probe.compute=Compute
+ote.ds.gui.rings=Field tiers: T %s · S %s · St %s
+
+item.DeepSeikoToken.name=DeepSeiko Debug Token
+tt.ds.token.0=Debug gold token (not intended for normal play)
+
+# DeepSeiko v1.8 machine checkup / debug token
+otht.recipe.DeepSeikoUpgrade=§b§lDeepSeiko Upgrades
+ote.ds.upg.title=Machine Upgrade
+ote.ds.upg.bec=Unlock Condensate
+ote.ds.upg.nanite=Swarm +1 Tier
+ote.ds.upg.ultimate=Ultimate upgrade
+ote.ds.upg.hint=Stage materials in the 3x3 grid, then press a button
+ote.ds.gui.probe.speed=Speed multiplier
+ote.ds.gui.unlocked=unlocked
+ote.ds.gui.token=Debug token active: max compute / all upgrades / perfect feeding
+tt.ds.token.1=Insert into the controller compute slot: max compute + all upgrades
+tt.ds.token.2=Not consumed, removing it restores everything (debug item, not for normal play)
+
+# DeepSeiko v1.9 console / rings / coolant
+ote.ds.gui.btn.console=DeepSeiko Console
+ote.ds.gui.ringTitle=Rings (drag to pick level 1~9; capped by installed generator tier)
+ote.ds.gui.probe.boost=Current boost
+ote.ds.gui.probe.ultimate=Ultimate x2 unlocked
+ote.ds.gui.probe.rings=Ring levels (time/space/stab)
+ote.ds.gui.btn.back=Back to console
+ote.ds.gui.speedFormula=§7Formula: Compute x Ring-Time x Ultimate x Coolant x built-in 10
+ote.ds.upg.fill=Fill from inventory
+otht.recipe.DeepSeikoAL=§b§lDeepSeiko Assembly
+item.DeepSeikoTokenSilver.name=DeepSeiko Debug Token (Silver)
+tt.ds.token.silver=Tab icon for the assembly line recipe page (silver, no glint)
+ote.ds.gui.btn.upgrade=Upgrade
+ote.ds.gui.speed=Speed
+ote.ds.gui.upgrade=Upgrade
+ote.ds.gui.btn.openUpgrade=Open upgrade
+ote.ds.gui.btn.closeHint=X to close
+item.ComputeCenterD99.name=D99 Compute Center
+item.ComputeCenterD199.name=D199 Compute Center
+item.ComputeCenterD999.name=D999 Compute Center
+tt.ds.compute.d99=Compute card - coefficient 0.08
+tt.ds.compute.d199=Compute card - coefficient 0.16
+tt.ds.compute.d999=Compute card - coefficient 0.25
+item.RiceSingularity.name=Rice Singularity
+item.SpacetimeCoolingCore.name=Spacetime Cooling Core
+tt.ds.core.0=§bIt can cool everything
+tt.ds.singularity.0=§b1234 bowls of white rice compressed into one point
+tt.ds.singularity.1=§7Requires the Pseudostable Black Hole Containment Field (stable black hole)
+ote.tm.ds.mode.title=§6§lTwo modes (screwdriver on controller)
+ote.tm.ds.mode.al=§b§l■ Assembly Line mode
+ote.tm.ds.mode.al.1=§7- Lossless overclock + unlimited parallel, no compute cards needed
+ote.tm.ds.mode.al.2=§7- Speed comes only from rings: time (x1.0~1.5) x stability (x1.0~1.2)
+ote.tm.ds.mode.al.3=§7- No coolant needed; EU x space (1.0~0.5) x stability (1.0~0.8)
+ote.tm.ds.mode.bec=§d§l■ Condensate mode
+ote.tm.ds.mode.bec.1=§7- Unlock condensate in the Upgrade panel first (and meet the nanite tier)
+ote.tm.ds.mode.bec.2=§7- Recipe duration is POINTS, not seconds: each tick advances P points
+ote.tm.ds.mode.bec.3=§7- P = 19400 x time ring x stability ring x compute-card multiplier
+ote.tm.ds.mode.bec.4=§7- compute cards boost P (cbrt(count) x card coef)
+ote.tm.ds.mode.bec.5=§7- single run floor 1s; batch time grows as N^0.3
+ote.tm.ds.mode.bec.6=§7- after the Ultimate upgrade: §k§8Ax9Zk3§kQ7mP§k#2v!§kLp8
+ote.tm.ds.rainbow=Attention is all you need.
+ote.tm.ds.rainbow.shift=I am hungry, feed me rice.
+ote.ds.gui.alNoUpgrade=Not available in Assembly Line mode
+ote.cm.ds.3=§7Structure: standard bays on the head ring; flank bands = Left Fin (time) / Right Fin (space), spine + dorsal fin = Top Fin (stability); super coolant hatch below the controller
+GT5U.gui.text.recipe_result.ds_need_card=Condensate mode needs a compute card in the controller slot (debug token also counts)
+ote.tm.ds.hint.controller=Controller: tip of the head
+ote.tm.ds.hint.bays=Standard bays on the head ring, any hatch
+ote.tm.ds.hint.rings.1=Ring slots = three fin channels: Left Fin (time) 83 / Right Fin (space) 83 / Top Fin (stability) 70
+ote.tm.ds.hint.rings.2=Each channel level 1~10: 1 = fin block, 2~10 = field generator (Crude~Hongmeng)
+ote.tm.ds.hint.rings.6=§bTop Fin (stability)§7: §a+2.5% speed§7 and §b-2.5% EU§7 per level => §a×1.20 §7/ §b×0.80 at max
+ote.tm.ds.hint.rings.5=§7Right Fin (space): §b-5% EU§7 per level, min §b×0.50
+ote.tm.ds.hint.rings.4=§7Left Fin (time): §a+5% speed§7 per level (shorter duration), max §a×1.50
+ote.tm.ds.hint.rings.3=All blocks in one channel must share the same level
+GT5U.gui.text.shutdown.ds_no_card=§cCompute card removed
+
+# CropsNH 水稻作物
+cropsnh_crops.rice=Rice
+
+# -- DeepSeiko: MUI2 panel / chat / shutdown (localized 2026-10-29) --
+ote.ds.chat.modeLocked=§cCannot switch mode while crafting
+ote.ds.lang.computeCard=Compute Card
+ote.ds.gui.compute=Compute
+ote.ds.gui.boost=Speed
+ote.ds.gui.power=Power
+ote.ds.gui.rate=Rate
+ote.ds.gui.ring.time=Time
+ote.ds.gui.ring.space=Space
+ote.ds.gui.ring.stab=Stability
+ote.ds.gui.throughput=§dThroughput: %s pts/tick
+ote.ds.gui.nanite=Nanites
+ote.ds.gui.ultimate=Ultimate
+ote.ds.gui.tokenLabel=Debug Token
+ote.ds.gui.state.unlocked=Unlocked
+ote.ds.gui.state.locked=Locked
+ote.ds.gui.state.done=Done
+ote.ds.gui.state.todo=Not done
+ote.ds.gui.state.inserted=Inserted
+ote.ds.gui.state.notInserted=Not inserted
+ote.ds.info.points=Points
+ote.ds.info.rate=Rate
+ote.ds.info.perTick=pts/t
+ote.ds.info.eta=ETA
+ote.ds.info.seconds=s
+ote.ds.upg.done.bec=§6Condensate: done
+ote.ds.upg.done.nanite=§6Nanites: done
+ote.ds.upg.done.ultimate=§6Ultimate: done
+ote.ds.upg.allDone=§6All upgrades done
+ote.ds.gui.avatar1=§1I have not eaten today QAQ
+ote.ds.gui.avatar2=§1You stared at me - feed me!?!
 oth.clone.speak=Clone: who am I--? %s
 entity.123Technology.entityNukeThrowable.name=Nuke Throwable
 entity.123Technology.DogRed.name=§cRed Dog
 entity.123Technology.DogBlue.name=§9Blue Dog
 #Items
 item.dogSpawnEgg.name=Dog Spawn Egg
+ote.ds.nei.nanite.line1=§bRequires upgrading the nanite swarm
+ote.ds.nei.nanite.line2=§bto tier %s

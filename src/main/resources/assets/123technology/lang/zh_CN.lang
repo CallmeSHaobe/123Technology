@@ -74,7 +74,7 @@ tt.br.3=他看起来还在跳动...
 tt.br.4=第一个脑子, 要从哪里来呢..?
 tt.br.5=你知道的, 做这种事自己总要付出一些代价.
 tt.lb.0=吃得饱饱的
-tt.tst.0§7哦塔斯汀, 哦塔斯汀, 有了你生活美好没烦恼~
+tt.tst.0=§7哦塔斯汀, 哦塔斯汀, 有了你生活美好没烦恼~
 tt.ww.0=§b§l这就是GTNH，听坠木马斯特说
 tt.690.0=§z§l一发摧毁一个航母战斗群
 tt.690.1=§4警告：投掷者后果自负 将造成大范围爆炸
@@ -213,6 +213,7 @@ ote.tn.nasa=集成式"火"箭装配车间
 otht.recipe.MegaIsaForge=§5§l§n艾萨锻炉-老登制造者
 otht.recipe.OTEMegaQFT=§c§l狄拉克逆变
 otht.recipe.nasa=§lCNSA - 装配式
+otht.recipe.DeepSeikoBEC=§b§l大肥鱼凝聚
 GT5U.gui.text.nowater=§4机器因炽焱或者炉温而憋憋
 GT5U.gui.text.HeatErr=§4机器因炉温不足而憋憋
 GT5U.gui.text.nolava=§4机器因凛冰而憋憋
@@ -761,9 +762,242 @@ ote.la.uxv=UXV 1,073,741,824A 激光源仓
 ote.la.uxvb=UXV 1,073,741,824A 激光靶仓
 
 oth.clone.whereami=我在哪里?
+
+#DeepSeiko 迪普西科
+MetaItemOTH.24.name=鲸跃 A1
+MetaItemOTH.27.name=鲸跃 A2
+MetaItemOTH.28.name=鲸跃 A3·满血版
+MetaItemOTH.29.name=鲸芯数据硬盘
+tt.ds.gpu.a1=§b8,000 TFLOPs §7- 迪普西科机房专用, 也能塞进机架仓
+tt.ds.gpu.a2=§b32,000 TFLOPs §7- 迪普西科机房专用, 也能塞进机架仓
+tt.ds.gpu.a3=§e128,000 TFLOPs §7- 满血版! 迪普西科机房专用, 也能塞进机架仓
+tt.ds.drive=§c断电时 25% 概率损毁(直接消失)
+item.WhiteRice.name=白米饭
+item.SpoiledRice.name=馊米饭
+tt.ds.rice.0=§b米饭奇点的原料
+tt.ds.rice.1=§7在亚稳态黑洞里压成一点
+tt.ds.rice.spoiled.0=§2馊了...
+tt.ds.rice.spoiled.1=§7不能做米饭奇点（谁要吃馊的）
+tile.dsCasing.0.name=鲸脂外壳
+tile.dsCasing.1.name=鲸脂填充块
+tile.dsCasing.2.name=鲸须格栅
+tile.dsCasing.3.name=尾鳍加强框
+
+#DeepSeiko 机器与文案
+ote.tn.ds=大肥鱼DEEPSEIKO
+gt.blockmachines.deepseiko.name=大肥鱼DEEPSEIKO
+ote.tn.dsroom=迪普西科·算力机房
+ote.tn.stomach=大胃袋
+item.DeepSeikoToken.name=迪普西科调试币
+tt.ds.token.0=调试用金色 Token（非正常游戏内容）
+ote.tn.rack=迪普西科·机架仓 (T1)
+ote.ds.mode.al=§b已切换: 装配线模式 (P0)
+ote.ds.mode.bec=§d已切换: 凝聚态模式 (需要凝聚态适配舱)
+ote.tm.ds.5b=§d■ 凝聚态：解锁终极升级获得全部性能
+ote.tm.ds.perf2=§7支持多A能源仓和激光仓
+ote.ds.struct.0=控制器：吻部尖端中心（结构字符 ~）
+ote.ds.struct.1=舱位：头部一圈标准舱位（结构字符 H）= 输入/输出总线、输入/输出仓、能源/激光仓
+ote.ds.struct.2=结构方块：鲸脂外壳 / 装配腔方块（腹褶 + 肚皮底 7 格）/ 鲸须格栅 / 尾鳍加强框 / 凝聚态适配舱
+ote.ds.struct.3=三环 = 三条鳍信道：左鳍(时间) / 右鳍(空间) / 顶鳍(稳定)，1~10 级；同一信道里的方块必须同级
+ote.ds.struct.4=控制器正下方是普通舱位，别把舱室塞到控制器脚下
+ote.tm.ds.0b=§7或许它能帮到你很多？！
+ote.tm.ds.perf=§7升级结构方块可以提升整台机器的性能：加速 耗电 并行
+ote.tm.ds.hint.b=鲸须格栅 (头部下颚): 输入总线/输入仓
+ote.tm.ds.hint.d=尾鳍加强框 (尾柄底面): 输出总线/输出仓
+ote.tm.ds.hint.e=鲸背脊线: 能源仓/激光仓
+ote.tm.dsroom.type=迪普西科 - 算力机房
+ote.tm.dsroom.0=烧显卡警告: 显卡每秒 0.2% 概率烧毁 (直接消失!)
+ote.tm.dsroom.1=断电: 每个鲸芯数据硬盘 25% 概率损毁 (直接消失!)
+ote.tm.dsroom.2=冷却液断供: 算力减半, 损耗 ×4
+ote.tm.dsroom.hint.e=能源仓 (机房自用供电)
+ote.tm.dsroom.hint.f=输入仓: 超级冷却液
+ote.cm.dsroom.0=3 - 组件机架 (背墙中央, 12主机+36显卡+4硬盘)
+ote.cm.dsroom.1=128 格内自动绑定最近的成型迪普西科, 一鲸一机房
+ote.tt.stomach.0=迪普西科的大胃袋: 只收白米饭
+ote.tt.stomach.1=9 格 × 64, 最多 576 个
+ote.tt.stomach.2=机器停机超过 60 秒, 仓里的饭会全部烂掉
+ote.tt.stomach.3=胃里白米饭
+ote.tt.stomach.4=已腐烂
+ote.tt.rack.0=算力机房组件仓: 12 主机 + 36 显卡 + 4 数据硬盘
+ote.tt.rack.1=部件算力与机架仓通用 (一表两用)
+ote.tt.rack.2=鲸跃 A1 = 8,000 / A2 = 32,000 / A3·满血版 = 128,000 TFLOPs
+
+#DeepSeiko v1.3
+ote.tn.rack.t2=迪普西科·机架仓 (T2)
+ote.tn.rack.t3=迪普西科·机架仓 (T3)
+ote.tn.nanite=纳米蜂收容仓
+ote.tn.signal=饱食信号仓
+ote.tt.nanite.0=放一颗纳米蜂（1~10 级）
+ote.tt.nanite.1=决定凝聚态模式能跑什么等级的配方（不影响速度）
+ote.tt.nanite.2=10 级（MagMatter）= 什么都能跑
+ote.tt.signal.0=输出鲸的饱食状态红石信号
+ote.tt.signal.1=吃饱（完美加速窗口内）= 15，饿 = 0
+ote.tt.signal.2=红石信号
+ote.tm.ds.type=凝聚态2班最终兵器
+ote.tm.ds.0=§b来自未知次元的一条大肥鱼
+ote.tm.ds.1=§b■ 装配线：无损超频+无需闪存
+ote.tm.ds.2=§b■ 装配线：结构方块等级提供额外增益
+ote.tm.ds.3=§d■ 凝聚态：只需要配方原流体，加工算法仍为BEC原版点数机制，但更加强力
+ote.tm.ds.4=§d■ 凝聚态：需要先在「机体升级」解锁，并按配方要求提升蜂群等级
+ote.tm.ds.5=§d■ 凝聚态：算力卡提供额外加速（光学 量子 普朗克 D99 D199 D999)还有——690？！
+ote.tm.ds.6=§cA§6t§et§ae§bn§dt§ci§6o§en §ai§bs §da§cl§6l §ey§ao§bu §dn§ce§6e§ed§a.
+
+#DeepSeiko v1.4 结构
+ote.tm.ds.hint.any=头部一圈 40 格标准舱位 (金块标记): 输入/输出总线仓, 输入/输出仓, 能源/激光仓
+tile.dsCasing.4.name=装配腔方块
+tile.dsCasing.5.name=装配腔外壳 (UXV)
+tile.dsCasing.6.name=凝聚态适配舱
+tile.dsCasing.7.name=鲸脂外壳（浅蓝）
+tile.dsCasing.8.name=鲸脂外壳（墨黑）
+tile.dsCasing.9.name=左鳍
+tile.dsCasing.10.name=右鳍
+tile.dsCasing.11.name=顶鳍
+channels.123technology.ds_left_fin=左鳍信道（1 = 左鳍方块；2~10 = 时间膨胀场发生器 粗制~鸿蒙）
+channels.123technology.ds_right_fin=右鳍信道（1 = 右鳍方块；2~10 = 压缩时空场发生器 粗制~鸿蒙）
+channels.123technology.ds_top_fin=顶鳍信道（1 = 顶鳍方块；2~10 = 稳定力场发生器 粗制~鸿蒙）
+
+#DeepSeiko 配方失败提示（SimpleCheckRecipeResult key 前缀固定为 GT5U.gui.text.recipe_result.）
+GT5U.gui.text.recipe_result.ds_need_adapter=凝聚态模式尚未解锁 (在「机体升级」面板消耗 4 个凝聚态适配舱)
+GT5U.gui.text.recipe_result.ds_no_stomach=未识别到大胃袋仓, 无法供饭
+GT5U.gui.text.recipe_result.ds_no_rice=大胃袋没饭了, 鲸罢工中 (需要白米饭)
+GT5U.gui.text.recipe_result.ds_nanite_low=蜂群等级低于该配方要求 (在「机体升级」面板逐级升级)
+GT5U.gui.text.recipe_result.ds_compute_low=算力不足, 带不动该配方 (算力卡插控制器右下角)
+
+#DeepSeiko 蓝图结构说明（"Hint N dot:" 前缀被 BlockRenderer6343 高亮功能解析, 勿改格式）
+
+
+
+
+
+
+
+
+
+# DeepSeiko GUI 仪表盘
+ote.ds.gui.line1=模式: %s | 三环等级 时 %s · 空 %s · 稳 %s
+ote.ds.gui.mode.al=装配线
+ote.ds.gui.mode.bec=凝聚态
+ote.ds.gui.line2=白米饭 %s / 本批请求 %s (%s)
+ote.ds.gui.fed=饱食中 %s
+ote.ds.gui.precise=精准就绪
+ote.ds.gui.imprecise=不精准 ×0.5
+ote.ds.gui.starving=没饭, 罢工!
+ote.ds.gui.noStomach=未装大胃袋仓
+ote.ds.gui.spoiled=, 馊饭 %s
+ote.ds.gui.line3=机架算力 %s TFLOPs (%s)
+ote.ds.gui.overheat=过热! 算力减半, 显卡加速烧毁
+ote.ds.gui.cool=散热正常
+ote.ds.gui.probe.rice=白米饭/每次需
+ote.ds.gui.probe.compute=算力
+ote.ds.gui.rings=三环等级: 时 %s · 空 %s · 稳 %s
+
+# DeepSeiko v1.8 机体升级 / 调试币
+otht.recipe.DeepSeikoUpgrade=§b§l大肥鱼升级
+ote.ds.upg.title=机体升级
+ote.ds.upg.bec=解锁凝聚
+ote.ds.upg.nanite=蜂群 +1 级
+ote.ds.upg.ultimate=终极升级
+ote.ds.upg.hint=材料放 3×3 暂存格后点按钮 (一次性扣除)
+ote.ds.gui.probe.speed=速度乘数
+ote.ds.gui.unlocked=已解锁
+ote.ds.gui.token=调试币生效: 算力拉满 / 升级全解锁 / 完美供饭
+tt.ds.token.1=插在控制器算力槽: 算力拉满 + 三项升级全解锁
+tt.ds.token.2=不消耗, 拔出即恢复原状 (调试用, 非正常游戏内容)
+
+# DeepSeiko v1.9 控制台 / 三环 / 冷却
+ote.ds.gui.btn.console=迪普西科控制台
+ote.ds.gui.ringTitle=三环设定（拖动滑条选 1~9 级；上限 = 已装场发生器等级）
+ote.ds.gui.probe.boost=当前加速
+ote.ds.gui.probe.ultimate=终极 ×2 已解锁
+ote.ds.gui.probe.rings=三环等级（时/空/稳）
+ote.ds.gui.btn.back=返回控制台
+ote.ds.gui.speedFormula=§7公式: 算力 × 三环·时间 × 终极 × 冷却 × 自带 10
+ote.ds.upg.fill=从背包补料
+otht.recipe.DeepSeikoAL=§b§l大肥鱼装配
+item.DeepSeikoTokenSilver.name=迪普西科调试币（银）
+tt.ds.token.silver=装配线配方图的页签图标（银币，无光效）
+ote.ds.gui.btn.upgrade=升级
+ote.ds.gui.speed=加速
+ote.ds.gui.upgrade=升级
+ote.ds.gui.btn.openUpgrade=打开升级
+ote.ds.gui.btn.closeHint=右上角 X 关闭
+item.ComputeCenterD99.name=D99算力中心
+item.ComputeCenterD199.name=D199算力中心
+item.ComputeCenterD999.name=D999算力中心
+tt.ds.compute.d99=算力卡 · 系数 0.08
+tt.ds.compute.d199=算力卡 · 系数 0.16
+tt.ds.compute.d999=算力卡 · 系数 0.25
+item.RiceSingularity.name=米饭奇点
+item.SpacetimeCoolingCore.name=时空冷却核心
+tt.ds.core.0=§b它可以冷却一切
+tt.ds.singularity.0=§b1234 个白米饭压成的一个点
+tt.ds.singularity.1=§7需要亚稳态黑洞遏制场（稳定的黑洞）才能压出来
+ote.tm.ds.mode.title=§6§l两种运行模式（螺丝刀右键控制器切换）
+ote.tm.ds.mode.al=§b§l■ 装配线模式
+ote.tm.ds.mode.al.1=§7· 无损超频 + 无限并行，不需要算力卡
+ote.tm.ds.mode.al.2=§7· 加速只来自三环：时间(×1.0~1.5) × 稳定(×1.0~1.2)
+ote.tm.ds.mode.al.3=§7· 不需要冷却液；耗电 ×空间(1.0~0.5) × 稳定(1.0~0.8)
+ote.tm.ds.mode.bec=§d§l■ 凝聚态模式
+ote.tm.ds.mode.bec.1=§7· 需要先在「机体升级」解锁凝聚态（并满足纳米蜂等级）
+ote.tm.ds.mode.bec.2=§7· 配方时长是「点数」不是秒：每 tick 推进 P 点
+ote.tm.ds.mode.bec.3=§7· P = 19400 × 时间环 × 稳定环 × 算力卡系数
+ote.tm.ds.mode.bec.4=§7· 算力卡可提升推进（³√张数 × 卡系数）
+ote.tm.ds.mode.bec.5=§7· 单件最快 1 秒；并行总时间按 N^0.3 增长
+ote.tm.ds.mode.bec.6=§7· 完成终极升级后：§k§8Ax9Zk3§kQ7mP§k#2v!§kLp8
+ote.tm.ds.rainbow=Attention is all you need.
+ote.tm.ds.rainbow.shift=我饿了我要吃大米饭
+ote.ds.gui.alNoUpgrade=装配线模式不可用
+ote.cm.ds.3=§7结构: 头部一圈标准舱位放 输入/输出总线仓、仓、能源/激光仓; 身体两侧斜带 = 左鳍(时间)/右鳍(空间), 背脊+背鳍 = 顶鳍(稳定); 控制器正下方是普通舱位
+GT5U.gui.text.recipe_result.ds_need_card=凝聚态模式需要一张算力卡（控制器算力槽；调试币也算）
+ote.tm.ds.hint.controller=控制器: 吻部尖端中心
+ote.tm.ds.hint.bays=头部一圈标准舱位, 任意舱室
+ote.tm.ds.hint.rings.1=三环槽 = 三条鳍信道：左鳍(时间) 83 格 / 右鳍(空间) 83 格 / 顶鳍(稳定) 70 格
+ote.tm.ds.hint.rings.2=每个信道 1~10 级：1 = 鳍方块，2~10 = 对应场发生器（粗制~鸿蒙）
+ote.tm.ds.hint.rings.6=§b顶鳍（稳定）§7：每级 §a+2.5% 加速§7 且 §b-2.5% 耗电§7，满级 ⇒ §a×1.20 §7/ §b×0.80
+ote.tm.ds.hint.rings.5=§7右鳍（空间）：每级 §b-5% 耗电§7，满级最低 §b×0.50
+ote.tm.ds.hint.rings.4=§7左鳍（时间）：每级 §a+5% 加速§7（缩短耗时），满级最快 §a×1.50
+ote.tm.ds.hint.rings.3=同一信道里的方块必须同级
+GT5U.gui.text.shutdown.ds_no_card=§c算力卡被拔掉了
+
+# CropsNH 水稻作物
+cropsnh_crops.rice=水稻
+
+# ── 迪普西科：MUI2 面板 / 聊天 / 停机原因（2026-10-29 本地化） ──
+ote.ds.chat.modeLocked=§c合成中不能切换模式
+ote.ds.lang.computeCard=算力卡
+ote.ds.gui.compute=算力
+ote.ds.gui.boost=加速
+ote.ds.gui.power=耗电
+ote.ds.gui.rate=推进
+ote.ds.gui.ring.time=时间
+ote.ds.gui.ring.space=空间
+ote.ds.gui.ring.stab=稳定
+ote.ds.gui.throughput=§d处理速度: 每刻 %s 点
+ote.ds.gui.nanite=蜂群
+ote.ds.gui.ultimate=终极
+ote.ds.gui.tokenLabel=调试币
+ote.ds.gui.state.unlocked=已解锁
+ote.ds.gui.state.locked=未解锁
+ote.ds.gui.state.done=已完成
+ote.ds.gui.state.todo=未完成
+ote.ds.gui.state.inserted=已插入
+ote.ds.gui.state.notInserted=未插入
+ote.ds.info.points=点数
+ote.ds.info.rate=推进
+ote.ds.info.perTick=点/t
+ote.ds.info.eta=预计剩余
+ote.ds.info.seconds=秒
+ote.ds.upg.done.bec=§6凝聚 已完成
+ote.ds.upg.done.nanite=§6蜂群 已完成
+ote.ds.upg.done.ultimate=§6终极 已完成
+ote.ds.upg.allDone=§6已全部升级
+ote.ds.gui.avatar1=§1今天又没吃饱饭QAQ
+ote.ds.gui.avatar2=§1看到了还不喂我？！
 oth.clone.speak=复制体: 我是谁--?%s
 entity.123Technology.entityNukeThrowable.name=核弹投掷物
 entity.123Technology.DogRed.name=§c红狗
 entity.123Technology.DogBlue.name=§9蓝狗
 #Items
 item.dogSpawnEgg.name=狗刷怪蛋
+ote.ds.nei.nanite.line1=§b需要机体升级纳米蜂群
+ote.ds.nei.nanite.line2=§b达到 %s 级

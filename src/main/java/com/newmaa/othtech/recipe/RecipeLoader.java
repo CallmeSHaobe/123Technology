@@ -23,7 +23,8 @@ public class RecipeLoader {
             new RecipesCyclotronRecipes(), new RecipesCircuit(), new RecipesSINOPEC(),
             new RecipesTangshanSteelFactory(), new RecipesSunFactoryEnqing(), new RecipesEpicCokeOvenFake(),
             new RecipesWoodenFusionReactor(), new RecipesMISA(), new RecipesNaquadah(), new RecipesEIO(),
-            new RecipesEXH(), new RecipesNewWetware(), new RecipesAntimonia(), new RecipesNASA(), new RecipesOTHOre() };
+            new RecipesEXH(), new RecipesNewWetware(), new RecipesAntimonia(), new RecipesNASA(), new RecipesOTHOre(),
+            new RecipesDeepSeiko() };
         OTHTechnology.LOG.info("RecipeLoader: Loading OTEMiniSteamNineInOne recipes...");
         OTEMiniSteamNineInOne.loadRecipes();
         OTHTechnology.LOG.info("RecipeLoader: OTEMiniSteamNineInOne done.");
@@ -56,7 +57,15 @@ public class RecipeLoader {
             String poolName = recipePool.getClass()
                 .getSimpleName();
             OTHTechnology.LOG.info("RecipeLoader: [{}/{}] Loading {}...", ++idx, recipePools.length, poolName);
-            recipePool.loadRecipes();
+            // 单个配方池抛异常绝不能让整个 completeInit 挂掉：
+            // 2026-10-26 14:26 迪普西科的一条 NEI 展示配方就抛了 IllegalArgumentException，
+            // 结果 FML 记为致命错误 ⇒ 所有存档进不去 / 新建世界失败。这里兜底，出错只跳过该池。
+            try {
+                recipePool.loadRecipes();
+            } catch (Throwable t) {
+                OTHTechnology.LOG
+                    .error("RecipeLoader: [{}/{}] {} FAILED（已跳过该配方池，继续加载其它）", idx, recipePools.length, poolName, t);
+            }
             OTHTechnology.LOG.info("RecipeLoader: [{}/{}] {} done.", idx, recipePools.length, poolName);
         }
 

@@ -9,6 +9,7 @@ import net.minecraftforge.client.model.IModelCustom;
 import net.minecraftforge.common.MinecraftForge;
 
 import com.newmaa.othtech.common.OTHItemList;
+import com.newmaa.othtech.common.blocks.deepseiko.TEDeepSeikoHolo;
 import com.newmaa.othtech.common.dimensions.sky.SkyProviderHandler;
 import com.newmaa.othtech.common.entity.EntityDogBlue;
 import com.newmaa.othtech.common.entity.EntityDogRed;
@@ -22,7 +23,9 @@ import com.newmaa.othtech.common.item.itemArmor.ItemHelmTallHatRender;
 import com.newmaa.othtech.common.item.itemBlock.ItemModelAsukaRender;
 import com.newmaa.othtech.common.item.itemBlock.ItemModelAyanamiRender;
 import com.newmaa.othtech.common.item.itemBlock.ItemModelTallHatRender;
+import com.newmaa.othtech.common.render.RiceBowlRenderer;
 
+import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -63,6 +66,10 @@ public class ClientProxy extends CommonProxy {
 
         registerRenderers();
         RenderingRegistry.registerEntityRenderingHandler(EntityFakePlayer.class, new RenderPlayer());
+
+        // 迪普西科米饭全息投影（影子方块 + TESR，旋转的米饭碗）
+        ClientRegistry.bindTileEntitySpecialRenderer(TEDeepSeikoHolo.class, new RiceBowlRenderer());
+
         // 三色狗共用 RenderDogColored，只是贴图不同
         RenderingRegistry
             .registerEntityRenderingHandler(EntityDogYellow.class, new RenderDogColored(RenderDogColored.YELLOW));
@@ -75,6 +82,7 @@ public class ClientProxy extends CommonProxy {
         RenderingRegistry.registerEntityRenderingHandler(
             EntityNukeThrowable.class,
             new RenderSnowball(ItemLoader.itemNukeThrowable));
+
     }
 
     @Override
