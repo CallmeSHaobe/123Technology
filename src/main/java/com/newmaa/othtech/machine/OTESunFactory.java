@@ -36,8 +36,10 @@ import com.google.common.collect.ImmutableList;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
+import com.gtnewhorizons.modularui.api.drawable.UITexture;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
+import com.newmaa.othtech.machine.gui.OTESunFactoryGui;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
 import com.newmaa.othtech.machine.machineclass.OTHSoundResource;
@@ -57,6 +59,7 @@ import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.api.util.shutdown.ShutDownReason;
 import gregtech.api.util.shutdown.ShutDownReasonRegistry;
+import gregtech.common.gui.modularui.multiblock.base.MTEMultiBlockBaseGui;
 import gregtech.common.items.MetaGeneratedItem03;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
@@ -79,14 +82,44 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
     private double Beeyonds = 0;
     private String BYDS = "0";
 
+    /**
+     * MUI1 copies of the mode icons. Only the MUI2 set in {@link OTESunFactoryGui} is ever rendered by GT5U 2.9, these
+     * keep the legacy {@code addUIWidgets} path showing the same artwork instead of a null background.
+     */
+    private static final UITexture LEGACY_MODE_ICON_PCB = UITexture
+        .fullImage("123technology", "gui/overlay_button/sunfactory_mode_pcb");
+    private static final UITexture LEGACY_MODE_ICON_SMD = UITexture
+        .fullImage("123technology", "gui/overlay_button/sunfactory_mode_smd");
+    private static final UITexture LEGACY_MODE_ICON_WAFER = UITexture
+        .fullImage("123technology", "gui/overlay_button/sunfactory_mode_wafer");
+    private static final UITexture LEGACY_MODE_ICON_COMPONENT = UITexture
+        .fullImage("123technology", "gui/overlay_button/sunfactory_mode_component");
+
     @Override
     public int totalMachineMode() {
         return 4;
     }
 
+    /**
+     * Legacy (MUI1) mode icon list. GT5U 2.9 builds multiblock GUIs with MUI2, where the mode switch button is
+     * created from {@link #getGui()}; this is kept so the legacy path can never inject a null background.
+     */
     @Override
     public void setMachineModeIcons() {
-        super.setMachineModeIcons();
+        machineModeIcons.add(LEGACY_MODE_ICON_PCB);
+        machineModeIcons.add(LEGACY_MODE_ICON_SMD);
+        machineModeIcons.add(LEGACY_MODE_ICON_WAFER);
+        machineModeIcons.add(LEGACY_MODE_ICON_COMPONENT);
+    }
+
+    /**
+     * MUI2 GUI, which is the only one GT5U 2.9 renders for multiblocks. The mode switch button is only added when
+     * the GUI owns at least one icon ({@code MTEMultiBlockBaseGui#createLeftPanelGapRow}), so the four icons passed
+     * in by {@link OTESunFactoryGui} are what actually make the recipe map switchable in game.
+     */
+    @Override
+    protected @NotNull MTEMultiBlockBaseGui<?> getGui() {
+        return new OTESunFactoryGui(this);
     }
 
     @Override
@@ -100,15 +133,39 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
         };
     }
 
+    /**
+     * Cycles the recipe map. The selectable range is limited by the installed stabilisation field generators, so a
+     * player can never put the controller into a mode that {@link #checkProcessing()} would refuse to run. Wrapping
+     * instead of clamping keeps repeated clicks / screwdriver uses moving even at the top of the unlocked range.
+     * <p>
+     * This method is also the {@code machineMode} GUI sync setter on the client, and the client never learns the sfg
+     * channel, so the restriction must only be applied server side - remapping it on the client would make the GUI
+     * display a different mode (icon, tooltip and name) than the one the machine actually runs.
+     */
     @Override
     public void setMachineMode(int index) {
-        super.setMachineMode(index);
+        if (getBaseMetaTileEntity() != null && getBaseMetaTileEntity().isServerSide()) {
+            super.setMachineMode(Math.floorMod(index, getUnlockedMachineModes()));
+        } else {
+            super.setMachineMode(index);
+        }
+    }
+
+    /**
+     * @return Amount of modes unlocked by the sfg channel of the installed stabilisation field generators.
+     */
+    public int getUnlockedMachineModes() {
+        if (stabilisationFieldMetadata >= 8) return 4;
+        if (stabilisationFieldMetadata >= 5) return 3;
+        if (stabilisationFieldMetadata >= 2) return 2;
+        return 1;
     }
 
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
         super.saveNBTData(aNBT);
-        aNBT.setInteger("mode", machineMode);
+        // machineMode is already persisted by MTEMultiBlockBase#saveNBTData ("machineMode") whenever
+        // supportsMachineModeSwitch() is true, so a second "mode" key was only a chance for the two to diverge.
         aNBT.setByte("glassTier", glassTier);
         aNBT.setDouble("speedBonus", Beeyonds);
         aNBT.setInteger("sfg", stabilisationFieldMetadata);
@@ -118,7 +175,10 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
     @Override
     public void loadNBTData(final NBTTagCompound aNBT) {
         super.loadNBTData(aNBT);
-        machineMode = aNBT.getByte("mode");
+        // Saves written before the controller had modes only carried the legacy "mode" key.
+        if (!aNBT.hasKey("machineMode") && aNBT.hasKey("mode")) {
+            machineMode = aNBT.getInteger("mode");
+        }
         glassTier = aNBT.getByte("glassTier");
         Beeyonds = aNBT.getDouble("speedBonus");
         stabilisationFieldMetadata = aNBT.getInteger("sfg");
@@ -228,33 +288,22 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
         return Arrays.asList(Recipemaps.SF1, Recipemaps.SF2, Recipemaps.SF3, Recipemaps.SF4);
     }
 
+    /**
+     * Cycles the recipe map. {@link #setMachineMode(int)} restricts the range to the modes unlocked by the installed
+     * sfg channel, so the player can never land on a mode {@link #checkProcessing()} would reject.
+     * <p>
+     * The feedback uses our own translation keys: GT5U.MULTI_MACHINE_CHANGE is not translated in GT's zh_CN.lang and
+     * appends "mode" to the (already translated) mode name, which reads wrong in every language.
+     */
     @Override
     public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
-        /*
-         * if (getBaseMetaTileEntity().isServerSide()) {
-         * if (supportsMachineModeSwitch()) {
-         * setMachineMode(nextMachineMode()); {
-         * int modeAmount;
-         * if (stabilisationFieldMetadata >= 8) {
-         * modeAmount = 4;
-         * } else if (stabilisationFieldMetadata >= 5) {
-         * modeAmount = 3;
-         * } else if (stabilisationFieldMetadata >= 2) {
-         * modeAmount = 2;
-         * } else {
-         * modeAmount = 1;
-         * }
-         * this.machineMode = (byte) ((this.machineMode + 1) % modeAmount);
-         * GTUtility.sendChatToPlayer(
-         * aPlayer,
-         * StatCollector.translateToLocal(
-         * machineMode == 0 ? "巨型PCB工厂模式"
-         * : machineMode == 1 ? "贴片工坊模式" : machineMode == 2 ? "NMD晶圆厂模式" : machineMode == 3 ? "元件批发者模式" : "null"));
-         * }
-         * }
-         * }
-         */
+        if (!getBaseMetaTileEntity().isServerSide() || !supportsMachineModeSwitch()) {
+            super.onScrewdriverRightClick(side, aPlayer, aX, aY, aZ, aTool);
+            return;
+        }
+        setMachineMode(nextMachineMode());
+        GTUtility.sendChatTrans(aPlayer, "ote.sf.chat.mode." + (machineMode + 1));
     }
 
     @Override
@@ -2454,28 +2503,28 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
      * @Override
      * protected MultiblockTooltipBuilder createTooltip() {
      * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-     * tt.addMachineType("§c§l老登的传奇造物 - 巨型PCB工厂丨贴片工坊丨NMD晶圆厂丨元件聚合者")
-     * .addInfo("§e§l主!体!南!下!")
-     * .addInfo("§5从某半岛神秘北方国家引进的尖端高科技巨构")
-     * .addInfo("§5利用「恩情」的力量将原材料一步转化为电路板所需要的材料")
-     * .addInfo("§5具有令人畏惧的良品率和毫无瑕疵的精密度")
-     * .addInfo("§a消耗恩情运行 : 1t/个")
-     * .addInfo("在配置文件设置配方NEI产出倍率, 默认为1.5, 四舍五入")
+     * tt.addMachineType("搂c搂l鑰佺櫥鐨勪紶濂囬€犵墿 - 宸ㄥ瀷PCB宸ュ巶涓ㄨ创鐗囧伐鍧婁辅NMD鏅跺渾鍘備辅鍏冧欢鑱氬悎鑰?)
+     * .addInfo("搂e搂l涓?浣?鍗?涓?")
+     * .addInfo("搂5浠庢煇鍗婂矝绁炵鍖楁柟鍥藉寮曡繘鐨勫皷绔珮绉戞妧宸ㄦ瀯")
+     * .addInfo("搂5鍒╃敤銆屾仼鎯呫€嶇殑鍔涢噺灏嗗師鏉愭枡涓€姝ヨ浆鍖栦负鐢佃矾鏉挎墍闇€瑕佺殑鏉愭枡")
+     * .addInfo("搂5鍏锋湁浠や汉鐣忔儳鐨勮壇鍝佺巼鍜屾鏃犵憰鐤电殑绮惧瘑搴?)
+     * .addInfo("搂a娑堣€楁仼鎯呰繍琛?: 1t/涓?)
+     * .addInfo("鍦ㄩ厤缃枃浠惰缃厤鏂筃EI浜у嚭鍊嶇巼, 榛樿涓?.5, 鍥涜垗浜斿叆")
      * .addInfo("--------------------")
-     * .addInfo("§b主机放入一团蜂群, 按照堆叠数量获得相应加速(log2(蜂群数量), 舍弃小数向下取整)")
-     * .addInfo("§b碳纳米蜂群 -- -2%")
-     * .addInfo("§b超时空蜂群 -- 30%")
-     * .addInfo("§b永恒蜂群 -- 75%")
-     * .addInfo("§b宇宙素蜂群 -- 150%")
+     * .addInfo("搂b涓绘満鏀惧叆涓€鍥㈣渹缇? 鎸夌収鍫嗗彔鏁伴噺鑾峰緱鐩稿簲鍔犻€?log2(铚傜兢鏁伴噺), 鑸嶅純灏忔暟鍚戜笅鍙栨暣)")
+     * .addInfo("搂b纰崇撼绫宠渹缇?-- -2%")
+     * .addInfo("搂b瓒呮椂绌鸿渹缇?-- 30%")
+     * .addInfo("搂b姘告亽铚傜兢 -- 75%")
+     * .addInfo("搂b瀹囧畽绱犺渹缇?-- 150%")
      * .addInfo("--------------------")
-     * .addInfo("sfg信道 = 0 解锁PCB工厂")
-     * .addInfo("sfg信道 = 2 解锁贴片工坊")
-     * .addInfo("sfg信道 = 5 解锁NMD晶圆厂")
-     * .addInfo("sfg信道 = 8 解锁元件聚合者")
-     * .addInfo("更换力场后结构不成型请重放主机")
+     * .addInfo("sfg淇￠亾 = 0 瑙ｉ攣PCB宸ュ巶")
+     * .addInfo("sfg淇￠亾 = 2 瑙ｉ攣璐寸墖宸ュ潑")
+     * .addInfo("sfg淇￠亾 = 5 瑙ｉ攣NMD鏅跺渾鍘?)
+     * .addInfo("sfg淇￠亾 = 8 瑙ｉ攣鍏冧欢鑱氬悎鑰?)
+     * .addInfo("鏇存崲鍔涘満鍚庣粨鏋勪笉鎴愬瀷璇烽噸鏀句富鏈?)
      * .addTecTechHatchInfo()
      * .addSeparator()
-     * .addController("红日恩情工坊")
+     * .addController("绾㈡棩鎭╂儏宸ュ潑")
      * .beginStructureBlock(63, 32, 63, false)
      * .addInputBus("AnyInputBus", 1)
      * .addOutputBus("AnyOutputBus", 1)
@@ -2483,7 +2532,7 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
      * .addOutputHatch("AnyOutputHatch", 1)
      * .addEnergyHatch("AnyEnergyHatch", 1)
      * .addMufflerHatch("AnyMufflerHatch", 1)
-     * .toolTipFinisher("§a123Technology - §cBeautiful World!");
+     * .toolTipFinisher("搂a123Technology - 搂cBeautiful World!");
      * return tt;
      * }
      */
@@ -2520,7 +2569,7 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
             .addOutputHatch("AnyOutputHatch", 1)
             .addEnergyHatch("AnyEnergyHatch", 1)
             .addMufflerHatch("AnyMufflerHatch", 1)
-            .toolTipFinisher("§a123Technology - §cBeautiful World!");
+            .toolTipFinisher("搂a123Technology - 搂cBeautiful World!");
         return tt;
     }
 

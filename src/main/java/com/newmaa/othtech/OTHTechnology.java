@@ -25,12 +25,14 @@ import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
 import com.newmaa.othtech.common.dimensions.AntimoniaUndergroundFluids;
 import com.newmaa.othtech.common.dimensions.OTHDimensionIntegration;
 import com.newmaa.othtech.common.dimensions.RegisterDimensions;
+import com.newmaa.othtech.common.dimensions.gtoregen.VisualProspectingOreVeinBridge;
 import com.newmaa.othtech.common.item.ItemLoader;
 import com.newmaa.othtech.common.materials.BWMaterialsLocalization;
 import com.newmaa.othtech.common.materials.MaterialsLoader;
 import com.newmaa.othtech.common.recipemap.MegaCALRecipeLoader;
 import com.newmaa.othtech.common.recipemap.NEIRecipeMaps;
 import com.newmaa.othtech.event.EventPlayerDied;
+import com.newmaa.othtech.event.EventWorldLoad;
 import com.newmaa.othtech.machine.MachineLoader;
 import com.newmaa.othtech.machine.machineclass.OTHMobHandlerLoader;
 import com.newmaa.othtech.quest.QuestLoader;
@@ -43,6 +45,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLLoadCompleteEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerAboutToStartEvent;
 import cpw.mods.fml.common.event.FMLServerStartedEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -85,6 +88,8 @@ public class OTHTechnology {
 
     public OTHTechnology() {
         MinecraftForge.EVENT_BUS.register(new EventPlayerDied());
+        // VisualProspecting（旅行地图的矿脉/流体叠层）的锑星矿脉补注册；世界加载时兜底执行
+        MinecraftForge.EVENT_BUS.register(new EventWorldLoad());
     }
 
     @Mod.EventHandler
@@ -167,6 +172,13 @@ public class OTHTechnology {
     public void serverStarting(FMLServerStartingEvent event) {
         proxy.serverStarting(event);
 
+    }
+
+    @Mod.EventHandler
+    public void serverAboutToStart(FMLServerAboutToStartEvent event) {
+        // 服务端在 FMLServerStartingEvent 阶段会加载 VisualProspecting 的矿脉缓存，
+        // 必须赶在那之前把锑星的自定义矿脉补进 VP 的矿脉表，否则旧存档里的锑星矿脉会被读成 NO_VEIN。
+        VisualProspectingOreVeinBridge.ensureRegistered();
     }
 
     @Mod.EventHandler

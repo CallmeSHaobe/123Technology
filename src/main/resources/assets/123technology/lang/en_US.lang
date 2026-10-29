@@ -639,6 +639,12 @@ ote.sf.mode.2=SMD Workshop Mode
 ote.sf.mode.3=NMD Wafer Fab Mode
 ote.sf.mode.4=Component Aggregator Mode
 ote.sf.mode.unknown=Unknown Mode
+ote.sf.chat.mode.1=Switched to §bPCB Factory Mode
+ote.sf.chat.mode.2=Switched to §bSMD Workshop Mode
+ote.sf.chat.mode.3=Switched to §bNMD Wafer Fab Mode
+ote.sf.chat.mode.4=Switched to §bComponent Aggregator Mode
+# GT's zh_CN.lang lacks this key, keep a translated copy so the mode button tooltip is not English
+GT5U.gui.button.mode_switch=Mode Switch
 ote.cm.sf.0=1 - Energy Hatch, Input/Output Bus, Input/Output Hatch : Replace Ultimate Molecular Machine Casing, supports TecTech Energy Hatch.
 
 #TangShan
@@ -759,3 +765,5 @@ oth.clone.speak=Clone: who am I--? %s
 entity.123Technology.entityNukeThrowable.name=Nuke Throwable
 entity.123Technology.DogRed.name=§cRed Dog
 entity.123Technology.DogBlue.name=§9Blue Dog
+#Items
+item.dogSpawnEgg.name=Dog Spawn Egg

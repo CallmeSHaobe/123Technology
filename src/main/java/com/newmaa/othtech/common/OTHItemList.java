@@ -87,6 +87,10 @@ public enum OTHItemList {
     RecordEVAB,
     RecordEVAC,
     RecordNGGU,
+    // 三色狗刷怪蛋：同一个物品的三个 metadata
+    DogYellowSpawnEgg,
+    DogRedSpawnEgg,
+    DogBlueSpawnEgg,
 
     // Machines
     NASA,
