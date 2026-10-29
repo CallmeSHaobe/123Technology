@@ -69,6 +69,6 @@ public class Config {
     public static boolean enableAntimoniaFarLands = true;
     public static int farLandsBoundary = 12_550_820;
     public static boolean is_Enqing_Song_Play = true;
-    public static boolean enableQuestInjection = true;
+    public static boolean enableQuestInjection = false;
     public static boolean enableFPChating = true;
 }
