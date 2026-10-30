@@ -12,7 +12,11 @@ dependencies {
     implementation(gtnhDev("GT5-Unofficial"))
 
     // CropsNH 由 GTNH maven 发布（dev 分类器），版本跟随上方 gtnhVersion 的模组清单，不再依赖本地 libs/*.jar。
-    implementation(gtnhDev("CropsNH"))
+    // 只用于编译：CropsNH 的 postInit 会硬引用 Better Builders Wands 的类（portablejim.bbw.*），
+    // 而 BBW 不是本工程的 dev 依赖；用 implementation 会把它带进 runClient 运行时并直接崩
+    // （NoClassDefFoundError: portablejim/bbw/core/conversion/ICustomMapping）。
+    // 生产环境由整合包提供 CropsNH + BBW，我们只保留软依赖（after:cropsnh + required:false 的独立 mixin）。
+    compileOnly(gtnhDev("CropsNH"))
     implementation(gtnhDev("NewHorizonsCoreMod"))
 //    implementation(gtnhDev("Mobs-Info"))
     implementation('com.github.GTNewHorizons:Mobs-Info:0.6.0-GTNH:dev')

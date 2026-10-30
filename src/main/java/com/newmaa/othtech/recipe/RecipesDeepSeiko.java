@@ -726,7 +726,7 @@ public class RecipesDeepSeiko implements IRecipePool {
             { stack(DeepSeikoCasingMeta.TAIL_FIN_FRAME, 4), stack(DeepSeikoCasingMeta.BLUBBER_CASING, 4),
                 GTOreDictUnificator.get(OrePrefixes.frameGt, Materials.Titanium, 4) }, };
         for (ItemStack[] recipe : casings) {
-            if (hasNullItem(recipe)) continue;
+            if (hasNullItem((Object[]) recipe)) continue;
             GTValues.RA.stdBuilder()
                 .itemInputs(tail(recipe))
                 .fluidInputs(new FluidStack(FluidRegistry.getFluid("molten.polytetrafluoroethylene"), 288))
