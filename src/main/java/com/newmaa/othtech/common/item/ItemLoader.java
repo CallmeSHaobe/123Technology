@@ -10,8 +10,15 @@ import com.newmaa.othtech.common.item.itemArmor.ItemHelmTallHatLaodeng;
 import com.newmaa.othtech.common.item.itemFoods.IngotHotDog;
 import com.newmaa.othtech.common.item.itemFoods.ItemBrain;
 import com.newmaa.othtech.common.item.itemFoods.ItemLeekBox;
+import com.newmaa.othtech.common.item.itemFoods.ItemSpoiledRice;
 import com.newmaa.othtech.common.item.itemFoods.ItemTST;
+import com.newmaa.othtech.common.item.itemFoods.ItemWhiteRice;
 import com.newmaa.othtech.common.item.itemFoods.ItemZhangww;
+import com.newmaa.othtech.common.item.itemMisc.ItemComputeCenter;
+import com.newmaa.othtech.common.item.itemMisc.ItemDeepSeikoToken;
+import com.newmaa.othtech.common.item.itemMisc.ItemDeepSeikoTokenSilver;
+import com.newmaa.othtech.common.item.itemMisc.ItemRiceSingularity;
+import com.newmaa.othtech.common.item.itemMisc.ItemSpacetimeCoolingCore;
 import com.newmaa.othtech.common.item.itemSpawnEgg.ItemDogSpawnEgg;
 import com.newmaa.othtech.common.item.itemTools.Dasima;
 import com.newmaa.othtech.common.item.itemTools.ItemRecord;
@@ -41,6 +48,13 @@ public class ItemLoader {
     public static Item RecordNGGU = new ItemRecord("NGG_U");
     public static Item itemBrain = new ItemBrain();
     public static Item itemHelmTallHatLaodeng = new ItemHelmTallHatLaodeng(DIAMOND, 0, "HelmTallHatLaodeng");
+    public static Item itemWhiteRice = new ItemWhiteRice();
+    public static Item itemSpoiledRice = new ItemSpoiledRice();
+    public static Item itemDeepSeikoToken = new ItemDeepSeikoToken();
+    public static Item itemDeepSeikoTokenSilver = new ItemDeepSeikoTokenSilver();
+    public static Item itemComputeCenter = new ItemComputeCenter();
+    public static Item itemRiceSingularity = new ItemRiceSingularity();
+    public static Item itemSpacetimeCoolingCore = new ItemSpacetimeCoolingCore();
     public static Item dogSpawnEgg = new ItemDogSpawnEgg();
 
     public ItemLoader(FMLPreInitializationEvent event) {
@@ -60,6 +74,13 @@ public class ItemLoader {
         OTHItemList.itemTST.set(registryAndCallback(itemTST, "itemTST"));
         OTHItemList.Brains.set(registryAndCallback(itemBrain, "BrainsHuman"));
         OTHItemList.Tallhat.set(registryAndCallback(itemHelmTallHatLaodeng, "HelmTallHatLaodeng"));
+        OTHItemList.WhiteRice.set(registryAndCallback(itemWhiteRice, "WhiteRice"));
+        OTHItemList.SpoiledRice.set(registryAndCallback(itemSpoiledRice, "SpoiledRice"));
+        OTHItemList.DeepSeikoToken.set(registryAndCallback(itemDeepSeikoToken, "DeepSeikoToken"));
+        OTHItemList.DeepSeikoTokenSilver.set(registryAndCallback(itemDeepSeikoTokenSilver, "DeepSeikoTokenSilver"));
+        OTHItemList.ComputeCenter.set(registryAndCallback(itemComputeCenter, "ComputeCenter"));
+        OTHItemList.RiceSingularity.set(registryAndCallback(itemRiceSingularity, "RiceSingularity"));
+        OTHItemList.SpacetimeCoolingCore.set(registryAndCallback(itemSpacetimeCoolingCore, "SpacetimeCoolingCore"));
 
         // 三种狗共用一个刷怪蛋物品，靠 metadata 区分（registryAndCallback 里已经 registerItem 过一次）
         OTHItemList.DogYellowSpawnEgg.set(registryAndCallback(dogSpawnEgg, "dogSpawnEgg"));

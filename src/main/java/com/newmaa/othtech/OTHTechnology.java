@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.FluidRegistry;
 
@@ -18,6 +19,7 @@ import com.newmaa.othtech.common.ItemAndBlockHandler;
 import com.newmaa.othtech.common.OreDictionaryLoader;
 import com.newmaa.othtech.common.beeyonds.OTHBeeyonds;
 import com.newmaa.othtech.common.blocks.antimonia.AntimoniaBlocks;
+import com.newmaa.othtech.common.blocks.deepseiko.DeepSeikoBlocks;
 import com.newmaa.othtech.common.blocks.fluids.AntimoniaFluids;
 import com.newmaa.othtech.common.blocks.fluids.RossFluids;
 import com.newmaa.othtech.common.blocks.oterender.OTERocketRender;
@@ -29,6 +31,8 @@ import com.newmaa.othtech.common.dimensions.gtoregen.VisualProspectingOreVeinBri
 import com.newmaa.othtech.common.item.ItemLoader;
 import com.newmaa.othtech.common.materials.BWMaterialsLocalization;
 import com.newmaa.othtech.common.materials.MaterialsLoader;
+import com.newmaa.othtech.common.recipemap.DeepSeikoALRecipeLoader;
+import com.newmaa.othtech.common.recipemap.DeepSeikoBECRecipeLoader;
 import com.newmaa.othtech.common.recipemap.MegaCALRecipeLoader;
 import com.newmaa.othtech.common.recipemap.NEIRecipeMaps;
 import com.newmaa.othtech.event.EventPlayerDied;
@@ -67,6 +71,8 @@ import gtnhintergalactic.recipe.SpacePumpingRecipes;
         + "required-after:miscutils;"
         + "required-after:dreamcraft;"
         + "required-after:gregtech;"
+        // CropsNH 水稻作物：软依赖（没有 cropsnh 时 mixin 会跳过，不影响其它功能）
+        + "after:cropsnh;"
         + "required-after:GalaxySpace;",
     acceptedMinecraftVersions = "1.7.10")
 public class OTHTechnology {
@@ -103,8 +109,14 @@ public class OTHTechnology {
         // 拷贝 CAL 配方并去掉压印电路需求
         if (GregTechAPI.sGTCompleteLoad != null) {
             GregTechAPI.sGTCompleteLoad.add(MegaCALRecipeLoader::load);
+            // 迪普西科凝聚态配方池：拷贝 BEC 配方并把纠缠凝聚态换成普通形态流体（GT 会先跑完
+            // BECRecipes.runLateRecipes() 再遍历 sGTCompleteLoad，时序必然安全）
+            GregTechAPI.sGTCompleteLoad.add(DeepSeikoBECRecipeLoader::load);
+            GregTechAPI.sGTCompleteLoad.add(DeepSeikoALRecipeLoader::load);
         } else {
             MegaCALRecipeLoader.load();
+            DeepSeikoBECRecipeLoader.load();
+            DeepSeikoALRecipeLoader.load();
         }
 
         new BWMaterialsLocalization().loader();
@@ -120,6 +132,7 @@ public class OTHTechnology {
         AntimoniaBlocks.initialize();
         AntimoniaFluids.initialize();
         RossFluids.initialize();
+        DeepSeikoBlocks.initialize();
     }
 
     @Mod.EventHandler
@@ -131,6 +144,8 @@ public class OTHTechnology {
         new RegisterDimensions().init();
         AntimoniaUndergroundFluids.register();
         NEIRecipeMaps.IMCSender();
+        // 迪普西科的米饭投影影子方块是纯技术方块，别让它在 NEI 里冒出来
+        API.hideItem(new ItemStack(DeepSeikoBlocks.dsHolo));
     }
 
     @SideOnly(Side.CLIENT)
@@ -159,12 +174,23 @@ public class OTHTechnology {
 
     @Mod.EventHandler
     public void completeInit(FMLLoadCompleteEvent event) {
-        LOG.info("completeInit: Starting recipe loading...");
-        RecipeLoader.loadRecipes();
-        LOG.info("completeInit: Recipe loading done, initializing OTHBeeyonds...");
-        new OTHBeeyonds();
-        LOG.info("completeInit: OTHBeeyonds done, FMLLoadComplete finished.");
-        // 添加自定义配方
+        // ⚠ 这里抛任何异常都会被 FML 记为致命错误，后果是「所有存档进不去、新建世界失败」，
+        // 2026-10-26 14:26 就因为一条 NEI 展示配方抛了 IllegalArgumentException 而炸过。
+        // 所以每一步都单独兜底：失败只记日志，绝不阻塞世界加载。
+        safeStep("RecipeLoader.loadRecipes", RecipeLoader::loadRecipes);
+        safeStep("DeepSeikoBECRecipeLoader", DeepSeikoBECRecipeLoader::load);
+        safeStep("DeepSeikoALRecipeLoader", DeepSeikoALRecipeLoader::load);
+        safeStep("OTHBeeyonds", OTHBeeyonds::new);
+        LOG.info("completeInit: finished.");
+    }
+
+    /** 执行一个初始化步骤；任何异常/错误都吞掉并记日志，保证 completeInit 不会把世界挡在门外 */
+    private static void safeStep(String name, Runnable step) {
+        try {
+            step.run();
+        } catch (Throwable t) {
+            LOG.error("completeInit step '" + name + "' failed; skipped so world loading is not blocked", t);
+        }
     }
 
     @Mod.EventHandler

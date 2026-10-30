@@ -1500,7 +1500,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.circuit, Materials.ZPM, 1), 6 * 256),
                 setStackSize(OTHItemList.dustIrOsSmM.get(64), 16 * 256),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.wireGt02, Materials.SuperconductorUHV, 1), 26 * 256),
-                setStackSize(GTModHandler.getModItem("gregtech", "Photonically Prepared Wafer", 1), 4 * 256))
+                setStackSize(GTOreDictUnificator.get("waferPhotonicallyPrepared", 1), 4 * 256))
             .fluidInputs(
                 FluidRegistry.getFluidStack("molten.sunnarium", 9216 * 256),
                 FluidRegistry.getFluidStack("molten.epoxid", 1152 * 256),

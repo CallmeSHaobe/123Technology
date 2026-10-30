@@ -4,6 +4,7 @@ import static net.minecraft.util.StatCollector.translateToLocal;
 
 import com.gtnewhorizon.gtnhlib.util.AnimatedTooltipHandler;
 import com.newmaa.othtech.common.OTHItemList;
+import com.newmaa.othtech.machine.hatch.OTEDeepSeikoNaniteCell;
 import com.newmaa.othtech.machine.hatch.OTEHatchRack;
 import com.newmaa.othtech.machine.hatch.OTEWTFHatch;
 import com.newmaa.othtech.utils.AuthorAnimation;
@@ -201,6 +202,12 @@ public class MachineLoader {
             .set(new OTEFireRocketAssembler(IDs + 62, "FireRocketAssembler", translateToLocal("ote.tn.nasa"))); // 模型错位,已无言
         OTHItemList.MegaThermalCentrifuge
             .set(new OTEMegaThermalCentrifuge(IDs + 64, "MegaThermalCentrifuge", translateToLocal("ote.tn.mtc")));
+
+        // 迪普西科 DeepSeiko（IDs+9..+12 与 +65..+68）
+        OTHItemList.DeepSeiko.set(new OTEDeepSeiko(IDs + 9, "DeepSeiko", translateToLocal("ote.tn.ds")));
+        OTHItemList.DeepSeikoNaniteCell.set(
+            new OTEDeepSeikoNaniteCell(IDs + 67, "DeepSeikoNaniteCell", translateToLocal("ote.tn.nanite"), 0)
+                .getStackForm(1L));
 
     }
 

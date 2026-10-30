@@ -1,40 +1,33 @@
 package com.newmaa.othtech.common.recipemap.recipeMapFrontends;
 
-import static com.newmaa.othtech.Config.NEIFrontend;
-
-import java.util.List;
-
 import com.gtnewhorizons.modularui.api.drawable.UITexture;
 import com.gtnewhorizons.modularui.api.math.Pos2d;
-import com.gtnewhorizons.modularui.api.math.Size;
 import com.gtnewhorizons.modularui.api.screen.ModularWindow;
 import com.gtnewhorizons.modularui.common.widget.DrawableWidget;
 
 import gregtech.api.recipe.BasicUIPropertiesBuilder;
 import gregtech.api.recipe.NEIRecipePropertiesBuilder;
-import gregtech.api.recipe.RecipeMapFrontend;
-import gregtech.common.gui.modularui.UIHelper;
+import gregtech.api.recipe.maps.LargeNEIFrontend;
 
-public class OTH_GeneralFrontend extends RecipeMapFrontend {
+/**
+ * 迪普西科配方池的 NEI 页面。
+ *
+ * <p>
+ * 直接继承 GT 自带的 {@link LargeNEIFrontend}：它专门处理「物品/流体都很多」的配方——
+ * 输入 3 列贴在左边、输出 3 列贴在右边（x=106）、流体接在物品下面，并按行数自动把背景拉高。
+ * 之前自己手写 4 列/6 列布局，结果输入网格会顶到输出位置（材料和目标物叠在一起）、
+ * 还把底部那三行文字压住；而覆写 {@code recipeBackgroundSize} 又会让这版 GT 崩客户端。
+ * 用 GT 现成的实现最稳。
+ * </p>
+ */
+public class OTH_GeneralFrontend extends LargeNEIFrontend {
 
-    private static final int xDirMaxCount = 4;
-    private static final int yOrigin = 8;
-    private final int itemRowCount;
-    public static final UITexture OTHUIT = NEIFrontend ? UITexture.fullImage("123technology", "items/MetaItem/0")
-        : UITexture.fullImage("123technology", "items/MetaItem/bb");
+    /** 页内左下角的小图标：调试硬币 */
+    public static final UITexture OTHUIT = UITexture.fullImage("123technology", "items/DeepSeikoToken");
 
     public OTH_GeneralFrontend(BasicUIPropertiesBuilder uiPropertiesBuilder,
         NEIRecipePropertiesBuilder neiPropertiesBuilder) {
-        super(uiPropertiesBuilder.logoPos(new Pos2d(79, 7)), neiPropertiesBuilder);
-        this.itemRowCount = getItemRowCount();
-    }
-
-    @Override
-    protected NEIRecipePropertiesBuilder modifyNEIProperties(NEIRecipePropertiesBuilder neiPropertiesBuilder) {
-        int itemRowCount = (Math.max(uiProperties.maxItemInputs, uiProperties.maxItemOutputs) - 1) / xDirMaxCount + 1;
-        int fluidRowCount = (Math.max(uiProperties.maxFluidInputs, uiProperties.maxFluidOutputs) - 1) / xDirMaxCount
-            + 1;
-        return neiPropertiesBuilder.recipeBackgroundSize(new Size(170, 10 + (itemRowCount + fluidRowCount) * 18));
+        super(uiPropertiesBuilder, neiPropertiesBuilder);
     }
 
     @Override
@@ -44,33 +37,4 @@ public class OTH_GeneralFrontend extends RecipeMapFrontend {
                 .setSize(18, 18)
                 .setPos(uiProperties.logoPos.add(windowOffset)));
     }
-
-    private int getItemRowCount() {
-        return (Math.max(uiProperties.maxItemInputs, uiProperties.maxItemOutputs) - 1) / xDirMaxCount + 1;
-    }
-
-    private int getFluidRowCount() {
-        return (Math.max(uiProperties.maxFluidInputs, uiProperties.maxFluidOutputs) - 1) / xDirMaxCount + 1;
-    }
-
-    @Override
-    public List<Pos2d> getItemInputPositions(int itemInputCount) {
-        return UIHelper.getGridPositions(itemInputCount, 6, yOrigin, xDirMaxCount);
-    }
-
-    @Override
-    public List<Pos2d> getItemOutputPositions(int itemOutputCount) {
-        return UIHelper.getGridPositions(itemOutputCount, 98, yOrigin, xDirMaxCount);
-    }
-
-    @Override
-    public List<Pos2d> getFluidInputPositions(int fluidInputCount) {
-        return UIHelper.getGridPositions(fluidInputCount, 6, yOrigin + itemRowCount * 18, xDirMaxCount);
-    }
-
-    @Override
-    public List<Pos2d> getFluidOutputPositions(int fluidOutputCount) {
-        return UIHelper.getGridPositions(fluidOutputCount, 98, yOrigin + itemRowCount * 18, xDirMaxCount);
-    }
-
 }

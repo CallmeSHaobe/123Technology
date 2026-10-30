@@ -38,3 +38,11 @@ addon.local.gradle.kts
 addon.late.local.gradle
 addon.late.local.gradle.kts
 layout.json
+
+# 本地开发素材 / 编译期依赖（不进 PR）
+/libs/*.jar
+!/libs/chisel-2.17.27-GTNH.jar
+/*.png
+/_whale/
+/CropsNH-水稻种子/
+/米饭投影-验收/

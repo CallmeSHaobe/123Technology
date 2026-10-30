@@ -10,6 +10,9 @@ elytraModpackVersion {
 
 dependencies {
     implementation(gtnhDev("GT5-Unofficial"))
+
+    // CropsNH 由 GTNH maven 发布（dev 分类器），版本跟随上方 gtnhVersion 的模组清单，不再依赖本地 libs/*.jar。
+    implementation(gtnhDev("CropsNH"))
     implementation(gtnhDev("NewHorizonsCoreMod"))
 //    implementation(gtnhDev("Mobs-Info"))
     implementation('com.github.GTNewHorizons:Mobs-Info:0.6.0-GTNH:dev')

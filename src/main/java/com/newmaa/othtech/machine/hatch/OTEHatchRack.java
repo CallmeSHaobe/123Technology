@@ -254,7 +254,6 @@ public class OTEHatchRack extends MTEHatch {
     // endregion
 
     public static void run() { // 20k heat cap max!
-
         new RackComponent(ItemList.Circuit_Crystalprocessor.get(1), 60, 56, -1f, true); // IV
         new RackComponent(ItemList.Circuit_Crystalcomputer.get(1), 80, 54, -1f, true); // LuV
         new RackComponent(ItemList.Circuit_Ultimatecrystalcomputer.get(1), 100, 52, -1f, true); // ZPM
@@ -326,6 +325,7 @@ public class OTEHatchRack extends MTEHatch {
                 new RackComponent(apuCreativeStack, 2400, 40, -1f, true); // APU Creative
             }
         }
+
     }
 
     public static class RackComponent implements Comparable<OTEHatchRack.RackComponent> {
