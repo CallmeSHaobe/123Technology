@@ -39,6 +39,7 @@ import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
+import com.newmaa.othtech.utils.OTHTooltipBuilder;
 
 import bartworks.API.BorosilicateGlass;
 import cpw.mods.fml.relauncher.Side;
@@ -682,7 +683,7 @@ public class OTELargeBin extends OTHMultiMachineBase<OTELargeBin> implements ICo
     /*
      * @Override
      * public MultiblockTooltipBuilder createTooltip() {
-     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+     * final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
      * tt.addMachineType(translateToLocal("垃圾桶丨回收机丨AE奇点制造机丨中子态素压缩机"))
      * .addInfo(translateToLocal("销毁一切, 仅此而已吗?"))
      * .addInfo("支持存储输入系列, 螺丝刀切换模式, 剪线钳切换耗时")
@@ -707,7 +708,7 @@ public class OTELargeBin extends OTHMultiMachineBase<OTELargeBin> implements ICo
      */
     @Override
     public MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
         tt.addMachineType(translateToLocal("ote.tm.bin.0"))
             .addInfo(translateToLocal("ote.tm.bin.1"))
             .addInfo(translateToLocal("ote.tm.bin.2"))
@@ -716,7 +717,7 @@ public class OTELargeBin extends OTHMultiMachineBase<OTELargeBin> implements ICo
             .addInfo(translateToLocal("ote.tm.bin.5"))
             .addInfo(translateToLocal("ote.tm.bin.6"))
             .addTecTechHatchInfo()
-            .beginStructureBlock(1, 3, 1, false)
+            .beginVariableStructureBlock(5, 19, 5, 31, 5, 19, false)
             .addController(translateToLocal("ote.tm.bin.12"))
             .addCasingInfoMin(translateToLocal("ote.tm.bin.13"), 5, false)
             .addEnergyHatch(translateToLocal("ote.tm.bin.14"), 1)

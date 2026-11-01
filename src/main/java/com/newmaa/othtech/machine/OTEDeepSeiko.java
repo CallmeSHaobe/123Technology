@@ -45,6 +45,7 @@ import com.newmaa.othtech.machine.hatch.OTEDeepSeikoNaniteCell;
 import com.newmaa.othtech.machine.machineclass.DeepSeikoMath;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
+import com.newmaa.othtech.utils.OTHTooltipBuilder;
 
 import gregtech.api.enums.NaniteTier;
 import gregtech.api.enums.SoundResource;
@@ -1608,7 +1609,7 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
     }
 
     protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
         tt.addMachineType(EnumChatFormatting.BLUE + StatCollector.translateToLocal("ote.tm.ds.type"))
             .addInfo(StatCollector.translateToLocal("ote.tm.ds.0"))
             .addInfo(StatCollector.translateToLocal("ote.tm.ds.0b"))
@@ -1621,7 +1622,8 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
             .addInfo(StatCollector.translateToLocal("ote.tm.ds.perf"))
             .addInfo(StatCollector.translateToLocal("ote.tm.ds.perf2"))
             .addInfo(StatCollector.translateToLocal("ote.tm.ds.6"))
-            .beginStructureBlock(60, 23, 33, false)
+            .addInfo(StatCollector.translateToLocal("ote.tm.ds.7"))
+            .beginStructureBlock(33, 23, 60, false)
             .addController(StatCollector.translateToLocal("ote.tm.ds.hint.controller"))
             .addInputBus(StatCollector.translateToLocal("ote.tm.ds.hint.bays"), 2)
             .addOutputBus(StatCollector.translateToLocal("ote.tm.ds.hint.bays"), 3)
@@ -1633,7 +1635,7 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
             .addStructureInfo(StatCollector.translateToLocal("ote.tm.ds.hint.rings.4"))
             .addStructureInfo(StatCollector.translateToLocal("ote.tm.ds.hint.rings.5"))
             .addStructureInfo(StatCollector.translateToLocal("ote.tm.ds.hint.rings.6"))
-            .toolTipFinisher("§a添加者: 123Technology - DeepSeek && Lokisidus");
+            .toolTipFinisher(EnumChatFormatting.RED + "123Technology - The TERMINATOR of BEC && AL. ");
         return tt;
     }
 
@@ -1777,8 +1779,10 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
             "18,8,1:H", "17,8,1:H", "16,8,1:H", "15,8,1:H", "14,8,1:H", "21,9,2:H", "20,9,2:H", "12,9,2:H", "11,9,2:H",
             "19,8,2:H", "13,8,2:H", "12,8,2:H", "19,7,2:H", "18,7,2:H", "17,7,2:H", "16,7,2:H", "15,7,2:H", "14,7,2:H",
             "13,7,2:H" };
+        // 正面：16x16 机壳基底 + 覆盖层立绘，覆盖层由 IIconContainer#getOverlayIcon() 提供
+        // （GTRenderedTexture 会在同一面先画基底再叠覆盖层；builder 只允许 addIcon 一次）
         CONTROLLER_FRONT_TEXTURE = TextureFactory.builder()
-            .addIcon(DeepSeikoIcons.CONTROLLER_FRONT)
+            .addIcon(DeepSeikoIcons.CONTROLLER_FRONT_BASE)
             .extFacing()
             .build();
         CONTROLLER_SIDE_TEXTURE = TextureFactory.of(DeepSeikoIcons.CONTROLLER_SIDE);

@@ -29,6 +29,7 @@ import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.gtnewhorizon.structurelib.structure.StructureUtility;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
+import com.newmaa.othtech.utils.OTHTooltipBuilder;
 
 import bartworks.API.BorosilicateGlass;
 import gregtech.api.enums.GTValues;
@@ -329,7 +330,7 @@ public class OTELargeCircuitAssembler extends OTHMultiMachineBase<OTELargeCircui
     /*
      * @Override
      * protected MultiblockTooltipBuilder createTooltip() {
-     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+     * final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
      * tt.addMachineType("§e§l轻工业计划 - 大型电路组装机")
      * .addInfo("§l朴实无华...")
      * .addInfo("能源仓等级限制配方等级")
@@ -354,7 +355,7 @@ public class OTELargeCircuitAssembler extends OTHMultiMachineBase<OTELargeCircui
      */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
         tt.addMachineType(translateToLocal("ote.tm.lca.0"))
             .addInfo(translateToLocal("ote.tm.lca.1"))
             .addInfo(translateToLocal("ote.tm.lca.2"))
@@ -366,7 +367,7 @@ public class OTELargeCircuitAssembler extends OTHMultiMachineBase<OTELargeCircui
             .addPollutionAmount(1024)
             .addSeparator()
             .addController(translateToLocal("ote.tn.lca"))
-            .beginStructureBlock(8, 6, 13, false)
+            .beginStructureBlock(13, 6, 8, false)
             .addInputBus("AnyInputBus", 3)
             .addOutputBus("AnyOutputBus", 2)
             .addInputHatch("AnyInputHatch", 3)

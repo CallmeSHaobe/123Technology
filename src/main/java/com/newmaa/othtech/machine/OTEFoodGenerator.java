@@ -32,6 +32,7 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.machine.machineclass.OTHTTMultiMachineBaseEM;
+import com.newmaa.othtech.utils.OTHTooltipBuilder;
 import com.newmaa.othtech.utils.Utils;
 
 import cpw.mods.fml.relauncher.Side;
@@ -414,7 +415,7 @@ public class OTEFoodGenerator extends OTHTTMultiMachineBaseEM implements IConstr
     /*
      * @Override
      * protected MultiblockTooltipBuilder createTooltip() {
-     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+     * final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
      * tt.addMachineType("只是一个发电机")
      * .addInfo("再也不用担心吃得太饱了")
      * .addInfo("丰矿地烧掉一切食物")
@@ -437,7 +438,7 @@ public class OTEFoodGenerator extends OTHTTMultiMachineBaseEM implements IConstr
      */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
         tt.addMachineType(translateToLocal("ote.tm.food.0"))
             .addInfo(translateToLocal("ote.tm.food.1"))
             .addInfo(translateToLocal("ote.tm.food.2"))
@@ -448,7 +449,7 @@ public class OTEFoodGenerator extends OTHTTMultiMachineBaseEM implements IConstr
             .addSeparator()
             .addPollutionAmount(100000)
             .addController(translateToLocal("ote.tn.food"))
-            .beginStructureBlock(7, 13, 7, false)
+            .beginStructureBlock(15, 15, 20, false)
             .addInputBus("AnyInputBus", 1)
             .addOutputBus("AnyOutputBus", 1)
             .addInputHatch("AnyInputHatch", 1)

@@ -43,6 +43,7 @@ import com.newmaa.othtech.machine.gui.OTESunFactoryGui;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
 import com.newmaa.othtech.machine.machineclass.OTHSoundResource;
+import com.newmaa.othtech.utils.OTHTooltipBuilder;
 
 import bartworks.API.BorosilicateGlass;
 import gregtech.api.enums.Materials;
@@ -2502,7 +2503,7 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
     /*
      * @Override
      * protected MultiblockTooltipBuilder createTooltip() {
-     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+     * final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
      * tt.addMachineType("搂c搂l鑰佺櫥鐨勪紶濂囬€犵墿 - 宸ㄥ瀷PCB宸ュ巶涓ㄨ创鐗囧伐鍧婁辅NMD鏅跺渾鍘備辅鍏冧欢鑱氬悎鑰?)
      * .addInfo("搂e搂l涓?浣?鍗?涓?")
      * .addInfo("搂5浠庢煇鍗婂矝绁炵鍖楁柟鍥藉寮曡繘鐨勫皷绔珮绉戞妧宸ㄦ瀯")
@@ -2538,7 +2539,7 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
      */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
         tt.addMachineType(translateToLocal("ote.tm.sf.0"))
             .addInfo(translateToLocal("ote.tm.sf.1"))
             .addInfo(translateToLocal("ote.tm.sf.2"))

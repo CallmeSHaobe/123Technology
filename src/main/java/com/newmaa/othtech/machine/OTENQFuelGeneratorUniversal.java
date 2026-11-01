@@ -45,6 +45,7 @@ import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.common.materials.BWLiquids;
 import com.newmaa.othtech.machine.machineclass.OTHTTMultiMachineBaseEM;
+import com.newmaa.othtech.utils.OTHTooltipBuilder;
 
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
@@ -569,7 +570,7 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
     /*
      * @Override
      * protected MultiblockTooltipBuilder createTooltip() {
-     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+     * final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
      * tt.addMachineType("通化之梦")
      * .addInfo(" §l§4“你产能不够吧? -v-” ")
      * .addInfo("通化的升级版本, 可以支持硅岩燃料, 但不能使用传统燃料喔 ~ 真正的清洁能源")
@@ -600,7 +601,7 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
      */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
         tt.addMachineType(translateToLocal("ote.tm.nfg.0"))
             .addInfo(translateToLocal("ote.tm.nfg.1"))
             .addInfo(translateToLocal("ote.tm.nfg.2"))
@@ -618,7 +619,7 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
             .addInfo(translateToLocal("ote.tm.nfg.15"))
             .addSeparator()
             .addController(translateToLocal("ote.tm.nfg.16"))
-            .beginStructureBlock(7, 13, 7, false)
+            .beginStructureBlock(6, 4, 9, false)
             .addInputBus("AnyInputBus", 1)
             .addOutputBus("AnyOutputBus", 1)
             .addInputHatch("AnyInputHatch", 1)

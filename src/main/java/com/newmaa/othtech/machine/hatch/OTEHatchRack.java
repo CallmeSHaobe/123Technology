@@ -42,7 +42,6 @@ import gregtech.api.util.GTModHandler;
 import gregtech.mixin.interfaces.accessors.EntityPlayerMPAccessor;
 import tectech.TecTech;
 import tectech.loader.ConfigHandler;
-import tectech.util.CommonValues;
 import tectech.util.TTUtility;
 
 /**
@@ -64,7 +63,7 @@ public class OTEHatchRack extends MTEHatch {
             aNameRegional,
             aTier,
             4,
-            new String[] { CommonValues.TEC_MARK_EM, translateToLocal("gt.blockmachines.hatch.rack.desc.0"),
+            new String[] { translateToLocal("gt.blockmachines.hatch.rack.desc.0"),
                 EnumChatFormatting.AQUA + translateToLocal("gt.blockmachines.hatch.rack.desc.1") });
     }
 

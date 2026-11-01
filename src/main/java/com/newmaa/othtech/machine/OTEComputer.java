@@ -45,6 +45,7 @@ import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.gtnewhorizon.structurelib.util.Vec3Impl;
 import com.newmaa.othtech.machine.hatch.OTEHatchRack;
 import com.newmaa.othtech.machine.machineclass.OTHTTMultiMachineBaseEM;
+import com.newmaa.othtech.utils.OTHTooltipBuilder;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -477,7 +478,7 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
 
     @Override
     public MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
         tt.addMachineType(translateToLocal("ote.computer.name"))
             // .addInfo(translateToLocal("ote.computer.desc.0"))
             // the Quantum Computer
@@ -493,7 +494,7 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
 
             // wireless mode
             .addTecTechHatchInfo()
-            .beginVariableStructureBlock(2, 2, 4, 4, 5, 16, false)
+            .beginStructureBlock(11, 11, 16, false)
             .addOtherStructurePart(
                 translateToLocal("gt.blockmachines.hatch.certain.tier.07.name"),
                 translateToLocal("tt.keyword.Structure.AnyComputerCasing"),

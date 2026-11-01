@@ -19,6 +19,7 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
+import com.newmaa.othtech.utils.OTHTooltipBuilder;
 
 import gregtech.api.GregTechAPI;
 import gregtech.api.enums.HeatingCoilLevel;
@@ -194,7 +195,7 @@ public class OTEIMBABlastFurnace extends MTEElectricBlastFurnace {
     /*
      * @Override
      * protected MultiblockTooltipBuilder createTooltip() {
-     * MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+     * MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
      * tt.addMachineType("§l超级无敌数值高炉")
      * .addInfo("§6§l不耗电！")
      * .addInfo("§6§lint并行！")
@@ -226,7 +227,7 @@ public class OTEIMBABlastFurnace extends MTEElectricBlastFurnace {
      */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
         tt.addMachineType(translateToLocal("ote.tm.imba.0"))
             .addInfo(translateToLocal("ote.tm.imba.1"))
             .addInfo(translateToLocal("ote.tm.imba.2"))
@@ -239,7 +240,7 @@ public class OTEIMBABlastFurnace extends MTEElectricBlastFurnace {
             .addInfo(translateToLocal("ote.tm.imba.9"))
             .addInfo(translateToLocal("ote.tm.imba.10"))
             .addPollutionAmount(getPollutionPerSecond(null))
-            .beginStructureBlock(3, 4, 3, true)
+            .beginStructureBlock(5, 4, 5, true)
             .addController("Front bottom")
             .addCasingInfoRange("Heat Proof Machine Casing", 0, 15, false)
             .addOtherStructurePart("Heating Coils (including advanced coils)", "Two middle Layers")

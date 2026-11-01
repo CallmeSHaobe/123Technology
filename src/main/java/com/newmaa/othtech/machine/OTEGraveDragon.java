@@ -31,6 +31,7 @@ import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
+import com.newmaa.othtech.utils.OTHTooltipBuilder;
 
 import gregtech.api.enums.HeatingCoilLevel;
 import gregtech.api.interfaces.ITexture;
@@ -354,7 +355,7 @@ public class OTEGraveDragon extends OTHMultiMachineBase<OTEGraveDragon> {
     /*
      * @Override
      * protected MultiblockTooltipBuilder createTooltip() {
-     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+     * final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
      * tt.addMachineType("§c§l老登的终极造物 - 黑龙驭者(新式龙研聚合装置)")
      * .addInfo("§e§o龙研堆了几千回, 工业进步第一次")
      * .addInfo("§c§o应赞美NHU之神, 蛋机要启动了...")
@@ -380,7 +381,7 @@ public class OTEGraveDragon extends OTHMultiMachineBase<OTEGraveDragon> {
      */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
         tt.addMachineType(translateToLocal("ote.tm.gd.0"))
             .addInfo(translateToLocal("ote.tm.gd.1"))
             .addInfo(translateToLocal("ote.tm.gd.2"))

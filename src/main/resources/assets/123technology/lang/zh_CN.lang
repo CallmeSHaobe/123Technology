@@ -784,8 +784,8 @@ tile.dsCasing.2.name=鲸须格栅
 tile.dsCasing.3.name=尾鳍加强框
 
 #DeepSeiko 机器与文案
-ote.tn.ds=大肥鱼DEEPSEIKO
-gt.blockmachines.deepseiko.name=大肥鱼DEEPSEIKO
+ote.tn.ds=§b§l迪普斯科通用装配观测系统试做型
+gt.blockmachines.deepseiko.name=§b§l迪普斯科通用装配观测系统试做型
 ote.tn.dsroom=迪普西科·算力机房
 ote.tn.stomach=大胃袋
 item.DeepSeikoToken.name=迪普西科调试币
@@ -800,7 +800,7 @@ ote.ds.struct.1=舱位：头部一圈标准舱位（结构字符 H）= 输入/�
 ote.ds.struct.2=结构方块：鲸脂外壳 / 装配腔方块（腹褶 + 肚皮底 7 格）/ 鲸须格栅 / 尾鳍加强框 / 凝聚态适配舱
 ote.ds.struct.3=三环 = 三条鳍信道：左鳍(时间) / 右鳍(空间) / 顶鳍(稳定)，1~10 级；同一信道里的方块必须同级
 ote.ds.struct.4=控制器正下方是普通舱位，别把舱室塞到控制器脚下
-ote.tm.ds.0b=§7或许它能帮到你很多？！
+ote.tm.ds.0b=§7或许它能帮到你很多 ?!
 ote.tm.ds.perf=§7升级结构方块可以提升整台机器的性能：加速 耗电 并行
 ote.tm.ds.hint.b=鲸须格栅 (头部下颚): 输入总线/输入仓
 ote.tm.ds.hint.d=尾鳍加强框 (尾柄底面): 输出总线/输出仓
@@ -833,14 +833,15 @@ ote.tt.nanite.2=10 级（MagMatter）= 什么都能跑
 ote.tt.signal.0=输出鲸的饱食状态红石信号
 ote.tt.signal.1=吃饱（完美加速窗口内）= 15，饿 = 0
 ote.tt.signal.2=红石信号
-ote.tm.ds.type=凝聚态2班最终兵器
-ote.tm.ds.0=§b来自未知次元的一条大肥鱼
+ote.tm.ds.type=老登的终极造物 - 通用装配观测系统机
+ote.tm.ds.0=§b来自未知次元的高能机体
 ote.tm.ds.1=§b■ 装配线：无损超频+无需闪存
 ote.tm.ds.2=§b■ 装配线：结构方块等级提供额外增益
 ote.tm.ds.3=§d■ 凝聚态：只需要配方原流体，加工算法仍为BEC原版点数机制，但更加强力
 ote.tm.ds.4=§d■ 凝聚态：需要先在「机体升级」解锁，并按配方要求提升蜂群等级
 ote.tm.ds.5=§d■ 凝聚态：算力卡提供额外加速（光学 量子 普朗克 D99 D199 D999)还有——690？！
 ote.tm.ds.6=§cA§6t§et§ae§bn§dt§ci§6o§en §ai§bs §da§cl§6l §ey§ao§bu §dn§ce§6e§ed§a.
+ote.tm.ds.7=§d作者 : §bLokisidus §d&& §9§zDeepSeek 41F
 
 #DeepSeiko v1.4 结构
 ote.tm.ds.hint.any=头部一圈 40 格标准舱位 (金块标记): 输入/输出总线仓, 输入/输出仓, 能源/激光仓
