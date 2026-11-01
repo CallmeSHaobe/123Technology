@@ -720,6 +720,19 @@ ote.tm.mtc.3=§b  Parallel: 1024
 ote.tm.mtc.4=§6  Uses GT++ Thermal Processing Casings for structure
 ote.tm.mtc.5=§l "The steel torrent of the Urals never ceases — ores are forged into the Motherland's lifeblood in the centrifugal inferno"
 
+#LargeQuHub
+ote.tn.quhub=Large Stackable Transformer (TBD)
+ote.tm.quhub.0=§lStackable Active Transformer - TBD
+ote.tm.quhub.1=§b  EU in: Energy Hatch / Multi-Amp Energy Hatch; EU out: Dynamo Hatch / Multi-Amp Dynamo Hatch
+ote.tm.quhub.2=§c  Laser Target / Laser Source Hatches are NOT supported
+ote.tm.quhub.3=§b  Enable Power Pass to relay energy (same loss as the Active Transformer)
+ote.tm.quhub.4=§b  The controller wall is the first slice; the center of the wall right behind it holds an EBF heating coil
+ote.tm.quhub.5=§b  Every 3x3 wall further back is one slice; slices can be stacked endlessly; max slices = coil tier³
+ote.tm.quhub.6=§6  Structure casing: Deoxidized Steel Machine Casing
+ote.cm.quhub.0=1 - Energy Hatch / Multi-Amp Energy Hatch / Dynamo Hatch / Multi-Amp Dynamo Hatch : replace Deoxidized Steel Machine Casing (no laser hatches)
+ote.cm.quhub.1=The controller wall is the first slice; the center of the wall right behind it holds an EBF heating coil
+ote.cm.quhub.2=Every 3x3 wall further back is one slice and can be stacked endlessly; max slices = coil tier³
+
 #WTFHatch
 ote.tm.wtf.0=Stores energy in a global network.
 ote.tm.wtf.1=Does not connect to wires. This block can draw EU from the network.

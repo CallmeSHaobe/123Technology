@@ -203,6 +203,8 @@ public class MachineLoader {
         OTHItemList.MegaThermalCentrifuge
             .set(new OTEMegaThermalCentrifuge(IDs + 64, "MegaThermalCentrifuge", translateToLocal("ote.tn.mtc")));
 
+        OTHItemList.LargeQuHub.set(new OTELargeQuHub(IDs + 69, "LargeQuHub", translateToLocal("ote.tn.quhub")));
+
         // 迪普西科 DeepSeiko（IDs+9..+12 与 +65..+68）
         OTHItemList.DeepSeiko.set(new OTEDeepSeiko(IDs + 9, "DeepSeiko", translateToLocal("ote.tn.ds")));
         OTHItemList.DeepSeikoNaniteCell.set(

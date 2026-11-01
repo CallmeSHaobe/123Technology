@@ -7,18 +7,7 @@ import static com.newmaa.othtech.utils.Utils.hasNullItem;
 import static com.newmaa.othtech.utils.Utils.setStackSize;
 import static goodgenerator.api.recipe.GoodGeneratorRecipeMaps.preciseAssemblerRecipes;
 import static gregtech.api.enums.Mods.*;
-import static gregtech.api.enums.TierEU.RECIPE_EV;
-import static gregtech.api.enums.TierEU.RECIPE_HV;
-import static gregtech.api.enums.TierEU.RECIPE_IV;
-import static gregtech.api.enums.TierEU.RECIPE_LuV;
-import static gregtech.api.enums.TierEU.RECIPE_MV;
-import static gregtech.api.enums.TierEU.RECIPE_UEV;
-import static gregtech.api.enums.TierEU.RECIPE_UHV;
-import static gregtech.api.enums.TierEU.RECIPE_UIV;
-import static gregtech.api.enums.TierEU.RECIPE_UMV;
-import static gregtech.api.enums.TierEU.RECIPE_UV;
-import static gregtech.api.enums.TierEU.RECIPE_UXV;
-import static gregtech.api.enums.TierEU.RECIPE_ZPM;
+import static gregtech.api.enums.TierEU.*;
 import static gregtech.api.recipe.RecipeMaps.assemblerRecipes;
 import static gregtech.api.recipe.RecipeMaps.centrifugeRecipes;
 import static gregtech.api.recipe.RecipeMaps.fluidExtractionRecipes;
@@ -1196,6 +1185,7 @@ public class RecipesMain implements IRecipePool {
         RecipeBuilder.builder()
             .itemOutputs(OTHItemList.AF.get(1))
             .itemInputs(
+                OTHItemList.LargeQuHub.get(4),
                 ItemList.IV_Coil.get(16),
                 ItemList.Casing_IV.get(1),
                 GTOreDictUnificator.get(OrePrefixes.wireGt01, Materials.SuperconductorIV, 64),
@@ -1467,5 +1457,16 @@ public class RecipesMain implements IRecipePool {
             .eut(RECIPE_ZPM)
             .duration(1)
             .addTo(AssemblyLine);
+        // Large Qu
+        RecipeBuilder.builder()
+            .itemOutputs(OTHItemList.LargeQuHub.get(1))
+            .itemInputs(
+                ItemList.Casing_LV.get(1),
+                ItemList.LV_Coil.get(4),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.LV, 4))
+            .fluidInputs(Materials.Lubricant.getFluid(123))
+            .eut(RECIPE_ULV)
+            .duration(120)
+            .addTo(assemblerRecipes);
     }
 }
