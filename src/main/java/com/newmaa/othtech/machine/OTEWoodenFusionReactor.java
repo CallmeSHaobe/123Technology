@@ -28,6 +28,7 @@ import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
+import com.newmaa.othtech.utils.OTHTooltipBuilder;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -659,7 +660,7 @@ public class OTEWoodenFusionReactor extends OTHMultiMachineBase<OTEWoodenFusionR
     /*
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
         tt.addMachineType("§c§l蒸汽时代的最终幻想 - 蒸汽聚变反应堆")
             .addInfo("§b§o他所能做的, 仅仅只是通过一些无法猜测的手段, 将蒸汽化为氢等离子体")
             .addInfo("EU消耗 : 0, 耗时 : (输入蒸汽数量(L) / 1000) * 20sec , 更高级的蒸汽减少运行时间")
@@ -679,7 +680,7 @@ public class OTEWoodenFusionReactor extends OTHMultiMachineBase<OTEWoodenFusionR
     }*/
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
         tt.addMachineType(translateToLocal("ote.tm.wfr.0"))
             .addInfo(translateToLocal("ote.tm.wfr.1"))
             .addInfo(translateToLocal("ote.tm.wfr.2"))

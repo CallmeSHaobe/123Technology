@@ -28,6 +28,7 @@ import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.EIOSpawnerBinding;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
+import com.newmaa.othtech.utils.OTHTooltipBuilder;
 
 import crazypants.enderio.EnderIO;
 import gregtech.api.GregTechAPI;
@@ -252,7 +253,7 @@ public class OTEEIO extends OTHMultiMachineBase<OTEEIO> {
     /*
      * @Override
      * protected MultiblockTooltipBuilder createTooltip() {
-     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+     * final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
      * tt.addMachineType(EnumChatFormatting.WHITE + "§l中登的终极造物 - 末影接口综合体")
      * .addInfo(EnumChatFormatting.ITALIC + "怪物的灵魂们终将得到解放")
      * .addInfo(EnumChatFormatting.ITALIC + "这就是工业化的魅力吗..?")
@@ -275,7 +276,7 @@ public class OTEEIO extends OTHMultiMachineBase<OTEEIO> {
      */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
         tt.addMachineType(EnumChatFormatting.WHITE + translateToLocal("ote.tm.eio.0"))
             .addInfo(EnumChatFormatting.ITALIC + translateToLocal("ote.tm.eio.1"))
             .addInfo(EnumChatFormatting.ITALIC + translateToLocal("ote.tm.eio.2"))

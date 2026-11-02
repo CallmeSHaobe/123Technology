@@ -29,6 +29,7 @@ import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
+import com.newmaa.othtech.utils.OTHTooltipBuilder;
 import com.newmaa.othtech.utils.Utils;
 
 import bartworks.API.BorosilicateGlass;
@@ -1671,7 +1672,7 @@ public class OTEMegaIsaFactory extends OTHMultiMachineBase<OTEMegaIsaFactory> {
     /*
      * @Override
      * protected MultiblockTooltipBuilder createTooltip() {
-     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+     * final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
      * tt.addMachineType("§2§l艾萨领主的终极造物 - 艾萨集成工厂")
      * .addInfo("§o神奇的艾萨系列, 将垃圾和化工产品融为一体, 这不神奇吗?")
      * .addInfo("§oNEI点击机器主机, 获取一个集大成之作...")
@@ -1697,7 +1698,7 @@ public class OTEMegaIsaFactory extends OTHMultiMachineBase<OTEMegaIsaFactory> {
      */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
         tt.addMachineType(translateToLocal("ote.tm.misa.0"))
             .addInfo(translateToLocal("ote.tm.misa.1"))
             .addInfo(translateToLocal("ote.tm.misa.2"))

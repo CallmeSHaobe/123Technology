@@ -92,6 +92,22 @@ public enum OTHItemList {
     DogRedSpawnEgg,
     DogBlueSpawnEgg,
 
+    // DeepSeiko 迪普西科
+    WhiteRice,
+    SpoiledRice,
+    /** 黄桃：黄桃草的产物（ItemFood，回 12 饥饿 + 30 秒速度 V） */
+    YellowPeach,
+    /** 迪普西科调试币（金色 Token） */
+    DeepSeikoToken,
+    /** 迪普西科调试币（银色，装配线配方图页签） */
+    DeepSeikoTokenSilver,
+    /** 算力中心 D99/D199/D999（meta 0/1/2） */
+    ComputeCenter,
+    /** 米饭奇点（1234 个白米饭在亚稳态黑洞里压出来的） */
+    RiceSingularity,
+    /** 时空冷却核心（装配线产物） */
+    SpacetimeCoolingCore,
+
     // Machines
     NASA,
     FISH,
@@ -141,7 +157,11 @@ public enum OTHItemList {
     OTEComputer,
     OTEHatchRack,
     LargeSteamHatch,
-    MegaThermalCentrifuge; // 乌拉尔山脉热分离厂 - 巨热力离心
+    MegaThermalCentrifuge, // 乌拉尔山脉热分离厂 - 巨热力离心
+    LargeQuHub, // 大型可堆叠变压器(暂定)
+
+    DeepSeiko,
+    DeepSeikoNaniteCell;
 
     private boolean mHasNotBeenSet;
     private boolean mDeprecated;

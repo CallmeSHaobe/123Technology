@@ -26,6 +26,7 @@ import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
 import com.newmaa.othtech.machine.machineclass.OTHTTMultiMachineBaseEM;
+import com.newmaa.othtech.utils.OTHTooltipBuilder;
 
 import gregtech.api.GregTechAPI;
 import gregtech.api.enums.Textures;
@@ -213,7 +214,7 @@ public class OTEHeatExchanger extends OTHTTMultiMachineBaseEM implements ISurviv
     /*
      * @Override
      * protected MultiblockTooltipBuilder createTooltip() {
-     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+     * final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
      * tt.addMachineType(EnumChatFormatting.BLUE + "真正的热能饕餮 - 真空冷冻热交换机")
      * .addInfo(EnumChatFormatting.RED + "回收热锭冶炼的废热, 化为超临界蒸汽.")
      * .addInfo(EnumChatFormatting.RED + "理论可回收热锭冰箱配方50%之EU")
@@ -234,7 +235,7 @@ public class OTEHeatExchanger extends OTHTTMultiMachineBaseEM implements ISurviv
      */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
         tt.addMachineType(EnumChatFormatting.BLUE + translateToLocal("ote.tm.exc.0"))
             .addInfo(EnumChatFormatting.RED + translateToLocal("ote.tm.exc.1"))
             .addInfo(EnumChatFormatting.RED + translateToLocal("ote.tm.exc.2"))

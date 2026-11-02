@@ -20,6 +20,7 @@ import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
+import com.newmaa.othtech.utils.OTHTooltipBuilder;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -248,7 +249,7 @@ public class OTEMegaFreezerGTpp extends OTHMultiMachineBase<OTEMegaFreezerGTpp> 
     /*
      * @Override
      * protected MultiblockTooltipBuilder createTooltip() {
-     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+     * final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
      * tt.addMachineType("§l老登的终极造物 - 真空冷冻机")
      * .addInfo("§b  EU消耗: 100%")
      * .addInfo("§b  速度 + 100%")
@@ -273,7 +274,7 @@ public class OTEMegaFreezerGTpp extends OTHMultiMachineBase<OTEMegaFreezerGTpp> 
      */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
         tt.addMachineType(translateToLocal("ote.tm.fz.0"))
             .addInfo(translateToLocal("ote.tm.fz.1"))
             .addInfo(translateToLocal("ote.tm.fz.2"))

@@ -2,7 +2,11 @@ package com.newmaa.othtech.common.recipemap;
 
 import java.util.Comparator;
 
+import net.minecraft.item.ItemStack;
+
 import com.newmaa.othtech.common.OTHItemList;
+import com.newmaa.othtech.common.blocks.deepseiko.DeepSeikoBlocks;
+import com.newmaa.othtech.common.blocks.deepseiko.DeepSeikoCasingMeta;
 import com.newmaa.othtech.common.recipemap.formatter.MISASpecialValueFormatter;
 import com.newmaa.othtech.common.recipemap.recipeMapFrontends.OTH_GeneralFrontend;
 import com.newmaa.othtech.common.recipemap.recipeMapFrontends.OTH_GeneralFrontendFireRocket;
@@ -14,6 +18,7 @@ import gregtech.api.gui.modularui.GTUITextures;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.RecipeMapBackend;
 import gregtech.api.recipe.RecipeMapBuilder;
+import gregtech.api.recipe.maps.AssemblyLineFrontend;
 import gregtech.api.recipe.maps.FluidOnlyFrontend;
 import gregtech.api.recipe.maps.FuelBackend;
 import gregtech.api.recipe.maps.QuantumComputerFrontend;
@@ -234,5 +239,44 @@ public class Recipemaps {
         .neiHandlerInfo(
             builder -> builder.setMaxRecipesPerPage(4)
                 .setDisplayStack(OTHItemList.OTEComputer.get(1)))
+        .build();
+
+    // 迪普西科·凝聚态配方（普通形态版）：由 DeepSeikoBECRecipeLoader 在 load complete 阶段
+    // 从 TecTech 的 BEC 配方池拷贝而来，纠缠凝聚态流体输入按等量换成普通材料流体，
+    // 不带任何 BEC 机制（蜂群/红线/凝聚态存储都没有，就是普通配方）。
+    public static final RecipeMap<OTH_RecipeMapBackend> DeepSeikoBEC = RecipeMapBuilder
+        .of("otht.recipe.DeepSeikoBEC", OTH_RecipeMapBackend::new)
+        // 与 TecTech 凝聚态装配页一致：16 物品输入 / 1 输出 / 4 流体
+        .maxIO(16, 1, 4, 0)
+        .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
+        // 复用 TecTech 的 BECAssemblyFrontend（原版装配线排版 + 纳米蜂群行），见 DeepSeikoBECFrontend
+        .frontend(DeepSeikoBECFrontend::new)
+        // NEI 页签图标 = 迪普西科调试硬币
+        .neiHandlerInfo(b -> b.setDisplayStack(OTHItemList.DeepSeikoToken.get(1)))
+        .build();
+
+    // 迪普西科·装配线配方（模式 A）：由 DeepSeikoALRecipeLoader 拷贝 GT 装配线可视化配方
+    // （去 fake、去数据棒）而来，只收装配线（不收电路装配线 CAL），零维护直跑。
+    public static final RecipeMap<OTH_RecipeMapBackend> DeepSeikoAL = RecipeMapBuilder
+        .of("otht.recipe.DeepSeikoAL", OTH_RecipeMapBackend::new)
+        // 装配线版式：16 物品输入 / 1 输出 / 4 流体（和 GT 装配线一致）
+        .maxIO(16, 1, 4, 0)
+        .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
+        .frontend(AssemblyLineFrontend::new)
+        // NEI 页签图标 = **银色**调试币（无附魔光效）—— 和金色的凝聚态/机体升级页一眼区分
+        .neiHandlerInfo(b -> b.setDisplayStack(OTHItemList.DeepSeikoTokenSilver.get(1)))
+        .build();
+
+    // 迪普西科·机体升级（纯 NEI 展示用）：三条升级消耗清单。
+    // 机器本身不跑这张配方图，实际扣除发生在 OTEDeepSeiko.tryUpgradeBec / tryUpgradeNanite /
+    // tryUpgradeUltimate 里；这里只为了让玩家在 NEI 里能查到要准备什么材料。
+    public static final RecipeMap<OTH_RecipeMapBackend> DeepSeikoUpgrade = RecipeMapBuilder
+        .of("otht.recipe.DeepSeikoUpgrade", OTH_RecipeMapBackend::new)
+        .maxIO(9, 1, 0, 0)
+        .dontUseProgressBar()
+        .frontend(OTH_GeneralFrontend::new)
+        // 页签图标 = 凝聚态适配舱（和上面两张地图的调试币区分开）
+        .neiHandlerInfo(
+            b -> b.setDisplayStack(new ItemStack(DeepSeikoBlocks.dsCasing, 1, DeepSeikoCasingMeta.CONDENSATE_ADAPTER)))
         .build();
 }

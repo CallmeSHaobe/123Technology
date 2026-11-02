@@ -37,6 +37,7 @@ import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
+import com.newmaa.othtech.utils.OTHTooltipBuilder;
 
 import bartworks.API.BorosilicateGlass;
 import goodgenerator.loader.Loaders;
@@ -309,7 +310,7 @@ public class OTEMegaCircuitAssLine extends OTHMultiMachineBase<OTEMegaCircuitAss
     /*
      * @Override
      * protected MultiblockTooltipBuilder createTooltip() {
-     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+     * final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
      * tt.addMachineType("§d§l电路组装的最终奥义 - 进阶高能电路装配线")
      * .addInfo("§q便宜好用的电路装配设施, 继承了原有的电装打包机制, 但是直接支持总成")
      * .addInfo("§q§o“是不是有点太超模了?”")
@@ -331,7 +332,7 @@ public class OTEMegaCircuitAssLine extends OTHMultiMachineBase<OTEMegaCircuitAss
      */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
         tt.addMachineType(translateToLocal("ote.tm.mca.0"))
             .addInfo(translateToLocal("ote.tm.mca.1"))
             .addInfo(translateToLocal("ote.tm.mca.2"))
@@ -341,7 +342,7 @@ public class OTEMegaCircuitAssLine extends OTHMultiMachineBase<OTEMegaCircuitAss
             .addTecTechHatchInfo()
             .addSeparator()
             .addController(translateToLocal("ote.tn.mca"))
-            .beginStructureBlock(13, 9, 29, false)
+            .beginStructureBlock(29, 9, 13, false)
             .addInputBus("AnyInputBus", 1)
             .addOutputBus("AnyOutputBus", 1)
             .addInputHatch("AnyInputHatch", 1)

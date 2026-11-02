@@ -39,6 +39,7 @@ import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTHSteamMultiBase;
+import com.newmaa.othtech.utils.OTHTooltipBuilder;
 import com.newmaa.othtech.utils.RecipeBuilder;
 
 import gregtech.api.GregTechAPI;
@@ -399,7 +400,7 @@ public class OTEMiniSteamNineInOne extends OTHSteamMultiBase<OTEMiniSteamNineInO
         }
         @Override
         protected MultiblockTooltipBuilder createTooltip() {
-            final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+            final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
             tt.addMachineType(translateToLocal("ote.tm.s9in1.0"))
                 .addSeparator()
                 .addInfo(translateToLocal("ote.tm.s9in1.1"))
@@ -419,7 +420,7 @@ public class OTEMiniSteamNineInOne extends OTHSteamMultiBase<OTEMiniSteamNineInO
                 .addPollutionAmount(233)
                 .addSeparator()
                 .addController(translateToLocal("ote.tn.s9in1"))
-                .beginStructureBlock(49, 7, 49, false)
+                .beginStructureBlock(5, 3, 3, false)
                 .addInputBus("AnyInputBus", 1)
                 .addOutputBus("AnyOutputBus", 1)
                 .addInputHatch("AnyInputHatch", 1)

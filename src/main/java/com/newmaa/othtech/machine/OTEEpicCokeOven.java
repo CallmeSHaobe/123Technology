@@ -30,6 +30,7 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
+import com.newmaa.othtech.utils.OTHTooltipBuilder;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -1312,7 +1313,7 @@ public class OTEEpicCokeOven extends OTHMultiMachineBase<OTEEpicCokeOven> {
     /*
      * @Override
      * protected MultiblockTooltipBuilder createTooltip() {
-     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+     * final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
      * tt.addMachineType("§d§n小登的终极造物, 中登的期盼之物, 老登的可望不可得之物 - 史诗焦炉")
      * .addInfo("§n§c永远不要忽略小登的力量...")
      * .addInfo("§o真正的终极机器, 没有高贵的造价, 更没有乱七八糟的机制(")
@@ -1335,7 +1336,7 @@ public class OTEEpicCokeOven extends OTHMultiMachineBase<OTEEpicCokeOven> {
      */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
         tt.addMachineType(translateToLocal("ote.tm.cocc.0"))
             .addInfo(translateToLocal("ote.tm.cocc.1"))
             .addInfo(translateToLocal("ote.tm.cocc.2"))
@@ -1346,7 +1347,7 @@ public class OTEEpicCokeOven extends OTHMultiMachineBase<OTEEpicCokeOven> {
             .addSeparator()
             .addPollutionAmount(114514)
             .addController(translateToLocal("ote.tn.cocc"))
-            .beginStructureBlock(7, 13, 7, false)
+            .beginStructureBlock(97, 11, 97, false)
             .addInputBus("AnyInputBus", 1)
             .addOutputBus("AnyOutputBus", 1)
             .addInputHatch("AnyInputHatch", 1)

@@ -40,6 +40,7 @@ import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.common.blocks.oterender.OTERocketRender;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
+import com.newmaa.othtech.utils.OTHTooltipBuilder;
 
 import cpw.mods.fml.client.registry.ClientRegistry;
 import gregtech.api.GregTechAPI;
@@ -363,7 +364,7 @@ public class OTEFireRocketAssembler extends OTHMultiMachineBase<OTEFireRocketAss
 
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
         tt.addMachineType(EnumChatFormatting.DARK_RED + translateToLocal("ote.tm.nasa.0"))
             .addInfo(EnumChatFormatting.ITALIC + translateToLocal("ote.tm.nasa.1"))
             .addInfo(EnumChatFormatting.ITALIC + translateToLocal("ote.tm.nasa.2"))
@@ -374,7 +375,7 @@ public class OTEFireRocketAssembler extends OTHMultiMachineBase<OTEFireRocketAss
             .addTecTechHatchInfo()
             .addSeparator()
             .addController(translateToLocal("ote.tn.nasa"))
-            .beginStructureBlock(13, 17, 37, false)
+            .beginStructureBlock(37, 17, 13, false)
             .addInputBus("AnyInputBus", 1)
             .addOutputBus("AnyOutputBus", 1)
             .addInputHatch("AnyInputHatch", 1)

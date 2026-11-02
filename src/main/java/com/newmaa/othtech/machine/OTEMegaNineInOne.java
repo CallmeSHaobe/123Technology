@@ -43,6 +43,7 @@ import com.gtnewhorizon.structurelib.structure.IStructureElement;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
+import com.newmaa.othtech.utils.OTHTooltipBuilder;
 import com.newmaa.othtech.utils.Utils;
 
 import bartworks.API.BorosilicateGlass;
@@ -877,7 +878,7 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
     /*
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
         tt.addMachineType("§c§l老登的终极造物 - 九合一 (巨型加工厂)")
             .addInfo("§a共有十五种模式, 使用螺丝刀切换类模式， 使用编程电路20 21 22切换内部模式")
             .addInfo("§aMetal类: 压缩机 车床 电力磁化机")
@@ -897,7 +898,7 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
             .addPollutionAmount(123)
             .addSeparator()
             .addController("巨型加工厂")
-            .beginStructureBlock(49, 7, 49, false)
+            .beginStructureBlock(49, 8, 49, false)
             .addInputBus("AnyInputBus", 1)
             .addOutputBus("AnyOutputBus", 1)
             .addInputHatch("AnyInputHatch", 1)
@@ -909,7 +910,7 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
     }*/
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
         tt.addMachineType(translateToLocal("oth.tm.mnio.0"))
             .addInfo(translateToLocal("oth.tm.mnio.1"))
             .addInfo(translateToLocal("oth.tm.mnio.2"))
@@ -929,7 +930,7 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
             .addPollutionAmount(123)
             .addSeparator()
             .addController(translateToLocal("ote.tn.mnio"))
-            .beginStructureBlock(49, 7, 49, false)
+            .beginStructureBlock(49, 8, 49, false)
             .addInputBus("AnyInputBus", 1)
             .addOutputBus("AnyOutputBus", 1)
             .addInputHatch("AnyInputHatch", 1)

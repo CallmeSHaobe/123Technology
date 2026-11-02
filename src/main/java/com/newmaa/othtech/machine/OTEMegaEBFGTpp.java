@@ -23,6 +23,7 @@ import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
+import com.newmaa.othtech.utils.OTHTooltipBuilder;
 import com.newmaa.othtech.utils.Utils;
 
 import bartworks.API.BorosilicateGlass;
@@ -344,7 +345,7 @@ public class OTEMegaEBFGTpp extends OTHMultiMachineBase<OTEMegaEBFGTpp> {
     /*
      * @Override
      * protected MultiblockTooltipBuilder createTooltip() {
-     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+     * final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
      * tt.addMachineType("§l老登的终极造物 - 工业高炉")
      * .addInfo("§b  EU消耗: 90%")
      * .addInfo("§b  速度 + 120%")
@@ -371,7 +372,7 @@ public class OTEMegaEBFGTpp extends OTHMultiMachineBase<OTEMegaEBFGTpp> {
      */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
         tt.addMachineType(translateToLocal("ote.tm.mebf.0"))
             .addInfo(translateToLocal("ote.tm.mebf.1"))
             .addInfo(translateToLocal("ote.tm.mebf.2"))

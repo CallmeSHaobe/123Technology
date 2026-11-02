@@ -36,6 +36,7 @@ import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
 import com.newmaa.othtech.machine.machineclass.OTHTTMultiMachineBaseEM;
+import com.newmaa.othtech.utils.OTHTooltipBuilder;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -656,7 +657,7 @@ public class OTEMegaNQFuelFactory extends OTHTTMultiMachineBaseEM implements ICo
     /*
      * @Override
      * protected MultiblockTooltipBuilder createTooltip() {
-     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+     * final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
      * tt.addMachineType("§z§l秒杀八台巨蒸的史诗级机器 - 压缩硅岩燃料精炼厂")
      * .addInfo("§l§o甜甜圈喜加一系列")
      * .addInfo("更高级的线圈允许并行与加速 :")
@@ -679,7 +680,7 @@ public class OTEMegaNQFuelFactory extends OTHTTMultiMachineBaseEM implements ICo
      */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
         tt.addMachineType(translateToLocal("ote.tm.mnf.0"))
             .addInfo(translateToLocal("ote.tm.mnf.1"))
             .addInfo(translateToLocal("ote.tm.mnf.2"))

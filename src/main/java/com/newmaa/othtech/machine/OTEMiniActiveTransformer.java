@@ -21,6 +21,7 @@ import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructa
 import com.gtnewhorizon.structurelib.structure.IItemSource;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.newmaa.othtech.machine.machineclass.OTHTTMultiMachineBaseEM;
+import com.newmaa.othtech.utils.OTHTooltipBuilder;
 
 import gregtech.api.enums.SoundResource;
 import gregtech.api.enums.Textures;
@@ -127,7 +128,7 @@ public class OTEMiniActiveTransformer extends OTHTTMultiMachineBaseEM
     /*
      * @Override
      * public MultiblockTooltipBuilder createTooltip() {
-     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+     * final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
      * tt.addMachineType(translateToLocal("中登的小型核弹 : 迷你有源变压器"))
      * .addInfo(translateToLocal("由于落后的IV工艺, 此机器导能时破坏主机依然会爆炸, 损耗不变"))
      * .addInfo(translateToLocal("他真的会有用吗?"))
@@ -149,7 +150,7 @@ public class OTEMiniActiveTransformer extends OTHTTMultiMachineBaseEM
      */
     @Override
     public MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
         tt.addMachineType(translateToLocal("ote.tm.mat.0"))
             .addInfo(translateToLocal("ote.tm.mat.1"))
             .addInfo(translateToLocal("ote.tm.mat.2"))

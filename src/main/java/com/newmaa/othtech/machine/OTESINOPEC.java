@@ -40,6 +40,7 @@ import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
+import com.newmaa.othtech.utils.OTHTooltipBuilder;
 import com.newmaa.othtech.utils.Utils;
 
 import bartworks.API.BorosilicateGlass;
@@ -1116,7 +1117,7 @@ public class OTESINOPEC extends OTHMultiMachineBase<OTESINOPEC> {
     /*
      * @Override
      * protected MultiblockTooltipBuilder createTooltip() {
-     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+     * final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
      * tt.addMachineType("§q§l重工业计划 - 中国石化集成工厂")
      * .addInfo("§l§a黑金的最终流处...")
      * .addInfo("§l一步到位.")
@@ -1139,7 +1140,7 @@ public class OTESINOPEC extends OTHMultiMachineBase<OTESINOPEC> {
      */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
         tt.addMachineType(translateToLocal("ote.tm.sinopec.0"))
             .addInfo(translateToLocal("ote.tm.sinopec.1"))
             .addInfo(translateToLocal("ote.tm.sinopec.2"))
@@ -1149,7 +1150,7 @@ public class OTESINOPEC extends OTHMultiMachineBase<OTESINOPEC> {
             .addPollutionAmount(6400)
             .addSeparator()
             .addController(translateToLocal("ote.tn.sinopec"))
-            .beginStructureBlock(33, 49, 48, false)
+            .beginStructureBlock(48, 49, 33, false)
             .addInputBus("AnyInputBus", 1)
             .addOutputBus("AnyOutputBus", 1)
             .addInputHatch("AnyInputHatch", 1)

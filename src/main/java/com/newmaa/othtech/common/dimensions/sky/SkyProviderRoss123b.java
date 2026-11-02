@@ -29,100 +29,82 @@ public class SkyProviderRoss123b extends SkyProviderBase implements ResourcesDim
         return;
     }
 
+    /** 天空里黑之月所在的深度平面。 */
+    private static final double MOON_Z = -100.0D;
+    /** 画圆盘的细分数。 */
+    private static final int MOON_SEGMENTS = 96;
+
+    /**
+     * 黑之月: 悬在天空一侧的巨大黑盘, 边缘一圈血色光环 —— 第三次冲击后挂在天上的那颗。
+     */
     @Override
     public void renderCelestialBodies(float partialTicks, WorldClient world, Minecraft mc) {
+        GL11.glPushAttrib(
+            GL11.GL_ENABLE_BIT | GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT | GL11.GL_LIGHTING_BIT);
+        GL11.glPushMatrix();
+        GL11.glDisable(GL11.GL_LIGHTING);
+        GL11.glDisable(GL11.GL_CULL_FACE);
+        GL11.glDisable(GL11.GL_TEXTURE_2D);
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        // 先清深度再关深度写入, 否则 glClear 会被深度掩码挡掉
+        GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
+        GL11.glDepthMask(false);
+        GL11.glShadeModel(GL11.GL_SMOOTH);
 
+        // 固定悬在固定方位, 不随昼夜转动(死掉的月亮不该再走)
+        GL11.glRotatef(18.0F, 1.0F, 0.0F, 0.0F);
+        GL11.glRotatef(64.0F, 0.0F, 1.0F, 0.0F);
+
+        float radius = 78.0F;
+        drawDisc(radius, 0.01F, 0.0F, 0.0F);
+        drawRing(radius, radius * 1.06F, 1.0F, 0.08F, 0.05F, 0.95F, 0.80F);
+        drawRing(radius * 1.06F, radius * 1.75F, 0.75F, 0.03F, 0.02F, 0.0F, 0.55F);
+
+        GL11.glPopMatrix();
+        GL11.glPopAttrib();
+    }
+
+    private static void drawDisc(float radius, float red, float green, float blue) {
+        Tessellator tessellator = Tessellator.instance;
+        tessellator.startDrawing(GL11.GL_TRIANGLE_FAN);
+        tessellator.setColorRGBA_F(red, green, blue, 1.0F);
+        tessellator.addVertex(0.0D, 0.0D, MOON_Z);
+        for (int i = 0; i <= MOON_SEGMENTS; i++) {
+            double angle = Math.PI * 2.0D * i / MOON_SEGMENTS;
+            tessellator.setColorRGBA_F(red, green, blue, 1.0F);
+            tessellator.addVertex(Math.cos(angle) * radius, Math.sin(angle) * radius, MOON_Z);
+        }
+        tessellator.draw();
+    }
+
+    private static void drawRing(float inner, float outer, float red, float green, float blue, float alphaOuter,
+        float alphaInner) {
+        Tessellator tessellator = Tessellator.instance;
+        tessellator.startDrawingQuads();
+        for (int i = 0; i < MOON_SEGMENTS; i++) {
+            double angle0 = Math.PI * 2.0D * i / MOON_SEGMENTS;
+            double angle1 = Math.PI * 2.0D * (i + 1) / MOON_SEGMENTS;
+            float cos0 = (float) Math.cos(angle0);
+            float sin0 = (float) Math.sin(angle0);
+            float cos1 = (float) Math.cos(angle1);
+            float sin1 = (float) Math.sin(angle1);
+
+            tessellator.setColorRGBA_F(red, green, blue, alphaOuter);
+            tessellator.addVertex(cos0 * outer, sin0 * outer, MOON_Z);
+            tessellator.addVertex(cos1 * outer, sin1 * outer, MOON_Z);
+            tessellator.setColorRGBA_F(red, green, blue, alphaInner);
+            tessellator.addVertex(cos1 * inner, sin1 * inner, MOON_Z);
+            tessellator.addVertex(cos0 * inner, sin0 * inner, MOON_Z);
+        }
+        tessellator.draw();
     }
 
     /**
-     * 渲染锑洞. Render the AntimoniaHole. From Chat-GPT
+     * 原来的"锑洞"三层脉动光晕已经去掉(天上那几条彩色弧带就是它)。
+     * <p>
+     * 天空现在只剩底色渐变 + 星点 + {@link #renderCelestialBodies} 里的黑之月。
      */
     @Override
-    public void renderSun(float partialTicks, WorldClient world, Minecraft mc) {
-        Tessellator tess = Tessellator.instance;
-
-        // =====================
-        // 1. 黑洞核心贴图
-        // =====================
-        this.drawTexture(AntimoniaStar, 120); // 核心贴图
-
-        GL11.glPushMatrix();
-        GL11.glDisable(GL11.GL_LIGHTING);
-
-        // 自发光混合模式
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
-
-        // 核心始终在正上方
-        GL11.glRotatef(90.0F, 1.0F, 0.0F, 0.0F);
-
-        float size = 80.0F; // 核心大小
-        double u0 = 0.0, u1 = 1.0, v0 = 0.0, v1 = 1.0;
-
-        tess.startDrawingQuads();
-        tess.addVertexWithUV(-size, size, -100.0, u0, v0);
-        tess.addVertexWithUV(size, size, -100.0, u1, v0);
-        tess.addVertexWithUV(size, -size, -100.0, u1, v1);
-        tess.addVertexWithUV(-size, -size, -100.0, u0, v1);
-        tess.draw();
-
-        // =====================
-        // 2. 多层动态光晕
-        // =====================
-        GL11.glDisable(GL11.GL_TEXTURE_2D); // 光晕纯色
-        int haloSegments = 64;
-        float time = world.getTotalWorldTime() + partialTicks;
-
-        // 定义光晕半径和基础颜色
-        float[] baseHaloSizes = { size * 1.5F, size * 2.0F, size * 2.5F };
-        float[][] haloColors = { { 1.0F, 0.2F, 0.2F, 0.6F }, // 红
-            { 0.2F, 1.0F, 0.2F, 0.4F }, // 绿
-            { 0.2F, 0.2F, 1.0F, 0.3F } // 蓝
-        };
-
-        for (int h = 0; h < baseHaloSizes.length; h++) {
-            float haloRadius = baseHaloSizes[h];
-
-            // 脉动效果
-            float pulse = 1.0F + 0.05F * (float) Math.sin(time * 0.1 + h);
-            float animatedRadius = haloRadius * pulse;
-
-            // 旋转角度
-            float rotationAngle = (time * 0.5F + h * 20) % 360;
-            double cosRot = Math.cos(Math.toRadians(rotationAngle));
-            double sinRot = Math.sin(Math.toRadians(rotationAngle));
-
-            tess.startDrawing(GL11.GL_TRIANGLE_FAN);
-
-            // 中心透明
-            tess.setColorRGBA_F(haloColors[h][0], haloColors[h][1], haloColors[h][2], 0.0F);
-            tess.addVertex(0.0, 0.0, -101.0);
-
-            // 外圈渐变
-            tess.setColorRGBA_F(haloColors[h][0], haloColors[h][1], haloColors[h][2], haloColors[h][3]);
-
-            for (int i = 0; i <= haloSegments; i++) {
-                double angle = 2 * Math.PI * i / haloSegments;
-                double dx = Math.cos(angle) * animatedRadius;
-                double dy = Math.sin(angle) * animatedRadius;
-
-                // 应用旋转
-                double rx = dx * cosRot - dy * sinRot;
-                double ry = dx * sinRot + dy * cosRot;
-
-                tess.addVertex(rx, ry, -101.0);
-            }
-
-            tess.draw();
-        }
-
-        GL11.glEnable(GL11.GL_TEXTURE_2D);
-
-        // =====================
-        // 3. 恢复状态
-        // =====================
-        GL11.glDisable(GL11.GL_BLEND);
-        GL11.glEnable(GL11.GL_LIGHTING);
-        GL11.glPopMatrix();
-    }
+    public void renderSun(float partialTicks, WorldClient world, Minecraft mc) {}
 }

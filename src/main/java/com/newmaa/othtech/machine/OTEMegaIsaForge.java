@@ -29,6 +29,7 @@ import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
+import com.newmaa.othtech.utils.OTHTooltipBuilder;
 
 import bartworks.API.BorosilicateGlass;
 import gregtech.api.GregTechAPI;
@@ -3469,7 +3470,7 @@ public class OTEMegaIsaForge extends OTHMultiMachineBase<OTEMegaIsaForge> {
     /*
      * @Override
      * protected MultiblockTooltipBuilder createTooltip() {
-     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+     * final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
      * tt.addMachineType("§b§l老登的终极造物 - 神之艾萨机 (老登制造者 & 太空组装机)")
      * .addInfo("§c§l'我拒绝了§4血魔法的恩赐§c和§e蜜蜂的甜蜜'")
      * .addInfo("§d艾萨领主认证")
@@ -3492,7 +3493,7 @@ public class OTEMegaIsaForge extends OTHMultiMachineBase<OTEMegaIsaForge> {
      */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
         tt.addMachineType(translateToLocal("ote.tm.mifo.0"))
             .addInfo(translateToLocal("ote.tm.mifo.1"))
             .addInfo(translateToLocal("ote.tm.mifo.2"))

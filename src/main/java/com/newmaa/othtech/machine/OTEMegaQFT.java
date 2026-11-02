@@ -33,6 +33,7 @@ import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
+import com.newmaa.othtech.utils.OTHTooltipBuilder;
 
 import gregtech.api.GregTechAPI;
 import gregtech.api.enums.Materials;
@@ -471,7 +472,7 @@ public class OTEMegaQFT extends OTHMultiMachineBase<OTEMegaQFT> {
 
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
         tt.addMachineType("§e§l老登们的又一造物 - §b「狄拉克逆变器」")
             .addInfo("§b§l对虚粒子的操控在量子之海中掀起了滔天巨浪...")
             .addInfo("§d提供基础原料，可以让复杂的化学、物理过程一步到位")
@@ -497,7 +498,7 @@ public class OTEMegaQFT extends OTHMultiMachineBase<OTEMegaQFT> {
     }*/
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
         tt.addMachineType(translateToLocal("ote.tm.mqft.0"))
             .addInfo(translateToLocal("ote.tm.mqft.1"))
             .addInfo(translateToLocal("ote.tm.mqft.2"))

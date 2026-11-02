@@ -25,6 +25,7 @@ import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.machine.machineclass.FishtorioLootTable;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
+import com.newmaa.othtech.utils.OTHTooltipBuilder;
 
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.TAE;
@@ -303,7 +304,7 @@ public class OTEFishtorio extends OTHMultiMachineBase<OTEFishtorio> {
 
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
         tt.addMachineType(EnumChatFormatting.DARK_GREEN + translateToLocal("ote.tm.ft.0"))
             .addInfo(EnumChatFormatting.ITALIC + translateToLocal("ote.tm.ft.1"))
             .addInfo(EnumChatFormatting.ITALIC + translateToLocal("ote.tm.ft.2"))

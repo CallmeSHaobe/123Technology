@@ -34,6 +34,7 @@ import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructa
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.newmaa.othtech.machine.machineclass.OTHTTMultiMachineBaseEM;
+import com.newmaa.othtech.utils.OTHTooltipBuilder;
 
 import forestry.api.apiculture.EnumBeeType;
 import forestry.api.apiculture.IAlleleBeeSpecies;
@@ -526,7 +527,7 @@ public class OTEBeeyonds extends OTHTTMultiMachineBaseEM implements IConstructab
 
     @Override
     public MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
         tt.addMachineType(translateToLocal("ote.tm.bee.0"))
             .addInfo(translateToLocal("ote.tm.bee.1"))
             .addInfo(translateToLocal("ote.tm.bee.2"))

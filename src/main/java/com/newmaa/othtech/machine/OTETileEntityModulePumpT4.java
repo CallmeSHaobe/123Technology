@@ -19,6 +19,7 @@ import com.gtnewhorizons.modularui.common.widget.DynamicPositionedColumn;
 import com.gtnewhorizons.modularui.common.widget.FakeSyncWidget;
 import com.gtnewhorizons.modularui.common.widget.SlotWidget;
 import com.gtnewhorizons.modularui.common.widget.TextWidget;
+import com.newmaa.othtech.utils.OTHTooltipBuilder;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -324,7 +325,7 @@ public abstract class OTETileEntityModulePumpT4 extends TileEntityModuleBase {
         /*
          * @Override
          * protected MultiblockTooltipBuilder createTooltip() {
-         * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+         * final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
          * tt.addMachineType("太空钻机模块")
          * .addInfo("将太空钻机功能添加到太空电梯")
          * .addInfo(EnumChatFormatting.LIGHT_PURPLE + "§l我 是 吸 仰 阳.")
@@ -345,7 +346,7 @@ public abstract class OTETileEntityModulePumpT4 extends TileEntityModuleBase {
          */
         @Override
         protected MultiblockTooltipBuilder createTooltip() {
-            final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+            final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
             tt.addMachineType(translateToLocal("ote.tm.pump.0"))
                 .addInfo(translateToLocal("ote.tm.pump.1"))
                 .addInfo(EnumChatFormatting.LIGHT_PURPLE + translateToLocal("ote.tm.pump.2"))

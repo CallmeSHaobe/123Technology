@@ -64,5 +64,6 @@ public class ItemRegister {
             .set(initItem("wrapBrains", 26, new String[] { texter("wrapBrains", "tt.wrapBrains") }));
         OTHItemList.AntimoniaPlanetDust
             .set(initItem("antimoniaPlanetDust", 64, new String[] { texter("antimoniaPlanetDust", "tt.ani") }));
+
     }
 }

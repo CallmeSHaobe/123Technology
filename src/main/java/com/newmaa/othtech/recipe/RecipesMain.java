@@ -7,18 +7,7 @@ import static com.newmaa.othtech.utils.Utils.hasNullItem;
 import static com.newmaa.othtech.utils.Utils.setStackSize;
 import static goodgenerator.api.recipe.GoodGeneratorRecipeMaps.preciseAssemblerRecipes;
 import static gregtech.api.enums.Mods.*;
-import static gregtech.api.enums.TierEU.RECIPE_EV;
-import static gregtech.api.enums.TierEU.RECIPE_HV;
-import static gregtech.api.enums.TierEU.RECIPE_IV;
-import static gregtech.api.enums.TierEU.RECIPE_LuV;
-import static gregtech.api.enums.TierEU.RECIPE_MV;
-import static gregtech.api.enums.TierEU.RECIPE_UEV;
-import static gregtech.api.enums.TierEU.RECIPE_UHV;
-import static gregtech.api.enums.TierEU.RECIPE_UIV;
-import static gregtech.api.enums.TierEU.RECIPE_UMV;
-import static gregtech.api.enums.TierEU.RECIPE_UV;
-import static gregtech.api.enums.TierEU.RECIPE_UXV;
-import static gregtech.api.enums.TierEU.RECIPE_ZPM;
+import static gregtech.api.enums.TierEU.*;
 import static gregtech.api.recipe.RecipeMaps.assemblerRecipes;
 import static gregtech.api.recipe.RecipeMaps.centrifugeRecipes;
 import static gregtech.api.recipe.RecipeMaps.fluidExtractionRecipes;
@@ -41,6 +30,8 @@ import net.minecraftforge.fluids.FluidStack;
 
 import com.newmaa.othtech.OTHTechnology;
 import com.newmaa.othtech.common.OTHItemList;
+import com.newmaa.othtech.common.blocks.nailong.NailongCasingMeta;
+import com.newmaa.othtech.common.blocks.nailong.NailongCasings;
 import com.newmaa.othtech.common.item.ItemLoader;
 import com.newmaa.othtech.common.materials.BWLiquids;
 import com.newmaa.othtech.common.materials.BWMaterials;
@@ -1196,6 +1187,7 @@ public class RecipesMain implements IRecipePool {
         RecipeBuilder.builder()
             .itemOutputs(OTHItemList.AF.get(1))
             .itemInputs(
+                OTHItemList.LargeQuHub.get(4),
                 ItemList.IV_Coil.get(16),
                 ItemList.Casing_IV.get(1),
                 GTOreDictUnificator.get(OrePrefixes.wireGt01, Materials.SuperconductorIV, 64),
@@ -1467,5 +1459,42 @@ public class RecipesMain implements IRecipePool {
             .eut(RECIPE_ZPM)
             .duration(1)
             .addTo(AssemblyLine);
+        // Large Qu
+        RecipeBuilder.builder()
+            .itemOutputs(OTHItemList.LargeQuHub.get(1))
+            .itemInputs(
+                ItemList.Casing_LV.get(1),
+                ItemList.LV_Coil.get(4),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.LV, 4))
+            .fluidInputs(Materials.Lubricant.getFluid(123))
+            .eut(RECIPE_ULV)
+            .duration(120)
+            .addTo(assemblerRecipes);
+        // nail
+        GTValues.RA.stdBuilder()
+            .itemInputs(
+                ItemList.Casing_ZPM.get(4),
+                OTHItemList.YellowPeach.get(16),
+                ItemList.Electric_Motor_LuV.get(1),
+                ItemList.Robot_Arm_LuV.get(1))
+            .itemOutputs(new ItemStack(NailongCasings.nailongCasing, 4, NailongCasingMeta.NAILONG))
+            .metadata(PRECISE_ASSEMBLER_CASING_TIER, 1)
+            .duration(12 * SECONDS)
+            .eut(RECIPE_LuV)
+            .addTo(preciseAssemblerRecipes);
+        // guantou
+        GTValues.RA.stdBuilder()
+            .itemInputs(
+                new ItemStack(NailongCasings.nailongCasing, 1, NailongCasingMeta.NAILONG),
+                OTHItemList.YellowPeach.get(16),
+                GTOreDictUnificator.get(OrePrefixes.plate, Materials.BorosilicateGlass, 16),
+                OTHItemList.LeekBox.get(64),
+                ItemList.Electric_Motor_LuV.get(2),
+                ItemList.Field_Generator_IV.get(1))
+            .itemOutputs(new ItemStack(NailongCasings.nailongCasing, 1, NailongCasingMeta.PEACH_CAN))
+            .eut(RECIPE_LuV)
+            .duration(60 * 20)
+            .addTo(assemblerRecipes);
+
     }
 }

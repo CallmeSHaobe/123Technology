@@ -45,6 +45,7 @@ import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.machine.gui.OTEBBPlasmaForgeGui;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
+import com.newmaa.othtech.utils.OTHTooltipBuilder;
 import com.newmaa.othtech.utils.Utils;
 
 import cpw.mods.fml.relauncher.Side;
@@ -492,7 +493,7 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
 
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
         // ── 序章:中二宣言 ──
         tt.addMachineType(translateToLocal("ote.bbpf.0"))
             .addInfo(translateToLocal("ote.bbpf.1"))

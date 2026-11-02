@@ -42,7 +42,6 @@ import gregtech.api.util.GTModHandler;
 import gregtech.mixin.interfaces.accessors.EntityPlayerMPAccessor;
 import tectech.TecTech;
 import tectech.loader.ConfigHandler;
-import tectech.util.CommonValues;
 import tectech.util.TTUtility;
 
 /**
@@ -64,7 +63,7 @@ public class OTEHatchRack extends MTEHatch {
             aNameRegional,
             aTier,
             4,
-            new String[] { CommonValues.TEC_MARK_EM, translateToLocal("gt.blockmachines.hatch.rack.desc.0"),
+            new String[] { translateToLocal("gt.blockmachines.hatch.rack.desc.0"),
                 EnumChatFormatting.AQUA + translateToLocal("gt.blockmachines.hatch.rack.desc.1") });
     }
 
@@ -254,7 +253,6 @@ public class OTEHatchRack extends MTEHatch {
     // endregion
 
     public static void run() { // 20k heat cap max!
-
         new RackComponent(ItemList.Circuit_Crystalprocessor.get(1), 60, 56, -1f, true); // IV
         new RackComponent(ItemList.Circuit_Crystalcomputer.get(1), 80, 54, -1f, true); // LuV
         new RackComponent(ItemList.Circuit_Ultimatecrystalcomputer.get(1), 100, 52, -1f, true); // ZPM
@@ -326,6 +324,7 @@ public class OTEHatchRack extends MTEHatch {
                 new RackComponent(apuCreativeStack, 2400, 40, -1f, true); // APU Creative
             }
         }
+
     }
 
     public static class RackComponent implements Comparable<OTEHatchRack.RackComponent> {

@@ -38,6 +38,7 @@ import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
+import com.newmaa.othtech.utils.OTHTooltipBuilder;
 import com.newmaa.othtech.utils.Utils;
 
 import crazypants.enderio.EnderIO;
@@ -1297,7 +1298,7 @@ public class OTETangShanSteelFactory extends OTHMultiMachineBase<OTETangShanStee
     /*
      * @Override
      * protected MultiblockTooltipBuilder createTooltip() {
-     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+     * final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
      * tt.addMachineType("§e§l重工业计划 - 唐山炼钢厂")
      * .addInfo("§l§8无数黑烟源源不断地从烟囱中冒出")
      * .addInfo("§l§8工业化的必由之路......")
@@ -1325,7 +1326,7 @@ public class OTETangShanSteelFactory extends OTHMultiMachineBase<OTETangShanStee
      */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
         tt.addMachineType(translateToLocal("ote.tm.ts.0"))
             .addInfo(translateToLocal("ote.tm.ts.1"))
             .addInfo(translateToLocal("ote.tm.ts.2"))
@@ -1340,7 +1341,7 @@ public class OTETangShanSteelFactory extends OTHMultiMachineBase<OTETangShanStee
             .addPollutionAmount(19200)
             .addSeparator()
             .addController(translateToLocal("ote.tn.ts"))
-            .beginStructureBlock(42, 41, 43, false)
+            .beginStructureBlock(43, 41, 42, false)
             .addInputBus("AnyInputBus", 1)
             .addOutputBus("AnyOutputBus", 1)
             .addInputHatch("AnyInputHatch", 1)

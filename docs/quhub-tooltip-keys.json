@@ -1,0 +1,117 @@
+{
+  "_machine": "OTELargeQuHub",
+  "_displayClass": "com.newmaa.othtech.machine.OTELargeQuHub",
+  "_metaId": 23589,
+  "_registryName": "LargeQuHub",
+  "_itemListEntry": "OTHItemList.LargeQuHub",
+  "_langFiles": [
+    "src/main/resources/assets/123technology/lang/zh_CN.lang",
+    "src/main/resources/assets/123technology/lang/en_US.lang"
+  ],
+  "_structure": {
+    "shape": "正面 3x3 竖墙为一片 (x 宽 3, y 高 3), 结构沿深度方向 (z) 向后延长",
+    "controller": "第 1 面墙的中心 (V_OFFSET=1, 即整机中段高度, 不再贴地)",
+    "coil": "控制器正后方 1 格那一面墙的中心, 放高炉加热线圈",
+    "slices": "线圈墙之后再往深处, 每面 3x3 墙 = 1 片, 逐片向后检测",
+    "minSize": "3x3x3 (控制器墙 + 线圈墙 + 至少 1 片)",
+    "maxSlices": "线圈等级^3 (Utils.getCoilTier)"
+  },
+  "_tooltipChain": [
+    "addMachineType -> ote.tm.quhub.0",
+    "addInfo       -> ote.tm.quhub.1 .. ote.tm.quhub.4",
+    "addInfo       -> ote.tm.mat.5 (共用: 龙堆爆炸警告)",
+    "addTecTechHatchInfo -> GT5U.MBTT.SupportAny (注意: 该文案写的是 'Multi-Amp and Laser', 与本机不支持激光冲突)",
+    "addController -> ote.tn.quhub",
+    "getStructureDescription -> ote.cm.quhub.0 .. ote.cm.quhub.2"
+  ],
+  "_notes": [
+    "新增 tooltip 行时沿用 ote.tm.quhub.N (5..9 预留), 并在 createTooltip() 补 .addInfo(translateToLocal(\"ote.tm.quhub.N\"))",
+    "ote.cm.quhub.* 是 getStructureDescription() 的结构说明, 结构检查失败时也会显示",
+    "otht.con 是通用标题键 (所有机器共用), 不要改名也不要删",
+    "ote.tm.mat.5 与 '迷你有源变压器' 共用, 改它会影响两台机器",
+    "tooltip 里的 \"AnyEnergyHatch\" / \"AnyDynamoHatch\" 是 addEnergyHatch/addDynamoHatch 的结构提示字面量, 不是本地化键",
+    "本文件是纯对照表 (不会被游戏读取), .lang 改动后请同步这里"
+  ],
+  "keys": {
+    "ote.tn.quhub": {
+      "usage": "控制器名称 (物品名), 也用于 tooltip 的 addController 行",
+      "zh_CN": "OTH史诗堆叠特大愁区",
+      "en_US": "Large Stackable Transformer (TBD)"
+    },
+    "ote.tm.quhub.0": {
+      "usage": "tooltip: 机器类型 (addMachineType)",
+      "zh_CN": "§l小登的好多区... - 区牌Hub",
+      "en_US": "§lStackable Active Transformer - TBD"
+    },
+    "ote.tm.quhub.1": {
+      "usage": "tooltip: 进/出仓说明",
+      "zh_CN": "§b  输入: 能源仓 / 多安能源仓 输出: 动力仓 / 多安动力仓",
+      "en_US": "§b  EU in: Energy Hatch / Multi-Amp Energy Hatch; EU out: Dynamo Hatch / Multi-Amp Dynamo Hatch"
+    },
+    "ote.tm.quhub.2": {
+      "usage": "tooltip: 不支持激光仓的警示",
+      "zh_CN": "§c  不支持激光靶仓 / 激光源仓",
+      "en_US": "§c  Laser Target / Laser Source Hatches are NOT supported"
+    },
+    "ote.tm.quhub.3": {
+      "usage": "tooltip: 能量传递 (Power Pass) 行为",
+      "zh_CN": "§b  开启导能自动传输能量.(大概吧?)",
+      "en_US": "§b  Enable Power Pass to relay energy (same loss as the Active Transformer)"
+    },
+    "ote.tm.quhub.4": {
+      "usage": "tooltip: 蓝图堆叠与片数上限",
+      "zh_CN": "§a  蓝图堆叠决定片数, 最大堆叠片数为线圈等级^3",
+      "en_US": "§b  The controller wall is the first slice; the center of the wall right behind it holds an EBF heating coil"
+    },
+    "ote.tm.quhub.5": {
+      "usage": "预留: 第 6 条 tooltip (en 已有文本, zh 缺; 代码暂未引用)",
+      "zh_CN": "",
+      "en_US": "§b  Every 3x3 wall further back is one slice; slices can be stacked endlessly; max slices = coil tier³"
+    },
+    "ote.tm.quhub.6": {
+      "usage": "预留: 第 7 条 tooltip (en 已有文本, zh 缺; 代码暂未引用)",
+      "zh_CN": "",
+      "en_US": "§6  Structure casing: Deoxidized Steel Machine Casing"
+    },
+    "ote.tm.quhub.7": {
+      "usage": "预留: 待填写",
+      "zh_CN": "",
+      "en_US": ""
+    },
+    "ote.tm.quhub.8": {
+      "usage": "预留: 待填写",
+      "zh_CN": "",
+      "en_US": ""
+    },
+    "ote.tm.quhub.9": {
+      "usage": "预留: 待填写",
+      "zh_CN": "",
+      "en_US": ""
+    },
+    "ote.tm.mat.5": {
+      "usage": "tooltip: 龙堆式爆炸警告 (共用键, 与迷你有源变压器共用)",
+      "zh_CN": "§c§l警告 : 爆炸为龙堆式爆炸 , 威力和输入功率正相关 ! 服务器请在配置文件内关闭 !",
+      "en_US": "§c§lWarning: Explosion is Dragon Pile-style, power proportional to input! Disable in config on servers!"
+    },
+    "ote.cm.quhub.0": {
+      "usage": "结构说明第 1 行 (仓室可替换的位置与限制)",
+      "zh_CN": "1 - 能源仓 / 多安能源仓 / 动力仓 / 多安动力仓 : 替换脱氧钢机械方块 (不支持激光仓)",
+      "en_US": "1 - Energy Hatch / Multi-Amp Energy Hatch / Dynamo Hatch / Multi-Amp Dynamo Hatch : replace Deoxidized Steel Machine Casing (no laser hatches)"
+    },
+    "ote.cm.quhub.1": {
+      "usage": "结构说明第 2 行 (第一片与线圈墙位置)",
+      "zh_CN": "控制器所在的那面墙为第一片, 它正后方一层的中心放高炉加热线圈",
+      "en_US": "The controller wall is the first slice; the center of the wall right behind it holds an EBF heating coil"
+    },
+    "ote.cm.quhub.2": {
+      "usage": "结构说明第 3 行 (堆叠片数与上限)",
+      "zh_CN": "再往深处每面 3x3 为一片, 可无限堆叠; 堆叠片数上限 = 线圈等级^3",
+      "en_US": "Every 3x3 wall further back is one slice and can be stacked endlessly; max slices = coil tier³"
+    },
+    "otht.con": {
+      "usage": "共用键: 结构说明的标题行 (所有机器共用, 不要改名)",
+      "zh_CN": "搭建细节",
+      "en_US": "Construction Details"
+    }
+  }
+}
