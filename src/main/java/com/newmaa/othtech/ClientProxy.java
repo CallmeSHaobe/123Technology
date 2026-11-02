@@ -10,6 +10,7 @@ import net.minecraftforge.common.MinecraftForge;
 
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.blocks.deepseiko.TEDeepSeikoHolo;
+import com.newmaa.othtech.common.dimensions.sky.RossFogHandler;
 import com.newmaa.othtech.common.dimensions.sky.SkyProviderHandler;
 import com.newmaa.othtech.common.entity.EntityDogBlue;
 import com.newmaa.othtech.common.entity.EntityDogRed;
@@ -49,6 +50,8 @@ public class ClientProxy extends CommonProxy {
         super.preInit(event);
         SkyProviderHandler sky = new SkyProviderHandler();
         this.register_event(sky);
+        // 锑罗斯水下雾色改成血色(原版硬编码成蓝色)
+        this.register_event(new RossFogHandler());
         // 在这里添加你需要的预初始化逻辑
     }
 

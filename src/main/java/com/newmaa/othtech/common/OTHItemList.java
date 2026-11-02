@@ -95,6 +95,8 @@ public enum OTHItemList {
     // DeepSeiko 迪普西科
     WhiteRice,
     SpoiledRice,
+    /** 黄桃：黄桃草的产物（ItemFood，回 12 饥饿 + 30 秒速度 V） */
+    YellowPeach,
     /** 迪普西科调试币（金色 Token） */
     DeepSeikoToken,
     /** 迪普西科调试币（银色，装配线配方图页签） */

@@ -13,6 +13,7 @@ import com.newmaa.othtech.common.item.itemFoods.ItemLeekBox;
 import com.newmaa.othtech.common.item.itemFoods.ItemSpoiledRice;
 import com.newmaa.othtech.common.item.itemFoods.ItemTST;
 import com.newmaa.othtech.common.item.itemFoods.ItemWhiteRice;
+import com.newmaa.othtech.common.item.itemFoods.ItemYellowPeach;
 import com.newmaa.othtech.common.item.itemFoods.ItemZhangww;
 import com.newmaa.othtech.common.item.itemMisc.ItemComputeCenter;
 import com.newmaa.othtech.common.item.itemMisc.ItemDeepSeikoToken;
@@ -50,6 +51,7 @@ public class ItemLoader {
     public static Item itemHelmTallHatLaodeng = new ItemHelmTallHatLaodeng(DIAMOND, 0, "HelmTallHatLaodeng");
     public static Item itemWhiteRice = new ItemWhiteRice();
     public static Item itemSpoiledRice = new ItemSpoiledRice();
+    public static Item itemYellowPeach = new ItemYellowPeach();
     public static Item itemDeepSeikoToken = new ItemDeepSeikoToken();
     public static Item itemDeepSeikoTokenSilver = new ItemDeepSeikoTokenSilver();
     public static Item itemComputeCenter = new ItemComputeCenter();
@@ -76,6 +78,7 @@ public class ItemLoader {
         OTHItemList.Tallhat.set(registryAndCallback(itemHelmTallHatLaodeng, "HelmTallHatLaodeng"));
         OTHItemList.WhiteRice.set(registryAndCallback(itemWhiteRice, "WhiteRice"));
         OTHItemList.SpoiledRice.set(registryAndCallback(itemSpoiledRice, "SpoiledRice"));
+        OTHItemList.YellowPeach.set(registryAndCallback(itemYellowPeach, "YellowPeach"));
         OTHItemList.DeepSeikoToken.set(registryAndCallback(itemDeepSeikoToken, "DeepSeikoToken"));
         OTHItemList.DeepSeikoTokenSilver.set(registryAndCallback(itemDeepSeikoTokenSilver, "DeepSeikoTokenSilver"));
         OTHItemList.ComputeCenter.set(registryAndCallback(itemComputeCenter, "ComputeCenter"));

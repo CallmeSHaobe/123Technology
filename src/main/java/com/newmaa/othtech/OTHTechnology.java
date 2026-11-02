@@ -22,6 +22,7 @@ import com.newmaa.othtech.common.blocks.antimonia.AntimoniaBlocks;
 import com.newmaa.othtech.common.blocks.deepseiko.DeepSeikoBlocks;
 import com.newmaa.othtech.common.blocks.fluids.AntimoniaFluids;
 import com.newmaa.othtech.common.blocks.fluids.RossFluids;
+import com.newmaa.othtech.common.blocks.nailong.NailongCasings;
 import com.newmaa.othtech.common.blocks.oterender.OTERocketRender;
 import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
 import com.newmaa.othtech.common.dimensions.AntimoniaUndergroundFluids;
@@ -133,6 +134,7 @@ public class OTHTechnology {
         AntimoniaFluids.initialize();
         RossFluids.initialize();
         DeepSeikoBlocks.initialize();
+        NailongCasings.initialize();
     }
 
     @Mod.EventHandler

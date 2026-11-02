@@ -45,6 +45,8 @@ tt.induTrans=§aConventional power supply cannot easily break through hyperdimen
 tt.beeISA=§7Nanoswarm§a's ultimate form...
 tt.beeMag=§6The swarm buzzes...
 tt.itemEnqing=§e§lEyes shining with light.... Provides laser source support for the §4§lSun Factory§e§l
+tt.yellowPeach=§eGrown by Yellow Peach Grass, as sweet as canned.
+tt.yellowPeach.effect=§bRestores 12 hunger and grants §dSpeed V§b for 30 seconds.
 tt.leCasimir=§aA modular power source that extends fins into the interdimensional void to draw energy, an essential component for high-level spacetime circuits.
 tt.resTrans=§aAn encapsulated multidimensional spacetime generation device, providing the multidimensional spacetime foundation for the massive spacetime annealing required during computation.
 tt.glassSingularity=§5§l「Emit Life-Dissolving Rainbow」
@@ -787,6 +789,7 @@ tt.ds.gpu.a2=§b32,000 TFLOPs §7- DeepSeiko server room, also fits the hatch ra
 tt.ds.gpu.a3=§e128,000 TFLOPs §7- FULL POWER! DeepSeiko server room, also fits the hatch rack
 tt.ds.drive=§c25%% chance to be destroyed on power loss (gone for good)
 item.WhiteRice.name=White Rice
+item.YellowPeach.name=§eYellow Peach
 item.SpoiledRice.name=Spoiled Rice
 tt.ds.rice.0=§bIngredient of the Rice Singularity
 tt.ds.rice.1=§7Compressed into a single point inside a stable black hole
@@ -864,6 +867,8 @@ tile.dsCasing.8.name=Blubber Casing (Dark)
 tile.dsCasing.9.name=Left Fin
 tile.dsCasing.10.name=Right Fin
 tile.dsCasing.11.name=Top Fin
+tile.nailongCasing.0.name=Nailong Casing
+tile.nailongCasing.1.name=Canned Yellow Peach Casing
 channels.123technology.ds_left_fin=Left fin channel (1 = Left Fin block; 2~10 = Time Dilation Field Generator, Crude~Hongmeng)
 channels.123technology.ds_right_fin=Right fin channel (1 = Right Fin block; 2~10 = Spacetime Compression Field Generator, Crude~Hongmeng)
 channels.123technology.ds_top_fin=Top fin channel (1 = Top Fin block; 2~10 = Stabilisation Field Generator, Crude~Hongmeng)
@@ -968,6 +973,10 @@ GT5U.gui.text.shutdown.ds_no_card=§cCompute card removed
 
 # CropsNH 水稻作物
 cropsnh_crops.rice=Rice
+
+# CropsNH Yellow Peach Grass
+cropsnh_crops.yellowPeachGrass=Yellow Peach Grass
+cropsnh_crops.yellowPeachGrass.flavour=Peaches hang between the blades, as sweet as canned.
 
 # -- DeepSeiko: MUI2 panel / chat / shutdown (localized 2026-10-29) --
 ote.ds.chat.modeLocked=§cCannot switch mode while crafting

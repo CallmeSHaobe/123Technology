@@ -43,6 +43,8 @@ tt.induTrans=§a常规的供能无法轻易突破超维度的限制，因此需�
 tt.beeISA=§7纳米蜂群§a的终极形态...
 tt.beeMag=§6蜂群嗡嗡作响...
 tt.itemEnqing=§e§l眼里有光....为§4§l恩情工厂§e§l提供激光源支持
+tt.yellowPeach=§e黄桃草结出的果子，甜得像罐头
+tt.yellowPeach.effect=§b恢复 12 点饥饿值，并给予 30 秒§d速度 V
 tt.leCasimir=§a一块将鳍片伸向多维宇宙间汲取能量的模块化电源，是高阶超时空电路必不可少的部件
 tt.resTrans=§a封装多维时空的发生装置，为计算时海量的时空退火提供了多维时空的基础
 tt.glassSingularity=§5§l「发射生命解离彩虹」
@@ -784,6 +786,7 @@ tt.ds.gpu.a2=§b32,000 TFLOPs §7- 迪普西科机房专用, 也能塞进机架�
 tt.ds.gpu.a3=§e128,000 TFLOPs §7- 满血版! 迪普西科机房专用, 也能塞进机架仓
 tt.ds.drive=§c断电时 25% 概率损毁(直接消失)
 item.WhiteRice.name=白米饭
+item.YellowPeach.name=§e黄桃
 item.SpoiledRice.name=馊米饭
 tt.ds.rice.0=§b米饭奇点的原料
 tt.ds.rice.1=§7在亚稳态黑洞里压成一点
@@ -864,6 +867,8 @@ tile.dsCasing.8.name=鲸脂外壳（墨黑）
 tile.dsCasing.9.name=左鳍
 tile.dsCasing.10.name=右鳍
 tile.dsCasing.11.name=顶鳍
+tile.nailongCasing.0.name=奈隆机械方块
+tile.nailongCasing.1.name=黄桃罐头机械方块
 channels.123technology.ds_left_fin=左鳍信道（1 = 左鳍方块；2~10 = 时间膨胀场发生器 粗制~鸿蒙）
 channels.123technology.ds_right_fin=右鳍信道（1 = 右鳍方块；2~10 = 压缩时空场发生器 粗制~鸿蒙）
 channels.123technology.ds_top_fin=顶鳍信道（1 = 顶鳍方块；2~10 = 稳定力场发生器 粗制~鸿蒙）
@@ -973,6 +978,10 @@ GT5U.gui.text.shutdown.ds_no_card=§c算力卡被拔掉了
 
 # CropsNH 水稻作物
 cropsnh_crops.rice=水稻
+
+# CropsNH 黄桃草
+cropsnh_crops.yellowPeachGrass=黄桃草
+cropsnh_crops.yellowPeachGrass.flavour=草叶间挂着一颗颗黄桃，甜得像罐头。
 
 # ── 迪普西科：MUI2 面板 / 聊天 / 停机原因（2026-10-29 本地化） ──
 ote.ds.chat.modeLocked=§c合成中不能切换模式

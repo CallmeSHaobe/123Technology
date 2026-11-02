@@ -3,7 +3,6 @@ package com.newmaa.othtech.common.dimensions.ross123b;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -18,7 +17,7 @@ import com.google.common.collect.Lists;
 import com.newmaa.othtech.common.blocks.antimonia.AntimoniaBlocks;
 import com.newmaa.othtech.common.blocks.fluids.RossFluids;
 import com.newmaa.othtech.common.dimensions.biome.BiomeGenBaseRoss123b;
-import com.newmaa.othtech.common.dimensions.structure.ross123b.MapGenBuildingRoss123b;
+import com.newmaa.othtech.common.dimensions.structure.ross123b.RossCity;
 
 import galaxyspace.core.dimension.ChunkProviderSpaceLakes;
 import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
@@ -27,24 +26,64 @@ import micdoodle8.mods.galacticraft.api.prefab.world.gen.MapGenBaseMeta;
 
 public class ChunkProviderRoss123b extends ChunkProviderSpaceLakes {
 
+    /** LCL 海面所在高度, 即最高一格水所在的 y。 */
+    public static final int SEA_LEVEL = 63;
+
+    /** 1.7.10 区块方块数组: 16 * 16 * 256, 下标为 (x * 16 + z) * 256 + y。 */
+    private static final int CHUNK_VOLUME = 16 * 16 * 256;
+    private static final int COLUMN_HEIGHT = 256;
+
     private final World world;
-    public MapGenBuildingRoss123b buildingMapGen = new MapGenBuildingRoss123b();
+    private final RossCity.Terrain terrain;
 
     public ChunkProviderRoss123b(World world, long seed, boolean mapFeaturesEnabled) {
         super(world, seed, mapFeaturesEnabled);
         this.world = world;
+        BlockMetaPair water = getWaterBlock();
+        BlockMetaPair stone = getStoneBlock();
+        BlockMetaPair soil = getDirtBlock();
+        BlockMetaPair grass = getGrassBlock();
+        this.terrain = new RossCity.Terrain(
+            water.getBlock(),
+            water.getMetadata(),
+            stone.getBlock(),
+            stone.getMetadata(),
+            soil.getBlock(),
+            soil.getMetadata(),
+            grass.getBlock(),
+            grass.getMetadata(),
+            getWaterLevel());
     }
 
+    /**
+     * 地形一次性写进方块数组, 再交给 {@link Chunk} 的数组构造器。
+     * <p>
+     * 旧实现是在 {@code populate} 里用 {@code world.setBlock} 逐格灌水: 每格都要做一次区块查找、
+     * 标记更新和光照重算, 而且会把邻区块已经写好的建筑重新灌成液体。走数组后整列只是几次数组写,
+     * 不会触发任何世界级通知, 也不会在生成过程中递归加载邻区块(历史上爆过 StackOverflowError)。
+     * <p>
+     * 地形(陆地/海床/LCL)、道路与桥、临街建筑、地下破损全部由 {@link RossCity} 写进这份数组,
+     * 因此不需要 {@code MapGenStructure} 那套 planning/populate 两段式流程, 也不会跨区块写方块。
+     * <p>
+     * 数组布局与 {@code Chunk(World, Block[], byte[], int, int)} 一致:
+     * {@code (x * 16 + z) * 256 + y}。
+     */
     @Override
     public Chunk provideChunk(int chunkX, int chunkZ) {
-        Chunk chunk = new Chunk(this.world, chunkX, chunkZ);
+        Block[] blocks = new Block[CHUNK_VOLUME];
+        byte[] metadata = new byte[CHUNK_VOLUME];
 
         for (int x = 0; x < 16; x++) {
             for (int z = 0; z < 16; z++) {
-                chunk.func_150807_a(x, 0, z, Blocks.bedrock, 0);
-                chunk.func_150807_a(x, 1, z, Blocks.bedrock, 0);
+                int column = (x * 16 + z) * COLUMN_HEIGHT;
+                blocks[column] = Blocks.bedrock;
+                blocks[column + 1] = Blocks.bedrock;
             }
         }
+
+        RossCity.stamp(blocks, metadata, chunkX, chunkZ, this.world.getSeed(), this.terrain);
+
+        Chunk chunk = new Chunk(this.world, blocks, metadata, chunkX, chunkZ);
 
         // EndlessIDs 环境下调用原版 getBiomeArray() 会直接崩, 必须走短数组接口
         if (chunk instanceof ChunkBiomeHook hook) {
@@ -73,37 +112,9 @@ public class ChunkProviderRoss123b extends ChunkProviderSpaceLakes {
 
     @Override
     public void populate(IChunkProvider provider, int chunkX, int chunkZ) {
-        int worldX = chunkX * 16;
-        int worldZ = chunkZ * 16;
-
-        for (int x = 0; x < 16; x++) {
-            for (int z = 0; z < 16; z++) {
-                for (int y = 2; y <= getWaterLevel(); y++) {
-                    world.setBlock(
-                        worldX + x,
-                        y,
-                        worldZ + z,
-                        getWaterBlock().getBlock(),
-                        getWaterBlock().getMetadata(),
-                        2);
-                }
-            }
-        }
-        Random rand = new Random(world.getSeed() + (chunkX * 341873128712L) + (chunkZ * 132897987541L));
-        buildingMapGen.generateStructuresInChunk(this.world, rand, chunkX, chunkZ);
-        int roadWidth = 5;
-        int spacingBlocks = 40 + roadWidth;
-        boolean roadX = ((worldX % spacingBlocks + spacingBlocks) % spacingBlocks) < roadWidth;
-        boolean roadZ = ((worldZ % spacingBlocks + spacingBlocks) % spacingBlocks) < roadWidth;
-        if (roadX || roadZ) {
-            for (int x = 0; x < 16; x++) {
-                for (int z = 0; z < 16; z++) {
-                    int y = 16;
-                    world.setBlock(worldX + x, y, worldZ + z, Blocks.quartz_block);
-                }
-            }
-        }
-
+        // 道路 / 建筑 / 破损已经在 provideChunk 的方块数组里一次成型, 这里不再需要后处理。
+        // 仍然保留空实现: 不能走基类的 populate, 那个实现会用到为 null 的 getBiomeGenerator()
+        // 和空的刷怪表。
     }
 
     @Override
@@ -133,7 +144,7 @@ public class ChunkProviderRoss123b extends ChunkProviderSpaceLakes {
 
     @Override
     public void recreateStructures(int x, int z) {
-        this.buildingMapGen.func_151539_a(this, this.world, x, z, null);
+        // 城市不再走 MapGenStructure, 没有需要"重建"的结构起点。
     }
 
     @Override
@@ -183,7 +194,7 @@ public class ChunkProviderRoss123b extends ChunkProviderSpaceLakes {
 
     @Override
     public int getWaterLevel() {
-        return 16;
+        return SEA_LEVEL;
     }
 
     @Override

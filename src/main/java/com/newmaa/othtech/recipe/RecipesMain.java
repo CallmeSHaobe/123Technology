@@ -30,6 +30,8 @@ import net.minecraftforge.fluids.FluidStack;
 
 import com.newmaa.othtech.OTHTechnology;
 import com.newmaa.othtech.common.OTHItemList;
+import com.newmaa.othtech.common.blocks.nailong.NailongCasingMeta;
+import com.newmaa.othtech.common.blocks.nailong.NailongCasings;
 import com.newmaa.othtech.common.item.ItemLoader;
 import com.newmaa.othtech.common.materials.BWLiquids;
 import com.newmaa.othtech.common.materials.BWMaterials;
@@ -1468,5 +1470,31 @@ public class RecipesMain implements IRecipePool {
             .eut(RECIPE_ULV)
             .duration(120)
             .addTo(assemblerRecipes);
+        // nail
+        GTValues.RA.stdBuilder()
+            .itemInputs(
+                ItemList.Casing_ZPM.get(4),
+                OTHItemList.YellowPeach.get(16),
+                ItemList.Electric_Motor_LuV.get(1),
+                ItemList.Robot_Arm_LuV.get(1))
+            .itemOutputs(new ItemStack(NailongCasings.nailongCasing, 4, NailongCasingMeta.NAILONG))
+            .metadata(PRECISE_ASSEMBLER_CASING_TIER, 1)
+            .duration(12 * SECONDS)
+            .eut(RECIPE_LuV)
+            .addTo(preciseAssemblerRecipes);
+        // guantou
+        GTValues.RA.stdBuilder()
+            .itemInputs(
+                new ItemStack(NailongCasings.nailongCasing, 1, NailongCasingMeta.NAILONG),
+                OTHItemList.YellowPeach.get(16),
+                GTOreDictUnificator.get(OrePrefixes.plate, Materials.BorosilicateGlass, 16),
+                OTHItemList.LeekBox.get(64),
+                ItemList.Electric_Motor_LuV.get(2),
+                ItemList.Field_Generator_IV.get(1))
+            .itemOutputs(new ItemStack(NailongCasings.nailongCasing, 1, NailongCasingMeta.PEACH_CAN))
+            .eut(RECIPE_LuV)
+            .duration(60 * 20)
+            .addTo(assemblerRecipes);
+
     }
 }
