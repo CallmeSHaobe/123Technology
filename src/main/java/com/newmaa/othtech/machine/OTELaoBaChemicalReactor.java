@@ -30,7 +30,6 @@ import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
-import com.newmaa.othtech.utils.OTHTooltipBuilder;
 import com.newmaa.othtech.utils.Utils;
 
 import bartworks.API.BorosilicateGlass;
@@ -58,6 +57,50 @@ import mcp.mobius.waila.api.IWailaDataAccessor;
 
 public class OTELaoBaChemicalReactor extends OTHMultiMachineBase<OTELaoBaChemicalReactor> {
 
+    private boolean isUnlocked = false;
+
+    private byte mode = 0;
+
+    public byte glassTier = 0;
+
+    private HeatingCoilLevel coilLevel;
+
+    private static final String STRUCTURE_PIECE_MAIN = "main";
+
+    private final int horizontalOffSet = 3;
+
+    private final int verticalOffSet = 12;
+
+    private final int depthOffSet = 0;
+
+    private static IStructureDefinition<OTELaoBaChemicalReactor> STRUCTURE_DEFINITION = null;
+
+    private static final String[] description = new String[] {
+        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.chem.0") };
+
+    // Structured by LyeeR
+    private final String[][] shapeMain = new String[][] {
+        { "FFFFFFF", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G",
+            "G     G", "G     G", "FFF~FFF" },
+        { "FFFFFFF", " BBBBB ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ",
+            " AAAAA ", " BBBBB ", "FFFFFFF" },
+        { "FFFFFFF", " BDDDB ", " A G A ", " A E A ", " A E A ", " A G A ", " ADDDA ", " A G A ", " A E A ", " A E A ",
+            " A G A ", " BDDDB ", "FFFFFFF" },
+        { "FFFFFFF", " BDCDB ", " AGCGA ", " AECEA ", " AECEA ", " AGCGA ", " ADCDA ", " AGCGA ", " AECEA ", " AECEA ",
+            " AGCGA ", " BDCDB ", "FFFFFFF" },
+        { "FFFFFFF", " BDDDB ", " A G A ", " A E A ", " A E A ", " A G A ", " ADDDA ", " A G A ", " A E A ", " A E A ",
+            " A G A ", " BDDDB ", "FFFFFFF" },
+        { "FFFFFFF", " BBBBB ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ",
+            " AAAAA ", " BBBBB ", "FFFFFFF" },
+        { "FFFFFFF", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G",
+            "G     G", "G     G", "FFFFFFF" } };
+
+    private static ITexture CASING_TEXTURE = null;
+
+    private static final int CASING_TEXTURE_ID = 182;
+
+    // ===================== Constructors =====================
+
     public OTELaoBaChemicalReactor(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
     }
@@ -66,30 +109,7 @@ public class OTELaoBaChemicalReactor extends OTHMultiMachineBase<OTELaoBaChemica
         super(aName);
     }
 
-    private boolean isUnlocked = false;
-
-    private byte mode = 0;
-    public byte glassTier = 0;
-
-    private HeatingCoilLevel coilLevel;
-
-    public HeatingCoilLevel getCoilLevel() {
-        return this.coilLevel;
-    }
-
-    public void setCoilLevel(HeatingCoilLevel coilLevel) {
-        this.coilLevel = coilLevel;
-    }
-
-    public int getCoilTier() {
-        return Utils.getCoilTier(coilLevel);
-    }
-
-    protected void updatetier() {
-        ItemStack aGuiStack = this.getControllerSlot();
-        isUnlocked = aGuiStack != null
-            && GTUtility.areStacksEqual(aGuiStack, GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 0));
-    }
+    // ===================== NBT =====================
 
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
@@ -107,37 +127,7 @@ public class OTELaoBaChemicalReactor extends OTHMultiMachineBase<OTELaoBaChemica
         mode = aNBT.getByte("mode");
     }
 
-    @Override
-    public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
-        int z) {
-        super.getWailaNBTData(player, tile, tag, world, x, y, z);
-        final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
-        if (tileEntity != null) {
-            tag.setBoolean("123Processing", isUnlocked);
-        }
-        if (tileEntity != null) {
-            tag.setInteger("Mode", mode);
-        }
-    }
-
-    @Override
-    public void getWailaBody(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor,
-        IWailaConfigHandler config) {
-        super.getWailaBody(itemStack, currentTip, accessor, config);
-        final NBTTagCompound tag = accessor.getNBTData();
-        currentTip.add(
-            translateToLocal("otht.waila.123") + EnumChatFormatting.RESET
-                + ": "
-                + EnumChatFormatting.GOLD
-                + tag.getBoolean("123Processing")
-                + EnumChatFormatting.RESET);
-        currentTip.add(
-            translateToLocal("otht.waila.mode") + EnumChatFormatting.RESET
-                + ": "
-                + EnumChatFormatting.GOLD
-                + tag.getString("Mode")
-                + EnumChatFormatting.RESET);
-    }
+    // ===================== Machine Parameters =====================
 
     @Override
     protected boolean isEnablePerfectOverclock() {
@@ -165,22 +155,6 @@ public class OTELaoBaChemicalReactor extends OTHMultiMachineBase<OTELaoBaChemica
     }
 
     @Override
-    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
-        ItemStack aTool) {
-        if (getBaseMetaTileEntity().isServerSide()) {
-            if (mode < 1) {
-                mode++;
-            } else {
-                mode = 0;
-            }
-            switch (mode) {
-                case 0 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.chem.mode.0"));
-                case 1 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.chem.mode.1"));
-            }
-        }
-    }
-
-    @Override
     public RecipeMap<?> getRecipeMap() {
         if (this.mode == 0) return RecipeMaps.chemicalPlantRecipes;
         return RecipeMaps.multiblockChemicalReactorRecipes;
@@ -191,6 +165,20 @@ public class OTELaoBaChemicalReactor extends OTHMultiMachineBase<OTELaoBaChemica
     public Collection<RecipeMap<?>> getAvailableRecipeMaps() {
         return Arrays.asList(RecipeMaps.chemicalPlantRecipes, RecipeMaps.multiblockChemicalReactorRecipes);
     }
+
+    public HeatingCoilLevel getCoilLevel() {
+        return this.coilLevel;
+    }
+
+    public void setCoilLevel(HeatingCoilLevel coilLevel) {
+        this.coilLevel = coilLevel;
+    }
+
+    public int getCoilTier() {
+        return Utils.getCoilTier(coilLevel);
+    }
+
+    // ===================== Processing Logic =====================
 
     @Override
     protected ProcessingLogic createProcessingLogic() {
@@ -217,19 +205,21 @@ public class OTELaoBaChemicalReactor extends OTHMultiMachineBase<OTELaoBaChemica
         }.setMaxParallelSupplier(this::getMaxParallelRecipes);
     }
 
+    @NotNull
+    @Override
+    public CheckRecipeResult checkProcessing() {
+        updatetier();
+        return super.checkProcessing();
+    }
+
+    // ===================== Structure =====================
+
     @Override
     public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
         updatetier();
         repairMachine();
         coilLevel = HeatingCoilLevel.None;
         if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
-    }
-
-    @NotNull
-    @Override
-    public CheckRecipeResult checkProcessing() {
-        updatetier();
-        return super.checkProcessing();
     }
 
     @Override
@@ -256,15 +246,6 @@ public class OTELaoBaChemicalReactor extends OTHMultiMachineBase<OTELaoBaChemica
             true);
 
     }
-
-    private static final String STRUCTURE_PIECE_MAIN = "main";
-
-    private final int horizontalOffSet = 3;
-    private final int verticalOffSet = 12;
-    private final int depthOffSet = 0;
-    private static IStructureDefinition<OTELaoBaChemicalReactor> STRUCTURE_DEFINITION = null;
-    private static final String[] description = new String[] {
-        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.chem.0") };
 
     @Override
     public String[] getStructureDescription(ItemStack stackSize) {
@@ -308,33 +289,18 @@ public class OTELaoBaChemicalReactor extends OTHMultiMachineBase<OTELaoBaChemica
         return STRUCTURE_DEFINITION;
     }
 
-    // Structured by LyeeR
-    private final String[][] shapeMain = new String[][] {
-        { "FFFFFFF", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G",
-            "G     G", "G     G", "FFF~FFF" },
-        { "FFFFFFF", " BBBBB ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ",
-            " AAAAA ", " BBBBB ", "FFFFFFF" },
-        { "FFFFFFF", " BDDDB ", " A G A ", " A E A ", " A E A ", " A G A ", " ADDDA ", " A G A ", " A E A ", " A E A ",
-            " A G A ", " BDDDB ", "FFFFFFF" },
-        { "FFFFFFF", " BDCDB ", " AGCGA ", " AECEA ", " AECEA ", " AGCGA ", " ADCDA ", " AGCGA ", " AECEA ", " AECEA ",
-            " AGCGA ", " BDCDB ", "FFFFFFF" },
-        { "FFFFFFF", " BDDDB ", " A G A ", " A E A ", " A E A ", " A G A ", " ADDDA ", " A G A ", " A E A ", " A E A ",
-            " A G A ", " BDDDB ", "FFFFFFF" },
-        { "FFFFFFF", " BBBBB ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ",
-            " AAAAA ", " BBBBB ", "FFFFFFF" },
-        { "FFFFFFF", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G",
-            "G     G", "G     G", "FFFFFFF" } };
-
     @Override
     public boolean addToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
         return super.addToMachineList(aTileEntity, aBaseCasingIndex)
             || addExoticEnergyInputToMachineList(aTileEntity, aBaseCasingIndex);
     }
 
+    // ===================== Tooltip =====================
+
     /*
      * @Override
      * protected MultiblockTooltipBuilder createTooltip() {
-     * final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
+     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
      * tt.addMachineType("§e§l老登的终极造物 - 铑钯反应釜(化学反应釜 & 化工厂)")
      * .addInfo("§l§a    吃饱啦!    ")
      * .addInfo("化工厂模式 ： 耗时 = NEI耗时 * (1 - 线圈等级 * 0.15),最低耗时倍率为0.1; 并行16, 无催化剂消耗, 有损超频")
@@ -358,7 +324,7 @@ public class OTELaoBaChemicalReactor extends OTHMultiMachineBase<OTELaoBaChemica
      */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType(translateToLocal("ote.tm.chem.0"))
             .addInfo(translateToLocal("ote.tm.chem.1"))
             .addInfo(translateToLocal("ote.tm.chem.2"))
@@ -369,6 +335,7 @@ public class OTELaoBaChemicalReactor extends OTHMultiMachineBase<OTELaoBaChemica
             .addInfo(translateToLocal("ote.tm.chem.7"))
             .addTecTechHatchInfo()
             .addSeparator()
+            .addInfo("§aAdded by: 123Technology - Chem-Terminator")
             .addController(translateToLocal("ote.tn.chem"))
             .beginStructureBlock(7, 13, 7, false)
             .addInputBus("AnyInputBus", 1)
@@ -376,17 +343,18 @@ public class OTELaoBaChemicalReactor extends OTHMultiMachineBase<OTELaoBaChemica
             .addInputHatch("AnyInputHatch", 1)
             .addOutputHatch("AnyOutputHatch", 1)
             .addEnergyHatch("AnyEnergyHatch", 1)
-            .toolTipFinisher("§a123Technology - Chem-Terminator");
+            .toolTipFinisher();
         return tt;
     }
+
+    // ===================== Standard Overrides =====================
 
     @Override
     public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
         return new OTELaoBaChemicalReactor(this.mName);
     }
 
-    private static ITexture CASING_TEXTURE = null;
-    private static final int CASING_TEXTURE_ID = 182;
+    // ===================== Textures =====================
 
     @Override
     public ITexture[] getTexture(final IGregTechTileEntity baseMetaTileEntity, final ForgeDirection sideDirection,
@@ -421,5 +389,61 @@ public class OTELaoBaChemicalReactor extends OTHMultiMachineBase<OTELaoBaChemica
     @Override
     protected SoundResource getProcessStartSound() {
         return SoundResource.GT_MACHINES_DISTILLERY_LOOP;
+    }
+
+    // ===================== Misc =====================
+
+    protected void updatetier() {
+        ItemStack aGuiStack = this.getControllerSlot();
+        isUnlocked = aGuiStack != null
+            && GTUtility.areStacksEqual(aGuiStack, GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 0));
+    }
+
+    @Override
+    public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
+        int z) {
+        super.getWailaNBTData(player, tile, tag, world, x, y, z);
+        final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
+        if (tileEntity != null) {
+            tag.setBoolean("123Processing", isUnlocked);
+        }
+        if (tileEntity != null) {
+            tag.setInteger("Mode", mode);
+        }
+    }
+
+    @Override
+    public void getWailaBody(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor,
+        IWailaConfigHandler config) {
+        super.getWailaBody(itemStack, currentTip, accessor, config);
+        final NBTTagCompound tag = accessor.getNBTData();
+        currentTip.add(
+            translateToLocal("otht.waila.123") + EnumChatFormatting.RESET
+                + ": "
+                + EnumChatFormatting.GOLD
+                + tag.getBoolean("123Processing")
+                + EnumChatFormatting.RESET);
+        currentTip.add(
+            translateToLocal("otht.waila.mode") + EnumChatFormatting.RESET
+                + ": "
+                + EnumChatFormatting.GOLD
+                + tag.getString("Mode")
+                + EnumChatFormatting.RESET);
+    }
+
+    @Override
+    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+        ItemStack aTool) {
+        if (getBaseMetaTileEntity().isServerSide()) {
+            if (mode < 1) {
+                mode++;
+            } else {
+                mode = 0;
+            }
+            switch (mode) {
+                case 0 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.chem.mode.0"));
+                case 1 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.chem.mode.1"));
+            }
+        }
     }
 }

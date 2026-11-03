@@ -45,7 +45,6 @@ import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.common.materials.BWLiquids;
 import com.newmaa.othtech.machine.machineclass.OTHTTMultiMachineBaseEM;
-import com.newmaa.othtech.utils.OTHTooltipBuilder;
 
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
@@ -76,6 +75,42 @@ import tectech.thing.metaTileEntity.multi.base.Parameters;
 public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
     implements IConstructable, ISurvivalConstructable {
 
+    private int pipeTier = -1;
+
+    private UUID ownerUUID;
+
+    private boolean isWirelessMode = false;
+
+    private String costingWirelessEU = "0";
+
+    Parameters.Group.ParameterIn time;
+
+    private static final IStatusFunction<OTENQFuelGeneratorUniversal> timeSTATUES = (base, p) -> LedStatus
+        .fromLimitsInclusiveOuterBoundary(p.get(), 1, 2, 1000, 114514);
+
+    private static final INameFunction<OTENQFuelGeneratorUniversal> timeName = (base, p) -> GCCoreUtil
+        .translate("ote.tt.exc.0");
+
+    private long tEff;
+
+    public long running_time = 0;
+
+    protected final List<MTEHatchInput> mMiddleInputHatches = new ArrayList<>();
+
+    private boolean isStoppingSafe;
+
+    private int heatingTicks;
+
+    protected final int HEATING_TIMER = SECOND * 10;
+
+    private static IStructureDefinition<OTENQFuelGeneratorUniversal> STRUCTURE_DEFINITION = null;
+
+    private static final String[] description = new String[] {
+        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.nfg.0") + ":",
+        translateToLocal("ote.cm.nfg.1") + ":", translateToLocal("ote.cm.nfg.2"), };
+
+    // ===================== Constructors =====================
+
     public OTENQFuelGeneratorUniversal(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
         super.useLongPower = true;
@@ -86,15 +121,7 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
         super.useLongPower = true;
     }
 
-    private int pipeTier = -1;
-    private UUID ownerUUID;
-    private boolean isWirelessMode = false;
-    private String costingWirelessEU = "0";
-    Parameters.Group.ParameterIn time;
-    private static final IStatusFunction<OTENQFuelGeneratorUniversal> timeSTATUES = (base, p) -> LedStatus
-        .fromLimitsInclusiveOuterBoundary(p.get(), 1, 2, 1000, 114514);
-    private static final INameFunction<OTENQFuelGeneratorUniversal> timeName = (base, p) -> GCCoreUtil
-        .translate("ote.tt.exc.0");
+    // ===================== NBT =====================
 
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
@@ -112,16 +139,281 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
         super.loadNBTData(aNBT);
     }
 
+    // ===================== Machine Parameters =====================
+
+    @Override
+    public RecipeMap<?> getRecipeMap() {
+        return NaquadahFuelFakeRecipes;
+    }
+
+    @Override
+    public int getMaxEfficiency(ItemStack aStack) {
+        return 10000;
+    }
+
+    @Override
+    public int getDamageToComponent(ItemStack aStack) {
+        return 0;
+    }
+
+    @Override
+    public boolean isCorrectMachinePart(ItemStack aStack) {
+        return true;
+    }
+
+    @Override
+    public boolean supportsVoidProtection() {
+        return true;
+    }
+
+    @Override
+    public boolean supportsInputSeparation() {
+        return true;
+    }
+
+    @Override
+    public boolean supportsSingleRecipeLocking() {
+        return true;
+    }
+
+    // ===================== Processing Logic =====================
+
+    @Override
+    public @NotNull CheckRecipeResult checkProcessing_EM() {
+        ArrayList<FluidStack> tFluids = getStoredFluids();
+        long PromoterAmount = findLiquidAmount(getPromoter(), tFluids);
+
+        CheckRecipeResult result;
+        result = processFuel(tFluids, NaquadahFuelFakeRecipes, PromoterAmount, 0.006D, 3);
+        if (result.wasSuccessful()) {
+            return result;
+        }
+        running_time = 0;
+        return CheckRecipeResultRegistry.NO_FUEL_FOUND;
+    }
+
+    @Override
+    public boolean onRunningTick(ItemStack stack) {
+        if (this.getBaseMetaTileEntity() != null && this.getBaseMetaTileEntity()
+            .isServerSide()) {
+            long euPerTick = getPowerFlow();
+            if (this.getBaseMetaTileEntity()
+                .isActive() && !isWirelessMode
+                && euPerTick > 0) {
+                addEnergyOutput_EM(euPerTick, 1);
+            }
+            if (heatingTicks < HEATING_TIMER) {
+                heatingTicks++;
+                isStoppingSafe = true;
+            } else if (isStoppingSafe) isStoppingSafe = false;
+        }
+        return true;
+    }
+
+    @Override
+    public void onFirstTick_EM(IGregTechTileEntity aBaseMetaTileEntity) {
+        super.onFirstTick_EM(aBaseMetaTileEntity);
+        this.ownerUUID = aBaseMetaTileEntity.getOwnerUuid();
+    }
+
     @Override
     protected void parametersInstantiation_EM() {
         Parameters.Group hatch_0 = parametrization.getGroup(0, false);
         time = hatch_0.makeInParameter(0, 1, timeName, timeSTATUES);
     }
 
+    // ===================== Structure =====================
+
     @Override
-    public RecipeMap<?> getRecipeMap() {
-        return NaquadahFuelFakeRecipes;
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
+        for (final MTEHatchInput tHatch : validMTEList(mInputHatches)) {
+            if (tHatch instanceof MTEHatchInputME) {
+                return;
+            }
+        }
+        if (this.pipeTier != 2) {
+            this.isWirelessMode = false;
+        }
+        checkPiece(mName, 2, 2, 0, errors);
+        repairMachine();
     }
+
+    @Override
+    public void construct(ItemStack stackSize, boolean hintsOnly) {
+        repairMachine();
+        buildPiece(mName, stackSize, hintsOnly, 2, 2, 0);
+
+    }
+
+    @Override
+    public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
+        if (mMachine) return -1;
+        return survivalBuildPiece(mName, stackSize, 2, 2, 0, elementBudget, env, false, true);
+    }
+
+    @Override
+    public String[] getStructureDescription(ItemStack stackSize) {
+        return description;
+    }
+
+    @Override
+    public IStructureDefinition<OTENQFuelGeneratorUniversal> getStructure_EM() {
+        if (STRUCTURE_DEFINITION == null) {
+            STRUCTURE_DEFINITION = StructureDefinition.<OTENQFuelGeneratorUniversal>builder()
+                .addShape(
+                    mName,
+                    transpose(
+                        new String[][] {
+                            { "TTTTT", "TTMMT", "TTMMT", "TTMMT", "TTMMT", "TTMMT", "TTMMT", "TTMMT", "TTTTT" },
+                            { "TTTTT", "SPCCI-", "SPCCI-", "SPCCI-", "SPCCI-", "SPCCI-", "SPCCI-", "SPCCI-", "TTTTT" },
+                            { "TT~TT", "SPGGI-", "SPGGI-", "SPGGI-", "SPGGI-", "SPGGI-", "SPGGI-", "SPGGI-", "TTETT" },
+                            { "TTTTT", "TTTTT", "TTTTT", "TTTTT", "TTTTT", "TTTTT", "TTTTT", "TTTTT", "TTTTT" } }))
+                .addElement('T', ofBlock(sBlockCasings8, 10))
+                .addElement(
+                    'M',
+                    buildHatchAdder(OTENQFuelGeneratorUniversal.class).atLeast(Muffler)
+                        .adder(OTENQFuelGeneratorUniversal::addToMachineList)
+                        .hint(2)
+                        .casingIndex(((BlockCasings8) sBlockCasings8).getTextureIndex(10))
+                        .buildAndChain(sBlockCasings8, 10))
+                .addElement(
+                    'S',
+                    buildHatchAdder(OTENQFuelGeneratorUniversal.class).atLeast(InputHatch, OutputHatch)
+                        .adder(OTENQFuelGeneratorUniversal::addToMachineList)
+                        .hint(3)
+                        .casingIndex(((BlockCasings8) sBlockCasings8).getTextureIndex(10))
+                        .buildAndChain(sBlockCasings8, 10))
+                .addElement(
+                    'E',
+                    buildHatchAdder(OTENQFuelGeneratorUniversal.class).atLeast(Dynamo.or(DynamoMulti))
+                        .adder(OTENQFuelGeneratorUniversal::addToMachineList)
+                        .hint(4)
+                        .casingIndex(((BlockCasings8) sBlockCasings8).getTextureIndex(10))
+                        .buildAndChain(sBlockCasings8, 10))
+                .addElement('P', withChannel("pipe", ofBlocksTiered((block, meta) -> {
+                    if (block == null) return null;
+                    if (block == sBlockCasings2 && meta == 15) {
+                        return 1;
+                    } else if (block == sBlockCasings9 && meta == 14) {
+                        return 2;
+                    }
+                    return null;
+                },
+                    ImmutableList.of(Pair.of(sBlockCasings2, 15), Pair.of(sBlockCasings9, 14)),
+                    -1,
+                    (t, meta) -> t.pipeTier = meta,
+                    OTENQFuelGeneratorUniversal::getPipeTierInstance)))
+                .addElement('C', ofBlock(sBlockCasings6, 8))
+                .addElement('G', ofBlock(sBlockCasings2, 4))
+                .addElement('I', ofBlock(sBlockCasings8, 4))
+                .build();
+        }
+        return STRUCTURE_DEFINITION;
+    }
+
+    // ===================== Tooltip =====================
+
+    /*
+     * @Override
+     * protected MultiblockTooltipBuilder createTooltip() {
+     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+     * tt.addMachineType("通化之梦")
+     * .addInfo(" §l§4“你产能不够吧? -v-” ")
+     * .addInfo("通化的升级版本, 可以支持硅岩燃料, 但不能使用传统燃料喔 ~ 真正的清洁能源")
+     * .addInfo("耗时根据主机参数决定, 单位tick, 无线模式实际功率为总发电 / 耗时(tick)")
+     * .addInfo("和通化一样的设计, 但同时兼备了大硅岩的加成")
+     * .addInfo("一次消耗输入仓内所有燃料和助燃剂")
+     * .addInfo("感谢伟大的铱锇钐大人，所有输出功率都将为原来的三倍")
+     * .addInfo("二级管道方块解锁无线模式, 使用螺丝刀开启")
+     * .addInfo("§a更高级的结构意味着更高级的§c助燃剂, §a一级结构:原子分离助燃剂, 二级结构:超维度等离子助燃剂")
+     * .addInfo("§a效率随着运行时间提升, 每秒提升1%效率，具体效率阈值为1230%")
+     * .addInfo("计算公式：总发电量=燃料数量*输出系数(3)*效率*燃料输出功率*配方时间")
+     * .addInfo("PS：上述计算的发电量为一次运行的总发电")
+     * .addInfo("§a注意 : 如果耗时小于20ticks, 则效率不会累加")
+     * .addInfo("§4你知道会发生什么。")
+     * .addInfo("§e警告 : 如果强行使用有线模式烧高级硅岩燃料, 将会导致电表倒转憋憋")
+     * .addInfo("§c支持TecTech多安动力仓, 激光仓, 但尽量请使用1,073,741,824A激光仓直连电容库")
+     * .addSeparator()
+     * .addController("发电坤")
+     * .beginStructureBlock(7, 13, 7, false)
+     * .addInputBus("AnyInputBus", 1)
+     * .addOutputBus("AnyOutputBus", 1)
+     * .addInputHatch("AnyInputHatch", 1)
+     * .addOutputHatch("AnyOutputHatch", 1)
+     * .addEnergyHatch("AnyEnergyHatch", 1)
+     * .toolTipFinisher("§b123Technology - KING OF GENERATORS , FOR THE GOD PIGEON");
+     * return tt;
+     * }
+     */
+    @Override
+    protected MultiblockTooltipBuilder createTooltip() {
+        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        tt.addMachineType(translateToLocal("ote.tm.nfg.0"))
+            .addInfo(translateToLocal("ote.tm.nfg.1"))
+            .addInfo(translateToLocal("ote.tm.nfg.2"))
+            .addInfo(translateToLocal("ote.tm.nfg.3"))
+            .addInfo(translateToLocal("ote.tm.nfg.4"))
+            .addInfo(translateToLocal("ote.tm.nfg.5"))
+            .addInfo(translateToLocal("ote.tm.nfg.6"))
+            .addInfo(translateToLocal("ote.tm.nfg.7"))
+            .addInfo(translateToLocal("ote.tm.nfg.8"))
+            .addInfo(translateToLocal("ote.tm.nfg.9"))
+            .addInfo(translateToLocal("ote.tm.nfg.10"))
+            .addInfo(translateToLocal("ote.tm.nfg.12"))
+            .addInfo(translateToLocal("ote.tm.nfg.13"))
+            .addInfo(translateToLocal("ote.tm.nfg.14"))
+            .addInfo(translateToLocal("ote.tm.nfg.15"))
+            .addSeparator()
+            .addInfo("§bAdded by: 123Technology - KING OF GENERATORS , FOR THE GOD PIGEON")
+            .addController(translateToLocal("ote.tm.nfg.16"))
+            .beginStructureBlock(6, 4, 9, false)
+            .addInputBus("AnyInputBus", 1)
+            .addOutputBus("AnyOutputBus", 1)
+            .addInputHatch("AnyInputHatch", 1)
+            .addOutputHatch("AnyOutputHatch", 1)
+            .addEnergyHatch("AnyEnergyHatch", 1)
+            .toolTipFinisher();
+        return tt;
+    }
+
+    // ===================== Standard Overrides =====================
+
+    @Override
+    public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
+        return new OTENQFuelGeneratorUniversal(this.mName);
+    }
+
+    // ===================== Textures =====================
+
+    @Override
+    public ITexture[] getTexture(final IGregTechTileEntity baseMetaTileEntity, final ForgeDirection sideDirection,
+        final ForgeDirection facing, final int aColorIndex, final boolean active, final boolean aRedstone) {
+
+        if (sideDirection == facing) {
+            if (active) return new ITexture[] {
+                getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings8, 10)), TextureFactory.builder()
+                    .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_ACTIVE)
+                    .extFacing()
+                    .build(),
+                TextureFactory.builder()
+                    .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_ACTIVE_GLOW)
+                    .extFacing()
+                    .build() };
+            return new ITexture[] { getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings8, 10)),
+                TextureFactory.builder()
+                    .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE)
+                    .extFacing()
+                    .build(),
+                TextureFactory.builder()
+                    .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_GLOW)
+                    .extFacing()
+                    .glow()
+                    .build() };
+        }
+        return new ITexture[] { getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings8, 10)) };
+    }
+
+    // ===================== Misc =====================
 
     @Override
     public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
@@ -204,24 +496,6 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
                         + translateToLocal("ote.fluid.gen.2")
                         + EnumChatFormatting.RESET);
             }
-    }
-
-    private long tEff;
-
-    public long running_time = 0;
-
-    @Override
-    public @NotNull CheckRecipeResult checkProcessing_EM() {
-        ArrayList<FluidStack> tFluids = getStoredFluids();
-        long PromoterAmount = findLiquidAmount(getPromoter(), tFluids);
-
-        CheckRecipeResult result;
-        result = processFuel(tFluids, NaquadahFuelFakeRecipes, PromoterAmount, 0.006D, 3);
-        if (result.wasSuccessful()) {
-            return result;
-        }
-        running_time = 0;
-        return CheckRecipeResultRegistry.NO_FUEL_FOUND;
     }
 
     protected CheckRecipeResult processFuel(ArrayList<FluidStack> tFluids, RecipeMap<FuelBackend> recipeMap,
@@ -344,30 +618,6 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
         return false;
     }
 
-    @Override
-    public boolean onRunningTick(ItemStack stack) {
-        if (this.getBaseMetaTileEntity() != null && this.getBaseMetaTileEntity()
-            .isServerSide()) {
-            long euPerTick = getPowerFlow();
-            if (this.getBaseMetaTileEntity()
-                .isActive() && !isWirelessMode
-                && euPerTick > 0) {
-                addEnergyOutput_EM(euPerTick, 1);
-            }
-            if (heatingTicks < HEATING_TIMER) {
-                heatingTicks++;
-                isStoppingSafe = true;
-            } else if (isStoppingSafe) isStoppingSafe = false;
-        }
-        return true;
-    }
-
-    @Override
-    public void onFirstTick_EM(IGregTechTileEntity aBaseMetaTileEntity) {
-        super.onFirstTick_EM(aBaseMetaTileEntity);
-        this.ownerUUID = aBaseMetaTileEntity.getOwnerUuid();
-    }
-
     public FluidStack findFuel(GTRecipe aFuel) {
         if (aFuel.mInputs != null && aFuel.mInputs.length > 0)
             return GTUtility.getFluidForFilledItem(aFuel.mInputs[0], true);
@@ -412,29 +662,6 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
     }
 
     @Override
-    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
-        for (final MTEHatchInput tHatch : validMTEList(mInputHatches)) {
-            if (tHatch instanceof MTEHatchInputME) {
-                return;
-            }
-        }
-        if (this.pipeTier != 2) {
-            this.isWirelessMode = false;
-        }
-        checkPiece(mName, 2, 2, 0, errors);
-        repairMachine();
-    }
-
-    @Override
-    public void construct(ItemStack stackSize, boolean hintsOnly) {
-        repairMachine();
-        buildPiece(mName, stackSize, hintsOnly, 2, 2, 0);
-
-    }
-
-    protected final List<MTEHatchInput> mMiddleInputHatches = new ArrayList<>();
-
-    @Override
     public void startRecipeProcessing() {
         for (MTEHatchInput hatch : validMTEList(mMiddleInputHatches)) {
             if (hatch instanceof IRecipeProcessingAwareHatch aware) {
@@ -452,76 +679,6 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
                 setResultIfFailure(aware.endRecipeProcessing(this));
             }
         }
-    }
-
-    @Override
-    public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
-        if (mMachine) return -1;
-        return survivalBuildPiece(mName, stackSize, 2, 2, 0, elementBudget, env, false, true);
-    }
-
-    private boolean isStoppingSafe;
-    private int heatingTicks;
-    protected final int HEATING_TIMER = SECOND * 10;
-
-    @Override
-    public String[] getStructureDescription(ItemStack stackSize) {
-        return description;
-    }
-
-    @Override
-    public IStructureDefinition<OTENQFuelGeneratorUniversal> getStructure_EM() {
-        if (STRUCTURE_DEFINITION == null) {
-            STRUCTURE_DEFINITION = StructureDefinition.<OTENQFuelGeneratorUniversal>builder()
-                .addShape(
-                    mName,
-                    transpose(
-                        new String[][] {
-                            { "TTTTT", "TTMMT", "TTMMT", "TTMMT", "TTMMT", "TTMMT", "TTMMT", "TTMMT", "TTTTT" },
-                            { "TTTTT", "SPCCI-", "SPCCI-", "SPCCI-", "SPCCI-", "SPCCI-", "SPCCI-", "SPCCI-", "TTTTT" },
-                            { "TT~TT", "SPGGI-", "SPGGI-", "SPGGI-", "SPGGI-", "SPGGI-", "SPGGI-", "SPGGI-", "TTETT" },
-                            { "TTTTT", "TTTTT", "TTTTT", "TTTTT", "TTTTT", "TTTTT", "TTTTT", "TTTTT", "TTTTT" } }))
-                .addElement('T', ofBlock(sBlockCasings8, 10))
-                .addElement(
-                    'M',
-                    buildHatchAdder(OTENQFuelGeneratorUniversal.class).atLeast(Muffler)
-                        .adder(OTENQFuelGeneratorUniversal::addToMachineList)
-                        .hint(2)
-                        .casingIndex(((BlockCasings8) sBlockCasings8).getTextureIndex(10))
-                        .buildAndChain(sBlockCasings8, 10))
-                .addElement(
-                    'S',
-                    buildHatchAdder(OTENQFuelGeneratorUniversal.class).atLeast(InputHatch, OutputHatch)
-                        .adder(OTENQFuelGeneratorUniversal::addToMachineList)
-                        .hint(3)
-                        .casingIndex(((BlockCasings8) sBlockCasings8).getTextureIndex(10))
-                        .buildAndChain(sBlockCasings8, 10))
-                .addElement(
-                    'E',
-                    buildHatchAdder(OTENQFuelGeneratorUniversal.class).atLeast(Dynamo.or(DynamoMulti))
-                        .adder(OTENQFuelGeneratorUniversal::addToMachineList)
-                        .hint(4)
-                        .casingIndex(((BlockCasings8) sBlockCasings8).getTextureIndex(10))
-                        .buildAndChain(sBlockCasings8, 10))
-                .addElement('P', withChannel("pipe", ofBlocksTiered((block, meta) -> {
-                    if (block == null) return null;
-                    if (block == sBlockCasings2 && meta == 15) {
-                        return 1;
-                    } else if (block == sBlockCasings9 && meta == 14) {
-                        return 2;
-                    }
-                    return null;
-                },
-                    ImmutableList.of(Pair.of(sBlockCasings2, 15), Pair.of(sBlockCasings9, 14)),
-                    -1,
-                    (t, meta) -> t.pipeTier = meta,
-                    OTENQFuelGeneratorUniversal::getPipeTierInstance)))
-                .addElement('C', ofBlock(sBlockCasings6, 8))
-                .addElement('G', ofBlock(sBlockCasings2, 4))
-                .addElement('I', ofBlock(sBlockCasings8, 4))
-                .build();
-        }
-        return STRUCTURE_DEFINITION;
     }
 
     public FluidStack getPromoter() {
@@ -554,136 +711,5 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
         /*
          * GTUtility.sendChatToPlayer(aPlayer, translateToLocal(isWirelessMode ? "无线模式启动" : "无线模式关闭"));
          */
-    }
-
-    private static IStructureDefinition<OTENQFuelGeneratorUniversal> STRUCTURE_DEFINITION = null;
-
-    private static final String[] description = new String[] {
-        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.nfg.0") + ":",
-        translateToLocal("ote.cm.nfg.1") + ":", translateToLocal("ote.cm.nfg.2"), };
-
-    @Override
-    public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-        return new OTENQFuelGeneratorUniversal(this.mName);
-    }
-
-    /*
-     * @Override
-     * protected MultiblockTooltipBuilder createTooltip() {
-     * final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
-     * tt.addMachineType("通化之梦")
-     * .addInfo(" §l§4“你产能不够吧? -v-” ")
-     * .addInfo("通化的升级版本, 可以支持硅岩燃料, 但不能使用传统燃料喔 ~ 真正的清洁能源")
-     * .addInfo("耗时根据主机参数决定, 单位tick, 无线模式实际功率为总发电 / 耗时(tick)")
-     * .addInfo("和通化一样的设计, 但同时兼备了大硅岩的加成")
-     * .addInfo("一次消耗输入仓内所有燃料和助燃剂")
-     * .addInfo("感谢伟大的铱锇钐大人，所有输出功率都将为原来的三倍")
-     * .addInfo("二级管道方块解锁无线模式, 使用螺丝刀开启")
-     * .addInfo("§a更高级的结构意味着更高级的§c助燃剂, §a一级结构:原子分离助燃剂, 二级结构:超维度等离子助燃剂")
-     * .addInfo("§a效率随着运行时间提升, 每秒提升1%效率，具体效率阈值为1230%")
-     * .addInfo("计算公式：总发电量=燃料数量*输出系数(3)*效率*燃料输出功率*配方时间")
-     * .addInfo("PS：上述计算的发电量为一次运行的总发电")
-     * .addInfo("§a注意 : 如果耗时小于20ticks, 则效率不会累加")
-     * .addInfo("§4你知道会发生什么。")
-     * .addInfo("§e警告 : 如果强行使用有线模式烧高级硅岩燃料, 将会导致电表倒转憋憋")
-     * .addInfo("§c支持TecTech多安动力仓, 激光仓, 但尽量请使用1,073,741,824A激光仓直连电容库")
-     * .addSeparator()
-     * .addController("发电坤")
-     * .beginStructureBlock(7, 13, 7, false)
-     * .addInputBus("AnyInputBus", 1)
-     * .addOutputBus("AnyOutputBus", 1)
-     * .addInputHatch("AnyInputHatch", 1)
-     * .addOutputHatch("AnyOutputHatch", 1)
-     * .addEnergyHatch("AnyEnergyHatch", 1)
-     * .toolTipFinisher("§b123Technology - KING OF GENERATORS , FOR THE GOD PIGEON");
-     * return tt;
-     * }
-     */
-    @Override
-    protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
-        tt.addMachineType(translateToLocal("ote.tm.nfg.0"))
-            .addInfo(translateToLocal("ote.tm.nfg.1"))
-            .addInfo(translateToLocal("ote.tm.nfg.2"))
-            .addInfo(translateToLocal("ote.tm.nfg.3"))
-            .addInfo(translateToLocal("ote.tm.nfg.4"))
-            .addInfo(translateToLocal("ote.tm.nfg.5"))
-            .addInfo(translateToLocal("ote.tm.nfg.6"))
-            .addInfo(translateToLocal("ote.tm.nfg.7"))
-            .addInfo(translateToLocal("ote.tm.nfg.8"))
-            .addInfo(translateToLocal("ote.tm.nfg.9"))
-            .addInfo(translateToLocal("ote.tm.nfg.10"))
-            .addInfo(translateToLocal("ote.tm.nfg.12"))
-            .addInfo(translateToLocal("ote.tm.nfg.13"))
-            .addInfo(translateToLocal("ote.tm.nfg.14"))
-            .addInfo(translateToLocal("ote.tm.nfg.15"))
-            .addSeparator()
-            .addController(translateToLocal("ote.tm.nfg.16"))
-            .beginStructureBlock(6, 4, 9, false)
-            .addInputBus("AnyInputBus", 1)
-            .addOutputBus("AnyOutputBus", 1)
-            .addInputHatch("AnyInputHatch", 1)
-            .addOutputHatch("AnyOutputHatch", 1)
-            .addEnergyHatch("AnyEnergyHatch", 1)
-            .toolTipFinisher("§b123Technology - KING OF GENERATORS , FOR THE GOD PIGEON");
-        return tt;
-    }
-
-    @Override
-    public boolean isCorrectMachinePart(ItemStack aStack) {
-        return true;
-    }
-
-    @Override
-    public int getMaxEfficiency(ItemStack aStack) {
-        return 10000;
-    }
-
-    @Override
-    public int getDamageToComponent(ItemStack aStack) {
-        return 0;
-    }
-
-    @Override
-    public boolean supportsVoidProtection() {
-        return true;
-    }
-
-    @Override
-    public boolean supportsInputSeparation() {
-        return true;
-    }
-
-    @Override
-    public boolean supportsSingleRecipeLocking() {
-        return true;
-    }
-
-    @Override
-    public ITexture[] getTexture(final IGregTechTileEntity baseMetaTileEntity, final ForgeDirection sideDirection,
-        final ForgeDirection facing, final int aColorIndex, final boolean active, final boolean aRedstone) {
-
-        if (sideDirection == facing) {
-            if (active) return new ITexture[] {
-                getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings8, 10)), TextureFactory.builder()
-                    .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_ACTIVE)
-                    .extFacing()
-                    .build(),
-                TextureFactory.builder()
-                    .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_ACTIVE_GLOW)
-                    .extFacing()
-                    .build() };
-            return new ITexture[] { getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings8, 10)),
-                TextureFactory.builder()
-                    .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE)
-                    .extFacing()
-                    .build(),
-                TextureFactory.builder()
-                    .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_GLOW)
-                    .extFacing()
-                    .glow()
-                    .build() };
-        }
-        return new ITexture[] { getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings8, 10)) };
     }
 }

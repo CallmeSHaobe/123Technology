@@ -45,7 +45,6 @@ import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.gtnewhorizon.structurelib.util.Vec3Impl;
 import com.newmaa.othtech.machine.hatch.OTEHatchRack;
 import com.newmaa.othtech.machine.machineclass.OTHTTMultiMachineBaseEM;
-import com.newmaa.othtech.utils.OTHTooltipBuilder;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -88,97 +87,35 @@ import tectech.thing.metaTileEntity.multi.base.render.TTRenderedExtendedFacingTe
  */
 public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructable, ISurvivalConstructable {
 
-    // region variables
     private final ArrayList<OTEHatchRack> eRacks = new ArrayList<>();
 
     private final ArrayList<MTEHatchWirelessComputationOutput> eWirelessComputationOutputs = new ArrayList<>();
 
     private static IIconContainer ScreenOFF;
+
     private static IIconContainer ScreenON;
+
     private static IStructureDefinition<OTEComputer> STRUCTURE_DEFINITION = null;
+
     private static final String STRUCTURE_PIECE_MAIN = "main";
+
     private final int horizontalOffSet = 3;
+
     private final int verticalOffSet = 8;
+
     private final int depthOffSet = 2;
+
     // private final ArrayList<MTEHatchInput> eCoolantInputs = new ArrayList<>();
     private int coolantConsumptionRate = 0;
+
     private boolean hasInsufficientCoolant = false;
 
-    // endregion
-
-    // region structure
     private static final String[] description = new String[] {
         EnumChatFormatting.AQUA + translateToLocal("tt.keyphrase.Hint_Details") + ":",
         translateToLocal("ote.computer.hint.0"), // 1 - Classic/Data Hatches or
         // Computer casing
         translateToLocal("ote.computer.hint.1") // 2 - Rack Hatches or Advanced
     };
-
-    // computer casing
-
-    @Override
-    public IStructureDefinition<OTEComputer> getStructure_EM() {
-        if (STRUCTURE_DEFINITION == null) {
-            STRUCTURE_DEFINITION = StructureDefinition.<OTEComputer>builder()
-                .addShape(STRUCTURE_PIECE_MAIN, shapeMain)
-                .addElement('A', ofBlock(sBlockCasings10, 9))
-                .addElement('B', chainAllGlasses())
-                .addElement(
-                    'C',
-                    OTEComputer.RackHatchElement.INSTANCE
-                        .newAnyOrCasing(BlockGTCasingsTT.textureOffset, 2, TTCasingsContainer.sBlockCasingsTT, 0))
-                .addElement(
-                    'D',
-                    buildHatchAdder(OTEComputer.class)
-                        .atLeast(
-                            Energy.or(ExoticEnergy),
-                            Maintenance,
-                            HatchElement.Uncertainty,
-                            HatchElement.InputData,
-                            WirelessComputationHatchElement.INSTANCE.or(HatchElement.OutputData),
-                            InputHatch)
-                        .casingIndex(BlockGTCasingsTT.textureOffset + 1)
-                        .hint(1)
-                        .buildAndChain(ofBlock(TTCasingsContainer.sBlockCasingsTT, 1)))
-                .addElement(
-                    'E',
-                    buildHatchAdder(OTEComputer.class).atLeast(InputHatch)
-                        .hint(2)
-                        .casingIndex(BlockGTCasingsTT.textureOffset + 2)
-                        .buildAndChain(sBlockCasingsTT, 2))
-                .addElement('F', ofBlock(sBlockCasingsTT, 3))
-                .addElement('G', ofBlock(sBlockGlass1, 1))
-                .addElement('I', ofBlock(BlockQuantumGlass.INSTANCE, 0))
-                .addElement('H', ofBlockUnlocalizedName("chisel", "futura", 2))
-                .addElement('J', ofBlockUnlocalizedName("appliedenergistics2", "tile.BlockAdvancedCraftingStorage", 3))
-                .addElement('L', ofBlockUnlocalizedName("appliedenergistics2", "tile.BlockAdvancedCraftingUnit", 3))
-
-                // A -> ofBlock...(gt.blockcasings10, 9, ...);
-                // B -> ofBlock...(gt.blockcasings8, 14, ...);
-                // C -> ofBlock...(gt.blockcasingsTT, 0, ...);
-                // D -> ofBlock...(gt.blockcasingsTT, 1, ...);
-                // E -> ofBlock...(gt.blockcasingsTT, 2, ...);
-                // F -> ofBlock...(gt.blockcasingsTT, 3, ...);
-                // G -> ofBlock...(gt.blockglass1, 1, ...);
-                // H -> ofBlock...(tile.chisel.futura, 2, ...);
-                // I -> ofBlock...(tile.quantumGlass, 0, ...);
-                //
-                // Tiles:
-                //
-                // Special Tiles:
-                // J -> ofSpecialTileAdder(appeng.tile.crafting.TileCraftingStorageTile, ...); // You will probably want
-                // to change it to something else
-                // K -> ofSpecialTileAdder(gregtech.api.metatileentity.BaseMetaTileEntity, ...); // You will probably
-                // want to change it to something else
-                // L -> ofSpecialTileAdder(appeng.tile.crafting.TileCraftingTile, ...); // You will probably want to
-                // change it to something else
-
-                .build();
-            // endregion
-
-        }
-        return STRUCTURE_DEFINITION;
-    }
 
     @SuppressWarnings("SpellCheckingInspection")
     private final String[][] shapeMain = new String[][] {
@@ -215,8 +152,8 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
         { "FFFFFFFFFFF", "DIIIIIIIIID", "DIIIIIIIIID", "DIIIIIIIIID", "DIIIIIIIIID", "DIIIIIIIIID", "DIIIIIIIIID",
             "DIIIIIIIIID", "DIIIIIIIIID", "DIIIIIIIIID", "FFFFFFFFFFF" } };
 
-    // region parameters
     protected Parameters.Group.ParameterIn overclock, overvolt;
+
     protected Parameters.Group.ParameterOut availableData;
 
     private boolean wirelessModeEnabled = false;
@@ -229,8 +166,10 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
     // computation
     private static final IStatusFunction<OTEComputer> OC_STATUS = (base, p) -> LedStatus
         .fromLimitsInclusiveOuterBoundary(p.get(), 0, 5, 10, 10);
+
     private static final IStatusFunction<OTEComputer> OV_STATUS = (base, p) -> LedStatus
         .fromLimitsInclusiveOuterBoundary(p.get(), 0, 1, 10, 10);
+
     private static final IStatusFunction<OTEComputer> COMPUTE_STATUS = (base, p) -> {
         if (base.eAvailableData < 0) {
             return LedStatus.STATUS_TOO_LOW;
@@ -240,7 +179,48 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
         }
         return LedStatus.STATUS_OK;
     };
-    // endregion
+
+    private enum RackHatchElement implements IHatchElement<OTEComputer> {
+
+        INSTANCE;
+
+        @Override
+        public List<? extends Class<? extends IMetaTileEntity>> mteClasses() {
+            return Collections.singletonList(OTEHatchRack.class);
+        }
+
+        @Override
+        public IGTHatchAdder<? super OTEComputer> adder() {
+            return OTEComputer::addRackToMachineList;
+        }
+
+        @Override
+        public long count(OTEComputer t) {
+            return t.eRacks.size();
+        }
+    }
+
+    private enum WirelessComputationHatchElement implements IHatchElement<OTEComputer> {
+
+        INSTANCE;
+
+        @Override
+        public List<? extends Class<? extends IMetaTileEntity>> mteClasses() {
+            return Collections.singletonList(MTEHatchWirelessComputationOutput.class);
+        }
+
+        @Override
+        public IGTHatchAdder<? super OTEComputer> adder() {
+            return OTEComputer::addWirelessDataOutputToMachineList;
+        }
+
+        @Override
+        public long count(OTEComputer gtMetaTileEntityEmComputer) {
+            return gtMetaTileEntityEmComputer.eWirelessComputationOutputs.size();
+        }
+    }
+
+    // ===================== Constructors =====================
 
     public OTEComputer(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
@@ -256,74 +236,7 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
         eAvailableData = 0; // 确保初始化时为0
     }
 
-    @Override
-    public RecipeMap<?> getRecipeMap() {
-        return OTEquantumComputerFakeRecipes;
-    }
-
-    @Override
-    public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-        return new OTEComputer(mName);
-    }
-
-    @Override
-    protected void parametersInstantiation_EM() {
-        Parameters.Group hatch_0 = parametrization.getGroup(0);
-        overclock = hatch_0.makeInParameter(0, 1, OC_NAME, OC_STATUS);
-        overvolt = hatch_0.makeInParameter(1, 1, OV_NAME, OV_STATUS);
-        availableData = hatch_0.makeOutParameter(0, 0, COMPUTE_NAME, COMPUTE_STATUS);
-    }
-
-    @Override
-    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
-        eRacks.clear();
-        if (!getBaseMetaTileEntity().isActive()) {
-            this.eAvailableData = 0;
-        }
-        for (OTEHatchRack rack : validMTEList(eRacks)) {
-            rack.getBaseMetaTileEntity()
-                .setActive(false);
-        }
-        if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
-        repairMachine();
-    }
-
-    @Override
-    public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
-        int z) {
-        super.getWailaNBTData(player, tile, tag, world, x, y, z);
-        final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
-        if (tileEntity != null) {
-            tag.setString("oc", String.valueOf(overclock.get()));
-            tag.setString("ov", String.valueOf(overvolt.get()));
-            tag.setString("data", String.valueOf(availableData.get()));
-        }
-    }
-
-    @Override
-    public void getWailaBody(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor,
-        IWailaConfigHandler config) {
-        super.getWailaBody(itemStack, currentTip, accessor, config);
-        final NBTTagCompound tag = accessor.getNBTData();
-        currentTip.add(
-            translateToLocal("ote.computer.cfgi.0") + EnumChatFormatting.RESET
-                + ": "
-                + EnumChatFormatting.GOLD
-                + tag.getString("oc")
-                + EnumChatFormatting.RESET);
-        currentTip.add(
-            translateToLocal("ote.computer.cfgi.1") + EnumChatFormatting.RESET
-                + ": "
-                + EnumChatFormatting.GOLD
-                + tag.getString("ov")
-                + EnumChatFormatting.RESET);
-        currentTip.add(
-            translateToLocal("ote.computer.cfgo.1") + EnumChatFormatting.RESET
-                + ": "
-                + EnumChatFormatting.GOLD
-                + tag.getString("data")
-                + EnumChatFormatting.RESET);
-    }
+    // ===================== NBT =====================
 
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
@@ -351,27 +264,14 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
         }
     }
 
-    private boolean tryConsumeFluid(boolean simulate) {
-        if (getBaseMetaTileEntity().isServerSide() && mMachine) {
-            FluidStack requiredCoolant = new FluidStack(Materials.SuperCoolant.mFluid, coolantConsumptionRate);
-            return depleteInput(requiredCoolant, simulate);
-        }
-        return false;
-    }
+    // ===================== Machine Parameters =====================
 
     @Override
-    public boolean onRunningTick(ItemStack aStack) {
-        startRecipeProcessing();
-        if (!tryConsumeFluid(true)) {
-            hasInsufficientCoolant = true;
-            endRecipeProcessing();
-            return true;
-        }
-        tryConsumeFluid(false);
-        hasInsufficientCoolant = false;
-        endRecipeProcessing();
-        return true;
+    public RecipeMap<?> getRecipeMap() {
+        return OTEquantumComputerFakeRecipes;
     }
+
+    // ===================== Processing Logic =====================
 
     @Override
     @NotNull
@@ -442,6 +342,300 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
     }
 
     @Override
+    public boolean onRunningTick(ItemStack aStack) {
+        startRecipeProcessing();
+        if (!tryConsumeFluid(true)) {
+            hasInsufficientCoolant = true;
+            endRecipeProcessing();
+            return true;
+        }
+        tryConsumeFluid(false);
+        hasInsufficientCoolant = false;
+        endRecipeProcessing();
+        return true;
+    }
+
+    @Override
+    protected void parametersInstantiation_EM() {
+        Parameters.Group hatch_0 = parametrization.getGroup(0);
+        overclock = hatch_0.makeInParameter(0, 1, OC_NAME, OC_STATUS);
+        overvolt = hatch_0.makeInParameter(1, 1, OV_NAME, OV_STATUS);
+        availableData = hatch_0.makeOutParameter(0, 0, COMPUTE_NAME, COMPUTE_STATUS);
+    }
+
+    @Override
+    public void stopMachine(@Nonnull ShutDownReason reason) {
+        super.stopMachine(reason);
+        eAvailableData = 0;
+        for (OTEHatchRack rack : validMTEList(eRacks)) {
+            rack.getBaseMetaTileEntity()
+                .setActive(false);
+        }
+
+        // 重置冷却液消耗率
+        coolantConsumptionRate = 0;
+        hasInsufficientCoolant = false;
+    }
+
+    // ===================== Structure =====================
+
+    @Override
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
+        eRacks.clear();
+        if (!getBaseMetaTileEntity().isActive()) {
+            this.eAvailableData = 0;
+        }
+        for (OTEHatchRack rack : validMTEList(eRacks)) {
+            rack.getBaseMetaTileEntity()
+                .setActive(false);
+        }
+        if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
+        repairMachine();
+    }
+
+    @Override
+    public void construct(ItemStack stackSize, boolean hintsOnly) {
+        buildPiece(STRUCTURE_PIECE_MAIN, stackSize, hintsOnly, horizontalOffSet, verticalOffSet, depthOffSet);
+    }
+
+    @Override
+    public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
+        if (mMachine) return -1;
+        int realBudget = elementBudget >= 200 ? elementBudget : Math.min(200, elementBudget * 5);
+        return survivalBuildPiece(
+            STRUCTURE_PIECE_MAIN,
+            stackSize,
+            horizontalOffSet,
+            verticalOffSet,
+            depthOffSet,
+            realBudget,
+            env,
+            false,
+            true);
+    }
+
+    @Override
+    public String[] getStructureDescription(ItemStack stackSize) {
+        return description;
+    }
+
+    // computer casing
+    @Override
+    public IStructureDefinition<OTEComputer> getStructure_EM() {
+        if (STRUCTURE_DEFINITION == null) {
+            STRUCTURE_DEFINITION = StructureDefinition.<OTEComputer>builder()
+                .addShape(STRUCTURE_PIECE_MAIN, shapeMain)
+                .addElement('A', ofBlock(sBlockCasings10, 9))
+                .addElement('B', chainAllGlasses())
+                .addElement(
+                    'C',
+                    OTEComputer.RackHatchElement.INSTANCE
+                        .newAnyOrCasing(BlockGTCasingsTT.textureOffset, 2, TTCasingsContainer.sBlockCasingsTT, 0))
+                .addElement(
+                    'D',
+                    buildHatchAdder(OTEComputer.class)
+                        .atLeast(
+                            Energy.or(ExoticEnergy),
+                            Maintenance,
+                            HatchElement.Uncertainty,
+                            HatchElement.InputData,
+                            WirelessComputationHatchElement.INSTANCE.or(HatchElement.OutputData),
+                            InputHatch)
+                        .casingIndex(BlockGTCasingsTT.textureOffset + 1)
+                        .hint(1)
+                        .buildAndChain(ofBlock(TTCasingsContainer.sBlockCasingsTT, 1)))
+                .addElement(
+                    'E',
+                    buildHatchAdder(OTEComputer.class).atLeast(InputHatch)
+                        .hint(2)
+                        .casingIndex(BlockGTCasingsTT.textureOffset + 2)
+                        .buildAndChain(sBlockCasingsTT, 2))
+                .addElement('F', ofBlock(sBlockCasingsTT, 3))
+                .addElement('G', ofBlock(sBlockGlass1, 1))
+                .addElement('I', ofBlock(BlockQuantumGlass.INSTANCE, 0))
+                .addElement('H', ofBlockUnlocalizedName("chisel", "futura", 2))
+                .addElement('J', ofBlockUnlocalizedName("appliedenergistics2", "tile.BlockAdvancedCraftingStorage", 3))
+                .addElement('L', ofBlockUnlocalizedName("appliedenergistics2", "tile.BlockAdvancedCraftingUnit", 3))
+
+                // A -> ofBlock...(gt.blockcasings10, 9, ...);
+                // B -> ofBlock...(gt.blockcasings8, 14, ...);
+                // C -> ofBlock...(gt.blockcasingsTT, 0, ...);
+                // D -> ofBlock...(gt.blockcasingsTT, 1, ...);
+                // E -> ofBlock...(gt.blockcasingsTT, 2, ...);
+                // F -> ofBlock...(gt.blockcasingsTT, 3, ...);
+                // G -> ofBlock...(gt.blockglass1, 1, ...);
+                // H -> ofBlock...(tile.chisel.futura, 2, ...);
+                // I -> ofBlock...(tile.quantumGlass, 0, ...);
+                //
+                // Tiles:
+                //
+                // Special Tiles:
+                // J -> ofSpecialTileAdder(appeng.tile.crafting.TileCraftingStorageTile, ...); // You will probably want
+                // to change it to something else
+                // K -> ofSpecialTileAdder(gregtech.api.metatileentity.BaseMetaTileEntity, ...); // You will probably
+                // want to change it to something else
+                // L -> ofSpecialTileAdder(appeng.tile.crafting.TileCraftingTile, ...); // You will probably want to
+                // change it to something else
+
+                .build();
+            // endregion
+
+        }
+        return STRUCTURE_DEFINITION;
+    }
+
+    // ===================== Tooltip =====================
+
+    @Override
+    public MultiblockTooltipBuilder createTooltip() {
+        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        tt.addMachineType(translateToLocal("ote.computer.name"))
+            // .addInfo(translateToLocal("ote.computer.desc.0"))
+            // the Quantum Computer
+            .addInfo(translateToLocal("ote.computer.desc.1")) // Used to generate
+            // computation (and heat)
+            .addInfo(translateToLocal("ote.computer.desc.2"))
+
+            .addInfo(translateToLocal("ote.computer.output.x2"))
+
+            .addInfo(translateToLocal("ote.computer.coolant"))
+
+            .addInfo(translateToLocal("ote.computer.desc.coolant.01"))
+
+            // wireless mode
+            .addTecTechHatchInfo()
+            .beginStructureBlock(11, 11, 16, false)
+            .addOtherStructurePart(
+                translateToLocal("gt.blockmachines.hatch.certain.tier.07.name"),
+                translateToLocal("tt.keyword.Structure.AnyComputerCasing"),
+                1) // Uncertainty Resolver: Any Computer Casing on first or last slice
+            .addOtherStructurePart(
+                translateToLocal("tt.keyword.Structure.DataConnector"),
+                translateToLocal("tt.keyword.Structure.AnyComputerCasing"),
+                1)
+            .addOtherStructurePart(translateToLocal("ote.calc.rank"), translateToLocal("gt.blockcasingsTT.0.name"), 2)
+            .addInputHatch(translateToLocal("ote.computer.coolantinput"), 1) // 新增冷却液输入
+            .addEnergyHatch(translateToLocal("tt.keyword.Structure.AnyComputerCasing"), 1) // Energy
+            .addSeparator()
+            .addInfo("Author:IDEA & DeepSeek")
+            .addSeparator()
+            .addInfo("§aAdded by: 123Technology - ExoicComputer")
+            .toolTipFinisher();
+        return tt;
+    }
+
+    // ===================== Standard Overrides =====================
+
+    @Override
+    public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
+        return new OTEComputer(mName);
+    }
+
+    @Override
+    public String[] getInfoData() {
+        ArrayList<String> data = new ArrayList<>(Arrays.asList(super.getInfoData()));
+        if (coolantConsumptionRate > 0) {
+            data.add(
+                StatCollector.translateToLocalFormatted(
+                    "ote.computer.info.coolant_usage",
+                    EnumChatFormatting.GREEN + "" + coolantConsumptionRate + " L/t" + EnumChatFormatting.RESET));
+        }
+        if (wirelessModeEnabled) {
+            WirelessComputationPacket wirelessComputationPacket = null;
+            if (getBaseMetaTileEntity() != null) {
+                wirelessComputationPacket = WirelessComputationPacket
+                    .getPacketByUserId(getBaseMetaTileEntity().getOwnerUuid());
+            }
+            data.add(StatCollector.translateToLocal("tt.infodata.qc.wireless_mode.enabled"));
+            if (wirelessComputationPacket != null) {
+                data.add(
+                    StatCollector.translateToLocalFormatted(
+                        "tt.infodata.qc.total_wireless_computation",
+                        "" + EnumChatFormatting.YELLOW + wirelessComputationPacket.getAvailableComputationStored()));
+            }
+        } else {
+            data.add(StatCollector.translateToLocal("tt.infodata.qc.wireless_mode.disabled"));
+        }
+        return data.toArray(new String[] {});
+    }
+
+    // ===================== Textures =====================
+
+    @Override
+    public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection facing,
+        int colorIndex, boolean aActive, boolean aRedstone) {
+        if (side == facing) {
+            return new ITexture[] { Textures.BlockIcons.casingTexturePages[BlockGTCasingsTT.texturePage][3],
+                new TTRenderedExtendedFacingTexture(aActive ? ScreenON : ScreenOFF) };
+        }
+        return new ITexture[] { Textures.BlockIcons.casingTexturePages[BlockGTCasingsTT.texturePage][3] };
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister aBlockIconRegister) {
+        super.registerIcons(aBlockIconRegister);
+        if (ScreenOFF == null) {
+            ScreenOFF = Textures.BlockIcons.custom("iconsets/EM_COMPUTER");
+        }
+        if (ScreenON == null) {
+            ScreenON = Textures.BlockIcons.custom("iconsets/EM_COMPUTER_ACTIVE");
+        }
+    }
+
+    @Override
+    protected SoundResource getActivitySoundLoop() {
+        return SoundResource.TECTECH_MACHINES_FX_HIGH_FREQ;
+    }
+
+    // ===================== Misc =====================
+
+    @Override
+    public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
+        int z) {
+        super.getWailaNBTData(player, tile, tag, world, x, y, z);
+        final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
+        if (tileEntity != null) {
+            tag.setString("oc", String.valueOf(overclock.get()));
+            tag.setString("ov", String.valueOf(overvolt.get()));
+            tag.setString("data", String.valueOf(availableData.get()));
+        }
+    }
+
+    @Override
+    public void getWailaBody(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor,
+        IWailaConfigHandler config) {
+        super.getWailaBody(itemStack, currentTip, accessor, config);
+        final NBTTagCompound tag = accessor.getNBTData();
+        currentTip.add(
+            translateToLocal("ote.computer.cfgi.0") + EnumChatFormatting.RESET
+                + ": "
+                + EnumChatFormatting.GOLD
+                + tag.getString("oc")
+                + EnumChatFormatting.RESET);
+        currentTip.add(
+            translateToLocal("ote.computer.cfgi.1") + EnumChatFormatting.RESET
+                + ": "
+                + EnumChatFormatting.GOLD
+                + tag.getString("ov")
+                + EnumChatFormatting.RESET);
+        currentTip.add(
+            translateToLocal("ote.computer.cfgo.1") + EnumChatFormatting.RESET
+                + ": "
+                + EnumChatFormatting.GOLD
+                + tag.getString("data")
+                + EnumChatFormatting.RESET);
+    }
+
+    private boolean tryConsumeFluid(boolean simulate) {
+        if (getBaseMetaTileEntity().isServerSide() && mMachine) {
+            FluidStack requiredCoolant = new FluidStack(Materials.SuperCoolant.mFluid, coolantConsumptionRate);
+            return depleteInput(requiredCoolant, simulate);
+        }
+        return false;
+    }
+
+    @Override
     public void outputAfterRecipe_EM() {
         if (!eOutputData.isEmpty()) {
             Vec3Impl pos = null;
@@ -477,42 +671,6 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
     }
 
     @Override
-    public MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
-        tt.addMachineType(translateToLocal("ote.computer.name"))
-            // .addInfo(translateToLocal("ote.computer.desc.0"))
-            // the Quantum Computer
-            .addInfo(translateToLocal("ote.computer.desc.1")) // Used to generate
-            // computation (and heat)
-            .addInfo(translateToLocal("ote.computer.desc.2"))
-
-            .addInfo(translateToLocal("ote.computer.output.x2"))
-
-            .addInfo(translateToLocal("ote.computer.coolant"))
-
-            .addInfo(translateToLocal("ote.computer.desc.coolant.01"))
-
-            // wireless mode
-            .addTecTechHatchInfo()
-            .beginStructureBlock(11, 11, 16, false)
-            .addOtherStructurePart(
-                translateToLocal("gt.blockmachines.hatch.certain.tier.07.name"),
-                translateToLocal("tt.keyword.Structure.AnyComputerCasing"),
-                1) // Uncertainty Resolver: Any Computer Casing on first or last slice
-            .addOtherStructurePart(
-                translateToLocal("tt.keyword.Structure.DataConnector"),
-                translateToLocal("tt.keyword.Structure.AnyComputerCasing"),
-                1)
-            .addOtherStructurePart(translateToLocal("ote.calc.rank"), translateToLocal("gt.blockcasingsTT.0.name"), 2)
-            .addInputHatch(translateToLocal("ote.computer.coolantinput"), 1) // 新增冷却液输入
-            .addEnergyHatch(translateToLocal("tt.keyword.Structure.AnyComputerCasing"), 1) // Energy
-            .addSeparator()
-            .addInfo("Author:IDEA & DeepSeek")
-            .toolTipFinisher("§a123Technology - ExoicComputer");
-        return tt;
-    }
-
-    @Override
     public void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
         if (getBaseMetaTileEntity().isServerSide()) {
@@ -525,33 +683,6 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
                 WirelessComputationPacket.disableWirelessNetWork(getBaseMetaTileEntity());
             }
         }
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister aBlockIconRegister) {
-        super.registerIcons(aBlockIconRegister);
-        if (ScreenOFF == null) {
-            ScreenOFF = Textures.BlockIcons.custom("iconsets/EM_COMPUTER");
-        }
-        if (ScreenON == null) {
-            ScreenON = Textures.BlockIcons.custom("iconsets/EM_COMPUTER_ACTIVE");
-        }
-    }
-
-    @Override
-    public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection facing,
-        int colorIndex, boolean aActive, boolean aRedstone) {
-        if (side == facing) {
-            return new ITexture[] { Textures.BlockIcons.casingTexturePages[BlockGTCasingsTT.texturePage][3],
-                new TTRenderedExtendedFacingTexture(aActive ? ScreenON : ScreenOFF) };
-        }
-        return new ITexture[] { Textures.BlockIcons.casingTexturePages[BlockGTCasingsTT.texturePage][3] };
-    }
-
-    @Override
-    protected SoundResource getActivitySoundLoop() {
-        return SoundResource.TECTECH_MACHINES_FX_HIGH_FREQ;
     }
 
     @Override
@@ -571,20 +702,6 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
     @Override
     protected long getAvailableData_EM() {
         return eAvailableData;
-    }
-
-    @Override
-    public void stopMachine(@Nonnull ShutDownReason reason) {
-        super.stopMachine(reason);
-        eAvailableData = 0;
-        for (OTEHatchRack rack : validMTEList(eRacks)) {
-            rack.getBaseMetaTileEntity()
-                .setActive(false);
-        }
-
-        // 重置冷却液消耗率
-        coolantConsumptionRate = 0;
-        hasInsufficientCoolant = false;
     }
 
     @Override
@@ -632,99 +749,5 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
                 && eOutputData.add((MTEHatchWirelessComputationOutput) aMetaTileEntity);
         }
         return false;
-    }
-
-    @Override
-    public void construct(ItemStack stackSize, boolean hintsOnly) {
-        buildPiece(STRUCTURE_PIECE_MAIN, stackSize, hintsOnly, horizontalOffSet, verticalOffSet, depthOffSet);
-    }
-
-    @Override
-    public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
-        if (mMachine) return -1;
-        int realBudget = elementBudget >= 200 ? elementBudget : Math.min(200, elementBudget * 5);
-        return survivalBuildPiece(
-            STRUCTURE_PIECE_MAIN,
-            stackSize,
-            horizontalOffSet,
-            verticalOffSet,
-            depthOffSet,
-            realBudget,
-            env,
-            false,
-            true);
-    }
-
-    @Override
-    public String[] getStructureDescription(ItemStack stackSize) {
-        return description;
-    }
-
-    @Override
-    public String[] getInfoData() {
-        ArrayList<String> data = new ArrayList<>(Arrays.asList(super.getInfoData()));
-        if (coolantConsumptionRate > 0) {
-            data.add(
-                StatCollector.translateToLocalFormatted(
-                    "ote.computer.info.coolant_usage",
-                    EnumChatFormatting.GREEN + "" + coolantConsumptionRate + " L/t" + EnumChatFormatting.RESET));
-        }
-        if (wirelessModeEnabled) {
-            WirelessComputationPacket wirelessComputationPacket = null;
-            if (getBaseMetaTileEntity() != null) {
-                wirelessComputationPacket = WirelessComputationPacket
-                    .getPacketByUserId(getBaseMetaTileEntity().getOwnerUuid());
-            }
-            data.add(StatCollector.translateToLocal("tt.infodata.qc.wireless_mode.enabled"));
-            if (wirelessComputationPacket != null) {
-                data.add(
-                    StatCollector.translateToLocalFormatted(
-                        "tt.infodata.qc.total_wireless_computation",
-                        "" + EnumChatFormatting.YELLOW + wirelessComputationPacket.getAvailableComputationStored()));
-            }
-        } else {
-            data.add(StatCollector.translateToLocal("tt.infodata.qc.wireless_mode.disabled"));
-        }
-        return data.toArray(new String[] {});
-    }
-
-    private enum RackHatchElement implements IHatchElement<OTEComputer> {
-
-        INSTANCE;
-
-        @Override
-        public List<? extends Class<? extends IMetaTileEntity>> mteClasses() {
-            return Collections.singletonList(OTEHatchRack.class);
-        }
-
-        @Override
-        public IGTHatchAdder<? super OTEComputer> adder() {
-            return OTEComputer::addRackToMachineList;
-        }
-
-        @Override
-        public long count(OTEComputer t) {
-            return t.eRacks.size();
-        }
-    }
-
-    private enum WirelessComputationHatchElement implements IHatchElement<OTEComputer> {
-
-        INSTANCE;
-
-        @Override
-        public List<? extends Class<? extends IMetaTileEntity>> mteClasses() {
-            return Collections.singletonList(MTEHatchWirelessComputationOutput.class);
-        }
-
-        @Override
-        public IGTHatchAdder<? super OTEComputer> adder() {
-            return OTEComputer::addWirelessDataOutputToMachineList;
-        }
-
-        @Override
-        public long count(OTEComputer gtMetaTileEntityEmComputer) {
-            return gtMetaTileEntityEmComputer.eWirelessComputationOutputs.size();
-        }
     }
 }

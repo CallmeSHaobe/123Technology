@@ -28,7 +28,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public final class AbstractSanctumContent {
 
     public static final String LOCAL_MANA_FLUID = "liquidmana123";
-    public static final String TST_MANA_FLUID = "liquidmana";
+    public static final String TST_MANA_FLUID = "liquid mana";
     public static final String BLOOD_FLUID = "lifeessence";
 
     private static Fluid localManaFluid;

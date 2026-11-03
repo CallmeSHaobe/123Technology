@@ -26,7 +26,6 @@ import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
 import com.newmaa.othtech.machine.machineclass.OTHTTMultiMachineBaseEM;
-import com.newmaa.othtech.utils.OTHTooltipBuilder;
 
 import gregtech.api.GregTechAPI;
 import gregtech.api.enums.Textures;
@@ -51,6 +50,47 @@ import tectech.thing.metaTileEntity.multi.base.Parameters;
 
 public class OTEHeatExchanger extends OTHTTMultiMachineBaseEM implements ISurvivalConstructable, IConstructable {
 
+    Parameters.Group.ParameterIn time;
+
+    private static final IStatusFunction<OTEHeatExchanger> timeSTATUES = (base, p) -> LedStatus
+        .fromLimitsInclusiveOuterBoundary(p.get(), 1, 2, 1000, 114514);
+
+    private static final INameFunction<OTEHeatExchanger> timeName = (base, p) -> GCCoreUtil.translate("ote.tt.exc.0");
+
+    private static final String STRUCTURE_PIECE_MAIN = "main";
+
+    private final int horizontalOffSet = 6;
+
+    private final int verticalOffSet = 7;
+
+    private final int depthOffSet = 0;
+
+    private static IStructureDefinition<OTEHeatExchanger> STRUCTURE_DEFINITION = null;
+
+    private static final String[] description = new String[] {
+        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.exc.0") };
+
+    // Structured by NewMaa
+    private final String[][] shapeMain = new String[][] {
+        { "             ", "             ", "             ", "   BBBBBBB   ", "   BBBBBBB   ", "   BDDDDDB   ",
+            "   BBBBBBB   ", "   BBBBBBB   ", "             ", "             ", "             " },
+        { "             ", " BBB BBB BBB ", " BBBBBBBBBBB ", " BBBBBBBBBBB ", " BBBBBBBBBBB ", " BBBBBBBBBBB ",
+            " BBBBBBBBBBB ", " BBBBBBBBBBB ", " BBBBBBBBBBB ", " BBB BBB BBB ", "             " },
+        { " EEE EEE EEE ", "EEEEEEEEEEEEE", "EEEEEEEEEEEEE", "EEEEEEEEEEEEE", "EEEEEEEEEEEEE", "EEEEEEEEEEEEE",
+            "EEEEEEEEEEEEE", "EEEEEEEEEEEEE", "EEEEEEEEEEEEE", "EEEEEEEEEEEEE", " EEE EEE EEE " },
+        { " EEE EEE EEE ", "ACCCACCCACCCA", "AFFFAFFFAFFFA", "ACCCACCCACCCA", "AFFFAFFFAFFFA", "ACCCACCCACCCA",
+            "AFFFAFFFAFFFA", "ACCCACCCACCCA", "AFFFAFFFAFFFA", "ACCCACCCACCCA", " EEE EEE EEE " },
+        { " EEE EEE EEE ", "ACCCACCCACCCA", "AFFFAFFFAFFFA", "ACCCACCCACCCA", "AFFFAFFFAFFFA", "ACCCACCCACCCA",
+            "AFFFAFFFAFFFA", "ACCCACCCACCCA", "AFFFAFFFAFFFA", "ACCCACCCACCCA", " EEE EEE EEE " },
+        { " EEE EEE EEE ", "ACCCACCCACCCA", "AFFFAFFFAFFFA", "ACCCACCCACCCA", "AFFFAFFFAFFFA", "ACCCACCCACCCA",
+            "AFFFAFFFAFFFA", "ACCCACCCACCCA", "AFFFAFFFAFFFA", "ACCCACCCACCCA", " EEE EEE EEE " },
+        { " EEE EEE EEE ", "ACCCACCCACCCA", "AFFFAFFFAFFFA", "ACCCACCCACCCA", "AFFFAFFFAFFFA", "ACCCACCCACCCA",
+            "AFFFAFFFAFFFA", "ACCCACCCACCCA", "AFFFAFFFAFFFA", "ACCCACCCACCCA", " EEE EEE EEE " },
+        { " EEE E~E EEE ", "EEEEEEEEEEEEE", "EEEEEEEEEEEEE", "EEEEEEEEEEEEE", "EEEEEEEEEEEEE", "EEEEEEEEEEEEE",
+            "EEEEEEEEEEEEE", "EEEEEEEEEEEEE", "EEEEEEEEEEEEE", "EEEEEEEEEEEEE", " EEE EEE EEE " } };
+
+    // ===================== Constructors =====================
+
     public OTEHeatExchanger(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
     }
@@ -59,27 +99,14 @@ public class OTEHeatExchanger extends OTHTTMultiMachineBaseEM implements ISurviv
         super(aName);
     }
 
-    Parameters.Group.ParameterIn time;
-    private static final IStatusFunction<OTEHeatExchanger> timeSTATUES = (base, p) -> LedStatus
-        .fromLimitsInclusiveOuterBoundary(p.get(), 1, 2, 1000, 114514);
-    private static final INameFunction<OTEHeatExchanger> timeName = (base, p) -> GCCoreUtil.translate("ote.tt.exc.0");
-
-    @Override
-    protected void parametersInstantiation_EM() {
-        Parameters.Group hatch_0 = parametrization.getGroup(0, false);
-        time = hatch_0.makeInParameter(0, 1, timeName, timeSTATUES);
-    }
+    // ===================== Machine Parameters =====================
 
     @Override
     public RecipeMap<?> getRecipeMap() {
         return Recipemaps.EXH;
     }
 
-    @Override
-    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
-        if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
-        repairMachine();
-    }
+    // ===================== Processing Logic =====================
 
     @Override
     protected ProcessingLogic createProcessingLogic() {
@@ -130,6 +157,20 @@ public class OTEHeatExchanger extends OTHTTMultiMachineBaseEM implements ISurviv
     }
 
     @Override
+    protected void parametersInstantiation_EM() {
+        Parameters.Group hatch_0 = parametrization.getGroup(0, false);
+        time = hatch_0.makeInParameter(0, 1, timeName, timeSTATUES);
+    }
+
+    // ===================== Structure =====================
+
+    @Override
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
+        if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
+        repairMachine();
+    }
+
+    @Override
     public void construct(ItemStack stackSize, boolean hintsOnly) {
         repairMachine();
         buildPiece(STRUCTURE_PIECE_MAIN, stackSize, hintsOnly, horizontalOffSet, verticalOffSet, depthOffSet);
@@ -153,15 +194,6 @@ public class OTEHeatExchanger extends OTHTTMultiMachineBaseEM implements ISurviv
             true);
 
     }
-
-    private static final String STRUCTURE_PIECE_MAIN = "main";
-
-    private final int horizontalOffSet = 6;
-    private final int verticalOffSet = 7;
-    private final int depthOffSet = 0;
-    private static IStructureDefinition<OTEHeatExchanger> STRUCTURE_DEFINITION = null;
-    private static final String[] description = new String[] {
-        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.exc.0") };
 
     @Override
     public String[] getStructureDescription(ItemStack stackSize) {
@@ -192,29 +224,12 @@ public class OTEHeatExchanger extends OTHTTMultiMachineBaseEM implements ISurviv
         return STRUCTURE_DEFINITION;
     }
 
-    // Structured by NewMaa
-    private final String[][] shapeMain = new String[][] {
-        { "             ", "             ", "             ", "   BBBBBBB   ", "   BBBBBBB   ", "   BDDDDDB   ",
-            "   BBBBBBB   ", "   BBBBBBB   ", "             ", "             ", "             " },
-        { "             ", " BBB BBB BBB ", " BBBBBBBBBBB ", " BBBBBBBBBBB ", " BBBBBBBBBBB ", " BBBBBBBBBBB ",
-            " BBBBBBBBBBB ", " BBBBBBBBBBB ", " BBBBBBBBBBB ", " BBB BBB BBB ", "             " },
-        { " EEE EEE EEE ", "EEEEEEEEEEEEE", "EEEEEEEEEEEEE", "EEEEEEEEEEEEE", "EEEEEEEEEEEEE", "EEEEEEEEEEEEE",
-            "EEEEEEEEEEEEE", "EEEEEEEEEEEEE", "EEEEEEEEEEEEE", "EEEEEEEEEEEEE", " EEE EEE EEE " },
-        { " EEE EEE EEE ", "ACCCACCCACCCA", "AFFFAFFFAFFFA", "ACCCACCCACCCA", "AFFFAFFFAFFFA", "ACCCACCCACCCA",
-            "AFFFAFFFAFFFA", "ACCCACCCACCCA", "AFFFAFFFAFFFA", "ACCCACCCACCCA", " EEE EEE EEE " },
-        { " EEE EEE EEE ", "ACCCACCCACCCA", "AFFFAFFFAFFFA", "ACCCACCCACCCA", "AFFFAFFFAFFFA", "ACCCACCCACCCA",
-            "AFFFAFFFAFFFA", "ACCCACCCACCCA", "AFFFAFFFAFFFA", "ACCCACCCACCCA", " EEE EEE EEE " },
-        { " EEE EEE EEE ", "ACCCACCCACCCA", "AFFFAFFFAFFFA", "ACCCACCCACCCA", "AFFFAFFFAFFFA", "ACCCACCCACCCA",
-            "AFFFAFFFAFFFA", "ACCCACCCACCCA", "AFFFAFFFAFFFA", "ACCCACCCACCCA", " EEE EEE EEE " },
-        { " EEE EEE EEE ", "ACCCACCCACCCA", "AFFFAFFFAFFFA", "ACCCACCCACCCA", "AFFFAFFFAFFFA", "ACCCACCCACCCA",
-            "AFFFAFFFAFFFA", "ACCCACCCACCCA", "AFFFAFFFAFFFA", "ACCCACCCACCCA", " EEE EEE EEE " },
-        { " EEE E~E EEE ", "EEEEEEEEEEEEE", "EEEEEEEEEEEEE", "EEEEEEEEEEEEE", "EEEEEEEEEEEEE", "EEEEEEEEEEEEE",
-            "EEEEEEEEEEEEE", "EEEEEEEEEEEEE", "EEEEEEEEEEEEE", "EEEEEEEEEEEEE", " EEE EEE EEE " } };
+    // ===================== Tooltip =====================
 
     /*
      * @Override
      * protected MultiblockTooltipBuilder createTooltip() {
-     * final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
+     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
      * tt.addMachineType(EnumChatFormatting.BLUE + "真正的热能饕餮 - 真空冷冻热交换机")
      * .addInfo(EnumChatFormatting.RED + "回收热锭冶炼的废热, 化为超临界蒸汽.")
      * .addInfo(EnumChatFormatting.RED + "理论可回收热锭冰箱配方50%之EU")
@@ -235,7 +250,7 @@ public class OTEHeatExchanger extends OTHTTMultiMachineBaseEM implements ISurviv
      */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType(EnumChatFormatting.BLUE + translateToLocal("ote.tm.exc.0"))
             .addInfo(EnumChatFormatting.RED + translateToLocal("ote.tm.exc.1"))
             .addInfo(EnumChatFormatting.RED + translateToLocal("ote.tm.exc.2"))
@@ -243,6 +258,7 @@ public class OTEHeatExchanger extends OTHTTMultiMachineBaseEM implements ISurviv
             .addInfo(EnumChatFormatting.YELLOW + translateToLocal("ote.tm.exc.4"))
             .addTecTechHatchInfo()
             .addSeparator()
+            .addInfo("§aAdded by: 123Technology - FrostyHeatExchanger")
             .addController(translateToLocal("ote.tn.exc"))
             .beginStructureBlock(13, 8, 11, false)
             .addInputBus("AnyInputBus", 1)
@@ -250,14 +266,18 @@ public class OTEHeatExchanger extends OTHTTMultiMachineBaseEM implements ISurviv
             .addInputHatch("AnyInputHatch", 1)
             .addOutputHatch("AnyOutputHatch", 1)
             .addEnergyHatch("AnyEnergyHatch", 1)
-            .toolTipFinisher("§a123Technology - FrostyHeatExchanger");
+            .toolTipFinisher();
         return tt;
     }
+
+    // ===================== Standard Overrides =====================
 
     @Override
     public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
         return new OTEHeatExchanger(this.mName);
     }
+
+    // ===================== Textures =====================
 
     @Override
     public ITexture[] getTexture(final IGregTechTileEntity baseMetaTileEntity, final ForgeDirection sideDirection,
@@ -289,5 +309,4 @@ public class OTEHeatExchanger extends OTHTTMultiMachineBaseEM implements ISurviv
         return new ITexture[] {
             Textures.BlockIcons.getCasingTextureForId(GTUtility.getCasingTextureIndex(GregTechAPI.sBlockCasings4, 0)) };
     }
-
 }

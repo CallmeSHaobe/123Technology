@@ -5,7 +5,6 @@ import static com.newmaa.othtech.Config.is_EggMachine_Recipes_For_NHU;
 import net.minecraftforge.fluids.FluidRegistry;
 
 import com.newmaa.othtech.OTHTechnology;
-import com.newmaa.othtech.common.recipemap.AbstractSanctumRecipes;
 import com.newmaa.othtech.machine.OTEMiniSteamNineInOne;
 import com.newmaa.othtech.utils.modsEnum;
 

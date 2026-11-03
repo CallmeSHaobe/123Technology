@@ -25,7 +25,6 @@ import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.machine.machineclass.FishtorioLootTable;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
-import com.newmaa.othtech.utils.OTHTooltipBuilder;
 
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.TAE;
@@ -49,8 +48,33 @@ import gtPlusPlus.xmod.gregtech.common.blocks.textures.TexturesGtBlock;
 import gtneioreplugin.plugin.item.ItemDimensionDisplay;
 
 public class OTEFishtorio extends OTHMultiMachineBase<OTEFishtorio> {
-    // TODO 憋憋渔场.
 
+    /** 一次全物品池抽奖需要的恩情数量 */
+    private static final int ENQING_PER_FULL_POOL = 1000;
+
+    private static ItemStack enqing;
+
+    private static final String STRUCTURE_PIECE_MAIN = "main";
+
+    private final int horizontalOffSet = 3;
+
+    private final int verticalOffSet = 3;
+
+    private final int depthOffSet = 0;
+
+    private static IStructureDefinition<OTEFishtorio> STRUCTURE_DEFINITION = null;
+
+    private static final String[] description = new String[] {
+        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.ft.0") };
+
+    /** 7×4×5 的空心壳体, 切片顺序是 [深度][高度][宽度] */
+    private final String[][] shapeMain = new String[][] { { "CCCCCCC", "CCCCCCC", "CCCCCCC", "CCC~CCC" },
+        { "CCCCCCC", "C     C", "C     C", "CCCCCCC" }, { "CCCCCCC", "C     C", "C     C", "CCCCCCC" },
+        { "CCCCCCC", "C     C", "C     C", "CCCCCCC" }, { "CCCCCCC", "CCCCCCC", "CCCCCCC", "CCCCCCC" } };
+
+    // ===================== Constructors =====================
+
+    // TODO 憋憋渔场.
     public OTEFishtorio(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
     }
@@ -59,8 +83,7 @@ public class OTEFishtorio extends OTHMultiMachineBase<OTEFishtorio> {
         super(aName);
     }
 
-    /** 一次全物品池抽奖需要的恩情数量 */
-    private static final int ENQING_PER_FULL_POOL = 1000;
+    // ===================== Machine Parameters =====================
 
     @Override
     protected boolean isEnablePerfectOverclock() {
@@ -79,6 +102,8 @@ public class OTEFishtorio extends OTHMultiMachineBase<OTEFishtorio> {
     public RecipeMap<?> getRecipeMap() {
         return null;
     }
+
+    // ===================== Processing Logic =====================
 
     /** 捕鱼: 主机槽的维度方块决定抽奖池, 输入 1000 恩情可以改抽全物品池 */
     @Override
@@ -142,6 +167,130 @@ public class OTEFishtorio extends OTHMultiMachineBase<OTEFishtorio> {
         return CheckRecipeResultRegistry.SUCCESSFUL;
     }
 
+    // ===================== Structure =====================
+
+    @Override
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
+        if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
+        repairMachine();
+    }
+
+    @Override
+    public void construct(ItemStack stackSize, boolean hintsOnly) {
+        repairMachine();
+        buildPiece(STRUCTURE_PIECE_MAIN, stackSize, hintsOnly, horizontalOffSet, verticalOffSet, depthOffSet);
+
+    }
+
+    @Override
+    public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
+        if (this.mMachine) return -1;
+        int realBudget = elementBudget >= 200 ? elementBudget : Math.min(200, elementBudget * 5);
+
+        return this.survivalBuildPiece(
+            STRUCTURE_PIECE_MAIN,
+            stackSize,
+            horizontalOffSet,
+            verticalOffSet,
+            depthOffSet,
+            realBudget,
+            env,
+            false,
+            true);
+
+    }
+
+    @Override
+    public String[] getStructureDescription(ItemStack stackSize) {
+        return description;
+    }
+
+    @Override
+    public IStructureDefinition<OTEFishtorio> getStructureDefinition() {
+        if (STRUCTURE_DEFINITION == null) {
+            STRUCTURE_DEFINITION = StructureDefinition.<OTEFishtorio>builder()
+                .addShape(STRUCTURE_PIECE_MAIN, shapeMain)
+                .addElement(
+                    'C',
+                    buildHatchAdder(OTEFishtorio.class)
+                        .atLeast(Energy.or(ExoticEnergy), MultiAmpEnergy, InputBus, OutputBus, InputHatch, OutputHatch)
+                        .adder(OTEFishtorio::addToMachineList)
+                        .hint(1)
+                        .casingIndex(TAE.GTPP_INDEX(32))
+                        .buildAndChain(ofBlock(ModBlocks.blockCasings3Misc, 0)))
+                .build();
+        }
+        return STRUCTURE_DEFINITION;
+    }
+
+    @Override
+    public boolean addToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
+        return super.addToMachineList(aTileEntity, aBaseCasingIndex)
+            || addMultiAmpEnergyInputToMachineList(aTileEntity, aBaseCasingIndex)
+            || addExoticEnergyInputToMachineList(aTileEntity, aBaseCasingIndex);
+    }
+
+    // ===================== Tooltip =====================
+
+    @Override
+    protected MultiblockTooltipBuilder createTooltip() {
+        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        tt.addMachineType(EnumChatFormatting.DARK_GREEN + translateToLocal("ote.tm.ft.0"))
+            .addInfo(EnumChatFormatting.ITALIC + translateToLocal("ote.tm.ft.1"))
+            .addInfo(EnumChatFormatting.ITALIC + translateToLocal("ote.tm.ft.2"))
+            .addInfo(EnumChatFormatting.ITALIC + translateToLocal("ote.tm.ft.3"))
+            .addInfo(EnumChatFormatting.WHITE + translateToLocal("ote.tm.ft.4"))
+            .addInfo(EnumChatFormatting.WHITE + translateToLocal("ote.tm.ft.9"))
+            .addInfo(EnumChatFormatting.WHITE + translateToLocal("ote.tm.ft.7"))
+            .addInfo(translateToLocal("ote.tm.ft.8"))
+            .addInfo(translateToLocal("ote.tm.ft.10"))
+            .addInfo(translateToLocal("ote.tm.ft.6"))
+            .addSupportMultiAmp()
+            .addSupportLaser()
+            .addSeparator()
+            .addInfo("§aAdded by: 123Technology - Fishtorio")
+            .addController(translateToLocal("ote.tn.ft"))
+            .beginStructureBlock(7, 4, 5, false)
+            .addInputBus("AnyInputBus", 1)
+            .addOutputBus("AnyOutputBus", 1)
+            .addInputHatch("AnyInputHatch", 1)
+            .addOutputHatch("AnyOutputHatch", 1)
+            .addEnergyHatch("AnyEnergyHatch", 1)
+            .toolTipFinisher();
+        return tt;
+    }
+
+    // ===================== Standard Overrides =====================
+
+    @Override
+    public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
+        return new OTEFishtorio(this.mName);
+    }
+
+    // ===================== Textures =====================
+
+    @Override
+    public ITexture[] getTexture(final IGregTechTileEntity baseMetaTileEntity, final ForgeDirection sideDirection,
+        final ForgeDirection facing, final int aColorIndex, final boolean active, final boolean aRedstone) {
+
+        if (sideDirection == facing) {
+            if (active) return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureIndex()),
+                TextureFactory.builder()
+                    .addIcon(TexturesGtBlock.Overlay_Machine_Controller_Advanced_Active)
+                    .extFacing()
+                    .build() };
+            return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureIndex()),
+                TextureFactory.builder()
+                    .addIcon(TexturesGtBlock.Overlay_Machine_Controller_Advanced)
+                    .extFacing()
+                    .glow()
+                    .build() };
+        }
+        return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureIndex()) };
+    }
+
+    // ===================== Misc =====================
+
     /** 能源仓电压等级(1 = LV), 没插仓时按 LV 算 */
     private int getVoltageTier() {
         return Math.min(15, Math.max(1, GTUtility.getTier(getMaxInputVoltage())));
@@ -173,8 +322,6 @@ public class OTEFishtorio extends OTHMultiMachineBase<OTEFishtorio> {
         }
         return null;
     }
-
-    private static ItemStack enqing;
 
     private static ItemStack enqingStack() {
         if (enqing == null) enqing = OTHItemList.itemEnqingM.get(1);
@@ -216,81 +363,6 @@ public class OTEFishtorio extends OTHMultiMachineBase<OTEFishtorio> {
         return left <= 0;
     }
 
-    @Override
-    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
-        if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
-        repairMachine();
-    }
-
-    @Override
-    public void construct(ItemStack stackSize, boolean hintsOnly) {
-        repairMachine();
-        buildPiece(STRUCTURE_PIECE_MAIN, stackSize, hintsOnly, horizontalOffSet, verticalOffSet, depthOffSet);
-
-    }
-
-    @Override
-    public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
-        if (this.mMachine) return -1;
-        int realBudget = elementBudget >= 200 ? elementBudget : Math.min(200, elementBudget * 5);
-
-        return this.survivalBuildPiece(
-            STRUCTURE_PIECE_MAIN,
-            stackSize,
-            horizontalOffSet,
-            verticalOffSet,
-            depthOffSet,
-            realBudget,
-            env,
-            false,
-            true);
-
-    }
-
-    private static final String STRUCTURE_PIECE_MAIN = "main";
-
-    private final int horizontalOffSet = 3;
-    private final int verticalOffSet = 3;
-    private final int depthOffSet = 0;
-    private static IStructureDefinition<OTEFishtorio> STRUCTURE_DEFINITION = null;
-    private static final String[] description = new String[] {
-        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.ft.0") };
-
-    @Override
-    public String[] getStructureDescription(ItemStack stackSize) {
-        return description;
-    }
-
-    @Override
-    public IStructureDefinition<OTEFishtorio> getStructureDefinition() {
-        if (STRUCTURE_DEFINITION == null) {
-            STRUCTURE_DEFINITION = StructureDefinition.<OTEFishtorio>builder()
-                .addShape(STRUCTURE_PIECE_MAIN, shapeMain)
-                .addElement(
-                    'C',
-                    buildHatchAdder(OTEFishtorio.class)
-                        .atLeast(Energy.or(ExoticEnergy), MultiAmpEnergy, InputBus, OutputBus, InputHatch, OutputHatch)
-                        .adder(OTEFishtorio::addToMachineList)
-                        .hint(1)
-                        .casingIndex(TAE.GTPP_INDEX(32))
-                        .buildAndChain(ofBlock(ModBlocks.blockCasings3Misc, 0)))
-                .build();
-        }
-        return STRUCTURE_DEFINITION;
-    }
-
-    /** 7×4×5 的空心壳体, 切片顺序是 [深度][高度][宽度] */
-    private final String[][] shapeMain = new String[][] { { "CCCCCCC", "CCCCCCC", "CCCCCCC", "CCC~CCC" },
-        { "CCCCCCC", "C     C", "C     C", "CCCCCCC" }, { "CCCCCCC", "C     C", "C     C", "CCCCCCC" },
-        { "CCCCCCC", "C     C", "C     C", "CCCCCCC" }, { "CCCCCCC", "CCCCCCC", "CCCCCCC", "CCCCCCC" } };
-
-    @Override
-    public boolean addToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
-        return super.addToMachineList(aTileEntity, aBaseCasingIndex)
-            || addMultiAmpEnergyInputToMachineList(aTileEntity, aBaseCasingIndex)
-            || addExoticEnergyInputToMachineList(aTileEntity, aBaseCasingIndex);
-    }
-
     /** 强制溢出销毁: 只允许 VOID_ALL, 玩家没法切回保护模式 */
     @Override
     public Set<VoidingMode> getAllowedVoidingModes() {
@@ -302,60 +374,7 @@ public class OTEFishtorio extends OTHMultiMachineBase<OTEFishtorio> {
         return VoidingMode.VOID_ALL;
     }
 
-    @Override
-    protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
-        tt.addMachineType(EnumChatFormatting.DARK_GREEN + translateToLocal("ote.tm.ft.0"))
-            .addInfo(EnumChatFormatting.ITALIC + translateToLocal("ote.tm.ft.1"))
-            .addInfo(EnumChatFormatting.ITALIC + translateToLocal("ote.tm.ft.2"))
-            .addInfo(EnumChatFormatting.ITALIC + translateToLocal("ote.tm.ft.3"))
-            .addInfo(EnumChatFormatting.WHITE + translateToLocal("ote.tm.ft.4"))
-            .addInfo(EnumChatFormatting.WHITE + translateToLocal("ote.tm.ft.9"))
-            .addInfo(EnumChatFormatting.WHITE + translateToLocal("ote.tm.ft.7"))
-            .addInfo(translateToLocal("ote.tm.ft.8"))
-            .addInfo(translateToLocal("ote.tm.ft.10"))
-            .addInfo(translateToLocal("ote.tm.ft.6"))
-            .addSupportMultiAmp()
-            .addSupportLaser()
-            .addSeparator()
-            .addController(translateToLocal("ote.tn.ft"))
-            .beginStructureBlock(7, 4, 5, false)
-            .addInputBus("AnyInputBus", 1)
-            .addOutputBus("AnyOutputBus", 1)
-            .addInputHatch("AnyInputHatch", 1)
-            .addOutputHatch("AnyOutputHatch", 1)
-            .addEnergyHatch("AnyEnergyHatch", 1)
-            .toolTipFinisher("§a123Technology - Fishtorio");
-        return tt;
-    }
-
-    @Override
-    public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-        return new OTEFishtorio(this.mName);
-    }
-
     private int getCasingTextureIndex() {
         return TAE.GTPP_INDEX(32);
     }
-
-    @Override
-    public ITexture[] getTexture(final IGregTechTileEntity baseMetaTileEntity, final ForgeDirection sideDirection,
-        final ForgeDirection facing, final int aColorIndex, final boolean active, final boolean aRedstone) {
-
-        if (sideDirection == facing) {
-            if (active) return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureIndex()),
-                TextureFactory.builder()
-                    .addIcon(TexturesGtBlock.Overlay_Machine_Controller_Advanced_Active)
-                    .extFacing()
-                    .build() };
-            return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureIndex()),
-                TextureFactory.builder()
-                    .addIcon(TexturesGtBlock.Overlay_Machine_Controller_Advanced)
-                    .extFacing()
-                    .glow()
-                    .build() };
-        }
-        return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(getCasingTextureIndex()) };
-    }
-
 }

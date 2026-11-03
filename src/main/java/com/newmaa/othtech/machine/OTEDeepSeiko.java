@@ -45,7 +45,6 @@ import com.newmaa.othtech.machine.hatch.OTEDeepSeikoNaniteCell;
 import com.newmaa.othtech.machine.machineclass.DeepSeikoMath;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
-import com.newmaa.othtech.utils.OTHTooltipBuilder;
 
 import gregtech.api.enums.NaniteTier;
 import gregtech.api.enums.SoundResource;
@@ -89,13 +88,21 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
 
     /** 三环原始值 = 信道等级（0 = 没装；1 = 只有鳍；2~10 = 发生器 1~9 级） */
     private int timeTier = 0;
+
     private int spaceTier = 0;
+
     private int stabTier = 0;
+
     private OTEDeepSeikoNaniteCell mNaniteCell = null;
+
     private float mSpeedMult = 1.0F;
+
     private boolean mBecUnlocked = false;
+
     private int mNaniteTier = 0;
+
     private boolean mSpeedUnlocked = false;
+
     public static final int UPGRADE_STAGE_SLOTS = 24;
 
     /**
@@ -109,40 +116,71 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
             OTEDeepSeiko.this.markDirty();
         }
     };
+
     public static final int NANITE_PER_TIER = 64;
+
     /** 纳米蜂群最高等级（与 GT {@code NaniteTier#getTier()} 的 1~10 对齐） */
     public static final int NANITE_TIER_MAX = 10;
+
     private static final int ULT_CASING_COUNT = 88;
+
     private static final int ULT_MAGMATTER_COUNT = 1234;
+
     private static final int ULT_STARGATE_COUNT = 1;
+
     private static ItemStack sReqBec;
+
     private static ItemStack sReqNanite;
+
     private static ItemStack sReqUltCasing;
+
     private static ItemStack sReqUltMagmatter;
+
     private static ItemStack sReqUltStargate;
+
     private static boolean sReqResolved = false;
+
     private static final Logger LOG = LogManager.getLogger("123Technology/DeepSeiko");
+
     /** 全息投影相对控制器的正面距离（格）；TEDeepSeikoHolo 的位置自检共用此常量。 */
     public static final int HOLO_FRONT_DISTANCE = 6;
+
     /** 水平朝向时投影相对控制器 y 下压的格数（对齐嘴部裂缝 ≈ y6） */
     public static final int HOLO_DROP = 4;
+
     private boolean mHoloPlaced = false;
+
     private int mHoloX = 0;
+
     private int mHoloY = 0;
+
     private int mHoloZ = 0;
+
     private int mHoloDiag = 0;
+
     private static final String STRUCTURE_PIECE_MAIN = "main";
+
     private static final Logger LOG_PREVIEW = LogManager.getLogger("123Technology/DeepSeikoPreview");
+
     private static World sPreviewBuiltWorld = null;
+
     private static IStructureDefinition<OTEDeepSeiko> STRUCTURE_DEFINITION = null;
+
     /** 控制器在结构坐标系里的位置（StructureLib 的 checkPiece/buildPiece 偏移） */
     private static final int HORIZONTAL_OFFSET = 16;
+
     private static final int VERTICAL_OFFSET = 10;
+
     private static final int DEPTH_OFFSET = 0;
+
     private static final IItemContainer[] TIME_GENS;
+
     private static final IItemContainer[] SPACE_GENS;
+
     private static final IItemContainer[] STAB_GENS;
+
     private static final String[] MARKED_HATCHES;
+
     /**
      * 三环鳍槽位（用户实机点选的位置）。
      * 格式 x,y,z 用 ; 分隔，三组之间用 | 分隔 —— 顺序是 <b>时间 | 空间 | 稳定</b>。
@@ -172,7 +210,51 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
         + "41,19,15;41,19,16;41,19,17;";
 
     private static final ITexture CONTROLLER_FRONT_TEXTURE;
+
     private static final ITexture CONTROLLER_SIDE_TEXTURE;
+
+    /** BEC 动态点数：配方开始时的基准推进（用于每 tick 折算实际速度） */
+    private float mBecBaseRate = 0.0F;
+
+    private double mBecRateAccum = 0.0D;
+
+    static {
+        TIME_GENS = new IItemContainer[] { CustomItemList.TimeAccelerationFieldGeneratorTier0,
+            CustomItemList.TimeAccelerationFieldGeneratorTier1, CustomItemList.TimeAccelerationFieldGeneratorTier2,
+            CustomItemList.TimeAccelerationFieldGeneratorTier3, CustomItemList.TimeAccelerationFieldGeneratorTier4,
+            CustomItemList.TimeAccelerationFieldGeneratorTier5, CustomItemList.TimeAccelerationFieldGeneratorTier6,
+            CustomItemList.TimeAccelerationFieldGeneratorTier7, CustomItemList.TimeAccelerationFieldGeneratorTier8 };
+        SPACE_GENS = new IItemContainer[] { CustomItemList.SpacetimeCompressionFieldGeneratorTier0,
+            CustomItemList.SpacetimeCompressionFieldGeneratorTier1,
+            CustomItemList.SpacetimeCompressionFieldGeneratorTier2,
+            CustomItemList.SpacetimeCompressionFieldGeneratorTier3,
+            CustomItemList.SpacetimeCompressionFieldGeneratorTier4,
+            CustomItemList.SpacetimeCompressionFieldGeneratorTier5,
+            CustomItemList.SpacetimeCompressionFieldGeneratorTier6,
+            CustomItemList.SpacetimeCompressionFieldGeneratorTier7,
+            CustomItemList.SpacetimeCompressionFieldGeneratorTier8 };
+        STAB_GENS = new IItemContainer[] { CustomItemList.StabilisationFieldGeneratorTier0,
+            CustomItemList.StabilisationFieldGeneratorTier1, CustomItemList.StabilisationFieldGeneratorTier2,
+            CustomItemList.StabilisationFieldGeneratorTier3, CustomItemList.StabilisationFieldGeneratorTier4,
+            CustomItemList.StabilisationFieldGeneratorTier5, CustomItemList.StabilisationFieldGeneratorTier6,
+            CustomItemList.StabilisationFieldGeneratorTier7, CustomItemList.StabilisationFieldGeneratorTier8 };
+        MARKED_HATCHES = new String[] { "19,11,0:H", "18,11,0:H", "17,11,0:H", "16,11,0:H", "15,11,0:H", "14,11,0:H",
+            "13,11,0:H", "17,10,0:H", "15,10,0:H", "14,10,0:H", "17,9,0:H", "16,9,0:H", "15,9,0:H", "20,10,1:H",
+            "19,10,1:H", "18,10,1:H", "13,10,1:H", "12,10,1:H", "19,9,1:H", "18,9,1:H", "14,9,1:H", "13,9,1:H",
+            "18,8,1:H", "17,8,1:H", "16,8,1:H", "15,8,1:H", "14,8,1:H", "21,9,2:H", "20,9,2:H", "12,9,2:H", "11,9,2:H",
+            "19,8,2:H", "13,8,2:H", "12,8,2:H", "19,7,2:H", "18,7,2:H", "17,7,2:H", "16,7,2:H", "15,7,2:H", "14,7,2:H",
+            "13,7,2:H" };
+        // 正面：16x16 机壳基底 + 覆盖层立绘，覆盖层由 IIconContainer#getOverlayIcon() 提供
+        // （GTRenderedTexture 会在同一面先画基底再叠覆盖层；builder 只允许 addIcon 一次）
+        CONTROLLER_FRONT_TEXTURE = TextureFactory.builder()
+            .addIcon(DeepSeikoIcons.CONTROLLER_FRONT_BASE)
+            .extFacing()
+            .build();
+        CONTROLLER_SIDE_TEXTURE = TextureFactory.of(DeepSeikoIcons.CONTROLLER_SIDE);
+        registerFinChannels();
+    }
+
+    // ===================== Constructors =====================
 
     public OTEDeepSeiko(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
@@ -182,17 +264,7 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
         super(aName);
     }
 
-    public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-        return new OTEDeepSeiko(this.mName);
-    }
-
-    public void setItemNBT(NBTTagCompound aNBT) {
-        super.setItemNBT(aNBT);
-        aNBT.setBoolean("dsBecUnlocked", this.mBecUnlocked);
-        aNBT.setInteger("dsNaniteTier", this.mNaniteTier);
-        aNBT.setBoolean("dsSpeedUnlocked", this.mSpeedUnlocked);
-        aNBT.setTag("dsUpgradeStage", this.mUpgradeStage.serializeNBT());
-    }
+    // ===================== NBT =====================
 
     public void saveNBTData(NBTTagCompound aNBT) {
         super.saveNBTData(aNBT);
@@ -216,6 +288,24 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
 
     }
 
+    // ===================== Machine Parameters =====================
+
+    protected boolean isEnablePerfectOverclock() {
+        return false;
+    }
+
+    public int getMaxParallelRecipes() {
+        return this.getMaxParallel();
+    }
+
+    protected float getSpeedBonus() {
+        return 1.0F;
+    }
+
+    public RecipeMap<?> getRecipeMap() {
+        return this.machineMode == 0 ? Recipemaps.DeepSeikoAL : Recipemaps.DeepSeikoBEC;
+    }
+
     public int totalMachineMode() {
         return 2;
     }
@@ -234,175 +324,7 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
         super.setMachineMode(mode);
     }
 
-    public boolean supportsMachineModeSwitch() {
-        return true;
-    }
-
-    public void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
-        ItemStack aItem) {
-        if (!this.getBaseMetaTileEntity()
-            .isClientSide()) {
-            if (this.mMaxProgresstime > 0) {
-                GTUtility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("ote.ds.chat.modeLocked"));
-                return;
-            }
-            this.setMachineMode(this.nextMachineMode());
-            // 切模式必须硬重置：否则上次的 BEC 配方缓存/基准推进残留，零点几秒就"恢复正常速度"
-            this.mMaxProgresstime = 0;
-            this.mProgresstime = 0;
-            this.mBecBaseRate = 0.0F;
-            this.mBecRateAccum = 0.0D;
-            this.getBaseMetaTileEntity()
-                .setActive(false);
-            GTUtility.sendChatToPlayer(
-                aPlayer,
-                StatCollector.translateToLocal(this.machineMode == 0 ? "ote.ds.mode.al" : "ote.ds.mode.bec"));
-        }
-    }
-
-    protected boolean isEnablePerfectOverclock() {
-        return false;
-    }
-
-    protected float getSpeedBonus() {
-        return 1.0F;
-    }
-
-    public int getMaxParallelRecipes() {
-        return this.getMaxParallel();
-    }
-
-    public RecipeMap<?> getRecipeMap() {
-        return this.machineMode == 0 ? Recipemaps.DeepSeikoAL : Recipemaps.DeepSeikoBEC;
-    }
-
-    /**
-     * 并行上限：跟着结构方块走 —— 三环（时间/空间/稳定）已装方块等级取平均，
-     * 1 级 512，每级 ×8，9 级夹到 Integer.MAX_VALUE（=无限并行）。
-     */
-    public int getParallelLevel() {
-        // 与 GUI / 三环倍率同口径：调试币插入时视为三环 9 级（否则会出现"GUI 显示 T9、并行却只有 512"）
-        int t = this.ringInstalledLimit(this.timeTier);
-        int sp = this.ringInstalledLimit(this.spaceTier);
-        int st = this.ringInstalledLimit(this.stabTier);
-        return Math.max(1, Math.min(9, (t + sp + st) / 3));
-    }
-
-    public int getMaxParallel() {
-        return DeepSeikoMath.maxParallel(this.getParallelLevel());
-    }
-
-    /**
-     * 算力卡（控制器槽里那一叠）对 BEC 点数系数的贡献：`1 + ³√(张数) × 卡系数`。
-     * <p>
-     * 卡系数：量子电路 0.05 · 普朗克尺度电路 0.10 · 690 战术核显卡 0.0123 ·
-     * D99/D199/D999 算力中心 0.08/0.16/0.25。不是算力卡返回 0。
-     * </p>
-     */
-    public static float computeCardCoefficient(net.minecraft.item.ItemStack stack) {
-        if (stack == null || stack.getItem() == null) return 0.0F;
-        // 金色调试币：万能算力卡（BEC 的「必须插一张卡」也认它；倍率另由 getComputeCardMultiplier 拉满）
-        if (stack.getItem() == com.newmaa.othtech.common.item.ItemLoader.itemDeepSeikoToken) return 1.0F;
-        if (stack.getItem() == com.newmaa.othtech.common.item.ItemLoader.itemComputeCenter) {
-            switch (stack.getItemDamage()) {
-                case 0:
-                    return 0.08F;
-                case 1:
-                    return 0.16F;
-                case 2:
-                    return 0.25F;
-                default:
-                    return 0.0F;
-            }
-        }
-        if (stack.getItem() == com.newmaa.othtech.common.item.ItemLoader.itemNukeThrowable) return 0.0123F; // 690 战术核显卡
-        // 银色调试币：等价于「只插了一张 690 战术核显卡」的最低配测试卡
-        if (stack.getItem() == com.newmaa.othtech.common.item.ItemLoader.itemDeepSeikoTokenSilver) return 0.0123F;
-
-        // NH 核心模组的三档电路：量子 / 皮米 / 普朗克
-        // 注意：这几样不是 GT 的 metaitem，按注册名匹配（之前量子只比 Item，导致完全认不出来）
-        if (isDreamcraftItem(stack, "QuantumCircuit")) return 0.05F;
-        if (isDreamcraftItem(stack, "PikoCircuit")) return 0.025F;
-        if (isDreamcraftItem(stack, "PlanckCircuit")) return 0.10F;
-
-        // GT 自带量子电路（item + damage 一起比；只比 item 会把所有 metaitem.01 都当成卡）
-        if (sameStackAs(stack, gregtech.api.enums.ItemList.Circuit_Quantumprocessor)
-            || sameStackAs(stack, gregtech.api.enums.ItemList.Circuit_Quantumcomputer)
-            || sameStackAs(stack, gregtech.api.enums.ItemList.Circuit_Quantummainframe)) return 0.05F;
-        return 0.0F;
-    }
-
-    /** 是否是 dreamcraft:<name> 这个物品（按注册名判断，兼容 meta） */
-    private static boolean isDreamcraftItem(net.minecraft.item.ItemStack stack, String name) {
-        cpw.mods.fml.common.registry.GameRegistry.UniqueIdentifier id = cpw.mods.fml.common.registry.GameRegistry
-            .findUniqueIdentifierFor(stack.getItem());
-        return id != null && "dreamcraft".equals(id.modId) && name.equals(id.name);
-    }
-
-    /** 与 ItemList 里的物品完全一致（item + damage 都比） */
-    private static boolean sameStackAs(net.minecraft.item.ItemStack stack, gregtech.api.enums.ItemList ref) {
-        if (ref == null || !ref.hasBeenSet()) return false;
-        net.minecraft.item.ItemStack expected = ref.get(1);
-        return expected != null && stack.getItem() == expected.getItem()
-            && stack.getItemDamage() == expected.getItemDamage();
-    }
-
-    /** 控制器槽里那张卡的系数（0 = 没插卡） */
-    public float getComputeCardCoefficientSafe() {
-        return computeCardCoefficient(getControllerSlot());
-    }
-
-    /** 停机原因：凝聚态模式缺算力卡 */
-    public static gregtech.api.util.shutdown.ShutDownReason computeCardShutDown() {
-        return gregtech.api.util.shutdown.ShutDownReasonRegistry
-            .outOfStuff(StatCollector.translateToLocal("ote.ds.lang.computeCard"), 1);
-    }
-
-    /** 有效基准推进：没记录过就用当前推进兜底（避免切模式后残留 0 导致点数显示成 tick 数） */
-    public float effectiveBecBaseRate() {
-        return this.mBecBaseRate > 0.0F ? this.mBecBaseRate : Math.max(1.0F, getBecPointsPerTick());
-    }
-
-    /** 本次配方已完成的点数（GUI 显示用）。返回值必须用 long：终极 + 调试币下单次配方可达 1e11 点。 */
-    public long getProgressPointScaled() {
-        if (this.mMaxProgresstime <= 0) return 0L;
-        // 点数 = 进度 tick × 每 tick 推进（不要再除 20，之前多除了，导致"点数/速度"对不上时长）
-        return (long) this.mProgresstime * (long) effectiveBecBaseRate();
-    }
-
-    /** 本次配方总点数（GUI 显示用） */
-    public long getProgressPointTotal() {
-        if (this.mMaxProgresstime <= 0) return 0L;
-        return (long) this.mMaxProgresstime * (long) effectiveBecBaseRate();
-    }
-
-    /** BEC 动态点数：配方开始时的基准推进（用于每 tick 折算实际速度） */
-    private float mBecBaseRate = 0.0F;
-    private double mBecRateAccum = 0.0D;
-
-    /** 当前实际推进（点/tick）；装配线返回 0 */
-    public float getBecCurrentRate() {
-        if (this.machineMode == 0) return 0.0F;
-        return getBecPointsPerTick();
-    }
-
-    /** BEC 当前推进（点/tick）；装配线模式返回 0 */
-    public float getBecPointsPerTick() {
-        if (this.machineMode == 0) return 0.0F;
-        return DeepSeikoMath
-            .becPointsPerTick(isSpeedUnlocked(), getTimeLevel(), getStabLevel(), getComputeCardMultiplier())
-            * getThroughputFactor();
-    }
-
-    /** 控制器槽里那叠算力卡给出的点数系数（≥1.0；不是卡就是 1.0） */
-    public float getComputeCardMultiplier() {
-        // 调试币：满算力（等同于算力封顶），BEC 的推进直接按 10000× 算
-        if (this.isTokenInserted()) return DeepSeikoMath.COMPUTE_MULT_CAP;
-        net.minecraft.item.ItemStack card = getControllerSlot();
-        float coef = computeCardCoefficient(card);
-        if (coef <= 0.0F) return 1.0F;
-        return 1.0F + (float) Math.cbrt(Math.max(1, card.stackSize)) * coef;
-    }
+    // ===================== Processing Logic =====================
 
     protected ProcessingLogic createProcessingLogic() {
         return (new OTHProcessingLogic() {
@@ -522,6 +444,428 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
         if (aBaseMetaTileEntity.isServerSide() && (aTick & 15L) == 0L) {
             this.tickRiceHolo();
         }
+    }
+
+    // ===================== Structure =====================
+
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
+        this.timeTier = 0;
+        this.spaceTier = 0;
+        this.stabTier = 0;
+        this.mNaniteCell = null;
+        if (this.checkPiece(STRUCTURE_PIECE_MAIN, HORIZONTAL_OFFSET, VERTICAL_OFFSET, DEPTH_OFFSET, errors)) {
+            this.repairMachine();
+        }
+    }
+
+    public void construct(ItemStack stackSize, boolean hintsOnly) {
+        this.repairMachine();
+        long t0 = System.nanoTime();
+        try {
+            this.buildPiece(
+                STRUCTURE_PIECE_MAIN,
+                stackSize,
+                hintsOnly,
+                HORIZONTAL_OFFSET,
+                VERTICAL_OFFSET,
+                DEPTH_OFFSET);
+        } catch (Throwable t) {
+            LOG_PREVIEW.error("构造（construct）时抛出异常 hintsOnly=" + hintsOnly, t);
+            throw t;
+        } finally {
+            LOG_PREVIEW
+                .info("construct(hintsOnly=" + hintsOnly + ") 耗时 " + (System.nanoTime() - t0) / 1000000L + " ms");
+        }
+    }
+
+    public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
+        if (this.mMachine) {
+            return -1;
+        }
+        if (this.isPreviewWorld()) {
+            World world = this.getBaseMetaTileEntity()
+                .getWorld();
+            if (sPreviewBuiltWorld != world) {
+                sPreviewBuiltWorld = world;
+                int before = this.countPreviewBlocks();
+                try {
+                    this.buildPiece(
+                        STRUCTURE_PIECE_MAIN,
+                        stackSize,
+                        false,
+                        HORIZONTAL_OFFSET,
+                        VERTICAL_OFFSET,
+                        DEPTH_OFFSET);
+                } catch (Throwable t) {
+                    LOG_PREVIEW.error("预览建造抛异常", t);
+                }
+                LOG_PREVIEW.info("预览建造完成：方块数 " + before + " -> " + this.countPreviewBlocks());
+            }
+            return 0;
+        }
+
+        int realBudget = elementBudget >= 200 ? elementBudget : Math.min(200, elementBudget * 5);
+        try {
+            return this.survivalBuildPiece(
+                STRUCTURE_PIECE_MAIN,
+                stackSize,
+                HORIZONTAL_OFFSET,
+                VERTICAL_OFFSET,
+                DEPTH_OFFSET,
+                realBudget,
+                env,
+                false,
+                true);
+        } catch (Throwable t) {
+            LOG_PREVIEW.error("生存建造抛异常 budget=" + elementBudget, t);
+            return -1;
+        }
+    }
+
+    /**
+     * 全息投影仪「搭建细节」聊天栏里列的内容。
+     *
+     * <p>
+     * 注意：这里必须<b>调用时</b>再翻译（用 {@link StatCollector#translateToLocal}），不能在 static 初始化里
+     * 就翻好——那样会在语言文件加载之前执行，结果拿到的就是原始 key（之前聊天栏里刷 ote.cm.ds.desc.0 这种
+     * 就是这个原因）。
+     * </p>
+     */
+    public String[] getStructureDescription(ItemStack stackSize) {
+        return new String[] { EnumChatFormatting.AQUA + StatCollector.translateToLocal("otht.con") + ":",
+            "§7" + StatCollector.translateToLocal("ote.ds.struct.0"),
+            "§7" + StatCollector.translateToLocal("ote.ds.struct.1"),
+            "§7" + StatCollector.translateToLocal("ote.ds.struct.2"),
+            "§7" + StatCollector.translateToLocal("ote.ds.struct.3"),
+            "§7" + StatCollector.translateToLocal("ote.ds.struct.4") };
+    }
+
+    public IStructureDefinition<OTEDeepSeiko> getStructureDefinition() {
+        if (STRUCTURE_DEFINITION == null) {
+            int casingIndex = GTUtility.getCasingTextureIndex(DeepSeikoBlocks.dsCasing, 0);
+            STRUCTURE_DEFINITION = StructureDefinition.builder()
+                // 三条鳍信道（ds_left_fin / ds_right_fin / ds_top_fin）由 finSlot() 里的 withChannel 登记，
+                // NEI 预览会据此生成 1~10 的信道滑条。注意：StructureLib 1.4.x 没有 addChannel()，
+                // 所以这里不显式声明信道上下限（预览滑条的最小值按 0 = 不设置处理）。
+                .addShape("main", generateWhaleShape())
+                .addElement('A', StructureUtility.ofBlock(DeepSeikoBlocks.dsCasing, 0))
+                .addElement('L', StructureUtility.ofBlock(DeepSeikoBlocks.dsCasing, 7))
+                .addElement('K', StructureUtility.ofBlock(DeepSeikoBlocks.dsCasing, 8))
+                .addElement('B', StructureUtility.ofBlock(DeepSeikoBlocks.dsCasing, 2))
+                .addElement(
+                    'H',
+                    GTStructureUtility.buildHatchAdder(OTEDeepSeiko.class)
+                        .adder(OTEDeepSeiko::addAnyHatchToMachineList)
+                        .hint(1)
+                        .casingIndex(casingIndex)
+                        .hatchItemFilter((t) -> { return anyHatchItem(); })
+                        // GT 自带机制：格子已有 GT 机器/舱室时 survivalPlaceBlock 返回 SKIP，
+                        // 而 placeBlock 对 SKIP 也返回 true（见 HatchElementBuilder$2 字节码），
+                        // 链条就此停止，后面的 ofBlock(casing) 不会把玩家放好的舱室覆盖掉。
+                        .shouldSkip((t, te) -> true)
+                        .buildAndChain(
+                            new IStructureElement[] { StructureUtility.ofBlock(DeepSeikoBlocks.dsCasing, 0) }))
+                .addElement('C', StructureUtility.ofBlock(DeepSeikoBlocks.dsCasing, 4))
+                // 三环 = 三条鳍信道（'T' 左鳍 / 'S' 右鳍 / 'R' 顶鳍）
+                .addElement(
+                    'T',
+                    finSlot(
+                        CH_FIN_TIME,
+                        DeepSeikoCasingMeta.FIN_TIME,
+                        TIME_GENS,
+                        (t, lvl) -> { t.timeTier = lvl.intValue(); },
+                        t -> t.timeTier))
+                .addElement(
+                    'S',
+                    finSlot(
+                        CH_FIN_SPACE,
+                        DeepSeikoCasingMeta.FIN_SPACE,
+                        SPACE_GENS,
+                        (t, lvl) -> { t.spaceTier = lvl.intValue(); },
+                        t -> t.spaceTier))
+                .addElement(
+                    'R',
+                    finSlot(
+                        CH_FIN_STAB,
+                        DeepSeikoCasingMeta.FIN_STAB,
+                        STAB_GENS,
+                        (t, lvl) -> { t.stabTier = lvl.intValue(); },
+                        t -> t.stabTier))
+                .addElement(
+                    'V',
+                    StructureUtility.ofChain(
+                        new IStructureElement[] { StructureUtility.ofBlock(DeepSeikoBlocks.dsCasing, 1),
+                            StructureUtility.ofBlock(DeepSeikoBlocks.dsCasing, 6) }))
+                .build();
+        }
+
+        return STRUCTURE_DEFINITION;
+    }
+
+    // ===================== Tooltip =====================
+
+    protected MultiblockTooltipBuilder createTooltip() {
+        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        tt.addMachineType(EnumChatFormatting.BLUE + StatCollector.translateToLocal("ote.tm.ds.type"))
+            .addInfo(StatCollector.translateToLocal("ote.tm.ds.0"))
+            .addInfo(StatCollector.translateToLocal("ote.tm.ds.0b"))
+            .addInfo(StatCollector.translateToLocal("ote.tm.ds.1"))
+            .addInfo(StatCollector.translateToLocal("ote.tm.ds.2"))
+            .addInfo(StatCollector.translateToLocal("ote.tm.ds.3"))
+            .addInfo(StatCollector.translateToLocal("ote.tm.ds.4"))
+            .addInfo(StatCollector.translateToLocal("ote.tm.ds.5"))
+            .addInfo(StatCollector.translateToLocal("ote.tm.ds.5b"))
+            .addInfo(StatCollector.translateToLocal("ote.tm.ds.perf"))
+            .addInfo(StatCollector.translateToLocal("ote.tm.ds.perf2"))
+            .addInfo(StatCollector.translateToLocal("ote.tm.ds.6"))
+            .addInfo(StatCollector.translateToLocal("ote.tm.ds.7"))
+            .addSeparator()
+            .addInfo(EnumChatFormatting.RED + "Added by: 123Technology - The TERMINATOR of BEC && AL. ")
+            .beginStructureBlock(33, 23, 60, false)
+            .addController(StatCollector.translateToLocal("ote.tm.ds.hint.controller"))
+            .addInputBus(StatCollector.translateToLocal("ote.tm.ds.hint.bays"), 2)
+            .addOutputBus(StatCollector.translateToLocal("ote.tm.ds.hint.bays"), 3)
+            .addInputHatch(StatCollector.translateToLocal("ote.tm.ds.hint.bays"), 2)
+            .addOutputHatch(StatCollector.translateToLocal("ote.tm.ds.hint.bays"), 3)
+            .addEnergyHatch(StatCollector.translateToLocal("ote.tm.ds.hint.bays"), 1)
+            .addStructureInfo("")
+            .addStructureInfo(StatCollector.translateToLocal("ote.tm.ds.hint.rings.2"))
+            .addStructureInfo(StatCollector.translateToLocal("ote.tm.ds.hint.rings.4"))
+            .addStructureInfo(StatCollector.translateToLocal("ote.tm.ds.hint.rings.5"))
+            .addStructureInfo(StatCollector.translateToLocal("ote.tm.ds.hint.rings.6"))
+            .toolTipFinisher();
+        return tt;
+    }
+
+    // ===================== Standard Overrides =====================
+
+    public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
+        return new OTEDeepSeiko(this.mName);
+    }
+
+    public String[] getInfoData() {
+        List<String> info = new ArrayList(Arrays.asList(super.getInfoData()));
+        if (this.machineMode == 1 && this.mMaxProgresstime > 0) {
+            long totalPoints = (long) this.mMaxProgresstime * (long) effectiveBecBaseRate();
+            long donePoints = (long) this.mProgresstime * (long) effectiveBecBaseRate();
+            long rate = (long) Math.max(1.0F, getBecCurrentRate());
+            long leftTicks = (long) Math.max(0, this.mMaxProgresstime - this.mProgresstime);
+            long etaSec = leftTicks / 20L;
+            info.add(
+                EnumChatFormatting.LIGHT_PURPLE + StatCollector.translateToLocal("ote.ds.info.points")
+                    + ": "
+                    + GTUtility.formatShortenedLong(donePoints)
+                    + " / "
+                    + GTUtility.formatShortenedLong(totalPoints)
+                    + "  §7("
+                    + String.format("%.1f", 100.0F * this.mProgresstime / Math.max(1, this.mMaxProgresstime))
+                    + "%)");
+            info.add(
+                EnumChatFormatting.LIGHT_PURPLE + StatCollector.translateToLocal("ote.ds.info.rate")
+                    + ": "
+                    + GTUtility.formatShortenedLong(rate)
+                    + " "
+                    + StatCollector.translateToLocal("ote.ds.info.perTick")
+                    + "   §7"
+                    + StatCollector.translateToLocal("ote.ds.info.eta")
+                    + " "
+                    + etaSec
+                    + " "
+                    + StatCollector.translateToLocal("ote.ds.info.seconds"));
+        }
+        info.add(
+            StatCollector.translateToLocal("ote.ds.gui.probe.boost") + ": "
+                + EnumChatFormatting.GOLD
+                + "×"
+                + String.format("%.1f", this.mSpeedMult)
+                + (this.isSpeedUnlocked()
+                    ? " " + EnumChatFormatting.DARK_GREEN + StatCollector.translateToLocal("ote.ds.gui.probe.ultimate")
+                    : ""));
+        info.add(
+            StatCollector.translateToLocal("ote.ds.gui.probe.rings") + ": "
+                + EnumChatFormatting.AQUA
+                + this.getTimeLevel()
+                + " / "
+                + this.getSpaceLevel()
+                + " / "
+                + this.getStabLevel());
+        if (this.isTokenInserted()) {
+            info.add(EnumChatFormatting.GOLD + StatCollector.translateToLocal("ote.ds.gui.token"));
+        }
+
+        return (String[]) info.toArray(new String[0]);
+    }
+
+    // ===================== Textures =====================
+
+    public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection facing,
+        int colorIndex, boolean aActive, boolean aRedstone) {
+        return side == facing ? new ITexture[] { CONTROLLER_FRONT_TEXTURE }
+            : new ITexture[] { CONTROLLER_SIDE_TEXTURE };
+    }
+
+    protected SoundResource getActivitySoundLoop() {
+        return SoundResource.TECTECH_MACHINES_NOISE;
+    }
+
+    // ===================== Misc =====================
+
+    public void setItemNBT(NBTTagCompound aNBT) {
+        super.setItemNBT(aNBT);
+        aNBT.setBoolean("dsBecUnlocked", this.mBecUnlocked);
+        aNBT.setInteger("dsNaniteTier", this.mNaniteTier);
+        aNBT.setBoolean("dsSpeedUnlocked", this.mSpeedUnlocked);
+        aNBT.setTag("dsUpgradeStage", this.mUpgradeStage.serializeNBT());
+    }
+
+    public boolean supportsMachineModeSwitch() {
+        return true;
+    }
+
+    public void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+        ItemStack aItem) {
+        if (!this.getBaseMetaTileEntity()
+            .isClientSide()) {
+            if (this.mMaxProgresstime > 0) {
+                GTUtility.sendChatToPlayer(aPlayer, StatCollector.translateToLocal("ote.ds.chat.modeLocked"));
+                return;
+            }
+            this.setMachineMode(this.nextMachineMode());
+            // 切模式必须硬重置：否则上次的 BEC 配方缓存/基准推进残留，零点几秒就"恢复正常速度"
+            this.mMaxProgresstime = 0;
+            this.mProgresstime = 0;
+            this.mBecBaseRate = 0.0F;
+            this.mBecRateAccum = 0.0D;
+            this.getBaseMetaTileEntity()
+                .setActive(false);
+            GTUtility.sendChatToPlayer(
+                aPlayer,
+                StatCollector.translateToLocal(this.machineMode == 0 ? "ote.ds.mode.al" : "ote.ds.mode.bec"));
+        }
+    }
+
+    /**
+     * 并行上限：跟着结构方块走 —— 三环（时间/空间/稳定）已装方块等级取平均，
+     * 1 级 512，每级 ×8，9 级夹到 Integer.MAX_VALUE（=无限并行）。
+     */
+    public int getParallelLevel() {
+        // 与 GUI / 三环倍率同口径：调试币插入时视为三环 9 级（否则会出现"GUI 显示 T9、并行却只有 512"）
+        int t = this.ringInstalledLimit(this.timeTier);
+        int sp = this.ringInstalledLimit(this.spaceTier);
+        int st = this.ringInstalledLimit(this.stabTier);
+        return Math.max(1, Math.min(9, (t + sp + st) / 3));
+    }
+
+    public int getMaxParallel() {
+        return DeepSeikoMath.maxParallel(this.getParallelLevel());
+    }
+
+    /**
+     * 算力卡（控制器槽里那一叠）对 BEC 点数系数的贡献：`1 + ³√(张数) × 卡系数`。
+     * <p>
+     * 卡系数：量子电路 0.05 · 普朗克尺度电路 0.10 · 690 战术核显卡 0.0123 ·
+     * D99/D199/D999 算力中心 0.08/0.16/0.25。不是算力卡返回 0。
+     * </p>
+     */
+    public static float computeCardCoefficient(net.minecraft.item.ItemStack stack) {
+        if (stack == null || stack.getItem() == null) return 0.0F;
+        // 金色调试币：万能算力卡（BEC 的「必须插一张卡」也认它；倍率另由 getComputeCardMultiplier 拉满）
+        if (stack.getItem() == com.newmaa.othtech.common.item.ItemLoader.itemDeepSeikoToken) return 1.0F;
+        if (stack.getItem() == com.newmaa.othtech.common.item.ItemLoader.itemComputeCenter) {
+            switch (stack.getItemDamage()) {
+                case 0:
+                    return 0.08F;
+                case 1:
+                    return 0.16F;
+                case 2:
+                    return 0.25F;
+                default:
+                    return 0.0F;
+            }
+        }
+        if (stack.getItem() == com.newmaa.othtech.common.item.ItemLoader.itemNukeThrowable) return 0.0123F; // 690 战术核显卡
+        // 银色调试币：等价于「只插了一张 690 战术核显卡」的最低配测试卡
+        if (stack.getItem() == com.newmaa.othtech.common.item.ItemLoader.itemDeepSeikoTokenSilver) return 0.0123F;
+
+        // NH 核心模组的三档电路：量子 / 皮米 / 普朗克
+        // 注意：这几样不是 GT 的 metaitem，按注册名匹配（之前量子只比 Item，导致完全认不出来）
+        if (isDreamcraftItem(stack, "QuantumCircuit")) return 0.05F;
+        if (isDreamcraftItem(stack, "PikoCircuit")) return 0.025F;
+        if (isDreamcraftItem(stack, "PlanckCircuit")) return 0.10F;
+
+        // GT 自带量子电路（item + damage 一起比；只比 item 会把所有 metaitem.01 都当成卡）
+        if (sameStackAs(stack, gregtech.api.enums.ItemList.Circuit_Quantumprocessor)
+            || sameStackAs(stack, gregtech.api.enums.ItemList.Circuit_Quantumcomputer)
+            || sameStackAs(stack, gregtech.api.enums.ItemList.Circuit_Quantummainframe)) return 0.05F;
+        return 0.0F;
+    }
+
+    /** 是否是 dreamcraft:<name> 这个物品（按注册名判断，兼容 meta） */
+    private static boolean isDreamcraftItem(net.minecraft.item.ItemStack stack, String name) {
+        cpw.mods.fml.common.registry.GameRegistry.UniqueIdentifier id = cpw.mods.fml.common.registry.GameRegistry
+            .findUniqueIdentifierFor(stack.getItem());
+        return id != null && "dreamcraft".equals(id.modId) && name.equals(id.name);
+    }
+
+    /** 与 ItemList 里的物品完全一致（item + damage 都比） */
+    private static boolean sameStackAs(net.minecraft.item.ItemStack stack, gregtech.api.enums.ItemList ref) {
+        if (ref == null || !ref.hasBeenSet()) return false;
+        net.minecraft.item.ItemStack expected = ref.get(1);
+        return expected != null && stack.getItem() == expected.getItem()
+            && stack.getItemDamage() == expected.getItemDamage();
+    }
+
+    /** 控制器槽里那张卡的系数（0 = 没插卡） */
+    public float getComputeCardCoefficientSafe() {
+        return computeCardCoefficient(getControllerSlot());
+    }
+
+    /** 停机原因：凝聚态模式缺算力卡 */
+    public static gregtech.api.util.shutdown.ShutDownReason computeCardShutDown() {
+        return gregtech.api.util.shutdown.ShutDownReasonRegistry
+            .outOfStuff(StatCollector.translateToLocal("ote.ds.lang.computeCard"), 1);
+    }
+
+    /** 有效基准推进：没记录过就用当前推进兜底（避免切模式后残留 0 导致点数显示成 tick 数） */
+    public float effectiveBecBaseRate() {
+        return this.mBecBaseRate > 0.0F ? this.mBecBaseRate : Math.max(1.0F, getBecPointsPerTick());
+    }
+
+    /** 本次配方已完成的点数（GUI 显示用）。返回值必须用 long：终极 + 调试币下单次配方可达 1e11 点。 */
+    public long getProgressPointScaled() {
+        if (this.mMaxProgresstime <= 0) return 0L;
+        // 点数 = 进度 tick × 每 tick 推进（不要再除 20，之前多除了，导致"点数/速度"对不上时长）
+        return (long) this.mProgresstime * (long) effectiveBecBaseRate();
+    }
+
+    /** 本次配方总点数（GUI 显示用） */
+    public long getProgressPointTotal() {
+        if (this.mMaxProgresstime <= 0) return 0L;
+        return (long) this.mMaxProgresstime * (long) effectiveBecBaseRate();
+    }
+
+    /** 当前实际推进（点/tick）；装配线返回 0 */
+    public float getBecCurrentRate() {
+        if (this.machineMode == 0) return 0.0F;
+        return getBecPointsPerTick();
+    }
+
+    /** BEC 当前推进（点/tick）；装配线模式返回 0 */
+    public float getBecPointsPerTick() {
+        if (this.machineMode == 0) return 0.0F;
+        return DeepSeikoMath
+            .becPointsPerTick(isSpeedUnlocked(), getTimeLevel(), getStabLevel(), getComputeCardMultiplier())
+            * getThroughputFactor();
+    }
+
+    /** 控制器槽里那叠算力卡给出的点数系数（≥1.0；不是卡就是 1.0） */
+    public float getComputeCardMultiplier() {
+        // 调试币：满算力（等同于算力封顶），BEC 的推进直接按 10000× 算
+        if (this.isTokenInserted()) return DeepSeikoMath.COMPUTE_MULT_CAP;
+        net.minecraft.item.ItemStack card = getControllerSlot();
+        float coef = computeCardCoefficient(card);
+        if (coef <= 0.0F) return 1.0F;
+        return 1.0F + (float) Math.cbrt(Math.max(1, card.stackSize)) * coef;
     }
 
     /** 信道等级（0 没装 / 1 只有鳍 / 2~10 发生器 1~9 级）→ 三环实际等级（1~9，1 = 无加成） */
@@ -1108,85 +1452,11 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
         return this.mMachine;
     }
 
-    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
-        this.timeTier = 0;
-        this.spaceTier = 0;
-        this.stabTier = 0;
-        this.mNaniteCell = null;
-        if (this.checkPiece(STRUCTURE_PIECE_MAIN, HORIZONTAL_OFFSET, VERTICAL_OFFSET, DEPTH_OFFSET, errors)) {
-            this.repairMachine();
-        }
-    }
-
     public ExtendedFacing getExtendedFacing() {
         ExtendedFacing facing = super.getExtendedFacing();
         if (facing != null) return facing;
         IGregTechTileEntity base = this.getBaseMetaTileEntity();
         return base == null ? ExtendedFacing.DEFAULT : ExtendedFacing.of(base.getFrontFacing());
-    }
-
-    public void construct(ItemStack stackSize, boolean hintsOnly) {
-        this.repairMachine();
-        long t0 = System.nanoTime();
-        try {
-            this.buildPiece(
-                STRUCTURE_PIECE_MAIN,
-                stackSize,
-                hintsOnly,
-                HORIZONTAL_OFFSET,
-                VERTICAL_OFFSET,
-                DEPTH_OFFSET);
-        } catch (Throwable t) {
-            LOG_PREVIEW.error("构造（construct）时抛出异常 hintsOnly=" + hintsOnly, t);
-            throw t;
-        } finally {
-            LOG_PREVIEW
-                .info("construct(hintsOnly=" + hintsOnly + ") 耗时 " + (System.nanoTime() - t0) / 1000000L + " ms");
-        }
-    }
-
-    public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
-        if (this.mMachine) {
-            return -1;
-        }
-        if (this.isPreviewWorld()) {
-            World world = this.getBaseMetaTileEntity()
-                .getWorld();
-            if (sPreviewBuiltWorld != world) {
-                sPreviewBuiltWorld = world;
-                int before = this.countPreviewBlocks();
-                try {
-                    this.buildPiece(
-                        STRUCTURE_PIECE_MAIN,
-                        stackSize,
-                        false,
-                        HORIZONTAL_OFFSET,
-                        VERTICAL_OFFSET,
-                        DEPTH_OFFSET);
-                } catch (Throwable t) {
-                    LOG_PREVIEW.error("预览建造抛异常", t);
-                }
-                LOG_PREVIEW.info("预览建造完成：方块数 " + before + " -> " + this.countPreviewBlocks());
-            }
-            return 0;
-        }
-
-        int realBudget = elementBudget >= 200 ? elementBudget : Math.min(200, elementBudget * 5);
-        try {
-            return this.survivalBuildPiece(
-                STRUCTURE_PIECE_MAIN,
-                stackSize,
-                HORIZONTAL_OFFSET,
-                VERTICAL_OFFSET,
-                DEPTH_OFFSET,
-                realBudget,
-                env,
-                false,
-                true);
-        } catch (Throwable t) {
-            LOG_PREVIEW.error("生存建造抛异常 budget=" + elementBudget, t);
-            return -1;
-        }
     }
 
     private boolean isPreviewWorld() {
@@ -1285,68 +1555,6 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
         } else {
             return this.addToMachineList(aBaseMetaTileEntity, aBaseCasingIndex);
         }
-    }
-
-    public IStructureDefinition<OTEDeepSeiko> getStructureDefinition() {
-        if (STRUCTURE_DEFINITION == null) {
-            int casingIndex = GTUtility.getCasingTextureIndex(DeepSeikoBlocks.dsCasing, 0);
-            STRUCTURE_DEFINITION = StructureDefinition.builder()
-                // 三条鳍信道（ds_left_fin / ds_right_fin / ds_top_fin）由 finSlot() 里的 withChannel 登记，
-                // NEI 预览会据此生成 1~10 的信道滑条。注意：StructureLib 1.4.x 没有 addChannel()，
-                // 所以这里不显式声明信道上下限（预览滑条的最小值按 0 = 不设置处理）。
-                .addShape("main", generateWhaleShape())
-                .addElement('A', StructureUtility.ofBlock(DeepSeikoBlocks.dsCasing, 0))
-                .addElement('L', StructureUtility.ofBlock(DeepSeikoBlocks.dsCasing, 7))
-                .addElement('K', StructureUtility.ofBlock(DeepSeikoBlocks.dsCasing, 8))
-                .addElement('B', StructureUtility.ofBlock(DeepSeikoBlocks.dsCasing, 2))
-                .addElement(
-                    'H',
-                    GTStructureUtility.buildHatchAdder(OTEDeepSeiko.class)
-                        .adder(OTEDeepSeiko::addAnyHatchToMachineList)
-                        .hint(1)
-                        .casingIndex(casingIndex)
-                        .hatchItemFilter((t) -> { return anyHatchItem(); })
-                        // GT 自带机制：格子已有 GT 机器/舱室时 survivalPlaceBlock 返回 SKIP，
-                        // 而 placeBlock 对 SKIP 也返回 true（见 HatchElementBuilder$2 字节码），
-                        // 链条就此停止，后面的 ofBlock(casing) 不会把玩家放好的舱室覆盖掉。
-                        .shouldSkip((t, te) -> true)
-                        .buildAndChain(
-                            new IStructureElement[] { StructureUtility.ofBlock(DeepSeikoBlocks.dsCasing, 0) }))
-                .addElement('C', StructureUtility.ofBlock(DeepSeikoBlocks.dsCasing, 4))
-                // 三环 = 三条鳍信道（'T' 左鳍 / 'S' 右鳍 / 'R' 顶鳍）
-                .addElement(
-                    'T',
-                    finSlot(
-                        CH_FIN_TIME,
-                        DeepSeikoCasingMeta.FIN_TIME,
-                        TIME_GENS,
-                        (t, lvl) -> { t.timeTier = lvl.intValue(); },
-                        t -> t.timeTier))
-                .addElement(
-                    'S',
-                    finSlot(
-                        CH_FIN_SPACE,
-                        DeepSeikoCasingMeta.FIN_SPACE,
-                        SPACE_GENS,
-                        (t, lvl) -> { t.spaceTier = lvl.intValue(); },
-                        t -> t.spaceTier))
-                .addElement(
-                    'R',
-                    finSlot(
-                        CH_FIN_STAB,
-                        DeepSeikoCasingMeta.FIN_STAB,
-                        STAB_GENS,
-                        (t, lvl) -> { t.stabTier = lvl.intValue(); },
-                        t -> t.stabTier))
-                .addElement(
-                    'V',
-                    StructureUtility.ofChain(
-                        new IStructureElement[] { StructureUtility.ofBlock(DeepSeikoBlocks.dsCasing, 1),
-                            StructureUtility.ofBlock(DeepSeikoBlocks.dsCasing, 6) }))
-                .build();
-        }
-
-        return STRUCTURE_DEFINITION;
     }
 
     private static String[][] generateWhaleShape() {
@@ -1590,118 +1798,6 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
 
     }
 
-    /**
-     * 全息投影仪「搭建细节」聊天栏里列的内容。
-     *
-     * <p>
-     * 注意：这里必须<b>调用时</b>再翻译（用 {@link StatCollector#translateToLocal}），不能在 static 初始化里
-     * 就翻好——那样会在语言文件加载之前执行，结果拿到的就是原始 key（之前聊天栏里刷 ote.cm.ds.desc.0 这种
-     * 就是这个原因）。
-     * </p>
-     */
-    public String[] getStructureDescription(ItemStack stackSize) {
-        return new String[] { EnumChatFormatting.AQUA + StatCollector.translateToLocal("otht.con") + ":",
-            "§7" + StatCollector.translateToLocal("ote.ds.struct.0"),
-            "§7" + StatCollector.translateToLocal("ote.ds.struct.1"),
-            "§7" + StatCollector.translateToLocal("ote.ds.struct.2"),
-            "§7" + StatCollector.translateToLocal("ote.ds.struct.3"),
-            "§7" + StatCollector.translateToLocal("ote.ds.struct.4") };
-    }
-
-    protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
-        tt.addMachineType(EnumChatFormatting.BLUE + StatCollector.translateToLocal("ote.tm.ds.type"))
-            .addInfo(StatCollector.translateToLocal("ote.tm.ds.0"))
-            .addInfo(StatCollector.translateToLocal("ote.tm.ds.0b"))
-            .addInfo(StatCollector.translateToLocal("ote.tm.ds.1"))
-            .addInfo(StatCollector.translateToLocal("ote.tm.ds.2"))
-            .addInfo(StatCollector.translateToLocal("ote.tm.ds.3"))
-            .addInfo(StatCollector.translateToLocal("ote.tm.ds.4"))
-            .addInfo(StatCollector.translateToLocal("ote.tm.ds.5"))
-            .addInfo(StatCollector.translateToLocal("ote.tm.ds.5b"))
-            .addInfo(StatCollector.translateToLocal("ote.tm.ds.perf"))
-            .addInfo(StatCollector.translateToLocal("ote.tm.ds.perf2"))
-            .addInfo(StatCollector.translateToLocal("ote.tm.ds.6"))
-            .addInfo(StatCollector.translateToLocal("ote.tm.ds.7"))
-            .beginStructureBlock(33, 23, 60, false)
-            .addController(StatCollector.translateToLocal("ote.tm.ds.hint.controller"))
-            .addInputBus(StatCollector.translateToLocal("ote.tm.ds.hint.bays"), 2)
-            .addOutputBus(StatCollector.translateToLocal("ote.tm.ds.hint.bays"), 3)
-            .addInputHatch(StatCollector.translateToLocal("ote.tm.ds.hint.bays"), 2)
-            .addOutputHatch(StatCollector.translateToLocal("ote.tm.ds.hint.bays"), 3)
-            .addEnergyHatch(StatCollector.translateToLocal("ote.tm.ds.hint.bays"), 1)
-            .addStructureInfo("")
-            .addStructureInfo(StatCollector.translateToLocal("ote.tm.ds.hint.rings.2"))
-            .addStructureInfo(StatCollector.translateToLocal("ote.tm.ds.hint.rings.4"))
-            .addStructureInfo(StatCollector.translateToLocal("ote.tm.ds.hint.rings.5"))
-            .addStructureInfo(StatCollector.translateToLocal("ote.tm.ds.hint.rings.6"))
-            .toolTipFinisher(EnumChatFormatting.RED + "123Technology - The TERMINATOR of BEC && AL. ");
-        return tt;
-    }
-
-    protected SoundResource getActivitySoundLoop() {
-        return SoundResource.TECTECH_MACHINES_NOISE;
-    }
-
-    public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection facing,
-        int colorIndex, boolean aActive, boolean aRedstone) {
-        return side == facing ? new ITexture[] { CONTROLLER_FRONT_TEXTURE }
-            : new ITexture[] { CONTROLLER_SIDE_TEXTURE };
-    }
-
-    public String[] getInfoData() {
-        List<String> info = new ArrayList(Arrays.asList(super.getInfoData()));
-        if (this.machineMode == 1 && this.mMaxProgresstime > 0) {
-            long totalPoints = (long) this.mMaxProgresstime * (long) effectiveBecBaseRate();
-            long donePoints = (long) this.mProgresstime * (long) effectiveBecBaseRate();
-            long rate = (long) Math.max(1.0F, getBecCurrentRate());
-            long leftTicks = (long) Math.max(0, this.mMaxProgresstime - this.mProgresstime);
-            long etaSec = leftTicks / 20L;
-            info.add(
-                EnumChatFormatting.LIGHT_PURPLE + StatCollector.translateToLocal("ote.ds.info.points")
-                    + ": "
-                    + GTUtility.formatShortenedLong(donePoints)
-                    + " / "
-                    + GTUtility.formatShortenedLong(totalPoints)
-                    + "  §7("
-                    + String.format("%.1f", 100.0F * this.mProgresstime / Math.max(1, this.mMaxProgresstime))
-                    + "%)");
-            info.add(
-                EnumChatFormatting.LIGHT_PURPLE + StatCollector.translateToLocal("ote.ds.info.rate")
-                    + ": "
-                    + GTUtility.formatShortenedLong(rate)
-                    + " "
-                    + StatCollector.translateToLocal("ote.ds.info.perTick")
-                    + "   §7"
-                    + StatCollector.translateToLocal("ote.ds.info.eta")
-                    + " "
-                    + etaSec
-                    + " "
-                    + StatCollector.translateToLocal("ote.ds.info.seconds"));
-        }
-        info.add(
-            StatCollector.translateToLocal("ote.ds.gui.probe.boost") + ": "
-                + EnumChatFormatting.GOLD
-                + "×"
-                + String.format("%.1f", this.mSpeedMult)
-                + (this.isSpeedUnlocked()
-                    ? " " + EnumChatFormatting.DARK_GREEN + StatCollector.translateToLocal("ote.ds.gui.probe.ultimate")
-                    : ""));
-        info.add(
-            StatCollector.translateToLocal("ote.ds.gui.probe.rings") + ": "
-                + EnumChatFormatting.AQUA
-                + this.getTimeLevel()
-                + " / "
-                + this.getSpaceLevel()
-                + " / "
-                + this.getStabLevel());
-        if (this.isTokenInserted()) {
-            info.add(EnumChatFormatting.GOLD + StatCollector.translateToLocal("ote.ds.gui.token"));
-        }
-
-        return (String[]) info.toArray(new String[0]);
-    }
-
     @NotNull
     protected MTEMultiBlockBaseGui<?> getGui() {
         return new DeepSeikoGui(this);
@@ -1753,42 +1849,6 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
             : (int) ((long) this.mProgresstime * (long) scale / (long) this.mMaxProgresstime);
     }
 
-    static {
-        TIME_GENS = new IItemContainer[] { CustomItemList.TimeAccelerationFieldGeneratorTier0,
-            CustomItemList.TimeAccelerationFieldGeneratorTier1, CustomItemList.TimeAccelerationFieldGeneratorTier2,
-            CustomItemList.TimeAccelerationFieldGeneratorTier3, CustomItemList.TimeAccelerationFieldGeneratorTier4,
-            CustomItemList.TimeAccelerationFieldGeneratorTier5, CustomItemList.TimeAccelerationFieldGeneratorTier6,
-            CustomItemList.TimeAccelerationFieldGeneratorTier7, CustomItemList.TimeAccelerationFieldGeneratorTier8 };
-        SPACE_GENS = new IItemContainer[] { CustomItemList.SpacetimeCompressionFieldGeneratorTier0,
-            CustomItemList.SpacetimeCompressionFieldGeneratorTier1,
-            CustomItemList.SpacetimeCompressionFieldGeneratorTier2,
-            CustomItemList.SpacetimeCompressionFieldGeneratorTier3,
-            CustomItemList.SpacetimeCompressionFieldGeneratorTier4,
-            CustomItemList.SpacetimeCompressionFieldGeneratorTier5,
-            CustomItemList.SpacetimeCompressionFieldGeneratorTier6,
-            CustomItemList.SpacetimeCompressionFieldGeneratorTier7,
-            CustomItemList.SpacetimeCompressionFieldGeneratorTier8 };
-        STAB_GENS = new IItemContainer[] { CustomItemList.StabilisationFieldGeneratorTier0,
-            CustomItemList.StabilisationFieldGeneratorTier1, CustomItemList.StabilisationFieldGeneratorTier2,
-            CustomItemList.StabilisationFieldGeneratorTier3, CustomItemList.StabilisationFieldGeneratorTier4,
-            CustomItemList.StabilisationFieldGeneratorTier5, CustomItemList.StabilisationFieldGeneratorTier6,
-            CustomItemList.StabilisationFieldGeneratorTier7, CustomItemList.StabilisationFieldGeneratorTier8 };
-        MARKED_HATCHES = new String[] { "19,11,0:H", "18,11,0:H", "17,11,0:H", "16,11,0:H", "15,11,0:H", "14,11,0:H",
-            "13,11,0:H", "17,10,0:H", "15,10,0:H", "14,10,0:H", "17,9,0:H", "16,9,0:H", "15,9,0:H", "20,10,1:H",
-            "19,10,1:H", "18,10,1:H", "13,10,1:H", "12,10,1:H", "19,9,1:H", "18,9,1:H", "14,9,1:H", "13,9,1:H",
-            "18,8,1:H", "17,8,1:H", "16,8,1:H", "15,8,1:H", "14,8,1:H", "21,9,2:H", "20,9,2:H", "12,9,2:H", "11,9,2:H",
-            "19,8,2:H", "13,8,2:H", "12,8,2:H", "19,7,2:H", "18,7,2:H", "17,7,2:H", "16,7,2:H", "15,7,2:H", "14,7,2:H",
-            "13,7,2:H" };
-        // 正面：16x16 机壳基底 + 覆盖层立绘，覆盖层由 IIconContainer#getOverlayIcon() 提供
-        // （GTRenderedTexture 会在同一面先画基底再叠覆盖层；builder 只允许 addIcon 一次）
-        CONTROLLER_FRONT_TEXTURE = TextureFactory.builder()
-            .addIcon(DeepSeikoIcons.CONTROLLER_FRONT_BASE)
-            .extFacing()
-            .build();
-        CONTROLLER_SIDE_TEXTURE = TextureFactory.of(DeepSeikoIcons.CONTROLLER_SIDE);
-        registerFinChannels();
-    }
-
     /**
      * 注册三条鳍信道：信道说明 + 1 级对应的方块（三个鳍）。
      * <p>
@@ -1809,5 +1869,804 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
         StructureLibAPI.registerChannelDescription(channel, "123technology", "channels.123technology." + channel);
         StructureLibAPI
             .registerChannelItem(channel, "123technology", 1, new ItemStack(DeepSeikoBlocks.dsCasing, 1, finMeta));
+    }
+
+    // Blue whale raw shape data (generated by build_from_ref.py, do not edit by hand).
+    // Referenced as OTEDeepSeikoShape.* inside this class.
+    /**
+     * 迪普西科蓝鲸原始形状（照抄外部参考「大肥鱼」60×33×23 空心鲸，_whale/whale60.json）。
+     * RAW_LAYERS[y] = 33 行（z），每行 60 字符（x）；原始字符：D 背/L 侧/K 下侧/W 白肚/I 内部灯位。
+     * 由 build_from_ref.py 自动生成，请勿手改——改形状改参考生成器。
+     */
+    private static final class OTEDeepSeikoShape {
+
+        public static final int LEN = 60;
+        public static final int WID = 33;
+        public static final int HEI = 23;
+
+        public static final String[][] RAW_LAYERS = { { // y=0
+            "                                                            ",
+            "                                                            ",
+            "                                                            ",
+            "                                                            ",
+            "                                                            ",
+            "                                                            ",
+            "                                                            ",
+            "                                                            ",
+            "                                                            ",
+            "                                                            ",
+            "                                                            ",
+            "                                                            ",
+            "                                                            ",
+            "                                                            ",
+            "                                                            ",
+            "                                                            ",
+            "                    WWWWWWW                                 ",
+            "                                                            ",
+            "                                                            ",
+            "                                                            ",
+            "                                                            ",
+            "                                                            ",
+            "                                                            ",
+            "                                                            ",
+            "                                                            ",
+            "                                                            ",
+            "                                                            ",
+            "                                                            ",
+            "                                                            ",
+            "                                                            ",
+            "                                                            ",
+            "                                                            ",
+            "                                                            ", },
+            { // y=1
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "             WWWWWWWWWWWWWWWWWWWW                           ",
+                "         WWWWWWWWWWWWWWWWWWWWWWWWWW                         ",
+                "        WWWWWWWWWWWWWWWWWWWWWWWWWWWWW                       ",
+                "        WWWWWWWWWWWW       WWWWWWWWWWW                      ",
+                "        WWWWWWWWWWWWWWWWWWWWWWWWWWWWW                       ",
+                "         WWWWWWWWWWWWWWWWWWWWWWWWWW                         ",
+                "             WWWWWWWWWWWWWWWWWWWW                           ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ", },
+            { // y=2
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                WWWWWWWWWWWWWWW                             ",
+                "         WWWWWWWWWWWWWWWWWWWWWWWWWWW                        ",
+                "       WWWWWW                    WWWWWW                     ",
+                "      WWW                          WWWWW                    ",
+                "      WW                             WWW                    ",
+                "      WW                              WWW                   ",
+                "      WW                             WWW                    ",
+                "      WWW                          WWWWW                    ",
+                "       WWWWWW                    WWWWWW                     ",
+                "         WWWWWWWWWWWWWWWWWWWWWWWWWWW                        ",
+                "                WWWWWWWWWWWWWWW                             ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ", },
+            { // y=3
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                WWWWWWWWWWWWWWWW                            ",
+                "        WWWWWWWW               WWWWWWW                      ",
+                "      WWW                           WWW                     ",
+                "      W                                WWW                  ",
+                "                                        WWW                 ",
+                "                                        WWW                 ",
+                "                                         WW                 ",
+                "                                        WWW                 ",
+                "                                        WWW                 ",
+                "      W                                WWW                  ",
+                "      WWW                           WWW                     ",
+                "        WWWWWWWW               WWWWWWW                      ",
+                "                WWWWWWWWWWWWWWWW                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ", },
+            { // y=4
+                "                                                            ",
+                "                       LLD                                  ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "        WWWWWWWWWWWWWWWWWWWWWWWWWWWWW                       ",
+                "      WW                             WWW                    ",
+                "                                       WWWW                 ",
+                "                                          WW                ",
+                "                                           W                ",
+                "                                           WW               ",
+                "                I          I               WWW              ",
+                "                                           WW               ",
+                "                                           W                ",
+                "                                          WW                ",
+                "                                       WWWW                 ",
+                "      WW                             WWW                    ",
+                "        WWWWWWWWWWWWWWWWWWWWWWWWWWWWW                       ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                       LLD                                  ",
+                "                                                            ", },
+            { // y=5
+                "                        LL                                  ",
+                "                      LLL                                   ",
+                "                     LLL                                    ",
+                "                   LLLLD                                    ",
+                "                  LLLLD                                     ",
+                "                 LLLLD                                      ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "           WWWWWWWWWWWWWWWWWWWWWWW                          ",
+                "      WWWWW                       WWWWW                     ",
+                "                                       WWW                  ",
+                "                                          WW                ",
+                "                                            W               ",
+                "                                            WWW             ",
+                "                                             WW             ",
+                "                                      I       W             ",
+                "                                             WW             ",
+                "                                            WWW             ",
+                "                                            W               ",
+                "                                          WW                ",
+                "                                       WWW                  ",
+                "      WWWWW                       WWWWW                     ",
+                "           WWWWWWWWWWWWWWWWWWWWWWW                          ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                 LLLLD                                      ",
+                "                  LLLLD                                     ",
+                "                   LLLLD                                    ",
+                "                     LLL                                    ",
+                "                      LLL                                   ",
+                "                        LL                                  ", },
+            { // y=6
+                "                       DDD                                  ",
+                "                      DDD                                   ",
+                "                    DDDD                                    ",
+                "                   LLLL                                     ",
+                "                 LLLLL                                      ",
+                "                LLLLL                                       ",
+                "               LLLLL                                        ",
+                "             LLLLLLD                                        ",
+                "            LLLLLLL                                         ",
+                "        WWWLLLLLLLLWWWWWWWWWWWWWWWWWWW                      ",
+                "    WWWW                              WWW                   ",
+                "                                         WW                 ",
+                "                                           WW               ",
+                "                                             WW             ",
+                "                                               W            ",
+                "                                               WW           ",
+                "                                               WW           ",
+                "                                               WW           ",
+                "                                               W            ",
+                "                                             WW             ",
+                "                                           WW               ",
+                "                                         WW                 ",
+                "    WWWW                              WWW                   ",
+                "        WWWLLLLLLLLWWWWWWWWWWWWWWWWWWW                      ",
+                "            LLLLLLL                                         ",
+                "             LLLLLLD                                        ",
+                "               LLLLL                                        ",
+                "                LLLLL                                       ",
+                "                 LLLLL                                      ",
+                "                   LLLL                                     ",
+                "                    DDDD                                    ",
+                "                      DDD                                   ",
+                "                       DDD                                  ", },
+            { // y=7
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                  DDDDD                                     ",
+                "                 DDDDD                                      ",
+                "               DDDDDD                                       ",
+                "              KDDDDD                                        ",
+                "             KKDDDD                                         ",
+                "            KKKLLLLWWWWWWWWWWWWWW                           ",
+                "       KKKKKK                    WWWWWW                     ",
+                "    KKK                                WWWW                 ",
+                "                                           W                ",
+                "                                            WWW             ",
+                "                                               W            ",
+                "                                                W           ",
+                "                                                 W          ",
+                "                                                 W          ",
+                "                                                 W          ",
+                "                                                W           ",
+                "                                               W            ",
+                "                                            WWW             ",
+                "                                           W                ",
+                "    KKK                                WWWW                 ",
+                "       KKKKKK                    WWWWWW                     ",
+                "            KKKLLLLWWWWWWWWWWWWWW                           ",
+                "             KKDDDD                                         ",
+                "              KDDDDD                                        ",
+                "               DDDDDD                                       ",
+                "                 DDDDD                                      ",
+                "                  DDDDD                                     ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ", },
+            { // y=8
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "           KKKKWWWWWWWWWWWWWWWWWWWW                         ",
+                "     KKKKKK                        WWWWW                    ",
+                "   WK                                   WWW                 ",
+                "                                           WW               ",
+                "                                             WW             ",
+                "                                               WW           ",
+                "                                                 W          ",
+                "                                                  W         ",
+                "                                                  WW        ",
+                "                                                  W         ",
+                "                                                 W          ",
+                "                                               WW           ",
+                "                                             WW             ",
+                "                                           WW               ",
+                "   WK                                   WWW                 ",
+                "     KKKKKK                        WWWWW                    ",
+                "           KKKKWWWWWWWWWWWWWWWWWWWW                         ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ", },
+            { // y=9
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "         LLLLLLLLLLLLLLLLLLLLLLLLLLL                        ",
+                "     LLLL                           LLLL                L   ",
+                "   LL                                   LLL            LL   ",
+                "                                           WWW         LL   ",
+                "                                              W       LLL   ",
+                "                                               WW    LLLL   ",
+                "                                                 WWLLLLLL   ",
+                "                                                   LLLLL    ",
+                "                                                    LLLL    ",
+                "                                                   LLLLL    ",
+                "                                                 WWLLLLLL   ",
+                "                                               WW    LLLL   ",
+                "                                              W       LLL   ",
+                "                                           WWW         LL   ",
+                "   LL                                   LLL            LL   ",
+                "     LLLL                           LLLL                L   ",
+                "         LLLLLLLLLLLLLLLLLLLLLLLLLLL                        ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ", },
+            { // y=10
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                           D",
+                "                                                           D",
+                "                                                          DD",
+                "         LLLLLLLLLLLLLLLLLLLLLLLLLLLL                    DDD",
+                "     LLLL                            LLL                LDDD",
+                "   LL                                   LLLL           LLDDD",
+                "                                            LL         LLDDD",
+                "                                              LL      LLLDDD",
+                "                                                LL   LLLLDD ",
+                "                                                  LLLLLLLD  ",
+                "                                                    LLLL    ",
+                "                                                    LLLL    ",
+                "                                                    LLLL    ",
+                "                                                  LLLLLLLD  ",
+                "                                                LL   LLLLDD ",
+                "                                              LL      LLLDDD",
+                "                                            LL         LLDDD",
+                "   LL                                   LLLL           LLDDD",
+                "     LLLL                            LLL                LDDD",
+                "         LLLLLLLLLLLLLLLLLLLLLLLLLLLL                    DDD",
+                "                                                          DD",
+                "                                                           D",
+                "                                                           D",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ", },
+            { // y=11
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "         LLLLLLLLLLLLLLLLLLLLLLLLLLL                        ",
+                "     LLLL                           LLLL                D   ",
+                "   LL                                   LLLL           DD   ",
+                "  L                                         LL         DD   ",
+                " L                                            LL      DDD   ",
+                "D                                               LD   DDDD   ",
+                "D                                                 DDDDDDD   ",
+                "D                                                  DDDDD    ",
+                "D                                                   DDDD    ",
+                "D                                                  DDDDD    ",
+                "D                                                 DDDDDDD   ",
+                "D                                               LD   DDDD   ",
+                " L                                            LL      DDD   ",
+                "  L                                         LL         DD   ",
+                "   LL                                   LLLL           DD   ",
+                "     LLLL                           LLLL                D   ",
+                "         LLLLLLLLLLLLLLLLLLLLLLLLLLL                        ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ", },
+            { // y=12
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "          LLLLLLLLLLLLLLLLLLLLLLLLL                         ",
+                "     LKKLL                         LLLLL                    ",
+                "   DL                                   LDD                 ",
+                "  D                                        DDD              ",
+                " D                                            D             ",
+                " D                                             DD           ",
+                "D                                                D          ",
+                "D                                                 D         ",
+                "D                                                 DD        ",
+                "D                                                 D         ",
+                "D                                                D          ",
+                " D                                             DD           ",
+                " D                                            D             ",
+                "  D                                        DDD              ",
+                "   DL                                   LDD                 ",
+                "     LKKLL                         LLLLL                    ",
+                "          LLLLLLLLLLLLLLLLLLLLLLLLL                         ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ", },
+            { // y=13
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "            DDDDDDDDDDDDDDDDDDDDDD                          ",
+                "      KKDDDD                      DDDDD                     ",
+                "    DD                                 DDDD                 ",
+                "  DD                                       D                ",
+                "  D                                         DDD             ",
+                " D                                             D            ",
+                " D                                             DD           ",
+                "D                                               DD          ",
+                "D                                               DD          ",
+                "D                                               DD          ",
+                " D                                             DD           ",
+                " D                                             D            ",
+                "  D                                         DDD             ",
+                "  DD                                       D                ",
+                "    DD                                 DDDD                 ",
+                "      KKDDDD                      DDDDD                     ",
+                "            DDDDDDDDDDDDDDDDDDDDDD                          ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ", },
+            { // y=14
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                DDDDDDDDDDDDDDDD                            ",
+                "       DDDDDDDDD                DDDDDD                      ",
+                "    DDD                               DDDD                  ",
+                "   D                                      DD                ",
+                "  D                                         D               ",
+                "  D                                         DDD             ",
+                " D                                            D             ",
+                " D                                            DD            ",
+                " D                                            DD            ",
+                " D                                            DD            ",
+                " D                                            D             ",
+                "  D                                         DDD             ",
+                "  D                                         D               ",
+                "   D                                      DD                ",
+                "    DDD                               DDDD                  ",
+                "       DDDDDDDDD                DDDDDD                      ",
+                "                DDDDDDDDDDDDDDDD                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ", },
+            { // y=15
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "          DDDDDDDDDDDDDDDDDDDDDDDDD                         ",
+                "      DDDD                         DDDD                     ",
+                "    DD                                 DDD                  ",
+                "   D                                      DD                ",
+                "  DD                                       D                ",
+                "  D                                        DDD              ",
+                "  D                                         DD              ",
+                "  D                                         DD              ",
+                "  D                                         DD              ",
+                "  D                                        DDD              ",
+                "  DD                                       D                ",
+                "   D                                      DD                ",
+                "    DD                                 DDD                  ",
+                "      DDDD                         DDDD                     ",
+                "          DDDDDDDDDDDDDDDDDDDDDDDDD                         ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ", },
+            { // y=16
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                   DDDDDDDDD                                ",
+                "         DDDDDDDDDD         DDDDDDDDD                       ",
+                "      DDDD                         DDDD                     ",
+                "    DDD                               DDDD                  ",
+                "    D                                   DDD                 ",
+                "   DD                                   DDD                 ",
+                "   D                                      LD                ",
+                "   D                                      LD                ",
+                "   D                                      LD                ",
+                "   DD                                   DDD                 ",
+                "    D                                   DDD                 ",
+                "    DDD                               DDDD                  ",
+                "      DDDD                         DDDD                     ",
+                "         DDDDDDDDDD         DDDDDDDDD                       ",
+                "                   DDDDDDDDD                                ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ", },
+            { // y=17
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                   DDDDDDDDD                                ",
+                "          DDDDDDDDDDDDDDDDDDDDDDDDD                         ",
+                "       DDDDDDD                  DDDDDD                      ",
+                "     DDDDDD                        DDDDD                    ",
+                "     DDD                             DDD                    ",
+                "    DDDD                              LLLLD                 ",
+                "    DDDD                              LLLLD                 ",
+                "    DDDD                              LLLLD                 ",
+                "     DDD                             DDD                    ",
+                "     DDDDDD                        DDDDD                    ",
+                "       DDDDDDD                  DDDDDD                      ",
+                "          DDDDDDDDDDDDDDDDDDDDDDDDD                         ",
+                "                   DDDDDDDDD                                ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ", },
+            { // y=18
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "              DDDDDDDDDDDDDDDDDD                            ",
+                "           DDDDDDDDDDDDDDDDDDDDDDDD                         ",
+                "        DDDDDDDDDDDDDDDDDDDDDDDDDDDDD                       ",
+                "        DDDDDDDDDDDDDDDDDDDDDDDDDDLLLLLLLL                  ",
+                "        DDDDDDDDDDDD       DDDDDDDLLLLLLLL                  ",
+                "        DDDDDDDDDDDDDDDDDDDDDDDDDDLLLLLLLL                  ",
+                "        DDDDDDDDDDDDDDDDDDDDDDDDDDDDD                       ",
+                "           DDDDDDDDDDDDDDDDDDDDDDDD                         ",
+                "              DDDDDDDDDDDDDDDDDD                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ", },
+            { // y=19
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                  DLLLLLLD                  ",
+                "                    DDDDDDD       DLLLLLLD                  ",
+                "                                  DLLLLLLD                  ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ", },
+            { // y=20
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                   DLLLLD                   ",
+                "                                   DLLLLD                   ",
+                "                                   DLLLLD                   ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ", },
+            { // y=21
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                    DLLD                    ",
+                "                                    DLLD                    ",
+                "                                    DLLD                    ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ", },
+            { // y=22
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                     DD                     ",
+                "                                     DD                     ",
+                "                                     DD                     ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ",
+                "                                                            ", }, };
+
+        private OTEDeepSeikoShape() {}
     }
 }

@@ -43,7 +43,6 @@ import com.gtnewhorizon.structurelib.structure.IStructureElement;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
-import com.newmaa.othtech.utils.OTHTooltipBuilder;
 import com.newmaa.othtech.utils.Utils;
 
 import bartworks.API.BorosilicateGlass;
@@ -70,361 +69,57 @@ import gtPlusPlus.xmod.gregtech.common.blocks.textures.TexturesGtBlock;
 
 public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
 
-    public OTEMegaNineInOne(int aID, String aName, String aNameRegional) {
-        super(aID, aName, aNameRegional);
-    }
-
-    public OTEMegaNineInOne(String aName) {
-        super(aName);
-    }
-
     protected int mInternalMode = 0;
+
     private static final int MODE_COMPRESSOR = 0;
+
     private static final int MODE_LATHE = 1;
+
     private static final int MODE_MAGNETIC = 2;
+
     private static final int MODE_FERMENTER = 3;
+
     private static final int MODE_FLUIDEXTRACT = 4;
+
     private static final int MODE_EXTRACTOR = 5;
+
     private static final int MODE_LASER = 6;
+
     private static final int MODE_AUTOCLAVE = 7;
+
     private static final int MODE_FLUIDSOLIDIFY = 8;
+
     private static final int MODE_ISA = 9;
+
     private static final int MODE_FLOAT = 10;
+
     private static final int MODE_VACUUM = 11;
+
     private static final int MODE_MOLE = 12;
+
     private static final int MODE_BREW = 13;
+
     private static final int MODE_HEAT = 14;
+
     private static final int[][] MODE_MAP = new int[][] { { 0, 1, 2 }, { 3, 4, 5 }, { 6, 7, 8 }, { 9, 10, 11 },
         { 12, 13, 14 } };
 
-    public int getTextureIndex() {
-        return TAE.getIndexFromPage(2, 2);
-    }
-
     private HeatingCoilLevel coilLevel;
-
-    public HeatingCoilLevel getCoilLevel() {
-        return this.coilLevel;
-    }
-
-    public void setCoilLevel(HeatingCoilLevel coilLevel) {
-        this.coilLevel = coilLevel;
-    }
-
-    public int getCoilTier() {
-        return Utils.getCoilTier(coilLevel);
-    }
-
-    @Override
-    public void saveNBTData(NBTTagCompound aNBT) {
-        super.saveNBTData(aNBT);
-        aNBT.setInteger("mInternalMode", mInternalMode);
-
-    }
-
-    @Override
-    public void loadNBTData(final NBTTagCompound aNBT) {
-        super.loadNBTData(aNBT);
-        this.mInternalMode = aNBT.getInteger("mInternalMode");
-
-    }
-
-    @Override
-    protected boolean isEnablePerfectOverclock() {
-        return true;
-    }
-
-    @Override
-    public int getMaxParallelRecipes() {
-        return Math.max(9, 64 - (GTUtility.getTier(this.getMaxInputVoltage()) * 9));
-    }
-
-    @Override
-    protected float getSpeedBonus() {
-        return (float) (1 + (GTUtility.getTier(this.getMaxInputVoltage()) * 0.16));
-    }
-
-    @Override
-    public RecipeMap<?> getRecipeMap() {
-        return null;
-    }
-
-    protected float getEuModifier() {
-        return (float) Math.max(0.01, ((double) 1 / getCoilTier()) * 0.1);
-    }
-
-    private ItemStack getCircuit(ItemStack[] t) {
-        for (ItemStack j : t) {
-            if (j.getItem() == Circuit_Integrated.getItem()) {
-                if (j.getItemDamage() >= 20 && j.getItemDamage() <= 22) {
-                    return j;
-                }
-            }
-        }
-        return null;
-    }
-
-    private int getCircuitID(ItemStack circuit) {
-        int H = circuit.getItemDamage();
-        int T = (H == 20 ? 0 : (H == 21 ? 1 : (H == 22 ? 2 : -1)));
-        return MODE_MAP[this.mInternalMode][T];
-    }
-
-    @NotNull
-    @Override
-    public Collection<RecipeMap<?>> getAvailableRecipeMaps() {
-        return Arrays.asList(
-            RecipeMaps.compressorRecipes,
-            RecipeMaps.latheRecipes,
-            RecipeMaps.polarizerRecipes,
-            RecipeMaps.fermentingRecipes,
-            RecipeMaps.fluidExtractionRecipes,
-            RecipeMaps.extractorRecipes,
-            RecipeMaps.laserEngraverRecipes,
-            RecipeMaps.autoclaveRecipes,
-            RecipeMaps.fluidSolidifierRecipes,
-            RecipeMaps.millingRecipes,
-            RecipeMaps.flotationCellRecipes,
-            RecipeMaps.vacuumFurnaceRecipes,
-            RecipeMaps.molecularTransformerRecipes,
-            RecipeMaps.brewingRecipes,
-            RecipeMaps.fluidHeaterRecipes);
-    }
-
-    @Override
-    protected ProcessingLogic createProcessingLogic() {
-        return new ProcessingLogic() {
-
-            private ItemStack lastCircuit = null;
-
-            @NotNull
-            @Override
-            public CheckRecipeResult process() {
-                setEuModifier(getEuModifier());
-                setSpeedBonus(getSpeedBonus());
-                setOverclock(isEnablePerfectOverclock() ? 4 : 2, 4);
-                return super.process();
-            }
-
-            @Override
-            protected @NotNull CheckRecipeResult validateRecipe(@NotNull GTRecipe recipe) {
-                if (recipe.getMetadata(CompressionTierKey.INSTANCE) != null) {
-                    if (getCoilTier() < 10 && recipe.getMetadata(CompressionTierKey.INSTANCE) == 1) {
-                        return CheckRecipeResultRegistry.insufficientMachineTier(1);
-                    } else if (getCoilTier() < 13 && recipe.getMetadata(CompressionTierKey.INSTANCE) == 2) {
-                        return CheckRecipeResultRegistry.insufficientMachineTier(2);
-                    } else return super.validateRecipe(recipe);
-                }
-                return CheckRecipeResultRegistry.SUCCESSFUL;
-            }
-
-            @Nonnull
-            @Override
-            protected Stream<GTRecipe> findRecipeMatches(@Nullable RecipeMap<?> map) {
-                ItemStack circuit = getCircuit(inputItems);
-                if (circuit == null) {
-                    return Stream.empty();
-                }
-                if (!GTUtility.areStacksEqual(circuit, lastCircuit)) {
-                    lastRecipe = null;
-                    lastCircuit = circuit;
-                }
-                RecipeMap<?> foundMap = getRecipeMap(getCircuitID(circuit));
-                if (foundMap == null) {
-                    return Stream.empty();
-                }
-                return super.findRecipeMatches(foundMap);
-            }
-
-        }.enablePerfectOverclock()
-            .setUnlimitedTierSkips()
-            .setMaxParallelSupplier(this::getMaxParallelRecipes);
-
-    }
-
-    private static RecipeMap<?> getRecipeMap(int aMode) {
-        if (aMode == MODE_COMPRESSOR) {
-            return RecipeMaps.compressorRecipes;
-        } else if (aMode == MODE_LATHE) {
-            return RecipeMaps.latheRecipes;
-        } else if (aMode == MODE_MAGNETIC) {
-            return RecipeMaps.polarizerRecipes;
-        } else if (aMode == MODE_FERMENTER) {
-            return RecipeMaps.fermentingRecipes;
-        } else if (aMode == MODE_FLUIDEXTRACT) {
-            return RecipeMaps.fluidExtractionRecipes;
-        } else if (aMode == MODE_EXTRACTOR) {
-            return RecipeMaps.extractorRecipes;
-        } else if (aMode == MODE_LASER) {
-            return RecipeMaps.laserEngraverRecipes;
-        } else if (aMode == MODE_AUTOCLAVE) {
-            return RecipeMaps.autoclaveRecipes;
-        } else if (aMode == MODE_FLUIDSOLIDIFY) {
-            return RecipeMaps.fluidSolidifierRecipes;
-        } else if (aMode == MODE_ISA) {
-            return RecipeMaps.millingRecipes;
-        } else if (aMode == MODE_FLOAT) {
-            return RecipeMaps.flotationCellRecipes;
-        } else if (aMode == MODE_VACUUM) {
-            return RecipeMaps.vacuumFurnaceRecipes;
-        } else if (aMode == MODE_MOLE) {
-            return RecipeMaps.molecularTransformerRecipes;
-        } else if (aMode == MODE_BREW) {
-            return RecipeMaps.brewingRecipes;
-        } else if (aMode == MODE_HEAT) {
-            return RecipeMaps.fluidHeaterRecipes;
-        } else return null;
-    }
-
-    @Override
-    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
-        ItemStack aTool) {
-        if (mInternalMode < 4) {
-            mInternalMode++;
-        } else {
-            mInternalMode = 0;
-        }
-        switch (mInternalMode) {
-            case 0 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.m9in1.mode.0"));
-            case 1 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.m9in1.mode.1"));
-            case 2 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.m9in1.mode.2"));
-            case 3 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.m9in1.mode.3"));
-            case 4 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.m9in1.mode.4"));
-        }
-        /*
-         * GTUtility.sendChatToPlayer(
-         * aPlayer,
-         * StatCollector.translateToLocal(
-         * mInternalMode == 0 ? translateToLocal("ote.tm.m9in1.mode.0")
-         * : mInternalMode == 1 ? translateToLocal("ote.tm.m9in1.mode.1")
-         * : mInternalMode == 2 ? translateToLocal("ote.tm.m9in1.mode.2")
-         * : mInternalMode == 3 ? translateToLocal("ote.tm.m9in1.mode.3")
-         * : mInternalMode == 4 ? translateToLocal("ote.tm.m9in1.mode.4") : "Null"));
-         */
-    }
-
-    @Override
-    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
-        if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
-        repairMachine();
-    }
-
-    @Override
-    public void construct(ItemStack stackSize, boolean hintsOnly) {
-        repairMachine();
-        buildPiece(STRUCTURE_PIECE_MAIN, stackSize, hintsOnly, horizontalOffSet, verticalOffSet, depthOffSet);
-    }
-
-    @Override
-    public int getPollutionPerSecond(final ItemStack aStack) {
-        return 123;
-    }
-
-    @Override
-    public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
-        if (this.mMachine) return -1;
-        int realBudget = elementBudget >= 200 ? elementBudget : Math.min(200, elementBudget * 5);
-
-        return this.survivalBuildPiece(
-            STRUCTURE_PIECE_MAIN,
-            stackSize,
-            horizontalOffSet,
-            verticalOffSet,
-            depthOffSet,
-            realBudget,
-            env,
-            false,
-            true);
-
-    }
 
     private static final String STRUCTURE_PIECE_MAIN = "main";
 
     private final int horizontalOffSet = 24;
+
     private final int verticalOffSet = 3;
+
     private final int depthOffSet = 40;
+
     private static IStructureDefinition<OTEMegaNineInOne> STRUCTURE_DEFINITION = null;
+
     private static final String[] description = new String[] {
         EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.mnio.0"),
         EnumChatFormatting.LIGHT_PURPLE + translateToLocal("ote.cm.mnio.1"),
         EnumChatFormatting.GOLD + translateToLocal("ote.cm.mnio.2") };
-
-    @Override
-    public String[] getStructureDescription(ItemStack stackSize) {
-        return description;
-    }
-
-    @Override
-    public IStructureDefinition<OTEMegaNineInOne> getStructureDefinition() {
-        if (STRUCTURE_DEFINITION == null) {
-            STRUCTURE_DEFINITION = StructureDefinition.<OTEMegaNineInOne>builder()
-                .addShape(STRUCTURE_PIECE_MAIN, shapeMain)
-                .addElement('D', ofBlock(ModBlocks.blockCasings3Misc, 2))
-                .addElement(
-                    'E',
-                    buildHatchAdder(OTEMegaNineInOne.class)
-                        .atLeast(
-                            InputBus,
-                            OutputBus,
-                            InputHatch,
-                            OutputHatch,
-                            Muffler,
-                            Maintenance,
-                            Energy.or(ExoticEnergy))
-                        .adder(OTEMegaNineInOne::addToMachineList)
-                        .hint(1)
-                        .casingIndex(getTextureIndex())
-                        .buildAndChain(ModBlocks.blockCasings3Misc, 2))
-                .addElement('A', BorosilicateGlass.ofBoroGlass(3))
-                .addElement('C', ofFrame(Materials.HSSS))
-                .addElement(
-                    'B',
-                    withChannel("coil", ofCoil(OTEMegaNineInOne::setCoilLevel, OTEMegaNineInOne::getCoilLevel)))
-                .addElement('F', new IStructureElement<>() {
-
-                    private final BlocksToPlace cached = BlocksToPlace.create(Blocks.beacon, 0);
-
-                    @Override
-                    public boolean check(OTEMegaNineInOne oteMegaNineInOne, World world, int x, int y, int z) {
-                        // in fact, we only need it is a beacon
-                        // so it also can be chisel's beacon...?
-                        return world.getBlock(x, y, z) instanceof BlockBeacon
-                            && world.getTileEntity(x, y, z) instanceof TileEntityBeacon;
-                    }
-
-                    @Override
-                    public boolean couldBeValid(OTEMegaNineInOne oteMegaNineInOne, World world, int x, int y, int z,
-                        ItemStack trigger) {
-                        // no side effect
-                        return check(oteMegaNineInOne, world, x, y, z);
-                    }
-
-                    @Override
-                    public boolean spawnHint(OTEMegaNineInOne oteMegaNineInOne, World world, int x, int y, int z,
-                        ItemStack trigger) {
-                        StructureLibAPI.hintParticle(world, x, y, z, Blocks.beacon, 0);
-                        return true;
-                    }
-
-                    @Override
-                    public boolean placeBlock(OTEMegaNineInOne oteMegaNineInOne, World world, int x, int y, int z,
-                        ItemStack trigger) {
-                        world.setBlock(x, y, z, Blocks.beacon, 0, 2);
-                        if (check(oteMegaNineInOne, world, x, y, z)) return true;
-                        else return world.setBlockToAir(x, y, z);
-                    }
-
-                    @Override
-                    public BlocksToPlace getBlocksToPlace(OTEMegaNineInOne oteMegaNineInOne, World world, int x, int y,
-                        int z, ItemStack trigger, AutoPlaceEnvironment env) {
-                        return cached;
-                    }
-                })
-                .build();
-
-        }
-        return STRUCTURE_DEFINITION;
-    }
 
     // spotless:off
     //structured by compactFusionReactor
@@ -870,15 +565,335 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
         "                                                 ",
         "                                                 "
     }};
+
+    // ===================== Constructors =====================
+
+    public OTEMegaNineInOne(int aID, String aName, String aNameRegional) {
+        super(aID, aName, aNameRegional);
+    }
+
+    public OTEMegaNineInOne(String aName) {
+        super(aName);
+    }
+
+    // ===================== NBT =====================
+
+    @Override
+    public void saveNBTData(NBTTagCompound aNBT) {
+        super.saveNBTData(aNBT);
+        aNBT.setInteger("mInternalMode", mInternalMode);
+
+    }
+
+    @Override
+    public void loadNBTData(final NBTTagCompound aNBT) {
+        super.loadNBTData(aNBT);
+        this.mInternalMode = aNBT.getInteger("mInternalMode");
+
+    }
+
+    // ===================== Machine Parameters =====================
+
+    @Override
+    protected boolean isEnablePerfectOverclock() {
+        return true;
+    }
+
+    @Override
+    public int getMaxParallelRecipes() {
+        return Math.max(9, 64 - (GTUtility.getTier(this.getMaxInputVoltage()) * 9));
+    }
+
+    @Override
+    protected float getSpeedBonus() {
+        return (float) (1 + (GTUtility.getTier(this.getMaxInputVoltage()) * 0.16));
+    }
+
+    protected float getEuModifier() {
+        return (float) Math.max(0.01, ((double) 1 / getCoilTier()) * 0.1);
+    }
+
+    @Override
+    public RecipeMap<?> getRecipeMap() {
+        return null;
+    }
+
+    private static RecipeMap<?> getRecipeMap(int aMode) {
+        if (aMode == MODE_COMPRESSOR) {
+            return RecipeMaps.compressorRecipes;
+        } else if (aMode == MODE_LATHE) {
+            return RecipeMaps.latheRecipes;
+        } else if (aMode == MODE_MAGNETIC) {
+            return RecipeMaps.polarizerRecipes;
+        } else if (aMode == MODE_FERMENTER) {
+            return RecipeMaps.fermentingRecipes;
+        } else if (aMode == MODE_FLUIDEXTRACT) {
+            return RecipeMaps.fluidExtractionRecipes;
+        } else if (aMode == MODE_EXTRACTOR) {
+            return RecipeMaps.extractorRecipes;
+        } else if (aMode == MODE_LASER) {
+            return RecipeMaps.laserEngraverRecipes;
+        } else if (aMode == MODE_AUTOCLAVE) {
+            return RecipeMaps.autoclaveRecipes;
+        } else if (aMode == MODE_FLUIDSOLIDIFY) {
+            return RecipeMaps.fluidSolidifierRecipes;
+        } else if (aMode == MODE_ISA) {
+            return RecipeMaps.millingRecipes;
+        } else if (aMode == MODE_FLOAT) {
+            return RecipeMaps.flotationCellRecipes;
+        } else if (aMode == MODE_VACUUM) {
+            return RecipeMaps.vacuumFurnaceRecipes;
+        } else if (aMode == MODE_MOLE) {
+            return RecipeMaps.molecularTransformerRecipes;
+        } else if (aMode == MODE_BREW) {
+            return RecipeMaps.brewingRecipes;
+        } else if (aMode == MODE_HEAT) {
+            return RecipeMaps.fluidHeaterRecipes;
+        } else return null;
+    }
+
+    @NotNull
+    @Override
+    public Collection<RecipeMap<?>> getAvailableRecipeMaps() {
+        return Arrays.asList(
+            RecipeMaps.compressorRecipes,
+            RecipeMaps.latheRecipes,
+            RecipeMaps.polarizerRecipes,
+            RecipeMaps.fermentingRecipes,
+            RecipeMaps.fluidExtractionRecipes,
+            RecipeMaps.extractorRecipes,
+            RecipeMaps.laserEngraverRecipes,
+            RecipeMaps.autoclaveRecipes,
+            RecipeMaps.fluidSolidifierRecipes,
+            RecipeMaps.millingRecipes,
+            RecipeMaps.flotationCellRecipes,
+            RecipeMaps.vacuumFurnaceRecipes,
+            RecipeMaps.molecularTransformerRecipes,
+            RecipeMaps.brewingRecipes,
+            RecipeMaps.fluidHeaterRecipes);
+    }
+
+    @Override
+    public int getPollutionPerSecond(final ItemStack aStack) {
+        return 123;
+    }
+
+    @Override
+    public int getMaxEfficiency(ItemStack aStack) {
+        return 10000;
+    }
+
+    @Override
+    public int getDamageToComponent(ItemStack aStack) {
+        return 0;
+    }
+
+    @Override
+    public boolean isCorrectMachinePart(ItemStack aStack) {
+        return true;
+    }
+
+    @Override
+    public boolean supportsVoidProtection() {
+        return true;
+    }
+
+    @Override
+    public boolean supportsInputSeparation() {
+        return true;
+    }
+
+    @Override
+    public boolean supportsSingleRecipeLocking() {
+        return true;
+    }
+
+    public HeatingCoilLevel getCoilLevel() {
+        return this.coilLevel;
+    }
+
+    public void setCoilLevel(HeatingCoilLevel coilLevel) {
+        this.coilLevel = coilLevel;
+    }
+
+    public int getCoilTier() {
+        return Utils.getCoilTier(coilLevel);
+    }
+
+    // ===================== Processing Logic =====================
+
+    @Override
+    protected ProcessingLogic createProcessingLogic() {
+        return new ProcessingLogic() {
+
+            private ItemStack lastCircuit = null;
+
+            @NotNull
+            @Override
+            public CheckRecipeResult process() {
+                setEuModifier(getEuModifier());
+                setSpeedBonus(getSpeedBonus());
+                setOverclock(isEnablePerfectOverclock() ? 3 : 2, 4);
+                return super.process();
+            }
+
+            @Override
+            protected @NotNull CheckRecipeResult validateRecipe(@NotNull GTRecipe recipe) {
+                if (recipe.getMetadata(CompressionTierKey.INSTANCE) != null) {
+                    if (getCoilTier() < 10 && recipe.getMetadata(CompressionTierKey.INSTANCE) == 1) {
+                        return CheckRecipeResultRegistry.insufficientMachineTier(1);
+                    } else if (getCoilTier() < 13 && recipe.getMetadata(CompressionTierKey.INSTANCE) == 2) {
+                        return CheckRecipeResultRegistry.insufficientMachineTier(2);
+                    } else return super.validateRecipe(recipe);
+                }
+                return CheckRecipeResultRegistry.SUCCESSFUL;
+            }
+
+            @Nonnull
+            @Override
+            protected Stream<GTRecipe> findRecipeMatches(@Nullable RecipeMap<?> map) {
+                ItemStack circuit = getCircuit(inputItems);
+                if (circuit == null) {
+                    return Stream.empty();
+                }
+                if (!GTUtility.areStacksEqual(circuit, lastCircuit)) {
+                    lastRecipe = null;
+                    lastCircuit = circuit;
+                }
+                RecipeMap<?> foundMap = getRecipeMap(getCircuitID(circuit));
+                if (foundMap == null) {
+                    return Stream.empty();
+                }
+                return super.findRecipeMatches(foundMap);
+            }
+
+        }.enablePerfectOverclock()
+            .setUnlimitedTierSkips()
+            .setMaxParallelSupplier(this::getMaxParallelRecipes);
+
+    }
+
+    // ===================== Structure =====================
+
+    @Override
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
+        if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
+        repairMachine();
+    }
+
+    @Override
+    public void construct(ItemStack stackSize, boolean hintsOnly) {
+        repairMachine();
+        buildPiece(STRUCTURE_PIECE_MAIN, stackSize, hintsOnly, horizontalOffSet, verticalOffSet, depthOffSet);
+    }
+
+    @Override
+    public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
+        if (this.mMachine) return -1;
+        int realBudget = elementBudget >= 200 ? elementBudget : Math.min(200, elementBudget * 5);
+
+        return this.survivalBuildPiece(
+            STRUCTURE_PIECE_MAIN,
+            stackSize,
+            horizontalOffSet,
+            verticalOffSet,
+            depthOffSet,
+            realBudget,
+            env,
+            false,
+            true);
+
+    }
+
+    @Override
+    public String[] getStructureDescription(ItemStack stackSize) {
+        return description;
+    }
+
+    @Override
+    public IStructureDefinition<OTEMegaNineInOne> getStructureDefinition() {
+        if (STRUCTURE_DEFINITION == null) {
+            STRUCTURE_DEFINITION = StructureDefinition.<OTEMegaNineInOne>builder()
+                .addShape(STRUCTURE_PIECE_MAIN, shapeMain)
+                .addElement('D', ofBlock(ModBlocks.blockCasings3Misc, 2))
+                .addElement(
+                    'E',
+                    buildHatchAdder(OTEMegaNineInOne.class)
+                        .atLeast(
+                            InputBus,
+                            OutputBus,
+                            InputHatch,
+                            OutputHatch,
+                            Muffler,
+                            Maintenance,
+                            Energy.or(ExoticEnergy))
+                        .adder(OTEMegaNineInOne::addToMachineList)
+                        .hint(1)
+                        .casingIndex(getTextureIndex())
+                        .buildAndChain(ModBlocks.blockCasings3Misc, 2))
+                .addElement('A', BorosilicateGlass.ofBoroGlass(3))
+                .addElement('C', ofFrame(Materials.HSSS))
+                .addElement(
+                    'B',
+                    withChannel("coil", ofCoil(OTEMegaNineInOne::setCoilLevel, OTEMegaNineInOne::getCoilLevel)))
+                .addElement('F', new IStructureElement<>() {
+
+                    private final BlocksToPlace cached = BlocksToPlace.create(Blocks.beacon, 0);
+
+                    @Override
+                    public boolean check(OTEMegaNineInOne oteMegaNineInOne, World world, int x, int y, int z) {
+                        // in fact, we only need it is a beacon
+                        // so it also can be chisel's beacon...?
+                        return world.getBlock(x, y, z) instanceof BlockBeacon
+                            && world.getTileEntity(x, y, z) instanceof TileEntityBeacon;
+                    }
+
+                    @Override
+                    public boolean couldBeValid(OTEMegaNineInOne oteMegaNineInOne, World world, int x, int y, int z,
+                        ItemStack trigger) {
+                        // no side effect
+                        return check(oteMegaNineInOne, world, x, y, z);
+                    }
+
+                    @Override
+                    public boolean spawnHint(OTEMegaNineInOne oteMegaNineInOne, World world, int x, int y, int z,
+                        ItemStack trigger) {
+                        StructureLibAPI.hintParticle(world, x, y, z, Blocks.beacon, 0);
+                        return true;
+                    }
+
+                    @Override
+                    public boolean placeBlock(OTEMegaNineInOne oteMegaNineInOne, World world, int x, int y, int z,
+                        ItemStack trigger) {
+                        world.setBlock(x, y, z, Blocks.beacon, 0, 2);
+                        if (check(oteMegaNineInOne, world, x, y, z)) return true;
+                        else return world.setBlockToAir(x, y, z);
+                    }
+
+                    @Override
+                    public BlocksToPlace getBlocksToPlace(OTEMegaNineInOne oteMegaNineInOne, World world, int x, int y,
+                        int z, ItemStack trigger, AutoPlaceEnvironment env) {
+                        return cached;
+                    }
+                })
+                .build();
+
+        }
+        return STRUCTURE_DEFINITION;
+    }
+
     @Override
     public boolean addToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
         return super.addToMachineList(aTileEntity, aBaseCasingIndex)
             || addExoticEnergyInputToMachineList(aTileEntity, aBaseCasingIndex);
     }
+
+    // ===================== Tooltip =====================
+
     /*
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType("§c§l老登的终极造物 - 九合一 (巨型加工厂)")
             .addInfo("§a共有十五种模式, 使用螺丝刀切换类模式， 使用编程电路20 21 22切换内部模式")
             .addInfo("§aMetal类: 压缩机 车床 电力磁化机")
@@ -910,7 +925,7 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
     }*/
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType(translateToLocal("oth.tm.mnio.0"))
             .addInfo(translateToLocal("oth.tm.mnio.1"))
             .addInfo(translateToLocal("oth.tm.mnio.2"))
@@ -926,9 +941,10 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
             .addInfo(translateToLocal("oth.tm.mnio.12"))
             .addInfo(translateToLocal("oth.tm.mnio.13"))
             .addInfo(translateToLocal("oth.tm.pollution"))
-            .addTecTechHatchInfo()
             .addPollutionAmount(123)
+            .addTecTechHatchInfo()
             .addSeparator()
+            .addInfo("§aAdded by: 123Technology - For The Best Machine")
             .addController(translateToLocal("ote.tn.mnio"))
             .beginStructureBlock(49, 8, 49, false)
             .addInputBus("AnyInputBus", 1)
@@ -937,45 +953,18 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
             .addOutputHatch("AnyOutputHatch", 1)
             .addEnergyHatch("AnyEnergyHatch", 1)
             .addMufflerHatch("AnyMufflerHatch", 1)
-            .toolTipFinisher("§a123Technology - For The Best Machine");
+            .toolTipFinisher();
         return tt;
     }
 
-    @Override
-    public boolean isCorrectMachinePart(ItemStack aStack) {
-        return true;
-    }
-
-    @Override
-    public int getMaxEfficiency(ItemStack aStack) {
-        return 10000;
-    }
-
-    @Override
-    public int getDamageToComponent(ItemStack aStack) {
-        return 0;
-    }
-
-    @Override
-    public boolean supportsVoidProtection() {
-        return true;
-    }
-
-    @Override
-    public boolean supportsInputSeparation() {
-        return true;
-    }
-
-    @Override
-    public boolean supportsSingleRecipeLocking() {
-        return true;
-    }
+    // ===================== Standard Overrides =====================
 
     @Override
     public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
         return new OTEMegaNineInOne(this.mName);
     }
 
+    // ===================== Textures =====================
 
     @Override
     public ITexture[] getTexture(final IGregTechTileEntity baseMetaTileEntity, final ForgeDirection sideDirection,
@@ -1000,6 +989,56 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
         }
         return new ITexture[] { Textures.BlockIcons
             .getCasingTextureForId(TAE.getIndexFromPage(2, 2)) };
+    }
+
+    // ===================== Misc =====================
+
+    public int getTextureIndex() {
+        return TAE.getIndexFromPage(2, 2);
+    }
+
+    private ItemStack getCircuit(ItemStack[] t) {
+        for (ItemStack j : t) {
+            if (j.getItem() == Circuit_Integrated.getItem()) {
+                if (j.getItemDamage() >= 20 && j.getItemDamage() <= 22) {
+                    return j;
+                }
+            }
+        }
+        return null;
+    }
+
+    private int getCircuitID(ItemStack circuit) {
+        int H = circuit.getItemDamage();
+        int T = (H == 20 ? 0 : (H == 21 ? 1 : (H == 22 ? 2 : -1)));
+        return MODE_MAP[this.mInternalMode][T];
+    }
+
+    @Override
+    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+        ItemStack aTool) {
+        if (mInternalMode < 4) {
+            mInternalMode++;
+        } else {
+            mInternalMode = 0;
+        }
+        switch (mInternalMode) {
+            case 0 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.m9in1.mode.0"));
+            case 1 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.m9in1.mode.1"));
+            case 2 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.m9in1.mode.2"));
+            case 3 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.m9in1.mode.3"));
+            case 4 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.m9in1.mode.4"));
+        }
+        /*
+         * GTUtility.sendChatToPlayer(
+         * aPlayer,
+         * StatCollector.translateToLocal(
+         * mInternalMode == 0 ? translateToLocal("ote.tm.m9in1.mode.0")
+         * : mInternalMode == 1 ? translateToLocal("ote.tm.m9in1.mode.1")
+         * : mInternalMode == 2 ? translateToLocal("ote.tm.m9in1.mode.2")
+         * : mInternalMode == 3 ? translateToLocal("ote.tm.m9in1.mode.3")
+         * : mInternalMode == 4 ? translateToLocal("ote.tm.m9in1.mode.4") : "Null"));
+         */
     }
 }
 //spotless:on

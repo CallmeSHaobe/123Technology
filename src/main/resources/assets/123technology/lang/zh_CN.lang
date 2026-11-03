@@ -288,7 +288,7 @@ oth.tm.mnio.8=§b电压等级提高一级，并行 -9， 最低为9, 默认为64
 oth.tm.mnio.9=§b配方耗时 = NEI耗时 * (1 + (能源仓电压等级 * 16%))
 oth.tm.mnio.10=§bEU消耗 : (1 / 线圈等级) * 0.1, 最低为0.01")
 oth.tm.mnio.11=§b海珀珍线圈解锁稳定的黑洞, 通流琥珀金线圈解锁HIP
-oth.tm.mnio.12=§b执行无损超频
+oth.tm.mnio.12=§b执行无损超频...吗?(3/4无损)
 oth.tm.mnio.13=§e九合一，我们敬爱你口牙！！ ---Sukune_News
 ote.tm.m9in1.mode.0=压缩-车床-磁化(Metal)
 ote.tm.m9in1.mode.1=发酵-流体提取-提取(Fluid)

@@ -28,7 +28,6 @@ import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
-import com.newmaa.othtech.utils.OTHTooltipBuilder;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -51,210 +50,22 @@ import mcp.mobius.waila.api.IWailaDataAccessor;
 
 public class OTEWoodenFusionReactor extends OTHMultiMachineBase<OTEWoodenFusionReactor> {
 
-    public OTEWoodenFusionReactor(int aID, String aName, String aNameRegional) {
-        super(aID, aName, aNameRegional);
-    }
-
-    public OTEWoodenFusionReactor(String aName) {
-        super(aName);
-    }
-
-    public int getTextureIndex() {
-        return TAE.getIndexFromPage(2, 2);
-    }
-
     public int TierSteam = 0;
+
     public int amountPlasma = 1;
-
-    @Override
-    public void saveNBTData(NBTTagCompound aNBT) {
-        aNBT.setInteger("TierSteam", TierSteam);
-        aNBT.setInteger("amountPlasma", amountPlasma);
-        super.saveNBTData(aNBT);
-
-    }
-
-    @Override
-    public void loadNBTData(final NBTTagCompound aNBT) {
-        TierSteam = aNBT.getInteger("TierSteam");
-        amountPlasma = aNBT.getInteger("amountPlasma");
-        super.loadNBTData(aNBT);
-
-    }
-
-    @Override
-    public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
-        int z) {
-        super.getWailaNBTData(player, tile, tag, world, x, y, z);
-        final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
-        if (tileEntity != null) {
-            String tier = GTUtility.formatShortenedLong(TierSteam);
-            String pla = GTUtility.formatShortenedLong(amountPlasma);
-            String bonus = NumberFormatUtil.formatNumber(getSpeedBonus());
-            tag.setString("Tier", tier);
-            tag.setString("PlasmaAmount", pla);
-            tag.setString("bonus", bonus);
-        }
-    }
-
-    @Override
-    public void getWailaBody(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor,
-        IWailaConfigHandler config) {
-        super.getWailaBody(itemStack, currentTip, accessor, config);
-        final NBTTagCompound tag = accessor.getNBTData();
-        currentTip.add(
-            translateToLocal("otht.waila.tier.steam") + EnumChatFormatting.RESET
-                + ": "
-                + EnumChatFormatting.GOLD
-                + tag.getString("Tier")
-                + EnumChatFormatting.RESET);
-        currentTip.add(
-            translateToLocal("otht.waila.gen.plasma") + EnumChatFormatting.RESET
-                + ": "
-                + EnumChatFormatting.GOLD
-                + tag.getString("PlasmaAmount")
-                + EnumChatFormatting.RESET);
-        currentTip.add(
-            translateToLocal("otht.waila.bonus.speed") + EnumChatFormatting.RESET
-                + ": "
-                + EnumChatFormatting.GOLD
-                + tag.getString("bonus")
-                + EnumChatFormatting.RESET);
-    }
-
-    @Override
-    protected boolean isEnablePerfectOverclock() {
-        return true;
-    }
-
-    @Override
-    public int getMaxParallelRecipes() {
-        return 16;
-    }
-
-    @Override
-    protected float getSpeedBonus() {
-        return switch (TierSteam) {
-            case 2 -> 0.5F;
-            case 3 -> 0.1F;
-            default -> 1;
-        };
-    }
-
-    protected float getEuModifier() {
-        return 0F;
-    }
-
-    @Override
-    public RecipeMap<?> getRecipeMap() {
-        return Recipemaps.WFR;
-    }
-
-    @Override
-    protected ProcessingLogic createProcessingLogic() {
-
-        return new ProcessingLogic() {
-
-            @NotNull
-            @Override
-            public CheckRecipeResult process() {
-                checkSteam();
-                setSpeedBonus(getSpeedBonus());
-                setOverclock(isEnablePerfectOverclock() ? 4 : 2, 4);
-                return super.process();
-            }
-
-        }.setMaxParallelSupplier(this::getMaxParallelRecipes);
-    }
-
-    public void checkSteam() {
-        List<FluidStack> inputStacks = getStoredFluids();
-        if (inputStacks == null) {
-            TierSteam = 1;
-            amountPlasma = 1;
-        }
-        if (inputStacks != null) {
-            for (FluidStack fluidStack : inputStacks) {
-                if (fluidStack.isFluidEqual(FluidRegistry.getFluidStack("steam", 1))) {
-                    TierSteam = 1;
-                    amountPlasma = 1;
-                } else if (fluidStack.isFluidEqual(FluidRegistry.getFluidStack("ic2superheatedsteam", 1))) {
-                    TierSteam = 2;
-                    amountPlasma = 10;
-                } else if (fluidStack.isFluidEqual(FluidRegistry.getFluidStack("densesupercriticalsteam", 1))) {
-                    TierSteam = 3;
-                    amountPlasma = 100;
-                }
-            }
-        }
-    }
-
-    @Override
-    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
-        if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
-        repairMachine();
-    }
-
-    @Override
-    public void construct(ItemStack stackSize, boolean hintsOnly) {
-        repairMachine();
-        buildPiece(STRUCTURE_PIECE_MAIN, stackSize, hintsOnly, horizontalOffSet, verticalOffSet, depthOffSet);
-    }
-
-    @Override
-    public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
-        if (this.mMachine) return -1;
-        int realBudget = elementBudget >= 200 ? elementBudget : Math.min(200, elementBudget * 5);
-
-        return this.survivalBuildPiece(
-            STRUCTURE_PIECE_MAIN,
-            stackSize,
-            horizontalOffSet,
-            verticalOffSet,
-            depthOffSet,
-            realBudget,
-            env,
-            false,
-            true);
-
-    }
 
     private static final String STRUCTURE_PIECE_MAIN = "main";
 
     private final int horizontalOffSet = 24;
+
     private final int verticalOffSet = 3;
+
     private final int depthOffSet = 40;
+
     private static IStructureDefinition<OTEWoodenFusionReactor> STRUCTURE_DEFINITION = null;
+
     private static final String[] description = new String[] {
         EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.wfr.0") };
-
-    @Override
-    public String[] getStructureDescription(ItemStack stackSize) {
-        return description;
-    }
-
-    @Override
-    public IStructureDefinition<OTEWoodenFusionReactor> getStructureDefinition() {
-        if (STRUCTURE_DEFINITION == null) {
-            STRUCTURE_DEFINITION = StructureDefinition.<OTEWoodenFusionReactor>builder()
-                .addShape(STRUCTURE_PIECE_MAIN, shapeMain)
-                .addElement('F', ofBlock(Blocks.planks, 0))
-                .addElement('E', ofBlock(Blocks.planks, 0))
-                .addElement(
-                    'D',
-                    buildHatchAdder(OTEWoodenFusionReactor.class).atLeast(InputHatch, OutputHatch)
-                        .adder(OTEWoodenFusionReactor::addToMachineList)
-                        .hint(1)
-                        .casingIndex(getTextureIndex())
-                        .buildAndChain(Blocks.stonebrick, 0))
-                .addElement('A', ofBlock(Blocks.glass, 0))
-                .addElement('G', ofFrame(Materials.Wood))
-                .addElement('B', ofBlock(GregTechAPI.sBlockCasings3, 13))
-                .build();
-
-        }
-        return STRUCTURE_DEFINITION;
-    }
 
     // spotless:off
     //structured from compactFusionReactor
@@ -652,15 +463,186 @@ public class OTEWoodenFusionReactor extends OTHMultiMachineBase<OTEWoodenFusionR
             "                                                 "
     }
     };
+
+    // ===================== Constructors =====================
+
+    public OTEWoodenFusionReactor(int aID, String aName, String aNameRegional) {
+        super(aID, aName, aNameRegional);
+    }
+
+    public OTEWoodenFusionReactor(String aName) {
+        super(aName);
+    }
+
+    // ===================== NBT =====================
+
+    @Override
+    public void saveNBTData(NBTTagCompound aNBT) {
+        aNBT.setInteger("TierSteam", TierSteam);
+        aNBT.setInteger("amountPlasma", amountPlasma);
+        super.saveNBTData(aNBT);
+
+    }
+
+    @Override
+    public void loadNBTData(final NBTTagCompound aNBT) {
+        TierSteam = aNBT.getInteger("TierSteam");
+        amountPlasma = aNBT.getInteger("amountPlasma");
+        super.loadNBTData(aNBT);
+
+    }
+
+    // ===================== Machine Parameters =====================
+
+    @Override
+    protected boolean isEnablePerfectOverclock() {
+        return true;
+    }
+
+    @Override
+    public int getMaxParallelRecipes() {
+        return 16;
+    }
+
+    @Override
+    protected float getSpeedBonus() {
+        return switch (TierSteam) {
+            case 2 -> 0.5F;
+            case 3 -> 0.1F;
+            default -> 1;
+        };
+    }
+
+    protected float getEuModifier() {
+        return 0F;
+    }
+
+    @Override
+    public RecipeMap<?> getRecipeMap() {
+        return Recipemaps.WFR;
+    }
+
+    @Override
+    public int getMaxEfficiency(ItemStack aStack) {
+        return 10000;
+    }
+
+    @Override
+    public int getDamageToComponent(ItemStack aStack) {
+        return 0;
+    }
+
+    @Override
+    public boolean isCorrectMachinePart(ItemStack aStack) {
+        return true;
+    }
+
+    @Override
+    public boolean supportsVoidProtection() {
+        return true;
+    }
+
+    @Override
+    public boolean supportsInputSeparation() {
+        return true;
+    }
+
+    @Override
+    public boolean supportsSingleRecipeLocking() {
+        return true;
+    }
+
+    // ===================== Processing Logic =====================
+
+    @Override
+    protected ProcessingLogic createProcessingLogic() {
+
+        return new ProcessingLogic() {
+
+            @NotNull
+            @Override
+            public CheckRecipeResult process() {
+                checkSteam();
+                setSpeedBonus(getSpeedBonus());
+                setOverclock(isEnablePerfectOverclock() ? 4 : 2, 4);
+                return super.process();
+            }
+
+        }.setMaxParallelSupplier(this::getMaxParallelRecipes);
+    }
+
+    // ===================== Structure =====================
+
+    @Override
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
+        if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
+        repairMachine();
+    }
+
+    @Override
+    public void construct(ItemStack stackSize, boolean hintsOnly) {
+        repairMachine();
+        buildPiece(STRUCTURE_PIECE_MAIN, stackSize, hintsOnly, horizontalOffSet, verticalOffSet, depthOffSet);
+    }
+
+    @Override
+    public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
+        if (this.mMachine) return -1;
+        int realBudget = elementBudget >= 200 ? elementBudget : Math.min(200, elementBudget * 5);
+
+        return this.survivalBuildPiece(
+            STRUCTURE_PIECE_MAIN,
+            stackSize,
+            horizontalOffSet,
+            verticalOffSet,
+            depthOffSet,
+            realBudget,
+            env,
+            false,
+            true);
+
+    }
+
+    @Override
+    public String[] getStructureDescription(ItemStack stackSize) {
+        return description;
+    }
+
+    @Override
+    public IStructureDefinition<OTEWoodenFusionReactor> getStructureDefinition() {
+        if (STRUCTURE_DEFINITION == null) {
+            STRUCTURE_DEFINITION = StructureDefinition.<OTEWoodenFusionReactor>builder()
+                .addShape(STRUCTURE_PIECE_MAIN, shapeMain)
+                .addElement('F', ofBlock(Blocks.planks, 0))
+                .addElement('E', ofBlock(Blocks.planks, 0))
+                .addElement(
+                    'D',
+                    buildHatchAdder(OTEWoodenFusionReactor.class).atLeast(InputHatch, OutputHatch)
+                        .adder(OTEWoodenFusionReactor::addToMachineList)
+                        .hint(1)
+                        .casingIndex(getTextureIndex())
+                        .buildAndChain(Blocks.stonebrick, 0))
+                .addElement('A', ofBlock(Blocks.glass, 0))
+                .addElement('G', ofFrame(Materials.Wood))
+                .addElement('B', ofBlock(GregTechAPI.sBlockCasings3, 13))
+                .build();
+
+        }
+        return STRUCTURE_DEFINITION;
+    }
+
     @Override
     public boolean addToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
         return super.addToMachineList(aTileEntity, aBaseCasingIndex)
             || addExoticEnergyInputToMachineList(aTileEntity, aBaseCasingIndex);
     }
+
+    // ===================== Tooltip =====================
+
     /*
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType("§c§l蒸汽时代的最终幻想 - 蒸汽聚变反应堆")
             .addInfo("§b§o他所能做的, 仅仅只是通过一些无法猜测的手段, 将蒸汽化为氢等离子体")
             .addInfo("EU消耗 : 0, 耗时 : (输入蒸汽数量(L) / 1000) * 20sec , 更高级的蒸汽减少运行时间")
@@ -680,13 +662,14 @@ public class OTEWoodenFusionReactor extends OTHMultiMachineBase<OTEWoodenFusionR
     }*/
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType(translateToLocal("ote.tm.wfr.0"))
             .addInfo(translateToLocal("ote.tm.wfr.1"))
             .addInfo(translateToLocal("ote.tm.wfr.2"))
             .addInfo(translateToLocal("ote.tm.wfr.3"))
             .addInfo(translateToLocal("ote.tm.wfr.4"))
             .addSeparator()
+            .addInfo("§7Added by: 123Technology - Steam age")
             .addController(translateToLocal("ote.tn.wfr"))
             .beginStructureBlock(49, 7, 49, false)
             .addInputBus("AnyInputBus", 1)
@@ -695,45 +678,18 @@ public class OTEWoodenFusionReactor extends OTHMultiMachineBase<OTEWoodenFusionR
             .addOutputHatch("AnyOutputHatch", 1)
             .addEnergyHatch("AnyEnergyHatch", 1)
             .addMufflerHatch("AnyMufflerHatch", 1)
-            .toolTipFinisher("§7123Technology - Steam age");
+            .toolTipFinisher();
         return tt;
     }
 
-    @Override
-    public boolean isCorrectMachinePart(ItemStack aStack) {
-        return true;
-    }
-
-    @Override
-    public int getMaxEfficiency(ItemStack aStack) {
-        return 10000;
-    }
-
-    @Override
-    public int getDamageToComponent(ItemStack aStack) {
-        return 0;
-    }
-
-    @Override
-    public boolean supportsVoidProtection() {
-        return true;
-    }
-
-    @Override
-    public boolean supportsInputSeparation() {
-        return true;
-    }
-
-    @Override
-    public boolean supportsSingleRecipeLocking() {
-        return true;
-    }
+    // ===================== Standard Overrides =====================
 
     @Override
     public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
         return new OTEWoodenFusionReactor(this.mName);
     }
 
+    // ===================== Textures =====================
 
     @Override
     public ITexture[] getTexture(final IGregTechTileEntity baseMetaTileEntity, final ForgeDirection sideDirection,
@@ -756,10 +712,79 @@ public class OTEWoodenFusionReactor extends OTHMultiMachineBase<OTEWoodenFusionR
         }
         return new ITexture[] { TextureFactory.of(MACHINE_BRONZE_SIDE) };
     }
+
     @SideOnly(Side.CLIENT)
     @Override
     protected SoundResource getActivitySoundLoop() {
         return SoundResource.GT_MACHINES_FUSION_LOOP;
+    }
+
+    // ===================== Misc =====================
+
+    public int getTextureIndex() {
+        return TAE.getIndexFromPage(2, 2);
+    }
+
+    @Override
+    public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
+        int z) {
+        super.getWailaNBTData(player, tile, tag, world, x, y, z);
+        final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
+        if (tileEntity != null) {
+            String tier = GTUtility.formatShortenedLong(TierSteam);
+            String pla = GTUtility.formatShortenedLong(amountPlasma);
+            String bonus = NumberFormatUtil.formatNumber(getSpeedBonus());
+            tag.setString("Tier", tier);
+            tag.setString("PlasmaAmount", pla);
+            tag.setString("bonus", bonus);
+        }
+    }
+
+    @Override
+    public void getWailaBody(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor,
+        IWailaConfigHandler config) {
+        super.getWailaBody(itemStack, currentTip, accessor, config);
+        final NBTTagCompound tag = accessor.getNBTData();
+        currentTip.add(
+            translateToLocal("otht.waila.tier.steam") + EnumChatFormatting.RESET
+                + ": "
+                + EnumChatFormatting.GOLD
+                + tag.getString("Tier")
+                + EnumChatFormatting.RESET);
+        currentTip.add(
+            translateToLocal("otht.waila.gen.plasma") + EnumChatFormatting.RESET
+                + ": "
+                + EnumChatFormatting.GOLD
+                + tag.getString("PlasmaAmount")
+                + EnumChatFormatting.RESET);
+        currentTip.add(
+            translateToLocal("otht.waila.bonus.speed") + EnumChatFormatting.RESET
+                + ": "
+                + EnumChatFormatting.GOLD
+                + tag.getString("bonus")
+                + EnumChatFormatting.RESET);
+    }
+
+    public void checkSteam() {
+        List<FluidStack> inputStacks = getStoredFluids();
+        if (inputStacks == null) {
+            TierSteam = 1;
+            amountPlasma = 1;
+        }
+        if (inputStacks != null) {
+            for (FluidStack fluidStack : inputStacks) {
+                if (fluidStack.isFluidEqual(FluidRegistry.getFluidStack("steam", 1))) {
+                    TierSteam = 1;
+                    amountPlasma = 1;
+                } else if (fluidStack.isFluidEqual(FluidRegistry.getFluidStack("ic2superheatedsteam", 1))) {
+                    TierSteam = 2;
+                    amountPlasma = 10;
+                } else if (fluidStack.isFluidEqual(FluidRegistry.getFluidStack("densesupercriticalsteam", 1))) {
+                    TierSteam = 3;
+                    amountPlasma = 100;
+                }
+            }
+        }
     }
 }
 //spotless:on

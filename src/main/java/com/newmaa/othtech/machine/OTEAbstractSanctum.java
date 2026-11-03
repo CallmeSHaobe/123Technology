@@ -4,6 +4,7 @@ import static com.gtnewhorizon.cropsnh.utility.ModUtils.ModIDs.GregTech;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlockUnlocalizedName;
 import static com.newmaa.othtech.utils.modsEnum.ThaumicBases;
+import static com.newmaa.othtech.utils.modsEnum.TwistSpaceTechnology;
 import static gregtech.api.enums.HatchElement.Energy;
 import static gregtech.api.enums.HatchElement.ExoticEnergy;
 import static gregtech.api.enums.HatchElement.InputBus;
@@ -28,9 +29,6 @@ import java.util.Set;
 import java.util.WeakHashMap;
 import java.util.stream.Stream;
 
-import com.newmaa.othtech.Config;
-import com.newmaa.othtech.utils.OTHTooltipBuilder;
-import gregtech.api.enums.SoundResource;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.Enchantment;
@@ -55,15 +53,16 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.IStructureElement;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
+import com.newmaa.othtech.Config;
 import com.newmaa.othtech.OTHTechnology;
 import com.newmaa.othtech.common.blocks.nailong.NailongCasings;
 import com.newmaa.othtech.common.materials.AbstractSanctumContent;
-import com.newmaa.othtech.common.recipemap.AbstractSanctumRecipes;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.gui.OTEAbstractSanctumGui;
 import com.newmaa.othtech.machine.machineclass.ForcedCompletionSoundLoop;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
+import com.newmaa.othtech.recipe.AbstractSanctumRecipes;
 import com.newmaa.othtech.utils.ShapeLoader;
 
 import cpw.mods.fml.relauncher.Side;
@@ -107,36 +106,91 @@ import vazkii.botania.common.block.ModFluffBlocks;
 public class OTEAbstractSanctum extends OTHMultiMachineBase<OTEAbstractSanctum> {
 
     private static final String STRUCTURE_PIECE_MAIN = "main";
+
     private static final String STRUCTURE_RESOURCE = "/assets/123technology/structures/abstract_sanctum_shape.txt";
+
     private static final int STRUCTURE_WIDTH = 41;
+
     private static final int STRUCTURE_HEIGHT = 27;
+
     private static final int STRUCTURE_LAYERS = 41;
+
     /** Controller location in StructureLib coordinates: A=column, B=row, C=layer. */
     private static final int CONTROLLER_HORIZONTAL_OFFSET = 20;
+
     private static final int CONTROLLER_VERTICAL_OFFSET = 22;
+
     private static final int CONTROLLER_DEPTH_OFFSET = 20;
+
     private static final int CRAFT_TICKS = 40 * 20;
+
     private static final int DUPLICATE_TICKS = 64 * 20 / 10;
+
     private static final int DUPLICATE_BASE_PARALLEL = 64;
+
     private static final int OGANESSON_PER_RUN = 144;
+
     private static final int VIRTUAL_UPGRADE_RESOURCE_AMOUNT = 1_000_000;
+
     private static final int MANA_UPGRADE_SLOT = 0;
+
     private static final int SALT_UPGRADE_SLOT = 1;
+
     private static final int BLOOD_UPGRADE_SLOT = 2;
 
     private static IStructureDefinition<OTEAbstractSanctum> STRUCTURE_DEFINITION;
 
     private int glassTier = -1;
+
     private double manaMultiplier = 1.0D;
+
     private double saltMultiplier = 1.0D;
+
     private double bloodMultiplier = 1.0D;
+
     private int overclocksThisCheck;
+
     private int oganessonParallelThisCheck;
+
     private boolean oganessonActiveThisCheck;
+
     private final ItemStackHandler upgradeInventory = new UpgradeItemStackHandler();
 
     private static final String[][] shapeMain = ShapeLoader
         .load(STRUCTURE_RESOURCE, STRUCTURE_WIDTH, STRUCTURE_HEIGHT, STRUCTURE_LAYERS);
+
+    private final class UpgradeItemStackHandler extends ItemStackHandler {
+
+        private UpgradeItemStackHandler() {
+            super(3);
+        }
+
+        @Override
+        public boolean isItemValid(int slot, ItemStack stack) {
+            return isUpgradeItem(slot, stack);
+        }
+
+        @Override
+        public int getSlotLimit(int slot) {
+            return 1;
+        }
+
+        @Override
+        protected void onContentsChanged(int slot) {
+            if (getBaseMetaTileEntity() != null) getBaseMetaTileEntity().markDirty();
+        }
+
+        @Override
+        protected void onLoad() {
+            for (int slot = 0; slot < getSlots(); slot++) {
+                if (!isItemValid(slot, getStackInSlot(slot))) {
+                    setStackInSlot(slot, null);
+                }
+            }
+        }
+    }
+
+    // ===================== Constructors =====================
 
     public OTEAbstractSanctum(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
@@ -148,20 +202,61 @@ public class OTEAbstractSanctum extends OTHMultiMachineBase<OTEAbstractSanctum> 
         alwaysMaxParallel = true;
     }
 
-    @Override
-    public void setMachineMode(int mode) {
-        if (mode < 0 || mode >= totalMachineMode()) return;
-        // Do not let an in-flight crafting/duplication operation continue under the other mode.
-        if (mode != machineMode && mMaxProgresstime > 0 && mMachine) return;
+    // ===================== NBT =====================
 
-        int previousMode = machineMode;
-        super.setMachineMode(mode);
-        if (machineMode != previousMode && getBaseMetaTileEntity() != null
-            && getBaseMetaTileEntity().isServerSide()) {
-            mProgresstime = 0;
-            mMaxProgresstime = 0;
-            if (processingLogic != null) processingLogic.clear();
+    @Override
+    public void saveNBTData(NBTTagCompound tag) {
+        super.saveNBTData(tag);
+        tag.setDouble("manaMultiplier", manaMultiplier);
+        tag.setDouble("saltMultiplier", saltMultiplier);
+        tag.setDouble("bloodMultiplier", bloodMultiplier);
+        tag.setTag("abstractSanctumUpgrades", upgradeInventory.serializeNBT());
+    }
+
+    @Override
+    public void loadNBTData(NBTTagCompound tag) {
+        super.loadNBTData(tag);
+        alwaysMaxParallel = true;
+        powerPanelMaxParallel = Math.max(1, getMaxParallelRecipes());
+        manaMultiplier = clampMultiplier(tag.getDouble("manaMultiplier"));
+        saltMultiplier = clampMultiplier(tag.getDouble("saltMultiplier"));
+        bloodMultiplier = clampMultiplier(tag.getDouble("bloodMultiplier"));
+        if (tag.hasKey("abstractSanctumUpgrades")) {
+            upgradeInventory.deserializeNBT(tag.getCompoundTag("abstractSanctumUpgrades"));
         }
+    }
+
+    // ===================== Machine Parameters =====================
+
+    @Override
+    protected boolean isEnablePerfectOverclock() {
+        return machineMode == 1;
+    }
+
+    @Override
+    public int getMaxParallelRecipes() {
+        return getMaxParallelForOverclocks(overclocksThisCheck);
+    }
+
+    @Override
+    protected float getSpeedBonus() {
+        if (machineMode != 0) return 1.0F;
+        return (float) (1.0D / getAccelerationFactor());
+    }
+
+    @Override
+    public RecipeMap<?> getRecipeMap() {
+        return machineMode == 1 ? Recipemaps.ABSTRACT_SANCTUM_DUPLICATE : Recipemaps.ABSTRACT_SANCTUM_CRAFT;
+    }
+
+    @Override
+    public Collection<RecipeMap<?>> getAvailableRecipeMaps() {
+        return Arrays.asList(Recipemaps.ABSTRACT_SANCTUM_CRAFT, Recipemaps.ABSTRACT_SANCTUM_DUPLICATE);
+    }
+
+    @Override
+    public int getPollutionPerSecond(ItemStack stack) {
+        return 0;
     }
 
     @Override
@@ -175,42 +270,21 @@ public class OTEAbstractSanctum extends OTHMultiMachineBase<OTEAbstractSanctum> 
     }
 
     @Override
-    public Collection<RecipeMap<?>> getAvailableRecipeMaps() {
-        return Arrays.asList(Recipemaps.ABSTRACT_SANCTUM_CRAFT, Recipemaps.ABSTRACT_SANCTUM_DUPLICATE);
-    }
+    public void setMachineMode(int mode) {
+        if (mode < 0 || mode >= totalMachineMode()) return;
+        // Do not let an in-flight crafting/duplication operation continue under the other mode.
+        if (mode != machineMode && mMaxProgresstime > 0 && mMachine) return;
 
-    @Override
-    public RecipeMap<?> getRecipeMap() {
-        return machineMode == 1 ? Recipemaps.ABSTRACT_SANCTUM_DUPLICATE : Recipemaps.ABSTRACT_SANCTUM_CRAFT;
-    }
-
-    @Override
-    protected boolean isEnablePerfectOverclock() {
-        return machineMode == 1;
-    }
-
-    @Override
-    public int getMaxParallelRecipes() {
-        return getMaxParallelForOverclocks(overclocksThisCheck);
-    }
-
-    private int getMaxParallelForOverclocks(int overclockCount) {
-        long parallel;
-        if (machineMode == 1) {
-            int shift = Math.min(Math.max(0, overclockCount), 24);
-            parallel = (long) DUPLICATE_BASE_PARALLEL << shift;
-        } else {
-            parallel = 1L + 2L * Math.max(0, overclockCount);
+        int previousMode = machineMode;
+        super.setMachineMode(mode);
+        if (machineMode != previousMode && getBaseMetaTileEntity() != null && getBaseMetaTileEntity().isServerSide()) {
+            mProgresstime = 0;
+            mMaxProgresstime = 0;
+            if (processingLogic != null) processingLogic.clear();
         }
-        parallel += oganessonActiveThisCheck ? oganessonParallelThisCheck : 0;
-        return (int) Math.min(Integer.MAX_VALUE, Math.max(1L, parallel));
     }
 
-    @Override
-    protected float getSpeedBonus() {
-        if (machineMode != 0) return 1.0F;
-        return (float) (1.0D / getAccelerationFactor());
-    }
+    // ===================== Processing Logic =====================
 
     @Override
     protected ProcessingLogic createProcessingLogic() {
@@ -316,8 +390,7 @@ public class OTEAbstractSanctum extends OTHMultiMachineBase<OTEAbstractSanctum> 
                             .stream()
                             .filter(recipe -> recipe.mEnabled && !recipe.mFakeRecipe)
                             .filter(recipe -> !isDedicatedRuntimeRecipe(recipe))
-                            .filter(
-                                recipe -> recipe.isRecipeInputEqual(false, false, matchingFluids, matchingItems))
+                            .filter(recipe -> recipe.isRecipeInputEqual(false, false, matchingFluids, matchingItems))
                             .collect(java.util.stream.Collectors.toList());
                     }
                     regularMatches = lastFallbackMatches.stream();
@@ -351,7 +424,9 @@ public class OTEAbstractSanctum extends OTHMultiMachineBase<OTEAbstractSanctum> 
                             .append('x')
                             .append(item.stackSize)
                             .append('@')
-                            .append(item.hasTagCompound() ? item.getTagCompound().hashCode() : 0)
+                            .append(
+                                item.hasTagCompound() ? item.getTagCompound()
+                                    .hashCode() : 0)
                             .append(';');
                     }
                 }
@@ -531,7 +606,10 @@ public class OTEAbstractSanctum extends OTHMultiMachineBase<OTEAbstractSanctum> 
                         if (stack == null) continue;
                         if (!first) result.append(", ");
                         first = false;
-                        result.append(stack.getFluid() == null ? "null" : stack.getFluid().getName())
+                        result.append(
+                            stack.getFluid() == null ? "null"
+                                : stack.getFluid()
+                                    .getName())
                             .append(" x")
                             .append(stack.amount);
                     }
@@ -834,6 +912,236 @@ public class OTEAbstractSanctum extends OTHMultiMachineBase<OTEAbstractSanctum> 
         return result;
     }
 
+    // ===================== Structure =====================
+
+    @Override
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
+        readTopGlassTier(aBaseMetaTileEntity);
+        if (!checkPiece(
+            STRUCTURE_PIECE_MAIN,
+            CONTROLLER_HORIZONTAL_OFFSET,
+            CONTROLLER_VERTICAL_OFFSET,
+            CONTROLLER_DEPTH_OFFSET,
+            errors)) return;
+        for (Object hatch : getExoticEnergyHatches()) {
+            if (!(hatch instanceof IMetaTileEntity meta)) continue;
+            if (meta instanceof MTEHatchWirelessMulti) {
+                errors.add(StructureErrors.glassTierNotEnough(VoltageIndex.UIV));
+                return;
+            }
+            int requiredGlassTier = requiredGlassTierFor(meta);
+            if (requiredGlassTier >= 0 && glassTier < requiredGlassTier) {
+                errors.add(StructureErrors.glassTierNotEnough(requiredGlassTier));
+                return;
+            }
+        }
+        repairMachine();
+    }
+
+    @Override
+    public void construct(ItemStack stackSize, boolean hintsOnly) {
+        buildPiece(
+            STRUCTURE_PIECE_MAIN,
+            stackSize,
+            hintsOnly,
+            CONTROLLER_HORIZONTAL_OFFSET,
+            CONTROLLER_VERTICAL_OFFSET,
+            CONTROLLER_DEPTH_OFFSET);
+    }
+
+    @Override
+    public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
+        if (mMachine) return -1;
+        if (isPreviewWorld()) {
+            IGregTechTileEntity base = getBaseMetaTileEntity();
+            World world = base.getWorld();
+            int[] anchorOffset = new int[3];
+            getExtendedFacing().getWorldOffset(
+                new int[] { CONTROLLER_HORIZONTAL_OFFSET, CONTROLLER_VERTICAL_OFFSET + 1, CONTROLLER_DEPTH_OFFSET },
+                anchorOffset);
+            int anchorX = base.getXCoord() + anchorOffset[0];
+            int anchorY = base.getYCoord() + anchorOffset[1];
+            int anchorZ = base.getZCoord() + anchorOffset[2];
+            // BlockRenderer keeps the same dummy world but clears it whenever a slider changes.
+            // Rebuild only when the fixed anchor is missing, so repeated build rounds stop.
+            if (world.isAirBlock(anchorX, anchorY, anchorZ)) {
+                buildPiece(
+                    STRUCTURE_PIECE_MAIN,
+                    stackSize,
+                    false,
+                    CONTROLLER_HORIZONTAL_OFFSET,
+                    CONTROLLER_VERTICAL_OFFSET,
+                    CONTROLLER_DEPTH_OFFSET);
+            }
+            return 0;
+        }
+        return survivalBuildPiece(
+            STRUCTURE_PIECE_MAIN,
+            stackSize,
+            CONTROLLER_HORIZONTAL_OFFSET,
+            CONTROLLER_VERTICAL_OFFSET,
+            CONTROLLER_DEPTH_OFFSET,
+            Math.max(1, elementBudget),
+            env,
+            false,
+            true);
+    }
+
+    @Override
+    public IStructureDefinition<OTEAbstractSanctum> getStructureDefinition() {
+        if (STRUCTURE_DEFINITION == null) {
+            STRUCTURE_DEFINITION = StructureDefinition.<OTEAbstractSanctum>builder()
+                .addShape(STRUCTURE_PIECE_MAIN, shapeMain)
+                // A：硼硅玻璃外罩；保留玻璃等级追踪。
+                .addElement(
+                    'A',
+                    chainAllGlasses(-1, (machine, tier) -> machine.glassTier = tier, machine -> machine.glassTier))
+                // B：新生魔艺血铁块。
+                .addElement('B', ofBlock(BlockList.BloodyIchorium.block, 0))
+                // C：盖亚之魂块。
+                .addElement('C', ofBlock(BlockList.Gaia.block, 0))
+                // D-H：神秘时代蜡烛、透明装饰方块与奥术石。
+                .addElement('D', ofBlock(ConfigBlocks.blockCandle, 4))
+                .addElement('E', ofBlock(ConfigBlocks.blockCosmeticOpaque, 0))
+                .addElement('F', ofBlock(ConfigBlocks.blockCosmeticOpaque, 1))
+                .addElement('G', ofBlock(ConfigBlocks.blockCosmeticSolid, 6))
+                .addElement('H', ofBlock(ConfigBlocks.blockCosmeticSolid, 7))
+                // I/J、L、S、T、V：血魔法符文与仪式石。
+                .addElement('I', ofBlock(WayofTime.alchemicalWizardry.ModBlocks.bloodRune, 0))
+                .addElement('J', ofBlock(WayofTime.alchemicalWizardry.ModBlocks.bloodRune, 4))
+                // K：原黄色染色陶瓦位置，替换为黄桃罐头机械方块，不参与仓室替换。
+                .addElement('K', ofBlock(NailongCasings.nailongCasing, 1))
+                .addElement('L', ofBlock(WayofTime.alchemicalWizardry.ModBlocks.efficiencyRune, 0))
+                // M-R：原版石英及植物魔法特殊石英。
+                .addElement('M', ofBlock(Blocks.quartz_block, 0))
+                .addElement('N', ofBlock(ModFluffBlocks.darkQuartzSlab, 0))
+                .addElement('O', ofBlock(ModFluffBlocks.sunnyQuartzSlab, 0))
+                .addElement('P', ofBlock(ModFluffBlocks.elfQuartz, 0))
+                .addElement('Q', ofBlock(ModFluffBlocks.sunnyQuartz, 0))
+                .addElement('R', ofBlock(ModFluffBlocks.sunnyQuartz, 1))
+                .addElement('S', ofBlock(WayofTime.alchemicalWizardry.ModBlocks.ritualStone, 0))
+                .addElement('T', ofBlock(WayofTime.alchemicalWizardry.ModBlocks.runeOfSelfSacrifice, 0))
+                // U：原砂岩位置，替换为奈隆机械方块，也允许放置仓室。
+                .addElement('U', nailongCasingWithHatches(0))
+                .addElement('V', ofBlock(WayofTime.alchemicalWizardry.ModBlocks.speedRune, 0))
+                // W：神秘基础学虚空方块。
+                .addElement(
+                    'W',
+                    ThaumicBases.isModLoaded() ? ofBlockUnlocalizedName("thaumicbases", "voidBlock", 0)
+                        : ofBlock(Blocks.stone, 0))
+                // X/Z：神秘时代魔杖基座和普通基座。
+                .addElement('X', ofBlock(ConfigBlocks.blockStoneDevice, 5))
+                // Y：原 GT 仓室位置；允许仓室，也可用奈隆机械方块。
+                .addElement('Y', nailongCasingWithHatches(0))
+                .addElement('Z', ofBlock(ConfigBlocks.blockStoneDevice, 1))
+                .build();
+        }
+        return STRUCTURE_DEFINITION;
+    }
+
+    @Override
+    public boolean addToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
+        IMetaTileEntity meta = aTileEntity == null ? null : aTileEntity.getMetaTileEntity();
+        if (meta instanceof MTEHatchWirelessMulti) return false;
+        int requiredGlassTier = requiredGlassTierFor(meta);
+        if (requiredGlassTier >= 0 && glassTier < requiredGlassTier) return false;
+        return super.addToMachineList(aTileEntity, aBaseCasingIndex);
+    }
+
+    // ===================== Tooltip =====================
+
+    @Override
+    protected MultiblockTooltipBuilder createTooltip() {
+        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        tt.addMachineType(translateToLocal("ote.abstract_sanctum.tooltip.0"))
+            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.1"))
+            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.2"))
+            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.3"))
+            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.4"))
+            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.5"))
+            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.6"))
+            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.7"))
+            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.8"))
+            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.9"))
+            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.10"))
+            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.11"))
+            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.12"))
+            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.13"))
+            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.14"))
+            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.15"))
+            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.16"))
+            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.17"))
+            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.18"))
+            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.20"))
+            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.21"))
+            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.19"))
+            .addSeparator()
+            .addInfo("§aAdded by: 123Technology - AbstractSanctum")
+
+            .addController(translateToLocal("ote.tn.abstract_sanctum"))
+            .beginStructureBlock(3, 3, 3, false)
+            .addInputBus("Input Bus", 1)
+            .addOutputBus("Output Bus", 1)
+            .addInputHatch("Fluid Input Hatch", 1)
+            .addEnergyHatch("Energy Hatch", 1)
+            .toolTipFinisher();
+        return tt;
+    }
+
+    // ===================== Standard Overrides =====================
+
+    @Override
+    public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
+        return new OTEAbstractSanctum(mName);
+    }
+
+    // ===================== Textures =====================
+
+    @Override
+    public ITexture[] getTexture(IGregTechTileEntity baseMetaTileEntity, ForgeDirection sideDirection,
+        ForgeDirection facing, int colorIndex, boolean active, boolean redstone) {
+        if (sideDirection == facing) {
+            if (active) return new ITexture[] {
+                Textures.BlockIcons.getCasingTextureForId(NailongCasings.nailongCasing.getTextureIndex(0)),
+                TextureFactory.builder()
+                    .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_ACTIVE)
+                    .extFacing()
+                    .build(),
+                TextureFactory.builder()
+                    .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_ACTIVE_GLOW)
+                    .extFacing()
+                    .glow()
+                    .build() };
+            return new ITexture[] {
+                Textures.BlockIcons.getCasingTextureForId(NailongCasings.nailongCasing.getTextureIndex(0)),
+                TextureFactory.builder()
+                    .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE)
+                    .extFacing()
+                    .build(),
+                TextureFactory.builder()
+                    .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_GLOW)
+                    .extFacing()
+                    .glow()
+                    .build() };
+        }
+        return new ITexture[] {
+            Textures.BlockIcons.getCasingTextureForId(NailongCasings.nailongCasing.getTextureIndex(0)) };
+    }
+
+    // ===================== Misc =====================
+
+    private int getMaxParallelForOverclocks(int overclockCount) {
+        long parallel;
+        if (machineMode == 1) {
+            int shift = Math.min(Math.max(0, overclockCount), 24);
+            parallel = (long) DUPLICATE_BASE_PARALLEL << shift;
+        } else {
+            parallel = 1L + 2L * Math.max(0, overclockCount);
+        }
+        parallel += oganessonActiveThisCheck ? oganessonParallelThisCheck : 0;
+        return (int) Math.min(Integer.MAX_VALUE, Math.max(1L, parallel));
+    }
+
     private boolean hasOganesson() {
         FluidStack required = AbstractSanctumContent.getOganessonStack(OGANESSON_PER_RUN);
         if (required == null) return false;
@@ -1066,8 +1374,11 @@ public class OTEAbstractSanctum extends OTHMultiMachineBase<OTEAbstractSanctum> 
     }
 
     private static boolean isManaFluid(String name) {
-        return AbstractSanctumContent.LOCAL_MANA_FLUID.equalsIgnoreCase(name)
-            || AbstractSanctumContent.TST_MANA_FLUID.equalsIgnoreCase(name);
+        if (TwistSpaceTechnology.isModLoaded()) {
+            return AbstractSanctumContent.TST_MANA_FLUID.equalsIgnoreCase(name);
+        } else {
+            return AbstractSanctumContent.LOCAL_MANA_FLUID.equalsIgnoreCase(name);
+        }
     }
 
     public double getAccelerationFactor() {
@@ -1099,28 +1410,6 @@ public class OTEAbstractSanctum extends OTHMultiMachineBase<OTEAbstractSanctum> 
 
     public ItemStackHandler getUpgradeInventory() {
         return upgradeInventory;
-    }
-
-    @Override
-    public void saveNBTData(NBTTagCompound tag) {
-        super.saveNBTData(tag);
-        tag.setDouble("manaMultiplier", manaMultiplier);
-        tag.setDouble("saltMultiplier", saltMultiplier);
-        tag.setDouble("bloodMultiplier", bloodMultiplier);
-        tag.setTag("abstractSanctumUpgrades", upgradeInventory.serializeNBT());
-    }
-
-    @Override
-    public void loadNBTData(NBTTagCompound tag) {
-        super.loadNBTData(tag);
-        alwaysMaxParallel = true;
-        powerPanelMaxParallel = Math.max(1, getMaxParallelRecipes());
-        manaMultiplier = clampMultiplier(tag.getDouble("manaMultiplier"));
-        saltMultiplier = clampMultiplier(tag.getDouble("saltMultiplier"));
-        bloodMultiplier = clampMultiplier(tag.getDouble("bloodMultiplier"));
-        if (tag.hasKey("abstractSanctumUpgrades")) {
-            upgradeInventory.deserializeNBT(tag.getCompoundTag("abstractSanctumUpgrades"));
-        }
     }
 
     private static double clampMultiplier(double value) {
@@ -1179,30 +1468,6 @@ public class OTEAbstractSanctum extends OTHMultiMachineBase<OTEAbstractSanctum> 
         return false;
     }
 
-    @Override
-    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
-        readTopGlassTier(aBaseMetaTileEntity);
-        if (!checkPiece(
-            STRUCTURE_PIECE_MAIN,
-            CONTROLLER_HORIZONTAL_OFFSET,
-            CONTROLLER_VERTICAL_OFFSET,
-            CONTROLLER_DEPTH_OFFSET,
-            errors)) return;
-        for (Object hatch : getExoticEnergyHatches()) {
-            if (!(hatch instanceof IMetaTileEntity meta)) continue;
-            if (meta instanceof MTEHatchWirelessMulti) {
-                errors.add(StructureErrors.glassTierNotEnough(VoltageIndex.UIV));
-                return;
-            }
-            int requiredGlassTier = requiredGlassTierFor(meta);
-            if (requiredGlassTier >= 0 && glassTier < requiredGlassTier) {
-                errors.add(StructureErrors.glassTierNotEnough(requiredGlassTier));
-                return;
-            }
-        }
-        repairMachine();
-    }
-
     private void readTopGlassTier(IGregTechTileEntity base) {
         glassTier = -1;
         if (base == null || base.getWorld() == null) return;
@@ -1221,55 +1486,6 @@ public class OTEAbstractSanctum extends OTHMultiMachineBase<OTEAbstractSanctum> 
             base.getWorld()
                 .getBlockMetadata(x, y, z));
         if (tier != null) glassTier = tier;
-    }
-
-    @Override
-    public void construct(ItemStack stackSize, boolean hintsOnly) {
-        buildPiece(
-            STRUCTURE_PIECE_MAIN,
-            stackSize,
-            hintsOnly,
-            CONTROLLER_HORIZONTAL_OFFSET,
-            CONTROLLER_VERTICAL_OFFSET,
-            CONTROLLER_DEPTH_OFFSET);
-    }
-
-    @Override
-    public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
-        if (mMachine) return -1;
-        if (isPreviewWorld()) {
-            IGregTechTileEntity base = getBaseMetaTileEntity();
-            World world = base.getWorld();
-            int[] anchorOffset = new int[3];
-            getExtendedFacing().getWorldOffset(
-                new int[] { CONTROLLER_HORIZONTAL_OFFSET, CONTROLLER_VERTICAL_OFFSET + 1, CONTROLLER_DEPTH_OFFSET },
-                anchorOffset);
-            int anchorX = base.getXCoord() + anchorOffset[0];
-            int anchorY = base.getYCoord() + anchorOffset[1];
-            int anchorZ = base.getZCoord() + anchorOffset[2];
-            // BlockRenderer keeps the same dummy world but clears it whenever a slider changes.
-            // Rebuild only when the fixed anchor is missing, so repeated build rounds stop.
-            if (world.isAirBlock(anchorX, anchorY, anchorZ)) {
-                buildPiece(
-                    STRUCTURE_PIECE_MAIN,
-                    stackSize,
-                    false,
-                    CONTROLLER_HORIZONTAL_OFFSET,
-                    CONTROLLER_VERTICAL_OFFSET,
-                    CONTROLLER_DEPTH_OFFSET);
-            }
-            return 0;
-        }
-        return survivalBuildPiece(
-            STRUCTURE_PIECE_MAIN,
-            stackSize,
-            CONTROLLER_HORIZONTAL_OFFSET,
-            CONTROLLER_VERTICAL_OFFSET,
-            CONTROLLER_DEPTH_OFFSET,
-            Math.max(1, elementBudget),
-            env,
-            false,
-            true);
     }
 
     /** BlockRenderer6343 creates a preview world whose class name contains one of these markers. */
@@ -1291,9 +1507,13 @@ public class OTEAbstractSanctum extends OTHMultiMachineBase<OTEAbstractSanctum> 
 
         boolean active = getBaseMetaTileEntity().isActive() && !getBaseMetaTileEntity().isMuffled();
         if (active && activitySoundLoop == null) {
-            ForcedCompletionSoundLoop sound = Config.is_Abstract_Sanctum_HAHAHAH ? new ForcedCompletionSoundLoop(
-                new ResourceLocation("123technology:machines.abstract_sanctum"),
-                getBaseMetaTileEntity()) : new ForcedCompletionSoundLoop(new ResourceLocation(GregTech + ":" + "machines.DistilleryLoop"), getBaseMetaTileEntity());
+            ForcedCompletionSoundLoop sound = Config.is_Abstract_Sanctum_HAHAHAH
+                ? new ForcedCompletionSoundLoop(
+                    new ResourceLocation("123technology:machines.abstract_sanctum"),
+                    getBaseMetaTileEntity())
+                : new ForcedCompletionSoundLoop(
+                    new ResourceLocation(GregTech + ":" + "machines.DistilleryLoop"),
+                    getBaseMetaTileEntity());
             activitySoundLoop = sound;
             Minecraft.getMinecraft()
                 .getSoundHandler()
@@ -1301,55 +1521,6 @@ public class OTEAbstractSanctum extends OTHMultiMachineBase<OTEAbstractSanctum> 
         } else if (activitySoundLoop instanceof ForcedCompletionSoundLoop sound) {
             sound.setMachineActive(active);
         }
-    }
-
-    @Override
-    public IStructureDefinition<OTEAbstractSanctum> getStructureDefinition() {
-        if (STRUCTURE_DEFINITION == null) {
-            STRUCTURE_DEFINITION = StructureDefinition.<OTEAbstractSanctum>builder()
-                .addShape(STRUCTURE_PIECE_MAIN, shapeMain)
-                // A：硼硅玻璃外罩；保留玻璃等级追踪。
-                .addElement(
-                    'A',
-                    chainAllGlasses(-1, (machine, tier) -> machine.glassTier = tier, machine -> machine.glassTier))
-                // B：新生魔艺血铁块。
-                .addElement('B', ofBlock(BlockList.BloodyIchorium.block, 0))
-                // C：盖亚之魂块。
-                .addElement('C', ofBlock(BlockList.Gaia.block, 0))
-                // D-H：神秘时代蜡烛、透明装饰方块与奥术石。
-                .addElement('D', ofBlock(ConfigBlocks.blockCandle, 4))
-                .addElement('E', ofBlock(ConfigBlocks.blockCosmeticOpaque, 0))
-                .addElement('F', ofBlock(ConfigBlocks.blockCosmeticOpaque, 1))
-                .addElement('G', ofBlock(ConfigBlocks.blockCosmeticSolid, 6))
-                .addElement('H', ofBlock(ConfigBlocks.blockCosmeticSolid, 7))
-                // I/J、L、S、T、V：血魔法符文与仪式石。
-                .addElement('I', ofBlock(WayofTime.alchemicalWizardry.ModBlocks.bloodRune, 0))
-                .addElement('J', ofBlock(WayofTime.alchemicalWizardry.ModBlocks.bloodRune, 4))
-                // K：原黄色染色陶瓦位置，替换为黄桃罐头机械方块，不参与仓室替换。
-                .addElement('K', ofBlock(NailongCasings.nailongCasing, 1))
-                .addElement('L', ofBlock(WayofTime.alchemicalWizardry.ModBlocks.efficiencyRune, 0))
-                // M-R：原版石英及植物魔法特殊石英。
-                .addElement('M', ofBlock(Blocks.quartz_block, 0))
-                .addElement('N', ofBlock(ModFluffBlocks.darkQuartzSlab, 0))
-                .addElement('O', ofBlock(ModFluffBlocks.sunnyQuartzSlab, 0))
-                .addElement('P', ofBlock(ModFluffBlocks.elfQuartz, 0))
-                .addElement('Q', ofBlock(ModFluffBlocks.sunnyQuartz, 0))
-                .addElement('R', ofBlock(ModFluffBlocks.sunnyQuartz, 1))
-                .addElement('S', ofBlock(WayofTime.alchemicalWizardry.ModBlocks.ritualStone, 0))
-                .addElement('T', ofBlock(WayofTime.alchemicalWizardry.ModBlocks.runeOfSelfSacrifice, 0))
-                // U：原砂岩位置，替换为奈隆机械方块，也允许放置仓室。
-                .addElement('U', nailongCasingWithHatches(0))
-                .addElement('V', ofBlock(WayofTime.alchemicalWizardry.ModBlocks.speedRune, 0))
-                // W：神秘基础学虚空方块。
-                .addElement('W', ThaumicBases.isModLoaded() ? ofBlockUnlocalizedName("thaumicbases", "tile.tb.voidblock", 0) : ofBlock(Blocks.stone, 0))
-                // X/Z：神秘时代魔杖基座和普通基座。
-                .addElement('X', ofBlock(ConfigBlocks.blockStoneDevice, 5))
-                // Y：原 GT 仓室位置；允许仓室，也可用奈隆机械方块。
-                .addElement('Y', nailongCasingWithHatches(0))
-                .addElement('Z', ofBlock(ConfigBlocks.blockStoneDevice, 1))
-                .build();
-        }
-        return STRUCTURE_DEFINITION;
     }
 
     private static IStructureElement<OTEAbstractSanctum> nailongCasingWithHatches(int meta) {
@@ -1370,15 +1541,6 @@ public class OTEAbstractSanctum extends OTHMultiMachineBase<OTEAbstractSanctum> 
         throw new IllegalStateException("Missing required AbstractSanctum structure block: " + unlocalizedName);
     }
 
-    @Override
-    public boolean addToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
-        IMetaTileEntity meta = aTileEntity == null ? null : aTileEntity.getMetaTileEntity();
-        if (meta instanceof MTEHatchWirelessMulti) return false;
-        int requiredGlassTier = requiredGlassTierFor(meta);
-        if (requiredGlassTier >= 0 && glassTier < requiredGlassTier) return false;
-        return super.addToMachineList(aTileEntity, aBaseCasingIndex);
-    }
-
     private static int requiredGlassTierFor(IMetaTileEntity meta) {
         if (meta instanceof MTEHatchEnergyTunnel) return VoltageIndex.UIV;
         if (meta instanceof MTEHatchEnergyMulti) return VoltageIndex.ZPM;
@@ -1387,85 +1549,8 @@ public class OTEAbstractSanctum extends OTHMultiMachineBase<OTEAbstractSanctum> 
     }
 
     @Override
-    public int getPollutionPerSecond(ItemStack stack) {
-        return 0;
-    }
-
-    @Override
-    protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
-        tt.addMachineType(translateToLocal("ote.abstract_sanctum.tooltip.0"))
-            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.1"))
-            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.2"))
-            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.3"))
-            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.4"))
-            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.5"))
-            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.6"))
-            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.7"))
-            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.8"))
-            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.9"))
-            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.10"))
-            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.11"))
-            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.12"))
-            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.13"))
-            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.14"))
-            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.15"))
-            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.16"))
-            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.17"))
-            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.18"))
-            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.20"))
-            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.21"))
-            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.19"))
-            .addSeparator()
-            .addController(translateToLocal("ote.tn.abstract_sanctum"))
-            .beginStructureBlock(3, 3, 3, false)
-            .addInputBus("Input Bus", 1)
-            .addOutputBus("Output Bus", 1)
-            .addInputHatch("Fluid Input Hatch", 1)
-            .addEnergyHatch("Energy Hatch", 1)
-            .toolTipFinisher("§a123Technology - AbstractSanctum");
-        return tt;
-    }
-
-    @Override
-    public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-        return new OTEAbstractSanctum(mName);
-    }
-
-    @Override
     protected @NotNull MTEMultiBlockBaseGui<?> getGui() {
         return new OTEAbstractSanctumGui(this);
-    }
-
-    @Override
-    public ITexture[] getTexture(IGregTechTileEntity baseMetaTileEntity, ForgeDirection sideDirection,
-        ForgeDirection facing, int colorIndex, boolean active, boolean redstone) {
-        if (sideDirection == facing) {
-            if (active) return new ITexture[] {
-                Textures.BlockIcons.getCasingTextureForId(NailongCasings.nailongCasing.getTextureIndex(0)),
-                TextureFactory.builder()
-                    .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_ACTIVE)
-                    .extFacing()
-                    .build(),
-                TextureFactory.builder()
-                    .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_ACTIVE_GLOW)
-                    .extFacing()
-                    .glow()
-                    .build() };
-            return new ITexture[] {
-                Textures.BlockIcons.getCasingTextureForId(NailongCasings.nailongCasing.getTextureIndex(0)),
-                TextureFactory.builder()
-                    .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE)
-                    .extFacing()
-                    .build(),
-                TextureFactory.builder()
-                    .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_GLOW)
-                    .extFacing()
-                    .glow()
-                    .build() };
-        }
-        return new ITexture[] {
-            Textures.BlockIcons.getCasingTextureForId(NailongCasings.nailongCasing.getTextureIndex(0)) };
     }
 
     @Override
@@ -1481,36 +1566,5 @@ public class OTEAbstractSanctum extends OTHMultiMachineBase<OTEAbstractSanctum> 
         GTUtility.sendChatTrans(
             player,
             machineMode == 1 ? "ote.abstract_sanctum.chat.duplicate" : "ote.abstract_sanctum.chat.craft");
-    }
-
-    private final class UpgradeItemStackHandler extends ItemStackHandler {
-
-        private UpgradeItemStackHandler() {
-            super(3);
-        }
-
-        @Override
-        public boolean isItemValid(int slot, ItemStack stack) {
-            return isUpgradeItem(slot, stack);
-        }
-
-        @Override
-        public int getSlotLimit(int slot) {
-            return 1;
-        }
-
-        @Override
-        protected void onContentsChanged(int slot) {
-            if (getBaseMetaTileEntity() != null) getBaseMetaTileEntity().markDirty();
-        }
-
-        @Override
-        protected void onLoad() {
-            for (int slot = 0; slot < getSlots(); slot++) {
-                if (!isItemValid(slot, getStackInSlot(slot))) {
-                    setStackInSlot(slot, null);
-                }
-            }
-        }
     }
 }

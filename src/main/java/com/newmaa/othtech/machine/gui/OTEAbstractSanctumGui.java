@@ -29,8 +29,8 @@ import com.cleanroommc.modularui.widgets.slot.ItemSlot;
 import com.cleanroommc.modularui.widgets.slot.ModularSlot;
 import com.cleanroommc.modularui.widgets.textfield.TextFieldWidget;
 import com.newmaa.othtech.common.materials.AbstractSanctumContent;
-import com.newmaa.othtech.common.recipemap.AbstractSanctumRecipes;
 import com.newmaa.othtech.machine.OTEAbstractSanctum;
+import com.newmaa.othtech.recipe.AbstractSanctumRecipes;
 
 import codechicken.nei.item.ItemFluidDisplay;
 import codechicken.nei.recipe.GuiUsageRecipe;

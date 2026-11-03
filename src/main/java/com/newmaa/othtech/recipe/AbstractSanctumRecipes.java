@@ -1,4 +1,4 @@
-package com.newmaa.othtech.common.recipemap;
+package com.newmaa.othtech.recipe;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,7 +24,7 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import com.newmaa.othtech.OTHTechnology;
 import com.newmaa.othtech.common.materials.AbstractSanctumContent;
-import com.newmaa.othtech.recipe.IRecipePool;
+import com.newmaa.othtech.common.recipemap.Recipemaps;
 
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipe;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;

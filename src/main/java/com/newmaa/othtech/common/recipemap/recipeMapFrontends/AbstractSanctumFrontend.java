@@ -1,22 +1,24 @@
 package com.newmaa.othtech.common.recipemap.recipeMapFrontends;
 
+import static com.newmaa.othtech.Config.NEIFrontend;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.gtnewhorizons.modularui.api.drawable.UITexture;
 import net.minecraft.item.ItemStack;
 
 import org.lwjgl.opengl.GL11;
 
 import com.gtnewhorizons.modularui.api.ModularUITextures;
+import com.gtnewhorizons.modularui.api.drawable.UITexture;
 import com.gtnewhorizons.modularui.api.math.Pos2d;
 import com.gtnewhorizons.modularui.api.math.Size;
 import com.gtnewhorizons.modularui.api.screen.ModularWindow;
 import com.gtnewhorizons.modularui.common.widget.DrawableWidget;
 import com.gtnewhorizons.modularui.common.widget.ProgressBar;
 import com.gtnewhorizons.modularui.common.widget.SlotWidget;
-import com.newmaa.othtech.common.recipemap.AbstractSanctumRecipes;
+import com.newmaa.othtech.recipe.AbstractSanctumRecipes;
 
 import codechicken.nei.PositionedStack;
 import gregtech.api.gui.modularui.GTUITextures;
@@ -25,8 +27,6 @@ import gregtech.api.recipe.NEIRecipePropertiesBuilder;
 import gregtech.api.recipe.RecipeMapFrontend;
 import gregtech.common.gui.modularui.UIHelper;
 import gregtech.nei.GTNEIDefaultHandler;
-
-import static com.newmaa.othtech.Config.NEIFrontend;
 
 /**
  * Keeps large infusion recipes inside a fixed four-row, eight-column input grid.
@@ -58,6 +58,7 @@ public class AbstractSanctumFrontend extends RecipeMapFrontend {
 
     private final boolean duplicateMode;
     private Pos2d windowOffset = new Pos2d(0, 0);
+
     @Override
     public void addGregTechLogo(ModularWindow.Builder builder, Pos2d windowOffset) {
         builder.widget(

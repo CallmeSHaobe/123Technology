@@ -40,7 +40,6 @@ import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
-import com.newmaa.othtech.utils.OTHTooltipBuilder;
 import com.newmaa.othtech.utils.Utils;
 
 import bartworks.API.BorosilicateGlass;
@@ -64,215 +63,27 @@ import mcp.mobius.waila.api.IWailaDataAccessor;
 
 public class OTESINOPEC extends OTHMultiMachineBase<OTESINOPEC> {
 
-    public OTESINOPEC(int aID, String aName, String aNameRegional) {
-        super(aID, aName, aNameRegional);
-    }
-
-    public OTESINOPEC(String aName) {
-        super(aName);
-    }
-
     private boolean isUnlocked = false;
 
     private HeatingCoilLevel coilLevel;
 
-    public HeatingCoilLevel getCoilLevel() {
-        return this.coilLevel;
-    }
-
-    public void setCoilLevel(HeatingCoilLevel coilLevel) {
-        this.coilLevel = coilLevel;
-    }
-
-    public int getCoilTier() {
-        return Utils.getCoilTier(coilLevel);
-    }
-
     private static ItemStack dustIrOsSmM = null;
-
-    @Override
-    public void onFirstTick(IGregTechTileEntity aBaseMetaTileEntity) {
-        super.onFirstTick(aBaseMetaTileEntity);
-        if (dustIrOsSmM == null) dustIrOsSmM = OTHItemList.dustIrOsSmM.get(1);
-    }
-
-    protected void updatetier() {
-        ItemStack aGuiStack = this.getControllerSlot();
-        isUnlocked = aGuiStack != null && GTUtility.areStacksEqual(aGuiStack, dustIrOsSmM);
-    }
-
-    @Override
-    public void saveNBTData(NBTTagCompound aNBT) {
-        super.saveNBTData(aNBT);
-        aNBT.setBoolean("isUnlocked", isUnlocked);
-    }
-
-    @Override
-    public void loadNBTData(final NBTTagCompound aNBT) {
-        super.loadNBTData(aNBT);
-        isUnlocked = aNBT.getBoolean("isUnlocked");
-    }
-
-    @Override
-    protected boolean isEnablePerfectOverclock() {
-        return isUnlocked;
-    }
-
-    public int getMaxParallelRecipes() {
-        if (isUnlocked) {
-            return Integer.MAX_VALUE;
-        } else {
-            return 64;
-        }
-    }
-
-    protected float getSpeedBonus() {
-        if (getCoilTier() >= 10) {
-            return 0.1F;
-        }
-        return 1 - getCoilTier() * 0.1F;
-    }
-
-    @Override
-    public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
-        int z) {
-        super.getWailaNBTData(player, tile, tag, world, x, y, z);
-        final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
-        if (tileEntity != null) {
-            tag.setBoolean("123Processing", isUnlocked);
-        }
-    }
-
-    @Override
-    public void getWailaBody(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor,
-        IWailaConfigHandler config) {
-        super.getWailaBody(itemStack, currentTip, accessor, config);
-        final NBTTagCompound tag = accessor.getNBTData();
-        currentTip.add(
-            translateToLocal("otht.waila.123") + EnumChatFormatting.RESET
-                + ": "
-                + EnumChatFormatting.GOLD
-                + tag.getBoolean("123Processing")
-                + EnumChatFormatting.RESET);
-    }
-
-    @Override
-    public RecipeMap<?> getRecipeMap() {
-        return Recipemaps.SINOPEC;
-    }
-
-    @Override
-    protected ProcessingLogic createProcessingLogic() {
-
-        return new OTHProcessingLogic() {
-
-            @NotNull
-            @Override
-            public CheckRecipeResult process() {
-                setSpeedBonus(getSpeedBonus());
-                return super.process();
-            }
-        }.setMaxParallelSupplier(this::getMaxParallelRecipes);
-    }
-
-    @Override
-    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
-        updatetier();
-        repairMachine();
-        coilLevel = HeatingCoilLevel.None;
-        checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors);
-    }
-
-    @NotNull
-    @Override
-    public CheckRecipeResult checkProcessing() {
-        updatetier();
-        return super.checkProcessing();
-    }
-
-    @Override
-    public void construct(ItemStack stackSize, boolean hintsOnly) {
-        repairMachine();
-        buildPiece(STRUCTURE_PIECE_MAIN, stackSize, hintsOnly, horizontalOffSet, verticalOffSet, depthOffSet);
-
-    }
-
-    @Override
-    public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
-        if (this.mMachine) return -1;
-        int realBudget = elementBudget >= 200 ? elementBudget : Math.min(200, elementBudget * 5);
-
-        return this.survivalBuildPiece(
-            STRUCTURE_PIECE_MAIN,
-            stackSize,
-            horizontalOffSet,
-            verticalOffSet,
-            depthOffSet,
-            realBudget,
-            env,
-            false,
-            true);
-
-    }
 
     private static final String STRUCTURE_PIECE_MAIN = "main";
 
     private final int horizontalOffSet = 26;
+
     private final int verticalOffSet = 46;
+
     private final int depthOffSet = 2;
+
     private static final int HORIZONTAL_DIRT_METAID = 10;
+
     private static IStructureDefinition<OTESINOPEC> STRUCTURE_DEFINITION = null;
+
     private static final String[] description = new String[] {
         EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.sinopec.0") + ":",
         translateToLocal("ote.cm.sinopec.1") };
-
-    @Override
-    public String[] getStructureDescription(ItemStack stackSize) {
-        return description;
-    }
-
-    @Override
-    public IStructureDefinition<OTESINOPEC> getStructureDefinition() {
-        if (STRUCTURE_DEFINITION == null) {
-            STRUCTURE_DEFINITION = StructureDefinition.<OTESINOPEC>builder()
-                .addShape(STRUCTURE_PIECE_MAIN, shapeMain)
-                .addElement('A', BorosilicateGlass.ofBoroGlass(3))
-                .addElement('B', BorosilicateGlass.ofBoroGlass(3))
-                .addElement('C', ofBlock(sBlockCasings2, 13))
-                .addElement('D', ofBlock(sBlockCasings2, 15))
-                .addElement('E', ofBlock(sBlockCasings3, 15))
-                .addElement('G', ofBlock(sBlockCasings4, 1))
-                .addElement('H', withChannel("coil", ofCoil(OTESINOPEC::setCoilLevel, OTESINOPEC::getCoilLevel)))
-                .addElement('I', ofBlock(sBlockCasings8, 0))
-                .addElement('J', ofBlock(sBlockCasings8, 1))
-                .addElement('K', ofBlock(sBlockMetal1, 12))
-                .addElement('L', ofBlock(sBlockMetal6, 13))
-                .addElement('M', ofBlock(sBlockMetal7, 11))
-                .addElement('P', ofFrame(Materials.Steel))
-                .addElement(
-                    'N',
-                    (Chisel.isModLoaded() && Block.getBlockFromName(Chisel.ID + ":concrete") != null) ? ofBlock(
-                        Objects.requireNonNull(Block.getBlockFromName(Chisel.ID + ":concrete")),
-                        HORIZONTAL_DIRT_METAID) : ofBlock(sBlockConcretes, 0))
-                .addElement(
-                    'F',
-                    buildHatchAdder(OTESINOPEC.class)
-                        .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch)
-                        .adder(OTESINOPEC::addToMachineList)
-                        .hint(1)
-                        .casingIndex(48)
-                        .buildAndChain(sBlockCasings4, 0))
-                .addElement(
-                    'O',
-                    buildHatchAdder(OTESINOPEC.class).atLeast(Muffler)
-                        .adder(OTESINOPEC::addToMachineList)
-                        .hint(2)
-                        .casingIndex(48)
-                        .buildAndChain(sBlockCasings4, 0))
-                .build();
-        }
-        return STRUCTURE_DEFINITION;
-    }
 
     // Structured by LyeeR
     @SuppressWarnings("SpellCheckingInspection")
@@ -1103,10 +914,55 @@ public class OTESINOPEC extends OTHMultiMachineBase<OTESINOPEC> {
             "                                                ", "                                                ",
             "NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN" } };
 
+    // ===================== Constructors =====================
+
+    public OTESINOPEC(int aID, String aName, String aNameRegional) {
+        super(aID, aName, aNameRegional);
+    }
+
+    public OTESINOPEC(String aName) {
+        super(aName);
+    }
+
+    // ===================== NBT =====================
+
     @Override
-    public boolean addToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
-        return super.addToMachineList(aTileEntity, aBaseCasingIndex)
-            || addExoticEnergyInputToMachineList(aTileEntity, aBaseCasingIndex);
+    public void saveNBTData(NBTTagCompound aNBT) {
+        super.saveNBTData(aNBT);
+        aNBT.setBoolean("isUnlocked", isUnlocked);
+    }
+
+    @Override
+    public void loadNBTData(final NBTTagCompound aNBT) {
+        super.loadNBTData(aNBT);
+        isUnlocked = aNBT.getBoolean("isUnlocked");
+    }
+
+    // ===================== Machine Parameters =====================
+
+    @Override
+    protected boolean isEnablePerfectOverclock() {
+        return isUnlocked;
+    }
+
+    public int getMaxParallelRecipes() {
+        if (isUnlocked) {
+            return Integer.MAX_VALUE;
+        } else {
+            return 64;
+        }
+    }
+
+    protected float getSpeedBonus() {
+        if (getCoilTier() >= 10) {
+            return 0.1F;
+        }
+        return 1 - getCoilTier() * 0.1F;
+    }
+
+    @Override
+    public RecipeMap<?> getRecipeMap() {
+        return Recipemaps.SINOPEC;
     }
 
     @Override
@@ -1114,10 +970,142 @@ public class OTESINOPEC extends OTHMultiMachineBase<OTESINOPEC> {
         return 6400;
     }
 
+    public HeatingCoilLevel getCoilLevel() {
+        return this.coilLevel;
+    }
+
+    public void setCoilLevel(HeatingCoilLevel coilLevel) {
+        this.coilLevel = coilLevel;
+    }
+
+    public int getCoilTier() {
+        return Utils.getCoilTier(coilLevel);
+    }
+
+    // ===================== Processing Logic =====================
+
+    @Override
+    protected ProcessingLogic createProcessingLogic() {
+
+        return new OTHProcessingLogic() {
+
+            @NotNull
+            @Override
+            public CheckRecipeResult process() {
+                setSpeedBonus(getSpeedBonus());
+                return super.process();
+            }
+        }.setMaxParallelSupplier(this::getMaxParallelRecipes);
+    }
+
+    @NotNull
+    @Override
+    public CheckRecipeResult checkProcessing() {
+        updatetier();
+        return super.checkProcessing();
+    }
+
+    @Override
+    public void onFirstTick(IGregTechTileEntity aBaseMetaTileEntity) {
+        super.onFirstTick(aBaseMetaTileEntity);
+        if (dustIrOsSmM == null) dustIrOsSmM = OTHItemList.dustIrOsSmM.get(1);
+    }
+
+    // ===================== Structure =====================
+
+    @Override
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
+        updatetier();
+        repairMachine();
+        coilLevel = HeatingCoilLevel.None;
+        checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors);
+    }
+
+    @Override
+    public void construct(ItemStack stackSize, boolean hintsOnly) {
+        repairMachine();
+        buildPiece(STRUCTURE_PIECE_MAIN, stackSize, hintsOnly, horizontalOffSet, verticalOffSet, depthOffSet);
+
+    }
+
+    @Override
+    public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
+        if (this.mMachine) return -1;
+        int realBudget = elementBudget >= 200 ? elementBudget : Math.min(200, elementBudget * 5);
+
+        return this.survivalBuildPiece(
+            STRUCTURE_PIECE_MAIN,
+            stackSize,
+            horizontalOffSet,
+            verticalOffSet,
+            depthOffSet,
+            realBudget,
+            env,
+            false,
+            true);
+
+    }
+
+    @Override
+    public String[] getStructureDescription(ItemStack stackSize) {
+        return description;
+    }
+
+    @Override
+    public IStructureDefinition<OTESINOPEC> getStructureDefinition() {
+        if (STRUCTURE_DEFINITION == null) {
+            STRUCTURE_DEFINITION = StructureDefinition.<OTESINOPEC>builder()
+                .addShape(STRUCTURE_PIECE_MAIN, shapeMain)
+                .addElement('A', BorosilicateGlass.ofBoroGlass(3))
+                .addElement('B', BorosilicateGlass.ofBoroGlass(3))
+                .addElement('C', ofBlock(sBlockCasings2, 13))
+                .addElement('D', ofBlock(sBlockCasings2, 15))
+                .addElement('E', ofBlock(sBlockCasings3, 15))
+                .addElement('G', ofBlock(sBlockCasings4, 1))
+                .addElement('H', withChannel("coil", ofCoil(OTESINOPEC::setCoilLevel, OTESINOPEC::getCoilLevel)))
+                .addElement('I', ofBlock(sBlockCasings8, 0))
+                .addElement('J', ofBlock(sBlockCasings8, 1))
+                .addElement('K', ofBlock(sBlockMetal1, 12))
+                .addElement('L', ofBlock(sBlockMetal6, 13))
+                .addElement('M', ofBlock(sBlockMetal7, 11))
+                .addElement('P', ofFrame(Materials.Steel))
+                .addElement(
+                    'N',
+                    (Chisel.isModLoaded() && Block.getBlockFromName(Chisel.ID + ":concrete") != null) ? ofBlock(
+                        Objects.requireNonNull(Block.getBlockFromName(Chisel.ID + ":concrete")),
+                        HORIZONTAL_DIRT_METAID) : ofBlock(sBlockConcretes, 0))
+                .addElement(
+                    'F',
+                    buildHatchAdder(OTESINOPEC.class)
+                        .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch)
+                        .adder(OTESINOPEC::addToMachineList)
+                        .hint(1)
+                        .casingIndex(48)
+                        .buildAndChain(sBlockCasings4, 0))
+                .addElement(
+                    'O',
+                    buildHatchAdder(OTESINOPEC.class).atLeast(Muffler)
+                        .adder(OTESINOPEC::addToMachineList)
+                        .hint(2)
+                        .casingIndex(48)
+                        .buildAndChain(sBlockCasings4, 0))
+                .build();
+        }
+        return STRUCTURE_DEFINITION;
+    }
+
+    @Override
+    public boolean addToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
+        return super.addToMachineList(aTileEntity, aBaseCasingIndex)
+            || addExoticEnergyInputToMachineList(aTileEntity, aBaseCasingIndex);
+    }
+
+    // ===================== Tooltip =====================
+
     /*
      * @Override
      * protected MultiblockTooltipBuilder createTooltip() {
-     * final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
+     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
      * tt.addMachineType("§q§l重工业计划 - 中国石化集成工厂")
      * .addInfo("§l§a黑金的最终流处...")
      * .addInfo("§l一步到位.")
@@ -1140,15 +1128,16 @@ public class OTESINOPEC extends OTHMultiMachineBase<OTESINOPEC> {
      */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType(translateToLocal("ote.tm.sinopec.0"))
             .addInfo(translateToLocal("ote.tm.sinopec.1"))
             .addInfo(translateToLocal("ote.tm.sinopec.2"))
             .addInfo(translateToLocal("ote.tm.sinopec.3"))
             .addInfo(translateToLocal("ote.tm.sinopec.4"))
-            .addTecTechHatchInfo()
             .addPollutionAmount(6400)
+            .addTecTechHatchInfo()
             .addSeparator()
+            .addInfo("§aAdded by: 123Technology - Heavy industry - SINOPEC")
             .addController(translateToLocal("ote.tn.sinopec"))
             .beginStructureBlock(48, 49, 33, false)
             .addInputBus("AnyInputBus", 1)
@@ -1157,14 +1146,18 @@ public class OTESINOPEC extends OTHMultiMachineBase<OTESINOPEC> {
             .addOutputHatch("AnyOutputHatch", 1)
             .addEnergyHatch("AnyEnergyHatch", 1)
             .addMufflerHatch("AnyMufflerHatch", 1)
-            .toolTipFinisher("§a123Technology - Heavy industry - SINOPEC");
+            .toolTipFinisher();
         return tt;
     }
+
+    // ===================== Standard Overrides =====================
 
     @Override
     public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
         return new OTESINOPEC(this.mName);
     }
+
+    // ===================== Textures =====================
 
     @Override
     public ITexture[] getTexture(final IGregTechTileEntity baseMetaTileEntity, final ForgeDirection sideDirection,
@@ -1200,5 +1193,35 @@ public class OTESINOPEC extends OTHMultiMachineBase<OTESINOPEC> {
     @Override
     protected SoundResource getProcessStartSound() {
         return SoundResource.GT_MACHINES_DISTILLERY_LOOP;
+    }
+
+    // ===================== Misc =====================
+
+    protected void updatetier() {
+        ItemStack aGuiStack = this.getControllerSlot();
+        isUnlocked = aGuiStack != null && GTUtility.areStacksEqual(aGuiStack, dustIrOsSmM);
+    }
+
+    @Override
+    public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
+        int z) {
+        super.getWailaNBTData(player, tile, tag, world, x, y, z);
+        final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
+        if (tileEntity != null) {
+            tag.setBoolean("123Processing", isUnlocked);
+        }
+    }
+
+    @Override
+    public void getWailaBody(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor,
+        IWailaConfigHandler config) {
+        super.getWailaBody(itemStack, currentTip, accessor, config);
+        final NBTTagCompound tag = accessor.getNBTData();
+        currentTip.add(
+            translateToLocal("otht.waila.123") + EnumChatFormatting.RESET
+                + ": "
+                + EnumChatFormatting.GOLD
+                + tag.getBoolean("123Processing")
+                + EnumChatFormatting.RESET);
     }
 }
