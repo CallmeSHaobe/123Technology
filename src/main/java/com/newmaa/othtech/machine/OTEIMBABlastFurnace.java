@@ -19,7 +19,6 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
-import com.newmaa.othtech.utils.OTHTooltipBuilder;
 
 import gregtech.api.GregTechAPI;
 import gregtech.api.enums.HeatingCoilLevel;
@@ -40,15 +39,12 @@ public class OTEIMBABlastFurnace extends MTEElectricBlastFurnace {
     private int mHeatingCapacity = 0;
 
     private static final String STRUCTURE_PIECE_MAIN = "main";
+
     private static final int CASING_INDEX = 11;
+
     private static final String[] description = new String[] {
         EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":",
         EnumChatFormatting.GOLD + translateToLocal("ote.cm.imba.0") };
-
-    @Override
-    public String[] getStructureDescription(ItemStack stackSize) {
-        return description;
-    }
 
     private static final IStructureDefinition<MTEElectricBlastFurnace> STRUCTURE_DEFINITION = StructureDefinition
         .<MTEElectricBlastFurnace>builder()
@@ -89,6 +85,8 @@ public class OTEIMBABlastFurnace extends MTEElectricBlastFurnace {
                 .buildAndChain(GregTechAPI.sBlockCasings1, CASING_INDEX))
         .build();
 
+    // ===================== Constructors =====================
+
     public OTEIMBABlastFurnace(int aID, String aName) {
         super(aID, aName, EnumChatFormatting.LIGHT_PURPLE + "The IMBA EBF");
     }
@@ -97,15 +95,7 @@ public class OTEIMBABlastFurnace extends MTEElectricBlastFurnace {
         super(aName);
     }
 
-    @Override
-    public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-        return new OTEIMBABlastFurnace(this.mName);
-    }
-
-    @Override
-    public IStructureDefinition<MTEElectricBlastFurnace> getStructureDefinition() {
-        return STRUCTURE_DEFINITION;
-    }
+    // ===================== Processing Logic =====================
 
     @Override
     protected ProcessingLogic createProcessingLogic() {
@@ -135,10 +125,7 @@ public class OTEIMBABlastFurnace extends MTEElectricBlastFurnace {
         };
     }
 
-    @Override
-    public boolean drainEnergyInput(long aEUt) {
-        return true;
-    }
+    // ===================== Structure =====================
 
     @Override
     public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
@@ -162,40 +149,22 @@ public class OTEIMBABlastFurnace extends MTEElectricBlastFurnace {
         return survivalBuildPiece(STRUCTURE_PIECE_MAIN, stackSize, 2, 3, 0, elementBudget, env, false, true);
     }
 
-    public int getPollutionOutputHatchCount() {
-        return this.mMufflerHatches.size();
+    @Override
+    public String[] getStructureDescription(ItemStack stackSize) {
+        return description;
     }
 
     @Override
-    public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection aFacing,
-        int colorIndex, boolean aActive, boolean redstoneLevel) {
-        if (side == aFacing) {
-            if (aActive) return new ITexture[] { casingTexturePages[0][CASING_INDEX], TextureFactory.builder()
-                .addIcon(OVERLAY_FRONT_ELECTRIC_BLAST_FURNACE_ACTIVE)
-                .extFacing()
-                .build(),
-                TextureFactory.builder()
-                    .addIcon(OVERLAY_FRONT_ELECTRIC_BLAST_FURNACE_ACTIVE_GLOW)
-                    .extFacing()
-                    .glow()
-                    .build() };
-            return new ITexture[] { casingTexturePages[0][CASING_INDEX], TextureFactory.builder()
-                .addIcon(OVERLAY_FRONT_ELECTRIC_BLAST_FURNACE)
-                .extFacing()
-                .build(),
-                TextureFactory.builder()
-                    .addIcon(OVERLAY_FRONT_ELECTRIC_BLAST_FURNACE_GLOW)
-                    .extFacing()
-                    .glow()
-                    .build() };
-        }
-        return new ITexture[] { casingTexturePages[0][CASING_INDEX] };
+    public IStructureDefinition<MTEElectricBlastFurnace> getStructureDefinition() {
+        return STRUCTURE_DEFINITION;
     }
+
+    // ===================== Tooltip =====================
 
     /*
      * @Override
      * protected MultiblockTooltipBuilder createTooltip() {
-     * MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
+     * MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
      * tt.addMachineType("§l超级无敌数值高炉")
      * .addInfo("§6§l不耗电！")
      * .addInfo("§6§lint并行！")
@@ -227,7 +196,7 @@ public class OTEIMBABlastFurnace extends MTEElectricBlastFurnace {
      */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
+        MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType(translateToLocal("ote.tm.imba.0"))
             .addInfo(translateToLocal("ote.tm.imba.1"))
             .addInfo(translateToLocal("ote.tm.imba.2"))
@@ -253,9 +222,57 @@ public class OTEIMBABlastFurnace extends MTEElectricBlastFurnace {
             .addOutputHatch("Pollution gases (CO2/CO/SO2), Any top layer casing", 1)
             .addStructureInfo("Pollution gas output amount scales with Muffler Hatch tier")
             .addInfo("§7§lAuthor:§4§l§m勃艮第大公,疯狂的富婆§4§l---§c§lSafariXiu☆")
-            .toolTipFinisher("§4§l123Technology");
+            .addSeparator()
+            .addInfo("§4§lAdded by: 123Technology")
+            .toolTipFinisher();
 
         return tt;
+    }
+
+    // ===================== Standard Overrides =====================
+
+    @Override
+    public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
+        return new OTEIMBABlastFurnace(this.mName);
+    }
+
+    // ===================== Textures =====================
+
+    @Override
+    public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection aFacing,
+        int colorIndex, boolean aActive, boolean redstoneLevel) {
+        if (side == aFacing) {
+            if (aActive) return new ITexture[] { casingTexturePages[0][CASING_INDEX], TextureFactory.builder()
+                .addIcon(OVERLAY_FRONT_ELECTRIC_BLAST_FURNACE_ACTIVE)
+                .extFacing()
+                .build(),
+                TextureFactory.builder()
+                    .addIcon(OVERLAY_FRONT_ELECTRIC_BLAST_FURNACE_ACTIVE_GLOW)
+                    .extFacing()
+                    .glow()
+                    .build() };
+            return new ITexture[] { casingTexturePages[0][CASING_INDEX], TextureFactory.builder()
+                .addIcon(OVERLAY_FRONT_ELECTRIC_BLAST_FURNACE)
+                .extFacing()
+                .build(),
+                TextureFactory.builder()
+                    .addIcon(OVERLAY_FRONT_ELECTRIC_BLAST_FURNACE_GLOW)
+                    .extFacing()
+                    .glow()
+                    .build() };
+        }
+        return new ITexture[] { casingTexturePages[0][CASING_INDEX] };
+    }
+
+    // ===================== Misc =====================
+
+    @Override
+    public boolean drainEnergyInput(long aEUt) {
+        return true;
+    }
+
+    public int getPollutionOutputHatchCount() {
+        return this.mMufflerHatches.size();
     }
 
     public int getmHeatingCapacity() {

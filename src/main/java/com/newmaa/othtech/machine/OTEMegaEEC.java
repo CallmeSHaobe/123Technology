@@ -42,7 +42,6 @@ import com.mojang.authlib.GameProfile;
 import com.newmaa.othtech.machine.machineclass.OTHMobHandlerLoader;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
-import com.newmaa.othtech.utils.OTHTooltipBuilder;
 import com.newmaa.othtech.utils.ShapeLoader;
 
 import bartworks.API.BorosilicateGlass;
@@ -70,8 +69,79 @@ import tectech.thing.block.BlockQuantumGlass;
 public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> {
 
     private static final Logger LOG_PREVIEW = LogManager.getLogger("123Technology/MegaEECPreview");
+
     /** NEI 预览的 DummyWorld；同一个预览世界只整体建造一次 */
     private static World sPreviewBuiltWorld = null;
+
+    private byte glassTier = 0;
+
+    private static final Item poweredSpawnerItem = Item.getItemFromBlock(EnderIO.blockPoweredSpawner);
+
+    public final Random rand = new FastRandom();
+
+    private static final String STRUCTURE_PIECE_MAIN = "main";
+
+    private final int horizontalOffSet = 25;
+
+    private final int verticalOffSet = 55;
+
+    private final int depthOffSet = 26;
+
+    private static IStructureDefinition<OTEMegaEEC> STRUCTURE_DEFINITION = null;
+
+    private static final String[] description = new String[] {
+        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":",
+        translateToLocal("1 - 消声仓, 能源仓, 输入输出总线, 输入输出仓 : 替换分子机械方块, 支持TecTech能源仓") };
+
+    // Structured by JulianChum
+    // 形状 50(x) x 143(z) x 56(y)：数据在 assets/123technology/structures/megaeec_shape.txt。
+    // 外置原因：8008 条字符串字面量作为「实例 final 字段」时，javac 会把这份初始化字节码复制进
+    // 每一个构造器，实测两个构造器各 51 KB，而 JVM 单方法上限 65535 字节 —— 再往形状里加两千条
+    // 就会 code too large。外置后构造器回到 1 KB 级，改结构也不用重编译。
+    private static final int SHAPE_WIDTH = 50;
+
+    private static final int SHAPE_HEIGHT = 143;
+
+    private static final int SHAPE_LAYERS = 56;
+
+    private static final String[][] shapeMain = ShapeLoader
+        .load("/assets/123technology/structures/megaeec_shape.txt", SHAPE_WIDTH, SHAPE_HEIGHT, SHAPE_LAYERS);
+
+    public OTEMegaEEC.EECFakePlayer EECPlayer = null;
+
+    private static class EECFakePlayer extends FakePlayer {
+
+        OTEMegaEEC mte;
+        ItemStack currentWeapon;
+
+        public EECFakePlayer(OTEMegaEEC mte) {
+            super(
+                (WorldServer) mte.getBaseMetaTileEntity()
+                    .getWorld(),
+                new GameProfile(
+                    UUID.nameUUIDFromBytes("[EEC Fake Player]".getBytes(StandardCharsets.UTF_8)),
+                    "[EEC Fake Player]"));
+            this.mte = mte;
+        }
+
+        @Override
+        public void renderBrokenItemStack(ItemStack p_70669_1_) {}
+
+        @Override
+        public void destroyCurrentEquippedItem() {}
+
+        @Override
+        public ItemStack getCurrentEquippedItem() {
+            return currentWeapon;
+        }
+
+        @Override
+        public ItemStack getHeldItem() {
+            return currentWeapon;
+        }
+    }
+
+    // ===================== Constructors =====================
 
     public OTEMegaEEC(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
@@ -81,10 +151,9 @@ public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> {
         super(aName);
     }
 
-    private byte glassTier = 0;
+    // ===================== NBT =====================
 
     // public final Random rand = new FastRandom();
-
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
         super.saveNBTData(aNBT);
@@ -99,6 +168,8 @@ public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> {
 
     }
 
+    // ===================== Machine Parameters =====================
+
     @Override
     protected boolean isEnablePerfectOverclock() {
         return true;
@@ -112,7 +183,87 @@ public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> {
         return 1 / 3.5F;
     }
 
-    private static final Item poweredSpawnerItem = Item.getItemFromBlock(EnderIO.blockPoweredSpawner);
+    @Override
+    public int getMaxEfficiency(ItemStack aStack) {
+        return 10000;
+    }
+
+    @Override
+    public int getDamageToComponent(ItemStack aStack) {
+        return 0;
+    }
+
+    /*
+     * @Override
+     * protected MultiblockTooltipBuilder createTooltip() {
+     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+     * tt.addMachineType("§e§l老登的终极造物 - 噬魂监狱(工业屠宰场)")
+     * .addInfo("§l§4“观自在菩萨, 行深般若波罗蜜多时照见五蕴皆空, 度一切苦厄.”")
+     * .addInfo("§l§4无法连接血魔法仪式, 自动销毁所有附魔以及有耐久损耗的装备")
+     * .addInfo("§n§b工业化的魅力......")
+     * .addInfo("并行: 134217728, 耗电固定为64A MAX, 时运等级64")
+     * .addInfo("注意: 多方块结构方块数量过多 无法预览结构")
+     * .addInfo("统计 : 灵魂沙 * 2200 , 博特姆合金块 * 1493 , 放射硅岩合金机械方块 * 12309")
+     * .addInfo("黑曜石 * 611 , 钢框架 * 169 , 脱氧钢机械方块 * 100")
+     * .addInfo("硼玻璃系列方块 * 240 , 太空电梯支持结构方块 * 918 , 分子机械方块 * 2271")
+     * .addInfo("量子玻璃 * 1101 , 遏制场发生器 * 44 , 玄铁栅栏 * 111")
+     * .addInfo("维度桥接机械方块 * 233 , 维度注入机械方块 * 241 , 时空扭曲机械方块 * 32")
+     * .addTecTechHatchInfo()
+     * .addSeparator()
+     * .addController("工业屠宰场")
+     * .beginStructureBlock(50, 143, 56, false)
+     * .addInputBus("AnyInputBus", 1)
+     * .addOutputBus("AnyOutputBus", 1)
+     * .addInputHatch("AnyInputHatch", 1)
+     * .addOutputHatch("AnyOutputHatch", 1)
+     * .addEnergyHatch("AnyEnergyHatch", 1)
+     * .toolTipFinisher("§a123Technology - §4EEC");
+     * return tt;
+     * }
+     */
+    @Override
+    public boolean isCorrectMachinePart(ItemStack aStack) {
+        return true;
+    }
+
+    @Override
+    public boolean supportsVoidProtection() {
+        return true;
+    }
+
+    @Override
+    public boolean supportsInputSeparation() {
+        return true;
+    }
+
+    @Override
+    public boolean supportsSingleRecipeLocking() {
+        return true;
+    }
+
+    // ===================== Processing Logic =====================
+
+    @Override
+    protected ProcessingLogic createProcessingLogic() {
+
+        return new OTHProcessingLogic() {
+
+            @NotNull
+            @Override
+            public CheckRecipeResult process() {
+                setSpeedBonus(getSpeedBonus());
+                setOverclock(isEnablePerfectOverclock() ? 4 : 2, 4);
+                return super.process();
+            }
+
+            @NotNull
+            @Override
+            protected CheckRecipeResult validateRecipe(@NotNull GTRecipe recipe) {
+                return CheckRecipeResultRegistry.SUCCESSFUL;
+            }
+
+        }.setMaxParallelSupplier(this::getMaxParallelRecipes);
+    }
 
     @Override
     @NotNull
@@ -160,29 +311,15 @@ public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> {
         return CheckRecipeResultRegistry.SUCCESSFUL;
     }
 
-    public final Random rand = new FastRandom();
-
     @Override
-    protected ProcessingLogic createProcessingLogic() {
-
-        return new OTHProcessingLogic() {
-
-            @NotNull
-            @Override
-            public CheckRecipeResult process() {
-                setSpeedBonus(getSpeedBonus());
-                setOverclock(isEnablePerfectOverclock() ? 4 : 2, 4);
-                return super.process();
-            }
-
-            @NotNull
-            @Override
-            protected CheckRecipeResult validateRecipe(@NotNull GTRecipe recipe) {
-                return CheckRecipeResultRegistry.SUCCESSFUL;
-            }
-
-        }.setMaxParallelSupplier(this::getMaxParallelRecipes);
+    public boolean onRunningTick(ItemStack aStack) {
+        // this.addOutput(recipeMap.get();
+        if (!super.onRunningTick(aStack)) return false;
+        this.updateSlots();
+        return true;
     }
+
+    // ===================== Structure =====================
 
     @Override
     public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
@@ -241,33 +378,6 @@ public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> {
 
     }
 
-    /** BlockRenderer6343 的预览世界类名带 Dummy / Observer / Tracked（与迪普西科同一套判据）。 */
-    private boolean isPreviewWorld() {
-        IGregTechTileEntity base = this.getBaseMetaTileEntity();
-        if (base == null || base.getWorld() == null) return false;
-        String name = base.getWorld()
-            .getClass()
-            .getName();
-        return name.contains("Dummy") || name.contains("Observer") || name.contains("Tracked");
-    }
-
-    @Override
-    public boolean onRunningTick(ItemStack aStack) {
-        // this.addOutput(recipeMap.get();
-        if (!super.onRunningTick(aStack)) return false;
-        this.updateSlots();
-        return true;
-    }
-
-    private static final String STRUCTURE_PIECE_MAIN = "main";
-    private final int horizontalOffSet = 25;
-    private final int verticalOffSet = 55;
-    private final int depthOffSet = 26;
-    private static IStructureDefinition<OTEMegaEEC> STRUCTURE_DEFINITION = null;
-    private static final String[] description = new String[] {
-        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":",
-        translateToLocal("1 - 消声仓, 能源仓, 输入输出总线, 输入输出仓 : 替换分子机械方块, 支持TecTech能源仓") };
-
     @Override
     public String[] getStructureDescription(ItemStack stackSize) {
         return description;
@@ -319,31 +429,25 @@ public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> {
         return STRUCTURE_DEFINITION;
     }
 
-    // Structured by JulianChum
-    // 形状 50(x) x 143(z) x 56(y)：数据在 assets/123technology/structures/megaeec_shape.txt。
-    // 外置原因：8008 条字符串字面量作为「实例 final 字段」时，javac 会把这份初始化字节码复制进
-    // 每一个构造器，实测两个构造器各 51 KB，而 JVM 单方法上限 65535 字节 —— 再往形状里加两千条
-    // 就会 code too large。外置后构造器回到 1 KB 级，改结构也不用重编译。
-    private static final int SHAPE_WIDTH = 50;
-    private static final int SHAPE_HEIGHT = 143;
-    private static final int SHAPE_LAYERS = 56;
-    private static final String[][] shapeMain = ShapeLoader
-        .load("/assets/123technology/structures/megaeec_shape.txt", SHAPE_WIDTH, SHAPE_HEIGHT, SHAPE_LAYERS);
-
     @Override
     public boolean addToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
         return super.addToMachineList(aTileEntity, aBaseCasingIndex)
             || addExoticEnergyInputToMachineList(aTileEntity, aBaseCasingIndex);
     }
 
+    // ===================== Tooltip =====================
+
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType(translateToLocal("ote.tm.eec.0"))
             .addInfo(translateToLocal("ote.tm.eec.1"))
             .addInfo(translateToLocal("ote.tm.eec.2"))
             .addInfo(translateToLocal("ote.tm.eec.3"))
             .addInfo(translateToLocal("ote.tm.eec.4"))
+            .addTecTechHatchInfo()
+            .addSeparator()
+            .addInfo("§aAdded by: 123Technology - §4EEC")
             /*
              * .addInfo(translateToLocal("ote.tm.eec.5"))
              * .addInfo(translateToLocal("ote.tm.eec.6"))
@@ -352,8 +456,6 @@ public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> {
              * .addInfo(translateToLocal("ote.tm.eec.9"))
              * .addInfo(translateToLocal("ote.tm.eec.10"))
              */
-            .addTecTechHatchInfo()
-            .addSeparator()
             .addController(translateToLocal("ote.tn.eec"))
             .beginStructureBlock(50, 143, 56, false)
             .addInputBus("AnyInputBus", 1)
@@ -361,73 +463,18 @@ public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> {
             .addInputHatch("AnyInputHatch", 1)
             .addOutputHatch("AnyOutputHatch", 1)
             .addEnergyHatch("AnyEnergyHatch", 1)
-            .toolTipFinisher("§a123Technology - §4EEC");
+            .toolTipFinisher();
         return tt;
     }
 
-    /*
-     * @Override
-     * protected MultiblockTooltipBuilder createTooltip() {
-     * final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
-     * tt.addMachineType("§e§l老登的终极造物 - 噬魂监狱(工业屠宰场)")
-     * .addInfo("§l§4“观自在菩萨, 行深般若波罗蜜多时照见五蕴皆空, 度一切苦厄.”")
-     * .addInfo("§l§4无法连接血魔法仪式, 自动销毁所有附魔以及有耐久损耗的装备")
-     * .addInfo("§n§b工业化的魅力......")
-     * .addInfo("并行: 134217728, 耗电固定为64A MAX, 时运等级64")
-     * .addInfo("注意: 多方块结构方块数量过多 无法预览结构")
-     * .addInfo("统计 : 灵魂沙 * 2200 , 博特姆合金块 * 1493 , 放射硅岩合金机械方块 * 12309")
-     * .addInfo("黑曜石 * 611 , 钢框架 * 169 , 脱氧钢机械方块 * 100")
-     * .addInfo("硼玻璃系列方块 * 240 , 太空电梯支持结构方块 * 918 , 分子机械方块 * 2271")
-     * .addInfo("量子玻璃 * 1101 , 遏制场发生器 * 44 , 玄铁栅栏 * 111")
-     * .addInfo("维度桥接机械方块 * 233 , 维度注入机械方块 * 241 , 时空扭曲机械方块 * 32")
-     * .addTecTechHatchInfo()
-     * .addSeparator()
-     * .addController("工业屠宰场")
-     * .beginStructureBlock(50, 143, 56, false)
-     * .addInputBus("AnyInputBus", 1)
-     * .addOutputBus("AnyOutputBus", 1)
-     * .addInputHatch("AnyInputHatch", 1)
-     * .addOutputHatch("AnyOutputHatch", 1)
-     * .addEnergyHatch("AnyEnergyHatch", 1)
-     * .toolTipFinisher("§a123Technology - §4EEC");
-     * return tt;
-     * }
-     */
-
-    @Override
-    public boolean isCorrectMachinePart(ItemStack aStack) {
-        return true;
-    }
-
-    @Override
-    public int getMaxEfficiency(ItemStack aStack) {
-        return 10000;
-    }
-
-    @Override
-    public int getDamageToComponent(ItemStack aStack) {
-        return 0;
-    }
-
-    @Override
-    public boolean supportsVoidProtection() {
-        return true;
-    }
-
-    @Override
-    public boolean supportsInputSeparation() {
-        return true;
-    }
-
-    @Override
-    public boolean supportsSingleRecipeLocking() {
-        return true;
-    }
+    // ===================== Standard Overrides =====================
 
     @Override
     public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
         return new OTEMegaEEC(this.mName);
     }
+
+    // ===================== Textures =====================
 
     @Override
     public ITexture[] getTexture(final IGregTechTileEntity baseMetaTileEntity, final ForgeDirection sideDirection,
@@ -467,37 +514,15 @@ public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> {
         return SoundResource.GT_MACHINES_DISTILLERY_LOOP;
     }
 
-    public OTEMegaEEC.EECFakePlayer EECPlayer = null;
+    // ===================== Misc =====================
 
-    private static class EECFakePlayer extends FakePlayer {
-
-        OTEMegaEEC mte;
-        ItemStack currentWeapon;
-
-        public EECFakePlayer(OTEMegaEEC mte) {
-            super(
-                (WorldServer) mte.getBaseMetaTileEntity()
-                    .getWorld(),
-                new GameProfile(
-                    UUID.nameUUIDFromBytes("[EEC Fake Player]".getBytes(StandardCharsets.UTF_8)),
-                    "[EEC Fake Player]"));
-            this.mte = mte;
-        }
-
-        @Override
-        public void renderBrokenItemStack(ItemStack p_70669_1_) {}
-
-        @Override
-        public void destroyCurrentEquippedItem() {}
-
-        @Override
-        public ItemStack getCurrentEquippedItem() {
-            return currentWeapon;
-        }
-
-        @Override
-        public ItemStack getHeldItem() {
-            return currentWeapon;
-        }
+    /** BlockRenderer6343 的预览世界类名带 Dummy / Observer / Tracked（与迪普西科同一套判据）。 */
+    private boolean isPreviewWorld() {
+        IGregTechTileEntity base = this.getBaseMetaTileEntity();
+        if (base == null || base.getWorld() == null) return false;
+        String name = base.getWorld()
+            .getClass()
+            .getName();
+        return name.contains("Dummy") || name.contains("Observer") || name.contains("Tracked");
     }
 }

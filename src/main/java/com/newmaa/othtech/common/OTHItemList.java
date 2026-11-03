@@ -158,6 +158,8 @@ public enum OTHItemList {
     OTEHatchRack,
     LargeSteamHatch,
     MegaThermalCentrifuge, // 乌拉尔山脉热分离厂 - 巨热力离心
+    AbstractSanctum,
+    ManaHatch123,
     LargeQuHub, // 大型可堆叠变压器(暂定)
 
     DeepSeiko,

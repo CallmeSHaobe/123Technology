@@ -21,7 +21,6 @@ import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructa
 import com.gtnewhorizon.structurelib.structure.IItemSource;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.newmaa.othtech.machine.machineclass.OTHTTMultiMachineBaseEM;
-import com.newmaa.othtech.utils.OTHTooltipBuilder;
 
 import gregtech.api.enums.SoundResource;
 import gregtech.api.enums.Textures;
@@ -42,35 +41,15 @@ public class OTEMiniActiveTransformer extends OTHTTMultiMachineBaseEM
 
     private boolean grace = false;
 
-    @Override
-    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
-        repairMachine();
-        casingCount = 0;
-        if (!checkPiece("main", 0, 1, 0, errors)) return;
-        if (checkPiece("main", 0, 1, 0, errors) && casingCount >= 0) {
-            grace = true;
-        } else if (grace) {
-            grace = false;
-        }
-        return;
-    }
-
-    @Override
-    public void onFirstTick_EM(IGregTechTileEntity aBaseMetaTileEntity) {
-        if (!mMachine) {
-            aBaseMetaTileEntity.disableWorking();
-        }
-    }
-
     private int casingCount = 0;
 
-    // region structure
     private static final String[] description = new String[] {
         EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.mat.0"), // 1 - Energy IO
                                                                                                         // Hatches or
                                                                                                         // High
         // Power Casing
     };
+
     private static final IStructureDefinition<OTEMiniActiveTransformer> STRUCTURE_DEFINITION = IStructureDefinition
         .<OTEMiniActiveTransformer>builder()
         .addShape("main", new String[][] { { "1", "~", "1", } })
@@ -83,11 +62,7 @@ public class OTEMiniActiveTransformer extends OTHTTMultiMachineBaseEM
                 .buildAndChain(onElementPass(t -> t.casingCount++, ofBlock(TTCasingsContainer.sBlockCasingsTT, 0))))
         .build();
 
-    @Override
-    public IStructureDefinition<OTEMiniActiveTransformer> getStructure_EM() {
-        return STRUCTURE_DEFINITION;
-    }
-    // endregion
+    // ===================== Constructors =====================
 
     public OTEMiniActiveTransformer(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
@@ -99,15 +74,24 @@ public class OTEMiniActiveTransformer extends OTHTTMultiMachineBaseEM
         eDismantleBoom = true;
     }
 
+    // ===================== Machine Parameters =====================
+
     @Override
-    public void onRemoval() {
-        super.onRemoval();
+    public boolean isSafeVoidButtonEnabled() {
+        return false;
     }
 
     @Override
-    public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-        return new OTEMiniActiveTransformer(mName);
+    public boolean isPowerPassButtonEnabled() {
+        return true;
     }
+
+    @Override
+    public boolean isAllowedToWorkButtonEnabled() {
+        return true;
+    }
+
+    // ===================== Processing Logic =====================
 
     @Override
     @NotNull
@@ -125,71 +109,8 @@ public class OTEMiniActiveTransformer extends OTHTTMultiMachineBaseEM
             : SimpleCheckRecipeResult.ofFailure("no_routing");
     }
 
-    /*
-     * @Override
-     * public MultiblockTooltipBuilder createTooltip() {
-     * final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
-     * tt.addMachineType(translateToLocal("中登的小型核弹 : 迷你有源变压器"))
-     * .addInfo(translateToLocal("由于落后的IV工艺, 此机器导能时破坏主机依然会爆炸, 损耗不变"))
-     * .addInfo(translateToLocal("他真的会有用吗?"))
-     * .addInfo(translateToLocal("桑百安够么, 应该够吧? 来吧! 试一下米妮!"))
-     * .addInfo(translateToLocal("请不要使用特高电流之激光仓, 不然有源可能会坏掉."))
-     * .addInfo(translateToLocal("§c§l警告 : 爆炸为龙堆式爆炸 , 威力和输入功率正相关 ! 服务器请在配置文件内关闭 !"))
-     * .addInfo(translateToLocal("§c§l警告 : 爆炸为龙堆式爆炸 , 威力和输入功率正相关 ! 服务器请在配置文件内关闭 !"))
-     * .addInfo(translateToLocal("§c§l警告 : 爆炸为龙堆式爆炸 , 威力和输入功率正相关 ! 服务器请在配置文件内关闭 !"))
-     * // .addInfo(translateToLocal("爆炸威力等于安培数"))
-     * .addTecTechHatchInfo()
-     * .beginStructureBlock(1, 3, 1, false)
-     * .addController(translateToLocal("结构正中心"))
-     * .addCasingInfoMin(translateToLocal("0x 超能机械方块(最低)"), 5, false)
-     * .addEnergyHatch(translateToLocal("任意能源仓, 激光靶仓"), 1)
-     * .addDynamoHatch(translateToLocal("任意动力仓, 激光源仓"), 1)
-     * .toolTipFinisher("§a123Technology - MINI NUKE");
-     * return tt;
-     * }
-     */
-    @Override
-    public MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
-        tt.addMachineType(translateToLocal("ote.tm.mat.0"))
-            .addInfo(translateToLocal("ote.tm.mat.1"))
-            .addInfo(translateToLocal("ote.tm.mat.2"))
-            .addInfo(translateToLocal("ote.tm.mat.3"))
-            .addInfo(translateToLocal("ote.tm.mat.4"))
-            .addInfo(translateToLocal("ote.tm.mat.5"))
-            // .addInfo(translateToLocal("爆炸威力等于安培数"))
-            .addTecTechHatchInfo()
-            .beginStructureBlock(1, 3, 1, false)
-            .addController(translateToLocal("ote.tm.mat.6"))
-            .addCasingInfoMin(translateToLocal("ote.tm.mat.7"), 5, false)
-            .addEnergyHatch(translateToLocal("ote.tm.mat.8"), 1)
-            .addDynamoHatch(translateToLocal("ote.tm.mat.9"), 1)
-            .toolTipFinisher("§a123Technology - MINI NUKE");
-        return tt;
-    }
-
-    @Override
-    public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection facing,
-        int colorIndex, boolean aActive, boolean aRedstone) {
-        if (side == facing) {
-            return new ITexture[] { Textures.BlockIcons.casingTexturePages[BlockGTCasingsTT.texturePage][0],
-                new TTRenderedExtendedFacingTexture(aActive ? TTMultiblockBase.ScreenON : TTMultiblockBase.ScreenOFF) };
-        }
-        return new ITexture[] { Textures.BlockIcons.casingTexturePages[BlockGTCasingsTT.texturePage][0] };
-    }
-
-    @Override
-    protected SoundResource getActivitySoundLoop() {
-        return SoundResource.TECTECH_MACHINES_NOISE;
-    }
-
     @Override
     public boolean onRunningTick(ItemStack aStack) {
-        return true;
-    }
-
-    @Override
-    public boolean doRandomMaintenanceDamage() {
         return true;
     }
 
@@ -198,6 +119,28 @@ public class OTEMiniActiveTransformer extends OTHTTMultiMachineBaseEM
         if ((aTick & 31) == 31) {
             ePowerPass = aBaseMetaTileEntity.isAllowedToWork();
         }
+    }
+
+    @Override
+    public void onFirstTick_EM(IGregTechTileEntity aBaseMetaTileEntity) {
+        if (!mMachine) {
+            aBaseMetaTileEntity.disableWorking();
+        }
+    }
+
+    // ===================== Structure =====================
+
+    @Override
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
+        repairMachine();
+        casingCount = 0;
+        if (!checkPiece("main", 0, 1, 0, errors)) return;
+        if (checkPiece("main", 0, 1, 0, errors) && casingCount >= 0) {
+            grace = true;
+        } else if (grace) {
+            grace = false;
+        }
+        return;
     }
 
     @Override
@@ -219,17 +162,90 @@ public class OTEMiniActiveTransformer extends OTHTTMultiMachineBaseEM
     }
 
     @Override
-    public boolean isPowerPassButtonEnabled() {
-        return true;
+    public IStructureDefinition<OTEMiniActiveTransformer> getStructure_EM() {
+        return STRUCTURE_DEFINITION;
+    }
+
+    // ===================== Tooltip =====================
+
+    /*
+     * @Override
+     * public MultiblockTooltipBuilder createTooltip() {
+     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+     * tt.addMachineType(translateToLocal("中登的小型核弹 : 迷你有源变压器"))
+     * .addInfo(translateToLocal("由于落后的IV工艺, 此机器导能时破坏主机依然会爆炸, 损耗不变"))
+     * .addInfo(translateToLocal("他真的会有用吗?"))
+     * .addInfo(translateToLocal("桑百安够么, 应该够吧? 来吧! 试一下米妮!"))
+     * .addInfo(translateToLocal("请不要使用特高电流之激光仓, 不然有源可能会坏掉."))
+     * .addInfo(translateToLocal("§c§l警告 : 爆炸为龙堆式爆炸 , 威力和输入功率正相关 ! 服务器请在配置文件内关闭 !"))
+     * .addInfo(translateToLocal("§c§l警告 : 爆炸为龙堆式爆炸 , 威力和输入功率正相关 ! 服务器请在配置文件内关闭 !"))
+     * .addInfo(translateToLocal("§c§l警告 : 爆炸为龙堆式爆炸 , 威力和输入功率正相关 ! 服务器请在配置文件内关闭 !"))
+     * // .addInfo(translateToLocal("爆炸威力等于安培数"))
+     * .addTecTechHatchInfo()
+     * .beginStructureBlock(1, 3, 1, false)
+     * .addController(translateToLocal("结构正中心"))
+     * .addCasingInfoMin(translateToLocal("0x 超能机械方块(最低)"), 5, false)
+     * .addEnergyHatch(translateToLocal("任意能源仓, 激光靶仓"), 1)
+     * .addDynamoHatch(translateToLocal("任意动力仓, 激光源仓"), 1)
+     * .toolTipFinisher("§a123Technology - MINI NUKE");
+     * return tt;
+     * }
+     */
+    @Override
+    public MultiblockTooltipBuilder createTooltip() {
+        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        tt.addMachineType(translateToLocal("ote.tm.mat.0"))
+            .addInfo(translateToLocal("ote.tm.mat.1"))
+            .addInfo(translateToLocal("ote.tm.mat.2"))
+            .addInfo(translateToLocal("ote.tm.mat.3"))
+            .addInfo(translateToLocal("ote.tm.mat.4"))
+            .addInfo(translateToLocal("ote.tm.mat.5"))
+            .addTecTechHatchInfo()
+            .addSeparator()
+            .addInfo("§aAdded by: 123Technology - MINI NUKE")
+            // .addInfo(translateToLocal("爆炸威力等于安培数"))
+            .beginStructureBlock(1, 3, 1, false)
+            .addController(translateToLocal("ote.tm.mat.6"))
+            .addCasingInfoMin(translateToLocal("ote.tm.mat.7"), 5, false)
+            .addEnergyHatch(translateToLocal("ote.tm.mat.8"), 1)
+            .addDynamoHatch(translateToLocal("ote.tm.mat.9"), 1)
+            .toolTipFinisher();
+        return tt;
+    }
+
+    // ===================== Standard Overrides =====================
+
+    @Override
+    public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
+        return new OTEMiniActiveTransformer(mName);
+    }
+
+    // ===================== Textures =====================
+
+    @Override
+    public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection facing,
+        int colorIndex, boolean aActive, boolean aRedstone) {
+        if (side == facing) {
+            return new ITexture[] { Textures.BlockIcons.casingTexturePages[BlockGTCasingsTT.texturePage][0],
+                new TTRenderedExtendedFacingTexture(aActive ? TTMultiblockBase.ScreenON : TTMultiblockBase.ScreenOFF) };
+        }
+        return new ITexture[] { Textures.BlockIcons.casingTexturePages[BlockGTCasingsTT.texturePage][0] };
     }
 
     @Override
-    public boolean isSafeVoidButtonEnabled() {
-        return false;
+    protected SoundResource getActivitySoundLoop() {
+        return SoundResource.TECTECH_MACHINES_NOISE;
+    }
+
+    // ===================== Misc =====================
+
+    @Override
+    public void onRemoval() {
+        super.onRemoval();
     }
 
     @Override
-    public boolean isAllowedToWorkButtonEnabled() {
+    public boolean doRandomMaintenanceDamage() {
         return true;
     }
 

@@ -1,4 +1,13 @@
 {
+  "machines.abstract_sanctum": {
+    "category": "block",
+    "sounds": [
+      {
+        "name": "abstract_sanctum_run",
+        "stream": "false"
+      }
+    ]
+  },
   "record.PRK_A": {
     "category": "record",
     "sounds": [

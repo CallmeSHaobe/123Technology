@@ -39,7 +39,6 @@ import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
-import com.newmaa.othtech.utils.OTHTooltipBuilder;
 
 import bartworks.API.BorosilicateGlass;
 import cpw.mods.fml.relauncher.Side;
@@ -71,74 +70,28 @@ import tectech.thing.metaTileEntity.multi.base.render.TTRenderedExtendedFacingTe
 public class OTELargeBin extends OTHMultiMachineBase<OTELargeBin> implements IConstructable, ISurvivalConstructable {
 
     private int mode = 0;
+
     public int mSA = 0;
+
     public int Tier = 1;
+
     public static String Tier1 = "Tier1";
+
     public static String Tier2 = "Tier2";
+
     public static String Tier3 = "Tier3";
+
     public static String Tier4 = "Tier4";
+
     protected static final int[] progressingTick = { 1, 5, 10, 20, 32, 64, 128, 192, 256, 512 };
+
     protected byte progressingTickIndex = 5;
 
-    @Override
-    public IStructureDefinition<OTELargeBin> getStructureDefinition() {
-        return STRUCTURE_DEFINITION;
-    }
-
-    @Override
-    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
-        repairMachine();
-        Tier = Math.max(1, Math.min(4, Tier));
-        if (Tier == 1 && !checkPiece(Tier1, 2, 3, 1, errors)) return;
-        if (Tier == 2 && !checkPiece(Tier2, 4, 9, 2, errors)) return;
-        if (Tier == 3 && !checkPiece(Tier3, 7, 18, 3, errors)) return;
-        if (Tier == 4 && !checkPiece(Tier4, 9, 27, 1, errors)) return;
-    }
-
-    @Override
-    public void construct(ItemStack stackSize, boolean hintsOnly) {
-        repairMachine();
-        Tier = Math.max(1, Math.min(4, stackSize.stackSize));
-        if (Tier == 1) {
-            buildPiece(Tier1, stackSize, hintsOnly, 2, 3, 1);
-        } else if (Tier == 2) {
-            buildPiece(Tier2, stackSize, hintsOnly, 4, 9, 2);
-        } else if (Tier == 3) {
-            buildPiece(Tier3, stackSize, hintsOnly, 7, 18, 3);
-        } else {
-            buildPiece(Tier4, stackSize, hintsOnly, 9, 27, 1);
-        }
-    }
-
-    @Override
-    public int survivalConstruct(ItemStack stackSize, int elementBudget, IItemSource source, EntityPlayerMP actor) {
-        if (mMachine) return -1;
-        Tier = Math.max(1, Math.min(4, stackSize.stackSize));
-        return Tier == 1 ? survivalBuildPiece(Tier1, stackSize, 2, 3, 1, elementBudget, source, actor, false, true)
-            : Tier == 2 ? survivalBuildPiece(Tier2, stackSize, 4, 9, 2, elementBudget, source, actor, false, true)
-                : Tier == 3 ? survivalBuildPiece(Tier3, stackSize, 7, 18, 3, elementBudget, source, actor, false, true)
-                    : survivalBuildPiece(Tier4, stackSize, 9, 27, 1, elementBudget, source, actor, false, true);
-    }
-
-    @Override
-    public RecipeMap<?> getRecipeMap() {
-        if (mode == 1) return recyclerRecipes;
-        if (mode == 2) return Recipemaps.AE2;
-        if (mode == 3) return RecipeMaps.neutroniumCompressorRecipes;
-        return BIN;
-    }
-
-    @NotNull
-    @Override
-    public Collection<RecipeMap<?>> getAvailableRecipeMaps() {
-        return Arrays.asList(recyclerRecipes, Recipemaps.AE2, RecipeMaps.neutroniumCompressorRecipes);
-    }
-
-    // region structure
     private static final String[] description = new String[] {
         EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.bin.0"),
         // Power Casing
     };
+
     private static final IStructureDefinition<OTELargeBin> STRUCTURE_DEFINITION = StructureDefinition
         .<OTELargeBin>builder()
         .addShape(
@@ -438,7 +391,22 @@ public class OTELargeBin extends OTHMultiMachineBase<OTELargeBin> implements ICo
         .addElement('G', ofBlock(sBlockCasingsTT, 6))
         .build();
 
-    // endregion
+    protected static IIconContainer ScreenOFF;
+
+    protected static IIconContainer ScreenON;
+
+    // ===================== Constructors =====================
+
+    public OTELargeBin(int aID, String aName, String aNameRegional) {
+        super(aID, aName, aNameRegional);
+    }
+
+    public OTELargeBin(String aName) {
+        super(aName);
+    }
+
+    // ===================== NBT =====================
+
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
         aNBT.setInteger("mode", this.mode);
@@ -457,61 +425,68 @@ public class OTELargeBin extends OTHMultiMachineBase<OTELargeBin> implements ICo
         super.loadNBTData(aNBT);
     }
 
+    // ===================== Machine Parameters =====================
+
     @Override
-    public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
-        int z) {
-        super.getWailaNBTData(player, tile, tag, world, x, y, z);
-        final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
-        if (tileEntity != null) {
-            String Mode = GTUtility.formatShortenedLong(this.mode);
-            tag.setString("Mode", Mode);
-            tag.setLong("MM", mSA);
-            tag.setInteger("Tier", Tier);
-        }
+    protected boolean isEnablePerfectOverclock() {
+        return mode == 1;
     }
 
     @Override
-    public void getWailaBody(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor,
-        IWailaConfigHandler config) {
-        super.getWailaBody(itemStack, currentTip, accessor, config);
-        final NBTTagCompound tag = accessor.getNBTData();
-        currentTip.add(
-            translateToLocal("otht.waila.mode") + EnumChatFormatting.RESET
-                + ": "
-                + EnumChatFormatting.GOLD
-                + tag.getString("Mode")
-                + EnumChatFormatting.RESET);
-        currentTip.add(
-            translateToLocal("otht.waila.bin.input") + EnumChatFormatting.RESET
-                + ": "
-                + EnumChatFormatting.GOLD
-                + tag.getLong("MM")
-                + EnumChatFormatting.RESET);
-        currentTip.add(
-            translateToLocal("otht.waila.tier") + EnumChatFormatting.RESET
-                + ": "
-                + EnumChatFormatting.GOLD
-                + tag.getLong("Tier")
-                + EnumChatFormatting.RESET);
-    }
-
-    public OTELargeBin(int aID, String aName, String aNameRegional) {
-        super(aID, aName, aNameRegional);
-    }
-
-    public OTELargeBin(String aName) {
-        super(aName);
+    public int getMaxParallelRecipes() {
+        return mode == 1 ? (GTUtility.getTier(this.getMaxInputVoltage()) * 2560) : 256;
     }
 
     @Override
-    public void onRemoval() {
-        super.onRemoval();
+    protected float getSpeedBonus() {
+        return 1;
     }
 
     @Override
-    public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-        return new OTELargeBin(mName);
+    public RecipeMap<?> getRecipeMap() {
+        if (mode == 1) return recyclerRecipes;
+        if (mode == 2) return Recipemaps.AE2;
+        if (mode == 3) return RecipeMaps.neutroniumCompressorRecipes;
+        return BIN;
     }
+
+    @NotNull
+    @Override
+    public Collection<RecipeMap<?>> getAvailableRecipeMaps() {
+        return Arrays.asList(recyclerRecipes, Recipemaps.AE2, RecipeMaps.neutroniumCompressorRecipes);
+    }
+
+    @Override
+    public int getMaxEfficiency(ItemStack aStack) {
+        return 10000;
+    }
+
+    @Override
+    public int getDamageToComponent(ItemStack aStack) {
+        return 0;
+    }
+
+    @Override
+    public boolean isCorrectMachinePart(ItemStack aStack) {
+        return true;
+    }
+
+    @Override
+    public boolean supportsVoidProtection() {
+        return true;
+    }
+
+    @Override
+    public boolean supportsInputSeparation() {
+        return true;
+    }
+
+    @Override
+    public boolean supportsSingleRecipeLocking() {
+        return true;
+    }
+
+    // ===================== Processing Logic =====================
 
     @Override
     protected ProcessingLogic createProcessingLogic() {
@@ -526,21 +501,6 @@ public class OTELargeBin extends OTHMultiMachineBase<OTELargeBin> implements ICo
                 return super.process();
             }
         }.setMaxParallelSupplier(this::getMaxParallelRecipes);
-    }
-
-    @Override
-    protected boolean isEnablePerfectOverclock() {
-        return mode == 1;
-    }
-
-    @Override
-    protected float getSpeedBonus() {
-        return 1;
-    }
-
-    @Override
-    public int getMaxParallelRecipes() {
-        return mode == 1 ? (GTUtility.getTier(this.getMaxInputVoltage()) * 2560) : 256;
     }
 
     @Override
@@ -650,6 +610,186 @@ public class OTELargeBin extends OTHMultiMachineBase<OTELargeBin> implements ICo
     }
 
     @Override
+    public boolean onRunningTick(ItemStack aStack) {
+        return true;
+    }
+
+    // ===================== Structure =====================
+
+    @Override
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
+        repairMachine();
+        Tier = Math.max(1, Math.min(4, Tier));
+        if (Tier == 1 && !checkPiece(Tier1, 2, 3, 1, errors)) return;
+        if (Tier == 2 && !checkPiece(Tier2, 4, 9, 2, errors)) return;
+        if (Tier == 3 && !checkPiece(Tier3, 7, 18, 3, errors)) return;
+        if (Tier == 4 && !checkPiece(Tier4, 9, 27, 1, errors)) return;
+    }
+
+    @Override
+    public void construct(ItemStack stackSize, boolean hintsOnly) {
+        repairMachine();
+        Tier = Math.max(1, Math.min(4, stackSize.stackSize));
+        if (Tier == 1) {
+            buildPiece(Tier1, stackSize, hintsOnly, 2, 3, 1);
+        } else if (Tier == 2) {
+            buildPiece(Tier2, stackSize, hintsOnly, 4, 9, 2);
+        } else if (Tier == 3) {
+            buildPiece(Tier3, stackSize, hintsOnly, 7, 18, 3);
+        } else {
+            buildPiece(Tier4, stackSize, hintsOnly, 9, 27, 1);
+        }
+    }
+
+    @Override
+    public int survivalConstruct(ItemStack stackSize, int elementBudget, IItemSource source, EntityPlayerMP actor) {
+        if (mMachine) return -1;
+        Tier = Math.max(1, Math.min(4, stackSize.stackSize));
+        return Tier == 1 ? survivalBuildPiece(Tier1, stackSize, 2, 3, 1, elementBudget, source, actor, false, true)
+            : Tier == 2 ? survivalBuildPiece(Tier2, stackSize, 4, 9, 2, elementBudget, source, actor, false, true)
+                : Tier == 3 ? survivalBuildPiece(Tier3, stackSize, 7, 18, 3, elementBudget, source, actor, false, true)
+                    : survivalBuildPiece(Tier4, stackSize, 9, 27, 1, elementBudget, source, actor, false, true);
+    }
+
+    @Override
+    public String[] getStructureDescription(ItemStack stackSize) {
+        return description;
+    }
+
+    @Override
+    public IStructureDefinition<OTELargeBin> getStructureDefinition() {
+        return STRUCTURE_DEFINITION;
+    }
+
+    // ===================== Tooltip =====================
+
+    /*
+     * @Override
+     * public MultiblockTooltipBuilder createTooltip() {
+     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+     * tt.addMachineType(translateToLocal("垃圾桶丨回收机丨AE奇点制造机丨中子态素压缩机"))
+     * .addInfo(translateToLocal("销毁一切, 仅此而已吗?"))
+     * .addInfo("支持存储输入系列, 螺丝刀切换模式, 剪线钳切换耗时")
+     * .addInfo("回收机模式功率为并行 * 30EU/t")
+     * .addInfo("于回收机模式下, 电压等级 + 1, 并行 + 2560, 完全固定输出输入物品数量50%的废料")
+     * .addInfo("于奇点制造机模式下, 并行为1, 每256000任意物品制作一个奇点")
+     * .addInfo("于中子态素压缩机模式下, 执行有损超频, 并行为256")
+     * .addInfo("升级结构获得模式升级, 主机放入编程电路编辑结构等级")
+     * .addInfo("一级结构 : 50x脱氧钢机械方块")
+     * .addInfo("二级结构 : 245x加强钛机械方块, 12x格栅机械方块, 45x脱氧钢机械方块")
+     * .addInfo("三级结构 : 670x强化钨钢机械方块, 69x硼玻璃方块")
+     * .addInfo(
+     * "四级结构 : 459x超维度机械方块, 38x维度桥接机械方块, 28x遏制场发生器, 893x中子强化硼玻璃方块, 478x中子稳定机械方块, 680x中子机械方块, 612x进阶格栅机械方块")
+     * .addTecTechHatchInfo()
+     * .beginStructureBlock(1, 3, 1, false)
+     * .addController(translateToLocal("结构正中心"))
+     * .addCasingInfoMin(translateToLocal("0x 脱氧钢机械方块(最低)"), 5, false)
+     * .addEnergyHatch(translateToLocal("任意输入总线, 输入仓, 输出总线, 能源仓, 动力仓"), 1)
+     * .toolTipFinisher("§a123Technology - JUST A WASTE BIN");
+     * return tt;
+     * }
+     */
+    @Override
+    public MultiblockTooltipBuilder createTooltip() {
+        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        tt.addMachineType(translateToLocal("ote.tm.bin.0"))
+            .addInfo(translateToLocal("ote.tm.bin.1"))
+            .addInfo(translateToLocal("ote.tm.bin.2"))
+            .addInfo(translateToLocal("ote.tm.bin.3"))
+            .addInfo(translateToLocal("ote.tm.bin.4"))
+            .addInfo(translateToLocal("ote.tm.bin.5"))
+            .addInfo(translateToLocal("ote.tm.bin.6"))
+            .addTecTechHatchInfo()
+            .addSeparator()
+            .addInfo("§aAdded by: 123Technology - JUST A WASTE BIN")
+            .beginVariableStructureBlock(5, 19, 5, 31, 5, 19, false)
+            .addController(translateToLocal("ote.tm.bin.12"))
+            .addCasingInfoMin(translateToLocal("ote.tm.bin.13"), 5, false)
+            .addEnergyHatch(translateToLocal("ote.tm.bin.14"), 1)
+            .toolTipFinisher();
+        return tt;
+    }
+
+    // ===================== Standard Overrides =====================
+
+    @Override
+    public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
+        return new OTELargeBin(mName);
+    }
+
+    // ===================== Textures =====================
+
+    @Override
+    public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection facing,
+        int colorIndex, boolean aActive, boolean aRedstone) {
+        if (side == facing) {
+            return new ITexture[] {
+                Textures.BlockIcons.getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings2, 0)),
+                new TTRenderedExtendedFacingTexture(aActive ? ScreenON : ScreenOFF) };
+        }
+        return new ITexture[] {
+            Textures.BlockIcons.getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings2, 0)) };
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister aBlockIconRegister) {
+        ScreenOFF = Textures.BlockIcons.custom("iconsets/EM_CONTROLLER");
+        ScreenON = Textures.BlockIcons.custom("iconsets/EM_CONTROLLER_ACTIVE");
+        super.registerIcons(aBlockIconRegister);
+    }
+
+    @Override
+    protected SoundResource getActivitySoundLoop() {
+        return SoundResource.TECTECH_MACHINES_NOISE;
+    }
+
+    // ===================== Misc =====================
+
+    @Override
+    public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
+        int z) {
+        super.getWailaNBTData(player, tile, tag, world, x, y, z);
+        final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
+        if (tileEntity != null) {
+            String Mode = GTUtility.formatShortenedLong(this.mode);
+            tag.setString("Mode", Mode);
+            tag.setLong("MM", mSA);
+            tag.setInteger("Tier", Tier);
+        }
+    }
+
+    @Override
+    public void getWailaBody(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor,
+        IWailaConfigHandler config) {
+        super.getWailaBody(itemStack, currentTip, accessor, config);
+        final NBTTagCompound tag = accessor.getNBTData();
+        currentTip.add(
+            translateToLocal("otht.waila.mode") + EnumChatFormatting.RESET
+                + ": "
+                + EnumChatFormatting.GOLD
+                + tag.getString("Mode")
+                + EnumChatFormatting.RESET);
+        currentTip.add(
+            translateToLocal("otht.waila.bin.input") + EnumChatFormatting.RESET
+                + ": "
+                + EnumChatFormatting.GOLD
+                + tag.getLong("MM")
+                + EnumChatFormatting.RESET);
+        currentTip.add(
+            translateToLocal("otht.waila.tier") + EnumChatFormatting.RESET
+                + ": "
+                + EnumChatFormatting.GOLD
+                + tag.getLong("Tier")
+                + EnumChatFormatting.RESET);
+    }
+
+    @Override
+    public void onRemoval() {
+        super.onRemoval();
+    }
+
+    @Override
     public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {
         if (getBaseMetaTileEntity().isServerSide()) {
@@ -680,121 +820,8 @@ public class OTELargeBin extends OTHMultiMachineBase<OTELargeBin> implements ICo
         return false;
     }
 
-    /*
-     * @Override
-     * public MultiblockTooltipBuilder createTooltip() {
-     * final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
-     * tt.addMachineType(translateToLocal("垃圾桶丨回收机丨AE奇点制造机丨中子态素压缩机"))
-     * .addInfo(translateToLocal("销毁一切, 仅此而已吗?"))
-     * .addInfo("支持存储输入系列, 螺丝刀切换模式, 剪线钳切换耗时")
-     * .addInfo("回收机模式功率为并行 * 30EU/t")
-     * .addInfo("于回收机模式下, 电压等级 + 1, 并行 + 2560, 完全固定输出输入物品数量50%的废料")
-     * .addInfo("于奇点制造机模式下, 并行为1, 每256000任意物品制作一个奇点")
-     * .addInfo("于中子态素压缩机模式下, 执行有损超频, 并行为256")
-     * .addInfo("升级结构获得模式升级, 主机放入编程电路编辑结构等级")
-     * .addInfo("一级结构 : 50x脱氧钢机械方块")
-     * .addInfo("二级结构 : 245x加强钛机械方块, 12x格栅机械方块, 45x脱氧钢机械方块")
-     * .addInfo("三级结构 : 670x强化钨钢机械方块, 69x硼玻璃方块")
-     * .addInfo(
-     * "四级结构 : 459x超维度机械方块, 38x维度桥接机械方块, 28x遏制场发生器, 893x中子强化硼玻璃方块, 478x中子稳定机械方块, 680x中子机械方块, 612x进阶格栅机械方块")
-     * .addTecTechHatchInfo()
-     * .beginStructureBlock(1, 3, 1, false)
-     * .addController(translateToLocal("结构正中心"))
-     * .addCasingInfoMin(translateToLocal("0x 脱氧钢机械方块(最低)"), 5, false)
-     * .addEnergyHatch(translateToLocal("任意输入总线, 输入仓, 输出总线, 能源仓, 动力仓"), 1)
-     * .toolTipFinisher("§a123Technology - JUST A WASTE BIN");
-     * return tt;
-     * }
-     */
-    @Override
-    public MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
-        tt.addMachineType(translateToLocal("ote.tm.bin.0"))
-            .addInfo(translateToLocal("ote.tm.bin.1"))
-            .addInfo(translateToLocal("ote.tm.bin.2"))
-            .addInfo(translateToLocal("ote.tm.bin.3"))
-            .addInfo(translateToLocal("ote.tm.bin.4"))
-            .addInfo(translateToLocal("ote.tm.bin.5"))
-            .addInfo(translateToLocal("ote.tm.bin.6"))
-            .addTecTechHatchInfo()
-            .beginVariableStructureBlock(5, 19, 5, 31, 5, 19, false)
-            .addController(translateToLocal("ote.tm.bin.12"))
-            .addCasingInfoMin(translateToLocal("ote.tm.bin.13"), 5, false)
-            .addEnergyHatch(translateToLocal("ote.tm.bin.14"), 1)
-            .toolTipFinisher("§a123Technology - JUST A WASTE BIN");
-        return tt;
-    }
-
-    protected static IIconContainer ScreenOFF;
-    protected static IIconContainer ScreenON;
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister aBlockIconRegister) {
-        ScreenOFF = Textures.BlockIcons.custom("iconsets/EM_CONTROLLER");
-        ScreenON = Textures.BlockIcons.custom("iconsets/EM_CONTROLLER_ACTIVE");
-        super.registerIcons(aBlockIconRegister);
-    }
-
-    @Override
-    public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection facing,
-        int colorIndex, boolean aActive, boolean aRedstone) {
-        if (side == facing) {
-            return new ITexture[] {
-                Textures.BlockIcons.getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings2, 0)),
-                new TTRenderedExtendedFacingTexture(aActive ? ScreenON : ScreenOFF) };
-        }
-        return new ITexture[] {
-            Textures.BlockIcons.getCasingTextureForId(GTUtility.getCasingTextureIndex(sBlockCasings2, 0)) };
-    }
-
-    @Override
-    protected SoundResource getActivitySoundLoop() {
-        return SoundResource.TECTECH_MACHINES_NOISE;
-    }
-
-    @Override
-    public boolean onRunningTick(ItemStack aStack) {
-        return true;
-    }
-
     @Override
     public boolean doRandomMaintenanceDamage() {
-        return true;
-    }
-
-    @Override
-    public String[] getStructureDescription(ItemStack stackSize) {
-        return description;
-    }
-
-    @Override
-    public boolean isCorrectMachinePart(ItemStack aStack) {
-        return true;
-    }
-
-    @Override
-    public int getMaxEfficiency(ItemStack aStack) {
-        return 10000;
-    }
-
-    @Override
-    public int getDamageToComponent(ItemStack aStack) {
-        return 0;
-    }
-
-    @Override
-    public boolean supportsVoidProtection() {
-        return true;
-    }
-
-    @Override
-    public boolean supportsInputSeparation() {
-        return true;
-    }
-
-    @Override
-    public boolean supportsSingleRecipeLocking() {
         return true;
     }
 

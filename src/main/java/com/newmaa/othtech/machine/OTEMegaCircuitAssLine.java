@@ -37,7 +37,6 @@ import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
-import com.newmaa.othtech.utils.OTHTooltipBuilder;
 
 import bartworks.API.BorosilicateGlass;
 import goodgenerator.loader.Loaders;
@@ -63,6 +62,69 @@ import mcp.mobius.waila.api.IWailaDataAccessor;
 
 public class OTEMegaCircuitAssLine extends OTHMultiMachineBase<OTEMegaCircuitAssLine> {
 
+    private boolean isUnlocked = false;
+
+    public byte glassTier = 0;
+
+    private static ItemStack Field_Generator_UEV = null;
+
+    private static final String STRUCTURE_PIECE_MAIN = "main";
+
+    private final int horizontalOffSet = 3;
+
+    private final int verticalOffSet = 6;
+
+    private final int depthOffSet = 3;
+
+    private static IStructureDefinition<OTEMegaCircuitAssLine> STRUCTURE_DEFINITION = null;
+
+    private static final String[] description = new String[] {
+        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.mca.0") };
+
+    // Structured by NewMaa
+    private final String[][] shapeMain = new String[][] {
+        { "                             ", "                             ", "                             ",
+            "                             ", "                             ", "                             ",
+            "                             ", "                             ", " HHHHHHHHHHHHHHHHHHHHHHHHHHH " },
+        { "                             ", "                             ", "                             ",
+            "                             ", "                             ", "                             ",
+            "                             ", "                             ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
+        { "                             ", "                             ", "                             ",
+            "                             ", "                             ", "                             ",
+            "                             ", "  I                       I  ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
+        { "                             ", "                             ", "                             ",
+            "                             ", "                             ", "                             ",
+            "  I~CCCCCCCCCCCCCCCCCCCCCCI  ", "  IGGGGGGGGGGGGGGGGGGGGGGGI  ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
+        { "                             ", "                             ", "  IIIIIIIIIIIIIIIIIIIIIIIII  ",
+            "  IAAAAAAAAAAAAAAAAAAAAAAAI  ", "  IAAAAAAAAAAAAAAAAAAAAAAAI  ", "  IAAAAAAAAAAAAAAAAAAAAAAAI  ",
+            "  IAAAAAAAAAAAAAAAAAAAAAAAI  ", " IICCCCCCCCCCCCCCCCCCCCCCCII ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
+        { "  I                       I  ", "  IJJJJJJJJJJJJJJJJJJJJJJJI  ", "  IJJJJJJJJJJJJJJJJJJJJJJJI  ",
+            "  I                       I  ", "  C                       C  ", "  C                       C  ",
+            "  CKLLLLLLLLLLLLLLLLLLLLLKC  ", " IIFFFFFFFFFFFFFFFFFFFFFFFII ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
+        { "  I                       I  ", "  IJJJJJJJJJJJJJJJJJJJJJJJI  ", "  CJBBBBBBBBBBBBBBBBBBBBBJC  ",
+            "  C                       C  ", "  C                       C  ", "  C                       D  ",
+            "  CK                     KC  ", " IIFEEEEEEEEEEEEEEEEEEEEEFII ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
+        { "  I                       I  ", "  IJJJJJJJJJJJJJJJJJJJJJJJI  ", "  IJJJJJJJJJJJJJJJJJJJJJJJI  ",
+            "  I                       I  ", "  C                       C  ", "  C                       C  ",
+            "  CKLLLLLLLLLLLLLLLLLLLLLKC  ", " IIFFFFFFFFFFFFFFFFFFFFFFFII ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
+        { "                             ", "                             ", "  IIIIIIIIIIIIIIIIIIIIIIIII  ",
+            "  IAAAAAAAAAAAAAAAAAAAAAAAI  ", "  IAAAAAAAAAAAAAAAAAAAAAAAI  ", "  IAAAAAAAAAAAAAAAAAAAAAAAI  ",
+            "  IAAAAAAAAAAAAAAAAAAAAAAAI  ", " IICCCCCCCCCCCCCCCCCCCCCCCII ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
+        { "                             ", "                             ", "                             ",
+            "                             ", "                             ", "                             ",
+            "  ICCCCCCCCCCCCCCCCCCCCCCCI  ", "  ICCCCCCCCCCCCCCCCCCCCCCCI  ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
+        { "                             ", "                             ", "                             ",
+            "                             ", "                             ", "                             ",
+            "                             ", "  I                       I  ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
+        { "                             ", "                             ", "                             ",
+            "                             ", "                             ", "                             ",
+            "                             ", "                             ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
+        { "                             ", "                             ", "                             ",
+            "                             ", "                             ", "                             ",
+            "                             ", "                             ", " HHHHHHHHHHHHHHHHHHHHHHHHHHH " } };
+
+    // ===================== Constructors =====================
+
     public OTEMegaCircuitAssLine(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
     }
@@ -71,22 +133,7 @@ public class OTEMegaCircuitAssLine extends OTHMultiMachineBase<OTEMegaCircuitAss
         super(aName);
     }
 
-    private boolean isUnlocked = false;
-
-    public byte glassTier = 0;
-
-    private static ItemStack Field_Generator_UEV = null;
-
-    @Override
-    public void onFirstTick(IGregTechTileEntity aBaseMetaTileEntity) {
-        super.onFirstTick(aBaseMetaTileEntity);
-        if (Field_Generator_UEV == null) Field_Generator_UEV = ItemList.Field_Generator_UEV.get(1);
-    }
-
-    protected void updatetier() {
-        ItemStack aGuiStack = this.getControllerSlot();
-        isUnlocked = aGuiStack != null && GTUtility.areStacksEqual(aGuiStack, Field_Generator_UEV);
-    }
+    // ===================== NBT =====================
 
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
@@ -102,28 +149,7 @@ public class OTEMegaCircuitAssLine extends OTHMultiMachineBase<OTEMegaCircuitAss
         glassTier = aNBT.getByte("glassTier");
     }
 
-    @Override
-    public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
-        int z) {
-        super.getWailaNBTData(player, tile, tag, world, x, y, z);
-        final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
-        if (tileEntity != null) {
-            tag.setBoolean("perfectOC", isUnlocked);
-        }
-    }
-
-    @Override
-    public void getWailaBody(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor,
-        IWailaConfigHandler config) {
-        super.getWailaBody(itemStack, currentTip, accessor, config);
-        final NBTTagCompound tag = accessor.getNBTData();
-        currentTip.add(
-            translateToLocal("otht.waila.perfectoc") + EnumChatFormatting.RESET
-                + ": "
-                + EnumChatFormatting.GOLD
-                + tag.getBoolean("perfectOC")
-                + EnumChatFormatting.RESET);
-    }
+    // ===================== Machine Parameters =====================
 
     @Override
     protected boolean isEnablePerfectOverclock() {
@@ -143,11 +169,7 @@ public class OTEMegaCircuitAssLine extends OTHMultiMachineBase<OTEMegaCircuitAss
         return MegaCAL;
     }
 
-    @Override
-    public @NotNull CheckRecipeResult checkProcessing() {
-        updatetier();
-        return super.checkProcessing();
-    }
+    // ===================== Processing Logic =====================
 
     @Override
     protected ProcessingLogic createProcessingLogic() {
@@ -170,6 +192,20 @@ public class OTEMegaCircuitAssLine extends OTHMultiMachineBase<OTEMegaCircuitAss
 
         }.setMaxParallelSupplier(this::getMaxParallelRecipes);
     }
+
+    @Override
+    public @NotNull CheckRecipeResult checkProcessing() {
+        updatetier();
+        return super.checkProcessing();
+    }
+
+    @Override
+    public void onFirstTick(IGregTechTileEntity aBaseMetaTileEntity) {
+        super.onFirstTick(aBaseMetaTileEntity);
+        if (Field_Generator_UEV == null) Field_Generator_UEV = ItemList.Field_Generator_UEV.get(1);
+    }
+
+    // ===================== Structure =====================
 
     @Override
     public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
@@ -200,15 +236,6 @@ public class OTEMegaCircuitAssLine extends OTHMultiMachineBase<OTEMegaCircuitAss
             true);
 
     }
-
-    private static final String STRUCTURE_PIECE_MAIN = "main";
-
-    private final int horizontalOffSet = 3;
-    private final int verticalOffSet = 6;
-    private final int depthOffSet = 3;
-    private static IStructureDefinition<OTEMegaCircuitAssLine> STRUCTURE_DEFINITION = null;
-    private static final String[] description = new String[] {
-        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.mca.0") };
 
     @Override
     public String[] getStructureDescription(ItemStack stackSize) {
@@ -259,58 +286,18 @@ public class OTEMegaCircuitAssLine extends OTHMultiMachineBase<OTEMegaCircuitAss
         return STRUCTURE_DEFINITION;
     }
 
-    // Structured by NewMaa
-    private final String[][] shapeMain = new String[][] {
-        { "                             ", "                             ", "                             ",
-            "                             ", "                             ", "                             ",
-            "                             ", "                             ", " HHHHHHHHHHHHHHHHHHHHHHHHHHH " },
-        { "                             ", "                             ", "                             ",
-            "                             ", "                             ", "                             ",
-            "                             ", "                             ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
-        { "                             ", "                             ", "                             ",
-            "                             ", "                             ", "                             ",
-            "                             ", "  I                       I  ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
-        { "                             ", "                             ", "                             ",
-            "                             ", "                             ", "                             ",
-            "  I~CCCCCCCCCCCCCCCCCCCCCCI  ", "  IGGGGGGGGGGGGGGGGGGGGGGGI  ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
-        { "                             ", "                             ", "  IIIIIIIIIIIIIIIIIIIIIIIII  ",
-            "  IAAAAAAAAAAAAAAAAAAAAAAAI  ", "  IAAAAAAAAAAAAAAAAAAAAAAAI  ", "  IAAAAAAAAAAAAAAAAAAAAAAAI  ",
-            "  IAAAAAAAAAAAAAAAAAAAAAAAI  ", " IICCCCCCCCCCCCCCCCCCCCCCCII ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
-        { "  I                       I  ", "  IJJJJJJJJJJJJJJJJJJJJJJJI  ", "  IJJJJJJJJJJJJJJJJJJJJJJJI  ",
-            "  I                       I  ", "  C                       C  ", "  C                       C  ",
-            "  CKLLLLLLLLLLLLLLLLLLLLLKC  ", " IIFFFFFFFFFFFFFFFFFFFFFFFII ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
-        { "  I                       I  ", "  IJJJJJJJJJJJJJJJJJJJJJJJI  ", "  CJBBBBBBBBBBBBBBBBBBBBBJC  ",
-            "  C                       C  ", "  C                       C  ", "  C                       D  ",
-            "  CK                     KC  ", " IIFEEEEEEEEEEEEEEEEEEEEEFII ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
-        { "  I                       I  ", "  IJJJJJJJJJJJJJJJJJJJJJJJI  ", "  IJJJJJJJJJJJJJJJJJJJJJJJI  ",
-            "  I                       I  ", "  C                       C  ", "  C                       C  ",
-            "  CKLLLLLLLLLLLLLLLLLLLLLKC  ", " IIFFFFFFFFFFFFFFFFFFFFFFFII ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
-        { "                             ", "                             ", "  IIIIIIIIIIIIIIIIIIIIIIIII  ",
-            "  IAAAAAAAAAAAAAAAAAAAAAAAI  ", "  IAAAAAAAAAAAAAAAAAAAAAAAI  ", "  IAAAAAAAAAAAAAAAAAAAAAAAI  ",
-            "  IAAAAAAAAAAAAAAAAAAAAAAAI  ", " IICCCCCCCCCCCCCCCCCCCCCCCII ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
-        { "                             ", "                             ", "                             ",
-            "                             ", "                             ", "                             ",
-            "  ICCCCCCCCCCCCCCCCCCCCCCCI  ", "  ICCCCCCCCCCCCCCCCCCCCCCCI  ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
-        { "                             ", "                             ", "                             ",
-            "                             ", "                             ", "                             ",
-            "                             ", "  I                       I  ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
-        { "                             ", "                             ", "                             ",
-            "                             ", "                             ", "                             ",
-            "                             ", "                             ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
-        { "                             ", "                             ", "                             ",
-            "                             ", "                             ", "                             ",
-            "                             ", "                             ", " HHHHHHHHHHHHHHHHHHHHHHHHHHH " } };
-
     @Override
     public boolean addToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
         return super.addToMachineList(aTileEntity, aBaseCasingIndex)
             || addExoticEnergyInputToMachineList(aTileEntity, aBaseCasingIndex);
     }
 
+    // ===================== Tooltip =====================
+
     /*
      * @Override
      * protected MultiblockTooltipBuilder createTooltip() {
-     * final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
+     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
      * tt.addMachineType("§d§l电路组装的最终奥义 - 进阶高能电路装配线")
      * .addInfo("§q便宜好用的电路装配设施, 继承了原有的电装打包机制, 但是直接支持总成")
      * .addInfo("§q§o“是不是有点太超模了?”")
@@ -332,7 +319,7 @@ public class OTEMegaCircuitAssLine extends OTHMultiMachineBase<OTEMegaCircuitAss
      */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType(translateToLocal("ote.tm.mca.0"))
             .addInfo(translateToLocal("ote.tm.mca.1"))
             .addInfo(translateToLocal("ote.tm.mca.2"))
@@ -341,6 +328,7 @@ public class OTEMegaCircuitAssLine extends OTHMultiMachineBase<OTEMegaCircuitAss
             .addInfo(translateToLocal("ote.tm.mca.5"))
             .addTecTechHatchInfo()
             .addSeparator()
+            .addInfo("§dAdded by: 123Technology - CircuitAssemblerLine")
             .addController(translateToLocal("ote.tn.mca"))
             .beginStructureBlock(29, 9, 13, false)
             .addInputBus("AnyInputBus", 1)
@@ -348,14 +336,18 @@ public class OTEMegaCircuitAssLine extends OTHMultiMachineBase<OTEMegaCircuitAss
             .addInputHatch("AnyInputHatch", 1)
             .addOutputHatch("AnyOutputHatch", 1)
             .addEnergyHatch("AnyEnergyHatch", 1)
-            .toolTipFinisher("§d123Technology - CircuitAssemblerLine");
+            .toolTipFinisher();
         return tt;
     }
+
+    // ===================== Standard Overrides =====================
 
     @Override
     public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
         return new OTEMegaCircuitAssLine(this.mName);
     }
+
+    // ===================== Textures =====================
 
     @Override
     public ITexture[] getTexture(final IGregTechTileEntity baseMetaTileEntity, final ForgeDirection sideDirection,
@@ -386,6 +378,36 @@ public class OTEMegaCircuitAssLine extends OTHMultiMachineBase<OTEMegaCircuitAss
         }
         return new ITexture[] {
             Textures.BlockIcons.getCasingTextureForId(GTUtility.getCasingTextureIndex(GregTechAPI.sBlockCasings2, 0)) };
+    }
+
+    // ===================== Misc =====================
+
+    protected void updatetier() {
+        ItemStack aGuiStack = this.getControllerSlot();
+        isUnlocked = aGuiStack != null && GTUtility.areStacksEqual(aGuiStack, Field_Generator_UEV);
+    }
+
+    @Override
+    public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
+        int z) {
+        super.getWailaNBTData(player, tile, tag, world, x, y, z);
+        final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
+        if (tileEntity != null) {
+            tag.setBoolean("perfectOC", isUnlocked);
+        }
+    }
+
+    @Override
+    public void getWailaBody(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor,
+        IWailaConfigHandler config) {
+        super.getWailaBody(itemStack, currentTip, accessor, config);
+        final NBTTagCompound tag = accessor.getNBTData();
+        currentTip.add(
+            translateToLocal("otht.waila.perfectoc") + EnumChatFormatting.RESET
+                + ": "
+                + EnumChatFormatting.GOLD
+                + tag.getBoolean("perfectOC")
+                + EnumChatFormatting.RESET);
     }
 
     @Override

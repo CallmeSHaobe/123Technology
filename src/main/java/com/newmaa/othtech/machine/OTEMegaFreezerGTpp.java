@@ -20,7 +20,6 @@ import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
-import com.newmaa.othtech.utils.OTHTooltipBuilder;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -46,157 +45,19 @@ import gtPlusPlus.xmod.gregtech.common.blocks.textures.TexturesGtBlock;
 
 public class OTEMegaFreezerGTpp extends OTHMultiMachineBase<OTEMegaFreezerGTpp> {
 
-    public OTEMegaFreezerGTpp(int aID, String aName, String aNameRegional) {
-        super(aID, aName, aNameRegional);
-    }
-
-    public OTEMegaFreezerGTpp(String aName) {
-        super(aName);
-    }
-
-    @Override
-    public void saveNBTData(NBTTagCompound aNBT) {
-        super.saveNBTData(aNBT);
-    }
-
-    @Override
-    public void loadNBTData(final NBTTagCompound aNBT) {
-        super.loadNBTData(aNBT);
-    }
-
-    @Override
-    protected boolean isEnablePerfectOverclock() {
-        return false;
-    }
-
-    public int getMaxParallelRecipes() {
-        return 256 * 4;
-    }
-
-    protected float getSpeedBonus() {
-        return 1F / 2F;
-    }
-
-    protected float getEuModifier() {
-        return 1F;
-    }
-
-    @Override
-    public RecipeMap<?> getRecipeMap() {
-        return RecipeMaps.vacuumFreezerRecipes;
-
-    }
-
-    @Override
-    public int getPollutionPerSecond(final ItemStack aStack) {
-        return 500 * 256;
-    }
-
-    @Override
-    protected ProcessingLogic createProcessingLogic() {
-        return new OTHProcessingLogic() {
-
-            @NotNull
-            @Override
-            protected CheckRecipeResult validateRecipe(@NotNull GTRecipe recipe) {
-                return checkForLava() ? CheckRecipeResultRegistry.SUCCESSFUL
-                    : SimpleCheckRecipeResult.ofFailure("nolava");
-            }
-
-            @NotNull
-            @Override
-            public CheckRecipeResult process() {
-                setSpeedBonus(getSpeedBonus());
-                setOverclock(isEnablePerfectOverclock() ? 4 : 2, 4);
-                setEuModifier(getEuModifier());
-                return super.process();
-            }
-
-        }.setMaxParallelSupplier(this::getMaxParallelRecipes);
-    }
-
-    @Override
-    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
-        if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
-        repairMachine();
-    }
-
-    @Override
-    public void construct(ItemStack stackSize, boolean hintsOnly) {
-        this.buildPiece(STRUCTURE_PIECE_MAIN, stackSize, hintsOnly, horizontalOffSet, verticalOffSet, depthOffSet);
-    }
-
-    @Override
-    public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
-        if (this.mMachine) return -1;
-        int realBudget = elementBudget >= 200 ? elementBudget : Math.min(200, elementBudget * 5);
-
-        return this.survivalBuildPiece(
-            STRUCTURE_PIECE_MAIN,
-            stackSize,
-            horizontalOffSet,
-            verticalOffSet,
-            depthOffSet,
-            realBudget,
-            env,
-            false,
-            true);
-
-    }
-
-    public boolean checkForLava() {
-        if (this.getStoredFluids() != null) {
-            for (FluidStack stored : this.getStoredFluids()) {
-                if (stored.isFluidEqual(FluidUtils.getWildcardFluidStack("cryotheum", 1))) {
-                    if (stored.amount >= 123 * 1000) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
     private static final String STRUCTURE_PIECE_MAIN = "main";
 
     private final int horizontalOffSet = 7;
+
     private final int verticalOffSet = 7;
+
     private final int depthOffSet = 0;
 
     private static IStructureDefinition<OTEMegaFreezerGTpp> STRUCTURE_DEFINITION = null;
+
     private static final String[] description = new String[] {
         EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.fz.0"),
         EnumChatFormatting.GOLD + translateToLocal("ote.cm.fz.0") };
-
-    @Override
-    public String[] getStructureDescription(ItemStack stackSize) {
-        return description;
-    }
-
-    @Override
-    public IStructureDefinition<OTEMegaFreezerGTpp> getStructureDefinition() {
-        if (STRUCTURE_DEFINITION == null) {
-            STRUCTURE_DEFINITION = StructureDefinition.<OTEMegaFreezerGTpp>builder()
-                .addShape(STRUCTURE_PIECE_MAIN, transpose(shapeMain))
-                .addElement(
-                    'A',
-                    buildHatchAdder(OTEMegaFreezerGTpp.class)
-                        .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch, Muffler)
-                        .adder(OTEMegaFreezerGTpp::addToMachineList)
-                        .hint(1)
-                        .casingIndex(TAE.getIndexFromPage(2, 10))
-                        .buildAndChain(ofBlock(ModBlocks.blockCasings3Misc, 10)))
-
-                .build();
-        }
-        return STRUCTURE_DEFINITION;
-    }
-
-    @Override
-    public boolean addToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
-        return super.addToMachineList(aTileEntity, aBaseCasingIndex)
-            || addExoticEnergyInputToMachineList(aTileEntity, aBaseCasingIndex);
-    }
 
     // Structured by BW
     private final String[][] shapeMain = new String[][] {
@@ -246,10 +107,180 @@ public class OTEMegaFreezerGTpp extends OTHMultiMachineBase<OTEMegaFreezerGTpp> 
             "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA",
             "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA" } };
 
+    // ===================== Constructors =====================
+
+    public OTEMegaFreezerGTpp(int aID, String aName, String aNameRegional) {
+        super(aID, aName, aNameRegional);
+    }
+
+    public OTEMegaFreezerGTpp(String aName) {
+        super(aName);
+    }
+
+    // ===================== NBT =====================
+
+    @Override
+    public void saveNBTData(NBTTagCompound aNBT) {
+        super.saveNBTData(aNBT);
+    }
+
+    @Override
+    public void loadNBTData(final NBTTagCompound aNBT) {
+        super.loadNBTData(aNBT);
+    }
+
+    // ===================== Machine Parameters =====================
+
+    @Override
+    protected boolean isEnablePerfectOverclock() {
+        return false;
+    }
+
+    public int getMaxParallelRecipes() {
+        return 256 * 4;
+    }
+
+    protected float getSpeedBonus() {
+        return 1F / 2F;
+    }
+
+    protected float getEuModifier() {
+        return 1F;
+    }
+
+    @Override
+    public RecipeMap<?> getRecipeMap() {
+        return RecipeMaps.vacuumFreezerRecipes;
+
+    }
+
+    @Override
+    public int getPollutionPerSecond(final ItemStack aStack) {
+        return 500 * 256;
+    }
+
+    @Override
+    public int getMaxEfficiency(ItemStack aStack) {
+        return 10000;
+    }
+
+    @Override
+    public int getDamageToComponent(ItemStack aStack) {
+        return 0;
+    }
+
+    @Override
+    public boolean isCorrectMachinePart(ItemStack aStack) {
+        return true;
+    }
+
+    @Override
+    public boolean supportsVoidProtection() {
+        return true;
+    }
+
+    @Override
+    public boolean supportsInputSeparation() {
+        return true;
+    }
+
+    @Override
+    public boolean supportsSingleRecipeLocking() {
+        return true;
+    }
+
+    // ===================== Processing Logic =====================
+
+    @Override
+    protected ProcessingLogic createProcessingLogic() {
+        return new OTHProcessingLogic() {
+
+            @NotNull
+            @Override
+            protected CheckRecipeResult validateRecipe(@NotNull GTRecipe recipe) {
+                return checkForLava() ? CheckRecipeResultRegistry.SUCCESSFUL
+                    : SimpleCheckRecipeResult.ofFailure("nolava");
+            }
+
+            @NotNull
+            @Override
+            public CheckRecipeResult process() {
+                setSpeedBonus(getSpeedBonus());
+                setOverclock(isEnablePerfectOverclock() ? 4 : 2, 4);
+                setEuModifier(getEuModifier());
+                return super.process();
+            }
+
+        }.setMaxParallelSupplier(this::getMaxParallelRecipes);
+    }
+
+    // ===================== Structure =====================
+
+    @Override
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
+        if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
+        repairMachine();
+    }
+
+    @Override
+    public void construct(ItemStack stackSize, boolean hintsOnly) {
+        this.buildPiece(STRUCTURE_PIECE_MAIN, stackSize, hintsOnly, horizontalOffSet, verticalOffSet, depthOffSet);
+    }
+
+    @Override
+    public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
+        if (this.mMachine) return -1;
+        int realBudget = elementBudget >= 200 ? elementBudget : Math.min(200, elementBudget * 5);
+
+        return this.survivalBuildPiece(
+            STRUCTURE_PIECE_MAIN,
+            stackSize,
+            horizontalOffSet,
+            verticalOffSet,
+            depthOffSet,
+            realBudget,
+            env,
+            false,
+            true);
+
+    }
+
+    @Override
+    public String[] getStructureDescription(ItemStack stackSize) {
+        return description;
+    }
+
+    @Override
+    public IStructureDefinition<OTEMegaFreezerGTpp> getStructureDefinition() {
+        if (STRUCTURE_DEFINITION == null) {
+            STRUCTURE_DEFINITION = StructureDefinition.<OTEMegaFreezerGTpp>builder()
+                .addShape(STRUCTURE_PIECE_MAIN, transpose(shapeMain))
+                .addElement(
+                    'A',
+                    buildHatchAdder(OTEMegaFreezerGTpp.class)
+                        .atLeast(Energy.or(ExoticEnergy), InputBus, OutputBus, InputHatch, OutputHatch, Muffler)
+                        .adder(OTEMegaFreezerGTpp::addToMachineList)
+                        .hint(1)
+                        .casingIndex(TAE.getIndexFromPage(2, 10))
+                        .buildAndChain(ofBlock(ModBlocks.blockCasings3Misc, 10)))
+
+                .build();
+        }
+        return STRUCTURE_DEFINITION;
+    }
+
+    @Override
+    public boolean addToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
+        return super.addToMachineList(aTileEntity, aBaseCasingIndex)
+            || addExoticEnergyInputToMachineList(aTileEntity, aBaseCasingIndex);
+    }
+
+    // ===================== Tooltip =====================
+
     /*
      * @Override
      * protected MultiblockTooltipBuilder createTooltip() {
-     * final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
+     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
      * tt.addMachineType("§l老登的终极造物 - 真空冷冻机")
      * .addInfo("§b  EU消耗: 100%")
      * .addInfo("§b  速度 + 100%")
@@ -274,7 +305,7 @@ public class OTEMegaFreezerGTpp extends OTHMultiMachineBase<OTEMegaFreezerGTpp> 
      */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType(translateToLocal("ote.tm.fz.0"))
             .addInfo(translateToLocal("ote.tm.fz.1"))
             .addInfo(translateToLocal("ote.tm.fz.2"))
@@ -282,9 +313,10 @@ public class OTEMegaFreezerGTpp extends OTHMultiMachineBase<OTEMegaFreezerGTpp> 
             .addInfo(translateToLocal("ote.tm.fz.4"))
             .addInfo(translateToLocal("ote.tm.fz.5"))
             .addInfo(translateToLocal("oth.tm.pollution"))
-            .addTecTechHatchInfo()
             .addPollutionAmount(128000)
+            .addTecTechHatchInfo()
             .addSeparator()
+            .addInfo("§aAdded by: 123Technology - VacuumFreezer")
             .addController(translateToLocal("ote.tn.fz"))
             .beginStructureBlock(15, 15, 15, false)
             .addInputBus("AnyInputBus", 1)
@@ -293,44 +325,18 @@ public class OTEMegaFreezerGTpp extends OTHMultiMachineBase<OTEMegaFreezerGTpp> 
             .addOutputHatch("AnyOutputHatch", 1)
             .addEnergyHatch("AnyEnergyHatch", 1)
             .addMufflerHatch("AnyMufflerHatch", 1)
-            .toolTipFinisher("§a123Technology - VacuumFreezer");
+            .toolTipFinisher();
         return tt;
     }
 
-    @Override
-    public boolean isCorrectMachinePart(ItemStack aStack) {
-        return true;
-    }
-
-    @Override
-    public int getMaxEfficiency(ItemStack aStack) {
-        return 10000;
-    }
-
-    @Override
-    public int getDamageToComponent(ItemStack aStack) {
-        return 0;
-    }
-
-    @Override
-    public boolean supportsVoidProtection() {
-        return true;
-    }
-
-    @Override
-    public boolean supportsInputSeparation() {
-        return true;
-    }
-
-    @Override
-    public boolean supportsSingleRecipeLocking() {
-        return true;
-    }
+    // ===================== Standard Overrides =====================
 
     @Override
     public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
         return new OTEMegaFreezerGTpp(this.mName);
     }
+
+    // ===================== Textures =====================
 
     @Override
     public ITexture[] getTexture(final IGregTechTileEntity baseMetaTileEntity, final ForgeDirection sideDirection,
@@ -356,5 +362,20 @@ public class OTEMegaFreezerGTpp extends OTHMultiMachineBase<OTEMegaFreezerGTpp> 
     @Override
     protected SoundResource getActivitySoundLoop() {
         return SoundResource.GT_MACHINES_ADV_FREEZER_LOOP;
+    }
+
+    // ===================== Misc =====================
+
+    public boolean checkForLava() {
+        if (this.getStoredFluids() != null) {
+            for (FluidStack stored : this.getStoredFluids()) {
+                if (stored.isFluidEqual(FluidUtils.getWildcardFluidStack("cryotheum", 1))) {
+                    if (stored.amount >= 123 * 1000) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 }

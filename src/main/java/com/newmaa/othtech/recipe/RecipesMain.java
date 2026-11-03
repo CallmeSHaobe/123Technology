@@ -28,6 +28,8 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
+import com.dreammaster.block.BlockList;
+import com.dreammaster.item.NHItemList;
 import com.newmaa.othtech.OTHTechnology;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.blocks.nailong.NailongCasingMeta;
@@ -54,6 +56,7 @@ import gregtech.loaders.misc.GTBees;
 import gtPlusPlus.xmod.gregtech.api.enums.GregtechItemList;
 import tectech.recipe.TTRecipeAdder;
 import tectech.thing.CustomItemList;
+import vazkii.botania.common.block.ModBlocks;
 
 public class RecipesMain implements IRecipePool {
 
@@ -1470,6 +1473,32 @@ public class RecipesMain implements IRecipePool {
             .eut(RECIPE_ULV)
             .duration(120)
             .addTo(assemblerRecipes);
+
+        // AbstractSanctum controller
+        GTValues.RA.stdBuilder()
+            .itemInputs(
+                ItemList.Hull_LuV.get(1),
+                new ItemStack(NailongCasings.nailongCasing, 16, NailongCasingMeta.NAILONG),
+                new ItemStack(NailongCasings.nailongCasing, 16, NailongCasingMeta.PEACH_CAN),
+                NHItemList.CircuitZPM.get(8),
+                BlockList.Gaia.get(4),
+                GTModHandler.getModItem("GoodGenerator", "essentiaCell", 4, 2),
+                BlockList.BloodyIchorium.get(4),
+                GTOreDictUnificator.get(OrePrefixes.plate, Materials.ElvenElementium, 64),
+                GTModHandler.getModItem("BloodArsenal", "blood_infused_diamond_unactive", 64))
+            .itemOutputs(OTHItemList.AbstractSanctum.get(1))
+            .eut(RECIPE_LuV)
+            .duration(600 * SECONDS)
+            .addTo(assemblerRecipes);
+
+        // AbstractSanctum mana conversion hatch
+        GTValues.RA.stdBuilder()
+            .itemInputs(ItemList.Hatch_Input_LuV.get(1), new ItemStack(ModBlocks.pool, 1, 3))
+            .itemOutputs(OTHItemList.ManaHatch123.get(1))
+            .duration(5 * SECONDS)
+            .eut(RECIPE_LV)
+            .addTo(assemblerRecipes);
+
         // nail
         GTValues.RA.stdBuilder()
             .itemInputs(

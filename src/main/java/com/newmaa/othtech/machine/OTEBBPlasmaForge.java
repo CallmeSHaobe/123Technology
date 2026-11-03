@@ -45,7 +45,6 @@ import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.machine.gui.OTEBBPlasmaForgeGui;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
-import com.newmaa.othtech.utils.OTHTooltipBuilder;
 import com.newmaa.othtech.utils.Utils;
 
 import cpw.mods.fml.relauncher.Side;
@@ -82,87 +81,23 @@ import tectech.thing.block.BlockQuantumGlass;
 
 public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> implements ISurvivalConstructable {
 
-    // 老大哥锻炉,老大哥的恩情还不完
-    protected void updatetier() {
-        if (hasCalibrationMatrix()) {
-            this.MLevel = 2;
-        } else {
-            this.MLevel = 1;
-        }
-    }
-
-    /**
-     * 控制器槽位是否放入超维校准矩阵(meta 32758),MLevel 2 的判定依据。
-     * 控制器槽是同步的库存槽,客户端永远最新,GUI 按钮以此作为门槛(同 DTPF 的做法)。
-     */
-    public boolean hasCalibrationMatrix() {
-        ItemStack aGuiStack = this.getControllerSlot();
-        return aGuiStack != null
-            && GTUtility.areStacksEqual(aGuiStack, GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32758));
-    }
-
-    @Override
-    public int getMaxParallelRecipes() {
-        if (MLevel == 2) {
-            return Integer.MAX_VALUE;
-        } else {
-            return mCoilLevel == null ? 0 : 1230 + mCoilLevel.getTier() * 1230;
-        }
-    }
-
     private int mHeatingCapacity = 0;
+
     private int MLevel = 1;
+
     private boolean failure = false;
+
     private HeatingCoilLevel mCoilLevel;
+
     private UUID ownerUUID;
+
     private static IStructureDefinition<OTEBBPlasmaForge> STRUCTURE_DEFINITION = null;
+
     private boolean isWirelessMode = false;
+
     private String costingWirelessEU = "0";
+
     private OverclockCalculator overclockCalculator;
-
-    public int getCoilTier() {
-        return Utils.getCoilTier(mCoilLevel);
-    }
-
-    public void setCoilLevel(HeatingCoilLevel aCoilLevel) {
-        mCoilLevel = aCoilLevel;
-    }
-
-    @Override
-    public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
-        int z) {
-        super.getWailaNBTData(player, tile, tag, world, x, y, z);
-        final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
-        if (tileEntity != null) {
-            tag.setString("costingWirelessEU", costingWirelessEU);
-        }
-    }
-
-    @Override
-    public void getWailaBody(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor,
-        IWailaConfigHandler config) {
-        super.getWailaBody(itemStack, currentTip, accessor, config);
-        final NBTTagCompound tag = accessor.getNBTData();
-        currentTip.add(
-            translateToLocal("otht.waila.wirelesseu") + EnumChatFormatting.RESET
-                + ": "
-                + EnumChatFormatting.GOLD
-                + tag.getString("costingWirelessEU")
-                + EnumChatFormatting.RESET
-                + " EU");
-    }
-
-    @Override
-    protected void setProcessingLogicPower(ProcessingLogic logic) {
-        if (isWirelessMode) {
-            logic.setAvailableVoltage(Long.MAX_VALUE);
-            logic.setAvailableAmperage(1);
-            logic.setAmperageOC(false);
-            logic.setUnlimitedTierSkips();
-        } else {
-            super.setProcessingLogicPower(logic);
-        }
-    }
 
     @SuppressWarnings("SpellCheckingInspection")
     private final String[][] shapeMain = new String[][] {
@@ -453,30 +388,7 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
 
     protected static final String STRUCTURE_PIECE_MAIN = "main";
 
-    public IStructureDefinition<OTEBBPlasmaForge> getStructureDefinition() {
-        if (STRUCTURE_DEFINITION == null) {
-            STRUCTURE_DEFINITION = StructureDefinition.<OTEBBPlasmaForge>builder()
-                .addShape(STRUCTURE_PIECE_MAIN, shapeMain)
-                .addElement('A', ofBlock(sBlockCasings1, 12))
-                .addElement(
-                    'B',
-                    buildHatchAdder(OTEBBPlasmaForge.class)
-                        .atLeast(InputHatch, OutputHatch, InputBus, OutputBus, Energy.or(ExoticEnergy), Maintenance)
-                        .casingIndex(DIM_INJECTION_CASING)
-                        .hint(1)
-                        .buildAndChain(sBlockCasings1, 13))
-                .addElement('C', ofBlock(sBlockCasings1, 14))
-                .addElement(
-                    'D',
-                    GTStructureChannels.HEATING_COIL
-                        .use(activeCoils(ofCoil(OTEBBPlasmaForge::setCoilLevel, OTEBBPlasmaForge::getCoilLevel))))
-                .addElement('E', ofBlock(sBlockCasingsTT, 7))
-                .addElement('F', ofBlock(sBlockCasingsTT, 8))
-                .addElement('G', ofBlock(BlockQuantumGlass.INSTANCE, 0))
-                .build();
-        }
-        return STRUCTURE_DEFINITION;
-    }
+    // ===================== Constructors =====================
 
     public OTEBBPlasmaForge(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
@@ -486,73 +398,41 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
         super(aName);
     }
 
-    @Override
-    public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-        return new OTEBBPlasmaForge(mName);
+    // ===================== NBT =====================
+
+    public void saveNBTData(NBTTagCompound aNBT) {
+        aNBT.setBoolean("wireless", isWirelessMode);
+        aNBT.setInteger("MLevel", MLevel);
+        super.saveNBTData(aNBT);
     }
 
     @Override
-    protected MultiblockTooltipBuilder createTooltip() {
-        MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
-        // ── 序章:中二宣言 ──
-        tt.addMachineType(translateToLocal("ote.bbpf.0"))
-            .addInfo(translateToLocal("ote.bbpf.1"))
-            .addInfo(translateToLocal("ote.bbpf.8"))
-            .addSeparator()
-            // ── 核心数值:并行 / 线圈效率 / 上限突破 ──
-            .addInfo(translateToLocal("ote.bbpf.2"))
-            .addInfo(translateToLocal("ote.bbpf.9"))
-            .addInfo(translateToLocal("ote.bbpf.10"))
-            .addInfo(translateToLocal("ote.bbpf.3"))
-            .addSeparator()
-            // ── 强化:校准矩阵 → 完美超频 + 无线模式 ──
-            .addInfo(translateToLocal("ote.bbpf.4"))
-            .addInfo(translateToLocal("ote.bbpf.11"))
-            .addInfo(translateToLocal("ote.bbpf.6"))
-            .addSeparator()
-            .addInfo(translateToLocal("ote.bbpf.7"))
-            .addSeparator()
-            // ── 结构(按 SHIFT 查看)──
-            .addController(translateToLocal("ote.bbpf.0"))
-            .beginStructureBlock(47, 11, 47, false)
-            .addStructureInfo(translateToLocal("ote.bbpf.12"))
-            .addStructureInfo(translateToLocal("ote.bbpf.13"))
-            .addStructureInfo(translateToLocal("ote.bbpf.14"))
-            .addInputBus("AnyInputBus", 1)
-            .addOutputBus("AnyOutputBus", 1)
-            .addInputHatch("AnyInputHatch", 1)
-            .addOutputHatch("AnyOutputHatch", 1)
-            .addEnergyHatch("AnyEnergyHatch", 1)
-            .addSubChannelUsage(GTStructureChannels.HEATING_COIL)
-            .toolTipFinisher();
-        return tt;
+    public void loadNBTData(final NBTTagCompound aNBT) {
+        MLevel = aNBT.getInteger("MLevel");
+        isWirelessMode = aNBT.getBoolean("wireless");
+        super.loadNBTData(aNBT);
+    }
+
+    // ===================== Machine Parameters =====================
+
+    protected boolean isEnablePerfectOverclock() {
+        return MLevel >= 2;
     }
 
     @Override
-    public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection aFacing,
-        int colorIndex, boolean aActive, boolean redstoneLevel) {
-
-        if (side == aFacing) {
-            if (aActive) return new ITexture[] { casingTexturePages[0][DIM_INJECTION_CASING], TextureFactory.builder()
-                .addIcon(OVERLAY_DTPF_ON)
-                .extFacing()
-                .build(),
-                TextureFactory.builder()
-                    .addIcon(OVERLAY_FUSION1_GLOW)
-                    .extFacing()
-                    .glow()
-                    .build() };
-            return new ITexture[] { casingTexturePages[0][DIM_INJECTION_CASING], TextureFactory.builder()
-                .addIcon(OVERLAY_DTPF_OFF)
-                .extFacing()
-                .build() };
+    public int getMaxParallelRecipes() {
+        if (MLevel == 2) {
+            return Integer.MAX_VALUE;
+        } else {
+            return mCoilLevel == null ? 0 : 1230 + mCoilLevel.getTier() * 1230;
         }
-        return new ITexture[] { casingTexturePages[0][DIM_INJECTION_CASING] };
     }
 
-    @Override
-    public RecipeMap<?> getRecipeMap() {
-        return RecipeMaps.plasmaForgeRecipes;
+    protected float getSpeedBonus() {
+        if (getCoilTier() == 14) {
+            return 0.01F;
+        }
+        return 1.0F - (getCoilTier() - 1) * 0.08F;
     }
 
     protected float getEuModifier() {
@@ -562,12 +442,34 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
         return 1.0F - (getCoilTier() - 1) * 0.08F;
     }
 
-    protected float getSpeedBonus() {
-        if (getCoilTier() == 14) {
-            return 0.01F;
-        }
-        return 1.0F - (getCoilTier() - 1) * 0.08F;
+    @Override
+    public RecipeMap<?> getRecipeMap() {
+        return RecipeMaps.plasmaForgeRecipes;
     }
+
+    @Override
+    public boolean supportsVoidProtection() {
+        return super.supportsVoidProtection();
+    }
+
+    @Override
+    public boolean supportsBatchMode() {
+        return super.supportsBatchMode();
+    }
+
+    public HeatingCoilLevel getCoilLevel() {
+        return mCoilLevel;
+    }
+
+    public void setCoilLevel(HeatingCoilLevel aCoilLevel) {
+        mCoilLevel = aCoilLevel;
+    }
+
+    public int getCoilTier() {
+        return Utils.getCoilTier(mCoilLevel);
+    }
+
+    // ===================== Processing Logic =====================
 
     @Override
     protected ProcessingLogic createProcessingLogic() {
@@ -732,6 +634,39 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
         }.setMaxParallelSupplier(this::getMaxParallelRecipes);
     }
 
+    @Override
+    protected void setProcessingLogicPower(ProcessingLogic logic) {
+        if (isWirelessMode) {
+            logic.setAvailableVoltage(Long.MAX_VALUE);
+            logic.setAvailableAmperage(1);
+            logic.setAmperageOC(false);
+            logic.setUnlimitedTierSkips();
+        } else {
+            super.setProcessingLogicPower(logic);
+        }
+    }
+
+    @NotNull
+    @Override
+    public CheckRecipeResult checkProcessing() {
+        updatetier();
+        setupProcessingLogic(processingLogic);
+
+        CheckRecipeResult result = doCheckRecipe();
+        if (!result.wasSuccessful()) return result;
+
+        // 从 processingLogic 获取结果
+        mMaxProgresstime = processingLogic.getDuration();
+        mOutputItems = processingLogic.getOutputItems();
+        mOutputFluids = processingLogic.getOutputFluids();
+
+        // 设置能量消耗（无线模式下 calculatedEut 已在 onRecipeStart 中被置为 0，此处恒为 0；
+        // 若不更新，lEUt 会残留有线模式下的数值，导致机器无能源仓却空转耗电）
+        lEUt = -processingLogic.getCalculatedEut();
+
+        return result;
+    }
+
     protected long getActualEnergyUsage() {
         if (isWirelessMode) {
             // 无线模式使用无线网络能量
@@ -741,6 +676,14 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
             return Math.abs(lEUt);
         }
     }
+
+    @Override
+    public void onFirstTick(IGregTechTileEntity aBaseMetaTileEntity) {
+        super.onFirstTick(aBaseMetaTileEntity);
+        this.ownerUUID = aBaseMetaTileEntity.getOwnerUuid();
+    }
+
+    // ===================== Structure =====================
 
     @Override
     public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
@@ -776,43 +719,87 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
     }
 
     @Override
-    public void getExtraInfoData(List<String> info) {
-        info.add(IGregTechDeviceInformation.encode("GT5U.EBF.heat.s", formatNumber(this.mHeatingCapacity)));
-    }
-
-    @NotNull
-    @Override
-    public CheckRecipeResult checkProcessing() {
-        updatetier();
-        setupProcessingLogic(processingLogic);
-
-        CheckRecipeResult result = doCheckRecipe();
-        if (!result.wasSuccessful()) return result;
-
-        // 从 processingLogic 获取结果
-        mMaxProgresstime = processingLogic.getDuration();
-        mOutputItems = processingLogic.getOutputItems();
-        mOutputFluids = processingLogic.getOutputFluids();
-
-        // 设置能量消耗（无线模式下 calculatedEut 已在 onRecipeStart 中被置为 0，此处恒为 0；
-        // 若不更新，lEUt 会残留有线模式下的数值，导致机器无能源仓却空转耗电）
-        lEUt = -processingLogic.getCalculatedEut();
-
-        return result;
+    public void construct(ItemStack stackSize, boolean hintsOnly) {
+        buildPiece(STRUCTURE_PIECE_MAIN, stackSize, hintsOnly, 23, 5, 20);
     }
 
     @Override
-    public void onFirstTick(IGregTechTileEntity aBaseMetaTileEntity) {
-        super.onFirstTick(aBaseMetaTileEntity);
-        this.ownerUUID = aBaseMetaTileEntity.getOwnerUuid();
+    public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
+        if (mMachine) return -1;
+        int realBudget = elementBudget >= 200 ? elementBudget : Math.min(200, elementBudget * 5);
+        return survivalBuildPiece(STRUCTURE_PIECE_MAIN, stackSize, 23, 5, 20, realBudget, env, false, true);
     }
 
+    public IStructureDefinition<OTEBBPlasmaForge> getStructureDefinition() {
+        if (STRUCTURE_DEFINITION == null) {
+            STRUCTURE_DEFINITION = StructureDefinition.<OTEBBPlasmaForge>builder()
+                .addShape(STRUCTURE_PIECE_MAIN, shapeMain)
+                .addElement('A', ofBlock(sBlockCasings1, 12))
+                .addElement(
+                    'B',
+                    buildHatchAdder(OTEBBPlasmaForge.class)
+                        .atLeast(InputHatch, OutputHatch, InputBus, OutputBus, Energy.or(ExoticEnergy), Maintenance)
+                        .casingIndex(DIM_INJECTION_CASING)
+                        .hint(1)
+                        .buildAndChain(sBlockCasings1, 13))
+                .addElement('C', ofBlock(sBlockCasings1, 14))
+                .addElement(
+                    'D',
+                    GTStructureChannels.HEATING_COIL
+                        .use(activeCoils(ofCoil(OTEBBPlasmaForge::setCoilLevel, OTEBBPlasmaForge::getCoilLevel))))
+                .addElement('E', ofBlock(sBlockCasingsTT, 7))
+                .addElement('F', ofBlock(sBlockCasingsTT, 8))
+                .addElement('G', ofBlock(BlockQuantumGlass.INSTANCE, 0))
+                .build();
+        }
+        return STRUCTURE_DEFINITION;
+    }
+
+    // ===================== Tooltip =====================
+
     @Override
-    public boolean addOutput(FluidStack aLiquid) {
-        if (aLiquid == null) return false;
-        FluidStack tLiquid = aLiquid.copy();
-        addOutputPartial(tLiquid);
-        return tLiquid.amount == 0;
+    protected MultiblockTooltipBuilder createTooltip() {
+        MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        // ── 序章:中二宣言 ──
+        tt.addMachineType(translateToLocal("ote.bbpf.0"))
+            .addInfo(translateToLocal("ote.bbpf.1"))
+            .addInfo(translateToLocal("ote.bbpf.8"))
+            .addSeparator()
+            // ── 核心数值:并行 / 线圈效率 / 上限突破 ──
+            .addInfo(translateToLocal("ote.bbpf.2"))
+            .addInfo(translateToLocal("ote.bbpf.9"))
+            .addInfo(translateToLocal("ote.bbpf.10"))
+            .addInfo(translateToLocal("ote.bbpf.3"))
+            .addSeparator()
+            // ── 强化:校准矩阵 → 完美超频 + 无线模式 ──
+            .addInfo(translateToLocal("ote.bbpf.4"))
+            .addInfo(translateToLocal("ote.bbpf.11"))
+            .addInfo(translateToLocal("ote.bbpf.6"))
+            .addSeparator()
+            .addInfo(translateToLocal("ote.bbpf.7"))
+            .addSeparator()
+            .addInfo("§aAdded by: 123Technology - PlasmaForge")
+            // ── 结构(按 SHIFT 查看)──
+            .addController(translateToLocal("ote.bbpf.0"))
+            .beginStructureBlock(47, 11, 47, false)
+            .addStructureInfo(translateToLocal("ote.bbpf.12"))
+            .addStructureInfo(translateToLocal("ote.bbpf.13"))
+            .addStructureInfo(translateToLocal("ote.bbpf.14"))
+            .addInputBus("AnyInputBus", 1)
+            .addOutputBus("AnyOutputBus", 1)
+            .addInputHatch("AnyInputHatch", 1)
+            .addOutputHatch("AnyOutputHatch", 1)
+            .addEnergyHatch("AnyEnergyHatch", 1)
+            .addSubChannelUsage(GTStructureChannels.HEATING_COIL)
+            .toolTipFinisher();
+        return tt;
+    }
+
+    // ===================== Standard Overrides =====================
+
+    @Override
+    public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
+        return new OTEBBPlasmaForge(mName);
     }
 
     @Override
@@ -907,22 +894,92 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
         return infoData.toArray(new String[0]);
     }
 
-    @Override
-    public void construct(ItemStack stackSize, boolean hintsOnly) {
-        buildPiece(STRUCTURE_PIECE_MAIN, stackSize, hintsOnly, 23, 5, 20);
-    }
+    // ===================== Textures =====================
 
     @Override
-    public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
-        if (mMachine) return -1;
-        int realBudget = elementBudget >= 200 ? elementBudget : Math.min(200, elementBudget * 5);
-        return survivalBuildPiece(STRUCTURE_PIECE_MAIN, stackSize, 23, 5, 20, realBudget, env, false, true);
+    public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection aFacing,
+        int colorIndex, boolean aActive, boolean redstoneLevel) {
+
+        if (side == aFacing) {
+            if (aActive) return new ITexture[] { casingTexturePages[0][DIM_INJECTION_CASING], TextureFactory.builder()
+                .addIcon(OVERLAY_DTPF_ON)
+                .extFacing()
+                .build(),
+                TextureFactory.builder()
+                    .addIcon(OVERLAY_FUSION1_GLOW)
+                    .extFacing()
+                    .glow()
+                    .build() };
+            return new ITexture[] { casingTexturePages[0][DIM_INJECTION_CASING], TextureFactory.builder()
+                .addIcon(OVERLAY_DTPF_OFF)
+                .extFacing()
+                .build() };
+        }
+        return new ITexture[] { casingTexturePages[0][DIM_INJECTION_CASING] };
     }
 
     @SideOnly(Side.CLIENT)
     @Override
     protected SoundResource getActivitySoundLoop() {
         return SoundResource.GT_MACHINES_PLASMAFORGE_LOOP;
+    }
+
+    // ===================== Misc =====================
+
+    // 老大哥锻炉,老大哥的恩情还不完
+    protected void updatetier() {
+        if (hasCalibrationMatrix()) {
+            this.MLevel = 2;
+        } else {
+            this.MLevel = 1;
+        }
+    }
+
+    /**
+     * 控制器槽位是否放入超维校准矩阵(meta 32758),MLevel 2 的判定依据。
+     * 控制器槽是同步的库存槽,客户端永远最新,GUI 按钮以此作为门槛(同 DTPF 的做法)。
+     */
+    public boolean hasCalibrationMatrix() {
+        ItemStack aGuiStack = this.getControllerSlot();
+        return aGuiStack != null
+            && GTUtility.areStacksEqual(aGuiStack, GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32758));
+    }
+
+    @Override
+    public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
+        int z) {
+        super.getWailaNBTData(player, tile, tag, world, x, y, z);
+        final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
+        if (tileEntity != null) {
+            tag.setString("costingWirelessEU", costingWirelessEU);
+        }
+    }
+
+    @Override
+    public void getWailaBody(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor,
+        IWailaConfigHandler config) {
+        super.getWailaBody(itemStack, currentTip, accessor, config);
+        final NBTTagCompound tag = accessor.getNBTData();
+        currentTip.add(
+            translateToLocal("otht.waila.wirelesseu") + EnumChatFormatting.RESET
+                + ": "
+                + EnumChatFormatting.GOLD
+                + tag.getString("costingWirelessEU")
+                + EnumChatFormatting.RESET
+                + " EU");
+    }
+
+    @Override
+    public void getExtraInfoData(List<String> info) {
+        info.add(IGregTechDeviceInformation.encode("GT5U.EBF.heat.s", formatNumber(this.mHeatingCapacity)));
+    }
+
+    @Override
+    public boolean addOutput(FluidStack aLiquid) {
+        if (aLiquid == null) return false;
+        FluidStack tLiquid = aLiquid.copy();
+        addOutputPartial(tLiquid);
+        return tLiquid.amount == 0;
     }
 
     @Override
@@ -953,37 +1010,6 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
 
     public boolean areEnergyHatchesEmpty() {
         return mEnergyHatches.isEmpty() && mExoticEnergyHatches.isEmpty();
-    }
-
-    public void saveNBTData(NBTTagCompound aNBT) {
-        aNBT.setBoolean("wireless", isWirelessMode);
-        aNBT.setInteger("MLevel", MLevel);
-        super.saveNBTData(aNBT);
-    }
-
-    @Override
-    public void loadNBTData(final NBTTagCompound aNBT) {
-        MLevel = aNBT.getInteger("MLevel");
-        isWirelessMode = aNBT.getBoolean("wireless");
-        super.loadNBTData(aNBT);
-    }
-
-    public HeatingCoilLevel getCoilLevel() {
-        return mCoilLevel;
-    }
-
-    protected boolean isEnablePerfectOverclock() {
-        return MLevel >= 2;
-    }
-
-    @Override
-    public boolean supportsVoidProtection() {
-        return super.supportsVoidProtection();
-    }
-
-    @Override
-    public boolean supportsBatchMode() {
-        return super.supportsBatchMode();
     }
 
     @Override

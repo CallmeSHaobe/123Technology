@@ -19,7 +19,6 @@ import com.gtnewhorizons.modularui.common.widget.DynamicPositionedColumn;
 import com.gtnewhorizons.modularui.common.widget.FakeSyncWidget;
 import com.gtnewhorizons.modularui.common.widget.SlotWidget;
 import com.gtnewhorizons.modularui.common.widget.TextWidget;
-import com.newmaa.othtech.utils.OTHTooltipBuilder;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -49,11 +48,16 @@ import tectech.thing.metaTileEntity.multi.base.render.TTRenderedExtendedFacingTe
 public abstract class OTETileEntityModulePumpT4 extends TileEntityModuleBase {
 
     public static final long ENERGY_CONSUMPTION = (int) VP[15];
+
     /** Input parameters */
     Parameters.Group.ParameterIn[] parallelSettings;
+
     Parameters.Group.ParameterIn[] gasTypeSettings;
+
     Parameters.Group.ParameterIn[] planetTypeSettings;
+
     Parameters.Group.ParameterIn batchSetting;
+
     /** Name of the planet type setting */
     private static final INameFunction<OTETileEntityModulePumpT4> PLANET_TYPE_SETTING_NAME = (base,
         p) -> GCCoreUtil.translate("gt.blockmachines.multimachine.project.ig.pump.cfgi.0") + " "
@@ -61,6 +65,7 @@ public abstract class OTETileEntityModulePumpT4 extends TileEntityModuleBase {
     /** Status of the planet type setting */
     private static final IStatusFunction<OTETileEntityModulePumpT4> PLANET_TYPE_STATUS = (base, p) -> LedStatus
         .fromLimitsInclusiveOuterBoundary(p.get(), 1, 0, 100, 100);
+
     /** Name of the gas type setting */
     private static final INameFunction<OTETileEntityModulePumpT4> GAS_TYPE_SETTING_NAME = (base,
         p) -> GCCoreUtil.translate("gt.blockmachines.multimachine.project.ig.pump.cfgi.1") + " "
@@ -68,6 +73,7 @@ public abstract class OTETileEntityModulePumpT4 extends TileEntityModuleBase {
     /** Status of the gas type setting */
     private static final IStatusFunction<OTETileEntityModulePumpT4> GAS_TYPE_STATUS = (base, p) -> LedStatus
         .fromLimitsInclusiveOuterBoundary(p.get(), 1, 0, 100, 100);
+
     /** Name of the parallel setting */
     private static final INameFunction<OTETileEntityModulePumpT4> PARALLEL_SETTING_NAME = (base,
         p) -> GCCoreUtil.translate("gt.blockmachines.multimachine.project.ig.pump.cfgi.2") + " "
@@ -75,14 +81,132 @@ public abstract class OTETileEntityModulePumpT4 extends TileEntityModuleBase {
     /** Status of the parallel setting */
     private static final IStatusFunction<OTETileEntityModulePumpT4> PARALLEL_STATUS = (base, p) -> LedStatus
         .fromLimitsInclusiveOuterBoundary(p.get(), 0, 1, 123123, base.getParallels());
+
     /** Name of the batch setting */
     private static final INameFunction<OTETileEntityModulePumpT4> BATCH_SETTING_NAME = (base, p) -> GCCoreUtil
         .translate("gt.blockmachines.multimachine.project.ig.pump.cfgi.3"); // Batch size
     /** Status of the batch setting */
     private static final IStatusFunction<OTETileEntityModulePumpT4> BATCH_STATUS = (base, p) -> LedStatus
         .fromLimitsInclusiveOuterBoundary(p.get(), 1, 0, 32, 128);
+
     /** Flag if this machine has an ME output hatch, will be updated in the structure check */
     protected boolean hasMeOutputHatch = false;
+
+    protected static IIconContainer engraving;
+
+    protected abstract int getParallels();
+
+    protected abstract int getParallelRecipes();
+
+    public static class ModulePumpT4 extends OTETileEntityModulePumpT4 {
+
+        /** Voltage tier of this module */
+        protected static final int MODULE_VOLTAGE_TIER = 16;
+        /** Tier of this module */
+        protected static final int MODULE_TIER = 4;
+        /** Minimum motor tier that is needed for this module */
+        protected static final int MINIMUM_MOTOR_TIER = 5;
+        /** Maximum amount of parallels of one recipe */
+        protected static final int MAX_PARALLELS = 123123;
+        /** Maximum amount of different recipes that can be done at once */
+        protected static final int MAX_PARALLEL_RECIPES = 5;
+
+        /**
+         * Create a new T4 mining module controller
+         *
+         * @param aID           ID of the controller
+         * @param aName         Name of the controller
+         * @param aNameRegional Localized name of the controller
+         */
+        public ModulePumpT4(int aID, String aName, String aNameRegional) {
+            super(aID, aName, aNameRegional, MODULE_VOLTAGE_TIER, MODULE_TIER, MINIMUM_MOTOR_TIER);
+        }
+
+        /**
+         * Create a new T4 mining module controller
+         *
+         * @param aName Name of the controller
+         */
+        public ModulePumpT4(String aName) {
+            super(aName, MODULE_VOLTAGE_TIER, MODULE_TIER, MINIMUM_MOTOR_TIER);
+        }
+
+        /**
+         * Get the number of parallels that this module can handle
+         *
+         * @return Number of possible parallels
+         */
+        protected int getParallels() {
+            return MAX_PARALLELS;
+        }
+
+        /**
+         * Get the number of parallel recipes that this module can handle
+         *
+         * @return Number of possible parallel recipes
+         */
+        protected int getParallelRecipes() {
+            return MAX_PARALLEL_RECIPES;
+        }
+
+        /**
+         * Get a new meta tile entity of this controller
+         *
+         * @param iGregTechTileEntity this
+         * @return New meta tile entity
+         */
+        @Override
+        public IMetaTileEntity newMetaEntity(IGregTechTileEntity iGregTechTileEntity) {
+            return new ModulePumpT4(mName);
+        }
+
+        /*
+         * @Override
+         * protected MultiblockTooltipBuilder createTooltip() {
+         * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+         * tt.addMachineType("太空钻机模块")
+         * .addInfo("将太空钻机功能添加到太空电梯")
+         * .addInfo(EnumChatFormatting.LIGHT_PURPLE + "§l我 是 吸 仰 阳.")
+         * .addInfo("直接从太空电梯接受能量,不使用能源仓")
+         * .addInfo("设定的行星和气体类型决定了输出的流体")
+         * .addInfo("锁定输出仓即可防止溢出销毁")
+         * .addInfo("§9运行电压：§aMAX 每个配方的最大并行：§c123123")
+         * .addInfo("一次处理多达§e5§r种不同的配方")
+         * .addInfo("需要§6MK-V§r或更高等级的加速轨道")
+         * .addSeparator()
+         * .beginStructureBlock(1, 5, 2, false)
+         * .addCasingInfoRange("太空电梯基座机械方块", 0, 9, false)
+         * .addOutputHatch("任意太空电梯基座机械方块", 1)
+         * .addInfo("§b§lAuthor:§l憋憋大师--HuimaoX")
+         * .toolTipFinisher("§a123Technology - SpacePump");
+         * return tt;
+         * }
+         */
+        @Override
+        protected MultiblockTooltipBuilder createTooltip() {
+            final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+            tt.addMachineType(translateToLocal("ote.tm.pump.0"))
+                .addInfo(translateToLocal("ote.tm.pump.1"))
+                .addInfo(EnumChatFormatting.LIGHT_PURPLE + translateToLocal("ote.tm.pump.2"))
+                .addInfo(translateToLocal("ote.tm.pump.3"))
+                .addInfo(translateToLocal("ote.tm.pump.4"))
+                .addInfo(translateToLocal("ote.tm.pump.5"))
+                .addInfo(translateToLocal("ote.tm.pump.6"))
+                .addInfo(translateToLocal("ote.tm.pump.7"))
+                .addInfo(translateToLocal("ote.tm.pump.8"))
+                .addSeparator()
+                .beginStructureBlock(1, 5, 2, false)
+                .addCasingInfoRange(translateToLocal("ote.tm.pump.9"), 0, 9, false)
+                .addOutputHatch(translateToLocal("ote.tm.pump.10"), 1)
+                .addInfo(translateToLocal("ote.tm.pump.11"))
+                .addSeparator()
+                .addInfo("§aAdded by: 123Technology - SpacePump")
+                .toolTipFinisher();
+            return tt;
+        }
+    }
+
+    // ===================== Constructors =====================
 
     public OTETileEntityModulePumpT4(int aID, String aName, String aNameRegional, int tTier, int tModuleTier,
         int tMinMotorTier) {
@@ -92,6 +216,8 @@ public abstract class OTETileEntityModulePumpT4 extends TileEntityModuleBase {
     public OTETileEntityModulePumpT4(String aName, int Tier, int tModuleTier, int tMinMotorTier) {
         super(aName, Tier, tModuleTier, tMinMotorTier);
     }
+
+    // ===================== Processing Logic =====================
 
     @Override
     public @NotNull CheckRecipeResult checkProcessing_EM() {
@@ -172,6 +298,8 @@ public abstract class OTETileEntityModulePumpT4 extends TileEntityModuleBase {
             .makeInParameter(1, 1, BATCH_SETTING_NAME, BATCH_STATUS);
     }
 
+    // ===================== Structure =====================
+
     @Override
     public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
         super.checkMachine(aBaseMetaTileEntity, aStack, errors);
@@ -184,7 +312,7 @@ public abstract class OTETileEntityModulePumpT4 extends TileEntityModuleBase {
         }
     }
 
-    protected static IIconContainer engraving;
+    // ===================== Textures =====================
 
     @Override
     public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection facing,
@@ -207,6 +335,8 @@ public abstract class OTETileEntityModulePumpT4 extends TileEntityModuleBase {
         engraving = Textures.BlockIcons.custom("iconsets/OVERLAY_SIDE_PUMP_MODULE");
         super.registerIcons(aBlockIconRegister);
     }
+
+    // ===================== Misc =====================
 
     @Override
     protected void drawTexts(DynamicPositionedColumn screenElements, SlotWidget inventorySlot) {
@@ -254,115 +384,5 @@ public abstract class OTETileEntityModulePumpT4 extends TileEntityModuleBase {
             return null;
         }
         return fluid.getLocalizedName();
-    }
-
-    protected abstract int getParallels();
-
-    protected abstract int getParallelRecipes();
-
-    public static class ModulePumpT4 extends OTETileEntityModulePumpT4 {
-
-        /** Voltage tier of this module */
-        protected static final int MODULE_VOLTAGE_TIER = 16;
-        /** Tier of this module */
-        protected static final int MODULE_TIER = 4;
-        /** Minimum motor tier that is needed for this module */
-        protected static final int MINIMUM_MOTOR_TIER = 5;
-        /** Maximum amount of parallels of one recipe */
-        protected static final int MAX_PARALLELS = 123123;
-        /** Maximum amount of different recipes that can be done at once */
-        protected static final int MAX_PARALLEL_RECIPES = 5;
-
-        /**
-         * Create a new T4 mining module controller
-         *
-         * @param aID           ID of the controller
-         * @param aName         Name of the controller
-         * @param aNameRegional Localized name of the controller
-         */
-        public ModulePumpT4(int aID, String aName, String aNameRegional) {
-            super(aID, aName, aNameRegional, MODULE_VOLTAGE_TIER, MODULE_TIER, MINIMUM_MOTOR_TIER);
-        }
-
-        /**
-         * Create a new T4 mining module controller
-         *
-         * @param aName Name of the controller
-         */
-        public ModulePumpT4(String aName) {
-            super(aName, MODULE_VOLTAGE_TIER, MODULE_TIER, MINIMUM_MOTOR_TIER);
-        }
-
-        /**
-         * Get the number of parallels that this module can handle
-         *
-         * @return Number of possible parallels
-         */
-        protected int getParallels() {
-            return MAX_PARALLELS;
-        }
-
-        /**
-         * Get the number of parallel recipes that this module can handle
-         *
-         * @return Number of possible parallel recipes
-         */
-        protected int getParallelRecipes() {
-            return MAX_PARALLEL_RECIPES;
-        }
-
-        /**
-         * Get a new meta tile entity of this controller
-         *
-         * @param iGregTechTileEntity this
-         * @return New meta tile entity
-         */
-        @Override
-        public IMetaTileEntity newMetaEntity(IGregTechTileEntity iGregTechTileEntity) {
-            return new ModulePumpT4(mName);
-        }
-
-        /*
-         * @Override
-         * protected MultiblockTooltipBuilder createTooltip() {
-         * final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
-         * tt.addMachineType("太空钻机模块")
-         * .addInfo("将太空钻机功能添加到太空电梯")
-         * .addInfo(EnumChatFormatting.LIGHT_PURPLE + "§l我 是 吸 仰 阳.")
-         * .addInfo("直接从太空电梯接受能量,不使用能源仓")
-         * .addInfo("设定的行星和气体类型决定了输出的流体")
-         * .addInfo("锁定输出仓即可防止溢出销毁")
-         * .addInfo("§9运行电压：§aMAX 每个配方的最大并行：§c123123")
-         * .addInfo("一次处理多达§e5§r种不同的配方")
-         * .addInfo("需要§6MK-V§r或更高等级的加速轨道")
-         * .addSeparator()
-         * .beginStructureBlock(1, 5, 2, false)
-         * .addCasingInfoRange("太空电梯基座机械方块", 0, 9, false)
-         * .addOutputHatch("任意太空电梯基座机械方块", 1)
-         * .addInfo("§b§lAuthor:§l憋憋大师--HuimaoX")
-         * .toolTipFinisher("§a123Technology - SpacePump");
-         * return tt;
-         * }
-         */
-        @Override
-        protected MultiblockTooltipBuilder createTooltip() {
-            final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
-            tt.addMachineType(translateToLocal("ote.tm.pump.0"))
-                .addInfo(translateToLocal("ote.tm.pump.1"))
-                .addInfo(EnumChatFormatting.LIGHT_PURPLE + translateToLocal("ote.tm.pump.2"))
-                .addInfo(translateToLocal("ote.tm.pump.3"))
-                .addInfo(translateToLocal("ote.tm.pump.4"))
-                .addInfo(translateToLocal("ote.tm.pump.5"))
-                .addInfo(translateToLocal("ote.tm.pump.6"))
-                .addInfo(translateToLocal("ote.tm.pump.7"))
-                .addInfo(translateToLocal("ote.tm.pump.8"))
-                .addSeparator()
-                .beginStructureBlock(1, 5, 2, false)
-                .addCasingInfoRange(translateToLocal("ote.tm.pump.9"), 0, 9, false)
-                .addOutputHatch(translateToLocal("ote.tm.pump.10"), 1)
-                .addInfo(translateToLocal("ote.tm.pump.11"))
-                .toolTipFinisher("§a123Technology - SpacePump");
-            return tt;
-        }
     }
 }

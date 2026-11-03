@@ -32,7 +32,6 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.machine.machineclass.OTHTTMultiMachineBaseEM;
-import com.newmaa.othtech.utils.OTHTooltipBuilder;
 import com.newmaa.othtech.utils.Utils;
 
 import cpw.mods.fml.relauncher.Side;
@@ -60,6 +59,94 @@ import tectech.thing.metaTileEntity.hatch.MTEHatchDynamoMulti;
 
 public class OTEFoodGenerator extends OTHTTMultiMachineBaseEM implements IConstructable, ISurvivalConstructable {
 
+    public int valveFood = 0;
+
+    public int casingTier = 1;
+
+    private long tStored;
+
+    private HeatingCoilLevel coilLevel;
+
+    private static final String STRUCTURE_PIECE_MAIN = "main";
+
+    private final int horizontalOffSet = 7;
+
+    private final int verticalOffSet = 12;
+
+    private final int depthOffSet = 0;
+
+    private static IStructureDefinition<OTEFoodGenerator> STRUCTURE_DEFINITION = null;
+
+    private static final String[] description = new String[] {
+        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.food.0") + ":",
+        translateToLocal("ote.cm.food.1") };
+
+    private final String[][] shapeMain = new String[][] {
+        { "               ", "               ", "     BBBBB     ", "   BB     BB   ", "   B       B   ",
+            "  B         B  ", "  B         B  ", "  B         B  ", "  B         B  ", "  B         B  ",
+            "   B       B   ", "   BB     BB   ", "     CC~CC     ", "               ", "               " },
+        { "               ", "    BBBBBBB    ", "   BB     BB   ", "  BB JJJJJ BB  ", " BB J A A J BB ",
+            " B JA A A AJ B ", " B J       J B ", " B J       J B ", " B JA     AJ B ", " B JA A A AJ B ",
+            " BB J A A J BB ", "  BB JJJJJ BB  ", "   BB     BB   ", "    BBBBBBB    ", "               " },
+        { "    BBBBBBB    ", " BBB       BBB ", " BB         BB ", " B           B ", "B    HJJJH    B",
+            "B   HJ   JH   B", "B   J     J   B", "B   J     J   B", "B   J     J   B", "B   HJ   JH   B",
+            "B    HJJJH    B", " B           B ", " BB         BB ", " BBB       BBB ", "    BBBBBBB    " },
+        { " BBBIIIIIIIBBB ", "B             B", "B             B", "B             B", "I     JJJ     I",
+            "I    J   J    I", "I   J     J   I", "I   J     J   I", "I   J     J   I", "I    J   J    I",
+            "I     JJJ     I", "B             B", "B             B", "B             B", " BBBIIIIIIIBBB " },
+        { " BBIIIIIIIIIBB ", "B             B", "B             B", "I             I", "I             I",
+            "I    DJJJD    I", "I    J   J    I", "I    J   J    I", "I    J   J    I", "I    DJJJD    I",
+            "I             I", "I             I", "B             B", "B             B", " BBIIIIIIIIIBB " },
+        { " BIIIIIIIIIIIB ", "B             B", "I             I", "I             I", "I             I",
+            "I    DJJJD    I", "I    J   J    I", "I    J   J    I", "I    J   J    I", "I    DJJJD    I",
+            "I             I", "I             I", "I             I", "B             B", " BIIIIIIIIIIIB " },
+        { "BIIIIIIIIIIIIIB", "I             I", "I             I", "I             I", "I             I",
+            "I    DDDDD    I", "I    DHJHD    I", "I    DJKJD    I", "I    DHJHD    I", "I    DDDDD    I",
+            "I             I", "I             I", "I             I", "I             I", "BIIIIIIIIIIIIIB" },
+        { "BIIIIIIIIIIIIIB", "I             I", "I             I", "I             I", "I             I",
+            "I             I", "I             I", "I      K      I", "I             I", "I             I",
+            "I             I", "I             I", "I             I", "I             I", "BIIIIIIIIIIIIIB" },
+        { "BIIIIIIIIIIIIIB", "I             I", "I             I", "I             I", "I             I",
+            "I     EEE     I", "I    E A E    I", "I    E K E    I", "I    E A E    I", "I     EEE     I",
+            "I             I", "I             I", "I             I", "I             I", "BIIIIIIIIIIIIIB" },
+        { "BIIIIIIIIIIIIIB", "I             I", "I             I", "I             I", "I             I",
+            "I             I", "I             I", "I      K      I", "I             I", "I             I",
+            "I             I", "I             I", "I             I", "I             I", "BIIIIIIIIIIIIIB" },
+        { "BIIIIIIIIIIIIIB", "I             I", "I             I", "I             I", "I             I",
+            "I     EEE     I", "I    E A E    I", "I    E K E    I", "I    E A E    I", "I     EEE     I",
+            "I             I", "I             I", "I             I", "I             I", "BIIIIIIIIIIIIIB" },
+        { "BIIIIIIIIIIIIIB", "I             I", "I             I", "I             I", "I             I",
+            "I             I", "I             I", "I      K      I", "I             I", "I             I",
+            "I             I", "I             I", "I             I", "I             I", "BIIIIIIIIIIIIIB" },
+        { "BIIIIIIIIIIIIIB", "I             I", "I             I", "I             I", "I             I",
+            "I     EEE     I", "I    E A E    I", "I    E K E    I", "I    E A E    I", "I     EEE     I",
+            "I             I", "I             I", "I             I", "I             I", "BIIIIIIIIIIIIIB" },
+        { " BIIIIIIIIIIIB ", "B             B", "I             I", "I             I", "I             I",
+            "I             I", "I             I", "I      K      I", "I             I", "I             I",
+            "I             I", "I             I", "I             I", "B             B", " BIIIIIIIIIIIB " },
+        { " BBIIIIIIIIIBB ", "B             B", "B             B", "I             I", "I             I",
+            "I     EEE     I", "I    E A E    I", "I    E K E    I", "I    E A E    I", "I     EEE     I",
+            "I             I", "I             I", "B             B", "B             B", " BBIIIIIIIIIBB " },
+        { " BBBIIIIIIIBBB ", "B             B", "B             B", "B             B", "I             I",
+            "I             I", "I             I", "I      K      I", "I             I", "I             I",
+            "I             I", "B             B", "B             B", "B             B", " BBBIIIIIIIBBB " },
+        { "    BBBBBBB    ", " BBB       BBB ", " BB         BB ", " B           B ", "B             B",
+            "B     EEE     B", "B    E A E    B", "B    E K E    B", "B    E A E    B", "B     EEE     B",
+            "B             B", " B           B ", " BB         BB ", " BBB       BBB ", "    BBBBBBB    " },
+        { "               ", "    BBBBBBB    ", "   BB     BB   ", "  BB       BB  ", " BB         BB ",
+            " B           B ", " B           B ", " B     K     B ", " B           B ", " B           B ",
+            " BB         BB ", "  BB       BB  ", "   BB     BB   ", "    BBBBBBB    ", "               " },
+        { "               ", "               ", "     BBBBB     ", "    BBBBBBB    ", "   BBB   BBB   ",
+            "  BBB     BBB  ", "  BB       BB  ", "  BB   K   BB  ", "  BB       BB  ", "  BBB     BBB  ",
+            "   BBB   BBB   ", "    BBBBBBB    ", "     BBBBB     ", "               ", "               " },
+        { "               ", "               ", "               ", "               ", "      BBB      ",
+            "     BBBBB     ", "    BBGGGBB    ", "    BBGFGBB    ", "    BBGGGBB    ", "     BBBBB     ",
+            "      BBB      ", "               ", "               ", "               ", "               " } };
+
+    private static IIconContainer ScreenON;
+
+    // ===================== Constructors =====================
+
     public OTEFoodGenerator(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
     }
@@ -68,22 +155,7 @@ public class OTEFoodGenerator extends OTHTTMultiMachineBaseEM implements IConstr
         super(aName);
     }
 
-    public int valveFood = 0;
-    public int casingTier = 1;
-    private long tStored;
-    private HeatingCoilLevel coilLevel;
-
-    public HeatingCoilLevel getCoilLevel() {
-        return this.coilLevel;
-    }
-
-    public void setCoilLevel(HeatingCoilLevel coilLevel) {
-        this.coilLevel = coilLevel;
-    }
-
-    public int getCoilTier() {
-        return Utils.getCoilTier(coilLevel);
-    }
+    // ===================== NBT =====================
 
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
@@ -99,31 +171,7 @@ public class OTEFoodGenerator extends OTHTTMultiMachineBaseEM implements IConstr
         super.loadNBTData(aNBT);
     }
 
-    @Override
-    public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
-        int z) {
-        super.getWailaNBTData(player, tile, tag, world, x, y, z);
-        final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
-        if (tileEntity != null) {
-            String bonus = GTUtility.formatShortenedLong(mEUt);
-            tag.setString("bonus", bonus);
-        }
-    }
-
-    @Override
-    public void getWailaBody(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor,
-        IWailaConfigHandler config) {
-        super.getWailaBody(itemStack, currentTip, accessor, config);
-        final NBTTagCompound tag = accessor.getNBTData();
-        currentTip.add(
-            translateToLocal("otht.waila.gen") + EnumChatFormatting.RESET
-                + ": "
-                + EnumChatFormatting.GOLD
-                + tag.getString("bonus")
-                + EnumChatFormatting.GOLD
-                + "EU/t"
-                + EnumChatFormatting.RESET);
-    }
+    // ===================== Machine Parameters =====================
 
     public int getMaxParallelRecipes() {
         return 64;
@@ -132,6 +180,55 @@ public class OTEFoodGenerator extends OTHTTMultiMachineBaseEM implements IConstr
     protected float getSpeedBonus() {
         return 1;
     }
+
+    @Override
+    public int getPollutionPerSecond(final ItemStack aStack) {
+        return 100000;
+    }
+
+    @Override
+    public int getMaxEfficiency(ItemStack aStack) {
+        return 10000;
+    }
+
+    @Override
+    public int getDamageToComponent(ItemStack aStack) {
+        return 0;
+    }
+
+    @Override
+    public boolean isCorrectMachinePart(ItemStack aStack) {
+        return true;
+    }
+
+    @Override
+    public boolean supportsVoidProtection() {
+        return true;
+    }
+
+    @Override
+    public boolean supportsInputSeparation() {
+        return true;
+    }
+
+    @Override
+    public boolean supportsSingleRecipeLocking() {
+        return true;
+    }
+
+    public HeatingCoilLevel getCoilLevel() {
+        return this.coilLevel;
+    }
+
+    public void setCoilLevel(HeatingCoilLevel coilLevel) {
+        this.coilLevel = coilLevel;
+    }
+
+    public int getCoilTier() {
+        return Utils.getCoilTier(coilLevel);
+    }
+
+    // ===================== Processing Logic =====================
 
     @Override
     public @NotNull CheckRecipeResult checkProcessing_EM() {
@@ -181,37 +278,6 @@ public class OTEFoodGenerator extends OTHTTMultiMachineBaseEM implements IConstr
     }
 
     @Override
-    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
-        if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
-        repairMachine();
-    }
-
-    @Override
-    public void construct(ItemStack stackSize, boolean hintsOnly) {
-        repairMachine();
-        buildPiece(STRUCTURE_PIECE_MAIN, stackSize, hintsOnly, horizontalOffSet, verticalOffSet, depthOffSet);
-
-    }
-
-    @Override
-    public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
-        if (this.mMachine) return -1;
-        int realBudget = elementBudget >= 200 ? elementBudget : Math.min(200, elementBudget * 5);
-
-        return this.survivalBuildPiece(
-            STRUCTURE_PIECE_MAIN,
-            stackSize,
-            horizontalOffSet,
-            verticalOffSet,
-            depthOffSet,
-            realBudget,
-            env,
-            false,
-            true);
-
-    }
-
-    @Override
     public boolean onRunningTick(ItemStack stack) {
         if (tStored > 0) {
             // push eu to dynamo
@@ -247,32 +313,38 @@ public class OTEFoodGenerator extends OTHTTMultiMachineBaseEM implements IConstr
         return true;
     }
 
-    public static int getBlockCasings(Block block, int meta) {
-        if (block == sBlockCasingsNH) {
-            return switch (meta) {
-                case 10 -> 10;
-                case 11 -> 11;
-                case 12 -> 12;
-                case 13 -> 13;
-                case 14 -> 14;
-                default -> 15;
-            };
-        }
-        if (block == sBlockCasings1) {
-            return meta + 1;
-        }
-        return 0;
+    // ===================== Structure =====================
+
+    @Override
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
+        if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
+        repairMachine();
     }
 
-    private static final String STRUCTURE_PIECE_MAIN = "main";
+    @Override
+    public void construct(ItemStack stackSize, boolean hintsOnly) {
+        repairMachine();
+        buildPiece(STRUCTURE_PIECE_MAIN, stackSize, hintsOnly, horizontalOffSet, verticalOffSet, depthOffSet);
 
-    private final int horizontalOffSet = 7;
-    private final int verticalOffSet = 12;
-    private final int depthOffSet = 0;
-    private static IStructureDefinition<OTEFoodGenerator> STRUCTURE_DEFINITION = null;
-    private static final String[] description = new String[] {
-        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.food.0") + ":",
-        translateToLocal("ote.cm.food.1") };
+    }
+
+    @Override
+    public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
+        if (this.mMachine) return -1;
+        int realBudget = elementBudget >= 200 ? elementBudget : Math.min(200, elementBudget * 5);
+
+        return this.survivalBuildPiece(
+            STRUCTURE_PIECE_MAIN,
+            stackSize,
+            horizontalOffSet,
+            verticalOffSet,
+            depthOffSet,
+            realBudget,
+            env,
+            false,
+            true);
+
+    }
 
     @Override
     public String[] getStructureDescription(ItemStack stackSize) {
@@ -340,82 +412,12 @@ public class OTEFoodGenerator extends OTHTTMultiMachineBaseEM implements IConstr
         return STRUCTURE_DEFINITION;
     }
 
-    private final String[][] shapeMain = new String[][] {
-        { "               ", "               ", "     BBBBB     ", "   BB     BB   ", "   B       B   ",
-            "  B         B  ", "  B         B  ", "  B         B  ", "  B         B  ", "  B         B  ",
-            "   B       B   ", "   BB     BB   ", "     CC~CC     ", "               ", "               " },
-        { "               ", "    BBBBBBB    ", "   BB     BB   ", "  BB JJJJJ BB  ", " BB J A A J BB ",
-            " B JA A A AJ B ", " B J       J B ", " B J       J B ", " B JA     AJ B ", " B JA A A AJ B ",
-            " BB J A A J BB ", "  BB JJJJJ BB  ", "   BB     BB   ", "    BBBBBBB    ", "               " },
-        { "    BBBBBBB    ", " BBB       BBB ", " BB         BB ", " B           B ", "B    HJJJH    B",
-            "B   HJ   JH   B", "B   J     J   B", "B   J     J   B", "B   J     J   B", "B   HJ   JH   B",
-            "B    HJJJH    B", " B           B ", " BB         BB ", " BBB       BBB ", "    BBBBBBB    " },
-        { " BBBIIIIIIIBBB ", "B             B", "B             B", "B             B", "I     JJJ     I",
-            "I    J   J    I", "I   J     J   I", "I   J     J   I", "I   J     J   I", "I    J   J    I",
-            "I     JJJ     I", "B             B", "B             B", "B             B", " BBBIIIIIIIBBB " },
-        { " BBIIIIIIIIIBB ", "B             B", "B             B", "I             I", "I             I",
-            "I    DJJJD    I", "I    J   J    I", "I    J   J    I", "I    J   J    I", "I    DJJJD    I",
-            "I             I", "I             I", "B             B", "B             B", " BBIIIIIIIIIBB " },
-        { " BIIIIIIIIIIIB ", "B             B", "I             I", "I             I", "I             I",
-            "I    DJJJD    I", "I    J   J    I", "I    J   J    I", "I    J   J    I", "I    DJJJD    I",
-            "I             I", "I             I", "I             I", "B             B", " BIIIIIIIIIIIB " },
-        { "BIIIIIIIIIIIIIB", "I             I", "I             I", "I             I", "I             I",
-            "I    DDDDD    I", "I    DHJHD    I", "I    DJKJD    I", "I    DHJHD    I", "I    DDDDD    I",
-            "I             I", "I             I", "I             I", "I             I", "BIIIIIIIIIIIIIB" },
-        { "BIIIIIIIIIIIIIB", "I             I", "I             I", "I             I", "I             I",
-            "I             I", "I             I", "I      K      I", "I             I", "I             I",
-            "I             I", "I             I", "I             I", "I             I", "BIIIIIIIIIIIIIB" },
-        { "BIIIIIIIIIIIIIB", "I             I", "I             I", "I             I", "I             I",
-            "I     EEE     I", "I    E A E    I", "I    E K E    I", "I    E A E    I", "I     EEE     I",
-            "I             I", "I             I", "I             I", "I             I", "BIIIIIIIIIIIIIB" },
-        { "BIIIIIIIIIIIIIB", "I             I", "I             I", "I             I", "I             I",
-            "I             I", "I             I", "I      K      I", "I             I", "I             I",
-            "I             I", "I             I", "I             I", "I             I", "BIIIIIIIIIIIIIB" },
-        { "BIIIIIIIIIIIIIB", "I             I", "I             I", "I             I", "I             I",
-            "I     EEE     I", "I    E A E    I", "I    E K E    I", "I    E A E    I", "I     EEE     I",
-            "I             I", "I             I", "I             I", "I             I", "BIIIIIIIIIIIIIB" },
-        { "BIIIIIIIIIIIIIB", "I             I", "I             I", "I             I", "I             I",
-            "I             I", "I             I", "I      K      I", "I             I", "I             I",
-            "I             I", "I             I", "I             I", "I             I", "BIIIIIIIIIIIIIB" },
-        { "BIIIIIIIIIIIIIB", "I             I", "I             I", "I             I", "I             I",
-            "I     EEE     I", "I    E A E    I", "I    E K E    I", "I    E A E    I", "I     EEE     I",
-            "I             I", "I             I", "I             I", "I             I", "BIIIIIIIIIIIIIB" },
-        { " BIIIIIIIIIIIB ", "B             B", "I             I", "I             I", "I             I",
-            "I             I", "I             I", "I      K      I", "I             I", "I             I",
-            "I             I", "I             I", "I             I", "B             B", " BIIIIIIIIIIIB " },
-        { " BBIIIIIIIIIBB ", "B             B", "B             B", "I             I", "I             I",
-            "I     EEE     I", "I    E A E    I", "I    E K E    I", "I    E A E    I", "I     EEE     I",
-            "I             I", "I             I", "B             B", "B             B", " BBIIIIIIIIIBB " },
-        { " BBBIIIIIIIBBB ", "B             B", "B             B", "B             B", "I             I",
-            "I             I", "I             I", "I      K      I", "I             I", "I             I",
-            "I             I", "B             B", "B             B", "B             B", " BBBIIIIIIIBBB " },
-        { "    BBBBBBB    ", " BBB       BBB ", " BB         BB ", " B           B ", "B             B",
-            "B     EEE     B", "B    E A E    B", "B    E K E    B", "B    E A E    B", "B     EEE     B",
-            "B             B", " B           B ", " BB         BB ", " BBB       BBB ", "    BBBBBBB    " },
-        { "               ", "    BBBBBBB    ", "   BB     BB   ", "  BB       BB  ", " BB         BB ",
-            " B           B ", " B           B ", " B     K     B ", " B           B ", " B           B ",
-            " BB         BB ", "  BB       BB  ", "   BB     BB   ", "    BBBBBBB    ", "               " },
-        { "               ", "               ", "     BBBBB     ", "    BBBBBBB    ", "   BBB   BBB   ",
-            "  BBB     BBB  ", "  BB       BB  ", "  BB   K   BB  ", "  BB       BB  ", "  BBB     BBB  ",
-            "   BBB   BBB   ", "    BBBBBBB    ", "     BBBBB     ", "               ", "               " },
-        { "               ", "               ", "               ", "               ", "      BBB      ",
-            "     BBBBB     ", "    BBGGGBB    ", "    BBGFGBB    ", "    BBGGGBB    ", "     BBBBB     ",
-            "      BBB      ", "               ", "               ", "               ", "               " } };
-
-    @Override
-    public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-        return new OTEFoodGenerator(this.mName);
-    }
-
-    @Override
-    public int getPollutionPerSecond(final ItemStack aStack) {
-        return 100000;
-    }
+    // ===================== Tooltip =====================
 
     /*
      * @Override
      * protected MultiblockTooltipBuilder createTooltip() {
-     * final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
+     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
      * tt.addMachineType("只是一个发电机")
      * .addInfo("再也不用担心吃得太饱了")
      * .addInfo("丰矿地烧掉一切食物")
@@ -438,16 +440,17 @@ public class OTEFoodGenerator extends OTHTTMultiMachineBaseEM implements IConstr
      */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType(translateToLocal("ote.tm.food.0"))
             .addInfo(translateToLocal("ote.tm.food.1"))
             .addInfo(translateToLocal("ote.tm.food.2"))
             .addInfo(translateToLocal("ote.tm.food.3"))
             .addInfo(translateToLocal("ote.tm.food.4"))
             .addInfo(translateToLocal("ote.tm.food.5"))
+            .addPollutionAmount(100000)
             .addTecTechHatchInfo()
             .addSeparator()
-            .addPollutionAmount(100000)
+            .addInfo("§aAdded by: 123Technology - FoodGenerator")
             .addController(translateToLocal("ote.tn.food"))
             .beginStructureBlock(15, 15, 20, false)
             .addInputBus("AnyInputBus", 1)
@@ -455,48 +458,18 @@ public class OTEFoodGenerator extends OTHTTMultiMachineBaseEM implements IConstr
             .addInputHatch("AnyInputHatch", 1)
             .addOutputHatch("AnyOutputHatch", 1)
             .addEnergyHatch("AnyEnergyHatch", 1)
-            .toolTipFinisher("§a123Technology - FoodGenerator");
+            .toolTipFinisher();
         return tt;
     }
 
-    @Override
-    public boolean isCorrectMachinePart(ItemStack aStack) {
-        return true;
-    }
+    // ===================== Standard Overrides =====================
 
     @Override
-    public int getMaxEfficiency(ItemStack aStack) {
-        return 10000;
+    public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
+        return new OTEFoodGenerator(this.mName);
     }
 
-    @Override
-    public int getDamageToComponent(ItemStack aStack) {
-        return 0;
-    }
-
-    @Override
-    public boolean supportsVoidProtection() {
-        return true;
-    }
-
-    @Override
-    public boolean supportsInputSeparation() {
-        return true;
-    }
-
-    @Override
-    public boolean supportsSingleRecipeLocking() {
-        return true;
-    }
-
-    private static IIconContainer ScreenON;
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister aBlockIconRegister) {
-        ScreenON = Textures.BlockIcons.custom("123technology:iconSetOTH/LEEK");
-        super.registerIcons(aBlockIconRegister);
-    }
+    // ===================== Textures =====================
 
     @Override
     public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection facing,
@@ -519,4 +492,55 @@ public class OTEFoodGenerator extends OTHTTMultiMachineBaseEM implements IConstr
             Textures.BlockIcons.getCasingTextureForId(GTUtility.getCasingTextureIndex(GregTechAPI.sBlockCasings2, 0)) };
     }
 
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister aBlockIconRegister) {
+        ScreenON = Textures.BlockIcons.custom("123technology:iconSetOTH/LEEK");
+        super.registerIcons(aBlockIconRegister);
+    }
+
+    // ===================== Misc =====================
+
+    @Override
+    public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
+        int z) {
+        super.getWailaNBTData(player, tile, tag, world, x, y, z);
+        final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
+        if (tileEntity != null) {
+            String bonus = GTUtility.formatShortenedLong(mEUt);
+            tag.setString("bonus", bonus);
+        }
+    }
+
+    @Override
+    public void getWailaBody(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor,
+        IWailaConfigHandler config) {
+        super.getWailaBody(itemStack, currentTip, accessor, config);
+        final NBTTagCompound tag = accessor.getNBTData();
+        currentTip.add(
+            translateToLocal("otht.waila.gen") + EnumChatFormatting.RESET
+                + ": "
+                + EnumChatFormatting.GOLD
+                + tag.getString("bonus")
+                + EnumChatFormatting.GOLD
+                + "EU/t"
+                + EnumChatFormatting.RESET);
+    }
+
+    public static int getBlockCasings(Block block, int meta) {
+        if (block == sBlockCasingsNH) {
+            return switch (meta) {
+                case 10 -> 10;
+                case 11 -> 11;
+                case 12 -> 12;
+                case 13 -> 13;
+                case 14 -> 14;
+                default -> 15;
+            };
+        }
+        if (block == sBlockCasings1) {
+            return meta + 1;
+        }
+        return 0;
+    }
 }

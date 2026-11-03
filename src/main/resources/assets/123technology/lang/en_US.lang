@@ -1015,6 +1015,48 @@ entity.123Technology.DogRed.name=§cRed Dog
 entity.123Technology.DogBlue.name=§9Blue Dog
 #Items
 item.dogSpawnEgg.name=Dog Spawn Egg
+# AbstractSanctum
+fluid.liquidmana123=Liquid Mana (123)
+ote.tn.abstract_sanctum=AbstractSanctum
+ote.tn.mana_hatch123=AbstractSanctum Mana Conversion Hatch
+ote.abstract_sanctum.mode.craft=Crafting Mode
+ote.abstract_sanctum.mode.duplicate=Duplication Mode
+ote.abstract_sanctum.chat.craft=Switched to Crafting Mode
+ote.abstract_sanctum.chat.duplicate=Switched to Duplication Mode
+ote.abstract_sanctum.chat.mode_locked=Cannot switch modes while the machine is running
+ote.abstract_sanctum.gui.mana=Mana
+ote.abstract_sanctum.gui.salt=World Salt
+ote.abstract_sanctum.gui.blood=Blood
+ote.abstract_sanctum.gui.config=§b✦ Material Multipliers ✦
+ote.abstract_sanctum.gui.range=§8Range 1.0–10.0, step 0.1
+ote.abstract_sanctum.gui.open_usage=§eClick to view related NEI recipes and bookmarks
+ote.abstract_sanctum.gui.parallel=§6Current parallels:§f %s
+ote.abstract_sanctum.gui.core.active=§b✦ Sanctum Core: §aMana circuits resonating
+ote.abstract_sanctum.gui.core.idle=§5✦ Sanctum Core: §7Idle; rune array remains stable
+ote.abstract_sanctum.upgrade.mana=§bEternal Mana Pool: Mana cost is reduced to zero
+ote.abstract_sanctum.upgrade.salt=§6Akashic Record: World Salt cost is reduced to zero
+ote.abstract_sanctum.upgrade.blood=§cArmok's Blood Orb: Life Essence cost is reduced to zero
+ote.abstract_sanctum.tooltip.0=§d✦ AbstractSanctum ✦ §7— Arcane Craft Integration
+ote.abstract_sanctum.tooltip.1=§d❖ §7"Arcane mass production? Hold my mana pool."
+ote.abstract_sanctum.tooltip.2=§5❖ §7"Mages cast spells. Machines work overtime."
+ote.abstract_sanctum.tooltip.3=§b❖ §7"Duplication is not cheating. It is throughput."
+ote.abstract_sanctum.tooltip.4=§b✦ CRAFTING RITE §7Recasts ancient recipes from Botania, Thaumcraft and Blood Magic
+ote.abstract_sanctum.tooltip.5=§6◆ PARALLEL §7§fCrafting base 1; lossy overclock, +2 per overclock
+ote.abstract_sanctum.tooltip.6=§5✦ ECHO DUPLICATION §7LV recipes; copies items from three resources without consuming the catalyst input
+ote.abstract_sanctum.tooltip.7=§6◆ PARALLEL §7§fLossless overclock; duplication base 64, ×2 per overclock
+ote.abstract_sanctum.tooltip.8=§3◆ MANA CIRCUIT §7Liquid Mana and Life Essence enter through hatches
+ote.abstract_sanctum.tooltip.9=§e◆ OGANESSON SURGE §7Fixed 144 mB per run; +4 crafting parallels, +64 duplication parallels
+ote.abstract_sanctum.tooltip.10=§a◆ GLASS AUTHORITY §7ZPM+ glass unlocks multi-amp energy hatches; UIV+ glass unlocks laser energy hatches
+ote.abstract_sanctum.tooltip.11=§c✖ ENERGY INTERDICTION §7Wireless energy hatches are rejected
+ote.abstract_sanctum.tooltip.12=§b✦ ACCELERATION LAW §7F(x,y,z)=1+3.23×(∫qx[1,x]+∫qy[1,y]+∫qz[1,z])
+ote.abstract_sanctum.tooltip.13=§8◆ ACCELERATION CURVES §7t is the matching material multiplier
+ote.abstract_sanctum.tooltip.14=§8qx(t)=0.01+1/(1+exp(160(t-1.05)))
+ote.abstract_sanctum.tooltip.15=§8qy(t)=0.01+1/(1+exp(8(t-3.50)))
+ote.abstract_sanctum.tooltip.16=§8qz(t)=0.01+1/(1+exp(40(t-1.20)))
+ote.abstract_sanctum.tooltip.17=§9 Keep the machine supplied with enough Mana, World Salt and Life Essence!
+ote.abstract_sanctum.tooltip.18=§6✦ ENDGAME CORES §7Three dedicated GUI slots can remove Mana, World Salt and Life Essence costs
+otht.recipe.AbstractSanctumCraft=AbstractSanctum - Crafting
+otht.recipe.AbstractSanctumDuplicate=AbstractSanctum - Duplication
 ote.ds.nei.nanite.line1=§bRequires upgrading the nanite swarm
 ote.ds.nei.nanite.line2=§bto tier %s
 GT5U.gui.text.recipe_result.ote_no_schematic=§4Missing rocket assembly schematic in the controller slot

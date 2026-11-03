@@ -36,7 +36,6 @@ import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
 import com.newmaa.othtech.machine.machineclass.OTHTTMultiMachineBaseEM;
-import com.newmaa.othtech.utils.OTHTooltipBuilder;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -63,6 +62,23 @@ import mcp.mobius.waila.api.IWailaDataAccessor;
 
 public class OTEMegaNQFuelFactory extends OTHTTMultiMachineBaseEM implements IConstructable, ISurvivalConstructable {
 
+    public int mode = 0;
+
+    private int tier = -1;
+
+    private static final String[] description = new String[] {
+        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.mnf.0") };
+
+    private final int horizontalOffSet = 24;
+
+    private final int verticalOffSet = 3;
+
+    private final int depthOffSet = 40;
+
+    private static IStructureDefinition<OTEMegaNQFuelFactory> STRUCTURE_DEFINITION = null;
+
+    // ===================== Constructors =====================
+
     public OTEMegaNQFuelFactory(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
     }
@@ -71,8 +87,7 @@ public class OTEMegaNQFuelFactory extends OTHTTMultiMachineBaseEM implements ICo
         super(aName);
     }
 
-    public int mode = 0;
-    private int tier = -1;
+    // ===================== NBT =====================
 
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
@@ -89,64 +104,12 @@ public class OTEMegaNQFuelFactory extends OTHTTMultiMachineBaseEM implements ICo
 
     }
 
-    @Override
-    public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
-        int z) {
-        super.getWailaNBTData(player, tile, tag, world, x, y, z);
-        final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
-        if (tileEntity != null) {
-            String Mode = GTUtility.formatShortenedLong(mode);
-            String OC = GTUtility.formatShortenedLong(this.tier);
-            tag.setString("Tier", Mode);
-            tag.setString("OC", OC);
-            tag.setString("Parallel", String.valueOf(maxParallel));
-        }
-    }
+    // ===================== Machine Parameters =====================
 
     @Override
-    public void getWailaBody(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor,
-        IWailaConfigHandler config) {
-        super.getWailaBody(itemStack, currentTip, accessor, config);
-        final NBTTagCompound tag = accessor.getNBTData();
-        currentTip.add(
-            translateToLocal("otht.waila.mode") + EnumChatFormatting.RESET
-                + ": "
-                + EnumChatFormatting.GOLD
-                + tag.getString("Tier")
-                + EnumChatFormatting.RESET);
-        currentTip.add(
-            translateToLocal("ote.tm.mnf.parallel.max") + EnumChatFormatting.RESET
-                + ": "
-                + EnumChatFormatting.GOLD
-                + tag.getString("Parallel")
-                + EnumChatFormatting.RESET);
-        currentTip.add(
-            translateToLocal("otht.waila.oc.amount") + EnumChatFormatting.RESET
-                + ": "
-                + EnumChatFormatting.GOLD
-                + tag.getString("OC")
-                + EnumChatFormatting.RESET);
-    }
-
-    @Override
-    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
-        ItemStack aTool) {
-        if (getBaseMetaTileEntity().isServerSide()) {
-            if (this.mode < 1 && this.tier == 4) {
-                this.mode++;
-            } else {
-                this.mode = 0;
-            }
-            switch (this.mode) {
-                case 0 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.mnf.mode.0"));
-                case 1 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.mnf.mode.1"));
-            }
-            /*
-             * GTUtility.sendChatToPlayer(
-             * aPlayer,
-             * StatCollector.translateToLocal(mode == 1 ? "压缩硅岩燃料精炼厂模式" : mode == 0 ? "硅岩燃料精炼厂模式" : "Null"));
-             */
-        }
+    public int getMaxParallelRecipes() {
+        maxParallel = getParallel();
+        return maxParallel;
     }
 
     @Override
@@ -161,26 +124,36 @@ public class OTEMegaNQFuelFactory extends OTHTTMultiMachineBaseEM implements ICo
     }
 
     @Override
-    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
-        if (!checkPiece(mName, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
-        repairMachine();
+    public int getMaxEfficiency(ItemStack aStack) {
+        return 10000;
     }
 
-    public int getParallel() {
-        if (this.tier == 1) {
-            return 16;
-        }
-        if (this.tier == 2) {
-            return 32;
-        }
-        if (this.tier == 3) {
-            return 64;
-        }
-        if (this.tier == 4) {
-            return 256;
-        }
+    @Override
+    public int getDamageToComponent(ItemStack aStack) {
         return 0;
     }
+
+    @Override
+    public boolean isCorrectMachinePart(ItemStack aStack) {
+        return true;
+    }
+
+    @Override
+    public boolean supportsVoidProtection() {
+        return true;
+    }
+
+    @Override
+    public boolean supportsInputSeparation() {
+        return true;
+    }
+
+    @Override
+    public boolean supportsSingleRecipeLocking() {
+        return true;
+    }
+
+    // ===================== Processing Logic =====================
 
     @Override
     protected ProcessingLogic createProcessingLogic() {
@@ -222,10 +195,12 @@ public class OTEMegaNQFuelFactory extends OTHTTMultiMachineBaseEM implements ICo
             .setMaxParallelSupplier(this::getMaxParallelRecipes);
     }
 
+    // ===================== Structure =====================
+
     @Override
-    public int getMaxParallelRecipes() {
-        maxParallel = getParallel();
-        return maxParallel;
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
+        if (!checkPiece(mName, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
+        repairMachine();
     }
 
     @Override
@@ -249,18 +224,10 @@ public class OTEMegaNQFuelFactory extends OTHTTMultiMachineBaseEM implements ICo
             true);
     }
 
-    private static final String[] description = new String[] {
-        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.mnf.0") };
-
     @Override
     public String[] getStructureDescription(ItemStack stackSize) {
         return description;
     }
-
-    private final int horizontalOffSet = 24;
-    private final int verticalOffSet = 3;
-    private final int depthOffSet = 40;
-    private static IStructureDefinition<OTEMegaNQFuelFactory> STRUCTURE_DEFINITION = null;
 
     @Override
     public IStructureDefinition<OTEMegaNQFuelFactory> getStructure_EM() {
@@ -644,20 +611,14 @@ public class OTEMegaNQFuelFactory extends OTHTTMultiMachineBaseEM implements ICo
         return STRUCTURE_DEFINITION;
     }
 
-    public Integer getTierInstance() {
-        return this.tier;
-    }
-
-    public int getTier() {
-        return this.tier;
-    }
+    // ===================== Tooltip =====================
 
     // spotless:off
     // structure copied from compactFusionReactor
     /*
      * @Override
      * protected MultiblockTooltipBuilder createTooltip() {
-     * final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
+     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
      * tt.addMachineType("§z§l秒杀八台巨蒸的史诗级机器 - 压缩硅岩燃料精炼厂")
      * .addInfo("§l§o甜甜圈喜加一系列")
      * .addInfo("更高级的线圈允许并行与加速 :")
@@ -680,7 +641,7 @@ public class OTEMegaNQFuelFactory extends OTHTTMultiMachineBaseEM implements ICo
      */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType(translateToLocal("ote.tm.mnf.0"))
             .addInfo(translateToLocal("ote.tm.mnf.1"))
             .addInfo(translateToLocal("ote.tm.mnf.2"))
@@ -689,6 +650,7 @@ public class OTEMegaNQFuelFactory extends OTHTTMultiMachineBaseEM implements ICo
             .addInfo(translateToLocal("ote.tm.mnf.5"))
             .addInfo(translateToLocal("ote.tm.mnf.6"))
             .addSeparator()
+            .addInfo("§7Added by: 123Technology - Naquadah's Dream")
             .addController(translateToLocal("ote.tn.mnf"))
             .beginStructureBlock(49, 7, 49, false)
             .addInputBus("AnyInputBus", 1)
@@ -697,44 +659,18 @@ public class OTEMegaNQFuelFactory extends OTHTTMultiMachineBaseEM implements ICo
             .addOutputHatch("AnyOutputHatch", 1)
             .addEnergyHatch("AnyEnergyHatch", 1)
             .addMufflerHatch("AnyMufflerHatch", 1)
-            .toolTipFinisher("§7123Technology - Naquadah's Dream");
+            .toolTipFinisher();
         return tt;
     }
 
-    @Override
-    public boolean isCorrectMachinePart(ItemStack aStack) {
-        return true;
-    }
-
-    @Override
-    public int getMaxEfficiency(ItemStack aStack) {
-        return 10000;
-    }
-
-    @Override
-    public int getDamageToComponent(ItemStack aStack) {
-        return 0;
-    }
-
-    @Override
-    public boolean supportsVoidProtection() {
-        return true;
-    }
-
-    @Override
-    public boolean supportsInputSeparation() {
-        return true;
-    }
-
-    @Override
-    public boolean supportsSingleRecipeLocking() {
-        return true;
-    }
+    // ===================== Standard Overrides =====================
 
     @Override
     public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
         return new OTEMegaNQFuelFactory(this.mName);
     }
+
+    // ===================== Textures =====================
 
     @Override
     public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection facing,
@@ -767,5 +703,91 @@ public class OTEMegaNQFuelFactory extends OTHTTMultiMachineBaseEM implements ICo
     @Override
     protected SoundResource getActivitySoundLoop() {
         return SoundResource.GT_MACHINES_FUSION_LOOP;
+    }
+
+    // ===================== Misc =====================
+
+    @Override
+    public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
+        int z) {
+        super.getWailaNBTData(player, tile, tag, world, x, y, z);
+        final IGregTechTileEntity tileEntity = getBaseMetaTileEntity();
+        if (tileEntity != null) {
+            String Mode = GTUtility.formatShortenedLong(mode);
+            String OC = GTUtility.formatShortenedLong(this.tier);
+            tag.setString("Tier", Mode);
+            tag.setString("OC", OC);
+            tag.setString("Parallel", String.valueOf(maxParallel));
+        }
+    }
+
+    @Override
+    public void getWailaBody(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor,
+        IWailaConfigHandler config) {
+        super.getWailaBody(itemStack, currentTip, accessor, config);
+        final NBTTagCompound tag = accessor.getNBTData();
+        currentTip.add(
+            translateToLocal("otht.waila.mode") + EnumChatFormatting.RESET
+                + ": "
+                + EnumChatFormatting.GOLD
+                + tag.getString("Tier")
+                + EnumChatFormatting.RESET);
+        currentTip.add(
+            translateToLocal("ote.tm.mnf.parallel.max") + EnumChatFormatting.RESET
+                + ": "
+                + EnumChatFormatting.GOLD
+                + tag.getString("Parallel")
+                + EnumChatFormatting.RESET);
+        currentTip.add(
+            translateToLocal("otht.waila.oc.amount") + EnumChatFormatting.RESET
+                + ": "
+                + EnumChatFormatting.GOLD
+                + tag.getString("OC")
+                + EnumChatFormatting.RESET);
+    }
+
+    @Override
+    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+        ItemStack aTool) {
+        if (getBaseMetaTileEntity().isServerSide()) {
+            if (this.mode < 1 && this.tier == 4) {
+                this.mode++;
+            } else {
+                this.mode = 0;
+            }
+            switch (this.mode) {
+                case 0 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.mnf.mode.0"));
+                case 1 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.mnf.mode.1"));
+            }
+            /*
+             * GTUtility.sendChatToPlayer(
+             * aPlayer,
+             * StatCollector.translateToLocal(mode == 1 ? "压缩硅岩燃料精炼厂模式" : mode == 0 ? "硅岩燃料精炼厂模式" : "Null"));
+             */
+        }
+    }
+
+    public int getParallel() {
+        if (this.tier == 1) {
+            return 16;
+        }
+        if (this.tier == 2) {
+            return 32;
+        }
+        if (this.tier == 3) {
+            return 64;
+        }
+        if (this.tier == 4) {
+            return 256;
+        }
+        return 0;
+    }
+
+    public Integer getTierInstance() {
+        return this.tier;
+    }
+
+    public int getTier() {
+        return this.tier;
     }
 }

@@ -23,7 +23,6 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.machine.machineclass.OTHTTMultiMachineBaseEM;
-import com.newmaa.othtech.utils.OTHTooltipBuilder;
 import com.newmaa.othtech.utils.Utils;
 
 import gregtech.api.GregTechAPI;
@@ -52,18 +51,25 @@ public class OTELargeQuHub extends OTHTTMultiMachineBaseEM
     implements IConstructable, ISurvivalConstructable, ICasingTextureProvider {
 
     private static final String PIECE_MAIN = "main";
+
     private static final String PIECE_COIL = "coil";
+
     private static final String PIECE_SLICE = "slice";
 
     private static final int H_OFFSET = 1;
+
     private static final int V_OFFSET = 1;
+
     private static final int D_OFFSET = 0;
 
     private static final int MIN_CASINGS = 9;
+
     private static final int MAX_BUILD_SLICES = 64;
 
     private static final String[][] SHAPE_MAIN = new String[][] { { "111", "1~1", "111" } };
+
     private static final String[][] SHAPE_COIL = new String[][] { { "111", "1K1", "111" } };
+
     private static final String[][] SHAPE_SLICE = new String[][] { { "111", "111", "111" } };
 
     private static IStructureDefinition<OTELargeQuHub> STRUCTURE_DEFINITION = null;
@@ -73,9 +79,14 @@ public class OTELargeQuHub extends OTHTTMultiMachineBaseEM
         translateToLocal("ote.cm.quhub.1"), translateToLocal("ote.cm.quhub.2") };
 
     private int casingCount = 0;
+
     private int slices = 0;
+
     private HeatingCoilLevel coilLevel = HeatingCoilLevel.None;
+
     private boolean grace = false;
+
+    // ===================== Constructors =====================
 
     public OTELargeQuHub(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
@@ -87,9 +98,41 @@ public class OTELargeQuHub extends OTHTTMultiMachineBaseEM
         eDismantleBoom = true;
     }
 
+    // ===================== Machine Parameters =====================
+
     @Override
-    public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-        return new OTELargeQuHub(this.mName);
+    public boolean canBeMuffled() {
+        return false;
+    }
+
+    @Override
+    public boolean supportsSingleRecipeLocking() {
+        return false;
+    }
+
+    @Override
+    public boolean isSafeVoidButtonEnabled() {
+        return false;
+    }
+
+    @Override
+    public boolean isPowerPassButtonEnabled() {
+        return true;
+    }
+
+    @Override
+    public boolean showRecipeTextInGUI() {
+        return false;
+    }
+
+    @Override
+    public boolean showMachineStatusInGUI() {
+        return false;
+    }
+
+    @Override
+    public boolean hasRunningText() {
+        return false;
     }
 
     public HeatingCoilLevel getCoilLevel() {
@@ -104,53 +147,43 @@ public class OTELargeQuHub extends OTHTTMultiMachineBaseEM
         return coilLevel == HeatingCoilLevel.None ? 0 : Utils.getCoilTier(coilLevel);
     }
 
-    public int getSlices() {
-        return slices;
-    }
+    // ===================== Processing Logic =====================
 
-    public int getMaxSlices() {
-        int tier = getCoilTier();
-        return tier * tier * tier;
+    @Override
+    @NotNull
+    protected CheckRecipeResult checkProcessing_EM() {
+        eAmpereFlow = 0;
+        mEUt = 0;
+        if (ePowerPass) {
+            mEfficiencyIncrease = 10000;
+            mMaxProgresstime = 20;
+            return SimpleCheckRecipeResult.ofSuccess("routing");
+        }
+        mEfficiencyIncrease = 0;
+        mMaxProgresstime = 0;
+        return SimpleCheckRecipeResult.ofFailure("no_routing");
     }
 
     @Override
-    public IStructureDefinition<OTELargeQuHub> getStructure_EM() {
-        if (STRUCTURE_DEFINITION == null) {
-            STRUCTURE_DEFINITION = StructureDefinition.<OTELargeQuHub>builder()
-                .addShape(PIECE_MAIN, SHAPE_MAIN)
-                .addShape(PIECE_COIL, SHAPE_COIL)
-                .addShape(PIECE_SLICE, SHAPE_SLICE)
-                .addElement(
-                    '1',
-                    buildHatchAdder(OTELargeQuHub.class)
-                        .atLeast(Energy, HatchElement.EnergyMulti, Dynamo, HatchElement.DynamoMulti)
-                        .adder(OTELargeQuHub::addHatchToMachineList)
-                        .casingIndex(casingTextureIndex())
-                        .hint(1)
-                        .buildAndChain(onElementPass(t -> t.casingCount++, ofBlock(GregTechAPI.sBlockCasings2, 0))))
-                .addElement('K', withChannel("coil", ofCoil(OTELargeQuHub::setCoilLevel, OTELargeQuHub::getCoilLevel)))
-                .build();
-        }
-        return STRUCTURE_DEFINITION;
-    }
-
-    private static int casingTextureIndex() {
-        return GTUtility.getCasingTextureIndex(GregTechAPI.sBlockCasings2, 0);
-    }
-
-    private boolean addHatchToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
-        if (aTileEntity == null) return false;
-        IMetaTileEntity aMetaTileEntity = aTileEntity.getMetaTileEntity();
-        if (aMetaTileEntity instanceof MTEHatchEnergyTunnel || aMetaTileEntity instanceof MTEHatchDynamoTunnel) {
-            return false;
-        }
-        return addToMachineList(aTileEntity, aBaseCasingIndex);
+    public boolean onRunningTick(ItemStack aStack) {
+        return true;
     }
 
     @Override
-    public String[] getStructureDescription(ItemStack stackSize) {
-        return description;
+    public void onPreTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
+        if ((aTick & 31) == 31) {
+            ePowerPass = aBaseMetaTileEntity.isAllowedToWork();
+        }
     }
+
+    @Override
+    public void onFirstTick_EM(IGregTechTileEntity aBaseMetaTileEntity) {
+        if (!mMachine) {
+            aBaseMetaTileEntity.disableWorking();
+        }
+    }
+
+    // ===================== Structure =====================
 
     @Override
     public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
@@ -247,78 +280,61 @@ public class OTELargeQuHub extends OTHTTMultiMachineBaseEM
     }
 
     @Override
-    @NotNull
-    protected CheckRecipeResult checkProcessing_EM() {
-        eAmpereFlow = 0;
-        mEUt = 0;
-        if (ePowerPass) {
-            mEfficiencyIncrease = 10000;
-            mMaxProgresstime = 20;
-            return SimpleCheckRecipeResult.ofSuccess("routing");
+    public String[] getStructureDescription(ItemStack stackSize) {
+        return description;
+    }
+
+    @Override
+    public IStructureDefinition<OTELargeQuHub> getStructure_EM() {
+        if (STRUCTURE_DEFINITION == null) {
+            STRUCTURE_DEFINITION = StructureDefinition.<OTELargeQuHub>builder()
+                .addShape(PIECE_MAIN, SHAPE_MAIN)
+                .addShape(PIECE_COIL, SHAPE_COIL)
+                .addShape(PIECE_SLICE, SHAPE_SLICE)
+                .addElement(
+                    '1',
+                    buildHatchAdder(OTELargeQuHub.class)
+                        .atLeast(Energy, HatchElement.EnergyMulti, Dynamo, HatchElement.DynamoMulti)
+                        .adder(OTELargeQuHub::addHatchToMachineList)
+                        .casingIndex(casingTextureIndex())
+                        .hint(1)
+                        .buildAndChain(onElementPass(t -> t.casingCount++, ofBlock(GregTechAPI.sBlockCasings2, 0))))
+                .addElement('K', withChannel("coil", ofCoil(OTELargeQuHub::setCoilLevel, OTELargeQuHub::getCoilLevel)))
+                .build();
         }
-        mEfficiencyIncrease = 0;
-        mMaxProgresstime = 0;
-        return SimpleCheckRecipeResult.ofFailure("no_routing");
+        return STRUCTURE_DEFINITION;
     }
 
-    @Override
-    public void onFirstTick_EM(IGregTechTileEntity aBaseMetaTileEntity) {
-        if (!mMachine) {
-            aBaseMetaTileEntity.disableWorking();
-        }
-    }
+    // ===================== Tooltip =====================
 
     @Override
-    public void onPreTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
-        if ((aTick & 31) == 31) {
-            ePowerPass = aBaseMetaTileEntity.isAllowedToWork();
-        }
+    protected MultiblockTooltipBuilder createTooltip() {
+        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+        tt.addMachineType(translateToLocal("ote.tm.quhub.0"))
+            .addInfo(translateToLocal("ote.tm.quhub.1"))
+            .addInfo(translateToLocal("ote.tm.quhub.2"))
+            .addInfo(translateToLocal("ote.tm.quhub.3"))
+            .addInfo(translateToLocal("ote.tm.quhub.4"))
+            .addInfo(translateToLocal("ote.tm.mat.5"))
+            .addSupportMultiAmp()
+            .addSeparator()
+            .addInfo("§aAdded by: 123Technology - §4LargeQuHub")
+            .addController(translateToLocal("ote.tn.quhub"))
+            .beginStructureBlock(3, 3, 3, false)
+            .addEnergyHatch("AnyEnergyHatch", 1)
+            .addDynamoHatch("AnyDynamoHatch", 1)
+            .toolTipFinisher();
+        return tt;
     }
 
-    @Override
-    public boolean onRunningTick(ItemStack aStack) {
-        return true;
-    }
+    // ===================== Standard Overrides =====================
 
     @Override
-    public boolean isPowerPassButtonEnabled() {
-        return true;
+    public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
+        return new OTELargeQuHub(this.mName);
     }
 
-    @Override
-    public boolean isSafeVoidButtonEnabled() {
-        return false;
-    }
-
-    @Override
-    public boolean supportsSingleRecipeLocking() {
-        return false;
-    }
-
-    @Override
-    public boolean showRecipeTextInGUI() {
-        return false;
-    }
-
-    @Override
-    public boolean showMachineStatusInGUI() {
-        return false;
-    }
-
-    @Override
-    public boolean hasRunningText() {
-        return false;
-    }
-
-    @Override
-    public boolean canBeMuffled() {
-        return false;
-    }
-
-    @Override
-    protected SoundResource getActivitySoundLoop() {
-        return SoundResource.TECTECH_MACHINES_NOISE;
-    }
+    // ===================== Textures =====================
 
     @Override
     public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection facing,
@@ -331,26 +347,36 @@ public class OTELargeQuHub extends OTHTTMultiMachineBaseEM
     }
 
     @Override
+    protected SoundResource getActivitySoundLoop() {
+        return SoundResource.TECTECH_MACHINES_NOISE;
+    }
+
+    @Override
     public ITexture getCasingTexture() {
         return Textures.BlockIcons.getCasingTextureForId(casingTextureIndex());
     }
 
-    @Override
-    protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
-        tt.addMachineType(translateToLocal("ote.tm.quhub.0"))
-            .addInfo(translateToLocal("ote.tm.quhub.1"))
-            .addInfo(translateToLocal("ote.tm.quhub.2"))
-            .addInfo(translateToLocal("ote.tm.quhub.3"))
-            .addInfo(translateToLocal("ote.tm.quhub.4"))
-            .addInfo(translateToLocal("ote.tm.mat.5"))
-            .addSupportMultiAmp()
-            .addSeparator()
-            .addController(translateToLocal("ote.tn.quhub"))
-            .beginStructureBlock(3, 3, 3, false)
-            .addEnergyHatch("AnyEnergyHatch", 1)
-            .addDynamoHatch("AnyDynamoHatch", 1)
-            .toolTipFinisher("§a123Technology - §4LargeQuHub");
-        return tt;
+    // ===================== Misc =====================
+
+    public int getSlices() {
+        return slices;
+    }
+
+    public int getMaxSlices() {
+        int tier = getCoilTier();
+        return tier * tier * tier;
+    }
+
+    private static int casingTextureIndex() {
+        return GTUtility.getCasingTextureIndex(GregTechAPI.sBlockCasings2, 0);
+    }
+
+    private boolean addHatchToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
+        if (aTileEntity == null) return false;
+        IMetaTileEntity aMetaTileEntity = aTileEntity.getMetaTileEntity();
+        if (aMetaTileEntity instanceof MTEHatchEnergyTunnel || aMetaTileEntity instanceof MTEHatchDynamoTunnel) {
+            return false;
+        }
+        return addToMachineList(aTileEntity, aBaseCasingIndex);
     }
 }

@@ -12,6 +12,7 @@ public enum modsEnum {
     NHUtilities(modsID.NHU),
     ET_Futurum(modsID.ET_Futurum),
     OTHTechnology(modsID.OTHTechnology),
+    ThaumicBases(modsID.ThaumicBases),
     GTNN(modsID.GTNN);
 
     public static class modsID {
@@ -20,6 +21,7 @@ public enum modsEnum {
         public static final String OTHTechnology = "123Technology";
         public static final String NHU = "NHUtilities";
         public static final String ET_Futurum = "etfuturum";
+        public static final String ThaumicBases = "thaumicbases";
         public static final String GTNN = "gtnn";
     }
 

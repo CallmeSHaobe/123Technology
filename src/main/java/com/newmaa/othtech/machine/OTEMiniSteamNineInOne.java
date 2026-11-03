@@ -39,7 +39,6 @@ import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTHSteamMultiBase;
-import com.newmaa.othtech.utils.OTHTooltipBuilder;
 import com.newmaa.othtech.utils.RecipeBuilder;
 
 import gregtech.api.GregTechAPI;
@@ -66,6 +65,66 @@ import gtPlusPlus.xmod.gregtech.common.blocks.textures.TexturesGtBlock;
 
 public class OTEMiniSteamNineInOne extends OTHSteamMultiBase<OTEMiniSteamNineInOne> implements ISurvivalConstructable {
 
+    private boolean IS_FURNACE_MODE = false;
+
+    private int mCountCasing = 0;
+
+    private static final long RECIPE_EUT = 4;
+
+    protected int mInternalMode = 0;
+
+    private static final int MODE_PUMP = 0;
+
+    private static final int MODE_ALLOY_FURNACE = 1;
+
+    private static final int MODE_EXTRACTOR = 2;
+
+    private static final int MODE_ORE_WASHING = 3;
+
+    private static final int MODE_CRACKING = 4;
+
+    private static final int MODE_HAMMER = 5;
+
+    private static final int MODE_COMPRESSOR = 6;
+
+    private static final int MODE_MIXER = 7;
+
+    private static final int MODE_CENTRIFUGE = 8;
+
+    private static final int[][] MODE_MAP = new int[][] { { 0, 1, 2 }, { 3, 4, 5 }, { 6, 7, 8 } };
+
+    private static final String STRUCTURE_PIECE_MAIN = "main";
+
+    private final int horizontalOffSet = 2;
+
+    private final int verticalOffSet = 1;
+
+    private final int depthOffSet = 0;
+
+    private static IStructureDefinition<OTEMiniSteamNineInOne> STRUCTURE_DEFINITION = null;
+
+    private static final String[] description = new String[] {
+        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.s9in1.0"),
+        EnumChatFormatting.LIGHT_PURPLE + translateToLocal("ote.cm.s9in1.1"),
+        EnumChatFormatting.GOLD + translateToLocal("ote.cm.s9in1.2") };
+
+    // spotless:off
+        private final String[][] shapeMain = new String[][]{{
+        "AHHHA",
+        "GH~HG",
+        "AHHHA"
+    },{
+        "AECEA",
+        "FBDBF",
+        "AECEA"
+    },{
+        "AAAAA",
+        "FFFFF",
+        "AAAAA"
+    }};
+
+    // ===================== Constructors =====================
+
     public OTEMiniSteamNineInOne(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
     }
@@ -74,25 +133,7 @@ public class OTEMiniSteamNineInOne extends OTHSteamMultiBase<OTEMiniSteamNineInO
         super(aName);
     }
 
-    @Override
-    public String getMachineType() {
-        return null;
-    }
-
-    private boolean IS_FURNACE_MODE = false;
-    private int mCountCasing = 0;
-    private static final long RECIPE_EUT = 4;
-    protected int mInternalMode = 0;
-    private static final int MODE_PUMP = 0;
-    private static final int MODE_ALLOY_FURNACE = 1;
-    private static final int MODE_EXTRACTOR = 2;
-    private static final int MODE_ORE_WASHING = 3;
-    private static final int MODE_CRACKING = 4;
-    private static final int MODE_HAMMER = 5;
-    private static final int MODE_COMPRESSOR = 6;
-    private static final int MODE_MIXER = 7;
-    private static final int MODE_CENTRIFUGE = 8;
-    private static final int[][] MODE_MAP = new int[][] { { 0, 1, 2 }, { 3, 4, 5 }, { 6, 7, 8 } };
+    // ===================== NBT =====================
 
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
@@ -108,9 +149,15 @@ public class OTEMiniSteamNineInOne extends OTHSteamMultiBase<OTEMiniSteamNineInO
 
     }
 
+    // ===================== Machine Parameters =====================
+
     @Override
     public int getMaxParallelRecipes() {
         return 256;
+    }
+
+    protected float getEuModifier() {
+        return 1F;
     }
 
     @Override
@@ -118,25 +165,26 @@ public class OTEMiniSteamNineInOne extends OTHSteamMultiBase<OTEMiniSteamNineInO
         return null;
     }
 
-    protected float getEuModifier() {
-        return 1F;
-    }
-
-    private ItemStack getCircuit(ItemStack[] t) {
-        for (ItemStack j : t) {
-            if (j.getItem() == Circuit_Integrated.getItem()) {
-                if (j.getItemDamage() >= 20 && j.getItemDamage() <= 22) {
-                    return j;
-                }
-            }
-        }
-        return null;
-    }
-
-    private int getCircuitID(ItemStack circuit) {
-        int H = circuit.getItemDamage();
-        int T = (H == 20 ? 0 : (H == 21 ? 1 : (H == 22 ? 2 : -1)));
-        return MODE_MAP[this.mInternalMode][T];
+    private static RecipeMap<?> getRecipeMap(int aMode) {
+        if (aMode == MODE_PUMP) {
+            return Recipemaps.STEAM_PUMP;
+        } else if (aMode == MODE_ALLOY_FURNACE) {
+            return RecipeMaps.alloySmelterRecipes;
+        } else if (aMode == MODE_EXTRACTOR) {
+            return RecipeMaps.extractorRecipes;
+        } else if (aMode == MODE_ORE_WASHING) {
+            return RecipeMaps.oreWasherRecipes;
+        } else if (aMode == MODE_CRACKING) {
+            return RecipeMaps.maceratorRecipes;
+        } else if (aMode == MODE_HAMMER) {
+            return RecipeMaps.hammerRecipes;
+        } else if (aMode == MODE_COMPRESSOR) {
+            return RecipeMaps.compressorRecipes;
+        } else if (aMode == MODE_MIXER) {
+            return RecipeMaps.mixerNonCellRecipes;
+        } else if (aMode == MODE_CENTRIFUGE) {
+            return RecipeMaps.centrifugeNonCellRecipes;
+        } else return null;
     }
 
     @NotNull
@@ -153,6 +201,37 @@ public class OTEMiniSteamNineInOne extends OTHSteamMultiBase<OTEMiniSteamNineInO
             RecipeMaps.mixerNonCellRecipes,
             RecipeMaps.centrifugeNonCellRecipes);
     }
+
+    @Override
+    public int getPollutionPerSecond(final ItemStack aStack) {
+        return 233;
+    }
+
+        @Override
+        public int getMaxEfficiency(ItemStack aStack) {
+            return 10000;
+        }
+
+        @Override
+        public int getDamageToComponent(ItemStack aStack) {
+            return 0;
+        }
+
+        @Override
+        public boolean isCorrectMachinePart(ItemStack aStack) {
+            return true;
+        }
+
+        /* @Override
+        public boolean supportsVoidProtection() {
+            return true;
+        } */
+        @Override
+        public boolean supportsInputSeparation() {
+            return false;
+        }
+
+    // ===================== Processing Logic =====================
 
     @Override
     protected ProcessingLogic createProcessingLogic() {
@@ -200,26 +279,177 @@ public class OTEMiniSteamNineInOne extends OTHSteamMultiBase<OTEMiniSteamNineInO
 
     }
 
-    private static RecipeMap<?> getRecipeMap(int aMode) {
-        if (aMode == MODE_PUMP) {
-            return Recipemaps.STEAM_PUMP;
-        } else if (aMode == MODE_ALLOY_FURNACE) {
-            return RecipeMaps.alloySmelterRecipes;
-        } else if (aMode == MODE_EXTRACTOR) {
-            return RecipeMaps.extractorRecipes;
-        } else if (aMode == MODE_ORE_WASHING) {
-            return RecipeMaps.oreWasherRecipes;
-        } else if (aMode == MODE_CRACKING) {
-            return RecipeMaps.maceratorRecipes;
-        } else if (aMode == MODE_HAMMER) {
-            return RecipeMaps.hammerRecipes;
-        } else if (aMode == MODE_COMPRESSOR) {
-            return RecipeMaps.compressorRecipes;
-        } else if (aMode == MODE_MIXER) {
-            return RecipeMaps.mixerNonCellRecipes;
-        } else if (aMode == MODE_CENTRIFUGE) {
-            return RecipeMaps.centrifugeNonCellRecipes;
-        } else return null;
+    // ===================== Structure =====================
+
+    @Override
+    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
+        if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
+        if (checkHatches()) updateHatchTexture();
+        checkHasSteamInput(errors);
+        checkHasAnyInput(errors);
+        checkHasAnyOutput(errors);
+    }
+
+    @Override
+    public void construct(ItemStack stackSize, boolean hintsOnly) {
+        buildPiece(STRUCTURE_PIECE_MAIN, stackSize, hintsOnly, horizontalOffSet, verticalOffSet, depthOffSet);
+    }
+
+    @Override
+    public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
+        if (this.mMachine) return -1;
+        int realBudget = elementBudget >= 200 ? elementBudget : Math.min(200, elementBudget * 5);
+
+        return this.survivalBuildPiece(
+            STRUCTURE_PIECE_MAIN,
+            stackSize,
+            horizontalOffSet,
+            verticalOffSet,
+            depthOffSet,
+            realBudget,
+            env,
+            false,
+            true);
+
+    }
+
+    @Override
+    public String[] getStructureDescription(ItemStack stackSize) {
+        return description;
+    }
+
+    @Override
+    public IStructureDefinition<OTEMiniSteamNineInOne> getStructureDefinition() {
+        if (STRUCTURE_DEFINITION == null) {
+            STRUCTURE_DEFINITION = StructureDefinition.<OTEMiniSteamNineInOne>builder()
+                .addShape(STRUCTURE_PIECE_MAIN, shapeMain)
+                .addElement('A', ofBlock(sBlockCasings2, 0))
+                .addElement('B', ofBlock(sBlockCasings2, 2))
+                .addElement('C', ofBlock(sBlockCasings2, 3))
+                .addElement('D', ofBlock(sBlockCasings2, 12))
+                .addElement('E', ofBlock(sBlockCasings2, 13))
+                .addElement('F', ofBlock(sBlockCasings3, 13))
+                .addElement('G', ofBlock(sBlockCasings1, 10))
+                .addElement(
+                    'H',
+                    ofChain(
+                        buildSteamInput(OTEMiniSteamNineInOne.class).casingIndex(10)
+                            .hint(1)
+                            .build(),
+                        buildHatchAdder(OTEMiniSteamNineInOne.class)
+                            .atLeast(
+                                SteamHatchElement.InputBus_Steam,
+                                SteamHatchElement.OutputBus_Steam,
+                                InputHatch,
+                                InputBus,
+                                OutputHatch,
+                                OutputBus,
+                                Muffler)
+                            .casingIndex(10)
+                            .hint(1)
+                            .buildAndChain(),
+                        ofBlock(sBlockCasings1, 10)))
+                .build();
+
+        }
+        return STRUCTURE_DEFINITION;
+    }
+
+        @Override
+        public boolean addToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
+            return super.addToMachineList(aTileEntity, aBaseCasingIndex)
+                || addExoticEnergyInputToMachineList(aTileEntity, aBaseCasingIndex);
+        }
+
+    // ===================== Tooltip =====================
+
+        @Override
+        protected MultiblockTooltipBuilder createTooltip() {
+            final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
+            tt.addMachineType(translateToLocal("ote.tm.s9in1.0"))
+                .addSeparator()
+                .addInfo(translateToLocal("ote.tm.s9in1.1"))
+                .addInfo(translateToLocal("ote.tm.s9in1.2"))
+                .addInfo(translateToLocal("ote.tm.s9in1.3"))
+                .addInfo(translateToLocal("ote.tm.s9in1.4"))
+                .addInfo(translateToLocal("ote.tm.s9in1.5"))
+                .addInfo(translateToLocal("ote.tm.s9in1.6"))
+                .addSeparator()
+                .addInfo(translateToLocal("ote.tm.s9in1.7"))
+                .addInfo(translateToLocal("ote.tm.s9in1.8"))
+                .addInfo(translateToLocal("ote.tm.s9in1.9"))
+                .addInfo(translateToLocal("ote.tm.s9in1.10"))
+                .addInfo(translateToLocal("ote.tm.s9in1.11"))
+                .addInfo(translateToLocal("ote.tm.s9in1.12"))
+                .addInfo(translateToLocal("ote.tm.s9in1.13"))
+                .addPollutionAmount(233)
+                .addSeparator()
+                .addInfo("§aAdded by: 123Technology - For The Machines of the Past")
+                .addController(translateToLocal("ote.tn.s9in1"))
+                .beginStructureBlock(5, 3, 3, false)
+                .addInputBus("AnyInputBus", 1)
+                .addOutputBus("AnyOutputBus", 1)
+                .addInputHatch("AnyInputHatch", 1)
+                .addOutputHatch("AnyOutputHatch", 1)
+                .addEnergyHatch("AnyEnergyHatch", 1)
+                .addMufflerHatch("AnyMufflerHatch", 1)
+                .toolTipFinisher();
+            return tt;
+        }
+
+    // ===================== Standard Overrides =====================
+
+        @Override
+        public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
+            return new OTEMiniSteamNineInOne(this.mName);
+        }
+
+    // ===================== Textures =====================
+
+        @Override
+        public ITexture[] getTexture(final IGregTechTileEntity baseMetaTileEntity, final ForgeDirection sideDirection,
+                                     final ForgeDirection facing, final int aColorIndex, final boolean active, final boolean aRedstone) {
+
+            if (sideDirection == facing) {
+                if (active) return new ITexture[] {
+                    TextureFactory.of(MACHINE_BRONZE_SIDE),
+                    TextureFactory.builder()
+                        .addIcon(TexturesGtBlock.Overlay_Machine_Controller_Advanced_Active)
+                        .extFacing()
+                        .build() };
+                return new ITexture[] {
+                    TextureFactory.of(MACHINE_BRONZE_SIDE),
+                    TextureFactory.builder()
+                        .addIcon(TexturesGtBlock.Overlay_Machine_Controller_Advanced)
+                        .extFacing()
+                        .glow()
+                        .build() };
+            }
+            return new ITexture[] { TextureFactory.of(MACHINE_BRONZE_SIDE) };
+        }
+
+    // ===================== Misc =====================
+
+    @Override
+    public String getMachineType() {
+        return null;
+    }
+
+    private ItemStack getCircuit(ItemStack[] t) {
+        for (ItemStack j : t) {
+            if (j.getItem() == Circuit_Integrated.getItem()) {
+                if (j.getItemDamage() >= 20 && j.getItemDamage() <= 22) {
+                    return j;
+                }
+            }
+        }
+        return null;
+    }
+
+    private int getCircuitID(ItemStack circuit) {
+        int H = circuit.getItemDamage();
+        int T = (H == 20 ? 0 : (H == 21 ? 1 : (H == 22 ? 2 : -1)));
+        return MODE_MAP[this.mInternalMode][T];
     }
 
     @Override
@@ -266,15 +496,6 @@ public class OTEMiniSteamNineInOne extends OTHSteamMultiBase<OTEMiniSteamNineInO
     }
 
     @Override
-    public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
-        if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
-        if (checkHatches()) updateHatchTexture();
-        checkHasSteamInput(errors);
-        checkHasAnyInput(errors);
-        checkHasAnyOutput(errors);
-    }
-
-    @Override
     public void updateSlots() {
         for (MTEHatchCustomFluidBase tHatch : validMTEList(mSteamInputFluids)) tHatch.updateSlots();
         for (MTEHatchSteamBusInput tHatch : validMTEList(mSteamInputs)) tHatch.updateSlots();
@@ -298,164 +519,6 @@ public class OTEMiniSteamNineInOne extends OTHSteamMultiBase<OTEMiniSteamNineInO
 
     }
 
-    @Override
-    public void construct(ItemStack stackSize, boolean hintsOnly) {
-        buildPiece(STRUCTURE_PIECE_MAIN, stackSize, hintsOnly, horizontalOffSet, verticalOffSet, depthOffSet);
-    }
-
-    @Override
-    public int getPollutionPerSecond(final ItemStack aStack) {
-        return 233;
-    }
-
-    @Override
-    public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
-        if (this.mMachine) return -1;
-        int realBudget = elementBudget >= 200 ? elementBudget : Math.min(200, elementBudget * 5);
-
-        return this.survivalBuildPiece(
-            STRUCTURE_PIECE_MAIN,
-            stackSize,
-            horizontalOffSet,
-            verticalOffSet,
-            depthOffSet,
-            realBudget,
-            env,
-            false,
-            true);
-
-    }
-
-    private static final String STRUCTURE_PIECE_MAIN = "main";
-
-    private final int horizontalOffSet = 2;
-    private final int verticalOffSet = 1;
-    private final int depthOffSet = 0;
-    private static IStructureDefinition<OTEMiniSteamNineInOne> STRUCTURE_DEFINITION = null;
-    private static final String[] description = new String[] {
-        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.s9in1.0"),
-        EnumChatFormatting.LIGHT_PURPLE + translateToLocal("ote.cm.s9in1.1"),
-        EnumChatFormatting.GOLD + translateToLocal("ote.cm.s9in1.2") };
-
-    @Override
-    public String[] getStructureDescription(ItemStack stackSize) {
-        return description;
-    }
-
-    @Override
-    public IStructureDefinition<OTEMiniSteamNineInOne> getStructureDefinition() {
-        if (STRUCTURE_DEFINITION == null) {
-            STRUCTURE_DEFINITION = StructureDefinition.<OTEMiniSteamNineInOne>builder()
-                .addShape(STRUCTURE_PIECE_MAIN, shapeMain)
-                .addElement('A', ofBlock(sBlockCasings2, 0))
-                .addElement('B', ofBlock(sBlockCasings2, 2))
-                .addElement('C', ofBlock(sBlockCasings2, 3))
-                .addElement('D', ofBlock(sBlockCasings2, 12))
-                .addElement('E', ofBlock(sBlockCasings2, 13))
-                .addElement('F', ofBlock(sBlockCasings3, 13))
-                .addElement('G', ofBlock(sBlockCasings1, 10))
-                .addElement(
-                    'H',
-                    ofChain(
-                        buildSteamInput(OTEMiniSteamNineInOne.class).casingIndex(10)
-                            .hint(1)
-                            .build(),
-                        buildHatchAdder(OTEMiniSteamNineInOne.class)
-                            .atLeast(
-                                SteamHatchElement.InputBus_Steam,
-                                SteamHatchElement.OutputBus_Steam,
-                                InputHatch,
-                                InputBus,
-                                OutputHatch,
-                                OutputBus,
-                                Muffler)
-                            .casingIndex(10)
-                            .hint(1)
-                            .buildAndChain(),
-                        ofBlock(sBlockCasings1, 10)))
-                .build();
-
-        }
-        return STRUCTURE_DEFINITION;
-    }
-
-    // spotless:off
-        private final String[][] shapeMain = new String[][]{{
-        "AHHHA",
-        "GH~HG",
-        "AHHHA"
-    },{
-        "AECEA",
-        "FBDBF",
-        "AECEA"
-    },{
-        "AAAAA",
-        "FFFFF",
-        "AAAAA"
-    }};
-        @Override
-        public boolean addToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
-            return super.addToMachineList(aTileEntity, aBaseCasingIndex)
-                || addExoticEnergyInputToMachineList(aTileEntity, aBaseCasingIndex);
-        }
-        @Override
-        protected MultiblockTooltipBuilder createTooltip() {
-            final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
-            tt.addMachineType(translateToLocal("ote.tm.s9in1.0"))
-                .addSeparator()
-                .addInfo(translateToLocal("ote.tm.s9in1.1"))
-                .addInfo(translateToLocal("ote.tm.s9in1.2"))
-                .addInfo(translateToLocal("ote.tm.s9in1.3"))
-                .addInfo(translateToLocal("ote.tm.s9in1.4"))
-                .addInfo(translateToLocal("ote.tm.s9in1.5"))
-                .addInfo(translateToLocal("ote.tm.s9in1.6"))
-                .addSeparator()
-                .addInfo(translateToLocal("ote.tm.s9in1.7"))
-                .addInfo(translateToLocal("ote.tm.s9in1.8"))
-                .addInfo(translateToLocal("ote.tm.s9in1.9"))
-                .addInfo(translateToLocal("ote.tm.s9in1.10"))
-                .addInfo(translateToLocal("ote.tm.s9in1.11"))
-                .addInfo(translateToLocal("ote.tm.s9in1.12"))
-                .addInfo(translateToLocal("ote.tm.s9in1.13"))
-                .addPollutionAmount(233)
-                .addSeparator()
-                .addController(translateToLocal("ote.tn.s9in1"))
-                .beginStructureBlock(5, 3, 3, false)
-                .addInputBus("AnyInputBus", 1)
-                .addOutputBus("AnyOutputBus", 1)
-                .addInputHatch("AnyInputHatch", 1)
-                .addOutputHatch("AnyOutputHatch", 1)
-                .addEnergyHatch("AnyEnergyHatch", 1)
-                .addMufflerHatch("AnyMufflerHatch", 1)
-                .toolTipFinisher("§a123Technology - For The Machines of the Past");
-            return tt;
-        }
-
-        @Override
-        public boolean isCorrectMachinePart(ItemStack aStack) {
-            return true;
-        }
-
-        @Override
-        public int getMaxEfficiency(ItemStack aStack) {
-            return 10000;
-        }
-
-        @Override
-        public int getDamageToComponent(ItemStack aStack) {
-            return 0;
-        }
-
-        /* @Override
-        public boolean supportsVoidProtection() {
-            return true;
-        } */
-
-        @Override
-        public boolean supportsInputSeparation() {
-            return false;
-        }
-
      @Override
      public boolean isInputSeparationEnabled() {
         return true;
@@ -466,34 +529,6 @@ public class OTEMiniSteamNineInOne extends OTHSteamMultiBase<OTEMiniSteamNineInO
         return true;
     }
 
-
-        @Override
-        public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-            return new OTEMiniSteamNineInOne(this.mName);
-        }
-
-
-        @Override
-        public ITexture[] getTexture(final IGregTechTileEntity baseMetaTileEntity, final ForgeDirection sideDirection,
-                                     final ForgeDirection facing, final int aColorIndex, final boolean active, final boolean aRedstone) {
-
-            if (sideDirection == facing) {
-                if (active) return new ITexture[] {
-                    TextureFactory.of(MACHINE_BRONZE_SIDE),
-                    TextureFactory.builder()
-                        .addIcon(TexturesGtBlock.Overlay_Machine_Controller_Advanced_Active)
-                        .extFacing()
-                        .build() };
-                return new ITexture[] {
-                    TextureFactory.of(MACHINE_BRONZE_SIDE),
-                    TextureFactory.builder()
-                        .addIcon(TexturesGtBlock.Overlay_Machine_Controller_Advanced)
-                        .extFacing()
-                        .glow()
-                        .build() };
-            }
-            return new ITexture[] { TextureFactory.of(MACHINE_BRONZE_SIDE) };
-        }
     public static void loadRecipes() {
         RecipeBuilder.builder()
             .itemInputs(

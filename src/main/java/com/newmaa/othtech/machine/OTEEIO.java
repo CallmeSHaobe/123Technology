@@ -28,7 +28,6 @@ import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.EIOSpawnerBinding;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
-import com.newmaa.othtech.utils.OTHTooltipBuilder;
 
 import crazypants.enderio.EnderIO;
 import gregtech.api.GregTechAPI;
@@ -47,6 +46,31 @@ import gregtech.common.blocks.BlockCasings2;
 
 public class OTEEIO extends OTHMultiMachineBase<OTEEIO> {
 
+    public boolean mode = false;
+
+    private static final String STRUCTURE_PIECE_MAIN = "main";
+
+    private final int horizontalOffSet = 3;
+
+    private final int verticalOffSet = 3;
+
+    private final int depthOffSet = 0;
+
+    private static IStructureDefinition<OTEEIO> STRUCTURE_DEFINITION = null;
+
+    private static final String[] description = new String[] {
+        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.eio.0") };
+
+    // Structured by LyeeR
+    private final String[][] shapeMain = new String[][] { { "BBBBBBB", "BBBBBBB", "BBBBBBB", "BBBBBBB", "BBBBBBB" },
+        { "BCCCCCB", "B     B", "B     B", "B     B", "BBBBBBB" },
+        { "BCCCCCB", "B     B", "B     B", "B AAA B", "BBBBBBB" },
+        { "BBB~BBB", "BBBBBBB", "BBBBBBB", "BBBBBBB", "BBBBBBB" } };
+
+    private static ITexture CASING_TEXTURE = null;
+
+    // ===================== Constructors =====================
+
     public OTEEIO(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
     }
@@ -55,7 +79,7 @@ public class OTEEIO extends OTHMultiMachineBase<OTEEIO> {
         super(aName);
     }
 
-    public boolean mode = false;
+    // ===================== NBT =====================
 
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
@@ -70,6 +94,8 @@ public class OTEEIO extends OTHMultiMachineBase<OTEEIO> {
         mode = aNBT.getBoolean("glassTier");
 
     }
+
+    // ===================== Machine Parameters =====================
 
     @Override
     protected boolean isEnablePerfectOverclock() {
@@ -88,6 +114,8 @@ public class OTEEIO extends OTHMultiMachineBase<OTEEIO> {
     public RecipeMap<?> getRecipeMap() {
         return Recipemaps.EIO;
     }
+
+    // ===================== Processing Logic =====================
 
     @Override
     protected ProcessingLogic createProcessingLogic() {
@@ -158,6 +186,8 @@ public class OTEEIO extends OTHMultiMachineBase<OTEEIO> {
         return CheckRecipeResultRegistry.NO_RECIPE;
     }
 
+    // ===================== Structure =====================
+
     @Override
     public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
         if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
@@ -190,30 +220,6 @@ public class OTEEIO extends OTHMultiMachineBase<OTEEIO> {
     }
 
     @Override
-    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
-        ItemStack aTool) {
-        if (mode == false) {
-            mode = true;
-        } else {
-            mode = false;
-        }
-        if (mode) {
-            aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.eio.mode.0"));
-        } else {
-            aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.eio.mode.1"));
-        }
-    }
-
-    private static final String STRUCTURE_PIECE_MAIN = "main";
-
-    private final int horizontalOffSet = 3;
-    private final int verticalOffSet = 3;
-    private final int depthOffSet = 0;
-    private static IStructureDefinition<OTEEIO> STRUCTURE_DEFINITION = null;
-    private static final String[] description = new String[] {
-        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.eio.0") };
-
-    @Override
     public String[] getStructureDescription(ItemStack stackSize) {
         return description;
     }
@@ -238,22 +244,18 @@ public class OTEEIO extends OTHMultiMachineBase<OTEEIO> {
         return STRUCTURE_DEFINITION;
     }
 
-    // Structured by LyeeR
-    private final String[][] shapeMain = new String[][] { { "BBBBBBB", "BBBBBBB", "BBBBBBB", "BBBBBBB", "BBBBBBB" },
-        { "BCCCCCB", "B     B", "B     B", "B     B", "BBBBBBB" },
-        { "BCCCCCB", "B     B", "B     B", "B AAA B", "BBBBBBB" },
-        { "BBB~BBB", "BBBBBBB", "BBBBBBB", "BBBBBBB", "BBBBBBB" } };
-
     @Override
     public boolean addToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
         return super.addToMachineList(aTileEntity, aBaseCasingIndex)
             || addExoticEnergyInputToMachineList(aTileEntity, aBaseCasingIndex);
     }
 
+    // ===================== Tooltip =====================
+
     /*
      * @Override
      * protected MultiblockTooltipBuilder createTooltip() {
-     * final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
+     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
      * tt.addMachineType(EnumChatFormatting.WHITE + "§l中登的终极造物 - 末影接口综合体")
      * .addInfo(EnumChatFormatting.ITALIC + "怪物的灵魂们终将得到解放")
      * .addInfo(EnumChatFormatting.ITALIC + "这就是工业化的魅力吗..?")
@@ -276,7 +278,7 @@ public class OTEEIO extends OTHMultiMachineBase<OTEEIO> {
      */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType(EnumChatFormatting.WHITE + translateToLocal("ote.tm.eio.0"))
             .addInfo(EnumChatFormatting.ITALIC + translateToLocal("ote.tm.eio.1"))
             .addInfo(EnumChatFormatting.ITALIC + translateToLocal("ote.tm.eio.2"))
@@ -286,6 +288,7 @@ public class OTEEIO extends OTHMultiMachineBase<OTEEIO> {
             .addInfo(translateToLocal("ote.tm.eio.6"))
             .addTecTechHatchInfo()
             .addSeparator()
+            .addInfo("§aAdded by: 123Technology - EnderIO")
             .addController(translateToLocal("ote.tn.eio"))
             .beginStructureBlock(7, 4, 5, false)
             .addInputBus("AnyInputBus", 1)
@@ -293,16 +296,18 @@ public class OTEEIO extends OTHMultiMachineBase<OTEEIO> {
             .addInputHatch("AnyInputHatch", 1)
             .addOutputHatch("AnyOutputHatch", 1)
             .addEnergyHatch("AnyEnergyHatch", 1)
-            .toolTipFinisher("§a123Technology - EnderIO");
+            .toolTipFinisher();
         return tt;
     }
+
+    // ===================== Standard Overrides =====================
 
     @Override
     public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
         return new OTEEIO(this.mName);
     }
 
-    private static ITexture CASING_TEXTURE = null;
+    // ===================== Textures =====================
 
     @Override
     public ITexture[] getTexture(final IGregTechTileEntity baseMetaTileEntity, final ForgeDirection sideDirection,
@@ -333,4 +338,20 @@ public class OTEEIO extends OTHMultiMachineBase<OTEEIO> {
         return new ITexture[] { CASING_TEXTURE };
     }
 
+    // ===================== Misc =====================
+
+    @Override
+    public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
+        ItemStack aTool) {
+        if (mode == false) {
+            mode = true;
+        } else {
+            mode = false;
+        }
+        if (mode) {
+            aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.eio.mode.0"));
+        } else {
+            aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.eio.mode.1"));
+        }
+    }
 }

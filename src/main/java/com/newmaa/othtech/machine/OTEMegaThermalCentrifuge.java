@@ -19,7 +19,6 @@ import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
-import com.newmaa.othtech.utils.OTHTooltipBuilder;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -246,7 +245,7 @@ public class OTEMegaThermalCentrifuge extends OTHMultiMachineBase<OTEMegaThermal
 
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
+        final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
         tt.addMachineType(translateToLocal("ote.tm.mtc.0"))
             .addInfo(translateToLocal("ote.tm.mtc.1"))
             .addInfo(translateToLocal("ote.tm.mtc.2"))
@@ -254,9 +253,10 @@ public class OTEMegaThermalCentrifuge extends OTHMultiMachineBase<OTEMegaThermal
             .addInfo(translateToLocal("ote.tm.mtc.4"))
             .addInfo(translateToLocal("ote.tm.mtc.5"))
             .addInfo(translateToLocal("oth.tm.pollution"))
-            .addTecTechHatchInfo()
             .addPollutionAmount(POLLUTION_PER_SECOND)
+            .addTecTechHatchInfo()
             .addSeparator()
+            .addInfo("§aAdded by: 123Technology - §4MegaThermalCentrifuge")
             .addController(translateToLocal("ote.tn.mtc"))
             .beginStructureBlock(15, 15, 15, false)
             .addInputBus("AnyInputBus", 1)
@@ -265,7 +265,7 @@ public class OTEMegaThermalCentrifuge extends OTHMultiMachineBase<OTEMegaThermal
             .addOutputHatch("AnyOutputHatch", 1)
             .addEnergyHatch("AnyEnergyHatch", 1)
             .addMufflerHatch("AnyMufflerHatch", 1)
-            .toolTipFinisher("§a123Technology - §4MegaThermalCentrifuge");
+            .toolTipFinisher();
         return tt;
     }
 
