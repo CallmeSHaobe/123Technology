@@ -209,7 +209,7 @@ ote.tn.pump=太空钻机模块MK-123
 ote.tn.s9in1=小型蒸汽加工厂
 ote.tn.bee=Beeyonds之家
 ote.tn.bbpf=超维度憋憋锻炉
-ote.tn.nasa=集成式"火"箭装配车间
+ote.tn.nasa=集成式"火"箭装配车间(WIP)
 
 #Machine_Addition
 otht.recipe.MegaIsaForge=§5§l§n艾萨锻炉-老登制造者
@@ -1022,3 +1022,4 @@ entity.123Technology.DogBlue.name=§9蓝狗
 item.dogSpawnEgg.name=狗刷怪蛋
 ote.ds.nei.nanite.line1=§b需要机体升级纳米蜂群
 ote.ds.nei.nanite.line2=§b达到 %s 级
+GT5U.gui.text.recipe_result.ote_no_schematic=§4控制器插槽缺少火箭装配图纸

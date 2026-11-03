@@ -22,13 +22,15 @@ public class OTERocketRender extends TileEntity {
     @Override
     public void writeToNBT(NBTTagCompound nbt) {
         super.writeToNBT(nbt);
-        nbt.setDouble("renderStatus", size);
+        nbt.setDouble("size", size);
     }
 
     @Override
     public void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
-        size = nbt.getDouble("size");
+        if (nbt.hasKey("size")) {
+            size = nbt.getDouble("size");
+        }
     }
 
     @Override
