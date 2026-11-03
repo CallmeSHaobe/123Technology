@@ -8,6 +8,7 @@ import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.blocks.deepseiko.DeepSeikoBlocks;
 import com.newmaa.othtech.common.blocks.deepseiko.DeepSeikoCasingMeta;
 import com.newmaa.othtech.common.recipemap.formatter.MISASpecialValueFormatter;
+import com.newmaa.othtech.common.recipemap.recipeMapFrontends.AbstractSanctumFrontend;
 import com.newmaa.othtech.common.recipemap.recipeMapFrontends.OTH_GeneralFrontend;
 import com.newmaa.othtech.common.recipemap.recipeMapFrontends.OTH_GeneralFrontendFireRocket;
 
@@ -239,6 +240,26 @@ public class Recipemaps {
         .neiHandlerInfo(
             builder -> builder.setMaxRecipesPerPage(4)
                 .setDisplayStack(OTHItemList.OTEComputer.get(1)))
+        .build();
+
+    public static final RecipeMap<OTH_RecipeMapBackend> ABSTRACT_SANCTUM_CRAFT = RecipeMapBuilder
+        .of("otht.recipe.AbstractSanctumCraft", OTH_RecipeMapBackend::new)
+        .maxIO(32, 1, 3, 0)
+        .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
+        .frontend((ui, nei) -> new AbstractSanctumFrontend(ui, nei, false))
+        .neiHandlerInfo(
+            builder -> builder.setDisplayStack(OTHItemList.AbstractSanctum.get(1))
+                .setMaxRecipesPerPage(1))
+        .build();
+
+    public static final RecipeMap<OTH_RecipeMapBackend> ABSTRACT_SANCTUM_DUPLICATE = RecipeMapBuilder
+        .of("otht.recipe.AbstractSanctumDuplicate", OTH_RecipeMapBackend::new)
+        .maxIO(32, 1, 3, 0)
+        .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
+        .frontend((ui, nei) -> new AbstractSanctumFrontend(ui, nei, true))
+        .neiHandlerInfo(
+            builder -> builder.setDisplayStack(OTHItemList.AbstractSanctum.get(1))
+                .setMaxRecipesPerPage(1))
         .build();
 
     // 迪普西科·凝聚态配方（普通形态版）：由 DeepSeikoBECRecipeLoader 在 load complete 阶段

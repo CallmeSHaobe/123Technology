@@ -1020,6 +1020,48 @@ entity.123Technology.DogRed.name=§c红狗
 entity.123Technology.DogBlue.name=§9蓝狗
 #Items
 item.dogSpawnEgg.name=狗刷怪蛋
+# AbstractSanctum
+fluid.liquidmana123=液态魔力
+ote.tn.abstract_sanctum=奈隆圣地
+ote.tn.mana_hatch123=神秘魔力转换阀
+ote.abstract_sanctum.mode.craft=制作模式
+ote.abstract_sanctum.mode.duplicate=复制模式
+ote.abstract_sanctum.chat.craft=已切换到制作模式
+ote.abstract_sanctum.chat.duplicate=已切换到复制模式
+ote.abstract_sanctum.chat.mode_locked=机器运行中，无法切换模式
+ote.abstract_sanctum.gui.mana=Mana
+ote.abstract_sanctum.gui.salt=世界盐
+ote.abstract_sanctum.gui.blood=血液
+ote.abstract_sanctum.gui.config=§b✦ 原料倍率设置 ✦
+ote.abstract_sanctum.gui.range=§8范围 1.0–10.0，步长 0.1
+ote.abstract_sanctum.gui.open_usage=§e点击查看相关 NEI 配方，可加入书签
+ote.abstract_sanctum.gui.parallel=§6当前并行：§f%s
+ote.abstract_sanctum.gui.core.active=§b✦ 奈隆核心：§a魔力回路共鸣中
+ote.abstract_sanctum.gui.core.idle=§5✦ 奈隆核心：§7待机，符文阵列保持稳定
+ote.abstract_sanctum.upgrade.mana=§b永恒魔力池：魔力消耗归零
+ote.abstract_sanctum.upgrade.salt=§6阿卡西记录：世界盐消耗归零
+ote.abstract_sanctum.upgrade.blood=§c阿蒙克气血宝珠：生命源质消耗归零
+ote.abstract_sanctum.tooltip.0=§d✦ 奈隆圣地 ✦ §7— 神秘工艺集成机组
+ote.abstract_sanctum.tooltip.1=§d❖ §7今天，结合三大魔法之力，终于有机会一睹祂的真容！
+ote.abstract_sanctum.tooltip.2=§5❖ §7这是。。什么？
+ote.abstract_sanctum.tooltip.3=§b❖ §7哈哈哈哈哈哈哈哈哈哈哈
+ote.abstract_sanctum.tooltip.4=§b✦ 制作模式 §7支持绝大多数植物魔法、神秘时代与血魔法的配方！
+ote.abstract_sanctum.tooltip.5=§6◆ 并行 §7§f有损超频，基础并行为1，每次超频使得并行+2
+ote.abstract_sanctum.tooltip.6=§5✦ 复制模式 §7，消耗三种原料来批量复制物品！输入总线的催化剂物品不会被消耗
+ote.abstract_sanctum.tooltip.7=§6◆ 并行 §7§f无损超频，基础并行64，每次超频基础并行*2^n(n为超频次数)
+ote.abstract_sanctum.tooltip.8=§3◆ §7液体魔力与生命源质经输入仓供应
+ote.abstract_sanctum.tooltip.9=§e◆ §7可选择通入og，每轮消耗 144 mB；使机器制作模式并行 +4，复制模式并行 +64
+ote.abstract_sanctum.tooltip.10=§a◆ §7ZPM及以上玻璃解锁多安能源仓；UIV及以上玻璃解锁激光能源仓
+ote.abstract_sanctum.tooltip.11=§c✖ §7不支持无线能源仓
+ote.abstract_sanctum.tooltip.12=§b✦ 加速公式 §7F(x,y,z)=1+3.23×(∫qx[1,x]+∫qy[1,y]+∫qz[1,z])
+ote.abstract_sanctum.tooltip.13=§8◆ 加速曲线 §7t 为对应原料倍率
+ote.abstract_sanctum.tooltip.14=§8qx(t)=0.01+1/(1+exp(160(t-1.05)))
+ote.abstract_sanctum.tooltip.15=§8qy(t)=0.01+1/(1+exp(8(t-3.50)))
+ote.abstract_sanctum.tooltip.16=§8qz(t)=0.01+1/(1+exp(40(t-1.20)))
+ote.abstract_sanctum.tooltip.17=§9 记得给机器供应足够的mana，世界盐和血液源质！
+ote.abstract_sanctum.tooltip.18=§6✦ §7主机 GUI 提供三个专用升级槽，可分别免除魔力、世界盐与生命源质消耗
+otht.recipe.AbstractSanctumCraft=奈隆圣地 - 制作
+otht.recipe.AbstractSanctumDuplicate=奈隆圣地 - 复制
 ote.ds.nei.nanite.line1=§b需要机体升级纳米蜂群
 ote.ds.nei.nanite.line2=§b达到 %s 级
 GT5U.gui.text.recipe_result.ote_no_schematic=§4控制器插槽缺少火箭装配图纸

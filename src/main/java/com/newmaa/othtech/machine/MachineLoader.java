@@ -6,8 +6,10 @@ import com.gtnewhorizon.gtnhlib.util.AnimatedTooltipHandler;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.machine.hatch.OTEDeepSeikoNaniteCell;
 import com.newmaa.othtech.machine.hatch.OTEHatchRack;
+import com.newmaa.othtech.machine.hatch.OTEManaHatch;
 import com.newmaa.othtech.machine.hatch.OTEWTFHatch;
 import com.newmaa.othtech.utils.AuthorAnimation;
+import com.newmaa.othtech.utils.modsEnum;
 
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.TierEU;
@@ -203,6 +205,13 @@ public class MachineLoader {
         OTHItemList.MegaThermalCentrifuge
             .set(new OTEMegaThermalCentrifuge(IDs + 64, "MegaThermalCentrifuge", translateToLocal("ote.tn.mtc")));
 
+        OTHItemList.AbstractSanctum
+            .set(new OTEAbstractSanctum(IDs + 65, "AbstractSanctum", translateToLocal("ote.tn.abstract_sanctum")));
+
+        if (!modsEnum.TwistSpaceTechnology.isModLoaded()) {
+            OTHItemList.ManaHatch123
+                .set(new OTEManaHatch(IDs + 66, "ManaHatch123", translateToLocal("ote.tn.mana_hatch123"), 7));
+        }
         OTHItemList.LargeQuHub.set(new OTELargeQuHub(IDs + 69, "LargeQuHub", translateToLocal("ote.tn.quhub")));
 
         // 迪普西科 DeepSeiko（IDs+9..+12 与 +65..+68）

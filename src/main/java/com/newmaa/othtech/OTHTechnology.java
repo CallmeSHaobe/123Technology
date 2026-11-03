@@ -30,6 +30,7 @@ import com.newmaa.othtech.common.dimensions.OTHDimensionIntegration;
 import com.newmaa.othtech.common.dimensions.RegisterDimensions;
 import com.newmaa.othtech.common.dimensions.gtoregen.VisualProspectingOreVeinBridge;
 import com.newmaa.othtech.common.item.ItemLoader;
+import com.newmaa.othtech.common.materials.AbstractSanctumContent;
 import com.newmaa.othtech.common.materials.BWMaterialsLocalization;
 import com.newmaa.othtech.common.materials.MaterialsLoader;
 import com.newmaa.othtech.common.recipemap.DeepSeikoALRecipeLoader;
@@ -103,6 +104,7 @@ public class OTHTechnology {
     // preInit "Run before anything else. Read your config, create blocks, items, etc, and register them with the
     // GameRegistry." (Remove if not needed)
     public void preInit(FMLPreInitializationEvent event) {
+        AbstractSanctumContent.initialize();
         // 锑星的 NEI 维度数据与 GT 矿脉注册（替代原 GTNEIDimensionHelperOTHMixin / GTOreGenOTHMixin）
         OTHDimensionIntegration.registerNEIDimension();
         OTHDimensionIntegration.scheduleOreVeinRegistration();
