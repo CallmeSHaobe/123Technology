@@ -1041,7 +1041,7 @@ ote.abstract_sanctum.gui.core.idle=§5✦ 奈隆核心：§7待机，符文阵�
 ote.abstract_sanctum.upgrade.mana=§b永恒魔力池：魔力消耗归零
 ote.abstract_sanctum.upgrade.salt=§6阿卡西记录：世界盐消耗归零
 ote.abstract_sanctum.upgrade.blood=§c阿蒙克气血宝珠：生命源质消耗归零
-ote.abstract_sanctum.tooltip.0=§d✦ 奈隆圣地 ✦ §7— 神秘工艺集成机组
+ote.abstract_sanctum.tooltip.0=§d扭曲人的最终解决方案 - 魔法学综合体
 ote.abstract_sanctum.tooltip.1=§d❖ §7今天，结合三大魔法之力，终于有机会一睹祂的真容！
 ote.abstract_sanctum.tooltip.2=§5❖ §7这是。。什么？
 ote.abstract_sanctum.tooltip.3=§b❖ §7哈哈哈哈哈哈哈哈哈哈哈
@@ -1050,16 +1050,19 @@ ote.abstract_sanctum.tooltip.5=§6◆ 并行 §7§f有损超频，基础并行�
 ote.abstract_sanctum.tooltip.6=§5✦ 复制模式 §7，消耗三种原料来批量复制物品！输入总线的催化剂物品不会被消耗
 ote.abstract_sanctum.tooltip.7=§6◆ 并行 §7§f无损超频，基础并行64，每次超频基础并行*2^n(n为超频次数)
 ote.abstract_sanctum.tooltip.8=§3◆ §7液体魔力与生命源质经输入仓供应
-ote.abstract_sanctum.tooltip.9=§e◆ §7可选择通入og，每轮消耗 144 mB；使机器制作模式并行 +4，复制模式并行 +64
+ote.abstract_sanctum.tooltip.9=§e◆ §7可选择通入Og，每轮消耗 144 mB；使机器制作模式并行 +4，复制模式并行 +64
 ote.abstract_sanctum.tooltip.10=§a◆ §7ZPM及以上玻璃解锁多安能源仓；UIV及以上玻璃解锁激光能源仓
 ote.abstract_sanctum.tooltip.11=§c✖ §7不支持无线能源仓
 ote.abstract_sanctum.tooltip.12=§b✦ 加速公式 §7F(x,y,z)=1+3.23×(∫qx[1,x]+∫qy[1,y]+∫qz[1,z])
 ote.abstract_sanctum.tooltip.13=§8◆ 加速曲线 §7t 为对应原料倍率
 ote.abstract_sanctum.tooltip.14=§8qx(t)=0.01+1/(1+exp(160(t-1.05)))
 ote.abstract_sanctum.tooltip.15=§8qy(t)=0.01+1/(1+exp(8(t-3.50)))
-ote.abstract_sanctum.tooltip.16=§8qz(t)=0.01+1/(1+exp(40(t-1.20)))
+ote.abstract_sanctum.tooltip.16=§8qz(t)=0.01+1/(1+exp(40(t-1.20)))  
 ote.abstract_sanctum.tooltip.17=§9 记得给机器供应足够的mana，世界盐和血液源质！
 ote.abstract_sanctum.tooltip.18=§6✦ §7主机 GUI 提供三个专用升级槽，可分别免除魔力、世界盐与生命源质消耗
+ote.abstract_sanctum.tooltip.19=§9作者 : §z§l§bNMC终焉的神秘使 - 0g123451
+ote.abstract_sanctum.tooltip.20=§c§l在配置文件中配置可怕的邪祟奈隆的笑声是否会在工作的时候散遍整个世界...
+ote.abstract_sanctum.tooltip.21=§c§l这就是病名为§e奶§c吧?
 otht.recipe.AbstractSanctumCraft=奈隆圣地 - 制作
 otht.recipe.AbstractSanctumDuplicate=奈隆圣地 - 复制
 ote.ds.nei.nanite.line1=§b需要机体升级纳米蜂群

@@ -1,6 +1,9 @@
 package com.newmaa.othtech.machine;
 
+import static com.gtnewhorizon.cropsnh.utility.ModUtils.ModIDs.GregTech;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
+import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlockUnlocalizedName;
+import static com.newmaa.othtech.utils.modsEnum.ThaumicBases;
 import static gregtech.api.enums.HatchElement.Energy;
 import static gregtech.api.enums.HatchElement.ExoticEnergy;
 import static gregtech.api.enums.HatchElement.InputBus;
@@ -25,6 +28,9 @@ import java.util.Set;
 import java.util.WeakHashMap;
 import java.util.stream.Stream;
 
+import com.newmaa.othtech.Config;
+import com.newmaa.othtech.utils.OTHTooltipBuilder;
+import gregtech.api.enums.SoundResource;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.Enchantment;
@@ -1285,9 +1291,9 @@ public class OTEAbstractSanctum extends OTHMultiMachineBase<OTEAbstractSanctum> 
 
         boolean active = getBaseMetaTileEntity().isActive() && !getBaseMetaTileEntity().isMuffled();
         if (active && activitySoundLoop == null) {
-            ForcedCompletionSoundLoop sound = new ForcedCompletionSoundLoop(
+            ForcedCompletionSoundLoop sound = Config.is_Abstract_Sanctum_HAHAHAH ? new ForcedCompletionSoundLoop(
                 new ResourceLocation("123technology:machines.abstract_sanctum"),
-                getBaseMetaTileEntity());
+                getBaseMetaTileEntity()) : new ForcedCompletionSoundLoop(new ResourceLocation(GregTech + ":" + "machines.DistilleryLoop"), getBaseMetaTileEntity());
             activitySoundLoop = sound;
             Minecraft.getMinecraft()
                 .getSoundHandler()
@@ -1335,7 +1341,7 @@ public class OTEAbstractSanctum extends OTHMultiMachineBase<OTEAbstractSanctum> 
                 .addElement('U', nailongCasingWithHatches(0))
                 .addElement('V', ofBlock(WayofTime.alchemicalWizardry.ModBlocks.speedRune, 0))
                 // W：神秘基础学虚空方块。
-                .addElement('W', ofBlock(findBlockByUnlocalizedName("tile.tb.voidblock"), 0))
+                .addElement('W', ThaumicBases.isModLoaded() ? ofBlockUnlocalizedName("thaumicbases", "tile.tb.voidblock", 0) : ofBlock(Blocks.stone, 0))
                 // X/Z：神秘时代魔杖基座和普通基座。
                 .addElement('X', ofBlock(ConfigBlocks.blockStoneDevice, 5))
                 // Y：原 GT 仓室位置；允许仓室，也可用奈隆机械方块。
@@ -1387,7 +1393,8 @@ public class OTEAbstractSanctum extends OTHMultiMachineBase<OTEAbstractSanctum> 
 
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        return new MultiblockTooltipBuilder().addMachineType(translateToLocal("ote.abstract_sanctum.tooltip.0"))
+        final MultiblockTooltipBuilder tt = new OTHTooltipBuilder();
+        tt.addMachineType(translateToLocal("ote.abstract_sanctum.tooltip.0"))
             .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.1"))
             .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.2"))
             .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.3"))
@@ -1406,6 +1413,9 @@ public class OTEAbstractSanctum extends OTHMultiMachineBase<OTEAbstractSanctum> 
             .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.16"))
             .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.17"))
             .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.18"))
+            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.20"))
+            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.21"))
+            .addInfo(translateToLocal("ote.abstract_sanctum.tooltip.19"))
             .addSeparator()
             .addController(translateToLocal("ote.tn.abstract_sanctum"))
             .beginStructureBlock(3, 3, 3, false)
@@ -1414,6 +1424,7 @@ public class OTEAbstractSanctum extends OTHMultiMachineBase<OTEAbstractSanctum> 
             .addInputHatch("Fluid Input Hatch", 1)
             .addEnergyHatch("Energy Hatch", 1)
             .toolTipFinisher("§a123Technology - AbstractSanctum");
+        return tt;
     }
 
     @Override

@@ -58,6 +58,8 @@ public class Config {
             "渔场",
             DEFAULT_FISHTORIO_FULL_POOL_ITEM_BLACKLIST,
             "默认屏蔽: AE2 创造ME存储元件/创造ME流体存储元件, 源质元件, ExU2 漆黑之门, 储物抽屉 创造模式取出升级.\n" + "改完需要重新进入世界或重启游戏(池子是启动后构建一次并缓存的).");
+        is_Abstract_Sanctum_HAHAHAH = configuration
+            .getBoolean("OTHTechnology : 开启奈隆圣地的诡异大笑, true为是, false为否", "A", is_Abstract_Sanctum_HAHAHAH, "A");
         if (configuration.hasChanged()) {
             configuration.save();
         }
@@ -91,4 +93,5 @@ public class Config {
     public static boolean is_Enqing_Song_Play = true;
     public static boolean enableQuestInjection = false;
     public static boolean enableFPChating = true;
+    public static boolean is_Abstract_Sanctum_HAHAHAH = true;
 }

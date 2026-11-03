@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.gtnewhorizons.modularui.api.drawable.UITexture;
 import net.minecraft.item.ItemStack;
 
 import org.lwjgl.opengl.GL11;
@@ -24,6 +25,8 @@ import gregtech.api.recipe.NEIRecipePropertiesBuilder;
 import gregtech.api.recipe.RecipeMapFrontend;
 import gregtech.common.gui.modularui.UIHelper;
 import gregtech.nei.GTNEIDefaultHandler;
+
+import static com.newmaa.othtech.Config.NEIFrontend;
 
 /**
  * Keeps large infusion recipes inside a fixed four-row, eight-column input grid.
@@ -50,9 +53,18 @@ public class AbstractSanctumFrontend extends RecipeMapFrontend {
     private static final int CRAFT_BACKGROUND_HEIGHT = 178;
     private static final int DUPLICATE_BACKGROUND_WIDTH = 138;
     private static final int DUPLICATE_BACKGROUND_HEIGHT = 54;
+    public static final UITexture OTHUIT = NEIFrontend ? UITexture.fullImage("123technology", "items/MetaItem/0")
+        : UITexture.fullImage("123technology", "items/MetaItem/bb");
 
     private final boolean duplicateMode;
     private Pos2d windowOffset = new Pos2d(0, 0);
+    @Override
+    public void addGregTechLogo(ModularWindow.Builder builder, Pos2d windowOffset) {
+        builder.widget(
+            new DrawableWidget().setDrawable(OTHUIT)
+                .setSize(18, 18)
+                .setPos(uiProperties.logoPos.add(windowOffset)));
+    }
 
     public AbstractSanctumFrontend(BasicUIPropertiesBuilder uiPropertiesBuilder,
         NEIRecipePropertiesBuilder neiPropertiesBuilder, boolean duplicateMode) {
