@@ -13,36 +13,28 @@ import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static net.minecraft.util.StatCollector.translateToLocal;
 
 import java.util.List;
-import java.util.Objects;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.AdvancedModelLoader;
-import net.minecraftforge.client.model.IModelCustom;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import org.jetbrains.annotations.NotNull;
-import org.lwjgl.opengl.GL11;
 
 import com.gtnewhorizon.structurelib.alignment.IAlignmentLimits;
 import com.gtnewhorizon.structurelib.alignment.constructable.IConstructable;
 import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructable;
+import com.gtnewhorizon.structurelib.alignment.enumerable.ExtendedFacing;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
+import com.gtnewhorizon.structurelib.structure.IStructureElement;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
-import com.newmaa.othtech.common.blocks.oterender.OTERocketRender;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 import com.newmaa.othtech.utils.OTHTooltipBuilder;
 
-import cpw.mods.fml.client.registry.ClientRegistry;
 import gregtech.api.GregTechAPI;
 import gregtech.api.enums.SoundResource;
 import gregtech.api.enums.Textures;
@@ -53,9 +45,11 @@ import gregtech.api.logic.ProcessingLogic;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
+import gregtech.api.recipe.check.SimpleCheckRecipeResult;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.structure.error.StructureError;
 import gregtech.api.util.GTRecipe;
+import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
 
 public class OTEFireRocketAssembler extends OTHMultiMachineBase<OTEFireRocketAssembler>
@@ -72,6 +66,16 @@ public class OTEFireRocketAssembler extends OTHMultiMachineBase<OTEFireRocketAss
     public ItemStack blueprint;
     public int tier;
 
+    private static final int ROCKET_OFFSET_BACK = 3;
+    private static final int ROCKET_OFFSET_RIGHT = 20;
+
+    private static final CheckRecipeResult NO_SCHEMATIC = SimpleCheckRecipeResult.ofFailure("ote_no_schematic");
+
+    private boolean mRocketPlaced;
+    private int mRocketX;
+    private int mRocketY;
+    private int mRocketZ;
+
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
         super.saveNBTData(aNBT);
@@ -87,6 +91,8 @@ public class OTEFireRocketAssembler extends OTHMultiMachineBase<OTEFireRocketAss
     @Override
     public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
         super.onPostTick(aBaseMetaTileEntity, aTick);
+        if (!aBaseMetaTileEntity.isServerSide()) return;
+        if (!mMachine || mMaxProgresstime <= 0) clearRenderBlock();
     }
 
     @Override
@@ -107,7 +113,6 @@ public class OTEFireRocketAssembler extends OTHMultiMachineBase<OTEFireRocketAss
         return Recipemaps.NASA;
     }
 
-    // TODO : Need a Special Items Check
     @Override
     protected ProcessingLogic createProcessingLogic() {
 
@@ -124,10 +129,29 @@ public class OTEFireRocketAssembler extends OTHMultiMachineBase<OTEFireRocketAss
             @NotNull
             @Override
             protected CheckRecipeResult validateRecipe(@NotNull GTRecipe recipe) {
-                return CheckRecipeResultRegistry.SUCCESSFUL;
+                return hasRequiredSpecialItems(recipe.mSpecialItems) ? CheckRecipeResultRegistry.SUCCESSFUL
+                    : NO_SCHEMATIC;
             }
 
         }.setMaxParallelSupplier(this::getMaxParallelRecipes);
+    }
+
+    private boolean hasRequiredSpecialItems(Object aSpecialItems) {
+        if (aSpecialItems == null) return true;
+        ItemStack specialSlot = getControllerSlot();
+        if (aSpecialItems instanceof ItemStack) {
+            return isSpecialItemPresent(specialSlot, (ItemStack) aSpecialItems);
+        }
+        if (aSpecialItems instanceof ItemStack[]) {
+            for (ItemStack stack : (ItemStack[]) aSpecialItems) {
+                if (stack != null && !isSpecialItemPresent(specialSlot, stack)) return false;
+            }
+        }
+        return true;
+    }
+
+    private static boolean isSpecialItemPresent(ItemStack aSpecialSlot, ItemStack aRequired) {
+        return aSpecialSlot != null && GTUtility.areStacksEqual(aSpecialSlot, aRequired);
     }
 
     @Override
@@ -199,24 +223,14 @@ public class OTEFireRocketAssembler extends OTHMultiMachineBase<OTEFireRocketAss
         if (STRUCTURE_DEFINITION == null) {
             STRUCTURE_DEFINITION = StructureDefinition.<OTEFireRocketAssembler>builder()
                 .addShape(STRUCTURE_PIECE_MAIN, transpose(shapeMain))
-                .addElement(
-                    'A',
-                    ofBlock(Objects.requireNonNull(Block.getBlockFromName(IndustrialCraft2.ID + ":blockAlloy")), 0))
-                .addElement(
-                    'B',
-                    ofBlock(
-                        Objects.requireNonNull(Block.getBlockFromName(IndustrialCraft2.ID + ":blockAlloyGlass")),
-                        0))
+                .addElement('A', ofBlockOr(IndustrialCraft2.ID + ":blockAlloy", 0, sBlockReinforced, 0))
+                .addElement('B', ofBlockOr(IndustrialCraft2.ID + ":blockAlloyGlass", 0, sBlockReinforced, 1))
                 .addElement('C', ofBlock(GregTechAPI.sBlockCasings2, 0))
                 .addElement('D', ofBlock(GregTechAPI.sBlockCasings3, 11))
                 .addElement('E', ofBlock(GregTechAPI.sBlockFrames, 335))
                 .addElement('G', ofBlock(GregTechAPI.sBlockReinforced, 8))
                 .addElement('H', ofBlock(GregTechAPI.sBlockReinforced, 9))
-                .addElement(
-                    'I',
-                    (Chisel.isModLoaded() && Block.getBlockFromName(Chisel.ID + ":factoryblock") != null)
-                        ? ofBlock(Objects.requireNonNull(Block.getBlockFromName(Chisel.ID + ":factoryblock")), 6)
-                        : ofBlock(sBlockConcretes, 0))
+                .addElement('I', ofBlockOr(Chisel.ID + ":factoryblock", 6, sBlockConcretes, 0))
                 .addElement(
                     'F',
                     buildHatchAdder(OTEFireRocketAssembler.class)
@@ -228,6 +242,12 @@ public class OTEFireRocketAssembler extends OTHMultiMachineBase<OTEFireRocketAss
                 .build();
         }
         return STRUCTURE_DEFINITION;
+    }
+
+    private static IStructureElement<OTEFireRocketAssembler> ofBlockOr(String aBlockName, int aMeta, Block aFallback,
+        int aFallbackMeta) {
+        Block block = Block.getBlockFromName(aBlockName);
+        return block == null ? ofBlock(aFallback, aFallbackMeta) : ofBlock(block, aMeta);
     }
 
     private final String[][] shapeMain = new String[][] {
@@ -353,7 +373,7 @@ public class OTEFireRocketAssembler extends OTHMultiMachineBase<OTEFireRocketAss
 
     @Override
     protected IAlignmentLimits getInitialAlignmentLimits() {
-        return (d, r, f) -> d.offsetY == 0 && r.isNotRotated();
+        return (d, r, f) -> d.offsetY == 0 && r.isNotRotated() && !f.isVerticallyFliped();
     }
 
     @Override
@@ -421,83 +441,66 @@ public class OTEFireRocketAssembler extends OTHMultiMachineBase<OTEFireRocketAss
         return SoundResource.GTCEU_LOOP_ASSEMBLER;
     }
 
-    public void createRenderBlock() {
-        int x = getBaseMetaTileEntity().getXCoord();
-        int y = getBaseMetaTileEntity().getYCoord();
-        int z = getBaseMetaTileEntity().getZCoord();
+    private void createRenderBlock() {
+        IGregTechTileEntity base = getBaseMetaTileEntity();
+        if (base == null || !base.isServerSide()) return;
+        World world = base.getWorld();
+        if (world == null) return;
 
-        double xOffset = 3 * getExtendedFacing().getRelativeBackInWorld().offsetX
-            - 20 * getExtendedFacing().getRelativeRightInWorld().offsetX;
-        double zOffset = 3 * getExtendedFacing().getRelativeBackInWorld().offsetZ
-            - 20 * getExtendedFacing().getRelativeRightInWorld().offsetZ;
-        double yOffset = 3 * getExtendedFacing().getRelativeBackInWorld().offsetY
-            - 20 * getExtendedFacing().getRelativeRightInWorld().offsetY;
-        this.getBaseMetaTileEntity()
-            .getWorld()
-            .setBlock((int) (x + xOffset), (int) (y + yOffset), (int) (z + zOffset), Blocks.air);
-        this.getBaseMetaTileEntity()
-            .getWorld()
-            .setBlock((int) (x + xOffset), (int) (y + yOffset), (int) (z + zOffset), RocketRenderBlock);
+        ExtendedFacing facing = getExtendedFacing();
+        ForgeDirection back = facing.getRelativeBackInWorld();
+        ForgeDirection right = facing.getRelativeRightInWorld();
+        int rocketX = base.getXCoord() + ROCKET_OFFSET_BACK * back.offsetX - ROCKET_OFFSET_RIGHT * right.offsetX;
+        int rocketY = base.getYCoord() + ROCKET_OFFSET_BACK * back.offsetY - ROCKET_OFFSET_RIGHT * right.offsetY;
+        int rocketZ = base.getZCoord() + ROCKET_OFFSET_BACK * back.offsetZ - ROCKET_OFFSET_RIGHT * right.offsetZ;
+
+        if (world.getBlock(rocketX, rocketY, rocketZ) == RocketRenderBlock) {
+            rememberRocket(rocketX, rocketY, rocketZ);
+            return;
+        }
+        if (mRocketPlaced && (mRocketX != rocketX || mRocketY != rocketY || mRocketZ != rocketZ)) clearRenderBlock();
+        if (!world.isAirBlock(rocketX, rocketY, rocketZ)) return;
+        world.setBlock(rocketX, rocketY, rocketZ, RocketRenderBlock, getRocketMeta(base), 3);
+        rememberRocket(rocketX, rocketY, rocketZ);
     }
 
-    public static void loadRender() {
-        new RocketRenderOTH();
+    private void rememberRocket(int x, int y, int z) {
+        mRocketPlaced = true;
+        mRocketX = x;
+        mRocketY = y;
+        mRocketZ = z;
     }
 
-    static class RocketRenderOTH extends TileEntitySpecialRenderer {
-
-        private static final ResourceLocation ROCKETTEXTURES = new ResourceLocation(
-            "galaxyspace",
-            "textures/model/tier" + "8" + "rocket.png");
-        private static final IModelCustom ROCKET = AdvancedModelLoader
-            .loadModel(new ResourceLocation("galaxyspace", "models/tier" + "8" + "rocket.obj"));
-
-        public RocketRenderOTH() {
-            ClientRegistry.bindTileEntitySpecialRenderer(OTERocketRender.class, this);
+    private void clearRenderBlock() {
+        if (!mRocketPlaced) return;
+        mRocketPlaced = false;
+        IGregTechTileEntity base = getBaseMetaTileEntity();
+        if (base == null || !base.isServerSide()) return;
+        World world = base.getWorld();
+        if (world != null && world.getBlock(mRocketX, mRocketY, mRocketZ) == RocketRenderBlock) {
+            world.setBlockToAir(mRocketX, mRocketY, mRocketZ);
         }
+    }
 
-        @Override
-        public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float timeSinceLastTick) {
-            if (!(tile instanceof OTERocketRender rocket)) return;
-            final double size = rocket.size;
-            GL11.glPushMatrix();
-            GL11.glTranslated(x + 0.5, y + 0.5, z + 0.5);
-            int meta = rocket.getBlockMetadata();
-
-            switch (meta) {
-                case 2:
-                    GL11.glRotated(180, 0, 1, 0);
-                    break;
-                case 3:
-                    GL11.glRotated(0, 0, 1, 0);
-                    break;
-                case 4:
-                    GL11.glRotated(90, 0, 1, 0);
-                    break;
-                case 5:
-                    GL11.glRotated(-90, 0, 1, 0);
-                    break;
-            }
-
-            renderStar(size);
-            GL11.glPopMatrix();
+    private static int getRocketMeta(IGregTechTileEntity base) {
+        switch (base.getFrontFacing()) {
+            case NORTH:
+                return 2;
+            case SOUTH:
+                return 3;
+            case WEST:
+                return 4;
+            case EAST:
+                return 5;
+            default:
+                return 3;
         }
+    }
 
-        private void renderStar(double size) {
-            GL11.glDisable(GL11.GL_LIGHTING);
-            GL11.glDisable(GL11.GL_CULL_FACE);
-            GL11.glEnable(GL11.GL_BLEND);
-            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-            this.bindTexture(ROCKETTEXTURES);
-            GL11.glScaled(size, size, size);
-            OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f);
-            ROCKET.renderAll();
-            GL11.glDisable(GL11.GL_BLEND);
-            GL11.glDepthMask(true);
-            GL11.glEnable(GL11.GL_CULL_FACE);
-            GL11.glEnable(GL11.GL_LIGHTING);
-        }
-
+    @Override
+    public void onRemoval() {
+        super.onRemoval();
+        clearRenderBlock();
     }
 
 }

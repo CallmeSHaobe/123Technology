@@ -1,7 +1,5 @@
 package com.newmaa.othtech;
 
-import static com.newmaa.othtech.machine.OTEFireRocketAssembler.loadRender;
-
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraftforge.client.MinecraftForgeClient;
@@ -25,6 +23,7 @@ import com.newmaa.othtech.common.item.itemBlock.ItemModelAsukaRender;
 import com.newmaa.othtech.common.item.itemBlock.ItemModelAyanamiRender;
 import com.newmaa.othtech.common.item.itemBlock.ItemModelTallHatRender;
 import com.newmaa.othtech.common.render.RiceBowlRenderer;
+import com.newmaa.othtech.common.render.RocketRenderOTH;
 
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -58,7 +57,7 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void init(FMLInitializationEvent event) {
         super.init(event);
-        loadRender();
+        new RocketRenderOTH();
         // 注册 itemModelAyanamiRender 渲染器
         new ItemModelAyanamiRender();
 

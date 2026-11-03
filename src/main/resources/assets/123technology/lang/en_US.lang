@@ -1017,3 +1017,4 @@ entity.123Technology.DogBlue.name=§9Blue Dog
 item.dogSpawnEgg.name=Dog Spawn Egg
 ote.ds.nei.nanite.line1=§bRequires upgrading the nanite swarm
 ote.ds.nei.nanite.line2=§bto tier %s
+GT5U.gui.text.recipe_result.ote_no_schematic=§4Missing rocket assembly schematic in the controller slot
