@@ -6,6 +6,7 @@ import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.client.model.IModelCustom;
 import net.minecraftforge.common.MinecraftForge;
 
+import com.newmaa.othtech.client.AbstractSanctumClientEvents;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.blocks.deepseiko.TEDeepSeikoHolo;
 import com.newmaa.othtech.common.dimensions.sky.RossFogHandler;
@@ -47,6 +48,7 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void preInit(FMLPreInitializationEvent event) {
         super.preInit(event);
+        this.register_event(new AbstractSanctumClientEvents());
         SkyProviderHandler sky = new SkyProviderHandler();
         this.register_event(sky);
         // 锑罗斯水下雾色改成血色(原版硬编码成蓝色)
