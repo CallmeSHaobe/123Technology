@@ -1,5 +1,9 @@
 package com.newmaa.othtech.common.dimensions.structure.ross123b;
 
+import java.util.Arrays;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 
@@ -15,16 +19,18 @@ import cpw.mods.fml.common.registry.GameRegistry;
  * <p>
  * 地形与路网:
  * <ul>
- * <li>用两级值噪声生成地形, 大部分区域低于海面(仍是 LCL 海), 只有少数岛屿/浅滩露出水面;</li>
- * <li>每 {@link #PERIOD} 个区块(128 格)一条 16 格宽的主干道, 街区里还有随机断头支路;</li>
+ * <li>地形以贴着海面的平原为主, 夹杂少量孤峰与盆地(湖/浅海), 平原上还会切出又长又窄的裂谷;</li>
+ * <li>城市不再必定出现: 每隔 {@link #CITY_CELL} 个区块有一个候选中心, 只有那一片足够平坦、
+ * 海拔又贴着海面时才会长出一座城;</li>
+ * <li>道路只伴随城市出现: 城内每 {@link #PERIOD} 个区块(128 格)一条 16 格宽的主干道, 街区里还有随机断头支路;</li>
  * <li>道路铺在地形表面上: 陆地就是地面, 水里就沉到海床上, 不会像以前那样浮在 y=63 的水面;</li>
  * <li>跨水的路段有概率架桥: 桥面从一岸的高度拱到另一岸, 用石砖桥墩撑到海床, 桥上有路面;</li>
- * <li>每隔 {@link #POLE_SPACING} 格沿路立一根地表电线杆(深色橡木杆身 + 横担 + 石英绝缘子,
- * 一半以上是歪的), 淹在水下的路段就是一排露出红海的歪杆, 电线以后再加;</li>
+ * <li>每隔 {@link #POLE_SPACING} 格沿路立一根路灯(IC2 铁栅栏杆身 + 横担 + 石英绝缘子 + 杆顶红石灯,
+ * 一半以上是歪的), 电线以后再加;</li>
  * <li>只有与道路正交相邻的区块(且自身不是道路)才是建筑地块, 所以建筑严格排在道路两侧。</li>
  * </ul>
  * 路面材质: 石头铺面, 石英块画中线。建筑随机为塔楼/多层楼/坍塌废墟, 带破洞/塌顶/断墙/残骸,
- * 地下部分一直延伸到基岩层, 随机为干(抽空)或湿(灌满 LCL)的地下室。
+ * 其中约一成的墙面掺着 chisel 红石块; 地下部分一直延伸到基岩层, 随机为干(抽空)或湿(灌满 LCL)的地下室。
  */
 public final class RossCity {
 
@@ -44,11 +50,52 @@ public final class RossCity {
     /** 地下室保留水的概率(百分比)。 */
     private static final int WET_BASEMENT_CHANCE = 55;
 
-    /** 地形噪声: 粗/细两级格子边长(方块), 以及相对海面的高度偏移与振幅。 */
+    /**
+     * 地形: 大部分是贴着海面的平原, 起伏很小; 少量丘陵/孤峰, 少量盆地(湖与浅海), 以及长条裂谷。
+     * <p>
+     * 平原噪声的格子边长; 平原的基准高度与起伏幅度(格)。
+     */
     private static final int NOISE_COARSE = 64;
     private static final int NOISE_FINE = 20;
-    private static final int TERRAIN_OFFSET = -10;
-    private static final int TERRAIN_AMPLITUDE = 14;
+    private static final int PLAIN_OFFSET = 2;
+    private static final int PLAIN_AMPLITUDE = 7;
+    /** 丘陵/孤峰用两层脊状噪声相乘: 大尺度决定走向, 小尺度把它切碎。 */
+    private static final int NOISE_RIDGE = 190;
+    private static final int NOISE_RIDGE_FINE = 80;
+    private static final int MOUNTAIN_HEIGHT = 32;
+    /** 再叠一道低频"山脉分布"闸门: 只有它高的地方才允许隆起, 于是山成片成岭, 别处全是平原。 */
+    private static final int NOISE_RIDGE_GATE = 420;
+    private static final double RIDGE_SHARPNESS = 14.0;
+    private static final double RIDGE_MODULATOR = 4.0;
+    /** 盆地(湖/浅海): 低频噪声低于阈值的成片区域往下压, 越低于阈值压得越深。 */
+    private static final int NOISE_BASIN = 300;
+    private static final double BASIN_THRESHOLD = 0.2;
+    private static final int BASIN_DEPTH = 34;
+    /** 裂谷: 噪声零值线附近向下挖, 又长又窄, 中线最深。 */
+    private static final int NOISE_RIFT = 300;
+    /** 裂谷中心的扭曲: 用另一层噪声把采样点横向推来推去, 免得裂谷是一条笔直的缝。 */
+    private static final int NOISE_RIFT_WARP = 140;
+    private static final int RIFT_WARP = 44;
+    private static final double RIFT_WIDTH = 0.025;
+    private static final int RIFT_DEPTH = 26;
+    /** 地表高度的硬边界, 防止噪声越界挖穿基岩或顶穿世界。 */
+    private static final int TERRAIN_MIN = BASEMENT_BOTTOM + 4;
+    private static final int TERRAIN_MAX = 200;
+
+    /**
+     * 城市: 每隔 {@link #CITY_CELL} 个区块一个候选中心, 半径 {@link #CITY_RADIUS_MIN} ~
+     * {@link #CITY_RADIUS_MIN}+{@link #CITY_RADIUS_SPAN},
+     * 只有当这一片地形足够平坦、且高度贴着海面时才真的长出一座城; 道路与楼只跟着城市走。
+     */
+    private static final int CITY_CELL = 32;
+    private static final int CITY_RADIUS_MIN = 5;
+    private static final int CITY_RADIUS_SPAN = 6;
+    /** 平坦度采样间距(格)、允许的高度偏差(格)、以及必须落在偏差内的采样点比例(百分比)。 */
+    private static final int CITY_SAMPLE_STEP = 8;
+    private static final int CITY_FLAT_TOLERANCE = 4;
+    private static final int CITY_FLAT_PERCENT = 88;
+    /** 城市海拔必须贴着海面(否则楼会被埋进山里或被淹得看不见)。 */
+    private static final int CITY_HEIGHT_BAND = 5;
 
     /** 桥: 跨度下限(格) / 架桥概率(%) / 桥面离水高度 / 沿路找岸的最远距离。 */
     private static final int BRIDGE_MIN_SPAN = 16;
@@ -69,9 +116,9 @@ public final class RossCity {
     private static final int POLE_MIN_HEIGHT = 7;
     private static final int POLE_HEIGHT_SPAN = 5;
     private static final int POLE_LEAN_CHANCE = 55;
-    /** 杆体/横担用深色橡木, 绝缘子用石英。 */
-    private static final Block POLE_BLOCK = Blocks.planks;
-    private static final int POLE_META = 5;
+    /** 杆体/横担用 IC2 的铁栅栏(没装 IC2 就退回铁栏杆), 杆顶一盏亮着的红石灯当路灯。 */
+    private static final Block POLE_BLOCK = resolvePoleFence();
+    private static final Block POLE_LAMP = Blocks.lit_redstone_lamp;
     private static final Block POLE_INSULATOR = Blocks.quartz_block;
 
     /** 巨型倾斜十字架: 每 CROSS_CELL 个区块一个候选点 / 出现概率(%) / 高度范围 / 倾斜坡度(每几格偏 1 格)。 */
@@ -94,6 +141,9 @@ public final class RossCity {
     private static final int KIND_RUIN = 1;
     private static final int KIND_BLOCK = 2;
     private static final int KIND_TOWER = 3;
+
+    /** 建筑墙面里掺 chisel 红石块(与巨型十字架同款)的比例(百分比), 以 2×2×2 的块团分布。 */
+    private static final int REDSTONE_VEIN_PERCENT = 10;
 
     private RossCity() {}
 
@@ -136,10 +186,10 @@ public final class RossCity {
         Stamper stamper = new Stamper(blocks, metadata, chunkX, chunkZ, seed);
         fillTerrain(stamper, chunkX, chunkZ, terrain);
 
-        int mask = roadMask(chunkX, chunkZ, seed);
+        int mask = roadMask(chunkX, chunkZ, seed, terrain.seaLevel);
         if (mask != 0) {
             stampRoad(stamper, chunkX, chunkZ, mask, terrain);
-        } else if (isPlotChunk(chunkX, chunkZ, seed)) {
+        } else if (isPlotChunk(chunkX, chunkZ, seed, terrain.seaLevel)) {
             stampPlot(stamper, chunkX, chunkZ, terrain);
         }
 
@@ -166,14 +216,124 @@ public final class RossCity {
     }
 
     // ------------------------------------------------------------------
+    // 城市的选址
+    // ------------------------------------------------------------------
+
+    /** 一座城: 中心的区块坐标与半径(区块), 以及它是哪张网格上的候选点(用于校验缓存)。 */
+    private static final class City {
+
+        final long seed;
+        final int cellX;
+        final int cellZ;
+        final int centerChunkX;
+        final int centerChunkZ;
+        final int radius;
+
+        City(long seed, int cellX, int cellZ, int centerChunkX, int centerChunkZ, int radius) {
+            this.seed = seed;
+            this.cellX = cellX;
+            this.cellZ = cellZ;
+            this.centerChunkX = centerChunkX;
+            this.centerChunkZ = centerChunkZ;
+            this.radius = radius;
+        }
+
+        /** 区块是否落在城内(按区块的方形范围, 正好对齐路网)。 */
+        boolean contains(int chunkX, int chunkZ) {
+            return Math.abs(chunkX - this.centerChunkX) <= this.radius
+                && Math.abs(chunkZ - this.centerChunkZ) <= this.radius;
+        }
+    }
+
+    /** 平坦度采样与判定结果都很贵, 按候选格缓存; 没有城市的格子也缓存(用 radius 0 表示)。 */
+    private static final Map<Long, City> CITY_CACHE = new ConcurrentHashMap<>();
+    private static final City NO_CITY = new City(0L, 0, 0, 0, 0, 0);
+
+    /** 该区块是否落在某座城里(会顺带检查周围 3×3 个候选格, 因为城可能跨格)。 */
+    static boolean isCityChunk(int chunkX, int chunkZ, long seed, int seaLevel) {
+        int cellX = Math.floorDiv(chunkX, CITY_CELL);
+        int cellZ = Math.floorDiv(chunkZ, CITY_CELL);
+        for (int offsetX = -1; offsetX <= 1; offsetX++) {
+            for (int offsetZ = -1; offsetZ <= 1; offsetZ++) {
+                City city = cityFor(seed, seaLevel, cellX + offsetX, cellZ + offsetZ);
+                if (city != null && city.contains(chunkX, chunkZ)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private static City cityFor(long seed, int seaLevel, int cellX, int cellZ) {
+        long key = mix(seed, cellX, cellZ, 901);
+        City cached = CITY_CACHE.get(key);
+        if (cached != null && cached.seed == seed && cached.cellX == cellX && cached.cellZ == cellZ) {
+            return cached.radius == 0 ? null : cached;
+        }
+        City city = planCity(seed, seaLevel, cellX, cellZ);
+        if (CITY_CACHE.size() > 8192) {
+            CITY_CACHE.clear(); // 走得太远就清一次, 反正重建只是花点时间
+        }
+        CITY_CACHE.put(key, city == null ? NO_CITY : city);
+        return city;
+    }
+
+    /**
+     * 候选城市: 先按种子定下半径与中心, 再在整片范围上采样地形, 只有"高度普遍贴着海面、
+     * 而且彼此差不多平"的地方才真的立城。这样城市不会落在山坡、深海或者裂谷正中间。
+     */
+    private static City planCity(long seed, int seaLevel, int cellX, int cellZ) {
+        int radius = CITY_RADIUS_MIN + rnd(seed, cellX, cellZ, 902) % CITY_RADIUS_SPAN;
+        int margin = radius + 2;
+        int slack = CITY_CELL - 2 * margin;
+        int centerChunkX = cellX * CITY_CELL + margin + (slack > 0 ? rnd(seed, cellX, cellZ, 903) % slack : 0);
+        int centerChunkZ = cellZ * CITY_CELL + margin + (slack > 0 ? rnd(seed, cellX, cellZ, 904) % slack : 0);
+
+        int span = ((radius * 2 + 1) << 4) - 1;
+        int samples = span / CITY_SAMPLE_STEP + 1;
+        int[] heights = new int[samples * samples];
+        int baseX = (centerChunkX - radius) << 4;
+        int baseZ = (centerChunkZ - radius) << 4;
+        int count = 0;
+        for (int i = 0; i < samples; i++) {
+            for (int j = 0; j < samples; j++) {
+                heights[count++] = terrainHeight(
+                    seed,
+                    seaLevel,
+                    baseX + i * CITY_SAMPLE_STEP,
+                    baseZ + j * CITY_SAMPLE_STEP);
+            }
+        }
+        Arrays.sort(heights);
+        int median = heights[count / 2];
+        if (Math.abs(median - (seaLevel + 1)) > CITY_HEIGHT_BAND) {
+            return null;
+        }
+
+        int within = 0;
+        for (int i = 0; i < count; i++) {
+            if (Math.abs(heights[i] - median) <= CITY_FLAT_TOLERANCE) {
+                within++;
+            }
+        }
+        if (within * 100 < count * CITY_FLAT_PERCENT) {
+            return null;
+        }
+        return new City(seed, cellX, cellZ, centerChunkX, centerChunkZ, radius);
+    }
+
+    // ------------------------------------------------------------------
     // 路网
     // ------------------------------------------------------------------
 
     /**
      * 该区块的道路方向掩码: bit0 = 沿 Z 的道路, bit1 = 沿 X 的道路, 0 表示不是道路。
-     * 同时具备两位就是路口。
+     * 同时具备两位就是路口。城市之外一律返回 0: 道路只伴随城市出现。
      */
-    static int roadMask(int chunkX, int chunkZ, long seed) {
+    static int roadMask(int chunkX, int chunkZ, long seed, int seaLevel) {
+        if (!isCityChunk(chunkX, chunkZ, seed, seaLevel)) {
+            return 0;
+        }
         int localX = Math.floorMod(chunkX, PERIOD);
         int localZ = Math.floorMod(chunkZ, PERIOD);
         int mask = 0;
@@ -189,22 +349,22 @@ public final class RossCity {
 
         int blockX = Math.floorDiv(chunkX, PERIOD);
         int blockZ = Math.floorDiv(chunkZ, PERIOD);
-        if ((mask & 1) == 0 && isVerticalSpur(seed, blockX, blockZ, localX, localZ)) {
+        if ((mask & 1) == 0 && isVerticalSpur(seed, seaLevel, blockX, blockZ, localX, localZ)) {
             mask |= 1;
         }
-        if ((mask & 2) == 0 && isHorizontalSpur(seed, blockX, blockZ, localX, localZ)) {
+        if ((mask & 2) == 0 && isHorizontalSpur(seed, seaLevel, blockX, blockZ, localX, localZ)) {
             mask |= 2;
         }
         return mask;
     }
 
     /** 该区块是不是道路(主干道或支路)。 */
-    static boolean isRoadChunk(int chunkX, int chunkZ, long seed) {
-        return roadMask(chunkX, chunkZ, seed) != 0;
+    static boolean isRoadChunk(int chunkX, int chunkZ, long seed, int seaLevel) {
+        return roadMask(chunkX, chunkZ, seed, seaLevel) != 0;
     }
 
     /** 横向支路: 从街区左/右侧的主干道伸进来, 到某个随机的行、随机长度为止(断头)。 */
-    private static boolean isHorizontalSpur(long seed, int blockX, int blockZ, int localX, int localZ) {
+    private static boolean isHorizontalSpur(long seed, int seaLevel, int blockX, int blockZ, int localX, int localZ) {
         int hash = rnd(seed, blockX, blockZ, 101);
         if (hash % 100 >= BRANCH_CHANCE) {
             return false;
@@ -214,11 +374,17 @@ public final class RossCity {
             return false;
         }
         int length = 2 + (hash >>> 11) % 5;
-        return ((hash >>> 16) & 1) == 0 ? localX <= length : localX >= PERIOD - length;
+        boolean fromLeft = ((hash >>> 16) & 1) == 0;
+        if (fromLeft ? localX > length : localX < PERIOD - length) {
+            return false;
+        }
+        // 支路必须接在城内那根主干道上, 否则城市边界会把支路切成一截孤零零的路
+        int anchorX = blockX * PERIOD + (fromLeft ? 0 : PERIOD);
+        return isCityChunk(anchorX, blockZ * PERIOD + localZ, seed, seaLevel);
     }
 
     /** 纵向支路, 规则同上。 */
-    private static boolean isVerticalSpur(long seed, int blockX, int blockZ, int localX, int localZ) {
+    private static boolean isVerticalSpur(long seed, int seaLevel, int blockX, int blockZ, int localX, int localZ) {
         int hash = rnd(seed, blockX, blockZ, 202);
         if (hash % 100 >= BRANCH_CHANCE) {
             return false;
@@ -228,27 +394,76 @@ public final class RossCity {
             return false;
         }
         int length = 2 + (hash >>> 11) % 5;
-        return ((hash >>> 16) & 1) == 0 ? localZ <= length : localZ >= PERIOD - length;
-    }
-
-    /** 临街地块: 自身不是道路, 且上下左右至少有一个邻区块是道路。 */
-    static boolean isPlotChunk(int chunkX, int chunkZ, long seed) {
-        if (isRoadChunk(chunkX, chunkZ, seed)) {
+        boolean fromTop = ((hash >>> 16) & 1) == 0;
+        if (fromTop ? localZ > length : localZ < PERIOD - length) {
             return false;
         }
-        return isRoadChunk(chunkX - 1, chunkZ, seed) || isRoadChunk(chunkX + 1, chunkZ, seed)
-            || isRoadChunk(chunkX, chunkZ - 1, seed)
-            || isRoadChunk(chunkX, chunkZ + 1, seed);
+        int anchorZ = blockZ * PERIOD + (fromTop ? 0 : PERIOD);
+        return isCityChunk(blockX * PERIOD + localX, anchorZ, seed, seaLevel);
+    }
+
+    /** 临街地块: 城内、自身不是道路, 且上下左右至少有一个邻区块是道路。 */
+    static boolean isPlotChunk(int chunkX, int chunkZ, long seed, int seaLevel) {
+        if (!isCityChunk(chunkX, chunkZ, seed, seaLevel)) {
+            return false;
+        }
+        if (isRoadChunk(chunkX, chunkZ, seed, seaLevel)) {
+            return false;
+        }
+        return isRoadChunk(chunkX - 1, chunkZ, seed, seaLevel) || isRoadChunk(chunkX + 1, chunkZ, seed, seaLevel)
+            || isRoadChunk(chunkX, chunkZ - 1, seed, seaLevel)
+            || isRoadChunk(chunkX, chunkZ + 1, seed, seaLevel);
     }
 
     // ------------------------------------------------------------------
     // 地形
     // ------------------------------------------------------------------
 
-    /** 该列的地形表面高度(纯函数: 只取决于世界种子与坐标)。 */
+    /**
+     * 该列的地形表面高度(纯函数: 只取决于世界种子与坐标)。
+     * <p>
+     * 以平原为主: 平原噪声给出贴着海面的小起伏; 丘陵/孤峰用两层脊状噪声相乘, 只有两层脊线叠在一起
+     * 的地方才隆起; 盆地用低频噪声的阈值切出成片的湖与浅海; 裂谷沿噪声零值线往下挖成长条深沟。
+     */
     static int terrainHeight(long seed, int seaLevel, int x, int z) {
-        double noise = octave(seed, x, z, NOISE_COARSE, 601) * 0.65 + octave(seed, x, z, NOISE_FINE, 602) * 0.35;
-        return seaLevel + TERRAIN_OFFSET + (int) Math.round(noise * TERRAIN_AMPLITUDE);
+        double plain = (octave(seed, x, z, NOISE_COARSE, 601) * 0.65 + octave(seed, x, z, NOISE_FINE, 602) * 0.35) * 2.0
+            - 1.0;
+        double mountain = Math.pow(smoothRidge(octave(seed, x, z, NOISE_RIDGE, 603)), RIDGE_SHARPNESS)
+            * Math.pow(smoothRidge(octave(seed, x, z, NOISE_RIDGE_FINE, 605)), RIDGE_MODULATOR);
+        mountain *= clamp01((octave(seed, x, z, NOISE_RIDGE_GATE, 608) - 0.2) / 0.8);
+        double basin = clamp01(1.0 - octave(seed, x, z, NOISE_BASIN, 607) / BASIN_THRESHOLD);
+        int warpX = x + (int) Math.round((octave(seed, x, z, NOISE_RIFT_WARP, 609) - 0.5) * RIFT_WARP);
+        double rift = riftCarve(octave(seed, warpX, z, NOISE_RIFT, 606));
+
+        double height = seaLevel + PLAIN_OFFSET
+            + plain * PLAIN_AMPLITUDE
+            + mountain * MOUNTAIN_HEIGHT
+            - basin * basin * BASIN_DEPTH
+            - rift;
+        int rounded = (int) Math.round(height);
+        return Math.max(TERRAIN_MIN, Math.min(TERRAIN_MAX, rounded));
+    }
+
+    /** 裂谷: 噪声越接近 0.5 越深, 于是沿着一条条长曲线挖出又窄又深的沟。 */
+    private static double riftCarve(double noise) {
+        double t = 1.0 - Math.abs(noise - 0.5) / RIFT_WIDTH;
+        if (t <= 0.0) {
+            return 0.0;
+        }
+        return t * t * (3.0 - 2.0 * t) * RIFT_DEPTH;
+    }
+
+    private static double clamp01(double value) {
+        if (value <= 0.0) {
+            return 0.0;
+        }
+        return value >= 1.0 ? 1.0 : value;
+    }
+
+    /** 把 0..1 的噪声折成"0.5 处最高"的三角波, 再用 smoothstep 抹掉尖角, 得到平滑的山脊线。 */
+    private static double smoothRidge(double value) {
+        double ridge = 1.0 - Math.abs(2.0 * value - 1.0);
+        return ridge * ridge * (3.0 - 2.0 * ridge);
     }
 
     private static double octave(long seed, int x, int z, int scale, int salt) {
@@ -356,7 +571,7 @@ public final class RossCity {
         if (left < 0 || right < 0 || right - left < BRIDGE_MIN_SPAN) {
             return null;
         }
-        if (containsJunction(seed, chunkX, chunkZ, alongZ, left, right)) {
+        if (containsJunction(seed, seaLevel, chunkX, chunkZ, alongZ, left, right)) {
             return null;
         }
         if (rnd(seed, left, alongZ ? 1 : 0, 611) % 100 >= BRIDGE_CHANCE) {
@@ -385,11 +600,12 @@ public final class RossCity {
         return alongZ ? terrainHeight(seed, seaLevel, laneX, pos) : terrainHeight(seed, seaLevel, pos, laneZ);
     }
 
-    private static boolean containsJunction(long seed, int chunkX, int chunkZ, boolean alongZ, int left, int right) {
+    private static boolean containsJunction(long seed, int seaLevel, int chunkX, int chunkZ, boolean alongZ, int left,
+        int right) {
         int from = Math.floorDiv(Math.min(left, right), 16);
         int to = Math.floorDiv(Math.max(left, right), 16);
         for (int chunk = from; chunk <= to; chunk++) {
-            if (roadMask(alongZ ? chunkX : chunk, alongZ ? chunk : chunkZ, seed) == 3) {
+            if (roadMask(alongZ ? chunkX : chunk, alongZ ? chunk : chunkZ, seed, seaLevel) == 3) {
                 return true;
             }
         }
@@ -496,7 +712,7 @@ public final class RossCity {
             int offset = lean ? (i * leanDir) / leanEvery : 0;
             int px = leanOnX ? x + offset : x;
             int pz = leanOnX ? z : z + offset;
-            stamper.put(px, baseY + i, pz, POLE_BLOCK, POLE_META);
+            stamper.put(px, baseY + i, pz, POLE_BLOCK, 0);
         }
 
         // 横担: 垂直于道路走向, 跟着杆身在这一高度的倾斜偏移走
@@ -507,17 +723,17 @@ public final class RossCity {
         int armY = baseY + armIndex;
         for (int t = -2; t <= 2; t++) {
             if (roadAlongZ) {
-                stamper.put(armX + t, armY, armZ, POLE_BLOCK, POLE_META);
+                stamper.put(armX + t, armY, armZ, POLE_BLOCK, 0);
             } else {
-                stamper.put(armX, armY, armZ + t, POLE_BLOCK, POLE_META);
+                stamper.put(armX, armY, armZ + t, POLE_BLOCK, 0);
             }
         }
         int arm2Y = armY - 2;
         for (int t = -1; t <= 1; t++) {
             if (roadAlongZ) {
-                stamper.put(armX + t, arm2Y, armZ, POLE_BLOCK, POLE_META);
+                stamper.put(armX + t, arm2Y, armZ, POLE_BLOCK, 0);
             } else {
-                stamper.put(armX, arm2Y, armZ + t, POLE_BLOCK, POLE_META);
+                stamper.put(armX, arm2Y, armZ + t, POLE_BLOCK, 0);
             }
         }
 
@@ -529,6 +745,10 @@ public final class RossCity {
             stamper.put(armX, armY + 1, armZ - 2, POLE_INSULATOR, 0);
             stamper.put(armX, armY + 1, armZ + 2, POLE_INSULATOR, 0);
         }
+
+        // 杆顶挂一盏亮着的红石灯: 这就是路灯本体
+        int topOffset = lean ? ((height - 1) * leanDir) / leanEvery : 0;
+        stamper.put(leanOnX ? x + topOffset : x, baseY + height, leanOnX ? z : z + topOffset, POLE_LAMP, 0);
     }
 
     // ------------------------------------------------------------------
@@ -685,6 +905,39 @@ public final class RossCity {
         for (Object key : Block.blockRegistry.getKeys()) {
             String name = String.valueOf(key);
             if (name.endsWith(":redstone_block")) {
+                Object candidate = Block.blockRegistry.getObject(name);
+                if (candidate instanceof Block && candidate != Blocks.air) {
+                    return (Block) candidate;
+                }
+            }
+        }
+        return null;
+    }
+
+    /** 路灯杆身: IC2 的铁栅栏(blockFenceIron)最像末日街头那种细杆; 找不到就退回原版铁栏杆。 */
+    private static Block resolvePoleFence() {
+        try {
+            Block ic2 = findIc2IronFence();
+            if (ic2 != null) {
+                return ic2;
+            }
+        } catch (Throwable ignored) {
+            // 没装 IC2 / 方块名变了就退回原版
+        }
+        return Blocks.iron_bars;
+    }
+
+    /** 找 IC2 的铁栅栏: 先按注册名查两个常见大小写, 查不到就扫一遍方块注册表。 */
+    private static Block findIc2IronFence() {
+        for (String name : new String[] { "blockFenceIron", "blockIronFence" }) {
+            Block byName = GameRegistry.findBlock("IC2", name);
+            if (byName != null && byName != Blocks.air) {
+                return byName;
+            }
+        }
+        for (Object key : Block.blockRegistry.getKeys()) {
+            String name = String.valueOf(key);
+            if (name.endsWith(":blockFenceIron") || name.endsWith(":blockIronFence")) {
                 Object candidate = Block.blockRegistry.getObject(name);
                 if (candidate instanceof Block && candidate != Blocks.air) {
                     return (Block) candidate;
@@ -1097,6 +1350,11 @@ public final class RossCity {
         }
 
         void wall(int worldX, int y, int worldZ, int palette) {
+            // 楼体里掺着和十字架同款的 chisel 红石块: 按 2×2×2 的块团出现, 约占墙面一成
+            if (noise(this.seed, worldX >> 1, y >> 1, worldZ >> 1, 353) < (REDSTONE_VEIN_PERCENT * 256) / 100) {
+                put(worldX, y, worldZ, CROSS_BODY.block, CROSS_BODY.meta);
+                return;
+            }
             int hash = noise(this.seed, worldX, y, worldZ, 351);
             switch (palette) {
                 case 0 -> put(worldX, y, worldZ, Blocks.quartz_block, hash < 18 ? 1 : 0);

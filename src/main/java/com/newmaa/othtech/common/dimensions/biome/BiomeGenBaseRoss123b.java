@@ -24,6 +24,6 @@ public class BiomeGenBaseRoss123b extends BiomeGenAntimonia {
         this.setHeight(new BiomeGenBase.Height(0.1F, 0.2F));
         this.enableRain = true;
         this.enableSnow = false;
-        this.temperature = 0.6F;
+        this.temperature = -10.6F;
     }
 }
