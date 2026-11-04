@@ -28,6 +28,7 @@ import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
 import com.newmaa.othtech.common.dimensions.AntimoniaUndergroundFluids;
 import com.newmaa.othtech.common.dimensions.OTHDimensionIntegration;
 import com.newmaa.othtech.common.dimensions.RegisterDimensions;
+import com.newmaa.othtech.common.dimensions.Ross123bUndergroundFluids;
 import com.newmaa.othtech.common.dimensions.gtoregen.VisualProspectingOreVeinBridge;
 import com.newmaa.othtech.common.item.ItemLoader;
 import com.newmaa.othtech.common.materials.AbstractSanctumContent;
@@ -147,6 +148,7 @@ public class OTHTechnology {
         MachineLoader.loadMachines();
         new RegisterDimensions().init();
         AntimoniaUndergroundFluids.register();
+        Ross123bUndergroundFluids.register();
         NEIRecipeMaps.IMCSender();
         // 迪普西科的米饭投影影子方块是纯技术方块，别让它在 NEI 里冒出来
         API.hideItem(new ItemStack(DeepSeikoBlocks.dsHolo));

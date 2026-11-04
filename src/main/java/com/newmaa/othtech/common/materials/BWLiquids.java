@@ -50,16 +50,18 @@ public class BWLiquids implements Runnable {
             .addCells(),
         offsetID_01 + 6,
         TextureSet.SET_FLUID);
-    public static final Werkstoff ALS = new Werkstoff(
-        new short[] { 0, 255, 255 },
-        "A.L.S",
-        subscriptNumbers(""),
-        new Werkstoff.Stats(),
-        Werkstoff.Types.MIXTURE,
-        new Werkstoff.GenerationFeatures().disable()
-            .addCells(),
-        offsetID_01 + 7,
-        TextureSet.SET_FLUID);
+    /*
+     * public static final Werkstoff ALS = new Werkstoff(
+     * new short[] { 0, 255, 255 },
+     * "A.L.S",
+     * subscriptNumbers(""),
+     * new Werkstoff.Stats(),
+     * Werkstoff.Types.MIXTURE,
+     * new Werkstoff.GenerationFeatures().disable()
+     * .addCells(),
+     * offsetID_01 + 7,
+     * TextureSet.SET_FLUID);
+     */
     public static final Werkstoff FUELA = new Werkstoff(
         new short[] { 154, 249, 72 },
         "FUELA",

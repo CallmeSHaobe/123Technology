@@ -136,7 +136,6 @@ public final class RossCity {
     private static final int CROSS_BODY_META = 1;
     private static final BlockMeta CROSS_BODY = resolveCrossBody();
     private static final BlockMeta CROSS_CORE = new BlockMeta(Blocks.glowstone, 0);
-    private static final BlockMeta CROSS_BASE = new BlockMeta(Blocks.obsidian, 0);
 
     private static final int KIND_RUIN = 1;
     private static final int KIND_BLOCK = 2;
@@ -144,6 +143,15 @@ public final class RossCity {
 
     /** 建筑墙面里掺 chisel 红石块(与巨型十字架同款)的比例(百分比), 以 2×2×2 的块团分布。 */
     private static final int REDSTONE_VEIN_PERCENT = 10;
+
+    /** 荒野地物: 枯树出现概率(%) / 枯草密度(0..255) / 墓碑、弹坑、天使骸骨的出现概率(%)。 */
+    private static final int TREE_CHANCE = 55;
+    private static final int BUSH_DENSITY = 3;
+    private static final int GRAVE_CHANCE = 18;
+    private static final int CRATER_CHANCE = 12;
+    private static final int BONES_CHANCE = 7;
+    /** 城内空地上的枯树概率(%): 比荒野稀一些。 */
+    private static final int LOT_TREE_CHANCE = 30;
 
     private RossCity() {}
 
@@ -191,6 +199,8 @@ public final class RossCity {
             stampRoad(stamper, chunkX, chunkZ, mask, terrain);
         } else if (isPlotChunk(chunkX, chunkZ, seed, terrain.seaLevel)) {
             stampPlot(stamper, chunkX, chunkZ, terrain);
+        } else {
+            stampWilderness(stamper, chunkX, chunkZ, terrain);
         }
 
         // 地标最后盖上去: 十字架会压过道路/建筑, 像第三次冲击后插在城市上的墓碑
@@ -203,6 +213,7 @@ public final class RossCity {
         Building building = plan(chunkX, chunkZ, baseY, stamper.seed);
         if (building == null) {
             stampDebris(stamper, chunkX, chunkZ, terrain, 36);
+            stampDeadTrees(stamper, chunkX, chunkZ, terrain, LOT_TREE_CHANCE);
             return;
         }
 
@@ -832,12 +843,8 @@ public final class RossCity {
         void stamp(Stamper stamper) {
             int fullHalf = this.thickness / 2;
             int shaftBase = this.baseY + 1;
-            int plinth = Math.max(4, this.thickness);
             int beamIndex = (this.height * CROSS_BEAM_HEIGHT) / 100;
             int beamHalf = (this.height * CROSS_BEAM_HALF) / 10;
-
-            // 黑曜石基座
-            box(stamper, this.centerX, this.baseY, this.centerZ, plinth, 0, plinth, CROSS_BASE);
 
             // 倾斜的竖臂, 上下两端逐渐收窄成尖
             int shaftTaper = Math.max(8, this.height / 5);
@@ -1254,6 +1261,224 @@ public final class RossCity {
         }
     }
 
+    // ------------------------------------------------------------------
+    // 地物: 第三次冲击之后留在荒野上的东西
+    // ------------------------------------------------------------------
+
+    /** 荒野地物总入口: 弹坑、枯树、枯草、墓碑、天使骸骨, 全按种子独立决定。 */
+    private static void stampWilderness(Stamper stamper, int chunkX, int chunkZ, Terrain terrain) {
+        stampCrater(stamper, chunkX, chunkZ, terrain);
+        stampDeadTrees(stamper, chunkX, chunkZ, terrain, TREE_CHANCE);
+        stampDeadBushes(stamper, chunkX, chunkZ, terrain);
+        stampGraveCrosses(stamper, chunkX, chunkZ, terrain);
+        stampAngelBones(stamper, chunkX, chunkZ, terrain);
+    }
+
+    private static void stampDeadTrees(Stamper stamper, int chunkX, int chunkZ, Terrain terrain, int chance) {
+        long seed = stamper.seed;
+        if (rnd(seed, chunkX, chunkZ, 1101) % 100 >= chance) {
+            return;
+        }
+        int count = 1 + rnd(seed, chunkX, chunkZ, 1102) % 3;
+        for (int i = 0; i < count; i++) {
+            int x = (chunkX << 4) + 2 + rnd(seed, chunkX, chunkZ, 1110 + i) % 12;
+            int z = (chunkZ << 4) + 2 + rnd(seed, chunkX, chunkZ, 1120 + i) % 12;
+            stampDeadTree(stamper, x, z, terrain, rnd(seed, chunkX, chunkZ, 1130 + i));
+        }
+    }
+
+    /** 一棵完全枯死的树: 立着的(带断枝) / 只剩树桩 / 已经倒下的, 一部分从根烧成焦炭。 */
+    private static void stampDeadTree(Stamper stamper, int x, int z, Terrain terrain, int hash) {
+        long seed = stamper.seed;
+        int ground = terrainHeight(seed, terrain.seaLevel, x, z) + 1;
+        int meta = (hash >>> 16) & 1;
+        boolean charred = (hash >>> 8) % 100 < 30;
+        int roll = hash % 100;
+        if (roll < 12) {
+            stampFallenTrunk(stamper, x, z, ground, hash, meta, charred);
+            return;
+        }
+        int height = roll < 38 ? 1 + (hash >>> 4) % 3 : 4 + (hash >>> 4) % 6;
+        boolean leanOnX = ((hash >>> 12) & 1) == 0;
+        int leanAt = Math.max(1, height - 2);
+        for (int i = 0; i < height; i++) {
+            boolean bend = i >= leanAt;
+            int px = leanOnX && bend ? x + 1 : x;
+            int pz = !leanOnX && bend ? z + 1 : z;
+            stamper.put(px, ground + i, pz, charred && i < 2 ? Blocks.coal_block : Blocks.log, meta);
+        }
+        int branches = 2 + (hash >>> 6) % 3;
+        for (int b = 0; b < branches; b++) {
+            int branchHash = rnd(seed, x + b * 7, z - b * 13, 1150);
+            int span = Math.max(1, height - 2);
+            int y = ground + 1 + branchHash % span;
+            boolean alongX = ((branchHash >>> 7) & 1) == 0;
+            int dir = ((branchHash >>> 4) & 1) == 0 ? 1 : -1;
+            int length = 2 + (branchHash >>> 5) % 2;
+            boolean bent = y - ground >= leanAt;
+            int bx = leanOnX && bent ? x + 1 : x;
+            int bz = !leanOnX && bent ? z + 1 : z;
+            for (int t = 1; t <= length; t++) {
+                int px = alongX ? bx + dir * t : bx;
+                int pz = alongX ? bz : bz + dir * t;
+                stamper.put(px, y + (t == length ? 1 : 0), pz, Blocks.log, meta);
+            }
+        }
+    }
+
+    private static void stampFallenTrunk(Stamper stamper, int x, int z, int ground, int hash, int meta,
+        boolean charred) {
+        boolean alongX = ((hash >>> 10) & 1) == 0;
+        int dir = ((hash >>> 13) & 1) == 0 ? 1 : -1;
+        int length = 3 + (hash >>> 11) % 4;
+        for (int i = 0; i < length; i++) {
+            int step = dir > 0 ? i : -i;
+            int px = alongX ? x + step : x;
+            int pz = alongX ? z : z + step;
+            stamper.put(px, ground, pz, charred && i % 3 == 0 ? Blocks.coal_block : Blocks.log, meta);
+        }
+        int stubStep = dir > 0 ? -1 : 1;
+        int sx = alongX ? x + stubStep : x;
+        int sz = alongX ? z : z + stubStep;
+        stamper.put(sx, ground, sz, Blocks.log, meta);
+        stamper.put(sx, ground + 1, sz, Blocks.log, meta);
+    }
+
+    private static void stampDeadBushes(Stamper stamper, int chunkX, int chunkZ, Terrain terrain) {
+        for (int x = 0; x < 16; x++) {
+            for (int z = 0; z < 16; z++) {
+                int worldX = (chunkX << 4) + x;
+                int worldZ = (chunkZ << 4) + z;
+                if (noise(stamper.seed, worldX, worldZ, 1160) >= BUSH_DENSITY) {
+                    continue;
+                }
+                int ground = terrainHeight(stamper.seed, terrain.seaLevel, worldX, worldZ);
+                if (ground < terrain.seaLevel) {
+                    continue;
+                }
+                stamper.put(worldX, ground + 1, worldZ, Blocks.deadbush, 0);
+            }
+        }
+    }
+
+    /** 荒野里的墓群: 三到六块深色橡木小十字架, 一部分歪着, 一部分已经倒在地上。 */
+    private static void stampGraveCrosses(Stamper stamper, int chunkX, int chunkZ, Terrain terrain) {
+        long seed = stamper.seed;
+        if (rnd(seed, chunkX, chunkZ, 1170) % 100 >= GRAVE_CHANCE) {
+            return;
+        }
+        int originX = (chunkX << 4) + 4 + rnd(seed, chunkX, chunkZ, 1171) % 8;
+        int originZ = (chunkZ << 4) + 4 + rnd(seed, chunkX, chunkZ, 1172) % 8;
+        int count = 3 + rnd(seed, chunkX, chunkZ, 1173) % 4;
+        for (int i = 0; i < count; i++) {
+            int x = originX + rnd(seed, chunkX, chunkZ, 1180 + i) % 5 - 2;
+            int z = originZ + rnd(seed, chunkX, chunkZ, 1190 + i) % 5 - 2;
+            int ground = terrainHeight(seed, terrain.seaLevel, x, z);
+            if (ground < terrain.seaLevel) {
+                continue;
+            }
+            int hash = rnd(seed, x, z, 1200);
+            int height = 2 + hash % 2;
+            if ((hash >>> 5) % 100 < 22) {
+                for (int t = 0; t <= height; t++) {
+                    stamper.put(x, ground, z - t, Blocks.planks, 5);
+                }
+                continue;
+            }
+            int shift = (hash >>> 3) % 100 < 40 ? 1 : 0;
+            for (int t = 0; t < height; t++) {
+                stamper.put(x + (t >= height - 1 ? shift : 0), ground + t, z, Blocks.planks, 5);
+            }
+            int barY = ground + height - 1;
+            stamper.put(x - 1 + shift, barY, z, Blocks.planks, 5);
+            stamper.put(x + 1 + shift, barY, z, Blocks.planks, 5);
+        }
+    }
+
+    /** 弹坑: 把地表往下挖成一个碗, 坑底铺黑曜石/碎石, 低于海面的部分重新灌满 LCL。 */
+    private static void stampCrater(Stamper stamper, int chunkX, int chunkZ, Terrain terrain) {
+        long seed = stamper.seed;
+        if (rnd(seed, chunkX, chunkZ, 1210) % 100 >= CRATER_CHANCE) {
+            return;
+        }
+        int radius = 2 + rnd(seed, chunkX, chunkZ, 1211) % 3;
+        int depth = 1 + rnd(seed, chunkX, chunkZ, 1212) % 3;
+        int margin = radius + 1;
+        int centerX = (chunkX << 4) + margin + rnd(seed, chunkX, chunkZ, 1213) % (16 - margin * 2);
+        int centerZ = (chunkZ << 4) + margin + rnd(seed, chunkX, chunkZ, 1214) % (16 - margin * 2);
+        for (int dx = -radius; dx <= radius; dx++) {
+            for (int dz = -radius; dz <= radius; dz++) {
+                double distance = Math.sqrt(dx * dx + dz * dz) / radius;
+                if (distance > 1.0D) {
+                    continue;
+                }
+                int worldX = centerX + dx;
+                int worldZ = centerZ + dz;
+                int ground = terrainHeight(seed, terrain.seaLevel, worldX, worldZ);
+                int floor = ground - (int) Math.round(depth * (1.0D - distance));
+                for (int y = floor + 1; y <= ground; y++) {
+                    stamper.clear(worldX, y, worldZ);
+                }
+                stamper.put(worldX, floor, worldZ, craterFloor(seed, worldX, floor, worldZ), 0);
+                if (floor < terrain.seaLevel) {
+                    for (int y = floor + 1; y <= terrain.seaLevel; y++) {
+                        stamper.put(worldX, y, worldZ, terrain.water, terrain.waterMeta);
+                    }
+                }
+            }
+        }
+    }
+
+    private static Block craterFloor(long seed, int x, int y, int z) {
+        int roll = noise(seed, x, y, z, 1215) % 100;
+        if (roll < 18) {
+            return Blocks.obsidian;
+        }
+        return roll < 60 ? Blocks.gravel : Blocks.cobblestone;
+    }
+
+    /** 天使骸骨: 半埋在地里的巨大肋骨 —— 脊椎 + 一排向下弯的肋骨 + 一颗带眼窝的头骨。 */
+    private static void stampAngelBones(Stamper stamper, int chunkX, int chunkZ, Terrain terrain) {
+        long seed = stamper.seed;
+        if (rnd(seed, chunkX, chunkZ, 1220) % 100 >= BONES_CHANCE) {
+            return;
+        }
+        boolean alongX = ((rnd(seed, chunkX, chunkZ, 1221) >>> 3) & 1) == 0;
+        int length = 6 + rnd(seed, chunkX, chunkZ, 1222) % 4;
+        int baseX = (chunkX << 4) + 5 + rnd(seed, chunkX, chunkZ, 1223) % 6;
+        int baseZ = (chunkZ << 4) + 5 + rnd(seed, chunkX, chunkZ, 1224) % 6;
+        int spineY = terrainHeight(seed, terrain.seaLevel, baseX, baseZ) + 2;
+        for (int i = 0; i < length; i++) {
+            int x = alongX ? baseX + i : baseX;
+            int z = alongX ? baseZ : baseZ + i;
+            stamper.put(x, spineY, z, Blocks.quartz_block, i % 3 == 0 ? 1 : 0);
+            if (i % 2 != 0) {
+                continue;
+            }
+            for (int side = -1; side <= 1; side += 2) {
+                for (int rib = 1; rib <= 3; rib++) {
+                    if (noise(seed, x * 3 + rib, spineY - rib, z * 5 - rib, 1225) % 100 < 14) {
+                        continue;
+                    }
+                    int px = alongX ? x : x + side * rib;
+                    int pz = alongX ? z + side * rib : z;
+                    stamper.put(px, spineY - (rib - 1), pz, Blocks.quartz_block, 0);
+                }
+            }
+        }
+        int headX = alongX ? baseX - 2 : baseX;
+        int headZ = alongX ? baseZ : baseZ - 2;
+        for (int dx = -1; dx <= 1; dx++) {
+            for (int dz = -1; dz <= 1; dz++) {
+                for (int dy = 0; dy < 2; dy++) {
+                    boolean socket = dy == 1 && dz == -1 && dx != 0;
+                    if (!socket) {
+                        stamper.put(headX + dx, spineY + dy, headZ + dz, Blocks.quartz_block, 0);
+                    }
+                }
+            }
+        }
+    }
     // ------------------------------------------------------------------
     // 工具
     // ------------------------------------------------------------------

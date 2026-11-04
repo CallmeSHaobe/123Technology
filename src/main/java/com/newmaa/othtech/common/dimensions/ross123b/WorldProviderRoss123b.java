@@ -115,17 +115,17 @@ public class WorldProviderRoss123b extends WorldProviderSpace
 
     @Override
     public float getSoundVolReductionAmount() {
-        return 1;
+        return 0.8F;
     }
 
     @Override
     public float getThermalLevelModifier() {
-        return 5.0F;
+        return 0.01F;
     }
 
     @Override
     public float getWindLevel() {
-        return 0.02F;
+        return 5F;
     }
 
     @Override
@@ -145,7 +145,7 @@ public class WorldProviderRoss123b extends WorldProviderSpace
 
     @Override
     public long getDayLength() {
-        return 2000L;
+        return 6000L;
     }
 
     @Override
@@ -155,12 +155,14 @@ public class WorldProviderRoss123b extends WorldProviderSpace
 
     @Override
     public Vector3 getFogColor() {
-        return new Vector3(0.75, 0.75, 0.75);
+        // 远景雾霭: 偏冷的深色, 让地平线沉进星空里, 不再泛红
+        return new Vector3(0.05, 0.06, 0.10);
     }
 
     @Override
     public Vector3 getSkyColor() {
-        return new Vector3(0.54, 0.0, 0.0);
+        // 天球主体是黑底银河, 所以底色压到近乎全黑(原来的纯红会把银河和星星盖掉)
+        return new Vector3(0.006, 0.008, 0.016);
     }
 
     @Override
