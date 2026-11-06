@@ -6,6 +6,7 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
+import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.IProgressUpdate;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -18,6 +19,7 @@ import com.newmaa.othtech.common.blocks.antimonia.AntimoniaBlocks;
 import com.newmaa.othtech.common.blocks.fluids.RossFluids;
 import com.newmaa.othtech.common.dimensions.biome.BiomeGenBaseRoss123b;
 import com.newmaa.othtech.common.dimensions.structure.ross123b.RossCity;
+import com.newmaa.othtech.common.dimensions.structure.ross123b.RossCityLoot;
 
 import galaxyspace.core.dimension.ChunkProviderSpaceLakes;
 import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
@@ -84,6 +86,17 @@ public class ChunkProviderRoss123b extends ChunkProviderSpaceLakes {
         RossCity.stamp(blocks, metadata, chunkX, chunkZ, this.world.getSeed(), this.terrain);
 
         Chunk chunk = new Chunk(this.world, blocks, metadata, chunkX, chunkZ);
+        for (int x = 0; x < 16; x++) {
+            for (int z = 0; z < 16; z++) {
+                for (int y = SEA_LEVEL + 1; y <= 160; y++) {
+                    if (blocks[(x * 16 + z) * COLUMN_HEIGHT + y] != Blocks.chest) continue;
+                    TileEntityChest chest = new TileEntityChest();
+                    RossCityLoot.fill(chest, this.world.getSeed(), (chunkX << 4) + x, (chunkZ << 4) + z);
+                    chunk.func_150812_a(x, y, z, chest);
+                    chunk.setChunkModified();
+                }
+            }
+        }
 
         // EndlessIDs 环境下调用原版 getBiomeArray() 会直接崩, 必须走短数组接口
         if (chunk instanceof ChunkBiomeHook hook) {

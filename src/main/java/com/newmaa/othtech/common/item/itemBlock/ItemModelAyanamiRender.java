@@ -47,7 +47,7 @@ public class ItemModelAyanamiRender implements IItemRenderer {
         GL11.glScalef(1.1f, 1.1f, 1.1f);
         GL11.glRotated(180, 0, 1, 0);
         GL11.glTranslatef(-0.2f, 0.3f, -0.4f);
-        GL11.glRotated(-90, 0, 1, 0);
+        GL11.glRotated(45, 0, 1, 0);
         Minecraft.getMinecraft().renderEngine.bindTexture(Main);
         ModelAyanami.renderAll();
         GL11.glPopMatrix();
