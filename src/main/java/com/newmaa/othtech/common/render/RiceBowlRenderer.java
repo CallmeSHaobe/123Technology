@@ -9,6 +9,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL13;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -63,7 +64,7 @@ public class RiceBowlRenderer extends TileEntitySpecialRenderer {
     /** 米饭开始鼓出碗口的高度 */
     private static final float RICE_RIM = BOWL_RIM_Y + 0.06F;
     /** 一张贴图在世界里占多少格：决定"米粒有多大"，1.10 格 ≈ 单颗米 7cm、碗口宽 32 颗 */
-    private static final float TEX_BLOCK = 1.10F;
+    private static final float TEX_BLOCK = 2.20F;
     /** 打包的满亮度 lightmap 坐标（u=240, v=240）：逐顶点写死，防止 Tessellator 复用上一批的亮度 */
     private static final int FULL_BRIGHT = 0xF000F0;
 
@@ -80,9 +81,9 @@ public class RiceBowlRenderer extends TileEntitySpecialRenderer {
     // ============================================================
     // 三、颜色（0..1）
     // ============================================================
-    private static final float[] C_BOWL = { 0.93F, 0.94F, 0.96F }; // 白瓷
-    private static final float[] C_INNER = { 0.62F, 0.66F, 0.74F }; // 碗内壁：白瓷落在阴影里
-    private static final float[] C_RIM = { 0.55F, 0.78F, 1.00F }; // 碗口内缘一条细亮线
+    private static final float[] C_BOWL = { 1.00F, 1.00F, 1.00F }; // 白瓷（贴图已去蓝，这里不再压色）
+    private static final float[] C_INNER = { 1.00F, 1.00F, 1.00F }; // 碗内壁：纯白瓷（别带蓝灰，用户反馈投影发蓝）
+    private static final float[] C_RIM = { 1.00F, 1.00F, 1.00F }; // 碗口内缘一条细亮线（白，不要蓝）
     private static final float[] C_RING = { 0.32F, 0.52F, 1.00F };
     private static final float[] C_WHITE = { 1.00F, 1.00F, 1.00F }; // 贴图原色，不额外染色
 
@@ -178,9 +179,18 @@ public class RiceBowlRenderer extends TileEntitySpecialRenderer {
         // 实体部件不透明：关混合，避免碗壁/米饭与背后内壁半透明混出灰雾
         GL11.glDisable(GL11.GL_BLEND);
         GL11.glEnable(GL11.GL_TEXTURE_2D);
-        // 有些渲染器会把 TEXTURE_ENV 改成 COMBINE/别的模式，导致贴图被额外乘暗；这里强制回 MODULATE
+        // 有些渲染器会把 TEXTURE_ENV 强改后不还原，导致贴图被额外乘暗；这里强制回 MODULATE
         GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, GL11.GL_TEXTURE_ENV_MODE, GL11.GL_MODULATE);
         GL11.glColor4f(1F, 1F, 1F, 1F);
+        // ★ 经典 1.7.10 全亮 TESR 技巧：关掉 1 号纹理单元（lightmap）。
+        // Angelica ≥2.2.36 的批量 TESR 管线按 GLSM 跟踪的 unit1 开关（DrawState.liveLightmap）
+        // 选着色器变体；其 FFP 仿真会把 dispatcher 预灌的世界光照喂进着色器，压过 TESR 里
+        // 显式 setLightmapTextureCoords(240,240)——暗处/暮色下就是蓝偏色（2.9.0 实测）。
+        // 关 unit1 → 管线走"无 lightmap"变体 → 片元 = 贴图 × 顶点色，我们设的颜色原样输出；
+        // 原版 FFP / 旧 Angelica 下这同样是标准全亮手法（RC-2 兼容）。用完必须恢复，别污染别的 TESR。
+        GL13.glActiveTexture(OpenGlHelper.lightmapTexUnit);
+        GL11.glDisable(GL11.GL_TEXTURE_2D);
+        GL13.glActiveTexture(OpenGlHelper.defaultTexUnit);
         bindTexture(BOWL_TEX);
         drawBowlWall(tes, timer, fade, ox, oy, oz, camX, camY, camZ);
 
@@ -192,7 +202,10 @@ public class RiceBowlRenderer extends TileEntitySpecialRenderer {
         bindTexture(RICE_TEX);
         drawRice(tes, timer, fill, fade, ox, oy, oz, camX, camY, camZ);
 
-        // ---- 6) 还原
+        // ---- 6) 还原（lightmap 单元必须还原，否则后续别的 TESR 会丢光照变蓝紫）
+        GL13.glActiveTexture(OpenGlHelper.lightmapTexUnit);
+        GL11.glEnable(GL11.GL_TEXTURE_2D);
+        GL13.glActiveTexture(OpenGlHelper.defaultTexUnit);
         GL11.glDepthMask(true);
         GL11.glDisable(GL11.GL_BLEND);
         GL11.glEnable(GL11.GL_CULL_FACE);
@@ -393,8 +406,15 @@ public class RiceBowlRenderer extends TileEntitySpecialRenderer {
      */
     private void drawRice(Tessellator tes, float time, float fill, float fade, float ox, float oy, float oz, float camX,
         float camY, float camZ) {
+        // 米饭必须纯白：关雾 + 强制白色，防止水下/远处雾色把饭染蓝
+        boolean fog = GL11.glIsEnabled(GL11.GL_FOG);
+        if (fog) GL11.glDisable(GL11.GL_FOG);
+        GL11.glColor4f(1F, 1F, 1F, 1F);
         float yTop = EMPTY_TOP + (FULL_TOP - EMPTY_TOP) * Math.min(fill, 1.08F);
-        if (yTop <= BOWL_IN_Y + 0.01F) return;
+        if (yTop <= BOWL_IN_Y + 0.01F) {
+            if (fog) GL11.glEnable(GL11.GL_FOG);
+            return;
+        }
 
         // ---- 剖面：[(r, y), ...]，由外圈向中心收
         float[] pr = new float[RICE_LAYER + 3];
@@ -452,6 +472,7 @@ public class RiceBowlRenderer extends TileEntitySpecialRenderer {
             }
         }
         tes.draw();
+        if (fog) GL11.glEnable(GL11.GL_FOG);
     }
 
     /** 米饭顶点：逐顶点上色（切向法线做 Gouraud）+ 世界坐标平面投影 UV */
@@ -460,7 +481,7 @@ public class RiceBowlRenderer extends TileEntitySpecialRenderer {
         float lx = r * ca, lz = r * sa;
         // 3D 法线 = (nr*cos, ny, nr*sin)，已归一化（nr,ny 本身是单位向量）
         // 米饭直接给纯白顶点色：之前无论怎么调 shade 都偏灰，先排除"逐顶点乘暗"这条路径
-        tes.setColorOpaque_F(1F, 1F, 1F);
+        tes.setColorOpaque_F(1.0F, 0.98F, 0.93F);
         tes.addVertexWithUV(lx, y, lz, lx / TEX_BLOCK, lz / TEX_BLOCK);
     }
 
