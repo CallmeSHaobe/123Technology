@@ -116,8 +116,8 @@ oth.comb.chromaticglass=Chromatic Glass Comb
 oth.comb.glass=Glass Comb
 
 #Entities
-entity.123Technology.DogYellow.name=§eYellow Dog
-entity.123Technology.CustomPlayer.name=§4Self-Replicant
+entity.123technology.DogYellow.name=§eYellow Dog
+entity.123technology.CustomPlayer.name=§4Self-Replicant
 
 #Blocks
 tile.modelTallHat.name=White Christmas Hat (Block)
@@ -933,9 +933,9 @@ ote.ds.upg.allDone=§6All upgrades done
 ote.ds.gui.avatar1=§1I have not eaten today QAQ
 ote.ds.gui.avatar2=§1You stared at me - feed me!?!
 oth.clone.speak=Clone: who am I--? %s
-entity.123Technology.entityNukeThrowable.name=Nuke Throwable
-entity.123Technology.DogRed.name=§cRed Dog
-entity.123Technology.DogBlue.name=§9Blue Dog
+entity.123technology.entityNukeThrowable.name=Nuke Throwable
+entity.123technology.DogRed.name=§cRed Dog
+entity.123technology.DogBlue.name=§9Blue Dog
 #Items
 item.dogSpawnEgg.name=Dog Spawn Egg
 # AbstractSanctum

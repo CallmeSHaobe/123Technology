@@ -6,7 +6,9 @@ import static com.newmaa.othtech.common.OTHItemList.SpaceElevatorModulePumpT4;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -50,12 +52,14 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLLoadCompleteEvent;
+import cpw.mods.fml.common.event.FMLMissingMappingsEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerAboutToStartEvent;
 import cpw.mods.fml.common.event.FMLServerStartedEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.GameRegistry.Type;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import gregtech.api.GregTechAPI;
@@ -80,7 +84,8 @@ import gtnhintergalactic.recipe.SpacePumpingRecipes;
     acceptedMinecraftVersions = "1.7.10")
 public class OTHTechnology {
 
-    public static final String MODID = "123Technology";
+    public static final String MODID = "123technology";
+    private static final String LEGACY_MODID = "123Technology";
 
     public static final String modName = Tags.MODNAME;
 
@@ -152,6 +157,31 @@ public class OTHTechnology {
         NEIRecipeMaps.IMCSender();
         // 迪普西科的米饭投影影子方块是纯技术方块，别让它在 NEI 里冒出来
         API.hideItem(new ItemStack(DeepSeikoBlocks.dsHolo));
+    }
+
+    @Mod.EventHandler
+    public void remapLegacyRegistrations(FMLMissingMappingsEvent event) {
+        String legacyPrefix = LEGACY_MODID + ":";
+        for (FMLMissingMappingsEvent.MissingMapping mapping : event.getAll()) {
+            if (!mapping.name.startsWith(legacyPrefix)) continue;
+
+            String path = mapping.name.substring(legacyPrefix.length());
+            if (mapping.type == Type.BLOCK) {
+                Block target = GameRegistry.findBlock(MODID, path);
+                if (target != null) {
+                    mapping.remap(target);
+                } else {
+                    LOG.warn("No replacement block for legacy mapping {}", mapping.name);
+                }
+            } else if (mapping.type == Type.ITEM) {
+                Item target = GameRegistry.findItem(MODID, path);
+                if (target != null) {
+                    mapping.remap(target);
+                } else {
+                    LOG.warn("No replacement item for legacy mapping {}", mapping.name);
+                }
+            }
+        }
     }
 
     @SideOnly(Side.CLIENT)

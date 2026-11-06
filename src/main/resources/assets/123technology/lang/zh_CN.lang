@@ -113,8 +113,8 @@ oth.comb.chromaticglass=彩色玻璃蜂窝
 oth.comb.glass=玻璃蜂窝
 
 #Entities
-entity.123Technology.DogYellow.name=§e黄狗
-entity.123Technology.CustomPlayer.name=§4自行复制体
+entity.123technology.DogYellow.name=§e黄狗
+entity.123technology.CustomPlayer.name=§4自行复制体
 
 #Blocks
 tile.modelTallHat.name=白色圣诞礼帽(Block)
@@ -939,9 +939,9 @@ ote.ds.upg.allDone=§6已全部升级
 ote.ds.gui.avatar1=§1今天又没吃饱饭QAQ
 ote.ds.gui.avatar2=§1看到了还不喂我？！
 oth.clone.speak=复制体: 我是谁--?%s
-entity.123Technology.entityNukeThrowable.name=核弹投掷物
-entity.123Technology.DogRed.name=§c红狗
-entity.123Technology.DogBlue.name=§9蓝狗
+entity.123technology.entityNukeThrowable.name=核弹投掷物
+entity.123technology.DogRed.name=§c红狗
+entity.123technology.DogBlue.name=§9蓝狗
 #Items
 item.dogSpawnEgg.name=狗刷怪蛋
 # AbstractSanctum

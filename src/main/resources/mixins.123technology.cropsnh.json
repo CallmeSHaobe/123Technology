@@ -2,7 +2,7 @@
   "required": false,
   "minVersion": "0.8.5-GTNH",
   "package": "com.newmaa.othtech.mixin",
-  "refmap": "mixins.othtech.refmap.json",
+  "refmap": "mixins.123technology.refmap.json",
   "target": "@env(DEFAULT)",
   "compatibilityLevel": "JAVA_8",
   "mixins": [

@@ -8,7 +8,7 @@ import com.gtnewhorizon.gtnhmixins.ILateMixinLoader;
 import com.gtnewhorizon.gtnhmixins.LateMixin;
 
 /**
- * 晚期 mixin（{@code mixins.othtech.late.json}）的注册入口。
+ * 晚期 mixin（{@code mixins.123technology.late.json}）的注册入口。
  * <p>
  * 注意：原来的 {@code BWRecipeLoadMixin} 已经移除。它靠注入
  * {@code CircuitImprintLoader#makeCraftingRecipes} 尾部来把 {@code bw.recipe.cal} 的配方拷进 MegaCAL，
@@ -20,7 +20,7 @@ public class LateMixins implements ILateMixinLoader {
 
     @Override
     public String getMixinConfig() {
-        return "mixins.othtech.late.json";
+        return "mixins.123technology.late.json";
     }
 
     @Override

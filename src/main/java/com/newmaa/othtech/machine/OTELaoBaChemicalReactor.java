@@ -28,6 +28,7 @@ import org.jetbrains.annotations.NotNull;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
+import com.newmaa.othtech.OTHTechnology;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 import com.newmaa.othtech.machine.machineclass.OTHProcessingLogic;
 import com.newmaa.othtech.utils.Utils;
@@ -396,7 +397,7 @@ public class OTELaoBaChemicalReactor extends OTHMultiMachineBase<OTELaoBaChemica
     protected void updatetier() {
         ItemStack aGuiStack = this.getControllerSlot();
         isUnlocked = aGuiStack != null
-            && GTUtility.areStacksEqual(aGuiStack, GTModHandler.getModItem("123Technology", "MetaItemOTH", 1, 0));
+            && GTUtility.areStacksEqual(aGuiStack, GTModHandler.getModItem(OTHTechnology.MODID, "MetaItemOTH", 1, 0));
     }
 
     @Override
