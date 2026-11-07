@@ -478,7 +478,7 @@ public class RecipesDeepSeiko implements IRecipePool {
             GTModHandler.getModItem("appliedenergistics2", "item.ItemExtremeStorageCell.Singularity", 1),
             GTModHandler.getModItem("ae2fc", "fluid_storage.singularity", 1),
             GTModHandler.getModItem("dreamcraft", "HeavenlyPikoCircuit", 16),
-            GTModHandler.getModItem("123Technology", "WhiteRice", 64) };
+            GTModHandler.getModItem(OTHTechnology.MODID, "WhiteRice", 64) };
         if (hasNullItem((Object[]) inputs)) {
             OTHTechnology.LOG.warn("[DeepSeiko] 凝聚态适配舱配方缺少物品，本次跳过");
             return;

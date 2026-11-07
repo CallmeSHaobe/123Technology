@@ -7,6 +7,7 @@ public class AntimoniaBlocks {
     public static BlockAntimoniaGrass antimoniaBlockGrass;
     public static BlockAntimoniaDirt antimoniaBlockDirt;
     public static BlockAntimoniaStone antimoniaBlockStone;
+    public static BlockAntimoniaSand antimoniaBlockSand;
 
     public AntimoniaBlocks() {}
 
@@ -14,9 +15,11 @@ public class AntimoniaBlocks {
         antimoniaBlockGrass = new BlockAntimoniaGrass();
         antimoniaBlockDirt = new BlockAntimoniaDirt();
         antimoniaBlockStone = new BlockAntimoniaStone();
+        antimoniaBlockSand = new BlockAntimoniaSand();
         GameRegistry.registerBlock(antimoniaBlockGrass, "antimoniaGrassBlock");
         GameRegistry.registerBlock(antimoniaBlockDirt, "antimoniaDirtBlock");
         GameRegistry.registerBlock(antimoniaBlockStone, "antimoniaStoneBlock");
+        GameRegistry.registerBlock(antimoniaBlockSand, "antimoniaSandBlock");
         oreDictRegistration();
     }
 

@@ -88,7 +88,7 @@ public class RecipesMain implements IRecipePool {
         // GTOreDictUnificator.get(OrePrefixes.dust, Materials.Osmium, 1),
         // GTOreDictUnificator.get(OrePrefixes.dust, Materials.Samarium, 1))
         // .fluidInputs(new FluidStack(water, 123123))
-        // .itemOutputs(GTModHandler.getModItem("123Technology", "dustIrOsSm", 1))
+        // .itemOutputs(GTModHandler.getModItem(OTHTechnology.MODID, "dustIrOsSm", 1))
         //
         // .eut(123123)
         // .duration(8100)
@@ -512,19 +512,33 @@ public class RecipesMain implements IRecipePool {
             .eut(480)
             .duration(1200 * 20)
             .addTo(RecipeMaps.multiblockChemicalReactorRecipes);
-        // ALS
         RecipeBuilder.builder()
-            .itemInputs(
-                GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 7),
-                GTOreDictUnificator.get(OrePrefixes.dust, Materials.Phosphorus, 16))
-            .fluidInputs(
+            .itemOutputs(
+                GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 16),
+                GTOreDictUnificator.get(OrePrefixes.dust, Materials.Phosphorus, 7))
+            .fluidOutputs(
                 Materials.Hydrogen.getGas(26000),
                 Materials.Oxygen.getGas(30000),
                 Materials.Nitrogen.getGas(21000))
-            .fluidOutputs(BWLiquids.ALS.getFluidOrGas(20000))
-            .eut(480)
-            .duration(1200 * 20)
-            .addTo(RecipeMaps.multiblockChemicalReactorRecipes);
+            .fluidInputs(BWLiquids.LCL.getFluidOrGas(20000))
+            .eut(1920)
+            .duration(80 * 20)
+            .addTo(RecipeMaps.electrolyzerNonCellRecipes);
+        // ALS
+        /*
+         * RecipeBuilder.builder()
+         * .itemInputs(
+         * GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 7),
+         * GTOreDictUnificator.get(OrePrefixes.dust, Materials.Phosphorus, 16))
+         * .fluidInputs(
+         * Materials.Hydrogen.getGas(26000),
+         * Materials.Oxygen.getGas(30000),
+         * Materials.Nitrogen.getGas(21000))
+         * .fluidOutputs(BWLiquids.ALS.getFluidOrGas(20000))
+         * .eut(480)
+         * .duration(1200 * 20)
+         * .addTo(RecipeMaps.multiblockChemicalReactorRecipes);
+         */
         // Ayanami Model
         RecipeBuilder.builder()
             .fluidInputs(BWLiquids.LCL.getFluidOrGas(50000))
@@ -533,19 +547,19 @@ public class RecipesMain implements IRecipePool {
                 GTModHandler.getModItem("gregtech", "gt.metaitem.02", 8, 32429),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.02", 8, 32420),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 17472))
-            .itemOutputs(GTModHandler.getModItem("123Technology", "modelAyanami", 1))
+            .itemOutputs(GTModHandler.getModItem(OTHTechnology.MODID, "modelAyanami", 1))
             .eut(320)
             .duration(40 * 20)
             .addTo(assemblerRecipes);
         // Asuka Model
         RecipeBuilder.builder()
-            .fluidInputs(BWLiquids.ALS.getFluidOrGas(50000))
+            .fluidInputs(BWLiquids.LCL.getFluidOrGas(50000))
             .itemInputs(
                 GTUtility.getIntegratedCircuit(17),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.02", 8, 32428),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.02", 8, 32420),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 17472))
-            .itemOutputs(GTModHandler.getModItem("123Technology", "modelAsuka", 1))
+            .itemOutputs(GTModHandler.getModItem(OTHTechnology.MODID, "modelAsuka", 1))
             .eut(320)
             .duration(40 * 20)
             .addTo(assemblerRecipes);
@@ -566,7 +580,7 @@ public class RecipesMain implements IRecipePool {
         RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(17),
-                GTModHandler.getModItem("123Technology", "modelAyanami", 0),
+                GTModHandler.getModItem(OTHTechnology.MODID, "modelAyanami", 0),
                 new ItemStack(Items.diamond, 3))
             .itemOutputs(
                 new ItemStack(ItemLoader.RecordEVAA, 1),

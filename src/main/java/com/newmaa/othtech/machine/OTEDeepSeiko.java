@@ -2,14 +2,11 @@ package com.newmaa.othtech.machine;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Predicate;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -160,10 +157,6 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
 
     private static final String STRUCTURE_PIECE_MAIN = "main";
 
-    private static final Logger LOG_PREVIEW = LogManager.getLogger("123Technology/DeepSeikoPreview");
-
-    private static World sPreviewBuiltWorld = null;
-
     private static IStructureDefinition<OTEDeepSeiko> STRUCTURE_DEFINITION = null;
 
     /** 控制器在结构坐标系里的位置（StructureLib 的 checkPiece/buildPiece 偏移） */
@@ -239,11 +232,11 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
             CustomItemList.StabilisationFieldGeneratorTier5, CustomItemList.StabilisationFieldGeneratorTier6,
             CustomItemList.StabilisationFieldGeneratorTier7, CustomItemList.StabilisationFieldGeneratorTier8 };
         MARKED_HATCHES = new String[] { "19,11,0:H", "18,11,0:H", "17,11,0:H", "16,11,0:H", "15,11,0:H", "14,11,0:H",
-            "13,11,0:H", "17,10,0:H", "15,10,0:H", "14,10,0:H", "17,9,0:H", "16,9,0:H", "15,9,0:H", "20,10,1:H",
-            "19,10,1:H", "18,10,1:H", "13,10,1:H", "12,10,1:H", "19,9,1:H", "18,9,1:H", "14,9,1:H", "13,9,1:H",
-            "18,8,1:H", "17,8,1:H", "16,8,1:H", "15,8,1:H", "14,8,1:H", "21,9,2:H", "20,9,2:H", "12,9,2:H", "11,9,2:H",
-            "19,8,2:H", "13,8,2:H", "12,8,2:H", "19,7,2:H", "18,7,2:H", "17,7,2:H", "16,7,2:H", "15,7,2:H", "14,7,2:H",
-            "13,7,2:H" };
+            "13,11,0:H", "18,10,0:H", "20,8,2:H", "17,10,0:H", "15,10,0:H", "14,10,0:H", "17,9,0:H", "16,9,0:H",
+            "15,9,0:H", "20,10,1:H", "19,10,1:H", "18,10,1:H", "13,10,1:H", "12,10,1:H", "19,9,1:H", "18,9,1:H",
+            "14,9,1:H", "13,9,1:H", "18,8,1:H", "17,8,1:H", "16,8,1:H", "15,8,1:H", "14,8,1:H", "21,9,2:H", "20,9,2:H",
+            "12,9,2:H", "11,9,2:H", "19,8,2:H", "13,8,2:H", "12,8,2:H", "19,7,2:H", "18,7,2:H", "17,7,2:H", "16,7,2:H",
+            "15,7,2:H", "14,7,2:H", "13,7,2:H" };
         // 正面：16x16 机壳基底 + 覆盖层立绘，覆盖层由 IIconContainer#getOverlayIcon() 提供
         // （GTRenderedTexture 会在同一面先画基底再叠覆盖层；builder 只允许 addIcon 一次）
         CONTROLLER_FRONT_TEXTURE = TextureFactory.builder()
@@ -460,66 +453,24 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
 
     public void construct(ItemStack stackSize, boolean hintsOnly) {
         this.repairMachine();
-        long t0 = System.nanoTime();
-        try {
-            this.buildPiece(
-                STRUCTURE_PIECE_MAIN,
-                stackSize,
-                hintsOnly,
-                HORIZONTAL_OFFSET,
-                VERTICAL_OFFSET,
-                DEPTH_OFFSET);
-        } catch (Throwable t) {
-            LOG_PREVIEW.error("构造（construct）时抛出异常 hintsOnly=" + hintsOnly, t);
-            throw t;
-        } finally {
-            LOG_PREVIEW
-                .info("construct(hintsOnly=" + hintsOnly + ") 耗时 " + (System.nanoTime() - t0) / 1000000L + " ms");
-        }
+        this.buildPiece(STRUCTURE_PIECE_MAIN, stackSize, hintsOnly, HORIZONTAL_OFFSET, VERTICAL_OFFSET, DEPTH_OFFSET);
     }
 
     public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
         if (this.mMachine) {
             return -1;
         }
-        if (this.isPreviewWorld()) {
-            World world = this.getBaseMetaTileEntity()
-                .getWorld();
-            if (sPreviewBuiltWorld != world) {
-                sPreviewBuiltWorld = world;
-                int before = this.countPreviewBlocks();
-                try {
-                    this.buildPiece(
-                        STRUCTURE_PIECE_MAIN,
-                        stackSize,
-                        false,
-                        HORIZONTAL_OFFSET,
-                        VERTICAL_OFFSET,
-                        DEPTH_OFFSET);
-                } catch (Throwable t) {
-                    LOG_PREVIEW.error("预览建造抛异常", t);
-                }
-                LOG_PREVIEW.info("预览建造完成：方块数 " + before + " -> " + this.countPreviewBlocks());
-            }
-            return 0;
-        }
-
         int realBudget = elementBudget >= 200 ? elementBudget : Math.min(200, elementBudget * 5);
-        try {
-            return this.survivalBuildPiece(
-                STRUCTURE_PIECE_MAIN,
-                stackSize,
-                HORIZONTAL_OFFSET,
-                VERTICAL_OFFSET,
-                DEPTH_OFFSET,
-                realBudget,
-                env,
-                false,
-                true);
-        } catch (Throwable t) {
-            LOG_PREVIEW.error("生存建造抛异常 budget=" + elementBudget, t);
-            return -1;
-        }
+        return this.survivalBuildPiece(
+            STRUCTURE_PIECE_MAIN,
+            stackSize,
+            HORIZONTAL_OFFSET,
+            VERTICAL_OFFSET,
+            DEPTH_OFFSET,
+            realBudget,
+            env,
+            false,
+            true);
     }
 
     /**
@@ -543,10 +494,7 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
     public IStructureDefinition<OTEDeepSeiko> getStructureDefinition() {
         if (STRUCTURE_DEFINITION == null) {
             int casingIndex = GTUtility.getCasingTextureIndex(DeepSeikoBlocks.dsCasing, 0);
-            STRUCTURE_DEFINITION = StructureDefinition.builder()
-                // 三条鳍信道（ds_left_fin / ds_right_fin / ds_top_fin）由 finSlot() 里的 withChannel 登记，
-                // NEI 预览会据此生成 1~10 的信道滑条。注意：StructureLib 1.4.x 没有 addChannel()，
-                // 所以这里不显式声明信道上下限（预览滑条的最小值按 0 = 不设置处理）。
+            StructureDefinition.Builder<OTEDeepSeiko> builder = StructureDefinition.builder()
                 .addShape("main", generateWhaleShape())
                 .addElement('A', StructureUtility.ofBlock(DeepSeikoBlocks.dsCasing, 0))
                 .addElement('L', StructureUtility.ofBlock(DeepSeikoBlocks.dsCasing, 7))
@@ -554,14 +502,16 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
                 .addElement('B', StructureUtility.ofBlock(DeepSeikoBlocks.dsCasing, 2))
                 .addElement(
                     'H',
+                    // 舱位在前、机壳兜底：玩家已放的舱室由 shouldSkip 保留（不覆盖），空位由
+                    // buildAndChain 的机壳兜底填上，避免头顶甲板留洞。
                     GTStructureUtility.buildHatchAdder(OTEDeepSeiko.class)
                         .adder(OTEDeepSeiko::addAnyHatchToMachineList)
+                        // hint(1) = BlockRenderer6343 舱位高亮的点号；hint(Supplier) = 高亮
+                        // tooltip 里「可用仓室」的舱型说明（缺省会显示 "unspecified GT hatch"）
                         .hint(1)
+                        .hint(() -> StatCollector.translateToLocal("ote.ds.hatch.universal"))
                         .casingIndex(casingIndex)
                         .hatchItemFilter((t) -> { return anyHatchItem(); })
-                        // GT 自带机制：格子已有 GT 机器/舱室时 survivalPlaceBlock 返回 SKIP，
-                        // 而 placeBlock 对 SKIP 也返回 true（见 HatchElementBuilder$2 字节码），
-                        // 链条就此停止，后面的 ofBlock(casing) 不会把玩家放好的舱室覆盖掉。
                         .shouldSkip((t, te) -> true)
                         .buildAndChain(
                             new IStructureElement[] { StructureUtility.ofBlock(DeepSeikoBlocks.dsCasing, 0) }))
@@ -595,8 +545,18 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
                     'V',
                     StructureUtility.ofChain(
                         new IStructureElement[] { StructureUtility.ofBlock(DeepSeikoBlocks.dsCasing, 1),
-                            StructureUtility.ofBlock(DeepSeikoBlocks.dsCasing, 6) }))
-                .build();
+                            StructureUtility.ofBlock(DeepSeikoBlocks.dsCasing, 6) }));
+            // 三环信道的显式定义（1~10 级）：blockrenderer6343 的预览 GUI 据此给出
+            // "未设置 = 跟随主等级滑条" 的语义。StructureLib 1.4.46+ 才有该 API，
+            // 旧版（如 RC-2 的 1.4.45）没有 → NoSuchMethodError，这里兜底跳过，保证同一 jar 双实例可用。
+            try {
+                builder.addChannel(CH_FIN_TIME, 1, 10)
+                    .addChannel(CH_FIN_SPACE, 1, 10)
+                    .addChannel(CH_FIN_STAB, 1, 10);
+            } catch (Throwable t) {
+                LOG.debug("StructureLib 无信道定义 API（<1.4.46），跳过三环信道显式注册", t);
+            }
+            STRUCTURE_DEFINITION = builder.build();
         }
 
         return STRUCTURE_DEFINITION;
@@ -1459,45 +1419,6 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
         return base == null ? ExtendedFacing.DEFAULT : ExtendedFacing.of(base.getFrontFacing());
     }
 
-    private boolean isPreviewWorld() {
-        IGregTechTileEntity base = this.getBaseMetaTileEntity();
-        if (base == null || base.getWorld() == null) return false;
-        String name = base.getWorld()
-            .getClass()
-            .getName();
-        return name.contains("Dummy") || name.contains("Observer") || name.contains("Tracked");
-    }
-
-    private int countPreviewBlocks() {
-        IGregTechTileEntity base = this.getBaseMetaTileEntity();
-        if (base == null || base.getWorld() == null) return -1;
-        World world = base.getWorld();
-        int cx = base.getXCoord();
-        int cy = base.getYCoord();
-        int cz = base.getZCoord();
-        int nonAir = 0;
-        Map<String, Integer> byBlock = new HashMap<>();
-
-        for (int dx = -64; dx <= 64; ++dx) {
-            for (int dz = -64; dz <= 64; ++dz) {
-                for (int dy = -14; dy <= 16; ++dy) {
-                    Block block = world.getBlock(cx + dx, cy + dy, cz + dz);
-                    if (block == null || block == Blocks.air) continue;
-                    ++nonAir;
-                    String key = block.getUnlocalizedName() + "@" + world.getBlockMetadata(cx + dx, cy + dy, cz + dz);
-                    byBlock.merge(key, 1, Integer::sum);
-                }
-            }
-        }
-
-        byBlock.entrySet()
-            .stream()
-            .sorted((a, b) -> Integer.compare(b.getValue(), a.getValue()))
-            .limit(8L)
-            .forEach(e -> LOG_PREVIEW.info("    " + e.getKey() + " x" + e.getValue()));
-        return nonAir;
-    }
-
     /**
      * 三环「鳍」信道槽位：**1 级 = 鳍块本身**，2~10 级 = 该家族发生器的 9 个等级（粗制 → 鸿蒙）。
      * <p>
@@ -1531,7 +1452,8 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
             }
             return null;
         }, reps, Integer.valueOf(0), setter, t -> Integer.valueOf(getter.applyAsInt(t)));
-        // 老存档兼容：空位、以及原先填的普通鲸脂外壳仍然算数（不参与定级）
+        // 保持 ofChain 兜底（空位/普通机壳）——不然预览建到第一个鳍格就失败、塌成单方块。
+        // 等级滑条要生效，靠下面 registerFinChannel() 把 1~10 级对应的方块注册成信道指示物。
         return StructureUtility.ofChain(
             StructureUtility.withChannel(channel, tiered),
             StructureUtility.ofBlock(DeepSeikoBlocks.dsCasing, 0),
@@ -1857,18 +1779,28 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
      */
     private static void registerFinChannels() {
         try {
-            registerFinChannel(CH_FIN_TIME, DeepSeikoCasingMeta.FIN_TIME);
-            registerFinChannel(CH_FIN_SPACE, DeepSeikoCasingMeta.FIN_SPACE);
-            registerFinChannel(CH_FIN_STAB, DeepSeikoCasingMeta.FIN_STAB);
+            registerFinChannel(CH_FIN_TIME, DeepSeikoCasingMeta.FIN_TIME, TIME_GENS);
+            registerFinChannel(CH_FIN_SPACE, DeepSeikoCasingMeta.FIN_SPACE, SPACE_GENS);
+            registerFinChannel(CH_FIN_STAB, DeepSeikoCasingMeta.FIN_STAB, STAB_GENS);
         } catch (Throwable ignored) {
             // 信道说明只是锦上添花
         }
     }
 
-    private static void registerFinChannel(String channel, int finMeta) {
+    /**
+     * 给 NEI 预览注册每个等级对应的“信道指示物”：1 = 鳍，2~10 = 各等级发生器。
+     * 只注册 1 级时，预览拿不到 2~10 的方块映射，拖等级滑条就没有效果。
+     */
+    private static void registerFinChannel(String channel, int finMeta, IItemContainer[] gens) {
         StructureLibAPI.registerChannelDescription(channel, "123technology", "channels.123technology." + channel);
         StructureLibAPI
             .registerChannelItem(channel, "123technology", 1, new ItemStack(DeepSeikoBlocks.dsCasing, 1, finMeta));
+        for (int i = 0; i < gens.length; ++i) {
+            ItemStack stack = gens[i].get(1L, new Object[0]);
+            if (stack != null) {
+                StructureLibAPI.registerChannelItem(channel, "123technology", i + 2, stack);
+            }
+        }
     }
 
     // Blue whale raw shape data (generated by build_from_ref.py, do not edit by hand).

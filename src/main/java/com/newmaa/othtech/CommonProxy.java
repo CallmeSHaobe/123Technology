@@ -1,8 +1,11 @@
 package com.newmaa.othtech;
 
 import net.minecraft.block.Block;
+import net.minecraftforge.common.MinecraftForge;
 
 import com.newmaa.othtech.common.blocks.oterender.BlockRocketRender;
+import com.newmaa.othtech.common.dimensions.ross123b.Ross123bBiomeMigration;
+import com.newmaa.othtech.common.dimensions.ross123b.Ross123bSpawnHandler;
 import com.newmaa.othtech.common.entity.EntityLoader;
 
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -22,6 +25,8 @@ public class CommonProxy {
     // load "Do your mod setup. Build whatever data structures you care about. Register recipes." (Remove if not needed)
     public void init(FMLInitializationEvent event) {
         new EntityLoader();
+        MinecraftForge.EVENT_BUS.register(new Ross123bSpawnHandler());
+        MinecraftForge.EVENT_BUS.register(new Ross123bBiomeMigration());
     }
 
     // postInit "Handle interaction with other mods, complete your setup based on this." (Remove if not needed)

@@ -44,15 +44,6 @@ public class WorldProviderRoss123b extends WorldProviderSpace
 
     }
 
-    /**
-     * 天气: 不再是"永远下雨", 而是每 {@link #SHOWER_CYCLE} tick 来一场 60~150 秒的阵雨, 其余时间放晴。
-     * <p>
-     * 先调基类: {@code WorldProviderSpace.updateWeather()} 负责维度时间偏移/存档, 并在
-     * {@link #canRainOrSnow()} 为 true 时触发原版的 {@code updateWeatherBody()}(降雨强度的过渡也靠它)。
-     * 之后按世界时间把 {@code raining/rainTime} 改写成我们自己的阵雨节奏 —— 原版那套一次下
-     * 10~20 分钟的雨在末日废墟里太久了。下雨/放晴的切换会由 {@code WorldServer.updateWeather()}
-     * 检测到并自动给该维度的玩家发包, 所以客户端能正常看到雨。
-     */
     @Override
     public void updateWeather() {
         super.updateWeather();
@@ -114,7 +105,7 @@ public class WorldProviderRoss123b extends WorldProviderSpace
 
     @Override
     public float getGravity() {
-        return -0.5F;
+        return -0.085F;
     }
 
     @Override
@@ -124,17 +115,17 @@ public class WorldProviderRoss123b extends WorldProviderSpace
 
     @Override
     public float getSoundVolReductionAmount() {
-        return 1;
+        return 0.8F;
     }
 
     @Override
     public float getThermalLevelModifier() {
-        return 5.0F;
+        return 0.01F;
     }
 
     @Override
     public float getWindLevel() {
-        return 0.0F;
+        return 5F;
     }
 
     @Override
@@ -154,7 +145,7 @@ public class WorldProviderRoss123b extends WorldProviderSpace
 
     @Override
     public long getDayLength() {
-        return 2000L;
+        return 6000L;
     }
 
     @Override
@@ -164,12 +155,14 @@ public class WorldProviderRoss123b extends WorldProviderSpace
 
     @Override
     public Vector3 getFogColor() {
-        return new Vector3(0.75, 0.75, 0.75);
+        // 远景雾霭: 偏冷的深色, 让地平线沉进星空里, 不再泛红
+        return new Vector3(0.05, 0.06, 0.10);
     }
 
     @Override
     public Vector3 getSkyColor() {
-        return new Vector3(0.54, 0.0, 0.0);
+        // 天球主体是黑底银河, 所以底色压到近乎全黑(原来的纯红会把银河和星星盖掉)
+        return new Vector3(0.006, 0.008, 0.016);
     }
 
     @Override

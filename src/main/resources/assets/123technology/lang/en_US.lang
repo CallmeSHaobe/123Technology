@@ -116,8 +116,8 @@ oth.comb.chromaticglass=Chromatic Glass Comb
 oth.comb.glass=Glass Comb
 
 #Entities
-entity.123Technology.DogYellow.name=§eYellow Dog
-entity.123Technology.CustomPlayer.name=§4Self-Replicant
+entity.123technology.DogYellow.name=§eYellow Dog
+entity.123technology.CustomPlayer.name=§4Self-Replicant
 
 #Blocks
 tile.modelTallHat.name=White Christmas Hat (Block)
@@ -126,6 +126,7 @@ tile.modelAsuka.name=Asuka Langley Soryu
 tile.AntimoniaStone.name=Antimony Stone
 tile.AntimoniaDirt.name=Antimony Dirt
 tile.AntimoniaGrass.name=Antimony Grass Block
+tile.AntimoniaSand.name=Antimony Sand
 tile.AquaRegia.name=Aqua Regia
 tile.LCL.name=LCL
 
@@ -804,10 +805,11 @@ ote.ds.mode.bec=§dSwitched: Condensate mode (needs Condensate Adapter)
 ote.tm.ds.5b=§d■ Condensate: unlock the ultimate upgrade for full performance
 ote.tm.ds.perf2=§7Supports multi-amp energy hatches and laser hatches
 ote.ds.struct.0=Controller: center of the snout tip (structure char ~)
-ote.ds.struct.1=Hatches: the ring of standard slots around the head (structure char H)
+ote.ds.struct.1=Hatches (universal slot, structure char H) = any standard GT hatch: bus / input-output hatches / energy / laser etc.
 ote.ds.struct.2=Blocks: blubber casing / assembly chamber casing (belly + 7 underside cells) / baleen grille / tail fin frame / condensate adapter
 ote.ds.struct.3=Three rings = three fin channels: Left Fin (time) / Right Fin (space) / Top Fin (stability), level 1~10; one channel must be all same level
-ote.ds.struct.4=The cell right below the controller is a plain hatch slot
+ote.ds.struct.4=Hatch positions: the ring around the machine head; right below the controller is also a hatch slot
+ote.ds.hatch.universal=any standard GT hatch (bus / input-output / energy / laser etc.)
 ote.tm.ds.0b=§7Perhaps it can help you a lot?!
 ote.tm.ds.perf=§7Upgrading the structure blocks improves the whole machine: speed, EU and parallel
 
@@ -932,9 +934,9 @@ ote.ds.upg.allDone=§6All upgrades done
 ote.ds.gui.avatar1=§1I have not eaten today QAQ
 ote.ds.gui.avatar2=§1You stared at me - feed me!?!
 oth.clone.speak=Clone: who am I--? %s
-entity.123Technology.entityNukeThrowable.name=Nuke Throwable
-entity.123Technology.DogRed.name=§cRed Dog
-entity.123Technology.DogBlue.name=§9Blue Dog
+entity.123technology.entityNukeThrowable.name=Nuke Throwable
+entity.123technology.DogRed.name=§cRed Dog
+entity.123technology.DogBlue.name=§9Blue Dog
 #Items
 item.dogSpawnEgg.name=Dog Spawn Egg
 # AbstractSanctum
@@ -982,3 +984,4 @@ otht.recipe.AbstractSanctumDuplicate=AbstractSanctum - Duplication
 ote.ds.nei.nanite.line1=§bRequires upgrading the nanite swarm
 ote.ds.nei.nanite.line2=§bto tier %s
 GT5U.gui.text.recipe_result.ote_no_schematic=§4Missing rocket assembly schematic in the controller slot
+otht.tier.1=Ross123b

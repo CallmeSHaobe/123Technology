@@ -5,6 +5,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import com.newmaa.othtech.Config;
+
 import gtneioreplugin.plugin.renderer.ItemDimensionDisplayRenderer;
 
 @Mixin(value = ItemDimensionDisplayRenderer.class, remap = false)
@@ -14,6 +16,8 @@ public abstract class ItemDimensionDisplayRendererOTHMixin {
     private static void oth$customDimensionTier(String dimName, CallbackInfoReturnable<Long> cir) {
         if ("Aa".equals(dimName)) {
             cir.setReturnValue(4L);
+        } else if ("R3".equals(dimName)) {
+            cir.setReturnValue((long) Config.tier_Ross123b);
         }
     }
 }

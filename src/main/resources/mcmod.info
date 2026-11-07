@@ -1,8 +1,8 @@
 {
     "modListVersion": 2,
     "modList": [{
-	    	"modid": "${modId}",
-	    	"name": "${modName}",
+        "modid": "123technology",
+        "name": "123Technology",
 	    	"description": "123Technology for GTNH Laodengs",
      		"version": "${modVersion}",
     		"mcversion": "${minecraftVersion}",
@@ -16,7 +16,7 @@
 		    "requiredMods": [],
 		    "dependencies": [],
 				"dependants": [],
-    		"useDependencyInformation": true
+        "useDependencyInformation": false
 		}]
 }
 

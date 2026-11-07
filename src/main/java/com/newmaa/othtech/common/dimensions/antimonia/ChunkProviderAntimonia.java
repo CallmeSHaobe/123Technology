@@ -5,7 +5,6 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFalling;
-import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.Chunk;
@@ -237,7 +236,7 @@ public class ChunkProviderAntimonia extends ChunkProviderSpaceLakes {
     }
 
     protected BlockMetaPair getStoneBlock() {
-        return new BlockMetaPair(Blocks.stone, (byte) 0);
+        return new BlockMetaPair(AntimoniaBlocks.antimoniaBlockStone, (byte) 0);
     }
 
     protected boolean enableBiomeGenBaseBlock() {

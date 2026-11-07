@@ -113,8 +113,8 @@ oth.comb.chromaticglass=彩色玻璃蜂窝
 oth.comb.glass=玻璃蜂窝
 
 #Entities
-entity.123Technology.DogYellow.name=§e黄狗
-entity.123Technology.CustomPlayer.name=§4自行复制体
+entity.123technology.DogYellow.name=§e黄狗
+entity.123technology.CustomPlayer.name=§4自行复制体
 
 #Blocks
 tile.modelTallHat.name=白色圣诞礼帽(Block)
@@ -123,6 +123,7 @@ tile.modelAsuka.name=明日香
 tile.AntimoniaStone.name=锑石
 tile.AntimoniaDirt.name=锑土
 tile.AntimoniaGrass.name=锑草方块
+tile.AntimoniaSand.name=锑沙
 tile.AquaRegia.name=王水
 tile.LCL.name=LCL
 
@@ -161,6 +162,7 @@ Material.irossm=铱锇钐
 
 #Galaxy
 otht.tier.0=锑星
+otht.tier.1=Ross 123b
 planet.Antimonia=§oAntimonia - 锑星
 planet.Ross123b=§oRoss123b - 锑罗斯
 star.starAntimonia=§0锑洞
@@ -803,10 +805,11 @@ ote.ds.mode.bec=§d已切换: 凝聚态模式 (需要凝聚态适配舱)
 ote.tm.ds.5b=§d■ 凝聚态：解锁终极升级获得全部性能
 ote.tm.ds.perf2=§7支持多A能源仓和激光仓
 ote.ds.struct.0=控制器：吻部尖端中心（结构字符 ~）
-ote.ds.struct.1=舱位：头部一圈标准舱位（结构字符 H）= 输入/输出总线、输入/输出仓、能源/激光仓
+ote.ds.struct.1=舱位（万能位，结构字符 H）＝ 任意 GT 标准舱室：总线 / 输入输出仓 / 能源 / 激光等
 ote.ds.struct.2=结构方块：鲸脂外壳 / 装配腔方块（腹褶 + 肚皮底 7 格）/ 鲸须格栅 / 尾鳍加强框 / 凝聚态适配舱
 ote.ds.struct.3=三环 = 三条鳍信道：左鳍(时间) / 右鳍(空间) / 顶鳍(稳定)，1~10 级；同一信道里的方块必须同级
-ote.ds.struct.4=控制器正下方是普通舱位，别把舱室塞到控制器脚下
+ote.ds.struct.4=舱位位置：机器头一圈，控制器正下方也是舱位
+ote.ds.hatch.universal=任意 GT 标准舱室（总线 / 输入输出仓 / 能源 / 激光等）
 ote.tm.ds.0b=§7或许它能帮到你很多 ?!
 ote.tm.ds.perf=§7升级结构方块可以提升整台机器的性能：加速 耗电 并行
 
@@ -937,9 +940,9 @@ ote.ds.upg.allDone=§6已全部升级
 ote.ds.gui.avatar1=§1今天又没吃饱饭QAQ
 ote.ds.gui.avatar2=§1看到了还不喂我？！
 oth.clone.speak=复制体: 我是谁--?%s
-entity.123Technology.entityNukeThrowable.name=核弹投掷物
-entity.123Technology.DogRed.name=§c红狗
-entity.123Technology.DogBlue.name=§9蓝狗
+entity.123technology.entityNukeThrowable.name=核弹投掷物
+entity.123technology.DogRed.name=§c红狗
+entity.123technology.DogBlue.name=§9蓝狗
 #Items
 item.dogSpawnEgg.name=狗刷怪蛋
 # AbstractSanctum

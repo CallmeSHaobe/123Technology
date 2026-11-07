@@ -2,6 +2,7 @@ package com.newmaa.othtech.recipe;
 
 import static com.newmaa.othtech.recipe.RecipesCircuit.getAstralArray;
 import static com.newmaa.othtech.utils.Utils.setStackSize;
+import static gregtech.api.enums.TierEU.RECIPE_UIV;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -16,6 +17,7 @@ import com.newmaa.othtech.utils.RecipeBuilder;
 
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
+import gregtech.api.enums.Mods;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMap;
@@ -294,6 +296,20 @@ public class RecipesMegaQFT implements IRecipePool {
             .duration(1200 * 20)
             .eut(TierEU.RECIPE_MAX / 2)
             .addTo(MQFT);
-
+        // Nq
+        RecipeBuilder.builder()
+            .fluidInputs(
+                Materials.NaquadahEnriched.getMolten(144 * 256),
+                Materials.Hydrogen.getGas(32000),
+                Materials.Nitrogen.getGas(32000 * 12),
+                Materials.Oxygen.getGas(32000))
+            .fluidOutputs(
+                Materials.PrismaticNaquadah.getMolten(256 * 144),
+                Materials.Strontium.getMolten(256 * 144),
+                Materials.PrismaticAcid.getFluid(1000 * 1000))
+            .itemInputs(GTModHandler.getModItem(Mods.Botania.ID, "manaResource", 24, 10))
+            .duration(123 * 20)
+            .eut(RECIPE_UIV)
+            .addTo(MQFT);
     }
 }

@@ -8,6 +8,6 @@ plugins {
 // 必须显式追加，否则 MixinCropLoader 不会被加载。核心 GT mixin 仍留在主配置里保持 required:true。
 tasks.named<Jar>("jar") {
     doFirst {
-        manifest.attributes["MixinConfigs"] = "mixins.othtech.json,mixins.othtech.cropsnh.json"
+        manifest.attributes["MixinConfigs"] = "mixins.123technology.json,mixins.123technology.cropsnh.json"
     }
 }

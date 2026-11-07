@@ -55,7 +55,7 @@ public final class VisualProspectingOreVeinBridge {
             if (inject()) {
                 registered = true;
                 OTHTechnology.LOG.info(
-                    "[OTHT] Registered {} Antimonia ore veins into VisualProspecting",
+                    "[OTHT] Registered {} custom ore veins into VisualProspecting",
                     AntimoniaGTOreVeinReg.getBuilders()
                         .size());
             }
@@ -101,10 +101,8 @@ public final class VisualProspectingOreVeinBridge {
                 }
             } catch (Throwable t) {
                 // 单条矿脉构造失败不能拖累其它矿脉（梗矿脉的「矿石」是流体材料，VP 那边的工具方法未必扛得住）
-                OTHTechnology.LOG.warn(
-                    "[OTHT] Could not mirror Antimonia ore vein {} into VisualProspecting",
-                    builder.oreMixName,
-                    t);
+                OTHTechnology.LOG
+                    .warn("[OTHT] Could not mirror custom ore vein {} into VisualProspecting", builder.oreMixName, t);
             }
         }
 
@@ -167,9 +165,9 @@ public final class VisualProspectingOreVeinBridge {
         warned = true;
         if (t == null) {
             OTHTechnology.LOG.warn(
-                "[OTHT] VisualProspecting's VeinTypeCaching layout changed, Antimonia ore veins won't show on the map");
+                "[OTHT] VisualProspecting's VeinTypeCaching layout changed, custom ore veins won't show on the map");
         } else {
-            OTHTechnology.LOG.warn("[OTHT] Failed to register Antimonia ore veins into VisualProspecting", t);
+            OTHTechnology.LOG.warn("[OTHT] Failed to register custom ore veins into VisualProspecting", t);
         }
     }
 }
