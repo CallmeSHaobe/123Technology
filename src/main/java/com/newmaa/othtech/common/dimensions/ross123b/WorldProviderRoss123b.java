@@ -105,7 +105,7 @@ public class WorldProviderRoss123b extends WorldProviderSpace
 
     @Override
     public float getGravity() {
-        return 0.085F;
+        return -0.085F;
     }
 
     @Override

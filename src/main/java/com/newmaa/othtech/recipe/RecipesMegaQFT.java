@@ -15,7 +15,11 @@ import com.newmaa.othtech.common.materials.BWLiquids;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.utils.RecipeBuilder;
 
-import gregtech.api.enums.*;
+import gregtech.api.enums.GTValues;
+import gregtech.api.enums.Materials;
+import gregtech.api.enums.Mods;
+import gregtech.api.enums.OrePrefixes;
+import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;

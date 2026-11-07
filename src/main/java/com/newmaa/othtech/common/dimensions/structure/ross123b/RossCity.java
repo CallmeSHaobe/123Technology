@@ -192,7 +192,7 @@ public final class RossCity {
             stampCaves(stamper, chunkX, chunkZ, terrain);
         }
         if (NervHeadquarters.intersects(chunkX, chunkZ)) {
-            NervHeadquarters.stamp(blocks, metadata, chunkX, chunkZ);
+            NervHeadquarters.stamp(blocks, metadata, chunkX, chunkZ, seed);
             return;
         }
 

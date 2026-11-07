@@ -30,6 +30,9 @@ public class SkyProviderHandler {
                 if (provider.getSkyRenderer() == null) {
                     provider.setSkyRenderer(new SkyProviderRoss123b());
                 }
+                if (provider.getWeatherRenderer() != RossRainRenderer.INSTANCE) {
+                    provider.setWeatherRenderer(RossRainRenderer.INSTANCE);
+                }
             }
         }
     }
