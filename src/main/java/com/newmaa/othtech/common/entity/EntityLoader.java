@@ -6,7 +6,6 @@ import net.minecraft.world.biome.BiomeGenBase;
 
 import com.newmaa.othtech.OTHTechnology;
 import com.newmaa.othtech.common.dimensions.biome.BiomeGenBaseAntimonia;
-import com.newmaa.othtech.common.dimensions.biome.BiomeGenBaseRoss123b;
 
 import cpw.mods.fml.common.registry.EntityRegistry;
 import galaxyspace.core.world.GSBiomeGenBase;
@@ -52,7 +51,6 @@ public class EntityLoader {
     private static void addDogSpawns(Class<? extends EntityDogBase> dogClass) {
         addDogSpawn(dogClass, GSBiomeGenBase.SPACE, 6, 1, 5);
         addDogSpawn(dogClass, BiomeGenBaseAntimonia.antimonia, 8, 1, 8);
-        addDogSpawn(dogClass, BiomeGenBaseRoss123b.ross123b, 8, 1, 8);
     }
 
     private static void addDogSpawn(Class<? extends EntityDogBase> dogClass, BiomeGenBase biome, int weight, int min,

@@ -1,6 +1,5 @@
 package com.newmaa.othtech.common.dimensions.ross123b;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -100,13 +99,20 @@ public class ChunkProviderRoss123b extends ChunkProviderSpaceLakes {
 
         // EndlessIDs 环境下调用原版 getBiomeArray() 会直接崩, 必须走短数组接口
         if (chunk instanceof ChunkBiomeHook hook) {
-            short biomeId = (short) BiomeGenBaseRoss123b.ross123b.biomeID;
             short[] biomes = hook.getBiomeShortArray();
             if (biomes == null || biomes.length != 256) {
                 biomes = new short[256];
                 hook.setBiomeShortArray(biomes);
             }
-            Arrays.fill(biomes, biomeId);
+            BiomeGenBase[] kinds = BiomeGenBaseRoss123b.all();
+            for (int x = 0; x < 16; x++) {
+                for (int z = 0; z < 16; z++) {
+                    int worldX = (chunkX << 4) + x;
+                    int worldZ = (chunkZ << 4) + z;
+                    biomes[(z << 4) | x] = (short) kinds[RossCity
+                        .biomeKind(this.world.getSeed(), SEA_LEVEL, worldX, worldZ)].biomeID;
+                }
+            }
         }
 
         chunk.generateSkylightMap();
@@ -167,7 +173,7 @@ public class ChunkProviderRoss123b extends ChunkProviderSpaceLakes {
 
     @Override
     protected BiomeGenBase[] getBiomesForGeneration() {
-        return new BiomeGenBase[] { BiomeGenBaseRoss123b.ross123b };
+        return BiomeGenBaseRoss123b.all();
     }
 
     @Override

@@ -70,7 +70,7 @@ public final class RossCity {
     private static final int CAVE_CHANCE = 48;
     private static final int CAVE_ENTRANCE_CHANCE = 22;
     private static final int TERRAIN_MIN = BASEMENT_BOTTOM + 4;
-    private static final int TERRAIN_MAX = 200;
+    private static final int TERRAIN_MAX = 226;
 
     /**
      * 城市: 每隔 {@link #CITY_CELL} 个区块一个候选中心, 半径 {@link #CITY_RADIUS_MIN} ~
@@ -457,21 +457,19 @@ public final class RossCity {
         double inland = Math.max(0.0, (continent - SHORELINE) / (1.0 - SHORELINE));
         double deepWater = Math.max(0.0, (SHORELINE - continent) / SHORELINE);
         double relief = smoothstep(clamp01((inland - 0.10) / 0.55));
-        double mountainZone = smoothstep(clamp01((inland - 0.20) / 0.38))
-            * smoothstep(clamp01((octave(seed, x, z, NOISE_MOUNTAIN_GATE, 604) - 0.32) / 0.25));
-        double ridge = smoothRidge(octave(seed, x, z, NOISE_RIDGE, 605)) * 0.7
-            + smoothRidge(octave(seed, x, z, NOISE_RIDGE_DETAIL, 606)) * 0.3;
+        double mountainZone = smoothstep(clamp01((inland - 0.13) / 0.32))
+            * smoothstep(clamp01((octave(seed, x, z, NOISE_MOUNTAIN_GATE, 604) - 0.24) / 0.23));
+        double ridge = smoothRidge(octave(seed, x, z, NOISE_RIDGE, 605)) * 0.62
+            + smoothRidge(octave(seed, x, z, NOISE_RIDGE_DETAIL, 606)) * 0.38;
         double plain = (octave(seed, x, z, NOISE_PLAIN, 607) - 0.5) * 3.0;
         double height = seaLevel + 1
             + inland * 18
-            + relief * (7 + ridge * 14)
-            + mountainZone * (12 + ridge * ridge * 60)
+            + relief * (8 + ridge * 19)
+            + mountainZone * (18 + ridge * ridge * 105 + smoothRidge(octave(seed, x, z, 55, 611)) * 11)
             - deepWater * (12 + deepWater * 28)
             + plain * (0.35 + relief * 1.65);
 
-        double warp = (octave(seed, x, z, NOISE_RIVER_WARP, 608) - 0.5) * 100;
-        double riverDistance = Math.abs(octave(seed, x + (int) warp, z - (int) warp, NOISE_RIVER, 609) - 0.5);
-        double river = 1.0 - smoothstep(clamp01((riverDistance - 0.008) / 0.035));
+        double river = riverStrength(seed, x, z);
         height -= river * (Math.max(0, height - seaLevel) + 4);
 
         double riftDistance = Math.abs(octave(seed, x, z, NOISE_RIFT, 610) - 0.5);
@@ -616,6 +614,27 @@ public final class RossCity {
             || terrainHeight(seed, seaLevel, x + distance, z) < seaLevel
             || terrainHeight(seed, seaLevel, x, z - distance) < seaLevel
             || terrainHeight(seed, seaLevel, x, z + distance) < seaLevel;
+    }
+
+    /** Uses the same height and shoreline rules as terrain filling. */
+    public static int biomeKind(long seed, int seaLevel, int x, int z) {
+        int height = terrainHeight(seed, seaLevel, x, z);
+        if (height >= seaLevel - 2 && height <= seaLevel + 3 && hasLclShore(seed, seaLevel, x, z)) return 1;
+        double continent = octave(seed, x, z, NOISE_CONTINENT, 601) * 0.78
+            + octave(seed, x, z, NOISE_COAST, 602) * 0.22;
+        double inland = Math.max(0.0, (continent - SHORELINE) / (1.0 - SHORELINE));
+        double river = riverStrength(seed, x, z);
+        if (height < seaLevel) return inland > 0.02 && river > 0.12 ? 2 : 0;
+        if (river > 0.4 && inland > 0.02 && height <= seaLevel + 5) return 2;
+        if (height >= seaLevel + 58) return 5;
+        if (height >= seaLevel + 20) return 4;
+        return 3;
+    }
+
+    private static double riverStrength(long seed, int x, int z) {
+        double warp = (octave(seed, x, z, NOISE_RIVER_WARP, 608) - 0.5) * 100;
+        double distance = Math.abs(octave(seed, x + (int) warp, z - (int) warp, NOISE_RIVER, 609) - 0.5);
+        return 1.0 - smoothstep(clamp01((distance - 0.008) / 0.035));
     }
 
     // ------------------------------------------------------------------

@@ -25,6 +25,7 @@ import com.newmaa.othtech.common.blocks.deepseiko.DeepSeikoBlocks;
 import com.newmaa.othtech.common.blocks.fluids.AntimoniaFluids;
 import com.newmaa.othtech.common.blocks.fluids.RossFluids;
 import com.newmaa.othtech.common.blocks.nailong.NailongCasings;
+import com.newmaa.othtech.common.blocks.oterender.BlockRocketRender;
 import com.newmaa.othtech.common.blocks.oterender.OTERocketRender;
 import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
 import com.newmaa.othtech.common.dimensions.AntimoniaUndergroundFluids;
@@ -157,6 +158,9 @@ public class OTHTechnology {
         NEIRecipeMaps.IMCSender();
         // 迪普西科的米饭投影影子方块是纯技术方块，别让它在 NEI 里冒出来
         API.hideItem(new ItemStack(DeepSeikoBlocks.dsHolo));
+        API.hideItem(new ItemStack(AntimoniaFluids.BlockAquaRegia));
+        API.hideItem(new ItemStack(RossFluids.BlockLCL));
+        API.hideItem(new ItemStack(new BlockRocketRender()));
     }
 
     @Mod.EventHandler

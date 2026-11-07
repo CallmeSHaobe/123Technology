@@ -20,6 +20,8 @@ import gregtech.api.util.GTUtility;
 
 public class RecipesEXH implements IRecipePool {
 
+    private static final int ITEM_OUTPUT_CHANCE = 9701;
+
     public static void generateEnhancedEXHRecipes() {
         Collection<GTRecipe> recipes = RecipeMaps.vacuumFreezerRecipes.getAllRecipes();
 
@@ -67,6 +69,10 @@ public class RecipesEXH implements IRecipePool {
 
             if (recipe.mOutputs != null && recipe.mOutputs.length > 0) {
                 builder.itemOutputs(recipe.mOutputs);
+
+                int[] outputChances = new int[recipe.mOutputs.length];
+                Arrays.fill(outputChances, ITEM_OUTPUT_CHANCE);
+                builder.outputChances(outputChances);
             }
 
             List<FluidStack> outputFluids = new ArrayList<>();
