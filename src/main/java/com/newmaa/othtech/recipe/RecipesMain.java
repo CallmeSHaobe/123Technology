@@ -38,6 +38,7 @@ import com.newmaa.othtech.common.item.ItemLoader;
 import com.newmaa.othtech.common.materials.BWLiquids;
 import com.newmaa.othtech.common.materials.BWMaterials;
 import com.newmaa.othtech.utils.RecipeBuilder;
+import com.newmaa.othtech.utils.modsEnum;
 
 import goodgenerator.loader.Loaders;
 import gregtech.api.enums.GTValues;
@@ -1507,12 +1508,14 @@ public class RecipesMain implements IRecipePool {
             .addTo(assemblerRecipes);
 
         // AbstractSanctum mana conversion hatch
-        GTValues.RA.stdBuilder()
-            .itemInputs(ItemList.Hatch_Input_LuV.get(1), new ItemStack(ModBlocks.pool, 1, 3))
-            .itemOutputs(OTHItemList.ManaHatch123.get(1))
-            .duration(5 * SECONDS)
-            .eut(RECIPE_LV)
-            .addTo(assemblerRecipes);
+        if (!modsEnum.TwistSpaceTechnology.isModLoaded()) {
+            GTValues.RA.stdBuilder()
+                .itemInputs(ItemList.Hatch_Input_LuV.get(1), new ItemStack(ModBlocks.pool, 1, 3))
+                .itemOutputs(OTHItemList.ManaHatch123.get(1))
+                .duration(5 * SECONDS)
+                .eut(RECIPE_LV)
+                .addTo(assemblerRecipes);
+        }
 
         // nail
         GTValues.RA.stdBuilder()
