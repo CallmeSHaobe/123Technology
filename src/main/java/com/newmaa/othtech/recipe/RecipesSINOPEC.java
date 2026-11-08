@@ -71,6 +71,21 @@ public class RecipesSINOPEC implements IRecipePool {
             .addTo(SINOPEC);
         GTValues.RA.stdBuilder()
             .fluidOutputs(
+                new FluidStack(gas, 288000),
+                new FluidStack(nap, 96000),
+                new FluidStack(naphthenicacid, 12000),
+                new FluidStack(lig, 240000),
+                new FluidStack(hea, 72000))
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(24),
+                setStackSize(GTModHandler.getModItem("cropsnh", "materialLeaf", 1, 10), 2400))
+            .itemOutputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Sulfur, 55))
+
+            .duration(3600)
+            .eut(TierEU.EV)
+            .addTo(SINOPEC);
+        GTValues.RA.stdBuilder()
+            .fluidOutputs(
                 new FluidStack(gas, 576000),
                 new FluidStack(nap, 72000),
                 new FluidStack(naphthenicacid, 6000),

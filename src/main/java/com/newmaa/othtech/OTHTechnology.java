@@ -35,8 +35,8 @@ import com.newmaa.othtech.common.dimensions.Ross123bUndergroundFluids;
 import com.newmaa.othtech.common.dimensions.gtoregen.VisualProspectingOreVeinBridge;
 import com.newmaa.othtech.common.item.ItemLoader;
 import com.newmaa.othtech.common.materials.AbstractSanctumContent;
-import com.newmaa.othtech.common.materials.BWMaterialsLocalization;
 import com.newmaa.othtech.common.materials.MaterialsLoader;
+import com.newmaa.othtech.common.materials.OTHMaterials;
 import com.newmaa.othtech.common.recipemap.DeepSeikoALRecipeLoader;
 import com.newmaa.othtech.common.recipemap.DeepSeikoBECRecipeLoader;
 import com.newmaa.othtech.common.recipemap.MegaCALRecipeLoader;
@@ -105,6 +105,7 @@ public class OTHTechnology {
         MinecraftForge.EVENT_BUS.register(new EventPlayerDied());
         // VisualProspecting（旅行地图的矿脉/流体叠层）的锑星矿脉补注册；世界加载时兜底执行
         MinecraftForge.EVENT_BUS.register(new EventWorldLoad());
+        OTHMaterials.install();
     }
 
     @Mod.EventHandler
@@ -129,7 +130,6 @@ public class OTHTechnology {
             DeepSeikoALRecipeLoader.load();
         }
 
-        new BWMaterialsLocalization().loader();
         new CreativeTabsLoader(event);
         new ItemLoader(event);
         new OreDictionaryLoader(event);

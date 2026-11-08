@@ -287,7 +287,7 @@ oth.tm.mnio.8=§bVoltage tier increase by 1, parallel -9, minimum 9, default 64.
 oth.tm.mnio.9=§bRecipe Time = NEI Time * (1 + (Energy Hatch Tier * 16%))
 oth.tm.mnio.10=§bEU Consumption: (1 / Coil Tier) * 0.1, minimum 0.01
 oth.tm.mnio.11=§bHypogen Coil unlocks stable black hole, Electrum Flux Alloy Coil unlocks HIP
-oth.tm.mnio.12=§bPerforms Perfect OC.
+oth.tm.mnio.12=§bPerforms 3/4 overclocking (3x EU, 4x speed per overclock).
 oth.tm.mnio.13=§e9-in-1, we revere you! ---Sukune_News
 ote.tm.m9in1.mode.0=Compress-Lathe-Magnetize (Metal)
 ote.tm.m9in1.mode.1=Ferment-Fluid Extract-Extract (Fluid)
@@ -985,3 +985,65 @@ ote.ds.nei.nanite.line1=§bRequires upgrading the nanite swarm
 ote.ds.nei.nanite.line2=§bto tier %s
 GT5U.gui.text.recipe_result.ote_no_schematic=§4Missing rocket assembly schematic in the controller slot
 otht.tier.1=Ross123b
+
+# ==== entangled condensate fluids (123 Technology) ====
+fluid.entangled_oth_void=Entangled Void Entropy Flow
+fluid.entangled_oth_void.name=Entangled Void Entropy Flow
+fluid.entangled_oth_stars=Entangled Molten Stardust
+fluid.entangled_oth_stars.name=Entangled Molten Stardust
+fluid.entangled_oth_superconductoruiv=Entangled Superconductor UIV Base
+fluid.entangled_oth_superconductoruiv.name=Entangled Superconductor UIV Base
+fluid.entangled_oth_superconductorumv=Entangled Superconductor UMV Base
+fluid.entangled_oth_superconductorumv.name=Entangled Superconductor UMV Base
+
+# ==== GregTech material names (123 Technology migration) ====
+Material.galaxy=Molten Galaxy
+Material.voidentropy=Void Entropy Flow
+Material.stars=Molten Stardust
+Material.lcl=L.C.L
+Material.fuela=§dHigh Octane Super Naquadah Rocket Fuel
+Material.fuela_de=§dDepleted High Octane Super Naquadah Rocket Fuel
+Material.promoterzpm=Atomic Separation Promoter
+Material.promoteruev=Hyperdimensional Plasma Promoter
+Material.hcl10=Super Hydrochloric Acid
+Material.hcl100=Extreme Hydrochloric Acid
+Material.hcl1000=Strange Hydrochloric Acid
+Material.hcl10000=Magic Hydrochloric Acid
+Material.hcl100000=Final Hydrochloric Acid
+Material.irossm=Iridiosamarium
+Material.gunmu=Observable Gunmu
+Material.degunmu=Unobservable Gunmu
+
+# ==== GT fluid names (123 Technology migration) ====
+fluid.galaxy=Molten Galaxy
+fluid.galaxy.name=Molten Galaxy
+fluid.voidentropy=Void Entropy Flow
+fluid.voidentropy.name=Void Entropy Flow
+fluid.stars=Molten Stardust
+fluid.stars.name=Molten Stardust
+fluid.lcl=L.C.L
+fluid.lcl.name=L.C.L
+fluid.fuela=§dHigh Octane Super Naquadah Rocket Fuel
+fluid.fuela.name=§dHigh Octane Super Naquadah Rocket Fuel
+fluid.fuela_de=§dDepleted High Octane Super Naquadah Rocket Fuel
+fluid.fuela_de.name=§dDepleted High Octane Super Naquadah Rocket Fuel
+fluid.promoterzpm=Atomic Separation Promoter
+fluid.promoterzpm.name=Atomic Separation Promoter
+fluid.promoteruev=Hyperdimensional Plasma Promoter
+fluid.promoteruev.name=Hyperdimensional Plasma Promoter
+fluid.hcl10=Super Hydrochloric Acid
+fluid.hcl10.name=Super Hydrochloric Acid
+fluid.hcl100=Extreme Hydrochloric Acid
+fluid.hcl100.name=Extreme Hydrochloric Acid
+fluid.hcl1000=Strange Hydrochloric Acid
+fluid.hcl1000.name=Strange Hydrochloric Acid
+fluid.hcl10000=Magic Hydrochloric Acid
+fluid.hcl10000.name=Magic Hydrochloric Acid
+fluid.hcl100000=Final Hydrochloric Acid
+fluid.hcl100000.name=Final Hydrochloric Acid
+fluid.molten.irossm=Molten IrOsSm
+fluid.molten.irossm.name=Molten IrOsSm
+fluid.molten.gunmu=Molten Observable Gunmu
+fluid.molten.gunmu.name=Molten Observable Gunmu
+fluid.molten.degunmu=Molten Unobservable Gunmu
+fluid.molten.degunmu.name=Molten Unobservable Gunmu

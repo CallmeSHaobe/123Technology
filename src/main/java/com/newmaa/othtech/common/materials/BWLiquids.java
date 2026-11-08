@@ -1,163 +1,54 @@
 package com.newmaa.othtech.common.materials;
 
-import static bartworks.util.BWUtil.subscriptNumbers;
+import java.util.function.Supplier;
 
-import bartworks.system.material.Werkstoff;
-import gregtech.api.enums.OrePrefixes;
-import gregtech.api.enums.TextureSet;
+import net.minecraftforge.fluids.FluidStack;
 
-public class BWLiquids implements Runnable {
+import gregtech.api.enums.Materials;
 
-    private static final int offsetID_01 = 12300;
-    public static final Werkstoff.GenerationFeatures gf = new Werkstoff.GenerationFeatures();
-    public static final Werkstoff Galaxy = new Werkstoff(
-        new short[] { 18, 80, 161 },
-        "FluidGalaxy",
-        subscriptNumbers("☆"),
-        new Werkstoff.Stats(),
-        Werkstoff.Types.MIXTURE,
-        new Werkstoff.GenerationFeatures().disable()
-            .addCells(),
-        offsetID_01 + 3,
-        TextureSet.SET_FLUID);
-    public static final Werkstoff Void = new Werkstoff(
-        new short[] { 166, 212, 223 },
-        "FluidVoid",
-        subscriptNumbers("Vi"),
-        new Werkstoff.Stats(),
-        Werkstoff.Types.MIXTURE,
-        new Werkstoff.GenerationFeatures().disable()
-            .addCells(),
-        offsetID_01 + 4,
-        TextureSet.SET_FLUID);
-    public static final Werkstoff Stars = new Werkstoff(
-        new short[] { 221, 226, 188 },
-        "MoltenStar",
-        subscriptNumbers("St"),
-        new Werkstoff.Stats(),
-        Werkstoff.Types.MIXTURE,
-        new Werkstoff.GenerationFeatures().disable()
-            .addCells(),
-        offsetID_01 + 5,
-        TextureSet.SET_FLUID);
-    public static final Werkstoff LCL = new Werkstoff(
-        new short[] { 250, 111, 42 },
-        "L.C.L",
-        subscriptNumbers(""),
-        new Werkstoff.Stats(),
-        Werkstoff.Types.MIXTURE,
-        new Werkstoff.GenerationFeatures().disable()
-            .addCells(),
-        offsetID_01 + 6,
-        TextureSet.SET_FLUID);
-    /*
-     * public static final Werkstoff ALS = new Werkstoff(
-     * new short[] { 0, 255, 255 },
-     * "A.L.S",
-     * subscriptNumbers(""),
-     * new Werkstoff.Stats(),
-     * Werkstoff.Types.MIXTURE,
-     * new Werkstoff.GenerationFeatures().disable()
-     * .addCells(),
-     * offsetID_01 + 7,
-     * TextureSet.SET_FLUID);
-     */
-    public static final Werkstoff FUELA = new Werkstoff(
-        new short[] { 154, 249, 72 },
-        "FUELA",
-        subscriptNumbers("化学能的尽头"),
-        new Werkstoff.Stats(),
-        Werkstoff.Types.MIXTURE,
-        new Werkstoff.GenerationFeatures().disable()
-            .addCells(),
-        offsetID_01 + 8,
-        TextureSet.SET_FLUID);
-    public static final Werkstoff FUELA_DE = new Werkstoff(
-        new short[] { 116, 182, 59 },
-        "FUELA_DE",
-        subscriptNumbers("他能干什么？"),
-        new Werkstoff.Stats(),
-        Werkstoff.Types.MIXTURE,
-        new Werkstoff.GenerationFeatures().disable()
-            .addCells(),
-        offsetID_01 + 9,
-        TextureSet.SET_FLUID);
-    public static final Werkstoff PromoterZPM = new Werkstoff(
-        new short[] { 247, 22, 22 },
-        "PromoterZPM",
-        subscriptNumbers(""),
-        new Werkstoff.Stats(),
-        Werkstoff.Types.MIXTURE,
-        new Werkstoff.GenerationFeatures().disable()
-            .addCells(),
-        offsetID_01 + 10,
-        TextureSet.SET_FLUID);
-    public static final Werkstoff PromoterUEV = new Werkstoff(
-        new short[] { 236, 242, 255 },
-        "PromoterUEV",
-        subscriptNumbers(""),
-        new Werkstoff.Stats(),
-        Werkstoff.Types.MIXTURE,
-        new Werkstoff.GenerationFeatures().disable()
-            .addCells(),
-        offsetID_01 + 11,
-        TextureSet.SET_FLUID);
-    public static final Werkstoff HCl10 = new Werkstoff(
-        new short[] { 240, 255, 240 },
-        "HCl10",
-        subscriptNumbers("HCl₁₀"),
-        new Werkstoff.Stats(),
-        Werkstoff.Types.MIXTURE,
-        new Werkstoff.GenerationFeatures().disable()
-            .addCells(),
-        offsetID_01 + 12,
-        TextureSet.SET_FLUID);
-    public static final Werkstoff HCl100 = new Werkstoff(
-        new short[] { 240, 255, 240 },
-        "HCl100",
-        subscriptNumbers("HCl₁₀₀"),
-        new Werkstoff.Stats(),
-        Werkstoff.Types.MIXTURE,
-        new Werkstoff.GenerationFeatures().disable()
-            .addCells(),
-        offsetID_01 + 13,
-        TextureSet.SET_FLUID);
-    public static final Werkstoff HCl1000 = new Werkstoff(
-        new short[] { 240, 255, 240 },
-        "HCl1000",
-        subscriptNumbers("HCl₁₀₀₀"),
-        new Werkstoff.Stats(),
-        Werkstoff.Types.MIXTURE,
-        new Werkstoff.GenerationFeatures().disable()
-            .addCells(),
-        offsetID_01 + 14,
-        TextureSet.SET_FLUID);
-    public static final Werkstoff HCl10000 = new Werkstoff(
-        new short[] { 240, 255, 240 },
-        "HCl10000",
-        subscriptNumbers("HCl₁₀₀₀₀"),
-        new Werkstoff.Stats(),
-        Werkstoff.Types.MIXTURE,
-        new Werkstoff.GenerationFeatures().disable()
-            .addCells(),
-        offsetID_01 + 15,
-        TextureSet.SET_FLUID);
-    public static final Werkstoff HCl100000 = new Werkstoff(
-        new short[] { 240, 255, 240 },
-        "HCl100000",
-        subscriptNumbers("HCl₁₀₀₀₀₀"),
-        new Werkstoff.Stats(),
-        Werkstoff.Types.MIXTURE,
-        new Werkstoff.GenerationFeatures().disable()
-            .addCells(),
-        offsetID_01 + 16,
-        TextureSet.SET_FLUID);
+public final class BWLiquids implements Runnable {
+
+    public static final FluidMat Galaxy = new FluidMat(() -> OTHMaterials.Galaxy);
+    public static final FluidMat Void = new FluidMat(() -> OTHMaterials.VoidEntropy);
+    public static final FluidMat Stars = new FluidMat(() -> OTHMaterials.Stars);
+    public static final FluidMat LCL = new FluidMat(() -> OTHMaterials.LCL);
+    public static final FluidMat FUELA = new FluidMat(() -> OTHMaterials.FUELA);
+    public static final FluidMat FUELA_DE = new FluidMat(() -> OTHMaterials.FUELA_DE);
+    public static final FluidMat PromoterZPM = new FluidMat(() -> OTHMaterials.PromoterZPM);
+    public static final FluidMat PromoterUEV = new FluidMat(() -> OTHMaterials.PromoterUEV);
+    public static final FluidMat HCl10 = new FluidMat(() -> OTHMaterials.HCl10);
+    public static final FluidMat HCl100 = new FluidMat(() -> OTHMaterials.HCl100);
+    public static final FluidMat HCl1000 = new FluidMat(() -> OTHMaterials.HCl1000);
+    public static final FluidMat HCl10000 = new FluidMat(() -> OTHMaterials.HCl10000);
+    public static final FluidMat HCl100000 = new FluidMat(() -> OTHMaterials.HCl100000);
+
+    private BWLiquids() {}
 
     @Override
-    public void run() {
-        for (OrePrefixes prefix : OrePrefixes.VALUES) {
-            gf.addPrefix(prefix);
+    public void run() {}
+
+    public static final class FluidMat {
+
+        private final Supplier<Materials> supplier;
+
+        private FluidMat(Supplier<Materials> supplier) {
+            this.supplier = supplier;
         }
-        gf.removePrefix(OrePrefixes.ore);
+
+        public Materials getMaterial() {
+            return supplier.get();
+        }
+
+        public FluidStack getFluidOrGas(int amount) {
+            final Materials material = supplier.get();
+            if (material == null) return null;
+            final FluidStack fluid = material.getFluid(amount);
+            return fluid != null ? fluid : material.getGas(amount);
+        }
+
+        public FluidStack getFluid(int amount) {
+            final Materials material = supplier.get();
+            return material == null ? null : material.getFluid(amount);
+        }
     }
 }

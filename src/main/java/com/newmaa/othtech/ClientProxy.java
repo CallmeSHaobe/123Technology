@@ -7,6 +7,8 @@ import net.minecraftforge.client.model.IModelCustom;
 import net.minecraftforge.common.MinecraftForge;
 
 import com.newmaa.othtech.client.AbstractSanctumClientEvents;
+import com.newmaa.othtech.client.OTEEntangledFluidRenderer;
+import com.newmaa.othtech.client.OTEMaterialRenderEffects;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.blocks.deepseiko.TEDeepSeikoHolo;
 import com.newmaa.othtech.common.dimensions.sky.RossFogHandler;
@@ -70,6 +72,9 @@ public class ClientProxy extends CommonProxy {
 
         registerRenderers();
         RenderingRegistry.registerEntityRenderingHandler(EntityFakePlayer.class, new RenderPlayer());
+
+        OTEMaterialRenderEffects.install();
+        OTEEntangledFluidRenderer.register();
 
         // 迪普西科米饭全息投影（影子方块 + TESR，旋转的米饭碗）
         ClientRegistry.bindTileEntitySpecialRenderer(TEDeepSeikoHolo.class, new RiceBowlRenderer());
