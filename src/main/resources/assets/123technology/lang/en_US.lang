@@ -287,7 +287,7 @@ oth.tm.mnio.8=§bVoltage tier increase by 1, parallel -9, minimum 9, default 64.
 oth.tm.mnio.9=§bRecipe Time = NEI Time * (1 + (Energy Hatch Tier * 16%))
 oth.tm.mnio.10=§bEU Consumption: (1 / Coil Tier) * 0.1, minimum 0.01
 oth.tm.mnio.11=§bHypogen Coil unlocks stable black hole, Electrum Flux Alloy Coil unlocks HIP
-oth.tm.mnio.12=§bPerforms 3/4 overclocking (3x EU, 4x speed per overclock).
+oth.tm.mnio.12=§bPerforms 3/4 overclocking (4x EU, 3x speed per overclock).
 oth.tm.mnio.13=§e9-in-1, we revere you! ---Sukune_News
 ote.tm.m9in1.mode.0=Compress-Lathe-Magnetize (Metal)
 ote.tm.m9in1.mode.1=Ferment-Fluid Extract-Extract (Fluid)
