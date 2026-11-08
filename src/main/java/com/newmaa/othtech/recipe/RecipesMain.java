@@ -21,7 +21,6 @@ import static tectech.thing.CustomItemList.eM_Hollow;
 import static tectech.thing.CustomItemList.eM_Power;
 import static tectech.thing.CustomItemList.eM_Spacetime;
 
-import com.newmaa.othtech.utils.modsEnum;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -1509,13 +1508,14 @@ public class RecipesMain implements IRecipePool {
             .addTo(assemblerRecipes);
 
         // AbstractSanctum mana conversion hatch
-        if (!modsEnum.TwistSpaceTechnology.isModLoaded()){
-        GTValues.RA.stdBuilder()
-            .itemInputs(ItemList.Hatch_Input_LuV.get(1), new ItemStack(ModBlocks.pool, 1, 3))
-            .itemOutputs(OTHItemList.ManaHatch123.get(1))
-            .duration(5 * SECONDS)
-            .eut(RECIPE_LV)
-            .addTo(assemblerRecipes);}
+        if (!modsEnum.TwistSpaceTechnology.isModLoaded()) {
+            GTValues.RA.stdBuilder()
+                .itemInputs(ItemList.Hatch_Input_LuV.get(1), new ItemStack(ModBlocks.pool, 1, 3))
+                .itemOutputs(OTHItemList.ManaHatch123.get(1))
+                .duration(5 * SECONDS)
+                .eut(RECIPE_LV)
+                .addTo(assemblerRecipes);
+        }
 
         // nail
         GTValues.RA.stdBuilder()
