@@ -18,6 +18,7 @@ import com.newmaa.othtech.OTHTechnology;
 
 import gregtech.api.enums.HeatingCoilLevel;
 import gregtech.api.metatileentity.MetaTileEntity;
+import gregtech.api.util.GTModHandler;
 
 public final class Utils {
 
@@ -374,5 +375,24 @@ public final class Utils {
 
     public static double calculatePowerTier(double voltage) {
         return 1 + Math.max(0, (Math.log(voltage) / LOG2) - 5) / 2;
+    }
+
+    /**
+     * 取 Eternal-Singularity 的最高阶奇点。
+     * <p>
+     * 正式整合包（完整 NH 包）里 {@code combined_singularity} 有 meta 15；dev 环境的 1.4.3 只有 0–14，
+     * 这时回落到 {@code eternal_singularity}，只影响 dev 环境，正式包里永远走第一分支。
+     */
+    public static ItemStack getEternalSingularity(int amount) {
+        final ItemStack combined = GTModHandler.getModItem("eternalsingularity", "combined_singularity", amount, 15);
+        if (combined != null) return combined;
+
+        final ItemStack fallback = GTModHandler.getModItem("eternalsingularity", "eternal_singularity", amount);
+        if (fallback != null) {
+            OTHTechnology.LOG.warn(
+                "combined_singularity meta 15 not present (dev environment), using eternal_singularity x{} instead",
+                amount);
+        }
+        return fallback;
     }
 }

@@ -6,10 +6,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import com.newmaa.othtech.common.materials.BWLiquids;
 
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.NaniteTier;
@@ -170,7 +173,19 @@ public final class DeepSeikoBECRecipeLoader {
         put(map, "magmatter", Materials.MagMatter.getMolten(1));
         put(map, "universium", Materials.Universium.getMolten(1));
         put(map, "eternity", Materials.Eternity.getMolten(1));
+        putOth(map, "void", BWLiquids.Void.getFluidOrGas(1));
+        putOth(map, "stars", BWLiquids.Stars.getFluidOrGas(1));
+        putOth(map, "superconductoruiv", FluidRegistry.getFluidStack("molten.superconductoruivbase", 1));
+        putOth(map, "superconductorumv", FluidRegistry.getFluidStack("molten.superconductorumvbase", 1));
         return map;
+    }
+
+    private static void putOth(Map<String, Fluid> map, String id, FluidStack source) {
+        if (source == null || source.getFluid() == null) {
+            LOG.warn("DeepSeikoBEC: source fluid for entangled_oth_{} is null, mapping skipped", id);
+            return;
+        }
+        map.put("entangled_oth_" + id, source.getFluid());
     }
 
     private static void put(Map<String, Fluid> map, String entangledId, FluidStack source) {

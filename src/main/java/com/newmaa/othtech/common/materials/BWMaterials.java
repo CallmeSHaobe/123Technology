@@ -1,36 +1,39 @@
 package com.newmaa.othtech.common.materials;
 
-import static bartworks.util.BWUtil.subscriptNumbers;
+import java.util.function.Supplier;
 
-import bartworks.system.material.Werkstoff;
+import net.minecraft.item.ItemStack;
+
+import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
-import gregtech.api.enums.TextureSet;
+import gregtech.api.util.GTOreDictUnificator;
 
-public class BWMaterials implements Runnable {
+public final class BWMaterials implements Runnable {
 
-    private static final int offsetID_01 = 12300;
-    public static final Werkstoff.GenerationFeatures gf = new Werkstoff.GenerationFeatures();
-    public static final Werkstoff IrOsSm = new Werkstoff(
-        new short[] { 36, 168, 255 },
-        "IrOsSm",
-        subscriptNumbers("IrOsSm"),
-        new Werkstoff.Stats().setMeltingPoint(114514),
-        Werkstoff.Types.MIXTURE,
-        new Werkstoff.GenerationFeatures().onlyDust()
-            .addMolten()
-            .addMetalItems()
-            .addCraftingMetalWorkingItems()
-            .addMetaSolidifierRecipes()
-            .addMetalCraftingSolidifierRecipes(),
-        offsetID_01 + 20,
-        TextureSet.SET_SHINY);
+    public static final SolidMat IrOsSm = new SolidMat(() -> OTHMaterials.IrOsSm);
+    public static final SolidMat Gunmu = new SolidMat(() -> OTHMaterials.Gunmu);
+    public static final SolidMat deGunmu = new SolidMat(() -> OTHMaterials.DeGunmu);
+
+    private BWMaterials() {}
 
     @Override
-    public void run() {
-        for (OrePrefixes prefix : OrePrefixes.VALUES) {
-            gf.addPrefix(prefix);
+    public void run() {}
+
+    public static final class SolidMat {
+
+        private final Supplier<Materials> supplier;
+
+        private SolidMat(Supplier<Materials> supplier) {
+            this.supplier = supplier;
         }
-        gf.removePrefix(OrePrefixes.ore);
-        gf.removePrefix(OrePrefixes.dust);
+
+        public Materials getMaterial() {
+            return supplier.get();
+        }
+
+        public ItemStack get(OrePrefixes prefix, int amount) {
+            final Materials material = supplier.get();
+            return material == null ? null : GTOreDictUnificator.get(prefix, material, amount);
+        }
     }
 }

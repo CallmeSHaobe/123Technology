@@ -34,7 +34,7 @@ IsaMillModule.2.name=§a铱锇钐合金研磨器复合体
 IsaMillModule.3.name=§c海珀珍研磨器复合体
 IsaMillModule.4.name=§7永恒研磨器复合体
 tt.boardCasimir=§a一块能够植入卡西米尔鳍片的板材，几乎不会与外界发生任何交互，时空的终点？
-tt.boardTrans=§a一块容纳过去、当下、未来，包含无穷多可能得微缩空间
+tt.boardTrans=§a一处容纳过去、现在与未来，包含无穷可能的微缩空间
 tt.capTrans=§a内置无穷大储量的芯片，可以包纳同一时空下时间带来的一切悖论
 tt.dioTrans=§a为防止多维时空的信息污染，每个时空在成型时单方面被注入一道信息流，这是独属于创世纪的火光
 tt.energyHatchSpacetime=§a对于一般的超时空电路，通过外置能量输入亦可进行有限的计算
@@ -42,7 +42,7 @@ tt.finCasimir=§a一对对细小达到时空最基本单位的鳍片，能从真
 tt.induTrans=§a常规的供能无法轻易突破超维度的限制，因此需要集成一个可以同时为不同时空供电的微型装置
 tt.beeISA=§7纳米蜂群§a的终极形态...
 tt.beeMag=§6蜂群嗡嗡作响...
-tt.itemEnqing=§e§l眼里有光....为§4§l恩情工厂§e§l提供激光源支持
+tt.itemEnqing=§e§l眼里有光....为§4§l太阳工厂§e§l提供激光源支持
 tt.yellowPeach=§e黄桃草结出的果子，甜得像罐头
 tt.yellowPeach.effect=§b恢复 12 点饥饿值，并给予 30 秒§d速度 V
 tt.leCasimir=§a一块将鳍片伸向多维宇宙间汲取能量的模块化电源，是高阶超时空电路必不可少的部件
@@ -58,7 +58,7 @@ tt.IOS=123,我们经爱你呀
 tt.HYP=坚不可摧..
 tt.SPE=研磨过去现在和未来
 tt.brains=他还在跳动...
-tt.slicedBrains=我在故我思.
+tt.slicedBrains=我思故我在。
 tt.wrapBrains=你必须想象,电路板里的大脑是幸福的.
 tt.ani=含锑量99.8%
 
@@ -95,7 +95,7 @@ item.record.EVA_B.desc=ARIANNE - Komm, süsser Tod (来吧，甜蜜の死亡)
 item.record.EVA_C.desc=Claire - Fly Me To The Moon
 item.record.NGG_U.desc=Rick Astley - Never Gonna Give You Up
 item.itemTST.name=塔斯汀小汉堡
-item.TallHatLaodeng.name=白色圣诞礼帽(For Laodengs)
+item.TallHatLaodeng.name=白色圣诞礼帽（老登专属）
 item.BrainsHuman.name=§n人类大脑
 
 #Bee
@@ -117,7 +117,7 @@ entity.123technology.DogYellow.name=§e黄狗
 entity.123technology.CustomPlayer.name=§4自行复制体
 
 #Blocks
-tile.modelTallHat.name=白色圣诞礼帽(Block)
+tile.modelTallHat.name=白色圣诞礼帽（方块）
 tile.modelAyanami.name=绫波丽
 tile.modelAsuka.name=明日香
 tile.AntimoniaStone.name=锑石
@@ -142,6 +142,11 @@ fluid.HCl10000.name=魔盐酸
 fluid.HCl100000.name=终盐酸
 item.IrOsSm.name=铱锇钐
 fluid.IrOsSm.name=铱锇钐
+item.gunmu.name=§q可观测态棍木-超理学聚合物
+fluid.gunmu.name=§q可观测态棍木-超理学聚合物
+item.degunmu.name=§8不可观测态棍木-超理学聚合物
+fluid.degunmu.name=§8不可观测态棍木-超理学聚合物
+oth.tt.gunmu.name=§z§m§l--------------------------------
 bw.werkstoff.12320.name=铱锇钐
 LCL=L.C.L
 
@@ -288,9 +293,9 @@ oth.tm.mnio.6=§aCol类: 分子重组仪 酿造室 流体加热机
 oth.tm.mnio.7=§b并行耗时公式来自某位§9冰之妖精
 oth.tm.mnio.8=§b电压等级提高一级，并行 -9， 最低为9, 默认为64
 oth.tm.mnio.9=§b配方耗时 = NEI耗时 * (1 + (能源仓电压等级 * 16%))
-oth.tm.mnio.10=§bEU消耗 : (1 / 线圈等级) * 0.1, 最低为0.01")
+oth.tm.mnio.10=§bEU消耗：(1 / 线圈等级) * 0.1，最低为0.01
 oth.tm.mnio.11=§b海珀珍线圈解锁稳定的黑洞, 通流琥珀金线圈解锁HIP
-oth.tm.mnio.12=§b执行无损超频...吗?(3/4无损)
+oth.tm.mnio.12=§b执行 3/4 超频（每次超频耗电变为 3 倍，速度变为 4 倍）。
 oth.tm.mnio.13=§e九合一，我们敬爱你口牙！！ ---Sukune_News
 ote.tm.m9in1.mode.0=压缩-车床-磁化(Metal)
 ote.tm.m9in1.mode.1=发酵-流体提取-提取(Fluid)
@@ -327,13 +332,14 @@ ote.cm.cocc.0=1 - 输入输出总线, 输入输出仓, 消声仓 : 替换脱氧�
 ote.tm.ft.0=§l老登的终极造物 - 异星渔场
 ote.tm.ft.1=§b赞美伟大的造物主Dr.Jumping! 如果没有她的万物至理公式'主 = 6', 老登们又怎么可能会有机会用到如此机器呢 ?
 ote.tm.ft.2=§b具体捕鱼原理 : Jumping恒等式解决了维度方块所蕴含的不确定性问题, 从而使得渔场内部小型维度的建立成为可能, 各种'鱼'将会被渔场内部的墨鱼之神所捕捉.
-ote.tm.ft.3='鱼'包括鱼, 海象, 韭菜盒子, 鲸鱼座藻类, 立方休, 苔石墙 etc. *也许可以放入锑星的维度方块, 但后果自负.
+ote.tm.ft.3='鱼'包括鱼、海象、韭菜盒子、鲸鱼座藻类、立方鱼、苔石砖等。*也许可以放入锑星的维度方块，但后果自负。
 ote.tm.ft.4=主机槽放入维度方块决定抽奖池: T0 抽 T0 维度矿粉, T1/T2 以此类推
 ote.tm.ft.9=维度矿粉池并行数 = 电压等级^3, 耗时固定 5 秒, 每并行耗电 1A 对应电压
 ote.tm.ft.6=随机产出喔, 可恶的抽卡. 憋憋.
 ote.tm.ft.7=输入 1000 个恩情可抽一次全物品池; 并行数 = 电压等级^1.4, 每次固定只扣 1000 恩情, 耗时固定 5 秒, 每并行耗电 1A 对应电压
 ote.tm.ft.8=§c全物品池不产出: GTNH核心 / 通用奇点 / 星门 的全部物品
 ote.tm.ft.10=§c另外不产出: 创造ME存储/流体元件, 源质元件, 漆黑之门, 创造模式取出升级 (可在配置文件里增删)
+ote.tm.ft.11=§6支持多安能源仓和激光能源仓；§c溢出产物始终销毁
 ote.cm.ft.0=1 - 输入输出总线/仓, 能源仓 : 替换渔场机械方块; 维度方块放主机槽或输入总线
 GT5U.gui.text.recipe_result.ft_no_dim=§4主机槽里没有维度方块
 GT5U.gui.text.recipe_result.ft_no_pool=§4该维度等级没有可抽取的产物
@@ -345,7 +351,7 @@ ote.tm.food.1=再也不用担心吃得太饱了
 ote.tm.food.2=丰矿地烧掉一切食物
 ote.tm.food.3=发电:食物饥饿值^2 * 线圈等级 * 机械方块等级 * 2 , 最高发电1A MAX/t , 64并行 , 一次最多烧毁一组相同食物
 ote.tm.food.4=§c§l注意:机器污染过高:如遇跳电并报错“无法排出污染”, 请尝试放置多个消声仓
-ote.tm.food.5=赞美伟大的富婆Safari_xiu吧!没有他就没有现在的123了憋憋.
+ote.tm.food.5=赞美伟大的富婆 Safari_xiu 吧！没有她就没有今天的 123 了憋憋。
 ote.cm.food.0=1 - 输入输出总线, 输入输出仓, 消声仓 : 替换脱氧钢机械方块
 ote.cm.food.1=2 - 动力仓 : 替换尾部脱氧钢机械方块
 
@@ -446,7 +452,7 @@ ote.tm.pump.7=一次处理多达§e5§r种不同的配方
 ote.tm.pump.8=需要§6MK-V§r或更高等级的加速轨道
 ote.tm.pump.9=太空电梯基座机械方块
 ote.tm.pump.10=任意太空电梯基座机械方块
-ote.tm.pump.11=§b§lAuthor:§l憋憋大师--HuimaoX
+ote.tm.pump.11=§b§l作者：§l憋憋大师--HuimaoX
 
 #MEBF
 ote.tm.mebf.1=§l老登的终极造物 - 工业高炉
@@ -725,12 +731,14 @@ ote.tm.mtc.4=§6  使用GT++热处理机械方块搭建结构
 ote.tm.mtc.5=§l 「乌拉尔山脉的钢铁洪流不会停歇，矿石在离心烈焰中化为祖国的养料」
 
 #LargeQuHub
-ote.tn.quhub=OTH史诗堆叠特大愁区
-ote.tm.quhub.0=§l小登的好多区... - 区牌Hub
+ote.tn.quhub=大型可堆叠变压器（待定）
+ote.tm.quhub.0=§l可堆叠有源变压器（待定）
 ote.tm.quhub.1=§b  输入: 能源仓 / 多安能源仓 输出: 动力仓 / 多安动力仓
 ote.tm.quhub.2=§c  不支持激光靶仓 / 激光源仓
-ote.tm.quhub.3=§b  开启导能自动传输能量.(大概吧?)
-ote.tm.quhub.4=§a  蓝图堆叠决定片数, 最大堆叠片数为线圈等级^3
+ote.tm.quhub.3=§b  启用能量直通以中继传输能量（损耗与有源变压器相同）
+ote.tm.quhub.4=§b  控制器所在墙面是第一片；其正后方墙面的中心须放置高炉加热线圈
+ote.tm.quhub.5=§b  后方每面 3x3 的墙算一片；可连续堆叠，最大片数 = 线圈等级³
+ote.tm.quhub.6=§6  结构外壳：脱氧钢机械方块
 ote.cm.quhub.0=1 - 能源仓 / 多安能源仓 / 动力仓 / 多安动力仓 : 替换脱氧钢机械方块 (不支持激光仓)
 ote.cm.quhub.1=控制器所在的那面墙为第一片, 它正后方一层的中心放高炉加热线圈
 ote.cm.quhub.2=再往深处每面 3x3 为一片, 可无限堆叠; 堆叠片数上限 = 线圈等级^3
@@ -954,7 +962,7 @@ ote.abstract_sanctum.mode.duplicate=复制模式
 ote.abstract_sanctum.chat.craft=已切换到制作模式
 ote.abstract_sanctum.chat.duplicate=已切换到复制模式
 ote.abstract_sanctum.chat.mode_locked=机器运行中，无法切换模式
-ote.abstract_sanctum.gui.mana=Mana
+ote.abstract_sanctum.gui.mana=魔力
 ote.abstract_sanctum.gui.salt=世界盐
 ote.abstract_sanctum.gui.blood=血液
 ote.abstract_sanctum.gui.config=§b✦ 原料倍率设置 ✦
@@ -973,7 +981,7 @@ ote.abstract_sanctum.tooltip.3=§b❖ §7哈哈哈哈哈哈哈哈哈哈哈
 ote.abstract_sanctum.tooltip.4=§b✦ 制作模式 §7支持绝大多数植物魔法、神秘时代与血魔法的配方！
 ote.abstract_sanctum.tooltip.5=§6◆ 并行 §7§f有损超频，基础并行为1，每次超频使得并行+2
 ote.abstract_sanctum.tooltip.6=§5✦ 复制模式 §7，消耗三种原料来批量复制物品！输入总线的催化剂物品不会被消耗
-ote.abstract_sanctum.tooltip.7=§6◆ 并行 §7§f无损超频，基础并行64，每次超频基础并行*2^n(n为超频次数)
+ote.abstract_sanctum.tooltip.7=§6◆ 并行 §7§f无损超频，基础并行64，每次超频翻倍（总并行 = 64×2^n，n为超频次数）
 ote.abstract_sanctum.tooltip.8=§3◆ §7液体魔力与生命源质经输入仓供应
 ote.abstract_sanctum.tooltip.9=§e◆ §7可选择通入Og，每轮消耗 144 mB；使机器制作模式并行 +4，复制模式并行 +64
 ote.abstract_sanctum.tooltip.10=§a◆ §7ZPM及以上玻璃解锁多安能源仓；UIV及以上玻璃解锁激光能源仓
@@ -983,7 +991,7 @@ ote.abstract_sanctum.tooltip.13=§8◆ 加速曲线 §7t 为对应原料倍率
 ote.abstract_sanctum.tooltip.14=§8qx(t)=0.01+1/(1+exp(160(t-1.05)))
 ote.abstract_sanctum.tooltip.15=§8qy(t)=0.01+1/(1+exp(8(t-3.50)))
 ote.abstract_sanctum.tooltip.16=§8qz(t)=0.01+1/(1+exp(40(t-1.20)))  
-ote.abstract_sanctum.tooltip.17=§9 记得给机器供应足够的mana，世界盐和血液源质！
+ote.abstract_sanctum.tooltip.17=§9 记得给机器供应足够的魔力、世界盐和生命源质！
 ote.abstract_sanctum.tooltip.18=§6✦ §7主机 GUI 提供三个专用升级槽，可分别免除魔力、世界盐与生命源质消耗
 ote.abstract_sanctum.tooltip.19=§9作者 : §z§l§bNMC终焉的神秘使 - 0g123451
 ote.abstract_sanctum.tooltip.20=§c§l在配置文件中配置可怕的邪祟奈隆的笑声是否会在工作的时候散遍整个世界...
@@ -993,3 +1001,65 @@ otht.recipe.AbstractSanctumDuplicate=奈隆圣地 - 复制
 ote.ds.nei.nanite.line1=§b需要机体升级纳米蜂群
 ote.ds.nei.nanite.line2=§b达到 %s 级
 GT5U.gui.text.recipe_result.ote_no_schematic=§4控制器插槽缺少火箭装配图纸
+
+#entangled
+fluid.entangled_oth_void=纠缠玻色-爱因斯坦凝聚态虚空熵流
+fluid.entangled_oth_void.name=纠缠玻色-爱因斯坦凝聚态虚空熵流
+fluid.entangled_oth_stars=纠缠玻色-爱因斯坦凝聚态星尘熔融
+fluid.entangled_oth_stars.name=纠缠玻色-爱因斯坦凝聚态星尘熔融
+fluid.entangled_oth_superconductoruiv=纠缠玻色-爱因斯坦凝聚态熔融UIV超导粗胚
+fluid.entangled_oth_superconductoruiv.name=纠缠玻色-爱因斯坦凝聚态熔融UIV超导粗胚
+fluid.entangled_oth_superconductorumv=纠缠玻色-爱因斯坦凝聚态熔融UMV超导粗胚
+fluid.entangled_oth_superconductorumv.name=纠缠玻色-爱因斯坦凝聚态熔融UMV超导粗胚
+
+# ==== GregTech 材料名（123 Technology 迁移）====
+Material.galaxy=熔融星系
+Material.voidentropy=虚空熵流
+Material.stars=星尘熔融
+Material.lcl=L.C.L
+Material.fuela=§d高辛烷超能硅岩火箭燃料
+Material.fuela_de=§d枯竭的高辛烷超能硅岩火箭燃料
+Material.promoterzpm=原子分离助燃剂
+Material.promoteruev=超维度等离子助燃剂
+Material.hcl10=超盐酸
+Material.hcl100=极盐酸
+Material.hcl1000=奇盐酸
+Material.hcl10000=魔盐酸
+Material.hcl100000=终盐酸
+Material.irossm=铱锇钐
+Material.gunmu=§q可观测态棍木-超理学聚合物
+Material.degunmu=§8不可观测态棍木-超理学聚合物
+
+# ==== GT 流体名（123 Technology 迁移）====
+fluid.galaxy=熔融星系
+fluid.galaxy.name=熔融星系
+fluid.voidentropy=虚空熵流
+fluid.voidentropy.name=虚空熵流
+fluid.stars=星尘熔融
+fluid.stars.name=星尘熔融
+fluid.lcl=L.C.L
+fluid.lcl.name=L.C.L
+fluid.fuela=§d高辛烷超能硅岩火箭燃料
+fluid.fuela.name=§d高辛烷超能硅岩火箭燃料
+fluid.fuela_de=§d枯竭的高辛烷超能硅岩火箭燃料
+fluid.fuela_de.name=§d枯竭的高辛烷超能硅岩火箭燃料
+fluid.promoterzpm=原子分离助燃剂
+fluid.promoterzpm.name=原子分离助燃剂
+fluid.promoteruev=超维度等离子助燃剂
+fluid.promoteruev.name=超维度等离子助燃剂
+fluid.hcl10=超盐酸
+fluid.hcl10.name=超盐酸
+fluid.hcl100=极盐酸
+fluid.hcl100.name=极盐酸
+fluid.hcl1000=奇盐酸
+fluid.hcl1000.name=奇盐酸
+fluid.hcl10000=魔盐酸
+fluid.hcl10000.name=魔盐酸
+fluid.hcl100000=终盐酸
+fluid.hcl100000.name=终盐酸
+fluid.molten.irossm=熔融铱锇钐
+fluid.molten.irossm.name=熔融铱锇钐
+fluid.molten.gunmu=熔融可观测态棍木-超理学聚合物
+fluid.molten.gunmu.name=熔融可观测态棍木-超理学聚合物
+fluid.molten.degunmu=熔融不可观测态棍木-超理学聚合物
+fluid.molten.degunmu.name=熔融不可观测态棍木-超理学聚合物
