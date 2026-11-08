@@ -1385,6 +1385,7 @@ public class RecipesMain implements IRecipePool {
             .itemInputs(
                 ItemList.Electric_Motor_UHV.get(64),
                 ItemList.Electric_Pump_UHV.get(16),
+                OTHItemList.AbstractSanctum.get(8),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 8, 5001),
                 GTOreDictUnificator.get(OrePrefixes.plateSuperdense, Materials.Void, 64),
                 GTOreDictUnificator.get(OrePrefixes.wireGt02, Materials.SuperconductorUHV, 64),
