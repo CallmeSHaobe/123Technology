@@ -28,11 +28,6 @@ public class RecipeLoader {
         OTHTechnology.LOG.info("RecipeLoader: Loading OTEMiniSteamNineInOne recipes...");
         OTEMiniSteamNineInOne.loadRecipes();
         OTHTechnology.LOG.info("RecipeLoader: OTEMiniSteamNineInOne done.");
-        if (!modsEnum.TwistSpaceTechnology.isModLoaded()) {
-            OTHTechnology.LOG.info("RecipeLoader: Loading RecipesCopiedFromTST...");
-            new RecipesCopiedFromTST().loadRecipes();
-            OTHTechnology.LOG.info("RecipeLoader: RecipesCopiedFromTST done.");
-        }
         if (modsEnum.NHUtilities.isModLoaded() && is_EggMachine_Recipes_For_NHU) {
             new RecipesDE().loadRecipes();
         }
@@ -57,9 +52,6 @@ public class RecipeLoader {
             String poolName = recipePool.getClass()
                 .getSimpleName();
             OTHTechnology.LOG.info("RecipeLoader: [{}/{}] Loading {}...", ++idx, recipePools.length, poolName);
-            // 单个配方池抛异常绝不能让整个 completeInit 挂掉：
-            // 2026-10-26 14:26 迪普西科的一条 NEI 展示配方就抛了 IllegalArgumentException，
-            // 结果 FML 记为致命错误 ⇒ 所有存档进不去 / 新建世界失败。这里兜底，出错只跳过该池。
             boolean loaded = true;
             try {
                 recipePool.loadRecipes();

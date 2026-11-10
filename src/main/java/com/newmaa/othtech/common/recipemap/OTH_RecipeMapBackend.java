@@ -9,9 +9,6 @@ public class OTH_RecipeMapBackend extends RecipeMapBackend {
         super(propertiesBuilder);
     }
 
-    /**
-     * Do nothing.
-     */
     @Override
     public void reInit() {}
 }

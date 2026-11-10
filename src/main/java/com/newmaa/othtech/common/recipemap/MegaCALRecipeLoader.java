@@ -8,21 +8,6 @@ import org.apache.logging.log4j.Logger;
 import bartworks.API.recipe.BartWorksRecipeMaps;
 import gregtech.api.util.GTRecipe;
 
-/**
- * 给「进阶高能电路装配线」({@code OTEMegaCircuitAssLine}) 的配方池 {@link Recipemaps#MegaCAL} 灌配方。
- * <p>
- * 这里的配方就是 CAL（压印装配线）配方本身：CAL 的配方是把电路组装机配方「倍增」后的版本
- * —— 6 个输入（电路元件已换成 {@code Wrap_*} 封装件）、输出 ×16、时长 ×12、并在<b>特殊槽</b>放压印电路。
- * 老版本 GT5U 由 {@code CircuitImprintLoader#reBuildRecipe} 自动生成这些配方，现在改由
- * NewHorizonsCoreMod 的 {@code CircuitAssemblyLineRecipes} 手写注册进 {@code bw.recipe.cal}。
- * <p>
- * 本机不需要压印板，所以唯一要做的就是：<b>拷贝 CAL 配方，然后把特殊槽里的压印电路去掉</b>。
- * <b>绝不能去动 {@code mInputs}</b> —— 输入里的「封装电路板 / 封装集成电路 / 封装贴片元件」和压印电路
- * 是同一个 meta item 的不同 meta，按物品身份去过滤会把正常输入一起删掉。
- * <p>
- * 调用时机：{@code GregTechAPI.sGTCompleteLoad}（FML load complete 阶段执行），必须晚于
- * NewHorizonsCoreMod 注册 CAL 配方（dreamcraft 也是挂在这个列表里，本模组 required-after:dreamcraft）。
- */
 public final class MegaCALRecipeLoader {
 
     private static final Logger LOG = LogManager.getLogger("123Technology/MegaCAL");

@@ -21,20 +21,6 @@ import micdoodle8.mods.galacticraft.core.items.GCItems;
 import micdoodle8.mods.galacticraft.planets.asteroids.items.AsteroidsItems;
 import micdoodle8.mods.galacticraft.planets.mars.items.MarsItems;
 
-/**
- * 锑星坟场本体（33x33）。
- * <p>
- * 组成：
- * <ul>
- * <li>整平的石台 + 一圈矮墙（南侧留 3 格门）；</li>
- * <li>三排十字墓碑，用各种石头砌成（圆石 / 苔石 / 石砖的各种 meta）；</li>
- * <li>三座刷怪笼石亭，分别刷黄狗 / 红狗 / 蓝狗；</li>
- * <li>南侧一座巨大的「F8」碑墙；</li>
- * <li>四角的箱子：固定 8 枚 GT 白铜币，另有几率开出星系 T1-T3 火箭。</li>
- * </ul>
- * 所有坐标都是「结构本地坐标」，随机数只用来决定战利品，不影响布局，
- * 所以同一座坟场跨区块生成时不会错位。
- */
 public class StructureComponentGraveyard extends StructureComponent {
 
     /** 结构边长。 */

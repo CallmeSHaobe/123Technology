@@ -8,37 +8,6 @@ import static com.gtnewhorizon.gtnhlib.util.AnimatedTooltipHandler.text;
 
 import java.util.function.Supplier;
 
-/**
- * "Author credit" animation — rainbow bounce, adapted from the
- * {@code drawRainbowBounceHeader} method in czqwq/EZMiner's {@code HudRenderer}.
- *
- * <pre>
- * §b§lAuthor:§r §7c§7z§cq§7w§7q  →  §7c§7z§6q§7w§7q  →  ...
- *               ↑ spotlight   ↑
- * </pre>
- *
- * <p>
- * One character of the author name holds the spotlight at a time; the spotlight
- * character cycles through the rainbow hues and is rendered bold + underlined
- * (a text-only "bounce"), while the remaining characters are dimmed.
- *
- * <p>
- * <b>Live tooltip registration (GT5U pattern):</b> GT5U registers animated author
- * lines on machine controllers at registration time via gtnhlib's
- * {@link com.gtnewhorizon.gtnhlib.util.AnimatedTooltipHandler} — see
- * {@code gregtech.loaders.preload.LoaderMetaTileEntities} + {@code GTAuthors}.
- * The handler hooks the client {@code ItemTooltipEvent} and re-evaluates the
- * {@link Supplier} on every frame, so the line animates in real time:
- *
- * <pre>
- * AnimatedTooltipHandler.addItemTooltip(stack, AuthorAnimation.getTooltipSupplier());
- * </pre>
- *
- * <p>
- * <b>Module decoupling:</b> this class keeps no mutable state — every frame is
- * derived from {@link System#currentTimeMillis()} alone, so the supplier is safe
- * to evaluate on either side (client/server) and reusable by any machine.
- */
 public final class AuthorAnimation {
 
     // ── Rainbow animation constants ──────────────────────────────────────────

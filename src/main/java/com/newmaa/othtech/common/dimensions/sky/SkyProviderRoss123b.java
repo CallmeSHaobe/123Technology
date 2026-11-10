@@ -15,12 +15,6 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import galaxyspace.core.render.sky.SkyProviderBase;
 
-/**
- * OMG 有GPT?!
- * 也许GPT修好了.
- * biebie.
- */
-
 @SideOnly(Side.CLIENT)
 public class SkyProviderRoss123b extends SkyProviderBase implements ResourcesDimensions {
 
@@ -61,20 +55,12 @@ public class SkyProviderRoss123b extends SkyProviderBase implements ResourcesDim
         fillScatteredStars(random);
     }
 
-    /**
-     * 星星永远按满亮度画: 这是个没有太阳的死掉的世界, 原版那套"按天色明暗"的亮度在这里会让星空一半时间消失。
-     * 画完星星再叠上银河。
-     */
     @Override
     protected void renderStarList(float partialTicks, WorldClient world) {
         renderStarListFullBrighness(partialTicks, world);
         renderGalaxy(partialTicks, world);
     }
 
-    /**
-     * 父类给星系/星云用的那几张牌子是黑底的贴图, 直接画出来在红天上是几团黑斑(之前就是这么翻车的),
-     * 所以这里关掉它, 银河改由 {@link #renderGalaxy} 自己画。
-     */
     @Override
     protected void drawTexture(ResourceLocation texture, double radius) {}
 
@@ -209,13 +195,6 @@ public class SkyProviderRoss123b extends SkyProviderBase implements ResourcesDim
         return new double[] { a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0] };
     }
 
-    /**
-     * 黑之月 + 横贯天空的红色光带 —— 第三次冲击后挂在天上的那颗, 以及它前方那道血色天光。
-     * <p>
-     * 光带画在 z = 0 这一个平面上, 而黑之月在 z = {@link #MOON_Z}; 两个平面平行, 所以光带在屏幕上
-     * 永远与黑之月"平行": 它绕过整个天球、从一侧地平线升到头顶再落到对面, 中线正好压在天空正中央。
-     * 两侧靠不透明度渐变淡出, 中间最实。
-     */
     @Override
     public void renderCelestialBodies(float partialTicks, WorldClient world, Minecraft mc) {
         GL11.glPushAttrib(

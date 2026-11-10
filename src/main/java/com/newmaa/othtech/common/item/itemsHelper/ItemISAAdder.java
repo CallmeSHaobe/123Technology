@@ -20,22 +20,12 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemISAAdder extends ItemISA_Basic {
-    /*
-     * An Item Map for managing basic items
-     */
-    // public static Map<String, ItemAdder> Item01Map = new HashMap<>();
 
-    /**
-     * A Set contains the meta value that has been used.
-     */
     public static final Set<Integer> MetaSet = new HashSet<>();
     public static final Map<Integer, String[]> MetaItemTooltipsMap = new HashMap<>();
 
     public final String unlocalizedName;
 
-    /**
-     * Create the basic item MetaItem.
-     */
     public ItemISAAdder(String aName, String aMetaName, CreativeTabs aCreativeTabs) {
         super(aName, aMetaName, aCreativeTabs);
         this.unlocalizedName = aMetaName;
@@ -65,15 +55,6 @@ public class ItemISAAdder extends ItemISA_Basic {
         return initItemISA(aName, aMeta);
 
     }
-
-    /**
-     * Init the basic items at the game pre init.
-     */
-    // public static void init() {
-    // for (String MetaName : Item01Map.keySet()) {
-    // GameRegistry.registerItem(Item01Map.get(MetaName), MetaName);
-    // }
-    // }
 
     // region Overrides
 

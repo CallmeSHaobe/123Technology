@@ -80,10 +80,6 @@ public enum OTHBeeDefinition implements IBeeDefinition {
 
     GATE(OTHBranchDefinition.OTHBYDS, "Gate", true, new Color(0x3808A0), new Color(0x3808A0), beeSpecies -> {
         beeSpecies.addProduct(GTModHandler.getModItem(NewHorizonsCoreMod.ID, "item.StargateCrystalDust", 1), 0.00810f);
-        // beeSpecies.addProduct(GTModHandler.getModItem(NewHorizonsCoreMod.ID, "item.StargateFramePart", 1), 0.00810f);
-        // beeSpecies
-        // .addSpecialty(GTModHandler.getModItem(NewHorizonsCoreMod.ID, "item.StargateShieldingFoil", 1, 0), 0.00123f);
-        // beeSpecies.addSpecialty(GTModHandler.getModItem(NewHorizonsCoreMod.ID, "item.StargateChevron", 1), 0.00123f);
         beeSpecies.setHumidity(DAMP);
         beeSpecies.setTemperature(EnumTemperature.NORMAL);
     }, template -> {
@@ -138,9 +134,6 @@ public enum OTHBeeDefinition implements IBeeDefinition {
         }, dis -> {
             IBeeMutationCustom tMutation = dis.registerMutation(GLAS, INFINITY.getSpecies(), 1);
             tMutation.requireResource(Block.getBlockFromName(GTPlusPlus.ID + ":blockBlockChromaticGlass"), 0); // block
-                                                                                                               // of
-                                                                                                               // Chromatic
-                                                                                                               // Glass
         }),
     JIUCAI(OTHBranchDefinition.OTHBYDS, "Jiucai", true, new Color(0xFFD5742A, true), new Color(0x38FF1038, true),
         beeSpecies -> {
@@ -328,11 +321,6 @@ public enum OTHBeeDefinition implements IBeeDefinition {
         return registerMutation(parent1, parent2, chance, 1f);
     }
 
-    /**
-     * Diese neue Funtion erlaubt Mutationsraten unter 1%. Setze dazu die Mutationsrate als Bruch mit chance /
-     * chanceDivider This new function allows Mutation percentages under 1%. Set them as a fraction with chance /
-     * chanceDivider
-     */
     private IBeeMutationCustom registerMutation(IAlleleBeeSpecies parent1, IAlleleBeeSpecies parent2, int chance,
         float chanceDivider) {
         return new OTHBeeMutation(parent1, parent2, this.getTemplate(), chance, chanceDivider);

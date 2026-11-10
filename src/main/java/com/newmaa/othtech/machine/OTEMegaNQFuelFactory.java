@@ -759,11 +759,6 @@ public class OTEMegaNQFuelFactory extends OTHTTMultiMachineBaseEM implements ICo
                 case 0 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.mnf.mode.0"));
                 case 1 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.mnf.mode.1"));
             }
-            /*
-             * GTUtility.sendChatToPlayer(
-             * aPlayer,
-             * StatCollector.translateToLocal(mode == 1 ? "压缩硅岩燃料精炼厂模式" : mode == 0 ? "硅岩燃料精炼厂模式" : "Null"));
-             */
         }
     }
 

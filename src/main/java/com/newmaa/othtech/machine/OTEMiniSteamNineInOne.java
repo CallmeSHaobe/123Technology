@@ -464,14 +464,6 @@ public class OTEMiniSteamNineInOne extends OTHSteamMultiBase<OTEMiniSteamNineInO
             case 1 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.s9in1.mode.1"));
             case 2 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.s9in1.mode.2"));
         }
-        /*
-         * GTUtility.sendChatToPlayer(
-         * aPlayer,
-         * StatCollector.translateToLocal(
-         * mInternalMode == 0 ? translateToLocal("ote.tm.s9in1.mode.0")
-         * : mInternalMode == 1 ? translateToLocal("ote.tm.s9in1.mode.1")
-         * : mInternalMode == 2 ? translateToLocal("ote.tm.s9in1.mode.2") : "null"));
-         */
     }
 
     @Override

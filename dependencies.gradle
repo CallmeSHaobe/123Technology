@@ -8,21 +8,32 @@ elytraModpackVersion {
     attachManifestVersionToJar = false
 }
 
+// TST：GitHub releases 的 dev jar 拉到 libs/（已被 .gitignore 忽略），首次编译前自动下载。
+// 0.8.1 的 Bottled Chaos 需要没人注册的 mutagen 流体，进存档会 NPE，dev 先钉 0.8.0。
+def tstVersion = (project.findProperty('tstVersion') ?: '0.8.0').toString()
+def tstJar = file("libs/TwistSpaceTechnology-${tstVersion}-dev.jar")
+def tstReleaseUrl = "https://github.com/Nxer/Twist-Space-Technology-Mod/releases/download/${tstVersion}/${tstJar.name}"
+
+tasks.register('downloadTwistSpaceTechnology') {
+    group = 'dependencies'
+    description = "下载 TST ${tstVersion} 的 dev jar 到 libs/（GitHub releases，无 maven 坐标）"
+    outputs.file(tstJar)
+    doLast {
+        if (tstJar.exists()) return
+        tstJar.parentFile.mkdirs()
+        logger.lifecycle("TST: downloading ${tstReleaseUrl}")
+        ant.get(src: tstReleaseUrl, dest: tstJar, skipexisting: true, verbose: true)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    dependsOn 'downloadTwistSpaceTechnology'
+}
+
 dependencies {
     implementation(gtnhDev("GT5-Unofficial"))
-
-    // CropsNH 由 GTNH maven 发布（dev 分类器），版本跟随上方 gtnhVersion 的模组清单，不再依赖本地 libs/*.jar。
-    // 只用于编译：CropsNH 的 postInit 会硬引用 Better Builders Wands 的类（portablejim.bbw.*），
-    // 而 BBW 不是本工程的 dev 依赖；用 implementation 会把它带进 runClient 运行时并直接崩
-    // （NoClassDefFoundError: portablejim/bbw/core/conversion/ICustomMapping）。
-    // 生产环境由整合包提供 CropsNH + BBW，我们只保留软依赖（after:cropsnh + required:false 的独立 mixin）。
     compileOnly(gtnhDev("CropsNH"))
     implementation(gtnhDev("NewHorizonsCoreMod"))
-//    implementation(gtnhDev("Mobs-Info"))
-    // Mobs Info 在整合包清单里属于 external_mods（2.9.0 起随包 0.6.2），没有对应的 GTNH maven 坐标
-    // （`0.6.2-GTNH` 在 nexus 上不存在，`gtnhDev("Mobs-Info")` 返回 null），所以只能钉在 maven 上最新的
-    // 0.6.0-GTNH。已逐类对比 0.6.0-GTNH 与本机 2.9.0 整合包里的 mobsinfo-0.6.2.jar：api/loader 的类集合、
-    // 成员名与参数个数完全一致（只剩 deobf/reobf 的 MC 方法名差异），0.6.2 是纯修复更新，不会 NoSuchMethodError。
     implementation('com.github.GTNewHorizons:Mobs-Info:0.6.0-GTNH:dev')
     implementation(gtnhDev("Infernal-Mobs"))
     implementation(gtnhDev("Galaxy-Space-GTNH"))
@@ -54,34 +65,24 @@ dependencies {
 
     implementation("thaumcraft:Thaumcraft:1.7.10-4.2.3.5:dev")
     implementation('com.github.GTNewHorizons:worldedit-gtnh:v0.0.8:dev')
-
-    // JourneyMap：两个可选坐标，按需要二选一（都是 compileOnly，不发布成硬依赖）
-    //   1) GTNH 分支 journeymap-legacy 的 5.2.x（模组包 2.9.0-RC-2 里带的就是 5.2.23-fairplay）
-    //      这一支**没有插件 API**，只有 journeymap.client.* / .common.* / .server.* 的实现类，
-    //      适合做 mixin / 反射式的兼容修补。
-    //   2) 上游 JourneyMap 1.7.10 的 6.0.x（同一个 Modrinth 项目发布的 forge 版）
-    //      带 journeymap.api.v2（IClientAPI / IClientPlugin），写插件/航点要用它。
-    // Modrinth maven 只提供 primary 文件（生产 jar），所以统一 rfg.deobf 一次。
-    // 想在本地 runClient 里真的加载 JourneyMap 调试，再补一条：
-    //   runtimeOnlyNonPublishable(rfg.deobf("maven.modrinth:journeymap:5.2.23"))
     compileOnly(rfg.deobf("maven.modrinth:journeymap:5.2.23"))
-    // compileOnly(rfg.deobf("maven.modrinth:journeymap:1.7.10-6.0.8+forge"))
-
-    // VisualProspecting：旅行地图上「GT 矿脉 / 地下流体 / TC 节点」三个叠层是它画的。
-    // 只用来编译「把锑星自定义矿脉补进它的矿脉表」那段兼容代码；没装 VP 时那段代码不会被加载。
     compileOnly(gtnhDev("VisualProspecting"))
+    compileOnly(files(tstJar))
+    runtimeOnlyNonPublishable(files(tstJar))
+    runtimeOnlyNonPublishable(gtnhDev("Electro-Magic-Tools")) {
+        exclude group: 'curse.maven', module: 'thaumcraft-nei-plugin-225095'
+    }
+    runtimeOnlyNonPublishable(gtnhDev("CropsNH"))
+    runtimeOnlyNonPublishable(gtnhDev("BetterBuildersWands"))
+    runtimeOnlyNonPublishable(gtnhDev("AspectRecipeIndex"))
+    runtimeOnlyNonPublishable(rfg.deobf('curse.maven:thaumcraft-nei-plugin-225095:2241913'))
 
 
     // runtime
     runtimeOnlyNonPublishable(gtnhDev("BetterP2P"))
-    // Chisel 现在由 GTNH maven 出 dev 包（2.9.0 清单是 2.17.34-GTNH），不再钉 libs/chisel-2.17.27-GTNH.jar
     runtimeOnlyNonPublishable(gtnhDev("Chisel")) { transitive = false }
     runtimeOnlyNonPublishable(gtnhDev("StructureLib"))
     runtimeOnlyNonPublishable(gtnhDev("BlockRenderer6343")) { transitive = false }
-    // GT5 5.09.54.265 的 GTItemOre / ItemStorage 上带 @Optional.Interface("mods.railcraft...IItemFirestoneBurning")，
-    // dev 运行环境里没有 Railcraft 时这个接口不会被剥掉，GT 在 initialize 阶段直接 NoClassDefFoundError（gregtech 变 UCHE）。
-    // 整合包里本来就有 Railcraft，dev 环境也补上，和 GTNH 自己的开发环境保持一致。
-    // 整合包 2.9.0 清单里是 9.17.36，但 GTNH maven 上只有到 9.17.34，这里钉最后一个能拉到的版本（只是 dev 运行期）。
     runtimeOnlyNonPublishable('com.github.GTNewHorizons:Railcraft:9.17.34:dev') { transitive = false }
 
     annotationProcessor('com.google.auto.value:auto-value:1.10.1')

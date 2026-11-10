@@ -6,12 +6,6 @@ import net.minecraft.world.gen.structure.MapGenStructure;
 import net.minecraft.world.gen.structure.MapGenStructureIO;
 import net.minecraft.world.gen.structure.StructureStart;
 
-/**
- * 锑星坟场：每 24x24 个区块随机挑一个位置生成一座 33x33 的坟场。
- * <p>
- * 里面有三只狗的刷怪笼、各种石头墓碑、南侧一座巨大的「F8」碑墙，
- * 四个角落的箱子固定给 8 枚 GT 白铜币，另有几率开出星系 T1-T3 火箭。
- */
 public class MapGenGraveyard extends MapGenStructure {
 
     /** 结构间距（区块）：每个 24x24 区块的区域最多一座坟场。 */

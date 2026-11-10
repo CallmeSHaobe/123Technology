@@ -20,14 +20,6 @@ import com.newmaa.othtech.common.OTHItemList;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 
-/**
- * 黄桃草的注册入口（作物 / 杂交 / 合成）。
- *
- * <p>
- * 与 {@link CropsNHRice} 一样由 {@link com.newmaa.othtech.mixin.MixinCropLoader} 在 CropsNH 的
- * {@code CropLoader.postInit()} 末尾调用，因此后面跑 MutationLoader（会 prune 杂交池）时我们的作物
- * 已经在注册表里了。
- */
 public final class CropsNHPeachGrass {
 
     public static ICropCard YellowPeachGrass;
@@ -46,14 +38,6 @@ public final class CropsNHPeachGrass {
         OTHTechnology.LOG.info("Registered crop: {}", YellowPeachGrass.getId());
     }
 
-    /**
-     * 杂交：
-     * <ol>
-     * <li>注册进 YELLOW / WHEAT / EDIBLE / LEAFY 四个杂交池 —— 池内作物两两相邻随机杂交时有可能出黄桃草；</li>
-     * <li>再挂一条定向杂交：小麦 × 柠檬 → 黄桃草（不需要靠运气）。</li>
-     * </ol>
-     * 定向杂交的父本必须是 CropsNH 自带作物，所以这里引用 {@link CropsNHCrops} 的静态字段。
-     */
     private static void registerMutations() {
         MutationRegistry.instance.register(YellowPeachGrass, YELLOW, WHEAT, EDIBLE, LEAFY);
 
@@ -66,13 +50,6 @@ public final class CropsNHPeachGrass {
         }
     }
 
-    /**
-     * 工作台无序合成：1 个普通小麦种子 + 1 个恩情 → 1 个黄桃草种子。
-     *
-     * <p>
-     * 用 {@link SeedStats#DEFAULT_ANALYZED} 生成种子，玩家拿到就是「已分析、1/1/1」的种子，可以直接种，
-     * 不需要先用作物分析仪扫。
-     */
     private static void registerRecipes() {
         ItemStack seed = YellowPeachGrass.getSeedItem(SeedStats.DEFAULT_ANALYZED);
         seed.stackSize = 1;

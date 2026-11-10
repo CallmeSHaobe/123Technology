@@ -28,9 +28,6 @@ import gregtech.api.recipe.RecipeMapFrontend;
 import gregtech.common.gui.modularui.UIHelper;
 import gregtech.nei.GTNEIDefaultHandler;
 
-/**
- * Keeps large infusion recipes inside a fixed four-row, eight-column input grid.
- */
 public class AbstractSanctumFrontend extends RecipeMapFrontend {
 
     private static final int INPUT_X = 6;

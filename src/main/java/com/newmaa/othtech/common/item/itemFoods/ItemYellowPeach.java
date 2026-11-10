@@ -15,15 +15,6 @@ import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-/**
- * 黄桃（Yellow Peach）：黄桃草的产物。
- *
- * <ul>
- * <li>恢复 12 点饥饿值</li>
- * <li>附赠 30 秒速度 V（amplifier = 4），概率 100%</li>
- * <li>始终可食用（吃饱了也能吃，方便续加速）</li>
- * </ul>
- */
 public class ItemYellowPeach extends ItemFood {
 
     /** 饥饿值回复量 */

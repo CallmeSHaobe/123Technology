@@ -166,9 +166,6 @@ public abstract class OTHSteamMultiBase<T extends OTHSteamMultiBase<T>> extends 
         super.onPostTick(aBaseMetaTileEntity, aTick);
     }
 
-    /**
-     * Called every tick the Machine runs
-     */
     @Override
     public boolean onRunningTick(ItemStack aStack) {
         if (lEUt < 0) {
@@ -218,10 +215,6 @@ public abstract class OTHSteamMultiBase<T extends OTHSteamMultiBase<T>> extends 
         if (!(aMetaTileEntity instanceof MTEHatchSteamBusOutput steamBus)) return false;
         return addToMachineListInternal(mSteamOutputs, steamBus, aBaseCasingIndex);
     }
-
-    /*
-     * Handle I/O with custom hatches
-     */
 
     @Override
     public boolean depleteInput(FluidStack aLiquid) {
@@ -507,62 +500,6 @@ public abstract class OTHSteamMultiBase<T extends OTHSteamMultiBase<T>> extends 
                 .setPos(-48 + 21, -8 + 21)
                 .setSize(18, 4));
     }
-
-    /*
-     * @Override
-     * public void getWailaBody(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor,
-     * IWailaConfigHandler config) {
-     * final NBTTagCompound tag = accessor.getNBTData();
-     * if (tag.getBoolean("incompleteStructure")) {
-     * currentTip
-     * .add(RED + StatCollector.translateToLocalFormatted("GT5U.waila.multiblock.status.incomplete") + RESET);
-     * }
-     * String efficiency = RESET + StatCollector
-     * .translateToLocalFormatted("GT5U.waila.multiblock.status.efficiency", tag.getFloat("efficiency"));
-     * if (tag.getBoolean("hasProblems")) {
-     * currentTip
-     * .add(RED + StatCollector.translateToLocal("GT5U.waila.multiblock.status.has_problem") + efficiency);
-     * } else if (!tag.getBoolean("incompleteStructure")) {
-     * currentTip
-     * .add(GREEN + StatCollector.translateToLocal("GT5U.waila.multiblock.status.running_fine") + efficiency);
-     * }
-     * boolean isActive = tag.getBoolean("isActive");
-     * if (isActive) {
-     * long actualEnergyUsage = tag.getLong("energyUsage");
-     * if (actualEnergyUsage > 0) {
-     * currentTip.add(
-     * StatCollector
-     * .translateToLocalFormatted("GTPP.waila.steam.use", formatNumbers(actualEnergyUsage * 20)));
-     * }
-     * }
-     * currentTip.add(
-     * GTWaila.getMachineProgressString(
-     * isActive,
-     * tag.getBoolean("isAllowedToWork"),
-     * tag.getInteger("maxProgress"),
-     * tag.getInteger("progress")));
-     * // Show ns on the tooltip
-     * if (GTMod.proxy.wailaAverageNS && tag.hasKey("averageNS")) {
-     * int tAverageTime = tag.getInteger("averageNS");
-     * currentTip.add(
-     * StatCollector
-     * .translateToLocalFormatted("GT5U.waila.multiblock.status.cpu_load", formatNumbers(tAverageTime)));
-     * }
-     * super.getMTEWailaBody(itemStack, currentTip, accessor, config);
-     * }
-     * protected static String getSteamTierTextForWaila(NBTTagCompound tag) {
-     * int tierMachine = tag.getInteger("tierMachine");
-     * String tierMachineText;
-     * if (tierMachine == 1) {
-     * tierMachineText = "Basic";
-     * } else if (tierMachine == 2) {
-     * tierMachineText = "High Pressure";
-     * } else {
-     * tierMachineText = String.valueOf(tierMachine);
-     * }
-     * return tierMachineText;
-     * }
-     */
 
     protected static <T extends OTHSteamMultiBase<T>> HatchElementBuilder<T> buildSteamInput(Class<T> typeToken) {
         return buildHatchAdder(typeToken).adder(OTHSteamMultiBase::addSteamInputFluidHatch)

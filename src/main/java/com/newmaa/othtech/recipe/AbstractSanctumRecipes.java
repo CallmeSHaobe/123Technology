@@ -715,10 +715,6 @@ public class AbstractSanctumRecipes implements IRecipePool {
         return usesShardSignature;
     }
 
-    /**
-     * Adds a self-duplication entry only when the crucible catalyst can also be represented by
-     * the output item. The duplicate frontend removes that catalyst from consumption.
-     */
     private void addCrucibleDuplicateRecipe(CrucibleRecipe source) {
         ItemStack output = copyRecipeOutput(source.getRecipeOutput());
         int salt = saltFor(source.aspects);

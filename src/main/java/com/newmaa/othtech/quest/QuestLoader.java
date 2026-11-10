@@ -43,10 +43,6 @@ public class QuestLoader {
 
     public static void registry() {
         try {
-            // IMPORTANT: copy quest files first, then inject the order key.
-            // Injecting the key without the corresponding QuestLine.json causes
-            // BetterQuesting to store a null IQuestLine entry, which crashes the
-            // quest-book GUI with NullPointerException at refreshChapterVisibility.
             boolean filesCopied = copyDefaultQuestsFromJar();
             syncQuestLinesOrder(filesCopied);
         } catch (Exception e) {

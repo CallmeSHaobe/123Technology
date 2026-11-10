@@ -524,9 +524,6 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .duration(20 * 64)
             .eut(TierEU.RECIPE_UIV)
             .addTo(SMD);
-        // NMD
-        // Some doped Wafer
-        // Silicon
         RecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.01", 0, 32398),

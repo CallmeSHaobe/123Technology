@@ -9,18 +9,6 @@ import com.gtnewhorizon.cropsnh.api.SeedShape;
 import com.gtnewhorizon.cropsnh.crops.abstracts.CropFood;
 import com.newmaa.othtech.common.OTHItemList;
 
-/**
- * 黄桃草（Yellow Peach Grass）。
- *
- * <ul>
- * <li>土壤：农田（{@link CropFood} 默认 {@code CropsNHSoilTypes.farmland}）</li>
- * <li>档次：tier 2</li>
- * <li>产出：本模组的黄桃（{@code OTHItemList.YellowPeach}，ItemFood：回 12 饥饿 + 30 秒速度 V）100%</li>
- * <li>杂交：已注册进 YELLOW / WHEAT / EDIBLE / LEAFY 杂交池，并有一条定向杂交「小麦 × 柠檬」（见
- * {@link CropsNHPeachGrass}）</li>
- * <li>种子来源：工作台无序合成「普通小麦种子 + 恩情」（见 {@link CropsNHPeachGrass#registerRecipes()}）</li>
- * </ul>
- */
 public class CropYellowPeachGrass extends CropFood {
 
     /** 贴图目录：assets/123technology/textures/blocks/crops/yellowPeachGrass/{0..3}.png */

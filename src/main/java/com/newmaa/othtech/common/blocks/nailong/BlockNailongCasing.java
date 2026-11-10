@@ -22,15 +22,6 @@ import gregtech.api.interfaces.IHasIndexedTexture;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GTUtility;
 
-/**
- * 奈隆系机壳：一个 meta Block 塞下「奈隆机械方块」与「黄桃罐头机械方块」。
- * <p>
- * meta 0 = 奈隆：六面同材质，纯黄色里掺一点淡黄。
- * meta 1 = 黄桃罐头：在 meta 0 的底色上加玻璃质感（半透明高光 + 玻璃罐边）。
- * <p>
- * 实现 {@link IHasIndexedTexture} 并占用 GT 贴图页 113（GT 官方用 0/1/2/8/16/17/20/42，
- * 本模组 DeepSeiko 占 114，TST 占 115），这样它作为多方块机壳时仓口贴图能跟着换色。
- */
 public class BlockNailongCasing extends Block implements IHasIndexedTexture {
 
     public static final int METACOUNT = NailongCasingMeta.VALUES.length;

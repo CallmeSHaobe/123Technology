@@ -93,11 +93,6 @@ public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> {
         EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":",
         translateToLocal("1 - 消声仓, 能源仓, 输入输出总线, 输入输出仓 : 替换分子机械方块, 支持TecTech能源仓") };
 
-    // Structured by JulianChum
-    // 形状 50(x) x 143(z) x 56(y)：数据在 assets/123technology/structures/megaeec_shape.txt。
-    // 外置原因：8008 条字符串字面量作为「实例 final 字段」时，javac 会把这份初始化字节码复制进
-    // 每一个构造器，实测两个构造器各 51 KB，而 JVM 单方法上限 65535 字节 —— 再往形状里加两千条
-    // 就会 code too large。外置后构造器回到 1 KB 级，改结构也不用重编译。
     private static final int SHAPE_WIDTH = 50;
 
     private static final int SHAPE_HEIGHT = 143;
@@ -193,34 +188,6 @@ public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> {
         return 0;
     }
 
-    /*
-     * @Override
-     * protected MultiblockTooltipBuilder createTooltip() {
-     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-     * tt.addMachineType("§e§l老登的终极造物 - 噬魂监狱(工业屠宰场)")
-     * .addInfo("§l§4“观自在菩萨, 行深般若波罗蜜多时照见五蕴皆空, 度一切苦厄.”")
-     * .addInfo("§l§4无法连接血魔法仪式, 自动销毁所有附魔以及有耐久损耗的装备")
-     * .addInfo("§n§b工业化的魅力......")
-     * .addInfo("并行: 134217728, 耗电固定为64A MAX, 时运等级64")
-     * .addInfo("注意: 多方块结构方块数量过多 无法预览结构")
-     * .addInfo("统计 : 灵魂沙 * 2200 , 博特姆合金块 * 1493 , 放射硅岩合金机械方块 * 12309")
-     * .addInfo("黑曜石 * 611 , 钢框架 * 169 , 脱氧钢机械方块 * 100")
-     * .addInfo("硼玻璃系列方块 * 240 , 太空电梯支持结构方块 * 918 , 分子机械方块 * 2271")
-     * .addInfo("量子玻璃 * 1101 , 遏制场发生器 * 44 , 玄铁栅栏 * 111")
-     * .addInfo("维度桥接机械方块 * 233 , 维度注入机械方块 * 241 , 时空扭曲机械方块 * 32")
-     * .addTecTechHatchInfo()
-     * .addSeparator()
-     * .addController("工业屠宰场")
-     * .beginStructureBlock(50, 143, 56, false)
-     * .addInputBus("AnyInputBus", 1)
-     * .addOutputBus("AnyOutputBus", 1)
-     * .addInputHatch("AnyInputHatch", 1)
-     * .addOutputHatch("AnyOutputHatch", 1)
-     * .addEnergyHatch("AnyEnergyHatch", 1)
-     * .toolTipFinisher("§a123Technology - §4EEC");
-     * return tt;
-     * }
-     */
     @Override
     public boolean isCorrectMachinePart(ItemStack aStack) {
         return true;
@@ -337,11 +304,6 @@ public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> {
     @Override
     public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
         if (this.mMachine) return -1;
-        // NEI 结构预览（BlockRenderer6343 的 GTGuiMultiblockHandler）：把控制器摆进 DummyWorld 后，
-        // 会拿 elementBudget = Integer.MAX_VALUE 反复调用本方法，直到世界不再变化或轮数用完。
-        // 本结构 400,400 格 / 22,333 个元素，走 survivalBuildPiece 是在客户端渲染线程里一格格摆，
-        // 预览会长时间空白；这里改成一次性 buildPiece，并且同一个预览世界只建一次
-        // （第二次直接返回 0 ⇒ 世界没变 ⇒ BlockRenderer 的 while 循环立刻结束）。
         if (this.isPreviewWorld()) {
             World world = this.getBaseMetaTileEntity()
                 .getWorld();
@@ -448,14 +410,6 @@ public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> {
             .addTecTechHatchInfo()
             .addSeparator()
             .addInfo("§aAdded by: 123Technology - §4EEC")
-            /*
-             * .addInfo(translateToLocal("ote.tm.eec.5"))
-             * .addInfo(translateToLocal("ote.tm.eec.6"))
-             * .addInfo(translateToLocal("ote.tm.eec.7"))
-             * .addInfo(translateToLocal("ote.tm.eec.8"))
-             * .addInfo(translateToLocal("ote.tm.eec.9"))
-             * .addInfo(translateToLocal("ote.tm.eec.10"))
-             */
             .addController(translateToLocal("ote.tn.eec"))
             .beginStructureBlock(50, 143, 56, false)
             .addInputBus("AnyInputBus", 1)

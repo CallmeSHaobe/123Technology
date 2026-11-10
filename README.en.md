@@ -38,7 +38,7 @@ so DO NOT RENAME IT please.
 
 2.If you encounter bugs after renaming the Mod file, DO NOT REPORT THEM thanks, as they are caused by the modification.
 
-3.The ModID is still 123Technology.
+3.The ModID is still 123technology.
 
 ### Thanks the Laodengs who helped with this mod
 

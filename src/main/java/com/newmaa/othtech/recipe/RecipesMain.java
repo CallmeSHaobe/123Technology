@@ -38,7 +38,6 @@ import com.newmaa.othtech.common.item.ItemLoader;
 import com.newmaa.othtech.common.materials.BWLiquids;
 import com.newmaa.othtech.common.materials.BWMaterials;
 import com.newmaa.othtech.utils.RecipeBuilder;
-import com.newmaa.othtech.utils.modsEnum;
 
 import goodgenerator.loader.Loaders;
 import gregtech.api.enums.GTValues;
@@ -57,7 +56,6 @@ import gregtech.loaders.misc.GTBees;
 import gtPlusPlus.xmod.gregtech.api.enums.GregtechItemList;
 import tectech.recipe.TTRecipeAdder;
 import tectech.thing.CustomItemList;
-import vazkii.botania.common.block.ModBlocks;
 
 public class RecipesMain implements IRecipePool {
 
@@ -79,20 +77,6 @@ public class RecipesMain implements IRecipePool {
         // final RecipeMap<?> MT = new getRecipeMapsFromOtherMods().get();
         final int IDs = 23520;
 
-        // dustIrOsSm assembler
-        // GTValues.RA.stdBuilder()
-        // .metadata(RESEARCH_ITEM, ItemList.Field_Generator_EV.get(1))
-        // .metadata(RESEARCH_TIME, 123 * MINUTES)
-        // .itemInputs(
-        // GTOreDictUnificator.get(OrePrefixes.dust, Materials.Iridium, 1),
-        // GTOreDictUnificator.get(OrePrefixes.dust, Materials.Osmium, 1),
-        // GTOreDictUnificator.get(OrePrefixes.dust, Materials.Samarium, 1))
-        // .fluidInputs(new FluidStack(water, 123123))
-        // .itemOutputs(GTModHandler.getModItem(OTHTechnology.MODID, "dustIrOsSm", 1))
-        //
-        // .eut(123123)
-        // .duration(8100)
-        // .addTo(GTRecipeConstants.AssemblyLine);
         GTModHandler.addCraftingRecipe(
             OTHItemList.LargeSteamHatch.get(1),
             new Object[] { "ABA", "BXB", "ABA", 'A', GTOreDictUnificator.get(OrePrefixes.plate, Materials.Steel, 1L),
@@ -284,18 +268,6 @@ public class RecipesMain implements IRecipePool {
             .duration(288)
             .eut(12300)
             .addTo(Chem);
-        // // 232
-        // RecipeBuilder.builder()
-        // .itemInputs(
-        // OTHItemList.dustLookNEIM.get(0),
-        // Materials.Thorium.getDust(1),
-        // GTUtility.getIntegratedCircuit(23),
-        // GTUtility.getIntegratedCircuit(2))
-        // .itemOutputs(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 30))
-        // .eut(12300)
-        // .duration(114)
-        // .addTo(Assem);
-        // Mega EEC
         TTRecipeAdder.addResearchableAssemblylineRecipe(
             getGM(14201, 1),
             5120000,
@@ -524,22 +496,6 @@ public class RecipesMain implements IRecipePool {
             .eut(1920)
             .duration(80 * 20)
             .addTo(RecipeMaps.electrolyzerNonCellRecipes);
-        // ALS
-        /*
-         * RecipeBuilder.builder()
-         * .itemInputs(
-         * GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 7),
-         * GTOreDictUnificator.get(OrePrefixes.dust, Materials.Phosphorus, 16))
-         * .fluidInputs(
-         * Materials.Hydrogen.getGas(26000),
-         * Materials.Oxygen.getGas(30000),
-         * Materials.Nitrogen.getGas(21000))
-         * .fluidOutputs(BWLiquids.ALS.getFluidOrGas(20000))
-         * .eut(480)
-         * .duration(1200 * 20)
-         * .addTo(RecipeMaps.multiblockChemicalReactorRecipes);
-         */
-        // Ayanami Model
         RecipeBuilder.builder()
             .fluidInputs(BWLiquids.LCL.getFluidOrGas(50000))
             .itemInputs(
@@ -1448,11 +1404,6 @@ public class RecipesMain implements IRecipePool {
             .eut(RECIPE_HV)
             .duration(123 * SECONDS)
             .addTo(assemblerRecipes);
-        // 异星渔场主机 (Fishtorio) - 装配线, 扫描仪闪存解锁
-        // 输入顺序: 珠海渔场主机 ×64 / LuV立场发生器 ×16 / LuV传感器 ×4 / 珠海渔场主机 ×64 /
-        // LuV电动马达 ×63 / LuV电动泵 ×48 / LuV电动泵 ×48 / LuV电动马达 ×63 /
-        // 恩情 ×64 / 恩情 ×64 / 韭菜盒子 ×1 / 海象 ×1
-        // 流体顺序: 熔融铱 123KL / 熔融锇 123KL / 熔融钐 123KL / 水 129KL
         GTValues.RA.stdBuilder()
             .metadata(RESEARCH_ITEM, ItemList.FishingPort.get(1))
             .metadata(SCANNING, new Scanning(1200, RECIPE_ZPM))
@@ -1506,16 +1457,6 @@ public class RecipesMain implements IRecipePool {
             .eut(RECIPE_LuV)
             .duration(600 * SECONDS)
             .addTo(assemblerRecipes);
-
-        // AbstractSanctum mana conversion hatch
-        if (!modsEnum.TwistSpaceTechnology.isModLoaded()) {
-            GTValues.RA.stdBuilder()
-                .itemInputs(ItemList.Hatch_Input_LuV.get(1), new ItemStack(ModBlocks.pool, 1, 3))
-                .itemOutputs(OTHItemList.ManaHatch123.get(1))
-                .duration(5 * SECONDS)
-                .eut(RECIPE_LV)
-                .addTo(assemblerRecipes);
-        }
 
         // nail
         GTValues.RA.stdBuilder()

@@ -160,28 +160,6 @@ public abstract class OTETileEntityModulePumpT4 extends TileEntityModuleBase {
             return new ModulePumpT4(mName);
         }
 
-        /*
-         * @Override
-         * protected MultiblockTooltipBuilder createTooltip() {
-         * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-         * tt.addMachineType("太空钻机模块")
-         * .addInfo("将太空钻机功能添加到太空电梯")
-         * .addInfo(EnumChatFormatting.LIGHT_PURPLE + "§l我 是 吸 仰 阳.")
-         * .addInfo("直接从太空电梯接受能量,不使用能源仓")
-         * .addInfo("设定的行星和气体类型决定了输出的流体")
-         * .addInfo("锁定输出仓即可防止溢出销毁")
-         * .addInfo("§9运行电压：§aMAX 每个配方的最大并行：§c123123")
-         * .addInfo("一次处理多达§e5§r种不同的配方")
-         * .addInfo("需要§6MK-V§r或更高等级的加速轨道")
-         * .addSeparator()
-         * .beginStructureBlock(1, 5, 2, false)
-         * .addCasingInfoRange("太空电梯基座机械方块", 0, 9, false)
-         * .addOutputHatch("任意太空电梯基座机械方块", 1)
-         * .addInfo("§b§lAuthor:§l憋憋大师--HuimaoX")
-         * .toolTipFinisher("§a123Technology - SpacePump");
-         * return tt;
-         * }
-         */
         @Override
         protected MultiblockTooltipBuilder createTooltip() {
             final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();

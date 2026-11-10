@@ -44,9 +44,6 @@ import tectech.TecTech;
 import tectech.loader.ConfigHandler;
 import tectech.util.TTUtility;
 
-/**
- * Created by Tec on 03.04.2017.
- */
 public class OTEHatchRack extends MTEHatch {
 
     private static IIconContainer EM_R;

@@ -27,17 +27,6 @@ import com.newmaa.othtech.common.entity.EntityDogYellow;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-/**
- * 三色狗的刷怪蛋。
- * <p>
- * 为什么不直接注册原版刷怪蛋：1.7.10 的 {@link ItemMonsterPlacer} 靠「全局实体 id」工作
- * （{@code EntityList.entityEggs} + {@code EntityList.createEntityByID}），而三色狗是用
- * {@code EntityRegistry.registerModEntity} 注册的 mod 实体，没有全局 id，也没有 egg 信息。
- * 所以这里继承它、只接管「刷哪只狗」，外观（蛋底图 + 斑点叠层）继续复用原版贴图，不需要任何新素材。
- * <p>
- * 一个物品 + metadata 区分三种颜色（0 黄 / 1 红 / 2 蓝），行为和原版刷怪蛋一致：
- * 右键方块召唤、右键液面召唤、命名牌改过名的蛋召唤出来的狗保留名字、创造模式不消耗。
- */
 public class ItemDogSpawnEgg extends ItemMonsterPlacer {
 
     public static final int META_YELLOW = 0;

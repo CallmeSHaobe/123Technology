@@ -11,10 +11,6 @@ import com.newmaa.othtech.common.dimensions.ResourcesDimensions;
 
 import galaxyspace.core.render.sky.SkyProviderBase;
 
-/**
- * 锑星天空盒: 纯黑视界 + 同心发光吸积盘。
- * 所有几何都用四边形/三角形拼, 不压扁、不做前后半圈拆分, 避免裁剪出怪三角形和"穿透"感。
- */
 public class SkyProviderAntimonia extends SkyProviderBase implements ResourcesDimensions {
 
     private static final float CORE_RADIUS = 100.0F;

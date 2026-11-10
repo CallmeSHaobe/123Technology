@@ -40,13 +40,6 @@ public class ChunkProviderAntimonia extends ChunkProviderSpaceLakes {
         this.mapFeaturesEnabled = mapFeaturesEnabled;
     }
 
-    /**
-     * 主世界版的洞穴生成器。
-     * <p>
-     * 不能再用 {@code MapGenCavesHell}：1.7.10 的地狱洞穴是按 128 格高的数组写死的（索引
-     * {@code (x * 16 + z) * 128 + y}，高度上限写死 120，而且只替换地狱岩 / 泥土 / 草方块）。 直接套在 256 格高的锑星区块上，
-     * 一来索引错位（挖出来的洞会落在完全无关的方块上），二来石头根本挖不动， 于是「洞穴」退化成地表泥土被随机啃掉几口。
-     */
     private final MapGenCaves caveGenerator = new MapGenCaves();
 
     private final MapGenRavine ravineGenerator = new MapGenRavine();
@@ -68,20 +61,6 @@ public class ChunkProviderAntimonia extends ChunkProviderSpaceLakes {
         this.caveGenerator.func_151539_a(this, this.worldObj, cX, cZ, blocks);
     }
 
-    /**
-     * 圈定结构起点（StructureStart）。
-     * <p>
-     * 原版在自己的 {@code provideChunk} 里会调用 mineshaft / village / stronghold 等结构生成器的
-     * {@code func_151539_a}：它会按 17x17 区块的范围扫描，为命中位置创建 StructureStart 并写进
-     * {@code structureMap}；之后 {@code populate} 阶段的 {@code generateStructuresInChunk} 才拿得到起点、
-     * 把已经圈定的结构往区块里摆（该方法本身不生成起点，注释里写得很清楚：
-     * "Does *not* generate StructureStarts"）。
-     * <p>
-     * GS 的 {@code ChunkProviderSpaceLakes.provideChunk} 完全没有这一步，原先只在
-     * {@link #recreateStructures} 里补，而 {@code recreateStructures} 只有「区块从存档载入」时才被
-     * {@code ChunkProviderServer#safeLoadChunk} 调用 —— 于是新生成的区块永远没有起点，
-     * 锑星城 / 坟场 / 废弃矿井在新鲜世界里根本不会出现。这里补齐原版流程。
-     */
     @Override
     public Chunk provideChunk(int chunkX, int chunkZ) {
         Chunk chunk = super.provideChunk(chunkX, chunkZ);
@@ -95,13 +74,6 @@ public class ChunkProviderAntimonia extends ChunkProviderSpaceLakes {
         return chunk;
     }
 
-    /**
-     * 锑星的边境之地（Far Lands）。
-     * <p>
-     * 先让原版流程生成一遍，再把越过 ±farLandsBoundary 的那些列整列覆盖掉：
-     * 越界列的地形由 {@link AntimoniaFarLands} 用「噪声坐标溢出」的方式复现，
-     * 接缝落在方块坐标 12,550,820 上，而不是整区块一刀切。
-     */
     @Override
     public void generateTerrain(int chunkX, int chunkZ, Block[] blocks, byte[] metadata) {
         super.generateTerrain(chunkX, chunkZ, blocks, metadata);
@@ -200,12 +172,6 @@ public class ChunkProviderAntimonia extends ChunkProviderSpaceLakes {
         this.graveyardGenerator.func_151539_a(this, this.worldObj, par1, par2, null);
     }
 
-    /**
-     * 原版实现（{@code ChunkProviderGenerate}）恒为 true，这里跟着返回 true。
-     * <p>
-     * 返回 false 会让任何经 {@code IChunkProvider#chunkExists} 查询本维度的代码以为「这块地从来没有区块」，
-     * 属于纯粹的谎报；真正的「区块是否已加载」由 {@code ChunkProviderServer} 自己判断。
-     */
     @Override
     public boolean chunkExists(int x, int z) {
         return true;

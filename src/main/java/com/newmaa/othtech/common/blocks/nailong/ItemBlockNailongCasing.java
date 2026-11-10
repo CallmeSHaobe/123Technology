@@ -4,9 +4,6 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
-/**
- * 奈隆系机壳的 ItemBlock：按 meta 给出各自的 unlocalized 名称（tile.nailongCasing.N）。
- */
 public class ItemBlockNailongCasing extends ItemBlock {
 
     public ItemBlockNailongCasing(Block block) {

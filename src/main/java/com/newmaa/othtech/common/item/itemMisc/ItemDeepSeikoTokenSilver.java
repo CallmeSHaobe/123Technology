@@ -14,14 +14,6 @@ import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-/**
- * 迪普西科调试币（银色版）。
- *
- * <p>
- * 只当「装配线配方图」的 NEI 页签图标用，和金色那枚（凝聚态 / 机体升级）区分开；
- * 刻意**不**加附魔光效，页签上不闪。
- * </p>
- */
 public class ItemDeepSeikoTokenSilver extends Item {
 
     public ItemDeepSeikoTokenSilver() {

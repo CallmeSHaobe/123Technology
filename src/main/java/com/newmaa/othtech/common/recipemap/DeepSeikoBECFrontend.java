@@ -7,10 +7,6 @@ import gregtech.api.recipe.NEIRecipePropertiesBuilder;
 import gregtech.nei.RecipeDisplayInfo;
 import tectech.recipe.BECAssemblyFrontend;
 
-/**
- * 大肥鱼凝聚态的 NEI 页面：完全复用 TecTech 的 {@link BECAssemblyFrontend}（原版装配线排版），
- * 只额外画一行「需要机体升级纳米蜂群达到 X 级」——X 取自 loader 转存进 {@code mSpecialValue} 的等级。
- */
 public class DeepSeikoBECFrontend extends BECAssemblyFrontend {
 
     public DeepSeikoBECFrontend(BasicUIPropertiesBuilder uiPropertiesBuilder,

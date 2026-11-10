@@ -566,55 +566,6 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
                 return CheckRecipeResultRegistry.SUCCESSFUL;
             }
 
-            // @Override
-            // protected @Nonnull CheckRecipeResult validateRecipe(@Nonnull GTRecipe recipe) {
-            // if (failure) {
-            // return SimpleCheckRecipeResult.ofFailure("nohatch");
-            // }
-            // setSpeedBonus(getSpeedBonus());
-            // setEuModifier(getEuModifier());
-            // setOverclock(isEnablePerfectOverclock() ? 4 : 2, 4);
-            //
-            // // 加热检查
-            // if (recipe.mSpecialValue > mHeatingCapacity) {
-            // return CheckRecipeResultRegistry.insufficientHeat(recipe.mSpecialValue);
-            // }
-            // if (isWirelessMode) {
-            // BigInteger availableEU = getUserEU(ownerUUID);
-            // long multiplier = recipe.getMetadataOrDefault(GTRecipeConstants.EU_MULTIPLIER, 1);
-            // recipeEU = BigInteger.valueOf(multiplier * recipe.mEUt * recipe.mDuration);
-            // // 计算能量允许的并行数
-            // BigInteger energyBasedParallel = availableEU.divide(recipeEU);
-            // // 取能量允许的并行数和机器最大并行数的最小值
-            // maxParallel = energyBasedParallel.min(BigInteger.valueOf(maxParallel)).intValue();
-            // if (maxParallel <= 0) {
-            // finalConsumption = BigInteger.ZERO;
-            // return CheckRecipeResultRegistry.insufficientStartupPower(recipeEU);
-            // }
-            // }
-
-            // // 无线模式能量检查
-            // if (isWirelessMode) {
-            // BigInteger availableEU = getUserEU(ownerUUID);
-            // long multiplier = recipe.getMetadataOrDefault(GTRecipeConstants.EU_MULTIPLIER, 1);
-            // maxParallel = availableEU.divide(recipeEU)
-            // .min(BigInteger.valueOf(maxParallel))
-            // .intValue();
-            // recipeEU = BigInteger.valueOf(multiplier * recipe.mEUt * recipe.mDuration);
-            // BigInteger TotalEU = BigInteger.valueOf(maxParallel).multiply(recipeEU);
-            // if (availableEU.compareTo(TotalEU) < 0) {
-            // finalConsumption = BigInteger.ZERO;
-            // return CheckRecipeResultRegistry.insufficientStartupPower(recipeEU);
-            // }
-            //// maxParallel = availableEU.divide(recipeEU)
-            //// .min(BigInteger.valueOf(maxParallel))
-            //// .intValue();
-            //
-            // }
-            //
-            // return CheckRecipeResultRegistry.SUCCESSFUL;
-            // }
-
             @NotNull
             @Override
             protected CheckRecipeResult onRecipeStart(@Nonnull GTRecipe recipe) {
@@ -935,10 +886,6 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
         }
     }
 
-    /**
-     * 控制器槽位是否放入超维校准矩阵(meta 32758),MLevel 2 的判定依据。
-     * 控制器槽是同步的库存槽,客户端永远最新,GUI 按钮以此作为门槛(同 DTPF 的做法)。
-     */
     public boolean hasCalibrationMatrix() {
         ItemStack aGuiStack = this.getControllerSlot();
         return aGuiStack != null
@@ -995,11 +942,6 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
         return isWirelessMode;
     }
 
-    /**
-     * 无线模式开关。规则在服务端强制执行(GUI 的 C2S 同步值经此落字段):
-     * 只有 MLevel &gt;= 2 且无能源仓才能开启;关闭永远允许。
-     * 注意:NBT 加载(loadNBTData)直接写字段,不走此规则。
-     */
     public void setWirelessModeEnabled(boolean value) {
         if (value && (getMLevel() < 2 || !areEnergyHatchesEmpty())) {
             isWirelessMode = false;

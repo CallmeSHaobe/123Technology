@@ -12,15 +12,6 @@ import com.newmaa.othtech.machine.OTESunFactory;
 import gregtech.api.util.GTUtility;
 import gregtech.common.gui.modularui.multiblock.base.MTEMultiBlockBaseGui;
 
-/**
- * MUI2 (ModularUI2) GUI for the {@link OTESunFactory}, same pattern as GT5U's own {@code MTEIndustrialPackagerGui}
- * hook and this mod's {@code OTEBBPlasmaForgeGui}.
- *
- * <p>
- * The only difference to the stock multiblock GUI is the mode switch button: it renders its overlay and its tooltip
- * from the synced {@code machineMode} value instead of the machine field. The client does not know the sfg channel,
- * so relying on the field made the icon cycle while the tooltip kept showing the previously synced mode name.
- */
 public class OTESunFactoryGui extends MTEMultiBlockBaseGui<OTESunFactory> {
 
     /** Mode icons, index = machine mode = recipe map (0 PCB, 1 SMD, 2 wafer, 3 components). */

@@ -22,10 +22,6 @@ import gregtech.api.util.GTUtility;
 import gtneioreplugin.util.DimensionHelper;
 import gtneioreplugin.util.GT5OreLayerHelper;
 
-/**
- * 异星渔场的抽奖池: 维度等级 → 该等级所有维度能挖到的矿粉。
- * 另外保留一份全物品池, 供消耗恩情时抽。
- */
 public final class FishtorioLootTable {
 
     private static final Map<Integer, List<ItemStack>> ORE_POOLS = new HashMap<>();

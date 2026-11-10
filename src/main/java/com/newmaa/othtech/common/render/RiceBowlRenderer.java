@@ -14,36 +14,12 @@ import org.lwjgl.opengl.GL13;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-/**
- * 「一大碗冒尖白米饭」全息投影 —— 满 → 吃到空 → 再添满，无限循环。
- *
- * <pre>
- * ── 怎么接进你的机器 ────────────────────────────────────────────────
- * 1) 让承载渲染的 TileEntity 实现 {@link IRiceBowlHolo}（下面的 State 是现成实现）。
- * 2) 客户端注册：
- *      ClientRegistry.bindTileEntitySpecialRenderer(你的TE.class, new RiceBowlRenderer());
- * 3) 服务端在 onPostTick 里只更新「running」，毫秒插值交给客户端（GT 本体同款做法）。
- *
- * ── 尺寸 ────────────────────────────────────────────────────────────
- * 包围盒 x,z ∈ [-1.4, 1.4]，y ∈ [0, 1.9]  ⇒ 正好塞进 3×3×4 的空间。
- * 纯旋转体建模，任意水平角度看上去完全一样（不要再加任何"正面"元素）。
- *
- * ── 贴图 ────────────────────────────────────────────────────────────
- *   assets/123technology/textures/model/rice.png   256×256   米粒（世界坐标平面投影，正片叠底）
- *   assets/123technology/textures/model/bowl.png   1024×512  白瓷底 + 两只鲸鱼（柱面 UV）
- * 两张都必须是 GL_REPEAT（TextureManager 默认就是）。
- * </pre>
- */
 @SideOnly(Side.CLIENT)
 public class RiceBowlRenderer extends TileEntitySpecialRenderer {
 
     private static final ResourceLocation RICE_TEX = new ResourceLocation("123technology", "textures/model/rice.png");
     private static final ResourceLocation BOWL_TEX = new ResourceLocation("123technology", "textures/model/bowl.png");
 
-    // ============================================================
-    // 一、几何参数（想改胖瘦/高矮只动这里，全部与 ricebowl_preview.py 同源）
-    // ============================================================
-    /** 碗的圆周分段。必须是 4 的倍数，旋转对称才不会露方向感 */
     private static final int BOWL_SEG = 96;
     /** 米饭同心环的分段（GPU 会做顶点插值，24 足够；预览用 144 只是为了软渲染不糊） */
     private static final int RICE_SEG = 48;
@@ -68,9 +44,6 @@ public class RiceBowlRenderer extends TileEntitySpecialRenderer {
     /** 打包的满亮度 lightmap 坐标（u=240, v=240）：逐顶点写死，防止 Tessellator 复用上一批的亮度 */
     private static final int FULL_BRIGHT = 0xF000F0;
 
-    // ============================================================
-    // 二、时间轴（秒）—— 一个完整循环 14 秒
-    // ============================================================
     private static final float LOOP = 14.0F;
     private static final float T_EAT_S = 3.0F; // 开始吃
     private static final float T_EAT_E = 7.6F; // 吃空
@@ -78,9 +51,6 @@ public class RiceBowlRenderer extends TileEntitySpecialRenderer {
     private static final float T_REF_E = 12.4F; // 添满
     // 0–3 满着停留；12.4–14 同样满着停留，然后进入下一轮
 
-    // ============================================================
-    // 三、颜色（0..1）
-    // ============================================================
     private static final float[] C_BOWL = { 1.00F, 1.00F, 1.00F }; // 白瓷（贴图已去蓝，这里不再压色）
     private static final float[] C_INNER = { 1.00F, 1.00F, 1.00F }; // 碗内壁：纯白瓷（别带蓝灰，用户反馈投影发蓝）
     private static final float[] C_RIM = { 1.00F, 1.00F, 1.00F }; // 碗口内缘一条细亮线（白，不要蓝）
@@ -102,9 +72,6 @@ public class RiceBowlRenderer extends TileEntitySpecialRenderer {
     private static final int MODE_UP = 2;
     private static final int MODE_DOWN = 3;
 
-    // ============================================================
-    // 五、入口
-    // ============================================================
     @Override
     public void renderTileEntityAt(TileEntity te, double x, double y, double z, float partialTicks) {
         if (!(te instanceof IRiceBowlHolo)) return;
@@ -182,12 +149,6 @@ public class RiceBowlRenderer extends TileEntitySpecialRenderer {
         // 有些渲染器会把 TEXTURE_ENV 强改后不还原，导致贴图被额外乘暗；这里强制回 MODULATE
         GL11.glTexEnvi(GL11.GL_TEXTURE_ENV, GL11.GL_TEXTURE_ENV_MODE, GL11.GL_MODULATE);
         GL11.glColor4f(1F, 1F, 1F, 1F);
-        // ★ 经典 1.7.10 全亮 TESR 技巧：关掉 1 号纹理单元（lightmap）。
-        // Angelica ≥2.2.36 的批量 TESR 管线按 GLSM 跟踪的 unit1 开关（DrawState.liveLightmap）
-        // 选着色器变体；其 FFP 仿真会把 dispatcher 预灌的世界光照喂进着色器，压过 TESR 里
-        // 显式 setLightmapTextureCoords(240,240)——暗处/暮色下就是蓝偏色（2.9.0 实测）。
-        // 关 unit1 → 管线走"无 lightmap"变体 → 片元 = 贴图 × 顶点色，我们设的颜色原样输出；
-        // 原版 FFP / 旧 Angelica 下这同样是标准全亮手法（RC-2 兼容）。用完必须恢复，别污染别的 TESR。
         GL13.glActiveTexture(OpenGlHelper.lightmapTexUnit);
         GL11.glDisable(GL11.GL_TEXTURE_2D);
         GL13.glActiveTexture(OpenGlHelper.defaultTexUnit);
@@ -215,9 +176,6 @@ public class RiceBowlRenderer extends TileEntitySpecialRenderer {
         GL11.glPopMatrix();
     }
 
-    // ============================================================
-    // 六、时间轴
-    // ============================================================
     private static float fillAt(float time) {
         float t = time % LOOP;
         if (t < 0F) t += LOOP;
@@ -228,10 +186,6 @@ public class RiceBowlRenderer extends TileEntitySpecialRenderer {
         return 1F;
     }
 
-    // ============================================================
-    // 七、碗
-    // ============================================================
-    /** 外壁：8 段剖面 + 柱面 UV（u 绕一圈，v=0 在碗口） */
     private void drawBowlWall(Tessellator tes, float time, float fade, float ox, float oy, float oz, float camX,
         float camY, float camZ) {
         int n = 24;
@@ -393,17 +347,6 @@ public class RiceBowlRenderer extends TileEntitySpecialRenderer {
             camZ);
     }
 
-    // ============================================================
-    // 八、米饭：只画上表面（同心环网格）
-    // ============================================================
-    /**
-     * 米饭跟碗壁贴合的那一圈是"接触面"，正常视角根本看不见，做出来只会露出一条
-     * 浅色围带（还会被半透明的内壁糊上一层）。所以这里只画顶面：
-     * fill 低 → 一个水平圆盘（吃到哪儿，盘就在哪儿）
-     * fill 高 → 从碗口往上鼓出的球冠
-     * 两种形状都用平面投影 UV（u=px/TEX_BLOCK, v=pz/TEX_BLOCK），
-     * 米粒大小恒定、不会在圆心收敛成风车或放射状条纹。
-     */
     private void drawRice(Tessellator tes, float time, float fill, float fade, float ox, float oy, float oz, float camX,
         float camY, float camZ) {
         // 米饭必须纯白：关雾 + 强制白色，防止水下/远处雾色把饭染蓝
@@ -714,18 +657,12 @@ public class RiceBowlRenderer extends TileEntitySpecialRenderer {
         return (float) (Math.atan2(s, c) / (2 * Math.PI));
     }
 
-    // ============================================================
-    // 十、逐顶点着色（结果写在 OUT_R/G/B/A）
-    // ============================================================
     private static float OUT_R, OUT_G, OUT_B, OUT_A;
     /** 当前模型原点（renderTileEntityAt 的 oy，相机相对坐标）：用来把 wy 还原成本地高度 */
     private static float ORIGIN_Y = 0F;
 
     private static void shade(int kind, float[] col, float alphaBase, float fade, float nx, float ny, float nz,
         float wx, float wy, float wz, float time, float camX, float camY, float camZ) {
-        // wx/wy/wz 是"相机相对"坐标（tilePos - camera），所以相机就在原点：
-        // 视线方向 = -w。之前用世界坐标 camX/camY/camZ 去减，方向是错的，
-        // 视角一动 fres 就乱跳（表现为投影明暗交错）。
         float vx = -wx, vy = -wy, vz = -wz;
         float vl = (float) Math.sqrt(vx * vx + vy * vy + vz * vz);
         if (vl < 1e-6F) vl = 1e-6F;
@@ -783,10 +720,6 @@ public class RiceBowlRenderer extends TileEntitySpecialRenderer {
         OUT_A = clamp(a, 0F, 1F) * fade;
     }
 
-    // ============================================================
-    // 十二、数学
-    // ============================================================
-    /** 外壁剖面半径：sin^0.7 —— 底部迅速外扩、上半段几乎竖直，才有"肚子" */
     private static float outerR(float y) {
         float t = clamp((y - BOWL_OUT_Y) / (BOWL_RIM_Y - BOWL_OUT_Y), 0F, 1F);
         return BOWL_FOOT + (BOWL_TOP_R - BOWL_FOOT) * (float) Math.pow(Math.sin(t * Math.PI * 0.5F), 0.7F);

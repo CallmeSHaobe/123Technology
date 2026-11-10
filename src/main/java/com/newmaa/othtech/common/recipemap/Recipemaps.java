@@ -47,18 +47,6 @@ public class Recipemaps {
                 .setMaxRecipesPerPage(2))
         .build();
 
-    // 没有使用先注释了 --keriils
-    // public static final RecipeMap<OTH_RecipeMapBackend> Cannon = RecipeMapBuilder
-    // .of("otht.recipe.EVACannon", OTH_RecipeMapBackend::new)
-    // .maxIO(1, 1, 0, 0)
-    // .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
-    // .frontend(OTH_GeneralFrontend::new)
-    // .neiHandlerInfo(
-    // builder -> builder.setDisplayStack(OTHItemList.dustIrOsSmM.get(1))
-    // .setMaxRecipesPerPage(2))
-    // .disableOptimize()
-    // .build();
-
     public static final RecipeMap<OTH_RecipeMapBackend> SINOPEC = RecipeMapBuilder
         .of("otht.recipe.SINOPEC", OTH_RecipeMapBackend::new)
         .maxIO(8, 8, 16, 16)
@@ -262,9 +250,6 @@ public class Recipemaps {
                 .setMaxRecipesPerPage(1))
         .build();
 
-    // 迪普西科·凝聚态配方（普通形态版）：由 DeepSeikoBECRecipeLoader 在 load complete 阶段
-    // 从 TecTech 的 BEC 配方池拷贝而来，纠缠凝聚态流体输入按等量换成普通材料流体，
-    // 不带任何 BEC 机制（蜂群/红线/凝聚态存储都没有，就是普通配方）。
     public static final RecipeMap<OTH_RecipeMapBackend> DeepSeikoBEC = RecipeMapBuilder
         .of("otht.recipe.DeepSeikoBEC", OTH_RecipeMapBackend::new)
         // 与 TecTech 凝聚态装配页一致：16 物品输入 / 1 输出 / 4 流体
@@ -288,9 +273,6 @@ public class Recipemaps {
         .neiHandlerInfo(b -> b.setDisplayStack(OTHItemList.DeepSeikoTokenSilver.get(1)))
         .build();
 
-    // 迪普西科·机体升级（纯 NEI 展示用）：三条升级消耗清单。
-    // 机器本身不跑这张配方图，实际扣除发生在 OTEDeepSeiko.tryUpgradeBec / tryUpgradeNanite /
-    // tryUpgradeUltimate 里；这里只为了让玩家在 NEI 里能查到要准备什么材料。
     public static final RecipeMap<OTH_RecipeMapBackend> DeepSeikoUpgrade = RecipeMapBuilder
         .of("otht.recipe.DeepSeikoUpgrade", OTH_RecipeMapBackend::new)
         .maxIO(9, 1, 0, 0)

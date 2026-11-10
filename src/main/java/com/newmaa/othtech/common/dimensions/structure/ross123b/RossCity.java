@@ -11,29 +11,6 @@ import com.newmaa.othtech.common.blocks.antimonia.AntimoniaBlocks;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 
-/**
- * 锑罗斯的城市生成器。
- * <p>
- * 布局完全由 {@code (世界种子, 区块坐标)} 决定: 同一个区块无论何时生成、以什么顺序生成,
- * 结果都完全一样, 而且每个区块只写自己那 16×16, 从不写邻区块。这样既不会在生成过程中
- * 触发级联区块加载(历史上爆过 StackOverflowError), 也不会出现"从存档重新载入后建筑才长出来"
- * 或者"建筑被邻区块的液体灌掉一半"的问题。
- * <p>
- * 地形与路网:
- * <ul>
- * <li>地形以贴着海面的平原为主, 夹杂少量孤峰与盆地(湖/浅海), 平原上还会切出又长又窄的裂谷;</li>
- * <li>城市不再必定出现: 每隔 {@link #CITY_CELL} 个区块有一个候选中心, 只有那一片足够平坦、
- * 海拔又贴着海面时才会长出一座城;</li>
- * <li>道路只伴随城市出现: 城内每 {@link #PERIOD} 个区块(128 格)一条 16 格宽的主干道, 街区里还有随机断头支路;</li>
- * <li>道路铺在地形表面上: 陆地就是地面, 水里就沉到海床上, 不会像以前那样浮在 y=63 的水面;</li>
- * <li>跨水的路段有概率架桥: 桥面从一岸的高度拱到另一岸, 用石砖桥墩撑到海床, 桥上有路面;</li>
- * <li>每隔 {@link #POLE_SPACING} 格沿路立一根路灯(IC2 铁栅栏杆身 + 横担 + 石英绝缘子 + 杆顶红石灯,
- * 一半以上是歪的), 电线以后再加;</li>
- * <li>只有与道路正交相邻的区块(且自身不是道路)才是建筑地块, 所以建筑严格排在道路两侧。</li>
- * </ul>
- * 路面材质: 石头铺面, 石英块画中线。建筑随机为塔楼/多层楼/坍塌废墟, 带破洞/塌顶/断墙/残骸,
- * 其中约一成的墙面掺着 chisel 红石块; 地下部分一直延伸到基岩层, 随机为干(抽空)或湿(灌满 LCL)的地下室。
- */
 public final class RossCity {
 
     /** 主干道间隔(区块), 即每 128 格一条 16 格宽的路。 */
@@ -72,11 +49,6 @@ public final class RossCity {
     private static final int TERRAIN_MIN = BASEMENT_BOTTOM + 4;
     private static final int TERRAIN_MAX = 226;
 
-    /**
-     * 城市: 每隔 {@link #CITY_CELL} 个区块一个候选中心, 半径 {@link #CITY_RADIUS_MIN} ~
-     * {@link #CITY_RADIUS_MIN}+{@link #CITY_RADIUS_SPAN},
-     * 只有当这一片地形足够平坦、且高度贴着海面时才真的长出一座城; 道路与楼只跟着城市走。
-     */
     private static final int CITY_CELL = 32;
     private static final int CITY_RADIUS_MIN = 5;
     private static final int CITY_RADIUS_SPAN = 6;
@@ -246,10 +218,6 @@ public final class RossCity {
         }
     }
 
-    // ------------------------------------------------------------------
-    // 城市的选址
-    // ------------------------------------------------------------------
-
     /** 一座城: 中心的区块坐标与半径(区块), 以及它是哪张网格上的候选点(用于校验缓存)。 */
     private static final class City {
 
@@ -308,10 +276,6 @@ public final class RossCity {
         return city;
     }
 
-    /**
-     * 候选城市: 先按种子定下半径与中心, 再在整片范围上采样地形, 只有"高度普遍贴着海面、
-     * 而且彼此差不多平"的地方才真的立城。这样城市不会落在山坡、深海或者裂谷正中间。
-     */
     private static City planCity(long seed, int seaLevel, int cellX, int cellZ) {
         int radius = CITY_RADIUS_MIN + rnd(seed, cellX, cellZ, 902) % CITY_RADIUS_SPAN;
         int margin = radius + 2;
@@ -353,14 +317,6 @@ public final class RossCity {
         return new City(seed, cellX, cellZ, centerChunkX, centerChunkZ, radius);
     }
 
-    // ------------------------------------------------------------------
-    // 路网
-    // ------------------------------------------------------------------
-
-    /**
-     * 该区块的道路方向掩码: bit0 = 沿 Z 的道路, bit1 = 沿 X 的道路, 0 表示不是道路。
-     * 同时具备两位就是路口。城市之外一律返回 0: 道路只伴随城市出现。
-     */
     static int roadMask(int chunkX, int chunkZ, long seed, int seaLevel) {
         if (!isCityChunk(chunkX, chunkZ, seed, seaLevel)) {
             return 0;
@@ -445,10 +401,6 @@ public final class RossCity {
             || isRoadChunk(chunkX, chunkZ - 1, seed, seaLevel)
             || isRoadChunk(chunkX, chunkZ + 1, seed, seaLevel);
     }
-
-    // ------------------------------------------------------------------
-    // 地形
-    // ------------------------------------------------------------------
 
     /** Broad continental noise controls LCL seas; elevation and ridges rise gradually inland. */
     static int terrainHeight(long seed, int seaLevel, int x, int z) {
@@ -637,10 +589,6 @@ public final class RossCity {
         return 1.0 - smoothstep(clamp01((distance - 0.008) / 0.035));
     }
 
-    // ------------------------------------------------------------------
-    // 道路与桥
-    // ------------------------------------------------------------------
-
     /** 把路面(或桥面)铺在地形表面上: 陆地就是地面, 水里就是海床。 */
     private static void stampRoad(Stamper stamper, int chunkX, int chunkZ, int mask, Terrain terrain) {
         int baseX = chunkX << 4;
@@ -681,12 +629,6 @@ public final class RossCity {
         }
     }
 
-    /**
-     * 判断该道路区块是否落在一段值得架桥的水面上。
-     * <p>
-     * 沿道路中线向两侧找第一块陆地; 跨度太短就照旧把路铺在海床上, 跨度够长时按种子决定是否架桥。
-     * 跨度内只要出现路口就放弃架桥(否则两条路的桥面会打在同一个区块里)。
-     */
     private static Bridge bridgeFor(long seed, Terrain terrain, int chunkX, int chunkZ, int mask) {
         if (mask != 1 && mask != 2) {
             return null;
@@ -798,17 +740,6 @@ public final class RossCity {
         }
     }
 
-    // ------------------------------------------------------------------
-    // 地表电线杆
-    // ------------------------------------------------------------------
-
-    /**
-     * 沿路每 {@link #POLE_SPACING} 格立一根电线杆, 立在路的一侧(区块内坐标 {@link #POLE_LATERAL}),
-     * 杆高 7~11 格, 有 {@link #POLE_LEAN_CHANCE}% 的概率歪斜; 顶部两根横担与石英绝缘子, 方向垂直于道路。
-     * <p>
-     * 杆脚直接坐在该列的地形表面上(陆地是地面, 水里是海床), 所以淹在水下的路段会变成一排露出红海的歪杆。
-     * 电线以后再加: 杆顶横担两端的位置是固定的, 到时按相邻杆的横担端点连过去就行。
-     */
     private static void stampPoles(Stamper stamper, int chunkX, int chunkZ, int mask, Terrain terrain) {
         if (mask != 1 && mask != 2) {
             return; // 路口不立杆
@@ -882,17 +813,6 @@ public final class RossCity {
         stamper.put(leanOnX ? x + topOffset : x, baseY + height, leanOnX ? z : z + topOffset, POLE_LAMP, 0);
     }
 
-    // ------------------------------------------------------------------
-    // 地标: 巨型倾斜十字架
-    // ------------------------------------------------------------------
-
-    /**
-     * 第三次冲击式的地标: 每 {@link #CROSS_CELL} 个区块有一个候选点, 按种子决定是否立一根巨大的、
-     * 倾斜的鲜红十字架(发光石核心 + 黑曜石基座)。横臂高而短, 四个末端逐渐收窄成尖。
-     * <p>
-     * 十字架会跨区块, 所以每个区块检查自己周围 3×3 个候选点, 只写落在自己范围内的方块; 候选点的
-     * 位置、尺寸、倾斜方向都是"种子 + 候选格坐标"的纯函数, 相邻区块看到的十字架完全一致。
-     */
     private static void stampCrosses(Stamper stamper, int chunkX, int chunkZ, Terrain terrain) {
         int cellSize = CROSS_CELL << 4;
         int baseX = chunkX << 4;
@@ -1008,9 +928,6 @@ public final class RossCity {
         return Math.max(0, Math.min(fullHalf, half));
     }
 
-    /**
-     * 十字架主体: Chisel 的 redstone_block(meta 1 = 光滑红石块)最鲜红, 找不到就退回原版红石块。
-     */
     private static BlockMeta resolveCrossBody() {
         try {
             Block chisel = findChiselRedstone();
@@ -1138,10 +1055,6 @@ public final class RossCity {
         }
     }
 
-    // ------------------------------------------------------------------
-    // 建筑
-    // ------------------------------------------------------------------
-
     /** 按地块坐标决定这一栋楼的类型与尺寸; 返回 null 表示空地。 */
     private static Building plan(int chunkX, int chunkZ, int baseY, long seed) {
         if (rnd(seed, chunkX, chunkZ, 201) % 100 < EMPTY_LOT_CHANCE) {
@@ -1197,12 +1110,6 @@ public final class RossCity {
         return building;
     }
 
-    /**
-     * 地下部分: 楼体一直延伸到基岩层(最低一层楼板压在 y=2), 形成地下室。
-     * <p>
-     * 内部随机灌满 LCL(湿)或全部抽空(干); 楼板从 y=2 开始每 {@link #FLOOR_HEIGHT} 一层,
-     * 竖井位置留空, 于是地面层能看到、也能下到地下。塌掉的废墟只保留底层楼板。
-     */
     private static void stampBasement(Stamper stamper, Building building, Terrain terrain) {
         int baseX = (stamper.chunkX << 4) + building.x0;
         int baseZ = (stamper.chunkZ << 4) + building.z0;
@@ -1466,10 +1373,6 @@ public final class RossCity {
             }
         }
     }
-
-    // ------------------------------------------------------------------
-    // 地物: 第三次冲击之后留在荒野上的东西
-    // ------------------------------------------------------------------
 
     private static void stampVillage(Stamper stamper, int chunkX, int chunkZ, Terrain terrain) {
         if (isCityChunk(chunkX, chunkZ, stamper.seed, terrain.seaLevel)) return;
@@ -1874,9 +1777,6 @@ public final class RossCity {
             stamper.put(x, y, z, block, meta);
         }
     }
-    // ------------------------------------------------------------------
-    // 工具
-    // ------------------------------------------------------------------
 
     /** 一栋楼的全部参数, 由 {@link #plan} 一次性算好。 */
     private static final class Building {

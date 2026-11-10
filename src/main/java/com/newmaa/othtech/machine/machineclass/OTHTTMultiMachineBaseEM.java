@@ -29,31 +29,19 @@ public abstract class OTHTTMultiMachineBaseEM extends TTMultiblockBase implement
         mWrench = true;
     }
 
-    /**
-     * No more machine error
-     */
     @Override
     public boolean doRandomMaintenanceDamage() {
         return true;
     }
 
-    /**
-     * No more machine error
-     */
     @Override
     public void checkMaintenance() {}
 
-    /**
-     * No more machine error
-     */
     @Override
     public boolean getDefaultHasMaintenanceChecks() {
         return false;
     }
 
-    /**
-     * No more machine error
-     */
     @Override
     public final boolean shouldCheckMaintenance() {
         return false;

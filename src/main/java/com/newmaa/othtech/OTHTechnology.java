@@ -34,7 +34,6 @@ import com.newmaa.othtech.common.dimensions.RegisterDimensions;
 import com.newmaa.othtech.common.dimensions.Ross123bUndergroundFluids;
 import com.newmaa.othtech.common.dimensions.gtoregen.VisualProspectingOreVeinBridge;
 import com.newmaa.othtech.common.item.ItemLoader;
-import com.newmaa.othtech.common.materials.AbstractSanctumContent;
 import com.newmaa.othtech.common.materials.MaterialsLoader;
 import com.newmaa.othtech.common.materials.OTHMaterials;
 import com.newmaa.othtech.common.recipemap.DeepSeikoALRecipeLoader;
@@ -79,6 +78,7 @@ import gtnhintergalactic.recipe.SpacePumpingRecipes;
         + "required-after:miscutils;"
         + "required-after:dreamcraft;"
         + "required-after:gregtech;"
+        + "required-after:TwistSpaceTechnology;"
         // CropsNH 水稻作物：软依赖（没有 cropsnh 时 mixin 会跳过，不影响其它功能）
         + "after:cropsnh;"
         + "required-after:GalaxySpace;",
@@ -112,7 +112,6 @@ public class OTHTechnology {
     // preInit "Run before anything else. Read your config, create blocks, items, etc, and register them with the
     // GameRegistry." (Remove if not needed)
     public void preInit(FMLPreInitializationEvent event) {
-        AbstractSanctumContent.initialize();
         // 锑星的 NEI 维度数据与 GT 矿脉注册（替代原 GTNEIDimensionHelperOTHMixin / GTOreGenOTHMixin）
         OTHDimensionIntegration.registerNEIDimension();
         OTHDimensionIntegration.scheduleOreVeinRegistration();
@@ -214,9 +213,6 @@ public class OTHTechnology {
 
     @Mod.EventHandler
     public void completeInit(FMLLoadCompleteEvent event) {
-        // ⚠ 这里抛任何异常都会被 FML 记为致命错误，后果是「所有存档进不去、新建世界失败」，
-        // 2026-10-26 14:26 就因为一条 NEI 展示配方抛了 IllegalArgumentException 而炸过。
-        // 所以每一步都单独兜底：失败只记日志，绝不阻塞世界加载。
         safeStep("RecipeLoader.loadRecipes", RecipeLoader::loadRecipes);
         safeStep("DeepSeikoBECRecipeLoader", DeepSeikoBECRecipeLoader::load);
         safeStep("DeepSeikoALRecipeLoader", DeepSeikoALRecipeLoader::load);

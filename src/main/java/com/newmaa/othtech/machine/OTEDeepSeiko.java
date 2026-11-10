@@ -73,10 +73,6 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
     /** 调试币给出的虚拟算力，仅用于展示与升级解锁判定。 */
     public static final long TOKEN_COMPUTE = 100000000L;
 
-    /**
-     * 三个鳍信道（StructureLib channel id，必须小写）。
-     * 每个信道 1~10 级：1 = 鳍块本身，2~10 = 该家族发生器的 9 个等级。
-     */
     public static final String CH_FIN_TIME = "ds_left_fin"; // 左鳍 → 时间膨胀
     public static final String CH_FIN_SPACE = "ds_right_fin"; // 右鳍 → 压缩时空
     public static final String CH_FIN_STAB = "ds_top_fin"; // 顶鳍 → 稳定力场
@@ -102,10 +98,6 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
 
     public static final int UPGRADE_STAGE_SLOTS = 24;
 
-    /**
-     * 升级暂存格。玩家可以自由拿放，所以必须在内容变化时 {@code markDirty()}：
-     * 否则区块不会进入待保存队列，异常退出时这一格的物品会回滚（=复制）或直接丢失。
-     */
     private final ItemStackHandler mUpgradeStage = new ItemStackHandler(UPGRADE_STAGE_SLOTS) {
 
         @Override
@@ -174,13 +166,6 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
 
     private static final String[] MARKED_HATCHES;
 
-    /**
-     * 三环鳍槽位（用户实机点选的位置）。
-     * 格式 x,y,z 用 ; 分隔，三组之间用 | 分隔 —— 顺序是 <b>时间 | 空间 | 稳定</b>。
-     * 第 0 组 → 'T'（左鳍）、第 1 组 → 'S'（右鳍）、第 2 组 → 'R'（顶鳍），
-     * 每组是一条独立的信道，见 {@link #finSlot(String, int, IItemContainer[], java.util.function.BiConsumer,
-     * java.util.function.ToIntFunction)}。
-     */
     private static final String RING_SLOTS_RAW = "13,6,25;13,7,25;14,6,25;14,7,25;14,7,26;15,6,25;15,6,26;15,7,25;15,7,26;15,7,27;16,6,25;16,6,26;"
         + "16,6,27;16,7,25;16,7,26;16,7,27;17,5,27;17,6,25;17,6,26;17,6,28;17,7,25;17,7,26;17,7,27;17,7,28;"
         + "18,5,27;18,5,28;18,6,25;18,6,26;18,6,28;18,7,25;18,7,26;18,7,27;18,7,28;18,7,29;19,5,27;19,5,28;"
@@ -307,10 +292,6 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
         return StatCollector.translateToLocal(mode == 0 ? "ote.ds.gui.mode.al" : "ote.ds.gui.mode.bec");
     }
 
-    /**
-     * 覆盖 GUI 的模式切换入口：合成中（mMaxProgresstime > 0）直接忽略，
-     * 螺丝刀和「机器头里的模式按钮」都走这一个方法，所以两边一起被拦住。
-     */
     @Override
     public void setMachineMode(int mode) {
         if (this.mMaxProgresstime > 0 && this.mMachine) return; // 合成中（螺丝刀和 GUI 按钮都走这里）
@@ -396,12 +377,6 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
         }).setMaxParallelSupplier(this::getTrueParallel);
     }
 
-    /**
-     * 凝聚态点数模型的**动态**推进：每 tick 按当前实际推进 / 起始推进 的比值额外补/扣进度。
-     * <p>
-     * 这样中途拔算力卡/换三环会立即反映到进度上（而不是开配方时定死）。
-     * </p>
-     */
     @Override
     public boolean onRunningTick(net.minecraft.item.ItemStack aStack) {
         boolean ok = super.onRunningTick(aStack);
@@ -473,15 +448,6 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
             true);
     }
 
-    /**
-     * 全息投影仪「搭建细节」聊天栏里列的内容。
-     *
-     * <p>
-     * 注意：这里必须<b>调用时</b>再翻译（用 {@link StatCollector#translateToLocal}），不能在 static 初始化里
-     * 就翻好——那样会在语言文件加载之前执行，结果拿到的就是原始 key（之前聊天栏里刷 ote.cm.ds.desc.0 这种
-     * 就是这个原因）。
-     * </p>
-     */
     public String[] getStructureDescription(ItemStack stackSize) {
         return new String[] { EnumChatFormatting.AQUA + StatCollector.translateToLocal("otht.con") + ":",
             "§7" + StatCollector.translateToLocal("ote.ds.struct.0"),
@@ -546,9 +512,6 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
                     StructureUtility.ofChain(
                         new IStructureElement[] { StructureUtility.ofBlock(DeepSeikoBlocks.dsCasing, 1),
                             StructureUtility.ofBlock(DeepSeikoBlocks.dsCasing, 6) }));
-            // 三环信道的显式定义（1~10 级）：blockrenderer6343 的预览 GUI 据此给出
-            // "未设置 = 跟随主等级滑条" 的语义。StructureLib 1.4.46+ 才有该 API，
-            // 旧版（如 RC-2 的 1.4.45）没有 → NoSuchMethodError，这里兜底跳过，保证同一 jar 双实例可用。
             try {
                 builder.addChannel(CH_FIN_TIME, 1, 10)
                     .addChannel(CH_FIN_SPACE, 1, 10)
@@ -704,10 +667,6 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
         }
     }
 
-    /**
-     * 并行上限：跟着结构方块走 —— 三环（时间/空间/稳定）已装方块等级取平均，
-     * 1 级 512，每级 ×8，9 级夹到 Integer.MAX_VALUE（=无限并行）。
-     */
     public int getParallelLevel() {
         // 与 GUI / 三环倍率同口径：调试币插入时视为三环 9 级（否则会出现"GUI 显示 T9、并行却只有 512"）
         int t = this.ringInstalledLimit(this.timeTier);
@@ -720,13 +679,6 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
         return DeepSeikoMath.maxParallel(this.getParallelLevel());
     }
 
-    /**
-     * 算力卡（控制器槽里那一叠）对 BEC 点数系数的贡献：`1 + ³√(张数) × 卡系数`。
-     * <p>
-     * 卡系数：量子电路 0.05 · 普朗克尺度电路 0.10 · 690 战术核显卡 0.0123 ·
-     * D99/D199/D999 算力中心 0.08/0.16/0.25。不是算力卡返回 0。
-     * </p>
-     */
     public static float computeCardCoefficient(net.minecraft.item.ItemStack stack) {
         if (stack == null || stack.getItem() == null) return 0.0F;
         // 金色调试币：万能算力卡（BEC 的「必须插一张卡」也认它；倍率另由 getComputeCardMultiplier 拉满）
@@ -1183,10 +1135,6 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
         return this.mBecUnlocked || this.isTokenInserted();
     }
 
-    /**
-     * 凝聚态配方的蜂群等级门槛：升级面板累的等级与收容仓里那颗蜂取较高者。
-     * 收容仓作为可插拔的「外部蜂群输入」参与判定，不再只是展示柜。
-     */
     public int getNaniteTier() {
         if (isSilverTokenInserted()) return 1;
         if (this.isTokenInserted()) return NANITE_TIER_MAX;
@@ -1312,9 +1260,6 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
                     int holoX = base.getXCoord() + front.offsetX * HOLO_FRONT_DISTANCE;
                     int holoZ = base.getZCoord() + front.offsetZ * HOLO_FRONT_DISTANCE;
                     int baseY = base.getYCoord() + front.offsetY * HOLO_FRONT_DISTANCE;
-                    // 高度：水平朝向时把投影压到"嘴部裂缝"那一层（控制器 Y - 6，结构里鲸须带在 y=4~7）；
-                    // 垂直朝向（朝上/朝下）保持原来的正面偏移。
-                    // 固定压在嘴部高度（不做避让扫描：位置必须唯一，否则旧影块会和新的重复渲染出两碗）
                     int holoY = front.offsetY == 0 ? baseY - HOLO_DROP : baseY;
                     if (!world.blockExists(holoX, holoY, holoZ)) {
                         this.diag("holo skipped: chunk not loaded at " + holoX + "," + holoY + "," + holoZ);
@@ -1419,18 +1364,6 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
         return base == null ? ExtendedFacing.DEFAULT : ExtendedFacing.of(base.getFrontFacing());
     }
 
-    /**
-     * 三环「鳍」信道槽位：**1 级 = 鳍块本身**，2~10 级 = 该家族发生器的 9 个等级（粗制 → 鸿蒙）。
-     * <p>
-     * 用 StructureLib 的标准分级方块实现（{@code ofBlocksTiered} + {@code withChannel}）：
-     * </p>
-     * <ul>
-     * <li>实机结构检查按方块真实等级走：同一个信道里的方块**必须同级**（要么全填鳍，要么全填同级发生器，
-     * 空位/普通机壳不受限）——这就是「时间/空间/稳定 必须同时升级」；</li>
-     * <li>BlockRenderer 的 NEI 预览会识别它，并给这条信道生成 1~10 的滑条；不单独设信道时跟随全局
-     * 「等级」滑条，三个鳍一起变。</li>
-     * </ul>
-     */
     private static IStructureElement<OTEDeepSeiko> finSlot(String channel, int finMeta, IItemContainer[] gens,
         java.util.function.BiConsumer<OTEDeepSeiko, Integer> setter,
         java.util.function.ToIntFunction<OTEDeepSeiko> getter) {
@@ -1517,9 +1450,6 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
 
         fillRowGaps(g, 0, 4, 'A');
         fillRowGaps(g, 4, 7, 'B');
-        // ⚠ 鲸须（B）只保留下颌 y<=9：fillRowGaps 本来是整段 x=4~6 都填 B，
-        // 结果从下颌一路包到头顶，远看"头上套了一圈灰格栅"（用户实机反馈）。
-        // 上半段改回背脊 A，让头顶和背脊连成一片，灰格栅只留在嘴/喉那一条。
         for (int ry = 10; ry < HEI; ++ry) {
             for (int rz = 0; rz < WID; ++rz) {
                 for (int rx = 4; rx < 7; ++rx) {
@@ -1527,9 +1457,6 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
                 }
             }
         }
-        // 补下巴（下颌）：原来头部只有上半截（上颚在 y=11~12），鼻子下面是空的，
-        // 侧面看像被切了一刀。这里在 x=0~3 补一圈白肚（C）当下颌，鼻尖逐格收窄；
-        // ⚠ 上颚在 y=11~12，下颌只补到 y<=9 ⇒ y=10 留出 1 格缝 = **微微张嘴**（不要补死）。
         int[][] chinSpec = { { 0, 8, 9 }, { 1, 7, 9 }, { 2, 6, 9 }, { 3, 6, 7 } };
         for (int[] cs : chinSpec) {
             int cx = cs[0], yBot = cs[1], yTop = cs[2];
@@ -1635,9 +1562,6 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
             }
         }
 
-        // 清理被完全包住的方块：六个面都是方块 ⇒ 从外面和内部腔体都看不见，
-        // 纯粹白吃结构材料。实测这一步能砍掉 437 个（3221 → 2784），且一轮就到不动点
-        // （第二轮 0 个），所以只扫一次。两阶段标记再删，避免边删边判导致的顺序差异。
         boolean[][][] buried = new boolean[HEI][WID][LEN];
         int culled = 0;
         for (int cx = 0; cx < LEN; ++cx) {
@@ -1737,13 +1661,6 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
         return this.stabTier;
     }
 
-    /**
-     * GUI 显示用的总算速。
-     * <p>
-     * 正常情况就是上次有效配方算出来的 {@code mSpeedMult}；但**插着调试币、还没跑过配方**时它是 1.0，
-     * 玩家会以为币没生效（用户反馈过）。所以插币且尚无结果时，直接按「满算力 + 满环 + 终极 + 冷却正常」算一遍理论值。
-     * </p>
-     */
     public float getSpeedMultiplier() {
         // 装配线模式：加速完全由三环（时间 + 稳定）决定，跟算力/终极无关
         if (this.machineMode == 0) {
@@ -1771,12 +1688,6 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
             : (int) ((long) this.mProgresstime * (long) scale / (long) this.mMaxProgresstime);
     }
 
-    /**
-     * 注册三条鳍信道：信道说明 + 1 级对应的方块（三个鳍）。
-     * <p>
-     * 只影响提示文案/全息投影的信道取值；注册失败（StructureLib 版本差异）不影响结构与预览。
-     * </p>
-     */
     private static void registerFinChannels() {
         try {
             registerFinChannel(CH_FIN_TIME, DeepSeikoCasingMeta.FIN_TIME, TIME_GENS);
@@ -1787,10 +1698,6 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
         }
     }
 
-    /**
-     * 给 NEI 预览注册每个等级对应的“信道指示物”：1 = 鳍，2~10 = 各等级发生器。
-     * 只注册 1 级时，预览拿不到 2~10 的方块映射，拖等级滑条就没有效果。
-     */
     private static void registerFinChannel(String channel, int finMeta, IItemContainer[] gens) {
         StructureLibAPI.registerChannelDescription(channel, "123technology", "channels.123technology." + channel);
         StructureLibAPI
@@ -1803,13 +1710,6 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
         }
     }
 
-    // Blue whale raw shape data (generated by build_from_ref.py, do not edit by hand).
-    // Referenced as OTEDeepSeikoShape.* inside this class.
-    /**
-     * 迪普西科蓝鲸原始形状（照抄外部参考「大肥鱼」60×33×23 空心鲸，_whale/whale60.json）。
-     * RAW_LAYERS[y] = 33 行（z），每行 60 字符（x）；原始字符：D 背/L 侧/K 下侧/W 白肚/I 内部灯位。
-     * 由 build_from_ref.py 自动生成，请勿手改——改形状改参考生成器。
-     */
     private static final class OTEDeepSeikoShape {
 
         public static final int LEN = 60;

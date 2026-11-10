@@ -15,9 +15,6 @@ import gregtech.api.modularui2.GTGuiTextures;
 import gregtech.common.gui.modularui.hatch.base.MTEHatchBaseGui;
 import gregtech.common.modularui2.widget.builder.ItemSlotGridBuilder;
 
-/**
- * MUI2 GUI for {@link OTEHatchRack}. Modelled after {@code MTEHatchRackGui} from upstream.
- */
 public class OTEHatchRackGui extends MTEHatchBaseGui<OTEHatchRack> {
 
     public OTEHatchRackGui(OTEHatchRack machine) {

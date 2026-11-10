@@ -41,10 +41,6 @@ import gtPlusPlus.core.material.MaterialMisc;
 import tectech.recipe.TTRecipeAdder;
 import tectech.recipe.TecTechRecipeMaps;
 
-/**
- * 迪普西科 DeepSeiko 的全部配方：白米饭（潘马斯水稻 + 碗）、鲸跃显卡、数据硬盘、结构方块、
- * 控制器 + 纳米蜂收容仓、米饭奇点（稳定黑洞），以及「机体升级」三项升级的材料清单（只给 NEI 查）。
- */
 public class RecipesDeepSeiko implements IRecipePool {
 
     @Override
@@ -64,13 +60,6 @@ public class RecipesDeepSeiko implements IRecipePool {
         addUpgradeRecipes();
     }
 
-    /**
-     * 米饭奇点：1234 个白米饭 → 1 个奇点。
-     * <p>
-     * {@code COMPRESSION_TIER = 2} ⇒ NEI 会标「需要稳定的黑洞」，只能由亚稳态黑洞遏制场（BHC）
-     * 在黑洞稳定时压出来；中子态素压缩机（tier &gt; 0 的配方直接拒绝）跑不了。
-     * </p>
-     */
     private void addRiceSingularityRecipe() {
         GTValues.RA.stdBuilder()
             .itemInputs(OTHItemList.WhiteRice.get(1234))
@@ -81,19 +70,6 @@ public class RecipesDeepSeiko implements IRecipePool {
             .addTo(RecipeMaps.neutroniumCompressorRecipes);
     }
 
-    /**
-     * 时空冷却核心：<b>原版装配线</b>配方（带研究/闪存）。
-     * <p>
-     * 用 TecTech 的 {@code addResearchableAssemblylineRecipe}：它会同时登记
-     * ①正式装配线配方（需要研究好的闪存）②研究站假配方（扫描 → 闪存）③NEI 可视化配方。
-     * 我们的迪普西科装配线模式拷贝的是③，所以这台机器也能直接做这条配方。
-     * </p>
-     * <ul>
-     * <li>研究物品：超级冷却机械方块（{@code gt.foundrycasings:9}）</li>
-     * <li>研究参数：总算力 123,321,000、每秒算力 8,192、功率 2,000,000,000、4A</li>
-     * <li>装配线本体：500,000,000 EU/t、300 秒</li>
-     * </ul>
-     */
     private void addSpacetimeCoolingCore() {
         ItemStack[] inputs = new ItemStack[] { new ItemStack(Blocks.ice, 64), // 冰
             new ItemStack(Blocks.packed_ice, 64), // 浮冰
@@ -140,20 +116,6 @@ public class RecipesDeepSeiko implements IRecipePool {
         return a != null ? a : b;
     }
 
-    /** 白米饭：潘马斯水稻 ×3 + 碗。 */
-    /**
-     * 迪普西科（控制器）的凝聚态配方。
-     *
-     * <p>
-     * 写进原版 {@code condensateAssemblingRecipes}；本模组的 {@code DeepSeikoBEC} 在 sGTCompleteLoad 阶段会把
-     * TecTech 的凝聚态配方整批拷过来（并把纠缠凝聚态镜像回普通流体），所以 <b>BEC 机器和迪普西科都能做</b>。
-     * </p>
-     *
-     * <p>
-     * 两个防御：{@code circuitExotic} 是 GT++/核心模组动态注册的矿辞，个别整合包可能没有 ⇒ 回退到
-     * {@code ItemList.Circuit_ExoticMainframe}；任何输入取空就整条跳过并打日志，不注册半条配方。
-     * </p>
-     */
     private void addDeepSeikoBecRecipe() {
         ItemStack exoticCircuit = GTOreDictUnificator.get("circuitExotic", 48);
         if (exoticCircuit == null) {
@@ -207,25 +169,6 @@ public class RecipesDeepSeiko implements IRecipePool {
         }
     }
 
-    /**
-     * 迪普西科结构方块（鲸脂外壳，{@code dsCasing} meta 0）×64 的研究站 / 原版装配线配方。
-     *
-     * <p>
-     * 走 {@code TTRecipeAdder.addResearchableAssemblylineRecipe}：一次生成
-     * ①研究站假配方（扫描米饭奇点 → 写入研究结果的数据棒）
-     * ②正式装配线配方（要数据棒）
-     * ③NEI 可视化配方（带数据棒格）。
-     * </p>
-     *
-     * <p>
-     * 研究参数：总计算量 16,777,216 ÷ 每秒 2,048 = 8,192 秒研究时长，研究功率 201,234,576 EU/t、1A；
-     * 装配线本体 6000 tick（300 秒）、{@code TierEU.RECIPE_UMV}。
-     * </p>
-     *
-     * <p>
-     * 流体用 {@link #moltenOrFluid} 兜底：超导基材/时空这类材料不一定注册熔融态，直接 getMolten 可能为 null。
-     * </p>
-     */
     private void addDsCasingAssemblyLineRecipe() {
         ItemStack[] inputs = new ItemStack[] {
             new ItemStack(GregTechAPI.sBlockMachines, 64, MetaTileEntityIDs.HULL_UIV.ID),
@@ -312,14 +255,6 @@ public class RecipesDeepSeiko implements IRecipePool {
         return MaterialMisc.MUTATED_LIVING_SOLDER.getFluidStack(amount);
     }
 
-    /**
-     * 装配腔方块（dsCasing meta 4）的研究站 / 装配线配方。
-     *
-     * <p>
-     * 研究物品是时空冷却核心：总计算量 32,777,216 ÷ 每秒 4,096 = 8,000 秒研究时长；
-     * 研究功率 40,000,000,000 EU/t、1A（研究站要能扛 UMV 级电压）；装配线 6000 tick、RECIPE_UMV。
-     * </p>
-     */
     private void addAssemblyCasingAssemblyLineRecipe() {
         ItemStack[] inputs = new ItemStack[] {
             GTModHandler.getModItem("GoodGenerator", "componentAssemblylineCasing", 1, 10),
@@ -373,20 +308,6 @@ public class RecipesDeepSeiko implements IRecipePool {
         }
     }
 
-    /**
-     * 三条「高级机壳」配方（用户提供）：
-     * <ul>
-     * <li>鲸脂外壳 ×8 → 墨黑外壳（meta 8）×8（组装机）</li>
-     * <li>鲸脂外壳 ×8 → 浅蓝外壳（meta 7）×8（组装机）</li>
-     * <li>7 种材料 → 鲸须格栅（meta 2）×8</li>
-     * </ul>
-     *
-     * <p>
-     * ⚠ 最后一条用户写的是粉碎机（macerator），但 GT 的 {@code maceratorRecipes} 是
-     * {@code maxIO(1, 4, 0, 0)} —— 只有 1 个物品输入格，7 输入配方永远匹配不到，NEI 也画不下。
-     * 这里改放进组装机（{@code maxIO(9, 1, 1, 0)}，7 输入 0 流体合法）。
-     * </p>
-     */
     private void addExoticCasingRecipes() {
         ItemStack blubber = new ItemStack(DeepSeikoBlocks.dsCasing, 8, DeepSeikoCasingMeta.BLUBBER_CASING);
 
@@ -458,10 +379,6 @@ public class RecipesDeepSeiko implements IRecipePool {
         }
     }
 
-    /**
-     * 凝聚态适配舱（dsCasing meta 6）的凝聚态配方：16 个输入、4 种纠缠凝聚态、蜂群最高 SixPhasedCopper，
-     * 时长 20 × 999999 tick。
-     */
     private void addCondensateAdapterBecRecipe() {
         // 23529 = 本实例里迪普西科控制器的 MTE meta（IDs+9 运行时分配）⇒ 用 OTHItemList 更稳
         ItemStack[] inputs = new ItemStack[] { OTHItemList.DeepSeiko.get(1),
@@ -511,10 +428,6 @@ public class RecipesDeepSeiko implements IRecipePool {
         }
     }
 
-    /**
-     * 三个鳍方块：鲸脂外壳 + 白米饭 → 左鳍 / 右鳍 / 顶鳍（dsCasing meta 9 / 10 / 11），
-     * 组装机配方，分别用编程电路 2 / 3 / 4 区分。
-     */
     private void addFinCasingRecipes() {
         int[] circuits = { 2, 3, 4 };
         int[] metas = { DeepSeikoCasingMeta.FIN_TIME, DeepSeikoCasingMeta.FIN_SPACE, DeepSeikoCasingMeta.FIN_STAB };
@@ -551,17 +464,6 @@ public class RecipesDeepSeiko implements IRecipePool {
         return stack;
     }
 
-    /**
-     * 按凝聚态自身的 unit 取出最接近的合法量，并返回 entangled 流体。
-     *
-     * <p>
-     * {@code CondensateType.getEntangled(amount)} 会硬校验 {@code amount % (unit / 2) == 0}，
-     * 而不同凝聚态的 unit 不一样：大部分是 144（步长 72），
-     * {@code QuarkGluonPlasma / BoundlessCosmicSolder / PhononMedium / DimensionallyShiftedSuperfluid}
-     * 是 1000（步长 500）。写死 72 的倍数会在这些类型上炸：
-     * {@code IllegalArgumentException: amount 7200 of condensate quarkgluonplasma is not cleanly divisible...}
-     * </p>
-     */
     private static FluidStack entangled(CondensateType type, int wanted) {
         int step = Math.max(1, type.getUnit() / 2);
         int down = (wanted / step) * step;
@@ -583,15 +485,6 @@ public class RecipesDeepSeiko implements IRecipePool {
         return copy;
     }
 
-    /**
-     * 三档算力中心的凝聚态配方（D99 / D199 / D999 各 ×8）。
-     *
-     * <p>
-     * 三条都是 BEC {@code condensateAssemblingRecipes}；蜂群要求按档递增：
-     * D99 最高 8 级、D199 最高 9 级、D999 最高 10 级（同一条配方内各输入格等级可以不同，门槛取最高档）；
-     * 时长分别 20×999999 / 20×2999999 / 20×9999999 tick，电压 UXV / UXV / MAX。
-     * </p>
-     */
     private void addComputeCenterBecRecipes() {
         // ---------- D99（meta 0） ----------
         ItemStack[] d99Inputs = new ItemStack[] { cosmicCircuit(4),
@@ -626,9 +519,6 @@ public class RecipesDeepSeiko implements IRecipePool {
             }
         }
 
-        // ---------- D199（meta 1） ----------
-        // 注意 gt.metaitem.03@32278 的语义：beta-3 是「普朗克尺度流形」，RC-2 起同一 ID 被复用为「卡拉比-丘流形」
-        // （ItemList.Planck_Manifold 已重命名为 CalabiYauManifold）。物品本身两版都存在，功能等价，此处按 RC-2 命名。
         ItemStack[] d199Inputs = new ItemStack[] { GTModHandler.getModItem("dreamcraft", "PlanckCircuit", 8),
             GTModHandler.getModItem("gregtech", "gt.metaitem.03", 16, 32278),
             GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 32275),
@@ -739,29 +629,12 @@ public class RecipesDeepSeiko implements IRecipePool {
 
     /** 鲸 + 专用仓。控制器按设计 §1（手合彩蛋白米饭 ×128）。 */
     private void addMachineRecipes() {
-        // 迪普西科之脑（控制器）：工作台配方已按用户要求删除，只保留 BEC 凝聚态配方
-        // （见 addDeepSeikoBecRecipe：TecTechRecipeMaps.condensateAssemblingRecipes）
-        // 纳米蜂收容仓
         GTModHandler.addCraftingRecipe(
             OTHItemList.DeepSeikoNaniteCell.get(1),
             new Object[] { "BBB", "BGB", "BBB", 'B', stack(DeepSeikoCasingMeta.BLUBBER_CASING, 1), 'G',
                 ItemList.Field_Generator_UIV.get(1) });
     }
 
-    /**
-     * 「机体升级」三项升级的材料清单。
-     * <p>
-     * 这张配方图只用于 NEI 查询：机器真正扣材料发生在 {@code OTEDeepSeiko.tryUpgradeBec /
-     * tryUpgradeNanite / tryUpgradeUltimate}（面板里的 6×4 虚拟暂存格）。
-     * </p>
-     * <p>
-     * ⚠ 教训（2026-10-26 14:26 事故）：这里原先用「矿辞输入」`Object[]{"nanite", 64}` 来覆盖所有等级的纳米蜂群，
-     * 结果 `GTOreDictUnificator.getOres("nanite")` 返回**空表**（它只认 GT 统一化过的条目），
-     * `GTRecipeBuilder.itemInputs` 直接抛 `IllegalArgumentException: null in argument`；
-     * 异常发生在 `completeInit` 里 ⇒ FML 记为致命错误 ⇒ **所有存档进不去、新建世界也失败**。
-     * 现在改成「每种纳米蜂群各发一条具体物品配方」，并且每条都独立 try/catch，绝不让 NEI 展示用的配方拖垮初始化。
-     * </p>
-     */
     private void addUpgradeRecipes() {
         ItemStack[] req = OTEDeepSeiko.getUpgradeRequirements();
         ItemStack bec = req[0], ultCasing = req[2], ultMagmatter = req[3], ultStargate = req[4];

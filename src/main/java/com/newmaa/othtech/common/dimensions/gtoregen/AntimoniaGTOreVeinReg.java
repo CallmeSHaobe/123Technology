@@ -21,10 +21,6 @@ public final class AntimoniaGTOreVeinReg {
 
     private AntimoniaGTOreVeinReg() {}
 
-    /**
-     * 注册锑星的全部自定义大矿脉。 由 {@code OTHDimensionIntegration#scheduleOreVeinRegistration()} 通过
-     * {@code GregTechAPI.sAfterGTPostload} 在 GT 自身矿脉注册完成之后调用。
-     */
     public static void registerAll() {
         register(veinSb());
         register(veinAr());

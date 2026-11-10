@@ -12,13 +12,6 @@ import com.newmaa.othtech.common.blocks.antimonia.AntimoniaBlocks;
 import bartworks.API.BorosilicateGlass;
 import micdoodle8.mods.galacticraft.api.prefab.world.gen.BiomeDecoratorSpace;
 
-/**
- * 锑星的装饰性矿脉。
- * <p>
- * 置换目标必须是 {@link AntimoniaBlocks#antimoniaBlockStone}：{@code ChunkProviderAntimonia#getStoneBlock()}
- * 返回的就是锑石，整颗星的基岩之上全是它。{@code WorldGenMinable} 只替换
- * {@code isReplaceableOreGen(...)} 为真的方块，目标方块对不上就会一条都生成不出来。
- */
 public class BiomeDecOreAntimonia extends BiomeDecoratorSpace {
 
     private World world;

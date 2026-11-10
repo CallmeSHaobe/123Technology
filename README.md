@@ -24,7 +24,9 @@
 
 切勿改动. 若因此出现bug概不负责 .
 
-ModID 仍为123Technology .
+ModID 仍为123technology .
+
+需求TwistSpaceTechnology作为该mod的前置 .
 
 ## 感谢这些老登们
 

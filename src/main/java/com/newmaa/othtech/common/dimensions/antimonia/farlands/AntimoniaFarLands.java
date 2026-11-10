@@ -4,29 +4,6 @@ import java.util.Random;
 
 import com.newmaa.othtech.Config;
 
-/**
- * 锑星边境之地（Far Lands）：人为把噪声地形生成器「撑爆」。
- * <p>
- * 经典边境之地的边界 12,550,820 其实是一个溢出点：噪声坐标 = 方块坐标 * (684.412 / 4) = 方块坐标 * 171.103，
- * 
- * <pre>
- *     12,550,820 * 171.103 = 2,147,482,594  →  正好顶到 2^31 (Integer.MAX_VALUE)
- * </pre>
- * 
- * 越过边界之后，两个溢出点会被同时触发：
- * <ol>
- * <li>{@code (int)} 强转饱和在 2^31-1，坐标减去强转结果剩下的「残差」是 10^10 量级的巨大数，
- * 它被原样拿去当 perlin 的插值权重，噪声密度直接爆掉，只剩符号还有意义；</li>
- * <li>坐标转 {@code float} 之后尾数只剩 256 / 512 的台阶，格点的梯度索引退化成伪随机序列。</li>
- * </ol>
- * 结果就是经典边境之地的三种形态：
- * <ul>
- * <li>只越过 x（或 z）：越界那条轴变成 1~2 格宽的柱子，高度直接顶到 255 或掉到 0（石墙 + 隧道），
- * 另一条轴仍是平滑 perlin，于是形成沿该轴延伸的长条山脊；</li>
- * <li>两个轴都越过：棋盘 / 对角条纹；</li>
- * <li>紧贴边界的那几格：直接立成一堵断崖。</li>
- * </ul>
- */
 public final class AntimoniaFarLands {
 
     /** 经典边境之地坐标：噪声坐标 * 171.103 恰好顶到 2^31。 */
@@ -56,9 +33,6 @@ public final class AntimoniaFarLands {
         return Math.abs((long) worldX) >= boundary || Math.abs((long) worldZ) >= boundary;
     }
 
-    /**
-     * 越界列的实心高度（0..255）。高于该高度是空气（低于海平面则填液体）。
-     */
     public static int heightAt(int worldX, int worldZ, long seed, int boundary) {
         boolean farX = Math.abs((long) worldX) >= boundary;
         boolean farZ = Math.abs((long) worldZ) >= boundary;

@@ -14,9 +14,6 @@ public class TextHandler {
 
     public static String texter(String aTextLine, String aKey) {
 
-        /**
-         * If not in Dev mode , return vanilla forge method directly.
-         */
         if (OTHTechnology.isInDevMode) {
             if (LangMap.get(aKey) == null) {
                 OTHTechnology.LOG.info("Texter get a new key - TextLine: " + aKey + " - " + aTextLine);

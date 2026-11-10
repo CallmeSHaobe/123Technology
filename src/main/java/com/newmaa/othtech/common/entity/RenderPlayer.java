@@ -15,12 +15,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 import twilightforest.TwilightForestMod;
 import twilightforest.client.renderer.entity.RenderTFGiantSkinportIntegration;
 
-/**
- * 复制体渲染器：模型用 {@link SatFakePlayer}，皮肤跟本地玩家走。
- * <p>
- * 这里不能直接用原版 {@code net.minecraft.client.renderer.entity.RenderPlayer}：它会把实体强转成
- * {@code AbstractClientPlayer}，对 {@link EntityFakePlayer} 直接 CCE。
- */
 @SideOnly(Side.CLIENT)
 public class RenderPlayer extends RenderBiped {
 
@@ -64,10 +58,6 @@ public class RenderPlayer extends RenderBiped {
         this.applyArms(slim);
     }
 
-    /**
-     * 瘦（Alex）手臂只建一次并缓存，避免之前每帧 new 两个 {@link ModelRenderer}；
-     * 同时保证从瘦皮肤换回普通皮肤时手臂能还原（之前是永久替换掉的）。
-     */
     private void applyArms(boolean slim) {
         if (!slim) {
             this.modelBipedMain.bipedRightArm = this.normalRightArm;

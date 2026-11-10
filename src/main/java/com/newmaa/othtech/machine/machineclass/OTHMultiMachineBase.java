@@ -94,11 +94,6 @@ public abstract class OTHMultiMachineBase<T extends OTHMultiMachineBase<T>> exte
 
     // region Processing Logic
 
-    /**
-     * Creates logic to run recipe check based on recipemap. This runs only once, on class instantiation.
-     * <p>
-     * If this machine doesn't use recipemap or does some complex things, override {@link #checkProcessing()}.
-     */
     @ApiStatus.OverrideOnly
     protected ProcessingLogic createProcessingLogic() {
         return new OTHProcessingLogic() {
@@ -168,11 +163,6 @@ public abstract class OTHMultiMachineBase<T extends OTHMultiMachineBase<T>> exte
         return (long) (-this.lEUt * (10000.0 / Math.max(1000, mEfficiency)));
     }
 
-    /**
-     * Checks recipe and setup machine if it's successful.
-     * <p>
-     * For generic machine working with recipemap, use {@link #createProcessingLogic()} to make use of shared codebase.
-     */
     @Nonnull
     @Override
     public CheckRecipeResult checkProcessing() {
@@ -510,14 +500,6 @@ public abstract class OTHMultiMachineBase<T extends OTHMultiMachineBase<T>> exte
             totalOutput += aTotal;
         }
 
-        /*
-         * disable explosion
-         * if (totalOutput < aEU || (aFoundMixedDynamos && !aAllowMixedVoltageDynamos)) {
-         * explodeMultiblock();
-         * return false;
-         * }
-         */
-
         long actualOutputEU;
         if (totalOutput < aEU) {
             actualOutputEU = totalOutput;
@@ -555,31 +537,19 @@ public abstract class OTHMultiMachineBase<T extends OTHMultiMachineBase<T>> exte
         return true;
     }
 
-    /**
-     * No more machine error
-     */
     @Override
     public boolean doRandomMaintenanceDamage() {
         return true;
     }
 
-    /**
-     * No more machine error
-     */
     @Override
     public void checkMaintenance() {}
 
-    /**
-     * No more machine error
-     */
     @Override
     public boolean getDefaultHasMaintenanceChecks() {
         return false;
     }
 
-    /**
-     * No more machine error
-     */
     @Override
     public final boolean shouldCheckMaintenance() {
         return false;
@@ -605,9 +575,6 @@ public abstract class OTHMultiMachineBase<T extends OTHMultiMachineBase<T>> exte
         return 0;
     }
 
-    /**
-     * no longer afraid of rain
-     */
     @Override
     public boolean willExplodeInRain() {
         return false;
@@ -785,14 +752,6 @@ public abstract class OTHMultiMachineBase<T extends OTHMultiMachineBase<T>> exte
         }
     }
 
-    /**
-     * Set total mode count for the machine.
-     * Also indicate whether this machine has multiple modes.
-     * Use {@link #machineMode} to get current machine mode index.
-     * Override {@link #getMachineModeName(int)} to set name for each mode.
-     * Override {@link #setMachineModeIcons()} to set button icon.
-     * Override {@link #setMachineMode(int)} or {@link #nextMachineMode()} to restrict mode change.
-     */
     public int totalMachineMode() {
         return 1;
     }

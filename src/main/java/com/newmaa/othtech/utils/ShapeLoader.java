@@ -10,22 +10,6 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-/**
- * 从 mod 资源里读取 StructureLib 形状，替代「几万条字符串字面量直接写在 Java 里」的写法。
- *
- * <p>
- * 起因：{@code OTEMegaEEC} 的 {@code shapeMain} 有 8008 条字符串字面量，作为<b>实例</b> {@code final}
- * 字段时 javac 会把这份初始化字节码复制进<b>每一个构造器</b>，实测两个构造器各 51 KB，
- * 而 JVM 单方法上限是 65,535 字节 —— 再往形状里加两千条就 {@code code too large}。
- * 外置成文本后构造器只剩 1 KB 级，且改结构不用重编译。
- * </p>
- *
- * <p>
- * 文件格式：UTF-8 纯文本，每个非空、非 {@code #} 开头的行是形状的一行（固定宽 {@code width}）；
- * 每 {@code height} 行构成一层，共 {@code layers} 层。空位用 {@link #EMPTY}（{@code '.'}）书写，
- * 加载时还原成 StructureLib 认识的空格。
- * </p>
- */
 public final class ShapeLoader {
 
     private static final Logger LOG = LogManager.getLogger("123Technology/ShapeLoader");

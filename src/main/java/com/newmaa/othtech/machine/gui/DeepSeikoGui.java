@@ -33,23 +33,6 @@ import gregtech.api.util.GTUtility;
 import gregtech.common.gui.modularui.multiblock.base.MTEMultiBlockBaseGui;
 import gregtech.common.modularui2.widget.builder.ItemSlotGridBuilder;
 
-/**
- * 迪普西科（DeepSeiko）的 MUI2 界面。
- *
- * <p>
- * 主 GUI 沿用 GT5U 的多方块框架（终端 / 背包 / 模式按钮 / 消音）。
- * 我们的两套自绘面板都**挂在主面板右侧**（{@code relative(parent).leftRel(1)}），
- * 不再像以前那样居中压在背包上：
- * </p>
- * <ul>
- * <li>控制台（340×250）：进度环 / 三条数据条 / 三环等级与加速倍率；</li>
- * <li>机体升级（190×182）：3×3 暂存格 + 三个升级按钮 + 进度文本，从控制台右上角的 ↑ 打开。</li>
- * </ul>
- * <p>
- * 模式切换按钮不在这里画 —— GT5U 的 {@code createLeftPanelGapRow} 会自己加（终端左下那排、配方锁定右边），
- * 前提是机器覆写 {@code setMachineModeIcons()}。
- * </p>
- */
 public class DeepSeikoGui extends MTEMultiBlockBaseGui<OTEDeepSeiko> {
 
     private static final int C_LINE = 0xFF1E3A66;
@@ -77,14 +60,6 @@ public class DeepSeikoGui extends MTEMultiBlockBaseGui<OTEDeepSeiko> {
         super(multiblock);
     }
 
-    /**
-     * 机器模式切换按钮的图标。
-     * <p>
-     * ⚠ MUI2 用的是 <b>GUI 侧</b>的 {@code MTEMultiBlockBaseGui.machineModeIcons}（MUI2 的 UITexture），
-     * 只有在 GUI 里重写这个方法，{@code createLeftPanelGapRow} 才会把按钮画出来（位置正好在
-     * 「配方锁定」右边）。在机器类里重写是 MUI1 的老路子，对 MUI2 界面无效。
-     * </p>
-     */
     @Override
     protected void setMachineModeIcons() {
         machineModeIcons.clear();
@@ -101,9 +76,6 @@ public class DeepSeikoGui extends MTEMultiBlockBaseGui<OTEDeepSeiko> {
         panel.background(UITexture.fullImage("123technology", "gui/ds_panel_blue"));
         // 头像气泡（点右下角头像时出现，3 秒后自动消失）
         panel.child(createAvatarText());
-        // 打开一级界面时自动把两侧面板拉起来。
-        // 注意：必须在「屏幕已经挂上」之后再 openPanel，否则第一次 tick 会静默失败，
-        // 所以这里不是只试一次，而是最多重试 40 tick（成功即停）。
         panel.onUpdateListener(w -> {
             if (autoOpened) return;
             try {
@@ -132,10 +104,6 @@ public class DeepSeikoGui extends MTEMultiBlockBaseGui<OTEDeepSeiko> {
     protected Flow createRightPanelGapRow(ModularPanel parent, PanelSyncManager syncManager) {
         return super.createRightPanelGapRow(parent, syncManager).child(createConsoleButton(parent, syncManager));
     }
-
-    // ============================================================
-    // 一级界面美化：换掉 GT 的大 G logo + 终端黑底换深蓝
-    // ============================================================
 
     /** 头像点击状态：气泡 3 秒消失；连点 3 下换台词 */
     private long bubbleUntil = 0L;
@@ -191,10 +159,6 @@ public class DeepSeikoGui extends MTEMultiBlockBaseGui<OTEDeepSeiko> {
             .background(new Rectangle().verticalGradient(0xFF0A1424, 0xFF060B14));
     }
 
-    /**
-     * 一级界面（主面板）也要看到冷却/加速状态 —— 用户反馈「没冷却仓只有二级界面才提示」。
-     * 在 GT 自带的终端文本列表下面追加一行。
-     */
     @Override
     protected ListWidget<IWidget, ?> createTerminalTextWidget(PanelSyncManager syncManager, ModularPanel parent) {
         IntSyncValue mode = new IntSyncValue(multiblock::getModeId);
@@ -227,13 +191,6 @@ public class DeepSeikoGui extends MTEMultiBlockBaseGui<OTEDeepSeiko> {
                     .setEnabledIf(w -> mode.getIntValue() == 1));
     }
 
-    /**
-     * 把面板放到主 GUI 右侧；**屏幕（GUI 缩放后）放不下就保持默认居中**。
-     * <p>
-     * 用户反馈：界面尺寸调大到 5、或分辨率小的时候，340 宽的控制台右侧会被裁掉。
-     * 这里按 ScaledResolution 判断「主面板 + 控制台 + 边距」是否放得下，放不下就退回居中（至少完整可见）。
-     * </p>
-     */
     private void placeBeside(ModularPanel p, ModularPanel parent) {
         if (!fitsBesideGui()) return; // 不设置 relative ⇒ ModularPanel 默认屏幕居中
         p.relative(parent)
@@ -254,10 +211,6 @@ public class DeepSeikoGui extends MTEMultiBlockBaseGui<OTEDeepSeiko> {
             return false;
         }
     }
-
-    // ============================================================
-    // 两侧细面板 75×120 + 升级覆盖层
-    // ============================================================
 
     private IWidget createConsoleButton(ModularPanel parent, PanelSyncManager sm) {
         final IPanelHandler[] speedRef = new IPanelHandler[1];
@@ -292,10 +245,6 @@ public class DeepSeikoGui extends MTEMultiBlockBaseGui<OTEDeepSeiko> {
         StringSyncValue vT = new StringSyncValue(() -> "T" + multiblock.getTimeLevel());
         StringSyncValue vS = new StringSyncValue(() -> "T" + multiblock.getSpaceLevel());
         StringSyncValue vB = new StringSyncValue(() -> "T" + multiblock.getStabLevel());
-        // ⚠ 推进必须走同步值：以前这里是客户端现算的 lambda，客户端读不到三环/算力卡，
-        // 显示成「基础 300,000」而终端显示「实际 540,000」，两边对不上。
-        // 用和终端同一个压缩格式（k/M/G），否则调试币的 5,400,000,000 会把 85 宽的面板撑成两三行。
-        // 只同步数字，单位在客户端 IKey.dynamic 里翻译（服务端没有语言文件，translateToLocal 会返回键名）
         StringSyncValue vRate = new StringSyncValue(
             () -> GTUtility.formatShortenedLong((long) Math.max(0F, multiblock.getBecCurrentRate())));
         sm.syncValue("ds_sp_total", vTotal);
