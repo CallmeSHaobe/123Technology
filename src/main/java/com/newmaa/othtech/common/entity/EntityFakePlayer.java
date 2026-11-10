@@ -28,10 +28,6 @@ public class EntityFakePlayer extends EntityLiving implements IMobInfoProvider {
 
     private static final int DATAWATCHER_ID_SITTING = 20;
     private int sitCooldown = 0;
-    /**
-     * GT++ 的 meta food 物品（meta 0 = 生人肉）。 旧代码引用的 {@code gtPlusPlus.core.item.ModItems.itemMetaFood} 在当前
-     * GT5U/GT++ 里已经不存在，改为从 {@link GregtechItemList} 里取回真实注册的那个实例。
-     */
     public static BaseItemMetaFood itemMetaFood;
 
     public EntityFakePlayer(World world) {
@@ -40,12 +36,6 @@ public class EntityFakePlayer extends EntityLiving implements IMobInfoProvider {
         this.dataWatcher.addObject(DATAWATCHER_ID_SITTING, (byte) 0);
     }
 
-    /**
-     * 惰性解析 GT++ 的 meta food 物品。
-     * <p>
-     * 不能在静态初始化里取：本类在 FML init 注册实体时就会被加载，而 GT++ 注册食物在更晚的阶段，
-     * 那时 {@code GregtechItemList.RawHumanMeat} 还是空的。
-     */
     public static Item metaFood() {
         if (itemMetaFood == null) {
             try {
@@ -101,12 +91,6 @@ public class EntityFakePlayer extends EntityLiving implements IMobInfoProvider {
         }
     }
 
-    /**
-     * 全服广播一句「我是谁」。文案走 lang，中英文各自维护。
-     * <p>
-     * 世界卸载的那一下 {@code MinecraftServer.getServer()} 可能是 null（此时 onLivingUpdate 仍会被调到），
-     * 必须判空，否则就是一句台词换一次服务端 NPE。
-     */
     private void sendMessageToAll() {
         MinecraftServer server = MinecraftServer.getServer();
         if (server == null) {
@@ -125,9 +109,6 @@ public class EntityFakePlayer extends EntityLiving implements IMobInfoProvider {
         c1.clampChance();
         drops.add(c1);
 
-        // 物品解析失败时不要生成 null 物品掉落：MobsInfo 序列化到客户端时会在
-        // ConstructableItemStack#writeToByteBuf 里对 null 的 itemIdentifier 直接 NPE，
-        // 结果就是整个实体在 MobsInfo/EEC 里都不可用。
         Item food = metaFood();
         if (food == null) return;
 

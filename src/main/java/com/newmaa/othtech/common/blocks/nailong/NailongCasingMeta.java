@@ -1,10 +1,5 @@
 package com.newmaa.othtech.common.blocks.nailong;
 
-/**
- * BlockNailongCasing 的 meta 顺序表（贴图 nailong/casing_N 与之一一对应）。
- * <p>
- * 一个方块 ID 塞两个机壳：奈隆是纯黄底色+一点点淡黄，黄桃罐头在奈隆的基础上加玻璃质感。
- */
 public final class NailongCasingMeta {
 
     /** 奈隆机械方块：纯黄色混合一点淡黄色 */

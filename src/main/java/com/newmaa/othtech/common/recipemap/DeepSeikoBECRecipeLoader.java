@@ -21,33 +21,10 @@ import gregtech.api.util.GTRecipeConstants;
 import gtPlusPlus.core.material.MaterialsElements;
 import tectech.recipe.TecTechRecipeMaps;
 
-/**
- * 给「迪普西科」({@code OTEDeepSeiko}) 的凝聚态配方池 {@link Recipemaps#DeepSeikoBEC} 灌配方。
- * <p>
- * ⚠ 关键坑：TecTech 的 {@code condensateAssemblingRecipes} 后端在 compileRecipe 里把
- * {@code mFluidInputs} 清空、真流体（纠缠凝聚态）转存进 metadata
- * {@link GTRecipeConstants#CONDENSATE_INPUT}——所以拷贝时必须从 metadata 取流体，
- * 直接读 mFluidInputs 永远是空数组（v1.5.1 悬案根因）。
- * <p>
- * 拿到纠缠凝聚态流体后，按 {@link #ENTANGLED_TO_SOURCE} 硬编码镜像表 1:1 换回对应普通材料流体
- * （同数量）。19 条映射与 TecTech {@code CondensateType} 枚举的 source 供应商逐一对应，
- * A1→A2 数量不变；表外流体留原样并打 WARN。
- * <p>
- * 同时把配方的蜂群等级要求（NANITE_TIERS metadata 的最高档，1~10）压进 {@code mSpecialValue}，
- * 供鲸的纳米蜂收容仓做门槛判定（GTRecipe.copy() 会丢 metadata，所以必须转存）。
- * <p>
- * 执行时机：{@code GregTechAPI.sGTCompleteLoad} + 迪普西科自己的 FMLLoadComplete（{@code RecipeLoader}
- * 末尾再跑一次本类，幂等）——双保险兜住一切晚注册的 BEC 配方。
- */
 public final class DeepSeikoBECRecipeLoader {
 
     private static final Logger LOG = LogManager.getLogger("123Technology/DeepSeikoBEC");
 
-    /**
-     * 纠缠凝聚态流体名（{@code entangled_<id>}）→ 普通形态源流体。
-     * 19 条 = TecTech {@code CondensateType} 全枚举，逐条照抄其 source 供应商
-     * （熔融态优先，无熔融的用标准流体；独立元素用 getFluidStack）。
-     */
     private static final Map<String, Fluid> ENTANGLED_TO_SOURCE = buildEntangledToSource();
 
     private DeepSeikoBECRecipeLoader() {}
@@ -148,10 +125,6 @@ public final class DeepSeikoBECRecipeLoader {
         return result;
     }
 
-    /**
-     * 19 条凝聚态镜像映射（A1→A2，数量不变）。id 与源流体严格照抄
-     * {@code gregtech.api.enums.CondensateType} 各枚举项的 source 供应商。
-     */
     private static Map<String, Fluid> buildEntangledToSource() {
         Map<String, Fluid> map = new HashMap<>();
         put(map, "neutronium", Materials.Neutronium.getMolten(1));

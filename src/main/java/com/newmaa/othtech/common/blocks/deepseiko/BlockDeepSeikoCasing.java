@@ -19,13 +19,6 @@ import gregtech.api.interfaces.IHasIndexedTexture;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.util.GTUtility;
 
-/**
- * 迪普西科（DeepSeiko）的全部结构方块：一个 meta Block 塞下鲸体机壳 / 鸿蒙件 / 机房件 / 适配舱。
- * meta 列表见 {@link DeepSeikoCasingMeta}。
- * <p>
- * 实现 {@link IHasIndexedTexture} 并占用 GT 贴图页 114，让 {@code buildHatchAdder().casingIndex(...)}
- * 拿到有效索引——舱室（总线/仓/能源）被机器吸收时会自动把贴图换成对应机壳色，与鲸体浑然一体。
- */
 public class BlockDeepSeikoCasing extends Block implements IHasIndexedTexture {
 
     public static final int METACOUNT = DeepSeikoCasingMeta.VALUES.length;

@@ -19,29 +19,13 @@ import com.newmaa.othtech.utils.MetaItemStackUtils;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-/**
- * An ItemStack Generator used Meta Item System.
- * <li>Use {@link ItemAdder#initItem(String, int)} to create your Item at ItemList01.
- *
- */
 public class ItemAdder extends ItemAdder_Basic {
 
-    /**
-     * An Item Map for managing basic items
-     */
-    // public static Map<String, ItemAdder> Item01Map = new HashMap<>();
-
-    /**
-     * A Set contains the meta value that has been used.
-     */
     public static final Set<Integer> MetaSet = new HashSet<>();
     public static final Map<Integer, String[]> MetaItemTooltipsMap = new HashMap<>();
 
     public final String unlocalizedName;
 
-    /**
-     * Create the basic item MetaItem.
-     */
     public ItemAdder(String aName, String aMetaName, CreativeTabs aCreativeTabs) {
         super(aName, aMetaName, aCreativeTabs);
         this.unlocalizedName = aMetaName;
@@ -70,15 +54,6 @@ public class ItemAdder extends ItemAdder_Basic {
         return initItem(aName, aMeta);
 
     }
-
-    /**
-     * Init the basic items at the game pre init.
-     */
-    // public static void init() {
-    // for (String MetaName : Item01Map.keySet()) {
-    // GameRegistry.registerItem(Item01Map.get(MetaName), MetaName);
-    // }
-    // }
 
     // region Overrides
 

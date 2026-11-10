@@ -75,10 +75,6 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
 
     private String BYDS = "0";
 
-    /**
-     * MUI1 copies of the mode icons. Only the MUI2 set in {@link OTESunFactoryGui} is ever rendered by GT5U 2.9, these
-     * keep the legacy {@code addUIWidgets} path showing the same artwork instead of a null background.
-     */
     private static final UITexture LEGACY_MODE_ICON_PCB = UITexture
         .fullImage("123technology", "gui/overlay_button/sunfactory_mode_pcb");
 
@@ -2237,15 +2233,6 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
         };
     }
 
-    /**
-     * Cycles the recipe map. The selectable range is limited by the installed stabilisation field generators, so a
-     * player can never put the controller into a mode that {@link #checkProcessing()} would refuse to run. Wrapping
-     * instead of clamping keeps repeated clicks / screwdriver uses moving even at the top of the unlocked range.
-     * <p>
-     * This method is also the {@code machineMode} GUI sync setter on the client, and the client never learns the sfg
-     * channel, so the restriction must only be applied server side - remapping it on the client would make the GUI
-     * display a different mode (icon, tooltip and name) than the one the machine actually runs.
-     */
     @Override
     public void setMachineMode(int index) {
         if (getBaseMetaTileEntity() != null && getBaseMetaTileEntity().isServerSide()) {
@@ -2427,43 +2414,6 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
 
     // ===================== Tooltip =====================
 
-    /*
-     * @Override
-     * protected MultiblockTooltipBuilder createTooltip() {
-     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-     * tt.addMachineType("搂c搂l鑰佺櫥鐨勪紶濂囬€犵墿 - 宸ㄥ瀷PCB宸ュ巶涓ㄨ创鐗囧伐鍧婁辅NMD鏅跺渾鍘備辅鍏冧欢鑱氬悎鑰?)
-     * .addInfo("搂e搂l涓?浣?鍗?涓?")
-     * .addInfo("搂5浠庢煇鍗婂矝绁炵鍖楁柟鍥藉寮曡繘鐨勫皷绔珮绉戞妧宸ㄦ瀯")
-     * .addInfo("搂5鍒╃敤銆屾仼鎯呫€嶇殑鍔涢噺灏嗗師鏉愭枡涓€姝ヨ浆鍖栦负鐢佃矾鏉挎墍闇€瑕佺殑鏉愭枡")
-     * .addInfo("搂5鍏锋湁浠や汉鐣忔儳鐨勮壇鍝佺巼鍜屾鏃犵憰鐤电殑绮惧瘑搴?)
-     * .addInfo("搂a娑堣€楁仼鎯呰繍琛?: 1t/涓?)
-     * .addInfo("鍦ㄩ厤缃枃浠惰缃厤鏂筃EI浜у嚭鍊嶇巼, 榛樿涓?.5, 鍥涜垗浜斿叆")
-     * .addInfo("--------------------")
-     * .addInfo("搂b涓绘満鏀惧叆涓€鍥㈣渹缇? 鎸夌収鍫嗗彔鏁伴噺鑾峰緱鐩稿簲鍔犻€?log2(铚傜兢鏁伴噺), 鑸嶅純灏忔暟鍚戜笅鍙栨暣)")
-     * .addInfo("搂b纰崇撼绫宠渹缇?-- -2%")
-     * .addInfo("搂b瓒呮椂绌鸿渹缇?-- 30%")
-     * .addInfo("搂b姘告亽铚傜兢 -- 75%")
-     * .addInfo("搂b瀹囧畽绱犺渹缇?-- 150%")
-     * .addInfo("--------------------")
-     * .addInfo("sfg淇￠亾 = 0 瑙ｉ攣PCB宸ュ巶")
-     * .addInfo("sfg淇￠亾 = 2 瑙ｉ攣璐寸墖宸ュ潑")
-     * .addInfo("sfg淇￠亾 = 5 瑙ｉ攣NMD鏅跺渾鍘?)
-     * .addInfo("sfg淇￠亾 = 8 瑙ｉ攣鍏冧欢鑱氬悎鑰?)
-     * .addInfo("鏇存崲鍔涘満鍚庣粨鏋勪笉鎴愬瀷璇烽噸鏀句富鏈?)
-     * .addTecTechHatchInfo()
-     * .addSeparator()
-     * .addController("绾㈡棩鎭╂儏宸ュ潑")
-     * .beginStructureBlock(63, 32, 63, false)
-     * .addInputBus("AnyInputBus", 1)
-     * .addOutputBus("AnyOutputBus", 1)
-     * .addInputHatch("AnyInputHatch", 1)
-     * .addOutputHatch("AnyOutputHatch", 1)
-     * .addEnergyHatch("AnyEnergyHatch", 1)
-     * .addMufflerHatch("AnyMufflerHatch", 1)
-     * .toolTipFinisher("搂a123Technology - 搂cBeautiful World!");
-     * return tt;
-     * }
-     */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
         final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
@@ -2541,10 +2491,6 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
 
     // ===================== Misc =====================
 
-    /**
-     * Legacy (MUI1) mode icon list. GT5U 2.9 builds multiblock GUIs with MUI2, where the mode switch button is
-     * created from {@link #getGui()}; this is kept so the legacy path can never inject a null background.
-     */
     @Override
     public void setMachineModeIcons() {
         machineModeIcons.add(LEGACY_MODE_ICON_PCB);
@@ -2553,11 +2499,6 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
         machineModeIcons.add(LEGACY_MODE_ICON_COMPONENT);
     }
 
-    /**
-     * MUI2 GUI, which is the only one GT5U 2.9 renders for multiblocks. The mode switch button is only added when
-     * the GUI owns at least one icon ({@code MTEMultiBlockBaseGui#createLeftPanelGapRow}), so the four icons passed
-     * in by {@link OTESunFactoryGui} are what actually make the recipe map switchable in game.
-     */
     @Override
     protected @NotNull MTEMultiBlockBaseGui<?> getGui() {
         return new OTESunFactoryGui(this);
@@ -2621,13 +2562,6 @@ public class OTESunFactory extends OTHMultiMachineBase<OTESunFactory> {
         }
     }
 
-    /**
-     * Cycles the recipe map. {@link #setMachineMode(int)} restricts the range to the modes unlocked by the installed
-     * sfg channel, so the player can never land on a mode {@link #checkProcessing()} would reject.
-     * <p>
-     * The feedback uses our own translation keys: GT5U.MULTI_MACHINE_CHANGE is not translated in GT's zh_CN.lang and
-     * appends "mode" to the (already translated) mode name, which reads wrong in every language.
-     */
     @Override
     public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
         ItemStack aTool) {

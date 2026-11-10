@@ -45,9 +45,6 @@ public class NukeExplosion extends Explosion {
         this.explosionZ = z;
     }
 
-    /**
-     * Does the first part of the explosion (destroy blocks)
-     */
     @Override
     public void doExplosionA() {
         final float f = this.explosionSize;
@@ -161,9 +158,6 @@ public class NukeExplosion extends Explosion {
         this.explosionSize = f;
     }
 
-    /**
-     * Does the second part of the explosion (sound, particles, drop spawn)
-     */
     @Override
     public void doExplosionB(final boolean p_77279_1_) {
         this.worldObj.playSoundEffect(
@@ -428,9 +422,6 @@ public class NukeExplosion extends Explosion {
         return this.field_77288_k;
     }
 
-    /**
-     * Returns either the entity that placed the explosive block, the entity that caused the explosion or null.
-     */
     @Override
     public EntityLivingBase getExplosivePlacedBy() {
         return this.exploder == null ? null

@@ -19,11 +19,6 @@ import gregtech.api.metatileentity.implementations.MTEHatch;
 import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTUtility;
 
-/**
- * 迪普西科的「纳米蜂收容仓」（原版纳米蜂群物品）：1 槽，放一颗纳米蜂（1~10 级）。
- * 决定凝聚态模式能跑什么等级的配方（对齐原版 BEC 的蜂群等级门槛），<b>不影响速度</b>。
- * 放 10 级（MagMatter 纳米蜂）= 什么都能跑。
- */
 public class OTEDeepSeikoNaniteCell extends MTEHatch {
 
     /** tier 序号（1~10）→ 参照物品，运行时初始化一次。 */
@@ -59,11 +54,6 @@ public class OTEDeepSeikoNaniteCell extends MTEHatch {
         return new ITexture[] { aBaseTexture };
     }
 
-    /**
-     * tier（1~10）→ 参照物品。注意 {@link NaniteTier} 有 12 个枚举项但只有 10 个真实等级
-     * （Carbon 与 Glowstone 同为 1、Silver 与 Neutronium 同为 2…），所以必须按 {@code getTier()} 取，
-     * 不能用 ordinal+1，否则 Glowstone 会被判成 2、MagMatter 会被判成 12。
-     */
     private static ItemStack tierRef(int tier) {
         return TIER_REFS.computeIfAbsent(tier, t -> {
             for (NaniteTier nt : NaniteTier.values()) {

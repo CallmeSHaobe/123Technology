@@ -56,16 +56,6 @@ public class ItemAdder_Basic extends Item {
         return this.unlocalizedName;
     }
 
-    // @Override
-    // @SideOnly(Side.CLIENT)
-    // public void registerIcons(IIconRegister iconRegister) {
-    // icon = iconRegister.registerIcon(this.iconPath);
-    // }
-    // @Override
-    // public IIcon getIconFromDamage(int aMetaData) {
-    // return icon;
-    // }
-
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item aItem, CreativeTabs aCreativeTabs, List aList) {

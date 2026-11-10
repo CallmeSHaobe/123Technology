@@ -14,14 +14,6 @@ import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-/**
- * 米饭奇点：1234 个白米饭在亚稳态黑洞遏制场（COMPRESSION_TIER = 2）里被压成一个点。
- *
- * <p>
- * 配方在 {@code RecipeMaps.neutroniumCompressorRecipes}，NEI 里会显示「需要稳定的黑洞」——
- * 也就是必须用 BHC（亚稳态黑洞遏制场）在黑洞稳定时跑。
- * </p>
- */
 public class ItemRiceSingularity extends Item {
 
     public ItemRiceSingularity() {

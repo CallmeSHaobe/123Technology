@@ -14,25 +14,6 @@ import gregtech.api.enums.Mods;
 import gregtech.api.interfaces.IOreMaterial;
 import gregtech.common.OreMixBuilder;
 
-/**
- * 把锑星的自定义 GT 大矿脉喂给 VisualProspecting。
- * <p>
- * 旅行地图上那几个「GT 矿脉 / 地下流体 / 神秘节点」叠层其实是 VisualProspecting（VP）画的，
- * 而它的矿脉表 {@code VeinTypeCaching} 只在 {@code FMLLoadCompleteEvent} 里遍历 GT 的 {@code OreMixes} 枚举建表。
- * 自定义矿脉（{@code new WorldgenGTOreLayer(builder)} 注册的那种，比如 {@code otht.vein.sb}）不在枚举里，
- * 于是 {@code getVeinType("otht.vein.sb")} 永远返回 {@code NO_VEIN}：
- * <ul>
- * <li>{@code ServerCache#onVeinGenerated} 收到 {@code VeinGenerateEvent} 后直接把未知矿脉丢掉 —— 地图上什么都不显示；</li>
- * <li>{@code OreVeinLayerManager} 会过滤掉 {@code NO_VEIN} —— 就算本地缓存里有也不画；</li>
- * <li>{@code dimensionsWithVeins} 里没有 {@code antimonia}，重建缓存的 {@code WorldAnalysis} 会直接跳过整个维度。</li>
- * </ul>
- * VP 没有公开的矿脉注册 API，所以这里反射它那三张表（名字 → 矿脉、维度集合、按主/副矿索引），把锑星的矿脉补进去。
- * 调用时机必须在 VP 建表之后（世界加载 / 服务端 about-to-start），早于它在 {@code FMLServerStartingEvent}
- * 里加载矿脉缓存，否则旧存档里的锑星矿脉会被读成 {@code NO_VEIN}。
- * <p>
- * 地下流体本来就走 GT 的 {@code UndergroundOil} + {@code GTUODimension}（{@code AntimoniaUndergroundFluids} 负责配置），
- * VP 那边按世界和区块读，不依赖矿脉表，所以不用额外处理。
- */
 public final class VisualProspectingOreVeinBridge {
 
     /** VP 的三张内部表（{@code VeinTypeCaching#init} 里建的那些）。 */

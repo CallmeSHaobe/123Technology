@@ -33,14 +33,6 @@ public class EntityLoader {
             sendsVelocityUpdates);
     }
 
-    /**
-     * 刷怪注册必须只跑一次，绝不能放在实体构造函数里。
-     * <p>
-     * FML 的 {@code EntityRegistry.addSpawn} 会无条件往群系的刷怪列表里追加条目（即使已经有同名条目，
-     * 也只会改一下已有条目的权重然后照样追加），所以每 new 一只狗就会多出好几条刷怪条目：
-     * 自然刷怪、{@code /summon}、EnderIO 灵魂瓶、mobsinfo/EEC 的 {@code createEntityCopy()} 全都会构造实体，
-     * 列表只增不减，最终把刷怪权重稀释成「狗灾」。
-     */
     private static void registerSpawns() {
         addDogSpawns(EntityDogYellow.class);
         addDogSpawns(EntityDogRed.class);

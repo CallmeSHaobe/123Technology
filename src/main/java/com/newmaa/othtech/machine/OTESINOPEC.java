@@ -1102,30 +1102,6 @@ public class OTESINOPEC extends OTHMultiMachineBase<OTESINOPEC> {
 
     // ===================== Tooltip =====================
 
-    /*
-     * @Override
-     * protected MultiblockTooltipBuilder createTooltip() {
-     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-     * tt.addMachineType("§q§l重工业计划 - 中国石化集成工厂")
-     * .addInfo("§l§a黑金的最终流处...")
-     * .addInfo("§l一步到位.")
-     * .addInfo("线圈等级<10时 耗时倍率 = 1 - 线圈等级 * 0.1, ≥10时耗时倍率固定为0.1")
-     * .addInfo("主机放入铱锇钐合金粉解锁无损超频以及并行限制, 并行默认为64")
-     * .addTecTechHatchInfo()
-     * .addPollutionAmount(6400)
-     * .addSeparator()
-     * .addController("中国石化")
-     * .beginStructureBlock(33, 49, 48, false)
-     * .addInputBus("AnyInputBus", 1)
-     * .addOutputBus("AnyOutputBus", 1)
-     * .addInputHatch("AnyInputHatch", 1)
-     * .addOutputHatch("AnyOutputHatch", 1)
-     * .addEnergyHatch("AnyEnergyHatch", 1)
-     * .addMufflerHatch("AnyMufflerHatch", 1)
-     * .toolTipFinisher("§a123Technology - Heavy industry - SINOPEC");
-     * return tt;
-     * }
-     */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
         final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();

@@ -1,13 +1,5 @@
 package com.newmaa.othtech.common.render;
 
-/**
- * 米饭全息投影的状态接口。
- *
- * <p>
- * 放在 common 包里（**不能**带 {@code @SideOnly(CLIENT)}）——承载它的 TileEntity 在服务端也存在，
- * 如果接口挂在客户端专属类里，服务端加载 TE 类型时会直接炸。
- * </p>
- */
 public interface IRiceBowlHolo {
 
     /** 投影是否应该存在（结构成型就为 true；false 时投影会自己消散） */

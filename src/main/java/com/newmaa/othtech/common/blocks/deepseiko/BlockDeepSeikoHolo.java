@@ -12,14 +12,6 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-/**
- * 米饭全息投影的「影子方块」—— 不可见、无碰撞、不可破坏、不掉落，只负责承载
- * {@link TEDeepSeikoHolo}（TESR 必须挂在自有方块上，GT 的 {@code BaseMetaTileEntity} 的 TESR 槽已被 GTClient 占用）。
- *
- * <p>
- * 由 {@code OTEDeepSeiko} 在结构成型后自动放到控制器正前方，拆机/结构破坏时自动清掉。
- * </p>
- */
 public class BlockDeepSeikoHolo extends Block {
 
     public BlockDeepSeikoHolo() {

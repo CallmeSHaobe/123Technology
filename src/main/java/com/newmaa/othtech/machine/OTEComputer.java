@@ -82,9 +82,6 @@ import tectech.thing.metaTileEntity.multi.base.LedStatus;
 import tectech.thing.metaTileEntity.multi.base.Parameters;
 import tectech.thing.metaTileEntity.multi.base.render.TTRenderedExtendedFacingTexture;
 
-/**
- * Created by danie_000 on 17.12.2016.
- */
 public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructable, ISurvivalConstructable {
 
     private final ArrayList<OTEHatchRack> eRacks = new ArrayList<>();
@@ -456,26 +453,6 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
                 .addElement('H', ofBlockUnlocalizedName("chisel", "futura", 2))
                 .addElement('J', ofBlockUnlocalizedName("appliedenergistics2", "tile.BlockAdvancedCraftingStorage", 3))
                 .addElement('L', ofBlockUnlocalizedName("appliedenergistics2", "tile.BlockAdvancedCraftingUnit", 3))
-
-                // A -> ofBlock...(gt.blockcasings10, 9, ...);
-                // B -> ofBlock...(gt.blockcasings8, 14, ...);
-                // C -> ofBlock...(gt.blockcasingsTT, 0, ...);
-                // D -> ofBlock...(gt.blockcasingsTT, 1, ...);
-                // E -> ofBlock...(gt.blockcasingsTT, 2, ...);
-                // F -> ofBlock...(gt.blockcasingsTT, 3, ...);
-                // G -> ofBlock...(gt.blockglass1, 1, ...);
-                // H -> ofBlock...(tile.chisel.futura, 2, ...);
-                // I -> ofBlock...(tile.quantumGlass, 0, ...);
-                //
-                // Tiles:
-                //
-                // Special Tiles:
-                // J -> ofSpecialTileAdder(appeng.tile.crafting.TileCraftingStorageTile, ...); // You will probably want
-                // to change it to something else
-                // K -> ofSpecialTileAdder(gregtech.api.metatileentity.BaseMetaTileEntity, ...); // You will probably
-                // want to change it to something else
-                // L -> ofSpecialTileAdder(appeng.tile.crafting.TileCraftingTile, ...); // You will probably want to
-                // change it to something else
 
                 .build();
             // endregion

@@ -10,14 +10,6 @@ import com.newmaa.othtech.OTHTechnology;
 import com.newmaa.othtech.common.crops.CropsNHPeachGrass;
 import com.newmaa.othtech.common.crops.CropsNHRice;
 
-/**
- * Hooks the tail of CropsNH's own crop loading so our crops are present for every later loader
- * (mutation / aspect / GT fake recipes / NEI).
- *
- * <p>
- * No {@code remap} is needed here: CropsNH is a mod, its class and method names are identical in
- * dev and production.
- */
 @Mixin(value = CropLoader.class, remap = false)
 public abstract class MixinCropLoader {
 

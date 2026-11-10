@@ -4,7 +4,6 @@ import static com.gtnewhorizon.cropsnh.utility.ModUtils.ModIDs.GregTech;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlockUnlocalizedName;
 import static com.newmaa.othtech.utils.modsEnum.ThaumicBases;
-import static com.newmaa.othtech.utils.modsEnum.TwistSpaceTechnology;
 import static gregtech.api.enums.HatchElement.Energy;
 import static gregtech.api.enums.HatchElement.ExoticEnergy;
 import static gregtech.api.enums.HatchElement.InputBus;
@@ -42,6 +41,7 @@ import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -96,13 +96,6 @@ import thaumcraft.common.items.wands.ItemWandCasting;
 import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.block.ModFluffBlocks;
 
-/**
- * Two-mode magical crafting machine.
- *
- * <p>
- * Mode 0 crafts converted Botania, Thaumcraft and Blood Magic recipes.
- * Mode 1 duplicates supported Botania/Thaumcraft objects without consuming the input.
- */
 public class OTEAbstractSanctum extends OTHMultiMachineBase<OTEAbstractSanctum> {
 
     private static final String STRUCTURE_PIECE_MAIN = "main";
@@ -379,9 +372,6 @@ public class OTEAbstractSanctum extends OTHMultiMachineBase<OTEAbstractSanctum> 
                     .collect(java.util.stream.Collectors.toList());
                 Stream<GTRecipe> regularMatches = indexedMatches.stream();
                 if (indexedMatches.isEmpty()) {
-                    // GT's lookup trie can miss entries when recipes were compiled through
-                    // changing staging states. Keep the normal indexed path first, then validate
-                    // the authoritative recipe list with GT's own full input matcher.
                     String fallbackSignature = buildFallbackSignature(matchingItems, matchingFluids);
                     if (lastFallbackMap != map || !fallbackSignature.equals(lastFallbackSignature)) {
                         lastFallbackMap = map;
@@ -1215,7 +1205,8 @@ public class OTEAbstractSanctum extends OTHMultiMachineBase<OTEAbstractSanctum> 
     private FluidStack scaleFluidCost(FluidStack input) {
         String name = input.getFluid()
             .getName();
-        if (isManaFluid(name) && isUpgradeInstalled(MANA_UPGRADE_SLOT)) {
+        boolean mana = isManaFluid(input);
+        if (mana && isUpgradeInstalled(MANA_UPGRADE_SLOT)) {
             FluidStack free = input.copy();
             free.amount = 0;
             return free;
@@ -1227,7 +1218,7 @@ public class OTEAbstractSanctum extends OTHMultiMachineBase<OTEAbstractSanctum> 
         }
 
         double multiplier = 1.0D;
-        if (isManaFluid(name)) multiplier = manaMultiplier;
+        if (mana) multiplier = manaMultiplier;
         else if (AbstractSanctumContent.BLOOD_FLUID.equalsIgnoreCase(name)) multiplier = bloodMultiplier;
         FluidStack scaled = input.copy();
         scaled.amount = Math.max(1, (int) Math.floor(input.amount * multiplier));
@@ -1373,12 +1364,10 @@ public class OTEAbstractSanctum extends OTHMultiMachineBase<OTEAbstractSanctum> 
         return false;
     }
 
-    private static boolean isManaFluid(String name) {
-        if (TwistSpaceTechnology.isModLoaded()) {
-            return AbstractSanctumContent.TST_MANA_FLUID.equalsIgnoreCase(name);
-        } else {
-            return AbstractSanctumContent.LOCAL_MANA_FLUID.equalsIgnoreCase(name);
-        }
+    /** Liquid Mana is TST's fluid, so compare against the fluid instance instead of a name. */
+    private static boolean isManaFluid(FluidStack input) {
+        Fluid mana = AbstractSanctumContent.getManaFluid();
+        return input != null && mana != null && input.getFluid() == mana;
     }
 
     public double getAccelerationFactor() {

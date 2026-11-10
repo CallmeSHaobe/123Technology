@@ -74,10 +74,6 @@ public class StructureCityPiecesAntimonia {
             var10 = StructureComponentCityBuildingBlack
                 .func_74921_a(par0ComponentVillageStartPiece, par2List, par3Random, par4, par5, par6, par7, par8);
         }
-        // } else if (var9 == StructureComponentVillageHouse.class) {
-        // var10 = StructureComponentVillageHouse
-        // .func_74921_a(par0ComponentVillageStartPiece, par2List, par3Random, par4, par5, par6, par7, par8);
-        // }
 
         return (StructureComponentCity) var10;
     }
@@ -140,9 +136,6 @@ public class StructureCityPiecesAntimonia {
         return null;
     }
 
-    /**
-     * attempts to find a next Structure Component to be spawned, private Village function
-     */
     private static StructureComponent getNextVillageStructureComponent(
         StructureStartPiecesAntimoniaCity par0ComponentVillageStartPiece, List<StructureComponent> par1List,
         Random par2Random, int par3, int par4, int par5, int par6, int par7) {
@@ -196,9 +189,6 @@ public class StructureCityPiecesAntimonia {
         return null;
     }
 
-    /**
-     * attempts to find a next Structure Component to be spawned
-     */
     static StructureComponent getNextStructureComponent(
         StructureStartPiecesAntimoniaCity par0ComponentVillageStartPiece, List<StructureComponent> par1List,
         Random par2Random, int par3, int par4, int par5, int par6, int par7) {

@@ -226,28 +226,6 @@ public class OTEHeatExchanger extends OTHTTMultiMachineBaseEM implements ISurviv
 
     // ===================== Tooltip =====================
 
-    /*
-     * @Override
-     * protected MultiblockTooltipBuilder createTooltip() {
-     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-     * tt.addMachineType(EnumChatFormatting.BLUE + "真正的热能饕餮 - 真空冷冻热交换机")
-     * .addInfo(EnumChatFormatting.RED + "回收热锭冶炼的废热, 化为超临界蒸汽.")
-     * .addInfo(EnumChatFormatting.RED + "理论可回收热锭冰箱配方50%之EU")
-     * .addInfo(EnumChatFormatting.RED + "物理学还存在吗?")
-     * .addInfo(EnumChatFormatting.YELLOW + "耗电: 0EU/t , 耗时请使用主机参数调整")
-     * .addTecTechHatchInfo()
-     * .addSeparator()
-     * .addController("热交换")
-     * .beginStructureBlock(13, 8, 11, false)
-     * .addInputBus("AnyInputBus", 1)
-     * .addOutputBus("AnyOutputBus", 1)
-     * .addInputHatch("AnyInputHatch", 1)
-     * .addOutputHatch("AnyOutputHatch", 1)
-     * .addEnergyHatch("AnyEnergyHatch", 1)
-     * .toolTipFinisher("§a123Technology - FrostyHeatExchanger");
-     * return tt;
-     * }
-     */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
         final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();

@@ -9,16 +9,6 @@ import com.newmaa.othtech.common.item.ItemLoader;
 
 import micdoodle8.mods.galacticraft.api.entity.IEntityBreathable;
 
-/**
- * 三色狗的公共父类。
- * <p>
- * 黄狗 / 红狗 / 蓝狗除了渲染贴图之外完全一样：同样的属性、同样的掉落、同样见狗就咬。
- * 目标选择用 {@code EntityAINearestAttackableTarget} 指向 {@code EntityDogBase}，所以三种颜色
- * 互相之间（以及同色之间）都会打起来 —— 锑星上到处都是三色狗大乱斗。
- * <p>
- * 攻击动作交给原版 {@code EntityWolf} 自带的 {@code EntityAIAttackOnCollide}：它会追着
- * {@code getAttackTarget()} 走，接近后调 {@code attackEntityAsMob}（原版狼的伤害：野生 2 点 / 驯服 4 点）。
- */
 public abstract class EntityDogBase extends EntityWolf implements IEntityBreathable {
 
     public EntityDogBase(World worldIn) {

@@ -14,9 +14,6 @@ import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-/**
- * 白米饭 —— 米饭奇点的原料（1234 个压成一个奇点）。
- */
 public class ItemWhiteRice extends ItemFood {
 
     public ItemWhiteRice() {

@@ -13,14 +13,6 @@ import com.newmaa.othtech.OTHTechnology;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 
-/**
- * 注册入口。
- *
- * <p>
- * 由 {@link com.newmaa.othtech.mixin.MixinCropLoader} 在 CropsNH 自己的
- * {@code CropLoader.postInit()} 末尾调用，这样后面的 MutationLoader / AspectLoader /
- * GTRecipeLoader 都能看到我们注册的作物，与内置作物完全同等待遇。
- */
 public final class CropsNHRice {
 
     public static ICropCard Rice;
@@ -38,13 +30,6 @@ public final class CropsNHRice {
         OTHTechnology.LOG.info("Registered crop: {}", Rice.getId());
     }
 
-    /**
-     * 工作台无序合成：1 个 harvestcraft 稻种（矿辞 seedRice）→ 1 个 CropsNH 水稻种子。
-     *
-     * <p>
-     * 用 {@link SeedStats#DEFAULT_ANALYZED} 生成种子，玩家拿到就是「已分析、1/1/1」的种子，
-     * 可以直接种，不需要先用作物分析仪扫描。
-     */
     private static void registerRecipes() {
         List<ItemStack> pamSeeds = OreDictionary.getOres("seedRice");
         if (pamSeeds == null || pamSeeds.isEmpty()) {

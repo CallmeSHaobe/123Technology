@@ -8,12 +8,6 @@ import net.minecraft.util.ResourceLocation;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-/**
- * 三色狗共用的渲染器：模型都是 {@link ModelWolf}，区别只有一张贴图。
- * <p>
- * 贴图由原版狼皮程序化染色而成（只染低饱和的毛发像素，眼睛 / 鼻子 / 项圈保持原色），
- * 见 {@code assets/123technology/textures/entity/dog_*.png}。
- */
 @SideOnly(Side.CLIENT)
 public class RenderDogColored extends RenderLiving {
 

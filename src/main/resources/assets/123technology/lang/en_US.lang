@@ -940,9 +940,7 @@ entity.123technology.DogBlue.name=§9Blue Dog
 #Items
 item.dogSpawnEgg.name=Dog Spawn Egg
 # AbstractSanctum
-fluid.liquidmana123=Liquid Mana (123)
 ote.tn.abstract_sanctum=AbstractSanctum
-ote.tn.mana_hatch123=AbstractSanctum Mana Conversion Hatch
 ote.abstract_sanctum.mode.craft=Crafting Mode
 ote.abstract_sanctum.mode.duplicate=Duplication Mode
 ote.abstract_sanctum.chat.craft=Switched to Crafting Mode
@@ -1047,3 +1045,106 @@ fluid.molten.gunmu=Molten Observable Gunmu
 fluid.molten.gunmu.name=Molten Observable Gunmu
 fluid.molten.degunmu=Molten Unobservable Gunmu
 fluid.molten.degunmu.name=Molten Unobservable Gunmu
+
+# BetterQuesting: betterquesting.quest.<base64url-uuid>.name|desc  (%% = %, %n = newline)
+# Base text lives in quest/DefaultQuests json; keep in sync, or drop the key to fall back.
+
+### Quest Lines ###
+
+# Quest Line: 123Technology
+betterquesting.questline.MmDiQmi9SX-d2PbI-qhBiw.name=123Technology
+betterquesting.questline.MmDiQmi9SX-d2PbI-qhBiw.desc=123Technology mod machine quest line%nEvery multiblock machine in the mod, introduced by the stage at which it can be crafted
+
+# Quest: 【Welcome】123Technology Machine Guide
+betterquesting.quest.ay1pLqoySV2Ac95D4uBbkg.name=【Welcome】123Technology Machine Guide
+betterquesting.quest.ay1pLqoySV2Ac95D4uBbkg.desc=§a【Welcome】123Technology Machine Guide§r%nWelcome to the 123Technology mod!%n%nThis quest line goes through every multiblock machine in the mod and groups them by recipe tier (i.e. when you can build them):%n  Tier 0.5 -- Steam Age%n  Tier 1   -- LV  Low Voltage (32 EU/t)%n  Tier 2   -- MV  Medium Voltage (128 EU/t)%n  Tier 3   -- HV  High Voltage (512 EU/t)%n  Tier 4   -- EV  Extreme Voltage (2048 EU/t)%n  Tier 5   -- IV  Insane Voltage (8192 EU/t)%n  Tier 6   -- LuV Ludicrous Voltage (32768 EU/t)%n  Tier 7   -- ZPM Voltage (131072 EU/t)%n  Tier 8   -- UV  Ultimate Voltage (524288 EU/t)%n  Tier 9   -- UHV Highly Ultimate Voltage (2097152 EU/t)%n  Tier 10  -- UEV Extremely Ultimate Voltage (8388608 EU/t)%n  Tier 11  -- UIV Insanely Ultimate Voltage (33554432 EU/t)%n  Tier 12  -- UMV Mega Ultimate Voltage (134217728 EU/t)%n  Tier 13  -- UXV Extended Mega Ultimate Voltage (536870912 EU/t)%n%nRequirement: just tick the checkbox, you do not need to hold any item.%nHave fun! Biebie~
+# Quest: 【Tier 0.5 Steam】Small Steam Processing Factory
+betterquesting.quest.DdtSFUYGRUiuG3zYwTzoIw.name=【Tier 0.5 Steam】Small Steam Processing Factory
+betterquesting.quest.DdtSFUYGRUiuG3zYwTzoIw.desc=§a【Tier 0.5 Steam】Small Steam Processing Factory§r%nThe earliest 123T multiblock - buildable in the Steam Age (Tier 0.5).%nCombines the Steam Furnace, Steam Compressor, Steam Hammer and many other steam recipes.%nDriven by Steam alone, it needs no power input at all (roughly 4 EU/t equivalent).%nThe core multiblock production facility for the transition from the Steam Age to the LV age.
+# Quest: 【Tier 1 LV】Peerless Skill Trash Can
+betterquesting.quest.g-zkLRLuQFiVxePCia28ew.name=【Tier 1 LV】Peerless Skill Trash Can
+betterquesting.quest.g-zkLRLuQFiVxePCia28ew.desc=§a【Tier 1 LV】Peerless Skill Trash Can§r%nThe Peerless Skill Trash Can - a high-capacity multiblock storage / disposal facility.%nDevours huge amounts of items and fluids, perfect for large-scale by-product handling.%nIts capacity is far beyond ordinary barrels or chests, making it the ideal choice for waste management.
+# Quest: 【Tier 2 MV】Epic Coke Oven T123
+betterquesting.quest.4Sg7QtBdRgmrVT5f8xoaRQ.name=【Tier 2 MV】Epic Coke Oven T123
+betterquesting.quest.4Sg7QtBdRgmrVT5f8xoaRQ.desc=§a【Tier 2 MV】Epic Coke Oven T123§r%nXiaodeng's ultimate creation, Zhongdeng's long-awaited hope - the Epic Coke Oven T123.%nA true ultimate machine: no noble price tag, and no messy mechanics.%nConversion: Diamond (Powder) -> Coke 1:1024, Coal (Powder) -> Coke 1:16, Dirt -> Coke 1:1%nTime: 1800*20 ticks - (Coal Output / 5) ticks, Power: 0 EU/t%nNote: if pollution gets too high, place a Muffler Hatch to prevent power trips.
+# Quest: 【Tier 3 HV】Beeyonds Home
+betterquesting.quest.zEr5ERzOS_mj2VoYMSGykg.name=【Tier 3 HV】Beeyonds Home
+betterquesting.quest.zEr5ERzOS_mj2VoYMSGykg.desc=§a【Tier 3 HV】Beeyonds Home§r%nAn industrial-grade multiblock apiary for the Beeyonds bee mod.%nStructure: GT machine casings, steel blocks, glass, grass and obsidian - buildable as early as HV.%nHouses huge numbers of bees and automates their management, boosting breeding and output efficiency.%nBrings the bee system into the industrial production line - the key facility for mass-producing honey, wax and special products.%n§cThis machine is not finished yet.
+# Quest: 【Tier 3 HV】Ender IO Complex
+betterquesting.quest.m--rTGr4QBStOg1OYK65GQ.name=【Tier 3 HV】Ender IO Complex
+betterquesting.quest.m--rTGr4QBStOg1OYK65GQ.desc=§a【Tier 3 HV】Ender IO Complex§r%nZhongdeng's ultimate creation - the Ender IO Complex.%nHandles Ender IO recipes with advanced EU-based machines instead of RF-based ones.%nSupports core EIO recipes such as the Head Assembly Machine and the Soul Binder.%nRuns Perfect OC, default parallel 64.%nRight-click with a Screwdriver to toggle Spawner Binding Mode (fixed 114 EU/t for 100 ticks).
+# Quest: 【Tier 3 HV】Food Generator
+betterquesting.quest.Yn7k_VGBRQ2dok2B6057BA.name=【Tier 3 HV】Food Generator
+betterquesting.quest.Yn7k_VGBRQ2dok2B6057BA.desc=§a【Tier 3 HV】Food Generator§r%nA special multiblock generator that burns food as fuel.%nPower formula: Food Hunger Value^2 * Coil Tier * Machine Casing Tier * 2 EU/t%nMax generation: 1A MAX/t; supports 64 parallel and burns up to one stack of identical food per run.%nNote: if pollution gets too high, place Muffler Hatches to prevent power trips.%nPraise the great rich lady Safari_xiu! Without her there would be no 123T today!
+# Quest: 【Tier 4 EV】Alien Fishery
+betterquesting.quest.7_NPu68RSfOX7Nj39tgZAw.name=【Tier 4 EV】Alien Fishery
+betterquesting.quest.7_NPu68RSfOX7Nj39tgZAw.desc=§a【Tier 4 EV】Alien Fishery§r%nLaodeng's ultimate creation - the Alien Fishery.%nThe Jumping Identity (Lord = 6) solves the uncertainty of dimension blocks, making a mini dimension fishery possible.%nCatches: fish, walrus, leek boxes, Cetus algae, cubes, mossy cobblestone walls and more.%nPut a Dimension Block into the controller slot; Glass Tier determines the Energy Hatch tier; runs Perfect OC.%nRandom output - the dreaded gacha (Biebie).%n§cThis machine is not finished yet.
+# Quest: 【Tier 4 EV】Integrated Rocket Assembly Workshop
+betterquesting.quest.HpRJtTKZRxej0sa8ABPBSw.name=【Tier 4 EV】Integrated Rocket Assembly Workshop
+betterquesting.quest.HpRJtTKZRxej0sa8ABPBSw.desc=§a【Tier 4 EV】Integrated Rocket Assembly Workshop§r%nA large all-in-one assembly workshop designed for rockets (the name is a pun, of course).%nStructure: IC2 alloy blocks, GT machine casings (T3), GT standard frames and more - buildable at EV.%nIntegrates rocket part manufacturing and final assembly, simplifying the early preparations for space exploration.%nSupports mass production of every kind of rocket and ore drone - the starting point of EV-era interstellar exploration.%n§cThis machine is not finished yet.
+# Quest: 【Tier 5 IV】Large Circuit Assembler
+betterquesting.quest.iTK_XTMBRXaoLSOINt2yAQ.name=【Tier 5 IV】Large Circuit Assembler
+betterquesting.quest.iTK_XTMBRXaoLSOINt2yAQ.desc=§a【Tier 5 IV】Large Circuit Assembler§r%nA large multiblock assembler built for crafting circuit boards in bulk.%nCovers circuit assembly recipes across the whole voltage range, from LV all the way to UHV.%nSupports parallel processing, saving a huge amount of mid- and late-game circuit crafting time.%nThe higher the coil tier, the faster it runs and the more parallels it gets.%nCircuits are needed throughout the entire game, so this machine is an indispensable core facility.
+# Quest: 【Tier 5 IV】Sinopec Integrated Factory
+betterquesting.quest.7bnPYcQUSA6Lh19enEHSbA.name=【Tier 5 IV】Sinopec Integrated Factory
+betterquesting.quest.7bnPYcQUSA6Lh19enEHSbA.desc=§a【Tier 5 IV】Sinopec Integrated Factory§r%nThe final destination of black gold... all in one step.%nA large chemical integration machine themed around Sinopec, merging distillation, cracking and refining into one process.%nCoil Tier < 10: Time Multiplier = 1 - Coil Tier * 0.1; >= 10: fixed at 0.1.%nInsert Iridiosamarium Alloy Powder into the main block to unlock Perfect OC and the parallel limit (default parallel 64).
+# Quest: 【Tier 6 LuV】RhPd Mysterious Chemical Plant
+betterquesting.quest.Ht5muGUBQJGLuA3hwtg-Zw.name=【Tier 6 LuV】RhPd Mysterious Chemical Plant
+betterquesting.quest.Ht5muGUBQJGLuA3hwtg-Zw.desc=§a【Tier 6 LuV】RhPd Mysterious Chemical Plant§r%nLaodeng's ultimate creation - the RhPd reaction vessel (Chemical Reactor & Chemical Plant).%nA mysterious chemical integration machine built around LuV-grade Rhodium (Rh) / Palladium (Pd) catalysts.%nChemical Plant Mode: Time = NEI Time * (1 - Coil Tier * 0.15), minimum 0.1; Parallel 16.%nLarge Chemical Reactor Mode: Time = NEI Time * (1 - Coil Tier * 0.1); unlimited parallel, Perfect OC.%nGlass Tier determines the Chemical Plant Tier (Chemical Plant Tier = Glass Channel Tier - 3).
+# Quest: 【Tier 6 LuV】Mega Blazing Blast Furnace
+betterquesting.quest.NFVV_eMKQ-SZ2ZtOx1Ky3g.name=【Tier 6 LuV】Mega Blazing Blast Furnace
+betterquesting.quest.NFVV_eMKQ-SZ2ZtOx1Ky3g.desc=§a【Tier 6 LuV】Mega Blazing Blast Furnace§r%nThe 123T enhanced version of the GTPP Mega Blast Furnace, focused on large-scale smelting.%nSpecial mode: does not consume Blazing Heat, but the input hatch must hold >= 123*1000L of Blazing Heat for the machine to run.%nStats: 90%% EU usage, +120%% speed, 2048 parallel.%nMind the Glass Tier requirement; if pollution gets too high, place Muffler Hatches.
+# Quest: 【Tier 6 LuV】Ultimate Compressed Mega Processing Factory
+betterquesting.quest.x9mfTjmySFquVCAgti8AWQ.name=【Tier 6 LuV】Ultimate Compressed Mega Processing Factory
+betterquesting.quest.x9mfTjmySFquVCAgti8AWQ.desc=§a【Tier 6 LuV】Ultimate Compressed Mega Processing Factory§r%nThe 123T flagship machine - the Ultimate Compressed Mega Processing Factory.%nIntegrates fifteen industrial processing modes (Screwdriver switches the category, Programming Circuits 20/21/22 switch the internal mode):%n  Metal Category: Compressor, Lathe, Electric Magnetizer%n  Fluid Category: Fermenter, Fluid Extractor, Extractor%n  Misc  Category: Laser Engraver, Autoclave, Fluid Solidifier%n  Isa   Category: Isa Mill, Industrial Flotation Plant, Vacuum Dryer%n  Col   Category: Molecular Reassembler, Brewery, Fluid Heater%nParallel formula: voltage tier increase by 1, parallel -2; minimum 9, default 256.
+# Quest: 【Tier 6 LuV】Mega Gelid Cryo Freezer
+betterquesting.quest.dS1WL93pSoeFCXQiXIWeVQ.name=【Tier 6 LuV】Mega Gelid Cryo Freezer
+betterquesting.quest.dS1WL93pSoeFCXQiXIWeVQ.desc=§a【Tier 6 LuV】Mega Gelid Cryo Freezer§r%nThe 123T enhanced version of the GTPP Mega Freezer.%nSpecial mode: does not consume Gelid Cryo, but the input hatch must hold >= 123*1000L of Gelid Cryo for the machine to run.%nStats: 100%% EU usage, +100%% speed, 1024 parallel.%nIndispensable for large-scale production of liquid metals and cryogenic materials.
+# Quest: 【Tier 6 LuV】Tangshan Steel Mill
+betterquesting.quest.9gvz9IoKQF6fjnQNQKGhMQ.name=【Tier 6 LuV】Tangshan Steel Mill
+betterquesting.quest.9gvz9IoKQF6fjnQNQKGhMQ.desc=§a【Tier 6 LuV】Tangshan Steel Mill§r%nEndless black smoke pouring from the chimneys - the only road to industrialisation...%nA large steelmaking integration machine named after the industrial city of Tangshan.%nProduces all kinds of steel-related alloys in one step: GTPP / GT5U, plus some BartWorks alloys.%nCombines blast furnace and arc furnace functions, greatly reducing the number of separate multiblocks you need.%nThe core facility for large-scale metal smelting at LuV.
+# Quest: 【Tier 7 ZPM】Vacuum Cryo Heat Exchanger
+betterquesting.quest.Ko9avk6-SliSW2TRNlG7KA.name=【Tier 7 ZPM】Vacuum Cryo Heat Exchanger
+betterquesting.quest.Ko9avk6-SliSW2TRNlG7KA.desc=§a【Tier 7 ZPM】Vacuum Cryo Heat Exchanger§r%nThe true heat devourer - the Vacuum Cryo Heat Exchanger.%nRecycles the waste heat generated by hot ingot smelting and turns it into supercritical steam.%nPower: 123 EU/t; best paired with a Mega Blast Furnace or a standard EBF.
+# Quest: 【Tier 7 ZPM】Universal Naquadah Fuel Engine
+betterquesting.quest.sYMWOljeSC--rsKZHbuPww.name=【Tier 7 ZPM】Universal Naquadah Fuel Engine
+betterquesting.quest.sYMWOljeSC--rsKZHbuPww.desc=§a【Tier 7 ZPM】Universal Naquadah Fuel Engine§r%nA universal large multiblock generator driven by Naquadah fuel.%nSupports many Naquadah fuel variants and generates power at UV+ levels.%nPair it with the Compressed Naquadah Fuel Refinery to build a complete Naquadah energy system.
+# Quest: 【Tier 7 ZPM】Compressed Wood Fusion Reactor Mk 0
+betterquesting.quest.AmKi6k5NQ1ewJ7u-NsUYVA.name=【Tier 7 ZPM】Compressed Wood Fusion Reactor Mk 0
+betterquesting.quest.AmKi6k5NQ1ewJ7u-NsUYVA.desc=§a【Tier 7 ZPM】Compressed Wood Fusion Reactor Mk 0§r%nA fully functional fusion reactor (Mk 0 level) whose name is a joke about wooden logs.%nProduces large amounts of plasma, the energy basis for advanced material synthesis.%nAs the entry point of the fusion series (Mk 0) it lays the foundation for higher-tier fusion research.%nThe gateway machine to ZPM-era nuclear fusion.
+# Quest: 【Tier 8 UV】Mini Active Transformer
+betterquesting.quest.Ym4arCtuTyCJaWfPnAvW-A.name=【Tier 8 UV】Mini Active Transformer
+betterquesting.quest.Ym4arCtuTyCJaWfPnAvW-A.desc=§a【Tier 8 UV】Mini Active Transformer§r%nA miniaturised active transformer that steps voltage up or down efficiently between voltage tiers.%nSmaller and more flexible to deploy than a standard transformer - perfect when space is at a premium.%nIts energy conversion advantages really shine from the UV stage onwards.
+# Quest: 【Tier 8 UV】Alien Quantum Supercomputer
+betterquesting.quest.BsJCOp-jSlOuziVZCAxxTg.name=【Tier 8 UV】Alien Quantum Supercomputer
+betterquesting.quest.BsJCOp-jSlOuziVZCAxxTg.desc=§a【Tier 8 UV】Alien Quantum Supercomputer§r%nA quantum-grade supercomputer from an alien civilisation that generates Computing Power.%nCoolant requirement: (Computing Power / 50) * Overclock^1.2 * Overvoltage^0.6 L/tick%nIt must continuously consume large amounts of super coolant and power to run; the machine stops working when coolant runs short.
+# Quest: 【Tier 8 UV】Isa Processing Integrated Factory OTH
+betterquesting.quest.26eIyt3pQ0uXJxTSLy45lg.name=【Tier 8 UV】Isa Processing Integrated Factory OTH
+betterquesting.quest.26eIyt3pQ0uXJxTSLy45lg.desc=§a【Tier 8 UV】Isa Processing Integrated Factory OTH§r%nThe wondrous Isa series, merging trash and chemical products into one.%nRuns Perfect OC; Time Multiplier = 1 / Coil Tier; and it comes with unexpected surprises!
+# Quest: 【Tier 8 UV】Advanced High Energy Circuit Assembly Line
+betterquesting.quest.zNzEmOeFTA-7O46iwTuEww.name=【Tier 8 UV】Advanced High Energy Circuit Assembly Line
+betterquesting.quest.zNzEmOeFTA-7O46iwTuEww.desc=§a【Tier 8 UV】Advanced High Energy Circuit Assembly Line§r%nA super-scale circuit assembly line, designed for mass-producing high-tier circuits from UV onwards.%nCoil Tier determines processing speed and the parallel cap.
+# Quest: 【Tier 9 UHV】Compressed Naquadah Fuel Refinery
+betterquesting.quest.7qVpf2YmTRaEHfQjX0O62A.name=【Tier 9 UHV】Compressed Naquadah Fuel Refinery
+betterquesting.quest.7qVpf2YmTRaEHfQjX0O62A.desc=§a【Tier 9 UHV】Compressed Naquadah Fuel Refinery§r%nA large refinery dedicated to producing high-purity Naquadah fuel.%nRefines raw Naquadah materials through several steps into Naquadah fuel liquids of every tier.%nPaired with the Universal Naquadah Fuel Engine it forms a complete Naquadah energy production chain.
+# Quest: 【Tier 10 UEV】Hyperdimensional Biebie Plasma Forge
+betterquesting.quest.IPxWcHigSZ6J7OvJzbfHUw.name=【Tier 10 UEV】Hyperdimensional Biebie Plasma Forge
+betterquesting.quest.IPxWcHigSZ6J7OvJzbfHUw.desc=§a【Tier 10 UEV】Hyperdimensional Biebie Plasma Forge§r%nA Biebie-themed hyperdimensional plasma forge - a top-tier metalworking machine.%nPerforms extreme material processing in an ultra-high-temperature plasma environment.%nRuns special alloy recipes that conventional methods cannot, making it the ultimate UEV metalworking machine.
+# Quest: 【Tier 10 UEV】Dragon's Grave (Black Dragon Tamer)
+betterquesting.quest.70dLFEOBRd61EnrqLq_WdQ.name=【Tier 10 UEV】Dragon's Grave (Black Dragon Tamer)
+betterquesting.quest.70dLFEOBRd61EnrqLq_WdQ.desc=§a【Tier 10 UEV】Dragon's Grave (Black Dragon Tamer)§r%nLaodeng's ultimate creation - the Black Dragon Tamer (a new Dragon Research Aggregation Device).%nParallel = Machine Casing Tier * 128; the highest tier unlocks int parallel.%nTime Multiplier = 1 - 0.05 * Coil Tier; tier 3 Machine Casing unlocks Perfect OC.%nMachine Casing Tier determines which recipe tiers can run. When changing the structure, re-place the main block to re-detect it.
+# Quest: 【Tier 10 UEV】Soul Devouring Prison (Mega EEC)
+betterquesting.quest.0Gwy4-uwSv6XNbfs2A5h6g.name=【Tier 10 UEV】Soul Devouring Prison (Mega EEC)
+betterquesting.quest.0Gwy4-uwSv6XNbfs2A5h6g.desc=§a【Tier 10 UEV】Soul Devouring Prison (Mega EEC)§r%nThe 123T enhanced version of the Mega EEC (Extreme Entity Crusher).%n(czqwq has confirmed: UIV optical circuits can already be made at UEV.)%nThe name "Soul Devouring" comes from its terrifying energy consumption - make sure you have a sufficient power supply!
+# Quest: 【Tier 12 UMV】The Red Sun Rises - Greatest Leader Kim's Enqing Parts Factory
+betterquesting.quest.iALIPjizR6aHhNNYUrcYcA.name=【Tier 12 UMV】The Red Sun Rises - Greatest Leader Kim's Enqing Parts Factory
+betterquesting.quest.iALIPjizR6aHhNNYUrcYcA.desc=§a【Tier 12 UMV】The Red Sun Rises - Greatest Leader Kim's Enqing Parts Factory§r%nJuche! Songun! March south!%nA cutting-edge high-tech mega-structure imported from the mysterious northern country of a certain peninsula.%nRuns on Enqing: 1t each; the recipe output multiplier can be adjusted in the config file (default 1.5, rounded).%nInsert a swarm into the main block for a speed boost (boost = floor(log2(swarm size))).
+# Quest: 【Tier 13 UXV】IMBA Super OP Blast Furnace
+betterquesting.quest.2DxOrqE1QPe-Zb6b8pis1A.name=【Tier 13 UXV】IMBA Super OP Blast Furnace
+betterquesting.quest.2DxOrqE1QPe-Zb6b8pis1A.desc=§a【Tier 13 UXV】IMBA Super OP Blast Furnace§r%n§6§lNo Power Consumption! int Parallel! Any job finishes in 10 ticks!%n§6§lBuilt-in neutron star! No upper furnace temperature limit!%n§1§oAn Enqing from the EOHBUF author - the cost is so low you will question your life!%n§9With it, resource scarcity, inefficiency and power shortage simply do not exist.%n§6"Legend says a god designed this machine while drunk and forgot to delete it upon waking..."
+# Quest: 【Tier 13 UXV】Dirac Tide (Mega QFT)
+betterquesting.quest.IKPHqBpQSx6c47p3_Ifgtg.name=【Tier 13 UXV】Dirac Tide (Mega QFT)
+betterquesting.quest.IKPHqBpQSx6c47p3_Ifgtg.desc=§a【Tier 13 UXV】Dirac Tide (Mega QFT)§r%nManipulating virtual particles raises towering waves in the quantum sea...%nA quantum field theory processor named after the physicist Dirac (the 123T UXV enhanced Mega QFT).%nProvides basic materials and lets complex chemical / physical processes be completed in a single step.%nTime Dilation Field Generator reduces recipe time by 10%% per tier.%nStabilization Field Generator tier >= 6 doubles output; Dirac Inversion Mode has unexpected surprises.
+# Quest: 【Tier 13 UXV】Divine Isa Forge
+betterquesting.quest.DRxHUCDZRuS86P4_DDae7w.name=【Tier 13 UXV】Divine Isa Forge
+betterquesting.quest.DRxHUCDZRuS86P4_DDae7w.desc=§a【Tier 13 UXV】Divine Isa Forge§r%nIsa Lord certified - divine speed and parallelism.%nThe structure also requires Dyson Sphere components (sBlockCasingsDyson) and can only be built at the UXV stage.%nTime = NEI Time * { 1 / {Voltage Tier^[(Glass Tier / 2) + 1]}^(1/3) }%nInsert a Star Matrix into the main block to unlock Space Assembly Mode.%nOne of the ultimate solutions for large-scale ore grinding and processing.

@@ -15,14 +15,6 @@ import gregtech.api.enums.Materials;
 import gregtech.api.objects.GTUODimension;
 import gregtech.api.util.GTConfig;
 
-/**
- * 锑星的地下流体池: HCl10 / HCl100 / HCl1000 / 王水, GT 石油钻机与探矿仪都能直接抽到。
- * <p>
- * cfg 的 "Dimension" 必须写维度名: NEI 的 {@code GT5UndergroundFluidHelper} 按 DimensionHelper 的
- * trimmedName 反查缩写, 而 GT 运行时 {@code GTUODimensionList#GetDimension} 在 id 查不到时用
- * WorldProvider 类名 contains 匹配, WorldProviderAntimonia 里正好含这个词。
- * 维度本身已由 {@code OTHDimensionIntegration#registerNEIDimension()} 在 preInit 注册进 NEI。
- */
 public final class AntimoniaUndergroundFluids {
 
     private static final String DIM_NAME = "Antimonia";

@@ -4528,41 +4528,11 @@ public class OTEGraveDragon extends OTHMultiMachineBase<OTEGraveDragon> {
 
     @Override
     public boolean addToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
-        // 注意：这里不要再 OR addExoticEnergyInputToMachineList，
-        // 否则"异种能源仓"能在任何一处可放仓的位置（也就是整片 A 平台）被塞进去。
-        // 能源仓（含 TecTech 异种能源仓）只允许放在 D（gt.blockreinforced）上，见 getStructureDefinition()。
         return super.addToMachineList(aTileEntity, aBaseCasingIndex);
     }
 
     // ===================== Tooltip =====================
 
-    /*
-     * @Override
-     * protected MultiblockTooltipBuilder createTooltip() {
-     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-     * tt.addMachineType("§c§l老登的终极造物 - 黑龙驭者(新式龙研聚合装置)")
-     * .addInfo("§e§o龙研堆了几千回, 工业进步第一次")
-     * .addInfo("§c§o应赞美NHU之神, 蛋机要启动了...")
-     * .addInfo("三级机械方块解锁无损超频")
-     * .addInfo("并行 = 机械方块等级 * 128，最高等级解锁int并行")
-     * .addInfo("§e耗时倍率 = 1 - 0.05 * 线圈等级")
-     * .addInfo("§e机械方块等级限制可执行的配方等级")
-     * .addInfo("§e更换结构时请重放主机以检测结构")
-     * .addTecTechHatchInfo()
-     * .addSeparator()
-     * .addController("巨龙之墓")
-     * .beginStructureBlock(67, 63, 67, false)
-     * .addInputBus("AnyInputBus", 1)
-     * .addOutputBus("AnyOutputBus", 1)
-     * .addInputHatch("AnyInputHatch", 1)
-     * .addOutputHatch("AnyOutputHatch", 1)
-     * .addEnergyHatch("AnyEnergyHatch", 1)
-     * .addMufflerHatch("AnyMufflerHatch", 1)
-     * .addInfo("§b§lAuthor:§l憋憋大师--HuimaoX")
-     * .toolTipFinisher("§a123Technology - §c§lDragonGrave");
-     * return tt;
-     * }
-     */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
         final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();

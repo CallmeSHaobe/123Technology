@@ -7,19 +7,11 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import net.minecraft.util.ResourceLocation;
 
-import gregtech.api.enums.SoundResource;
-
 public enum OTHSoundResource {
 
     ENQING(350, "123technology", "machines.enqing");
 
-    /**
-     * Internal mapping by {@code int} id
-     */
     private static final Map<Integer, OTHSoundResource> ID_SOUND_MAP = new ConcurrentHashMap<>();
-    /**
-     * Internal mapping by {@code String} ResourceLocation
-     */
     private static final Map<String, OTHSoundResource> RESOURCE_STR_SOUND_MAP = new ConcurrentHashMap<>();
     static {
         EnumSet.allOf(OTHSoundResource.class)
@@ -37,14 +29,8 @@ public enum OTHSoundResource {
             .forEach(sound -> RESOURCE_STR_SOUND_MAP.put(sound.resourceLocation.toString(), sound));
     }
 
-    /**
-     * This Sound's identifier
-     */
     public final int id;
 
-    /**
-     * The {@link ResourceLocation} of this {@link SoundResource}
-     */
     public final ResourceLocation resourceLocation;
 
     OTHSoundResource(final int id, final ResourceLocation resourceLocation) {

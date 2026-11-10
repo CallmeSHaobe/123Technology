@@ -17,14 +17,6 @@ import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-/**
- * 算力中心（D99 / D199 / D999）。
- *
- * <p>
- * 放进控制器算力槽里当"算力卡"用，参与 BEC 的点数系数：`1 + ³√(张数) × 卡系数`。
- * 系数：D99 = 0.08、D199 = 0.16、D999 = 0.25。
- * </p>
- */
 public class ItemComputeCenter extends Item {
 
     private static final String[] NAMES = { "ComputeCenterD99", "ComputeCenterD199", "ComputeCenterD999" };

@@ -5,12 +5,6 @@ import java.util.Random;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureStart;
 
-/**
- * 坟场的 StructureStart：只放一个整块的组件。
- * <p>
- * 台面高度不按地形取（那样会跨区块算出一堆不同的高度），而是按「结构坐标 + 世界种子」算一个固定值，
- * 之后组件自己把这块地整平／补台，所以跨区块不会出现台阶错位。
- */
 public class StructureStartGraveyard extends StructureStart {
 
     public StructureStartGraveyard() {}

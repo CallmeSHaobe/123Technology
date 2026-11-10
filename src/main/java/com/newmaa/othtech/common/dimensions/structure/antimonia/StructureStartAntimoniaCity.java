@@ -52,9 +52,6 @@ public class StructureStartAntimoniaCity extends StructureStart {
         }
     }
 
-    /**
-     * currently only defined for Villages, returns true if Village has more than 2 non-road components
-     */
     @Override
     public boolean isSizeableStructure() {
         return true;

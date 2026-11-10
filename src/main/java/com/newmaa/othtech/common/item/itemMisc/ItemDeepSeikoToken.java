@@ -14,15 +14,6 @@ import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-/**
- * 迪普西科调试币（金色 Token）。
- *
- * <p>
- * 放进控制器 GUI 右下角那个算力槽（{@code mInventory[1]}）就相当于「开发者模式」：
- * 算力拉满（{@link com.newmaa.othtech.machine.OTEDeepSeiko#TOKEN_COMPUTE}）、三项升级全部生效、
- * 三环满级。币本身<b>不消耗</b>，拔出来状态立刻恢复原样。
- * </p>
- */
 public class ItemDeepSeikoToken extends Item {
 
     public ItemDeepSeikoToken() {

@@ -168,9 +168,6 @@ public class RecipesEIO implements IRecipePool {
             .duration(80 * 20)
             .addTo(EIO);
 
-        // BlinderFakeRecipes
-        // 仅用于 NEI 展示：必须 fake()，否则会变成一条能匹配真实物品的正经配方，
-        // 用普通模式跑就会消耗真灵魂瓶+真刷怪笼并吐出一个没有 mobType 的“空刷怪笼”(issue #254)。
         GTRecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(EnderIO.MODID, "itemSoulVessel", 1)

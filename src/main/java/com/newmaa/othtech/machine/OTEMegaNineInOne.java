@@ -1029,16 +1029,6 @@ public class OTEMegaNineInOne extends OTHMultiMachineBase<OTEMegaNineInOne> {
             case 3 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.m9in1.mode.3"));
             case 4 -> aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.m9in1.mode.4"));
         }
-        /*
-         * GTUtility.sendChatToPlayer(
-         * aPlayer,
-         * StatCollector.translateToLocal(
-         * mInternalMode == 0 ? translateToLocal("ote.tm.m9in1.mode.0")
-         * : mInternalMode == 1 ? translateToLocal("ote.tm.m9in1.mode.1")
-         * : mInternalMode == 2 ? translateToLocal("ote.tm.m9in1.mode.2")
-         * : mInternalMode == 3 ? translateToLocal("ote.tm.m9in1.mode.3")
-         * : mInternalMode == 4 ? translateToLocal("ote.tm.m9in1.mode.4") : "Null"));
-         */
     }
 }
 //spotless:on

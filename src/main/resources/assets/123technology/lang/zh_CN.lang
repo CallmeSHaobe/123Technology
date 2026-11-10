@@ -954,9 +954,7 @@ entity.123technology.DogBlue.name=§9蓝狗
 #Items
 item.dogSpawnEgg.name=狗刷怪蛋
 # AbstractSanctum
-fluid.liquidmana123=液态魔力
 ote.tn.abstract_sanctum=奈隆圣地
-ote.tn.mana_hatch123=神秘魔力转换阀
 ote.abstract_sanctum.mode.craft=制作模式
 ote.abstract_sanctum.mode.duplicate=复制模式
 ote.abstract_sanctum.chat.craft=已切换到制作模式
@@ -1063,3 +1061,106 @@ fluid.molten.gunmu=熔融可观测态棍木-超理学聚合物
 fluid.molten.gunmu.name=熔融可观测态棍木-超理学聚合物
 fluid.molten.degunmu=熔融不可观测态棍木-超理学聚合物
 fluid.molten.degunmu.name=熔融不可观测态棍木-超理学聚合物
+
+# BetterQuesting：betterquesting.quest.<base64url-uuid>.name|desc（%% 表示 %，%n 表示换行）
+# json 原文在 quest/DefaultQuests，改文案时两边同步，或删键回落 json。
+
+### Quest Lines ###
+
+# Quest Line: 123Technology
+betterquesting.questline.MmDiQmi9SX-d2PbI-qhBiw.name=123Technology
+betterquesting.questline.MmDiQmi9SX-d2PbI-qhBiw.desc=123Technology Mod 机器任务线%n按制作阶段分类介绍本模组所有多方块机器
+
+# Quest: 【欢迎】123Technology 机器指引
+betterquesting.quest.ay1pLqoySV2Ac95D4uBbkg.name=【欢迎】123Technology 机器指引
+betterquesting.quest.ay1pLqoySV2Ac95D4uBbkg.desc=§a【欢迎】123Technology 机器指引§r%n欢迎来到 123Technology 模组！%n%n本任务线按照配方等级（何时能制作该机器）分类介绍所有多方块机器：%n  Tier 0.5 -- 蒸汽时代（Steam）%n  Tier 1   -- LV  低压    (32 EU/t)%n  Tier 2   -- MV  中压    (128 EU/t)%n  Tier 3   -- HV  高压    (512 EU/t)%n  Tier 4   -- EV  极高压  (2048 EU/t)%n  Tier 5   -- IV  绝缘压  (8192 EU/t)%n  Tier 6   -- LuV 低超压  (32768 EU/t)%n  Tier 7   -- ZPM 零点模  (131072 EU/t)%n  Tier 8   -- UV  终极压  (524288 EU/t)%n  Tier 9   -- UHV 超终极压 (2097152 EU/t)%n  Tier 10  -- UEV 超绝缘压 (8388608 EU/t)%n  Tier 11  -- UIV 超绝缘压 II  (33554432 EU/t)%n  Tier 12  -- UMV 超绝缘压 III (134217728 EU/t)%n  Tier 13  -- UXV 超绝缘压 IV  (536870912 EU/t)%n%n任务要求：完成复选框即可，无需持有物品。%n祝游戏愉快！憋憋～
+# Quest: 【Tier 0.5 蒸汽】小型蒸汽加工厂
+betterquesting.quest.DdtSFUYGRUiuG3zYwTzoIw.name=【Tier 0.5 蒸汽】小型蒸汽加工厂
+betterquesting.quest.DdtSFUYGRUiuG3zYwTzoIw.desc=§a【Tier 0.5 蒸汽】小型蒸汽加工厂§r%n最早可制作的123T多方块机器，在蒸汽时代（Tier 0.5）即可建造。%n集成蒸汽熔炉、蒸汽压缩机、蒸汽锤击等多种蒸汽配方。%n以蒸汽（Steam）驱动，无需任何电力输入，耗电约 4 EU/t 等效。%n是蒸汽时代向低压电时代过渡的核心多方块生产设施。
+# Quest: 【Tier 1 LV】盖世神功垃圾桶
+betterquesting.quest.g-zkLRLuQFiVxePCia28ew.name=【Tier 1 LV】盖世神功垃圾桶
+betterquesting.quest.g-zkLRLuQFiVxePCia28ew.desc=§a【Tier 1 LV】盖世神功垃圾桶§r%n盖世神功垃圾桶——大容量多方块储存/销毁设施。%n可吞噬大量物品和液体，适用于大规模副产品处理场景。%n容量远超普通桶或箱，是废料管理的理想选择。
+# Quest: 【Tier 2 MV】史诗焦炭终结者 T123
+betterquesting.quest.4Sg7QtBdRgmrVT5f8xoaRQ.name=【Tier 2 MV】史诗焦炭终结者 T123
+betterquesting.quest.4Sg7QtBdRgmrVT5f8xoaRQ.desc=§a【Tier 2 MV】史诗焦炭终结者 T123§r%n小登的终极造物，中登的期盼之物——史诗焦炭炉 T123。%n真正的终极机器，没有高贵的造价，更没有乱七八糟的机制。%n转换比例：钻石(粉)->焦炭 1:1024，煤炭(粉)->焦炭 1:16，土->焦炭 1:1%n耗时: 1800*20 ticks - (煤炭产出/5) ticks，耗电：0 EU/t%n注意：污染过高时请放置消声仓以防止跳电。
+# Quest: 【Tier 3 HV】Beeyonds 之家
+betterquesting.quest.zEr5ERzOS_mj2VoYMSGykg.name=【Tier 3 HV】Beeyonds 之家
+betterquesting.quest.zEr5ERzOS_mj2VoYMSGykg.desc=§a【Tier 3 HV】Beeyonds 之家§r%n为 Beeyonds 蜜蜂模组提供的工业级多方块蜂房。%n结构：GT基础机械外壳、钢化石、玻璃、草地、黑曜石组成，HV阶段即可建造。%n可容纳并自动化管理大量蜜蜂，提升蜜蜂育种和产出效率。%n将蜜蜂系统融入工业生产线，是蜂蜜/蜡/特殊产物量产的关键设施。%n§c该机器还未完成
+# Quest: 【Tier 3 HV】末影接口综合体
+betterquesting.quest.m--rTGr4QBStOg1OYK65GQ.name=【Tier 3 HV】末影接口综合体
+betterquesting.quest.m--rTGr4QBStOg1OYK65GQ.desc=§a【Tier 3 HV】末影接口综合体§r%n中登的终极造物——末影接口综合体。%n以先进 EU 系机器代替 RF 系机器，处理 Ender IO 相关配方。%n支持：头颅装配机、灵魂绑定机等 EIO 核心配方。%n执行无损超频，默认并行 64。%n螺丝刀右键可切换刷怪笼绑定模式（固定耗电 114 EU/t，100 ticks）。
+# Quest: 【Tier 3 HV】食物发电机
+betterquesting.quest.Yn7k_VGBRQ2dok2B6057BA.name=【Tier 3 HV】食物发电机
+betterquesting.quest.Yn7k_VGBRQ2dok2B6057BA.desc=§a【Tier 3 HV】食物发电机§r%n以食物为燃料的特殊多方块发电机。%n发电公式：食物饥饿值^2 × 线圈等级 × 机械方块等级 × 2 EU/t%n最高发电：1A MAX/t；支持 64 并行，每次最多烧毁一组相同食物。%n注意：污染过高时请放置消声仓防止跳电。%n赞美富婆 Safari_xiu！没有他就没有现在的 123T！
+# Quest: 【Tier 4 EV】异星渔场
+betterquesting.quest.7_NPu68RSfOX7Nj39tgZAw.name=【Tier 4 EV】异星渔场
+betterquesting.quest.7_NPu68RSfOX7Nj39tgZAw.desc=§a【Tier 4 EV】异星渔场§r%n老登的终极造物——异星渔场。%nJumping 恒等式（主=6）解决了维度方块的不确定性，建立微型维度渔场。%n捕获物：鱼、海象、韭菜盒子、鲸鱼座藻类、立方体、苔石墙等。%n主机需放入维度方块；玻璃等级决定能源仓等级；执行无损超频。%n随机产出——可恶的抽卡机制（憋憋）。%n§c该机器还未完成
+# Quest: 【Tier 4 EV】集成式火箭装配车间
+betterquesting.quest.HpRJtTKZRxej0sa8ABPBSw.name=【Tier 4 EV】集成式火箭装配车间
+betterquesting.quest.HpRJtTKZRxej0sa8ABPBSw.desc=§a【Tier 4 EV】集成式火箭装配车间§r%n专为火箭（含义双关）设计的大型一体化装配车间。%n结构：IC2合金块、GT机械外壳（T3）、GT标准框架等，EV阶段可建造。%n集成火箭零件制造与最终组装流程，简化太空探索前期准备。%n支持各型火箭及矿石无人机的批量生产，是进入 EV 星际探索阶段的起点。%n§c该机器还未完成
+# Quest: 【Tier 5 IV】大型电路组装机
+betterquesting.quest.iTK_XTMBRXaoLSOINt2yAQ.name=【Tier 5 IV】大型电路组装机
+betterquesting.quest.iTK_XTMBRXaoLSOINt2yAQ.desc=§a【Tier 5 IV】大型电路组装机§r%n专为批量制造电路板设计的大型多方块组装机。%n覆盖从 LV 到 UHV 全电压等级的电路组装配方。%n支持并行加工，大幅节省中后期游戏电路制造时间。%n线圈等级越高，生产速度越快、并行数越多。%n电路需求贯穿整个游戏进程，此机器是不可或缺的核心设施。
+# Quest: 【Tier 5 IV】中国石化集成工厂
+betterquesting.quest.7bnPYcQUSA6Lh19enEHSbA.name=【Tier 5 IV】中国石化集成工厂
+betterquesting.quest.7bnPYcQUSA6Lh19enEHSbA.desc=§a【Tier 5 IV】中国石化集成工厂§r%n黑金的最终流处...一步到位。%n以中国石化为主题的大型化工集成机器，整合蒸馏/裂解/提炼等流程。%n线圈等级 <10 时耗时倍率 = 1 - 线圈等级*0.1；>=10 时固定为 0.1。%n主机放入铱锇钐合金粉可解锁无损超频及并行限制（默认并行 64）。
+# Quest: 【Tier 6 LuV】铑钯蜜汁化工厂
+betterquesting.quest.Ht5muGUBQJGLuA3hwtg-Zw.name=【Tier 6 LuV】铑钯蜜汁化工厂
+betterquesting.quest.Ht5muGUBQJGLuA3hwtg-Zw.desc=§a【Tier 6 LuV】铑钯蜜汁化工厂§r%n老登的终极造物——铑钯反应釜（化学反应釜 & 化工厂）。%n以 LuV 级铑(Rh)/钯(Pd)催化剂为核心的神秘化工集成机器。%n化工厂模式：耗时=NEI耗时*(1-线圈等级*0.15)，最低0.1；并行16。%n大型化学反应釜模式：耗时=NEI耗时*(1-线圈等级*0.1)；无限并行，无损超频。%n玻璃等级决定化工厂等级（化工厂等级 = 玻璃信道等级 - 3）。
+# Quest: 【Tier 6 LuV】巨型炽焱高炉
+betterquesting.quest.NFVV_eMKQ-SZ2ZtOx1Ky3g.name=【Tier 6 LuV】巨型炽焱高炉
+betterquesting.quest.NFVV_eMKQ-SZ2ZtOx1Ky3g.desc=§a【Tier 6 LuV】巨型炽焱高炉§r%nGTPP 巨型高炉的 123T 强化版本，专注大规模冶炼。%n特殊模式：不消耗烈焰之炽焱，但输入仓必须有 >=123*1000L 烈焰之炽焱才可运行。%n参数：EU 消耗 90%%，速度 +120%%，并行 2048。%n请注意玻璃等级要求；污染过高时请放置消声仓。
+# Quest: 【Tier 6 LuV】终极压缩巨型加工厂
+betterquesting.quest.x9mfTjmySFquVCAgti8AWQ.name=【Tier 6 LuV】终极压缩巨型加工厂
+betterquesting.quest.x9mfTjmySFquVCAgti8AWQ.desc=§a【Tier 6 LuV】终极压缩巨型加工厂§r%n123T 核心旗舰机器——终极压缩巨型加工厂。%n集成十五种工业加工模式（螺丝刀切换类，编程电路20/21/22切换内部模式):%n  Metal 类: 压缩机、车床、电力磁化机%n  Fluid 类: 发酵槽、流体提取机、提取机%n  Misc  类: 激光蚀刻机、高压釜、流体固化机%n  Isa   类: 艾萨研磨机、工业浮选机、真空干燥炉%n  Col   类: 分子重组仪、酿造室、流体加热机%n并行公式：电压等级提高一级并行-2，最低9，默认256。
+# Quest: 【Tier 6 LuV】巨型凛冰冷冻机
+betterquesting.quest.dS1WL93pSoeFCXQiXIWeVQ.name=【Tier 6 LuV】巨型凛冰冷冻机
+betterquesting.quest.dS1WL93pSoeFCXQiXIWeVQ.desc=§a【Tier 6 LuV】巨型凛冰冷冻机§r%nGTPP 巨型冷冻机的 123T 强化版本。%n特殊模式：不消耗极寒之凛冰，但输入仓必须有 >=123*1000L 凛冰才可运行。%n参数：EU 消耗 100%%，速度 +100%%，并行 1024。%n大规模液态金属与冷冻材料生产不可或缺的机器。
+# Quest: 【Tier 6 LuV】唐山炼钢厂
+betterquesting.quest.9gvz9IoKQF6fjnQNQKGhMQ.name=【Tier 6 LuV】唐山炼钢厂
+betterquesting.quest.9gvz9IoKQF6fjnQNQKGhMQ.desc=§a【Tier 6 LuV】唐山炼钢厂§r%n无数黑烟从烟囱冒出，工业化的必由之路...%n以工业重镇唐山命名的大型炼钢集成机器。%n一步到位地生产各种钢铁相关合金：GTPP / GT5U，以及部分 BartWorks 合金。%n集成高炉与电弧炉功能，大幅减少独立多方块建造数量。%n是 LuV 阶段大规模金属冶炼的核心设施。
+# Quest: 【Tier 7 ZPM】真空冷冻热交换机
+betterquesting.quest.Ko9avk6-SliSW2TRNlG7KA.name=【Tier 7 ZPM】真空冷冻热交换机
+betterquesting.quest.Ko9avk6-SliSW2TRNlG7KA.desc=§a【Tier 7 ZPM】真空冷冻热交换机§r%n真正的热能饕餮——真空冷冻热交换机。%n回收高炉热锭冶炼产生的废热，将其转化为超临界蒸汽。%n耗电：123 EU/t；推荐与巨型高炉或标准 EBF 配套使用。
+# Quest: 【Tier 7 ZPM】通用硅岩燃料引擎
+betterquesting.quest.sYMWOljeSC--rsKZHbuPww.name=【Tier 7 ZPM】通用硅岩燃料引擎
+betterquesting.quest.sYMWOljeSC--rsKZHbuPww.desc=§a【Tier 7 ZPM】通用硅岩燃料引擎§r%n以硅岩（Naquadah）燃料驱动的通用型大型多方块发电机。%n支持多种硅岩燃料变体，发电量达到 UV+ 级别。%n与压缩硅岩燃料精炼厂配合使用，构建完整的硅岩能源体系。
+# Quest: 【Tier 7 ZPM】压缩原木聚变反应堆 Mk 0
+betterquesting.quest.AmKi6k5NQ1ewJ7u-NsUYVA.name=【Tier 7 ZPM】压缩原木聚变反应堆 Mk 0
+betterquesting.quest.AmKi6k5NQ1ewJ7u-NsUYVA.desc=§a【Tier 7 ZPM】压缩原木聚变反应堆 Mk 0§r%n以原木为玩笑名的功能完整聚变反应堆（Mk 0 级别）。%n可生产大量等离子体，是高级材料合成的能源基础。%n作为聚变系列的起点（Mk 0），为更高等级的聚变研究奠定基础。%nZPM 阶段核聚变技术的入门机器。
+# Quest: 【Tier 8 UV】迷你有源变压器
+betterquesting.quest.Ym4arCtuTyCJaWfPnAvW-A.name=【Tier 8 UV】迷你有源变压器
+betterquesting.quest.Ym4arCtuTyCJaWfPnAvW-A.desc=§a【Tier 8 UV】迷你有源变压器§r%n小型化的有源变压器，可在各电压等级之间高效升降压。%n相比标准变压器体积更小、部署更灵活，适合对空间有要求的场景。%n从UV阶段开始能体现出最佳的能量转换优势。
+# Quest: 【Tier 8 UV】异星量子超级计算机
+betterquesting.quest.BsJCOp-jSlOuziVZCAxxTg.name=【Tier 8 UV】异星量子超级计算机
+betterquesting.quest.BsJCOp-jSlOuziVZCAxxTg.desc=§a【Tier 8 UV】异星量子超级计算机§r%n来自异星文明的量子级超级计算机，生成算力（Computing Power）。%n冷却液需求公式：(算力/50) × 超频^1.2 × 超压^0.6 L/tick%n需持续消耗大量超级冷却液和电力才能运行；冷却液不足时机器将停止工作。
+# Quest: 【Tier 8 UV】艾萨处理集成工厂 OTH
+betterquesting.quest.26eIyt3pQ0uXJxTSLy45lg.name=【Tier 8 UV】艾萨处理集成工厂 OTH
+betterquesting.quest.26eIyt3pQ0uXJxTSLy45lg.desc=§a【Tier 8 UV】艾萨处理集成工厂 OTH§r%n神奇的艾萨系列，将垃圾和化工产品融为一体。%n执行无损超频；耗时倍率=1/线圈等级；还拥有意想不到的惊喜！
+# Quest: 【Tier 8 UV】进阶高能电路装配线
+betterquesting.quest.zNzEmOeFTA-7O46iwTuEww.name=【Tier 8 UV】进阶高能电路装配线
+betterquesting.quest.zNzEmOeFTA-7O46iwTuEww.desc=§a【Tier 8 UV】进阶高能电路装配线§r%n超大规模电路装配线，专为 UV+ 阶段高等级电路批量生产设计。%n线圈等级决定加工速度与并行上限。
+# Quest: 【Tier 9 UHV】压缩硅岩燃料精炼厂
+betterquesting.quest.7qVpf2YmTRaEHfQjX0O62A.name=【Tier 9 UHV】压缩硅岩燃料精炼厂
+betterquesting.quest.7qVpf2YmTRaEHfQjX0O62A.desc=§a【Tier 9 UHV】压缩硅岩燃料精炼厂§r%n专门生产高纯度硅岩燃料的大型精炼厂。%n将原始硅岩材料经多步骤精炼，转化为各级硅岩燃料液体。%n与通用硅岩燃料引擎搭配，构成完整的硅岩能源生产链条。
+# Quest: 【Tier 10 UEV】超维度憋憋锻炉
+betterquesting.quest.IPxWcHigSZ6J7OvJzbfHUw.name=【Tier 10 UEV】超维度憋憋锻炉
+betterquesting.quest.IPxWcHigSZ6J7OvJzbfHUw.desc=§a【Tier 10 UEV】超维度憋憋锻炉§r%n憋憋（BB）主题的超维度等离子锻炉——顶级金属加工机器。%n能在超高温等离子环境中进行极端材料处理。%n可处理常规方法无法完成的特殊合金配方，是 UEV 终极金属加工机器。
+# Quest: 【Tier 10 UEV】巨龙之墓（黑龙驭者）
+betterquesting.quest.70dLFEOBRd61EnrqLq_WdQ.name=【Tier 10 UEV】巨龙之墓（黑龙驭者）
+betterquesting.quest.70dLFEOBRd61EnrqLq_WdQ.desc=§a【Tier 10 UEV】巨龙之墓（黑龙驭者）§r%n老登的终极造物——黑龙驭者（新式龙研聚合装置）。%n并行 = 机械方块等级 * 128，最高等级解锁 int 并行。%n耗时倍率 = 1 - 0.05 * 线圈等级；三级机械方块解锁无损超频。%n机械方块等级决定可执行的配方等级，更换结构时请重放主机检测。
+# Quest: 【Tier 10 UEV】噬魂监狱（Mega EEC）
+betterquesting.quest.0Gwy4-uwSv6XNbfs2A5h6g.name=【Tier 10 UEV】噬魂监狱（Mega EEC）
+betterquesting.quest.0Gwy4-uwSv6XNbfs2A5h6g.desc=§a【Tier 10 UEV】噬魂监狱（Mega EEC）§r%n巨型极端能量管道（EEC）的 123T 强化版本。%n（czqwq明确确认：UIV光学电路在UEV阶段就能做了）%n「噬魂」之名源于其恐怖的能量消耗——请确保有充足的能量供应！
+# Quest: 【Tier 12 UMV】红日之将军恩情配件厂
+betterquesting.quest.iALIPjizR6aHhNNYUrcYcA.name=【Tier 12 UMV】红日之将军恩情配件厂
+betterquesting.quest.iALIPjizR6aHhNNYUrcYcA.desc=§a【Tier 12 UMV】红日之将军恩情配件厂§r%n主！体！南！下！%n从某半岛神秘北方国家引进的尖端高科技巨构。%n消耗恩情运行：1t/个；配方产出倍率可在配置文件中调整（默认 1.5，四舍五入）。%n主机放入一团蜂群可获得加速（加速=log2(蜂群数量)，向下取整）。
+# Quest: 【Tier 13 UXV】IMBA 超模高炉
+betterquesting.quest.2DxOrqE1QPe-Zb6b8pis1A.name=【Tier 13 UXV】IMBA 超模高炉
+betterquesting.quest.2DxOrqE1QPe-Zb6b8pis1A.desc=§a【Tier 13 UXV】IMBA 超模高炉§r%n不耗电！int 并行！任何配方 10 tick 完成！%n内置一颗中子星！炉温无上限！%n来自 EOHBUF 作者的眷顾——成本低到怀疑人生！%n只要有它，资源匮乏、效率低下、能量不足统统不存在。%n传说中，神明在喝醉后设计了一台机器，醒来后却忘了删掉它...
+# Quest: 【Tier 13 UXV】狄拉克潮汐（Mega QFT）
+betterquesting.quest.IKPHqBpQSx6c47p3_Ifgtg.name=【Tier 13 UXV】狄拉克潮汐（Mega QFT）
+betterquesting.quest.IKPHqBpQSx6c47p3_Ifgtg.desc=§a【Tier 13 UXV】狄拉克潮汐（Mega QFT）§r%n对虚粒子的操控在量子之海中掀起了滔天巨浪...%n以物理学家狄拉克命名的量子场论处理机（Mega QFT 123T UXV 强化版）。%n提供基础原料，可让复杂化学/物理过程一步到位完成。%n时间膨胀场发生器每提升一级减少 10%% 配方时间。%n稳定力场发生器等级 >=6 时产量翻倍；狄拉克逆变模式有意想不到的惊喜。
+# Quest: 【Tier 13 UXV】神之艾萨锻炉
+betterquesting.quest.DRxHUCDZRuS86P4_DDae7w.name=【Tier 13 UXV】神之艾萨锻炉
+betterquesting.quest.DRxHUCDZRuS86P4_DDae7w.desc=§a【Tier 13 UXV】神之艾萨锻炉§r%n艾萨领主认证——神级速度与并行。%n结构同样需要戴森球组件（sBlockCasingsDyson），为 UXV 阶段方可建造。%n耗时 = NEI耗时 * { 1 / {电压等级^[(玻璃等级/2)+1]}^(1/3) }%n主机放入星阵可解锁太空组装模式。%n是大规模矿石研磨处理的终极解决方案之一。

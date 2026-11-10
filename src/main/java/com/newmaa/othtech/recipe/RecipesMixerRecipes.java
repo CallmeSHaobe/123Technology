@@ -36,16 +36,6 @@ public class RecipesMixerRecipes implements IRecipePool {
             .duration(200)
             .eut(6144)
             .addTo(LMixer);
-        // GTValues.RA.stdBuilder()
-        // .itemInputs(
-        // GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tin, 1),
-        // GTOreDictUnificator.get(OrePrefixes.dust, Materials.Arsenic, 1),
-        // GTOreDictUnificator.get(OrePrefixes.ingot, Materials.Fireclay, 4))
-        // .itemOutputs(GTModHandler.getModItem("123Technology", "dustSnAs", 1))
-        //
-        // .duration(200)
-        // .eut(30)
-        // .addTo(LMixer);
         GTValues.RA.stdBuilder()
             .itemOutputs(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 5, 10101))
             .itemInputs(

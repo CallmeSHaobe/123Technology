@@ -16,14 +16,6 @@ import gregtech.GTMod;
 import gregtech.api.objects.GTUODimension;
 import gregtech.api.util.GTConfig;
 
-/**
- * 锑罗斯 123b 的地下流体池: 只有一种 —— BartWorks 注册的 L.C.L, GT 的石油钻机与探矿仪都能直接抽到。
- * <p>
- * 配置写法和锑星那份({@link AntimoniaUndergroundFluids})完全一致, 区别是这里只有一种流体, Chance 权重
- * 无所谓(单流体时永远抽到它)。cfg 的 "Dimension" 必须写维度名: NEI 的 {@code GT5UndergroundFluidHelper}
- * 按 DimensionHelper 的 trimmedName 反查缩写, 而 GT 运行时 {@code GTUODimensionList#GetDimension} 在 id
- * 查不到时用 WorldProvider 类名 contains 匹配, {@code WorldProviderRoss123b} 里正好含 "Ross123b"。
- */
 public final class Ross123bUndergroundFluids {
 
     /** 必须同时对上 WorldProvider 类名与 DimensionHelper 的 trimmedName。 */

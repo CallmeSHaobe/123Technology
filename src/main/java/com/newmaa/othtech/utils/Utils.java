@@ -29,9 +29,6 @@ public final class Utils {
     public static final BigInteger BIG_INTEGER_100 = BigInteger.valueOf(100);
     // region about game
 
-    /**
-     * LV = 1, MAX = 14
-     */
     public static int getCoilTier(HeatingCoilLevel coilLevel) {
         return coilLevel.getTier() + 1;
     }
@@ -299,10 +296,6 @@ public final class Utils {
         return number > Integer.MAX_VALUE - margin ? Integer.MAX_VALUE - margin : (int) number;
     }
 
-    /**
-     * Recursively checks an Object array for null ItemStacks or nested null items.
-     * Used to validate recipe inputs before passing to TTRecipeAdder.
-     */
     public static boolean hasNullItem(Object... items) {
         if (items == null) return true;
         for (Object item : items) {
@@ -377,12 +370,6 @@ public final class Utils {
         return 1 + Math.max(0, (Math.log(voltage) / LOG2) - 5) / 2;
     }
 
-    /**
-     * 取 Eternal-Singularity 的最高阶奇点。
-     * <p>
-     * 正式整合包（完整 NH 包）里 {@code combined_singularity} 有 meta 15；dev 环境的 1.4.3 只有 0–14，
-     * 这时回落到 {@code eternal_singularity}，只影响 dev 环境，正式包里永远走第一分支。
-     */
     public static ItemStack getEternalSingularity(int amount) {
         final ItemStack combined = GTModHandler.getModItem("eternalsingularity", "combined_singularity", amount, 15);
         if (combined != null) return combined;

@@ -313,38 +313,6 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
 
     // ===================== Tooltip =====================
 
-    /*
-     * @Override
-     * protected MultiblockTooltipBuilder createTooltip() {
-     * final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-     * tt.addMachineType("通化之梦")
-     * .addInfo(" §l§4“你产能不够吧? -v-” ")
-     * .addInfo("通化的升级版本, 可以支持硅岩燃料, 但不能使用传统燃料喔 ~ 真正的清洁能源")
-     * .addInfo("耗时根据主机参数决定, 单位tick, 无线模式实际功率为总发电 / 耗时(tick)")
-     * .addInfo("和通化一样的设计, 但同时兼备了大硅岩的加成")
-     * .addInfo("一次消耗输入仓内所有燃料和助燃剂")
-     * .addInfo("感谢伟大的铱锇钐大人，所有输出功率都将为原来的三倍")
-     * .addInfo("二级管道方块解锁无线模式, 使用螺丝刀开启")
-     * .addInfo("§a更高级的结构意味着更高级的§c助燃剂, §a一级结构:原子分离助燃剂, 二级结构:超维度等离子助燃剂")
-     * .addInfo("§a效率随着运行时间提升, 每秒提升1%效率，具体效率阈值为1230%")
-     * .addInfo("计算公式：总发电量=燃料数量*输出系数(3)*效率*燃料输出功率*配方时间")
-     * .addInfo("PS：上述计算的发电量为一次运行的总发电")
-     * .addInfo("§a注意 : 如果耗时小于20ticks, 则效率不会累加")
-     * .addInfo("§4你知道会发生什么。")
-     * .addInfo("§e警告 : 如果强行使用有线模式烧高级硅岩燃料, 将会导致电表倒转憋憋")
-     * .addInfo("§c支持TecTech多安动力仓, 激光仓, 但尽量请使用1,073,741,824A激光仓直连电容库")
-     * .addSeparator()
-     * .addController("发电坤")
-     * .beginStructureBlock(7, 13, 7, false)
-     * .addInputBus("AnyInputBus", 1)
-     * .addOutputBus("AnyOutputBus", 1)
-     * .addInputHatch("AnyInputHatch", 1)
-     * .addOutputHatch("AnyOutputHatch", 1)
-     * .addEnergyHatch("AnyEnergyHatch", 1)
-     * .toolTipFinisher("§b123Technology - KING OF GENERATORS , FOR THE GOD PIGEON");
-     * return tt;
-     * }
-     */
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
         final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
@@ -527,9 +495,6 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
             }
             if (isWirelessMode) {
                 this.setPowerFlow(0);
-                // Bug fix: use BigDecimal to preserve FuelsValueBonus fractional precision before
-                // converting to BigInteger; also multiply mDuration before dividing by 100 to
-                // avoid premature rounding loss.
                 BigInteger costingWirelessEUTemp = BigDecimal.valueOf(recipe.mSpecialValue)
                     .multiply(BigDecimal.valueOf(FuelsValueBonus))
                     .multiply(BigDecimal.valueOf(FuelAmount))
@@ -624,16 +589,6 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
         else return aFuel.mFluidInputs[0];
     }
 
-    /**
-     * Calculates the efficiency multiplier {@code tEff} used to scale power output.
-     *
-     * <p>
-     * <b>Intentional behaviour (no-promoter case):</b> when {@code aPromoter == 0} this method
-     * sets {@code tEff = 0}, which causes the power output for that cycle to be 0 EU/t (or 0 EU in
-     * wireless mode). The fuel is still consumed by the caller. This is by design — the promoter
-     * fluid is a hard prerequisite; without it the generator fires but intentionally produces no
-     * energy.
-     */
     public void calculateEfficiency(long aFuel, long aPromoter, double coefficient) {
         if (aPromoter == 0) {
             this.tEff = 0;
@@ -708,8 +663,5 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
         } else {
             aPlayer.addChatMessage(new ChatComponentTranslation("ote.tm.nfg.mode.1"));
         }
-        /*
-         * GTUtility.sendChatToPlayer(aPlayer, translateToLocal(isWirelessMode ? "无线模式启动" : "无线模式关闭"));
-         */
     }
 }

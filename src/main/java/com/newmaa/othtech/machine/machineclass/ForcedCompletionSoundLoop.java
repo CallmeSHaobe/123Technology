@@ -10,14 +10,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.client.GTSoundLoop;
 
-/**
- * Loops while the machine is active, but never cuts an already-started 10-second cycle when it stops.
- *
- * <p>
- * The machine only owns one instance. An inactive machine switches the sound to non-repeating; after the
- * current cycle finishes, the normal activity-sound lifecycle can dispose it and create a fresh instance
- * for the next run.
- */
 @SideOnly(Side.CLIENT)
 public final class ForcedCompletionSoundLoop extends GTSoundLoop {
 

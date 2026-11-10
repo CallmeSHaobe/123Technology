@@ -2,9 +2,6 @@ package com.newmaa.othtech.common.blocks.deepseiko;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 
-/**
- * 迪普西科结构方块注册入口（preInit 调用，与 AntimoniaBlocks 同款时序）。
- */
 public class DeepSeikoBlocks {
 
     public static BlockDeepSeikoCasing dsCasing;

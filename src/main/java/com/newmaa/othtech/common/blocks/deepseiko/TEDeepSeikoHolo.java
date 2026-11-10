@@ -10,19 +10,6 @@ import com.newmaa.othtech.machine.OTEDeepSeiko;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 
-/**
- * 米饭全息投影的承载 TE（配合 {@link BlockDeepSeikoHolo} + {@code RiceBowlRenderer}）。
- *
- * <p>
- * 「是否在播放」直接读方块 metadata（0 = 停机 / 1 = 加工中）：metadata 变更走原版方块更新包，
- * 天然同步到客户端，不用自建网络通道。动画时钟与毫秒戳纯客户端插值，服务端不参与。
- * </p>
- *
- * <p>
- * 另外每 5 秒做一次宿主自检：控制器被拆、结构散了、甚至存档里遗留了无人认领的影块，
- * 都会被自己清掉，不会在世界里留下隐形垃圾方块。
- * </p>
- */
 public class TEDeepSeikoHolo extends TileEntity implements IRiceBowlHolo {
 
     private static final int OWNER_NONE = Integer.MIN_VALUE;
@@ -49,10 +36,6 @@ public class TEDeepSeikoHolo extends TileEntity implements IRiceBowlHolo {
     private boolean hasOwner() {
         return ownerY != OWNER_NONE;
     }
-
-    // region 状态（给渲染器用）
-    //
-    // metadata 三态：0 = 不存在/消散中，1 = 满满一碗（结构成型但没开工），2 = 吃循环（加工中）
 
     @Override
     public boolean isHoloRunning() {

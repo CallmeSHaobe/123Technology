@@ -14,14 +14,6 @@ import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-/**
- * 时空冷却核心：迪普西科「装配线」模式的产物，整台机器的冷却系统最终压进这一颗核心里。
- *
- * <p>
- * 配方在 {@code Recipemaps.DeepSeikoAL}（装配线模式）：10 种冰/冷却材料 + 4 种冷却流体，
- * 2,000,000,000 EU/t。NEI 里能看到完整清单。
- * </p>
- */
 public class ItemSpacetimeCoolingCore extends Item {
 
     public ItemSpacetimeCoolingCore() {

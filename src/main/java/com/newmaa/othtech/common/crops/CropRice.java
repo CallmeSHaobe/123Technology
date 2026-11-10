@@ -11,18 +11,6 @@ import com.gtnewhorizon.cropsnh.api.ISeedShape;
 import com.gtnewhorizon.cropsnh.api.SeedShape;
 import com.gtnewhorizon.cropsnh.crops.abstracts.CropFood;
 
-/**
- * 水稻（Pam's HarvestCraft 的 rice）。
- *
- * <ul>
- * <li>土壤：农田（{@link CropFood} 的默认值 {@code CropsNHSoilTypes.farmland}）</li>
- * <li>档次：tier 1（最低）</li>
- * <li>产出：{@code cropRice}（harvestcraft:riceItem）100%</li>
- * <li>种子来源：工作台无序合成 {@code seedRice} → 本作物种子（见 CropsNHAddonCrops#registerRecipes）</li>
- * </ul>
- *
- * 合并到别的 mod 时，本文件只依赖 CropsNH 的 API 和 Minecraft/Forge，直接拷走即可。
- */
 public class CropRice extends CropFood {
 
     public CropRice() {

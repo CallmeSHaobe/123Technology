@@ -144,10 +144,6 @@ public class RecipesNewWetware implements IRecipePool {
 
     }
 
-    /**
-     * 切割机要两份配方: cutterRecipes 给机器用, cutterFakeRecipes 给 NEI 用
-     * (NEI 页读的是 GT 加载期从 cutterRecipes 快照出来的 fake 池, 后加的配方不会自动同步过去)
-     */
     private static void addSlicedBrainRecipe(ItemStack wire, ItemStack brain, ItemStack output, FluidStack fluid) {
         if (wire == null || brain == null || output == null || fluid == null) return;
 

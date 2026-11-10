@@ -15,10 +15,6 @@ import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-/**
- * 馊米饭 —— 放坏了的白米饭（不能拿去做米饭奇点）。
- * 喂了馊饭的迪普西科会闹脾气：速度再打五折。
- */
 public class ItemSpoiledRice extends ItemFood {
 
     public ItemSpoiledRice() {
