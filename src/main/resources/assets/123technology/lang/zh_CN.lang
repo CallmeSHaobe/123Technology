@@ -108,6 +108,7 @@ for.bees.species.ironoth=铁块
 for.bees.species.chg=§a彩§b色§e玻§c璃
 for.bees.species.shengxi=§d§n§l§o生息
 for.bees.species.enqing=§4§l恩情
+for.bees.species.grassoth=§a草
 oth.comb.hypogen=海珀珍蜂窝
 oth.comb.chromaticglass=彩色玻璃蜂窝
 oth.comb.glass=玻璃蜂窝
@@ -918,6 +919,9 @@ cropsnh_crops.rice=水稻
 # CropsNH 黄桃草
 cropsnh_crops.yellowPeachGrass=黄桃草
 cropsnh_crops.yellowPeachGrass.flavour=草叶间挂着一颗颗黄桃，甜得像罐头。
+
+# CropsNH 蜜蜂草
+cropsnh_crops.beeGrass=蜜蜂草
 
 # ── 迪普西科：MUI2 面板 / 聊天 / 停机原因（2026-10-29 本地化） ──
 ote.ds.chat.modeLocked=§c合成中不能切换模式

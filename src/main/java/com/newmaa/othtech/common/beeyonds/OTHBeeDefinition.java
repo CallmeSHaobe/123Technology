@@ -24,6 +24,7 @@ import org.jetbrains.annotations.NotNull;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.item.ItemLoader;
 
+import binnie.extrabees.genetics.ExtraBeeDefinition;
 import binnie.extrabees.genetics.effect.ExtraBeesEffect;
 import forestry.api.apiculture.BeeManager;
 import forestry.api.apiculture.EnumBeeChromosome;
@@ -179,6 +180,27 @@ public enum OTHBeeDefinition implements IBeeDefinition {
             IBeeMutationCustom tMutation = dis
                 .registerMutation(GTBeeDefinition.IRON.getSpecies(), CLAY.getSpecies(), 100);
             tMutation.requireResource(Blocks.iron_ore, 0); // Enqing Factory
+        }),
+    GRASSOTH(OTHBranchDefinition.OTHBYDS, "Grass", true, new Color(0x2DCB12, true), new Color(0x2DCB12, true),
+        beeSpecies -> {
+            beeSpecies.addProduct(new ItemStack(Blocks.tallgrass, 64, 1), 1F);
+            beeSpecies.addProduct(new ItemStack(Blocks.tallgrass, 64, 2), 1F);
+            beeSpecies.addProduct(new ItemStack(Blocks.deadbush, 64, 1), 1F);
+            beeSpecies.addProduct(new ItemStack(Blocks.vine, 64, 1), 1F);
+            beeSpecies.setHumidity(DAMP);
+            beeSpecies.setTemperature(EnumTemperature.WARM);
+        }, template -> {
+            AlleleHelper.instance.set(template, FLOWERING, EnumAllele.Flowering.MAXIMUM);
+            AlleleHelper.instance.set(template, HUMIDITY_TOLERANCE, EnumAllele.Tolerance.NONE);
+            AlleleHelper.instance.set(template, EFFECT, AlleleEffect.effectNone);
+            AlleleHelper.instance.set(template, FLOWER_PROVIDER, EnumAllele.Flowers.VANILLA);
+        }, dis -> {
+            IBeeMutationCustom tMutation = dis.registerMutation(
+                ExtraBeeDefinition.GREEN.getGenome()
+                    .getPrimary(),
+                CLAY.getSpecies(),
+                100);
+            tMutation.requireResource(Blocks.grass, 0); // GRASS
         }),
     SHENGXI(OTHBranchDefinition.OTHBYDS, "shengxi", true, new Color(0xFFEE14BB, true), new Color(0xFF7C18D2, true),
         beeSpecies -> {

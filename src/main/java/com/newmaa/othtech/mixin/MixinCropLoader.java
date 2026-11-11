@@ -7,6 +7,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.gtnewhorizon.cropsnh.loaders.CropLoader;
 import com.newmaa.othtech.OTHTechnology;
+import com.newmaa.othtech.common.crops.CropsNHBeeGrass;
 import com.newmaa.othtech.common.crops.CropsNHPeachGrass;
 import com.newmaa.othtech.common.crops.CropsNHRice;
 
@@ -25,6 +26,11 @@ public abstract class MixinCropLoader {
             CropsNHPeachGrass.registerAll();
         } catch (Throwable t) {
             OTHTechnology.LOG.error("CropsNH yellow peach grass registration failed", t);
+        }
+        try {
+            CropsNHBeeGrass.registerAll();
+        } catch (Throwable t) {
+            OTHTechnology.LOG.error("CropsNH bee grass registration failed", t);
         }
     }
 }
