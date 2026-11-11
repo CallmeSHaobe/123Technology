@@ -1,5 +1,5 @@
 {
-  "required": true,
+  "required": false,
   "minVersion": "0.8.5-GTNH",
   "package": "com.newmaa.othtech.mixin",
   "refmap": "mixins.123technology.refmap.json",

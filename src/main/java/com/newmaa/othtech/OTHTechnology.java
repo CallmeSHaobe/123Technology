@@ -79,7 +79,6 @@ import gtnhintergalactic.recipe.SpacePumpingRecipes;
         + "required-after:dreamcraft;"
         + "required-after:gregtech;"
         + "required-after:TwistSpaceTechnology;"
-        // CropsNH 水稻作物：软依赖（没有 cropsnh 时 mixin 会跳过，不影响其它功能）
         + "after:cropsnh;"
         + "required-after:GalaxySpace;",
     acceptedMinecraftVersions = "1.7.10")
