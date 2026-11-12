@@ -90,7 +90,8 @@ public class ClientProxy extends CommonProxy {
 
     @SubscribeEvent
     public void onTextureStitch(TextureStitchEvent.Post event) {
-        if (event.map.getTextureType() != 0 || OTHMaterials.LCL == null || OTHMaterials.LCL.mFluid == null
+        if (event.map.getTextureType() != 0 || OTHMaterials.LCL == null
+            || OTHMaterials.LCL.mFluid == null
             || RossFluids.BlockLCL == null) return;
         OTHMaterials.LCL.mFluid.setIcons(RossFluids.BlockLCL.getIcon(1, 0), RossFluids.BlockLCL.getIcon(2, 0));
     }
