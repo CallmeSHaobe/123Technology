@@ -17,11 +17,16 @@ import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
+import gregtech.api.enums.VoltageIndex;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.RecipeMaps;
+import gregtech.api.recipe.metadata.NanochipAssemblyMatrixTierKey;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
+import gregtech.api.util.GTRecipeConstants;
 import gregtech.api.util.GTUtility;
+import gregtech.common.tileentities.machines.multi.nanochip.util.CircuitCalibration;
+import gregtech.common.tileentities.machines.multi.nanochip.util.CircuitComponent;
 import gtPlusPlus.core.material.MaterialsElements;
 import gtnhlanth.common.register.WerkstoffMaterialPool;
 import tectech.thing.CustomItemList;
@@ -42,6 +47,16 @@ public class RecipesCircuit implements IRecipePool {
         final RecipeMap<?> MQFT = Recipemaps.QFTMega;
         final RecipeMap<?> Assem = RecipeMaps.assemblerRecipes;
         final int eut = 1000000000;
+
+        GTValues.RA.stdBuilder()
+            .itemInputs(CircuitComponent.NanoProcessor.getFakeStack(1))
+            .fluidInputs(Materials.SolderingAlloy.getMolten(144))
+            .itemOutputs(CircuitComponent.QuantumProcessor.getFakeStack(1))
+            .duration(10 * 20)
+            .eut(TierEU.RECIPE_UV)
+            .metadata(NanochipAssemblyMatrixTierKey.INSTANCE, VoltageIndex.UV)
+            .metadata(GTRecipeConstants.CIRCUIT_CALIBRATION_TYPE, CircuitCalibration.PRIMITIVE)
+            .addTo(RecipeMaps.nanochipAssemblyMatrixRecipes);
 
         // 超时空电路基板
         GTValues.RA.stdBuilder()
