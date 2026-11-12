@@ -11,8 +11,10 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
@@ -30,7 +32,10 @@ import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipe;
 import WayofTime.alchemicalWizardry.api.alchemy.AlchemyRecipeRegistry;
 import WayofTime.alchemicalWizardry.api.altarRecipeRegistry.AltarRecipe;
 import WayofTime.alchemicalWizardry.api.altarRecipeRegistry.AltarRecipeRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
+import fox.spiteful.avaritia.items.LudicrousItems;
 import gregtech.api.enums.GTValues;
+import gregtech.api.enums.Mods;
 import gregtech.api.enums.VoltageIndex;
 import gregtech.api.objects.OreDictItemStack;
 import gregtech.api.recipe.RecipeMap;
@@ -52,6 +57,7 @@ import thaumcraft.common.lib.crafting.InfusionRunicAugmentRecipe;
 import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.recipe.RecipeElvenTrade;
 import vazkii.botania.api.recipe.RecipeManaInfusion;
+import vazkii.botania.api.recipe.RecipePureDaisy;
 import vazkii.botania.api.recipe.RecipeRuneAltar;
 import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.block.tile.TileTerraPlate;
@@ -65,6 +71,11 @@ public class AbstractSanctumRecipes implements IRecipePool {
         .create(Boolean.class, "otht.abstractSanctum.wandAugmentation");
     public static final RecipeMetadataKey<DynamicInfusionOutput> DYNAMIC_INFUSION_OUTPUT = SimpleRecipeMetadataKey
         .create(DynamicInfusionOutput.class, "otht.abstractSanctum.dynamicInfusionOutput");
+
+    private static final String[] TINKERS_INFUSION_OUTPUTS = { "pickaxe", "shovel", "hatchet", "broadsword",
+        "longsword", "rapier", "dagger", "cutlass", "frypan", "battlesign", "chisel", "mattock", "scythe", "lumberaxe",
+        "cleaver", "hammer", "battleaxe", "excavator", "Shuriken", "ThrowingKnife", "Javelin", "ShortBow", "LongBow",
+        "Crossbow", "ArrowAmmo", "BoltAmmo" };
 
     private static final int CRAFT_TICKS = 40 * 20;
     private static final int DUPLICATE_TICKS = 64 * 20 / 10;
@@ -87,7 +98,9 @@ public class AbstractSanctumRecipes implements IRecipePool {
     private static final int CRUCIBLE_DUPLICATE_CIRCUIT = 2;
     private static final int BLOOD_ALCHEMY_CIRCUIT = 21;
     private static final int BLOOD_ALTAR_CIRCUIT = 22;
+    private static final int WORLD_SALT_BLOCK_CIRCUIT = 24;
     private static final int WORLD_SALT_DUPLICATE_CIRCUIT = 24;
+    private static final int PURE_DAISY_CIRCUIT = 0;
     private static final Set<String> LOGGED_WAND_AUGMENTATIONS = new HashSet<>();
     private static final int MANA_INFUSION_EUT = (int) GTValues.VP[VoltageIndex.LV];
     private static final int ALCHEMY_EUT = (int) GTValues.VP[VoltageIndex.HV];
@@ -100,10 +113,12 @@ public class AbstractSanctumRecipes implements IRecipePool {
     private static final int BLOOD_ALCHEMY_EUT = (int) GTValues.VP[VoltageIndex.MV];
     private static final int BLOOD_ALTAR_EUT = (int) GTValues.VP[VoltageIndex.HV];
     private static final int DUPLICATE_EUT = (int) GTValues.VP[VoltageIndex.LV];
+    private static final int PURE_DAISY_EUT = (int) GTValues.VP[VoltageIndex.LV];
 
     private static final Map<String, Integer> ASPECT_LEVELS = new HashMap<>();
     private static final List<GTRecipe> DYNAMIC_INFUSION_RUNTIME_RECIPES = new ArrayList<>();
     private static final List<GTRecipe> WAND_AUGMENTATION_RUNTIME_RECIPES = new ArrayList<>();
+    private static Set<Item> skippedInfusionOutputs;
     private int crucibleShardFallbackCount;
     private int crucibleDuplicateCount;
     private int infusionEnchantmentCount;
@@ -222,6 +237,7 @@ public class AbstractSanctumRecipes implements IRecipePool {
 
         loadRuneAltarRecipes();
         loadElvenTradeRecipes();
+        loadPureDaisyRecipes();
         loadTerrestrialAgglomerationRecipe();
     }
 
@@ -306,6 +322,30 @@ public class AbstractSanctumRecipes implements IRecipePool {
             TERRESTRIAL_AGGLOMERATION_CIRCUIT);
     }
 
+    private void loadPureDaisyRecipes() {
+        for (RecipePureDaisy source : BotaniaAPI.pureDaisyRecipes) {
+            if (source == null || source.getOutput() == null) continue;
+            if (source.getInput() == Blocks.water) continue;
+            try {
+                Object input = normalizePureDaisyInput(source.getInput());
+                if (input == null) continue;
+                ItemStack output = new ItemStack(source.getOutput(), 1, source.getOutputMeta());
+
+                List<Object> inputs = new ArrayList<>();
+                addMergedObjectInput(inputs, input);
+                addSaltToObjects(inputs, CRAFT_BASE_SALT);
+                addCircuitToObjects(inputs, PURE_DAISY_CIRCUIT);
+
+                List<FluidStack> fluids = new ArrayList<>();
+                addFluid(fluids, AbstractSanctumContent.getManaStack(DEFAULT_MANA_MB));
+                addFluid(fluids, AbstractSanctumContent.getBloodStack(DEFAULT_BLOOD_MB));
+                addConvertedCraftBuilder(inputs, output, fluids, PURE_DAISY_EUT, PURE_DAISY_CIRCUIT);
+            } catch (Throwable t) {
+                OTHTechnology.LOG.warn("Failed to convert Botania pure daisy recipe {}", source, t);
+            }
+        }
+    }
+
     private void addCraftRecipe(RecipeManaInfusion source, int circuit) {
         List<Object> inputs = normalizeBotaniaInputs(Collections.singletonList(source.getInput()));
         if (inputs.isEmpty()) return;
@@ -328,6 +368,8 @@ public class AbstractSanctumRecipes implements IRecipePool {
         if (isWorldSalt(source.getOutput())) return;
         ItemStack duplicateInput = normalizeDuplicateInput(source.getInput());
         if (duplicateInput == null) return;
+        ItemStack duplicateOutput = copyRecipeOutput(source.getOutput());
+        if (duplicateOutput == null) return;
         List<ItemStack> inputs = new ArrayList<>();
         inputs.add(duplicateInput);
         addSalt(inputs, DUPLICATE_SALT);
@@ -338,8 +380,7 @@ public class AbstractSanctumRecipes implements IRecipePool {
         addFluid(fluids, AbstractSanctumContent.getBloodStack(DUPLICATE_BLOOD_MB));
         addBuilder(
             inputs,
-            source.getOutput()
-                .copy(),
+            duplicateOutput,
             fluids,
             Recipemaps.ABSTRACT_SANCTUM_DUPLICATE,
             DUPLICATE_TICKS,
@@ -437,13 +478,14 @@ public class AbstractSanctumRecipes implements IRecipePool {
         List<Object> inputs = normalizeArcaneInputs(rawInputs);
         if (output == null || salt < 0 || inputs.isEmpty()) return;
 
+        int circuit = isWorldSaltBlock(output) ? WORLD_SALT_BLOCK_CIRCUIT : ARCANE_WORKBENCH_CIRCUIT;
         addSaltToObjects(inputs, salt);
-        addCircuitToObjects(inputs, ARCANE_WORKBENCH_CIRCUIT);
+        addCircuitToObjects(inputs, circuit);
 
         List<FluidStack> fluids = new ArrayList<>();
         addFluid(fluids, AbstractSanctumContent.getManaStack(DEFAULT_MANA_MB));
         addFluid(fluids, AbstractSanctumContent.getBloodStack(DEFAULT_BLOOD_MB));
-        addConvertedCraftBuilder(inputs, output.copy(), fluids, ARCANE_WORKBENCH_EUT, ARCANE_WORKBENCH_CIRCUIT);
+        addConvertedCraftBuilder(inputs, output.copy(), fluids, ARCANE_WORKBENCH_EUT, circuit);
     }
 
     private void addInfusionRecipe(InfusionRecipe source) {
@@ -454,7 +496,7 @@ public class AbstractSanctumRecipes implements IRecipePool {
 
         ItemStack center = centerInput.copy();
         ItemStack output = resolveInfusionOutput(source, centerInput);
-        if (output == null) return;
+        if (output == null || isSkippedInfusionOutput(output)) return;
 
         AspectList aspects = source.getAspects(centerInput);
         int salt = saltFor(aspects);
@@ -468,6 +510,7 @@ public class AbstractSanctumRecipes implements IRecipePool {
                 addMergedInputExact(inputs, component);
             }
         }
+        logNonConsumedInfusionCatalyst(output, centerInput, components);
         addSalt(inputs, salt);
         addCircuit(inputs, INFUSION_CIRCUIT);
 
@@ -568,6 +611,46 @@ public class AbstractSanctumRecipes implements IRecipePool {
         return "jcm2606.thaumicmachina.core.crafting.infusion.RecipeInfusionWandAugmentation".equals(
             source.getClass()
                 .getName());
+    }
+
+    private static boolean isSkippedInfusionOutput(ItemStack output) {
+        if (output == null || output.getItem() == null) return true;
+        return getSkippedInfusionOutputs().contains(output.getItem());
+    }
+
+    private static Set<Item> getSkippedInfusionOutputs() {
+        if (skippedInfusionOutputs != null) return skippedInfusionOutputs;
+
+        Set<Item> skipped = new HashSet<>();
+        addIfPresent(skipped, ConfigItems.itemJarNode);
+        if (Mods.Gadomancy.isModLoaded()) {
+            addIfPresent(skipped, GameRegistry.findItem(Mods.Gadomancy.ID, "ItemEtherealFamiliar"));
+        }
+        if (Mods.TinkerConstruct.isModLoaded()) {
+            for (String name : TINKERS_INFUSION_OUTPUTS) {
+                addIfPresent(skipped, GameRegistry.findItem(Mods.TinkerConstruct.ID, name));
+            }
+        }
+        skippedInfusionOutputs = skipped;
+        return skippedInfusionOutputs;
+    }
+
+    private static void addIfPresent(Set<Item> items, Item item) {
+        if (item != null) items.add(item);
+    }
+
+    private static void logNonConsumedInfusionCatalyst(ItemStack output, ItemStack center, ItemStack[] components) {
+        if (isNonConsumedInfusionCatalyst(center) || containsNonConsumedCatalyst(components)) {
+            OTHTechnology.LOG.info("AbstractSanctum non-consumed pearl catalyst recipe: output={}", output);
+        }
+    }
+
+    private static boolean containsNonConsumedCatalyst(ItemStack[] stacks) {
+        if (stacks == null) return false;
+        for (ItemStack stack : stacks) {
+            if (isNonConsumedInfusionCatalyst(stack)) return true;
+        }
+        return false;
     }
 
     private static WandAugmentationSpec inspectWandAugmentation(InfusionRecipe source) {
@@ -716,11 +799,14 @@ public class AbstractSanctumRecipes implements IRecipePool {
     }
 
     private void addCrucibleDuplicateRecipe(CrucibleRecipe source) {
-        ItemStack output = copyRecipeOutput(source.getRecipeOutput());
+        ItemStack sourceOutput = copyRecipeOutput(source.getRecipeOutput());
         int salt = saltFor(source.aspects);
-        if (output == null || salt < 0 || isWorldSalt(output) || !catalystMatchesOutput(source.catalyst, output)) {
+        if (sourceOutput == null || salt < 0
+            || isWorldSalt(sourceOutput)
+            || !catalystMatchesOutput(source.catalyst, sourceOutput)) {
             return;
         }
+        ItemStack output = sourceOutput.copy();
 
         List<ItemStack> inputs = new ArrayList<>();
         ItemStack input = normalizeDuplicateInput(output);
@@ -759,6 +845,12 @@ public class AbstractSanctumRecipes implements IRecipePool {
             }
         }
         return false;
+    }
+
+    private static boolean isWorldSaltBlock(ItemStack stack) {
+        return stack != null && "tile.salisMundusBlock".equals(
+            stack.getItem()
+                .getUnlocalizedName());
     }
 
     private static boolean addCrucibleShardSignature(List<Object> inputs, int shardPairIndex) {
@@ -889,7 +981,9 @@ public class AbstractSanctumRecipes implements IRecipePool {
 
     private static void addCraftBuilderWithDynamicInfusionOutput(List<ItemStack> inputs, ItemStack output,
         List<FluidStack> fluids, DynamicInfusionOutput dynamicOutput) {
-        if (inputs.isEmpty() || output == null) return;
+        if (inputs.isEmpty()) return;
+        output = unifyRecipeOutput(output);
+        if (output == null) return;
         List<ItemStack> mergedInputs = mergeInputs(inputs);
         ensureCircuitInStacks(mergedInputs, INFUSION_CIRCUIT);
         moveCircuitToEnd(mergedInputs);
@@ -906,7 +1000,9 @@ public class AbstractSanctumRecipes implements IRecipePool {
 
     private static void addConvertedCraftBuilder(List<Object> inputs, ItemStack output, List<FluidStack> fluids,
         int eut, int circuit) {
-        if (inputs.isEmpty() || output == null) return;
+        if (inputs.isEmpty()) return;
+        output = unifyRecipeOutput(output);
+        if (output == null) return;
         List<Object> mergedInputs = mergeObjectInputs(inputs);
         ensureCircuitInObjects(mergedInputs, circuit);
         moveCircuitToEndObjects(mergedInputs);
@@ -921,7 +1017,9 @@ public class AbstractSanctumRecipes implements IRecipePool {
 
     private static <T> boolean addConvertedCraftBuilderWithMetadata(List<Object> inputs, ItemStack output,
         List<FluidStack> fluids, int eut, int circuit, RecipeMetadataKey<T> key, T value) {
-        if (inputs.isEmpty() || output == null) return false;
+        if (inputs.isEmpty()) return false;
+        output = unifyRecipeOutput(output);
+        if (output == null) return false;
         List<Object> mergedInputs = mergeObjectInputs(inputs);
         ensureCircuitInObjects(mergedInputs, circuit);
         moveCircuitToEndObjects(mergedInputs);
@@ -938,7 +1036,9 @@ public class AbstractSanctumRecipes implements IRecipePool {
 
     private static void addBuilder(List<ItemStack> inputs, ItemStack output, List<FluidStack> fluids, RecipeMap<?> map,
         int duration, int eut, int circuit) {
-        if (inputs.isEmpty() || output == null) return;
+        if (inputs.isEmpty()) return;
+        output = unifyRecipeOutput(output);
+        if (output == null) return;
         List<ItemStack> mergedInputs = mergeInputs(inputs);
         ensureCircuitInStacks(mergedInputs, circuit);
         moveCircuitToEnd(mergedInputs);
@@ -953,7 +1053,9 @@ public class AbstractSanctumRecipes implements IRecipePool {
 
     private static <T> void addBuilderWithMetadata(List<ItemStack> inputs, ItemStack output, List<FluidStack> fluids,
         RecipeMap<?> map, int duration, int eut, int circuit, RecipeMetadataKey<T> key, T value) {
-        if (inputs.isEmpty() || output == null) return;
+        if (inputs.isEmpty()) return;
+        output = unifyRecipeOutput(output);
+        if (output == null) return;
         List<ItemStack> mergedInputs = mergeInputs(inputs);
         ensureCircuitInStacks(mergedInputs, circuit);
         moveCircuitToEnd(mergedInputs);
@@ -1055,6 +1157,10 @@ public class AbstractSanctumRecipes implements IRecipePool {
             && stack.getItemDamage() == 14;
     }
 
+    public static boolean isNonConsumedInfusionCatalyst(ItemStack stack) {
+        return stack != null && stack.getItem() == LudicrousItems.bigPearl;
+    }
+
     private static boolean isBalancedShard(ItemStack stack) {
         return stack != null && ConfigItems.itemShard != null
             && stack.getItem() == ConfigItems.itemShard
@@ -1130,6 +1236,24 @@ public class AbstractSanctumRecipes implements IRecipePool {
         return result;
     }
 
+    private static Object normalizePureDaisyInput(Object input) {
+        if (input instanceof Block block) {
+            return new ItemStack(block, 1, OreDictionary.WILDCARD_VALUE);
+        }
+        if (input instanceof String ore && !ore.isEmpty()
+            && !OreDictionary.getOres(ore)
+                .isEmpty()) {
+            return new OreDictItemStack(ore, 1);
+        }
+        return null;
+    }
+
+    public static ItemStack unifyRecipeOutput(ItemStack output) {
+        if (output == null || output.getItem() == null || output.stackSize <= 0) return null;
+        ItemStack unified = GTOreDictUnificator.get(true, output, true);
+        return unified != null ? unified : output.copy();
+    }
+
     private static boolean containsOutputAsInput(List<Object> inputs, ItemStack output) {
         if (output == null) return false;
         for (Object input : inputs) {
@@ -1177,6 +1301,10 @@ public class AbstractSanctumRecipes implements IRecipePool {
 
     private static void addMergedInput(List<ItemStack> inputs, ItemStack input) {
         if (input == null) return;
+        if (isNonConsumedInfusionCatalyst(input)) {
+            addNonConsumedCatalyst(inputs, input);
+            return;
+        }
         for (ItemStack existing : inputs) {
             if (sameItemIgnoreNbt(existing, input)) {
                 existing.stackSize += input.stackSize;
@@ -1188,6 +1316,10 @@ public class AbstractSanctumRecipes implements IRecipePool {
 
     private static void addMergedInputExact(List<ItemStack> inputs, ItemStack input) {
         if (input == null || input.getItem() == null || input.stackSize <= 0) return;
+        if (isNonConsumedInfusionCatalyst(input)) {
+            addNonConsumedCatalyst(inputs, input);
+            return;
+        }
         // Keep recipe-defined world salt independent from the machine's resource cost.
         // Otherwise the resource multiplier/waiver is incorrectly applied to both stacks.
         if (isWorldSalt(input)) {
@@ -1201,6 +1333,13 @@ public class AbstractSanctumRecipes implements IRecipePool {
             }
         }
         inputs.add(input.copy());
+    }
+
+    private static void addNonConsumedCatalyst(List<ItemStack> inputs, ItemStack catalyst) {
+        for (ItemStack existing : inputs) {
+            if (sameItemIgnoreNbt(existing, catalyst)) return;
+        }
+        inputs.add(catalyst.copy());
     }
 
     private static List<ItemStack> mergeInputs(List<ItemStack> inputs) {
