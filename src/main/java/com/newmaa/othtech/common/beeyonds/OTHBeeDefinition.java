@@ -2,6 +2,8 @@ package com.newmaa.othtech.common.beeyonds;
 
 import static com.newmaa.othtech.common.OTHItemList.itemEnqingM;
 import static com.newmaa.othtech.common.beeyonds.OTHBeeDefinitionReference.*;
+import static com.newmaa.othtech.utils.NbtHelper.cropsnhSeed;
+import static com.newmaa.othtech.utils.Utils.setStackSize;
 import static forestry.api.apiculture.EnumBeeChromosome.*;
 import static forestry.api.apiculture.EnumBeeChromosome.FLOWER_PROVIDER;
 import static forestry.api.core.EnumHumidity.DAMP;
@@ -22,8 +24,10 @@ import org.apache.commons.lang3.text.WordUtils;
 import org.jetbrains.annotations.NotNull;
 
 import com.newmaa.othtech.common.OTHItemList;
+import com.newmaa.othtech.common.crops.CropBeeGrass;
 import com.newmaa.othtech.common.item.ItemLoader;
 
+import binnie.extrabees.genetics.ExtraBeeDefinition;
 import binnie.extrabees.genetics.effect.ExtraBeesEffect;
 import forestry.api.apiculture.BeeManager;
 import forestry.api.apiculture.EnumBeeChromosome;
@@ -179,6 +183,28 @@ public enum OTHBeeDefinition implements IBeeDefinition {
             IBeeMutationCustom tMutation = dis
                 .registerMutation(GTBeeDefinition.IRON.getSpecies(), CLAY.getSpecies(), 100);
             tMutation.requireResource(Blocks.iron_ore, 0); // Enqing Factory
+        }),
+    GRASSOTH(OTHBranchDefinition.OTHBYDS, "Grass", true, new Color(0x2DCB12, true), new Color(0x2DCB12, true),
+        beeSpecies -> {
+            beeSpecies.addProduct(new ItemStack(Blocks.tallgrass, 64, 1), 1F);
+            beeSpecies.addProduct(new ItemStack(Blocks.tallgrass, 64, 2), 1F);
+            beeSpecies.addProduct(new ItemStack(Blocks.deadbush, 64, 1), 1F);
+            beeSpecies.addProduct(new ItemStack(Blocks.vine, 64, 1), 1F);
+            beeSpecies.addProduct(setStackSize(cropsnhSeed(CropBeeGrass.CROP_ID), 1), 1F);
+            beeSpecies.setHumidity(DAMP);
+            beeSpecies.setTemperature(EnumTemperature.WARM);
+        }, template -> {
+            AlleleHelper.instance.set(template, FLOWERING, EnumAllele.Flowering.MAXIMUM);
+            AlleleHelper.instance.set(template, HUMIDITY_TOLERANCE, EnumAllele.Tolerance.NONE);
+            AlleleHelper.instance.set(template, EFFECT, AlleleEffect.effectNone);
+            AlleleHelper.instance.set(template, FLOWER_PROVIDER, EnumAllele.Flowers.VANILLA);
+        }, dis -> {
+            IBeeMutationCustom tMutation = dis.registerMutation(
+                ExtraBeeDefinition.GREEN.getGenome()
+                    .getPrimary(),
+                CLAY.getSpecies(),
+                100);
+            tMutation.requireResource(Blocks.grass, 0); // GRASS
         }),
     SHENGXI(OTHBranchDefinition.OTHBYDS, "shengxi", true, new Color(0xFFEE14BB, true), new Color(0xFF7C18D2, true),
         beeSpecies -> {
