@@ -2,6 +2,8 @@ package com.newmaa.othtech.common.beeyonds;
 
 import static com.newmaa.othtech.common.OTHItemList.itemEnqingM;
 import static com.newmaa.othtech.common.beeyonds.OTHBeeDefinitionReference.*;
+import static com.newmaa.othtech.utils.NbtHelper.cropsnhSeed;
+import static com.newmaa.othtech.utils.Utils.setStackSize;
 import static forestry.api.apiculture.EnumBeeChromosome.*;
 import static forestry.api.apiculture.EnumBeeChromosome.FLOWER_PROVIDER;
 import static forestry.api.core.EnumHumidity.DAMP;
@@ -22,6 +24,7 @@ import org.apache.commons.lang3.text.WordUtils;
 import org.jetbrains.annotations.NotNull;
 
 import com.newmaa.othtech.common.OTHItemList;
+import com.newmaa.othtech.common.crops.CropBeeGrass;
 import com.newmaa.othtech.common.item.ItemLoader;
 
 import binnie.extrabees.genetics.ExtraBeeDefinition;
@@ -187,6 +190,7 @@ public enum OTHBeeDefinition implements IBeeDefinition {
             beeSpecies.addProduct(new ItemStack(Blocks.tallgrass, 64, 2), 1F);
             beeSpecies.addProduct(new ItemStack(Blocks.deadbush, 64, 1), 1F);
             beeSpecies.addProduct(new ItemStack(Blocks.vine, 64, 1), 1F);
+            beeSpecies.addProduct(setStackSize(cropsnhSeed(CropBeeGrass.CROP_ID), 1), 1F);
             beeSpecies.setHumidity(DAMP);
             beeSpecies.setTemperature(EnumTemperature.WARM);
         }, template -> {

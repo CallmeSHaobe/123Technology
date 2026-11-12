@@ -36,6 +36,7 @@ import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.newmaa.othtech.machine.machineclass.OTHTTMultiMachineBaseEM;
 
 import forestry.api.apiculture.EnumBeeType;
+import forestry.api.apiculture.FlowerManager;
 import forestry.api.apiculture.IAlleleBeeSpecies;
 import forestry.api.apiculture.IBee;
 import forestry.api.apiculture.IBeeGenome;
@@ -53,6 +54,7 @@ import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.metatileentity.implementations.MTEHatchEnergy;
 import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
+import gregtech.api.recipe.check.ResultMissingApiaryFlowers;
 import gregtech.api.recipe.check.SimpleCheckRecipeResult;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.structure.error.ErrorType;
@@ -70,13 +72,10 @@ public class OTEBeeyonds extends OTHTTMultiMachineBaseEM implements IConstructab
 
     private static final int CYCLE_TICKS = 100;
 
-    private static final double BEE_ACCELERATION = 64d;
+    private static final double BEE_ACCELERATION = 2d;
 
-    /** 每只女王 0.5A HV */
-    private static final long EU_PER_BEE = V[VoltageIndex.HV] / 2;
-
-    /** 4 * 1.2^8, 与GT巨型蜂箱同款的生产修正基准 */
-    private static final float BASE_PRODUCTION_MODIFIER = 17.19926784f;
+    /** 高于未升级工业蜂箱的 2, 低于巨型工业蜂箱的 17.19926784 */
+    private static final float BASE_PRODUCTION_MODIFIER = 4f;
 
     private static final String STRUCTURE_PIECE_MAIN = "main";
 
@@ -243,11 +242,13 @@ public class OTEBeeyonds extends OTHTTMultiMachineBaseEM implements IConstructab
 
     public OTEBeeyonds(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
+        useLongPower = true;
         eDismantleBoom = true;
     }
 
     public OTEBeeyonds(String aName) {
         super(aName);
+        useLongPower = true;
         eDismantleBoom = true;
     }
 
@@ -344,13 +345,20 @@ public class OTEBeeyonds extends OTHTTMultiMachineBaseEM implements IConstructab
             return CheckRecipeResultRegistry.NO_RECIPE;
         }
 
-        // 只给能源仓供得起的女王供电, 否则 TT 的 drainEnergyInput 会判超功率直接停机
-        int active = mStorage.size();
-        long cost = EU_PER_BEE * active;
+        // 每只女王消耗 3.8^最大能源仓电压等级 EU/t, 不足 1 EU/t 的小数向上取整
+        long euPerBee = (long) Math.ceil(Math.pow(3.8d, getTierIndex()));
         long cap = Math.max(0L, getMaxInputEu());
-        if (cap > 0 && cost > cap) {
-            active = (int) Math.max(1L, Math.min(active, cap / EU_PER_BEE));
-            cost = Math.min(EU_PER_BEE * active, cap);
+        int active = (int) Math.min(mStorage.size(), cap / euPerBee);
+        if (active == 0) {
+            activeBees = 0;
+            return CheckRecipeResultRegistry.insufficientPower(euPerBee);
+        }
+        long cost = euPerBee * active;
+
+        Map<String, String> missingFlowers = getMissingFlowers(root, world, active);
+        if (!missingFlowers.isEmpty()) {
+            activeBees = 0;
+            return ResultMissingApiaryFlowers.newFailure(missingFlowers);
         }
 
         float tier = getTierIndex();
@@ -378,9 +386,42 @@ public class OTEBeeyonds extends OTHTTMultiMachineBaseEM implements IConstructab
 
     // ===================== Structure =====================
 
+    private Map<String, String> getMissingFlowers(IBeeRoot root, World world, int active) {
+        Map<String, String> missing = new HashMap<>();
+        for (int i = 0; i < active; i++) {
+            IBee bee = root.getMember(mStorage.get(i).queen);
+            if (bee == null || bee.getGenome() == null) continue;
+            var provider = bee.getGenome()
+                .getFlowerProvider();
+            String type = provider.getFlowerType();
+            if (type != null && !type.isEmpty()) missing.putIfAbsent(type, provider.getDescription());
+        }
+        if (missing.isEmpty()) return missing;
+
+        IGregTechTileEntity base = getBaseMetaTileEntity();
+        int[] offset = new int[3];
+        for (int layer = 1; layer <= 3 && !missing.isEmpty(); layer++) {
+            for (int depth = 16; depth <= 18 && !missing.isEmpty(); depth++) {
+                for (int column = 9; column <= 13 && !missing.isEmpty(); column++) {
+                    getExtendedFacing()
+                        .getWorldOffset(new int[] { column - H_OFFSET, depth - V_OFFSET, layer - D_OFFSET }, offset);
+                    int x = base.getXCoord() + offset[0];
+                    int y = base.getYCoord() + offset[1];
+                    int z = base.getZCoord() + offset[2];
+                    if (!world.isAirBlock(x, y, z)) {
+                        missing.keySet()
+                            .removeIf(type -> FlowerManager.flowerRegistry.isAcceptedFlower(type, world, x, y, z));
+                    }
+                }
+            }
+        }
+        return missing;
+    }
+
     @Override
     public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
         if (!checkPiece(STRUCTURE_PIECE_MAIN, H_OFFSET, V_OFFSET, D_OFFSET, errors)) return;
+        doPeriodicChecks = true;
         repairMachine();
         checkEnergyHatchLimit(errors);
         checkHasOutputBus(errors);
@@ -428,6 +469,7 @@ public class OTEBeeyonds extends OTHTTMultiMachineBaseEM implements IConstructab
             .addInfo(translateToLocal("ote.tm.bee.4"))
             .addInfo(translateToLocal("ote.tm.bee.5"))
             .addInfo(translateToLocal("ote.tm.bee.6"))
+            .addInfo(translateToLocal("ote.tm.bee.7"))
             .addTecTechHatchInfo()
             .addSeparator()
             .addInfo("§aAdded by: 123Technology - Beeyonds")
@@ -502,6 +544,11 @@ public class OTEBeeyonds extends OTHTTMultiMachineBaseEM implements IConstructab
         tag.setInteger("beeActive", activeBees);
         tag.setInteger("beeTier", getTierIndex());
         tag.setDouble("beeMultiplier", getOutputMultiplier());
+        tag.setLong(
+            "beeEnergyUsage",
+            getBaseMetaTileEntity() != null && getBaseMetaTileEntity().isActive() && activeBees > 0 && !outputMode
+                ? Math.max(0L, getActualEnergyUsage())
+                : 0L);
     }
 
     @Override
@@ -509,6 +556,12 @@ public class OTEBeeyonds extends OTHTTMultiMachineBaseEM implements IConstructab
         IWailaConfigHandler config) {
         super.getWailaBody(itemStack, currentTip, accessor, config);
         NBTTagCompound tag = accessor.getNBTData();
+        currentTip.add(
+            translateToLocal("ote.waila.bee.energy") + EnumChatFormatting.RESET
+                + ": "
+                + EnumChatFormatting.GOLD
+                + String.format(java.util.Locale.ROOT, "%,d EU/t", tag.getLong("beeEnergyUsage"))
+                + EnumChatFormatting.RESET);
         currentTip.add(
             translateToLocal("ote.waila.bee.stored") + EnumChatFormatting.RESET
                 + ": "
@@ -558,11 +611,11 @@ public class OTEBeeyonds extends OTHTTMultiMachineBaseEM implements IConstructab
         return Math.min(V.length - 1, tier);
     }
 
-    /** 12 槽塞满且能源仓高于 EV 时产出 × √电压等级, 否则 1 */
+    /** 12 槽塞满且能源仓高于 EV 时每级增加 10% 产出, 最多 1.5 倍 */
     private double getOutputMultiplier() {
         int tier = getTierIndex();
         if (mStorage.size() < MAX_SLOTS || tier <= VoltageIndex.EV) return 1d;
-        return Math.sqrt(tier);
+        return 1d + Math.min(tier - VoltageIndex.EV, 5) * 0.1d;
     }
 
     private static ItemStack[] mergeOutputs(List<ItemStack> stacks) {

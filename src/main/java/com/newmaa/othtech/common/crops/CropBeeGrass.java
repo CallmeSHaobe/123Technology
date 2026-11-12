@@ -9,6 +9,8 @@ import com.newmaa.othtech.utils.NbtHelper;
 
 public class CropBeeGrass extends CropPattern {
 
+    public static final String CROP_ID = "cropsnh:beeGrass";
+
     public CropBeeGrass() {
         super("beeGrass", new Color(0x2DCB12), new Color(0x2DCB12));
 
@@ -22,7 +24,7 @@ public class CropBeeGrass extends CropPattern {
 
     @Override
     public String getFlavourText() {
-        return "cropsnh_crops.beeGrass.flavour";
+        return "";
     }
 
     @Override

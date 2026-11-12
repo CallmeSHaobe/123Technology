@@ -7,9 +7,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.gtnewhorizon.cropsnh.loaders.CropLoader;
 import com.newmaa.othtech.OTHTechnology;
-import com.newmaa.othtech.common.crops.CropsNHBeeGrass;
-import com.newmaa.othtech.common.crops.CropsNHPeachGrass;
-import com.newmaa.othtech.common.crops.CropsNHRice;
+import com.newmaa.othtech.common.crops.CropsNHLoader;
 
 @Mixin(value = CropLoader.class, remap = false)
 public abstract class MixinCropLoader {
@@ -17,18 +15,18 @@ public abstract class MixinCropLoader {
     @Inject(method = "postInit", at = @At("RETURN"), remap = false)
     private static void oth$registerCropsNH(CallbackInfo ci) {
         try {
-            CropsNHRice.registerAll();
+            CropsNHLoader.registerRice();
         } catch (Throwable t) {
             // Never take the whole modpack down because of an addon crop.
             OTHTechnology.LOG.error("CropsNH rice crop registration failed", t);
         }
         try {
-            CropsNHPeachGrass.registerAll();
+            CropsNHLoader.registerPeachGrass();
         } catch (Throwable t) {
             OTHTechnology.LOG.error("CropsNH yellow peach grass registration failed", t);
         }
         try {
-            CropsNHBeeGrass.registerAll();
+            CropsNHLoader.registerBeeGrass();
         } catch (Throwable t) {
             OTHTechnology.LOG.error("CropsNH bee grass registration failed", t);
         }
