@@ -22,9 +22,7 @@ jobs:
           fetch-depth: 0
 
       - name: Publish Static File to Release
-        uses: ncipollo/release-action@v1
-        with:
-          artifacts: "libs/123Technology_Musics.zip"
-          tag: ${{ github.ref_name }}
-          allowUpdates: true
-          draft: false
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: gh release upload "$RELEASE_TAG" libs/123Technology_Musics.zip --clobber
