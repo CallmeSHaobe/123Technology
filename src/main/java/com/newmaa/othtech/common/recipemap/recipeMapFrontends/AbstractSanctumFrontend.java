@@ -106,6 +106,8 @@ public class AbstractSanctumFrontend extends RecipeMapFrontend {
         }
 
         ensureCircuitVisible(recipe, regularInputs);
+        moveCircuitToEnd(regularInputs);
+        positionItemInputs(regularInputs);
         recipe.mInputs.clear();
         recipe.mInputs.addAll(regularInputs);
         recipe.mInputs.addAll(fluidInputs);
@@ -113,6 +115,27 @@ public class AbstractSanctumFrontend extends RecipeMapFrontend {
             resourceSalt.relx = (duplicateMode ? DUPLICATE_SALT_X : SALT_X) + windowOffset.x + 1;
             resourceSalt.rely = (duplicateMode ? DUPLICATE_RESOURCE_Y : SALT_Y) + windowOffset.y + 1;
             recipe.mInputs.add(resourceSalt);
+        }
+    }
+
+    private void positionItemInputs(List<PositionedStack> inputs) {
+        List<Pos2d> positions = getItemInputPositions(inputs.size());
+        for (int i = 0; i < inputs.size(); i++) {
+            PositionedStack stack = inputs.get(i);
+            Pos2d pos = positions.get(i);
+            stack.relx = pos.x + windowOffset.x + 1;
+            stack.rely = pos.y + windowOffset.y + 1;
+        }
+    }
+
+    private static void moveCircuitToEnd(List<PositionedStack> inputs) {
+        for (int i = 0; i < inputs.size(); i++) {
+            PositionedStack stack = inputs.get(i);
+            if (stack.item != null && gregtech.api.util.GTUtility.isAnyIntegratedCircuit(stack.item)) {
+                inputs.remove(i);
+                inputs.add(stack);
+                return;
+            }
         }
     }
 
