@@ -514,8 +514,12 @@ public class OTEAbstractSanctum extends OTHMultiMachineBase<OTEAbstractSanctum> 
                 for (ItemStack required : recipe.mInputs) {
                     if (required == null) continue;
                     int requiredAmount = required.stackSize;
-                    if (requiredAmount <= 0 && GTUtility.isAnyIntegratedCircuit(required)) {
-                        requiredAmount = 1;
+                    if (requiredAmount <= 0) {
+                        if (AbstractSanctumRecipes.isNonConsumedInfusionCatalyst(required)) {
+                            if (!hasAvailableItemType(availablePool, required)) return false;
+                            continue;
+                        }
+                        if (GTUtility.isAnyIntegratedCircuit(required)) requiredAmount = 1;
                     }
                     if (requiredAmount <= 0) continue;
                     if (consumeAvailableItem(availablePool, required, requiredAmount) < requiredAmount) return false;
@@ -536,8 +540,14 @@ public class OTEAbstractSanctum extends OTHMultiMachineBase<OTEAbstractSanctum> 
                 for (ItemStack required : recipe.mInputs) {
                     if (required == null) continue;
                     int requiredAmount = required.stackSize;
-                    if (requiredAmount <= 0 && GTUtility.isAnyIntegratedCircuit(required)) {
-                        requiredAmount = 1;
+                    if (requiredAmount <= 0) {
+                        if (AbstractSanctumRecipes.isNonConsumedInfusionCatalyst(required)) {
+                            if (!hasAvailableItemType(availablePool, required)) {
+                                missing.add(required + " x1 (non-consumed catalyst)");
+                            }
+                            continue;
+                        }
+                        if (GTUtility.isAnyIntegratedCircuit(required)) requiredAmount = 1;
                     }
                     if (requiredAmount <= 0) continue;
                     int consumed = consumeAvailableItem(availablePool, required, requiredAmount);
@@ -546,6 +556,13 @@ public class OTEAbstractSanctum extends OTHMultiMachineBase<OTEAbstractSanctum> 
                     }
                 }
                 return missing.toString();
+            }
+
+            private boolean hasAvailableItemType(List<ItemStack> availablePool, ItemStack required) {
+                for (ItemStack available : availablePool) {
+                    if (matchesRequiredItem(available, required)) return true;
+                }
+                return false;
             }
 
             private int consumeAvailableItem(List<ItemStack> availablePool, ItemStack required, int amount) {
@@ -670,21 +687,31 @@ public class OTEAbstractSanctum extends OTHMultiMachineBase<OTEAbstractSanctum> 
             private GTRecipe prepareRuntimeRecipe(GTRecipe recipe) {
                 Integer enchantmentId = recipe
                     .getMetadataOrDefault(AbstractSanctumRecipes.INFUSION_ENCHANTMENT_EFFECT, -1);
+                GTRecipe prepared;
                 if (enchantmentId >= 0) {
-                    return prepareEnchantmentOutput(recipe, enchantmentId);
+                    prepared = prepareEnchantmentOutput(recipe, enchantmentId);
+                } else {
+                    boolean wandAugmentation = recipe
+                        .getMetadataOrDefault(AbstractSanctumRecipes.WAND_AUGMENTATION_RECIPE, false);
+                    if (wandAugmentation) {
+                        prepared = prepareWandAugmentationOutput(recipe);
+                    } else {
+                        AbstractSanctumRecipes.DynamicInfusionOutput dynamicOutput = recipe
+                            .getMetadata(AbstractSanctumRecipes.DYNAMIC_INFUSION_OUTPUT);
+                        prepared = dynamicOutput != null ? prepareDynamicInfusionOutput(recipe, dynamicOutput) : recipe;
+                    }
                 }
+                return unifyRuntimeOutputs(prepared);
+            }
 
-                boolean wandAugmentation = recipe
-                    .getMetadataOrDefault(AbstractSanctumRecipes.WAND_AUGMENTATION_RECIPE, false);
-                if (wandAugmentation) {
-                    return prepareWandAugmentationOutput(recipe);
+            private GTRecipe unifyRuntimeOutputs(GTRecipe recipe) {
+                if (recipe == null || recipe.mOutputs == null) return recipe;
+                GTRecipe result = recipe.copy();
+                for (int i = 0; i < result.mOutputs.length; i++) {
+                    ItemStack output = AbstractSanctumRecipes.unifyRecipeOutput(result.mOutputs[i]);
+                    if (output != null) result.mOutputs[i] = output;
                 }
-                AbstractSanctumRecipes.DynamicInfusionOutput dynamicOutput = recipe
-                    .getMetadata(AbstractSanctumRecipes.DYNAMIC_INFUSION_OUTPUT);
-                if (dynamicOutput != null) {
-                    return prepareDynamicInfusionOutput(recipe, dynamicOutput);
-                }
-                return recipe;
+                return result;
             }
 
             private GTRecipe prepareEnchantmentOutput(GTRecipe recipe, int enchantmentId) {
@@ -982,11 +1009,11 @@ public class OTEAbstractSanctum extends OTHMultiMachineBase<OTEAbstractSanctum> 
         if (STRUCTURE_DEFINITION == null) {
             STRUCTURE_DEFINITION = StructureDefinition.<OTEAbstractSanctum>builder()
                 .addShape(STRUCTURE_PIECE_MAIN, shapeMain)
-                // A：硼硅玻璃外罩；保留玻璃等级追踪。
+                // A：玻璃。
                 .addElement(
                     'A',
                     chainAllGlasses(-1, (machine, tier) -> machine.glassTier = tier, machine -> machine.glassTier))
-                // B：新生魔艺血铁块。
+                // B：血腥灵宝块。
                 .addElement('B', ofBlock(BlockList.BloodyIchorium.block, 0))
                 // C：盖亚之魂块。
                 .addElement('C', ofBlock(BlockList.Gaia.block, 0))
@@ -1178,7 +1205,9 @@ public class OTEAbstractSanctum extends OTHMultiMachineBase<OTEAbstractSanctum> 
                 if (ignoreSalt && i == resourceSaltIndex) continue;
 
                 ItemStack scaled = input.copy();
-                if (i == resourceSaltIndex) {
+                if (AbstractSanctumRecipes.isNonConsumedInfusionCatalyst(input)) {
+                    scaled.stackSize = 0;
+                } else if (i == resourceSaltIndex) {
                     scaled.stackSize = Math.max(1, (int) Math.floor(input.stackSize * saltMultiplier));
                 }
                 items.add(scaled);
@@ -1310,7 +1339,10 @@ public class OTEAbstractSanctum extends OTHMultiMachineBase<OTEAbstractSanctum> 
         if (multiplier <= 0) return;
         if (recipe.mInputs != null) {
             for (ItemStack required : recipe.mInputs) {
-                if (required == null || required.stackSize <= 0) continue;
+                if (required == null || required.stackSize <= 0
+                    || AbstractSanctumRecipes.isNonConsumedInfusionCatalyst(required)) {
+                    continue;
+                }
                 int remaining = required.stackSize * multiplier;
                 for (ItemStack available : inputItems) {
                     if (remaining <= 0) break;

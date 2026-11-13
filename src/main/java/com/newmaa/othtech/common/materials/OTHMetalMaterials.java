@@ -22,7 +22,7 @@ public final class OTHMetalMaterials {
             translateToLocalFormatted("oth.tt.gunmu.name"),
             0xF8F8FF,
             TextureSet.SET_NONE,
-            114514,
+            -0,
             true);
     }
 
@@ -34,7 +34,7 @@ public final class OTHMetalMaterials {
                 .setChemicalFormula("")
                 .setIconSet(TextureSet.SET_SHINY)
                 .setARGB(0xFFFFF0)
-                .setMeltingPoint(114514)
+                .setMeltingPoint(-0)
                 .setBlastFurnaceTemp(114514)
                 .addFluid()
                 .addCell()

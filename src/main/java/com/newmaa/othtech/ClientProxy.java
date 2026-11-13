@@ -3,6 +3,7 @@ package com.newmaa.othtech;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraftforge.client.MinecraftForgeClient;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.client.model.IModelCustom;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -10,6 +11,7 @@ import com.newmaa.othtech.client.OTEEntangledFluidRenderer;
 import com.newmaa.othtech.client.OTEMaterialRenderEffects;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.blocks.deepseiko.TEDeepSeikoHolo;
+import com.newmaa.othtech.common.blocks.fluids.RossFluids;
 import com.newmaa.othtech.common.dimensions.sky.RossFogHandler;
 import com.newmaa.othtech.common.dimensions.sky.SkyProviderHandler;
 import com.newmaa.othtech.common.entity.EntityDogBlue;
@@ -24,6 +26,7 @@ import com.newmaa.othtech.common.item.itemArmor.ItemHelmTallHatRender;
 import com.newmaa.othtech.common.item.itemBlock.ItemModelAsukaRender;
 import com.newmaa.othtech.common.item.itemBlock.ItemModelAyanamiRender;
 import com.newmaa.othtech.common.item.itemBlock.ItemModelTallHatRender;
+import com.newmaa.othtech.common.materials.OTHMaterials;
 import com.newmaa.othtech.common.render.RiceBowlRenderer;
 import com.newmaa.othtech.common.render.RocketRenderOTH;
 
@@ -33,6 +36,7 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class ClientProxy extends CommonProxy {
 
@@ -51,21 +55,17 @@ public class ClientProxy extends CommonProxy {
         super.preInit(event);
         SkyProviderHandler sky = new SkyProviderHandler();
         this.register_event(sky);
-        // 锑罗斯水下雾色改成血色(原版硬编码成蓝色)
         this.register_event(new RossFogHandler());
-        // 在这里添加你需要的预初始化逻辑
+        MinecraftForge.EVENT_BUS.register(this);
     }
 
     @Override
     public void init(FMLInitializationEvent event) {
         super.init(event);
         new RocketRenderOTH();
-        // 注册 itemModelAyanamiRender 渲染器
+
         new ItemModelAyanamiRender();
-
-        // 注册 itemModelAsukaRender 渲染器
         new ItemModelAsukaRender();
-
         new ItemModelTallHatRender();
 
         registerRenderers();
@@ -74,28 +74,31 @@ public class ClientProxy extends CommonProxy {
         OTEMaterialRenderEffects.install();
         OTEEntangledFluidRenderer.register();
 
-        // 迪普西科米饭全息投影（影子方块 + TESR，旋转的米饭碗）
         ClientRegistry.bindTileEntitySpecialRenderer(TEDeepSeikoHolo.class, new RiceBowlRenderer());
 
-        // 三色狗共用 RenderDogColored，只是贴图不同
         RenderingRegistry
             .registerEntityRenderingHandler(EntityDogYellow.class, new RenderDogColored(RenderDogColored.YELLOW));
         RenderingRegistry
             .registerEntityRenderingHandler(EntityDogRed.class, new RenderDogColored(RenderDogColored.RED));
         RenderingRegistry
             .registerEntityRenderingHandler(EntityDogBlue.class, new RenderDogColored(RenderDogColored.BLUE));
-        // 核弹投掷物没有渲染器就会完全隐形（RenderManager 只会沿父类找，EntityThrowable 没有映射）。
-        // RenderSnowball 直接拿物品图标当投射物贴图，飞行中的核弹就看得见了。
         RenderingRegistry.registerEntityRenderingHandler(
             EntityNukeThrowable.class,
             new RenderSnowball(ItemLoader.itemNukeThrowable));
 
     }
 
+    @SubscribeEvent
+    public void onTextureStitch(TextureStitchEvent.Post event) {
+        if (event.map.getTextureType() != 0 || OTHMaterials.LCL == null
+            || OTHMaterials.LCL.mFluid == null
+            || RossFluids.BlockLCL == null) return;
+        OTHMaterials.LCL.mFluid.setIcons(RossFluids.BlockLCL.getIcon(1, 0), RossFluids.BlockLCL.getIcon(2, 0));
+    }
+
     @Override
     public void postInit(FMLPostInitializationEvent event) {
         super.postInit(event);
-        // 在这里添加你需要的后初始化逻辑
     }
 
     // Override CommonProxy methods here, if you want a different behaviour on the client (e.g. registering renders).

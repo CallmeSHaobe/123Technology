@@ -75,8 +75,7 @@ public class OTELargeQuHub extends OTHTTMultiMachineBaseEM
     private static IStructureDefinition<OTELargeQuHub> STRUCTURE_DEFINITION = null;
 
     private static final String[] description = new String[] {
-        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.quhub.0"),
-        translateToLocal("ote.cm.quhub.1"), translateToLocal("ote.cm.quhub.2") };
+        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.quhub.0") };
 
     private int casingCount = 0;
 
@@ -313,9 +312,6 @@ public class OTELargeQuHub extends OTHTTMultiMachineBaseEM
         tt.addMachineType(translateToLocal("ote.tm.quhub.0"))
             .addInfo(translateToLocal("ote.tm.quhub.1"))
             .addInfo(translateToLocal("ote.tm.quhub.2"))
-            .addInfo(translateToLocal("ote.tm.quhub.3"))
-            .addInfo(translateToLocal("ote.tm.quhub.4"))
-            .addInfo(translateToLocal("ote.tm.mat.5"))
             .addSupportMultiAmp()
             .addSeparator()
             .addInfo("§aAdded by: 123Technology - §4LargeQuHub")

@@ -9,8 +9,8 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 public class RossFluids {
 
-    /** 第三次冲击的 LCL 红, 管道/储罐/NEI 里显示的颜色。 */
-    public static final int LCL_COLOR = 0xFFC41E12;
+    /** 与 LCL 材料一致的橙色, 用于管道/储罐/NEI 的流体着色。 */
+    public static final int LCL_COLOR = 0xFFFA6F2A;
 
     public static Fluid LCL;
     public static Block BlockLCL;

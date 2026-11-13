@@ -56,6 +56,7 @@ tt.socInf=§7§k//§9§lGive life to time, give civilization to the years.§7§k
 tt.socNor=§c§lAll is One...
 tt.transTrans=§aBreaks through the limitations of distance and time within any encapsulated space, making hyperdimensional communication possible.
 tt.neiISA=Check NEI..
+tt.IOS=123, we love you
 tt.HYP=Indestructible..
 tt.SPE=Grinding past, present, and future
 tt.brains=It's still beating...
@@ -111,6 +112,7 @@ for.bees.species.ironoth=Iron Block
 for.bees.species.chg=§aColored §bGlass
 for.bees.species.shengxi=§d§n§l§oVitality
 for.bees.species.enqing=§4§lEnqing
+for.bees.species.grassoth=§aGrass
 oth.comb.hypogen=Hypogen Comb
 oth.comb.chromaticglass=Chromatic Glass Comb
 oth.comb.glass=Glass Comb
@@ -145,6 +147,11 @@ fluid.HCl10000.name=Magic Hydrochloric Acid
 fluid.HCl100000.name=Final Hydrochloric Acid
 item.IrOsSm.name=Iridiosamarium
 fluid.IrOsSm.name=Iridiosamarium
+item.gunmu.name=§qObservable Gunmu - Hyperphysics Polymer
+fluid.gunmu.name=§qObservable Gunmu - Hyperphysics Polymer
+item.degunmu.name=§8Unobservable Gunmu - Hyperphysics Polymer
+fluid.degunmu.name=§8Unobservable Gunmu - Hyperphysics Polymer
+oth.tt.gunmu.name=§z§m§l--------------------------------
 bw.werkstoff.12320.name=Iridiosamarium
 LCL=L.C.L
 
@@ -164,6 +171,7 @@ Material.hcl100000=Final Hydrochloric Acid
 Material.irossm=Iridiosamarium
 
 #Galaxy
+otht.tier.0=Antimony Star
 planet.Antimonia=§oAntimonia - Antimony Star
 planet.Ross123b=§oRoss123b - Antimony Ross
 star.starAntimonia=§0Antimony Hole
@@ -212,6 +220,7 @@ ote.tn.pump=Space Drill Module MK-123
 ote.tn.s9in1=Small Steam Processing Factory
 ote.tn.bee=Beeyonds Home
 ote.tn.bbpf=Hyperdimensional Biebie Plasma Forge
+ote.tn.nasa=Integrated Rocket Assembly Workshop (WIP)
 
 #Machine_Addition
 GT5U.gui.text.nowater=§4Machine shoooootdown due to Blazing Heat or Furnace Temperature
@@ -246,6 +255,7 @@ otht.recipe.NQF=Compressed Naquadah Fuel Refinery
 otht.recipe.fuel.nq=§7§lUniversal Naquadah Fuel Engine
 otht.recipe.MCA=Advanced High Energy Circuit Assembly Line
 otht.recipe.DeepSeikoBEC=§b§lDeepSeiko Condensate
+otht.recipe.nasa=§lCNSA - Modular Assembly
 otht.recipe.AE2=Singularity Producer
 otht.recipe.BIN=Trash Can
 otht.recipe.RCY=Recycler
@@ -726,17 +736,12 @@ ote.tm.mtc.4=§6  Uses GT++ Thermal Processing Casings for structure
 ote.tm.mtc.5=§l "The steel torrent of the Urals never ceases — ores are forged into the Motherland's lifeblood in the centrifugal inferno"
 
 #LargeQuHub
-ote.tn.quhub=Large Stackable Transformer (TBD)
-ote.tm.quhub.0=§lStackable Active Transformer - TBD
-ote.tm.quhub.1=§b  EU in: Energy Hatch / Multi-Amp Energy Hatch; EU out: Dynamo Hatch / Multi-Amp Dynamo Hatch
-ote.tm.quhub.2=§c  Laser Target / Laser Source Hatches are NOT supported
-ote.tm.quhub.3=§b  Enable Power Pass to relay energy (same loss as the Active Transformer)
-ote.tm.quhub.4=§b  The controller wall is the first slice; the center of the wall right behind it holds an EBF heating coil
-ote.tm.quhub.5=§b  Every 3x3 wall further back is one slice; slices can be stacked endlessly; max slices = coil tier³
-ote.tm.quhub.6=§6  Structure casing: Deoxidized Steel Machine Casing
+ote.tn.quhub=Large Qu-Brand Hub
+ote.tm.quhub.0=§lXiaodeng's Comical Creation - One Big Region.
+ote.tm.quhub.1=§bOnly standard and multi-amp Dynamo Hatches and Energy Hatches are supported
+ote.tm.quhub.2=§cLaser Target and Laser Source Hatches are not supported
+ote.tm.quhub.5=§bThe blueprint determines the number of stacked slices; maximum slices = coil tier^3
 ote.cm.quhub.0=1 - Energy Hatch / Multi-Amp Energy Hatch / Dynamo Hatch / Multi-Amp Dynamo Hatch : replace Deoxidized Steel Machine Casing (no laser hatches)
-ote.cm.quhub.1=The controller wall is the first slice; the center of the wall right behind it holds an EBF heating coil
-ote.cm.quhub.2=Every 3x3 wall further back is one slice and can be stacked endlessly; max slices = coil tier³
 
 #WTFHatch
 ote.tm.wtf.0=Stores energy in a global network.
@@ -828,6 +833,7 @@ ote.tm.ds.3=§d■ Condensate: only the recipe's own fluids are needed; still BE
 ote.tm.ds.4=§d■ Condensate: unlock it in the machine upgrade panel, and raise nanite tier as recipes require
 ote.tm.ds.5=§d■ Condensate: compute cards give extra speed (Optical, Quantum, Planck, D99, D199, D999) ... and 690?!
 ote.tm.ds.6=§cA§6t§et§ae§bn§dt§ci§6o§en §ai§bs §da§cl§6l §ey§ao§bu §dn§ce§6e§ed§a.
+ote.tm.ds.7=§dAuthors: §bLokisidus §d&& §9§zDeepSeek 41F
 
 #DeepSeiko v1.4 structure
 tile.dsCasing.4.name=Assembly Chamber Casing
@@ -907,6 +913,9 @@ cropsnh_crops.rice=Rice
 cropsnh_crops.yellowPeachGrass=Yellow Peach Grass
 cropsnh_crops.yellowPeachGrass.flavour=Peaches hang between the blades, as sweet as canned.
 
+# CropsNH Bee Grass
+cropsnh_crops.beeGrass=Bee Grass
+
 # -- DeepSeiko: MUI2 panel / chat / shutdown (localized 2026-10-29) --
 ote.ds.chat.modeLocked=§cCannot switch mode while crafting
 ote.ds.lang.computeCard=Compute Card
@@ -979,6 +988,9 @@ ote.abstract_sanctum.tooltip.15=§8qy(t)=0.01+1/(1+exp(8(t-3.50)))
 ote.abstract_sanctum.tooltip.16=§8qz(t)=0.01+1/(1+exp(40(t-1.20)))
 ote.abstract_sanctum.tooltip.17=§9 Keep the machine supplied with enough Mana, World Salt and Life Essence!
 ote.abstract_sanctum.tooltip.18=§6✦ ENDGAME CORES §7Three dedicated GUI slots can remove Mana, World Salt and Life Essence costs
+ote.abstract_sanctum.tooltip.19=§9Author: §z§l§bNMC's Envoy of the End - 0g123451
+ote.abstract_sanctum.tooltip.20=§c§lConfigure whether the sinister Nailong's laughter echoes across the world while this machine runs...
+ote.abstract_sanctum.tooltip.21=§c§lIs this what they call §eMilk§c Sickness?
 otht.recipe.AbstractSanctumCraft=AbstractSanctum - Crafting
 otht.recipe.AbstractSanctumDuplicate=AbstractSanctum - Duplication
 ote.ds.nei.nanite.line1=§bRequires upgrading the nanite swarm
