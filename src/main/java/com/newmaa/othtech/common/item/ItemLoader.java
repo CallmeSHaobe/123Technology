@@ -25,6 +25,7 @@ import com.newmaa.othtech.common.item.itemTools.Dasima;
 import com.newmaa.othtech.common.item.itemTools.ItemRecord;
 import com.newmaa.othtech.common.item.itemTools.ItemSunLighter;
 import com.newmaa.othtech.common.item.itemWeapons.ItemNukeThrowable;
+import com.newmaa.othtech.common.item.itemWeapons.ItemPositronCannon;
 import com.newmaa.othtech.common.item.itemWeapons.ShikanokoNoko;
 
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -40,6 +41,7 @@ public class ItemLoader {
     public static Item ShikanokoNoko = new ShikanokoNoko();
     public static Item itemSunLighter = new ItemSunLighter();
     public static Item itemNukeThrowable = new ItemNukeThrowable();
+    public static Item itemPositronCannon = new ItemPositronCannon();
     public static Item itemTST = new ItemTST();
     public static Item RecordPRKA = new ItemRecord("PRK_A");
     public static Item RecordPRKB = new ItemRecord("PRK_B");
@@ -67,6 +69,7 @@ public class ItemLoader {
         OTHItemList.SunLighter.set(registryAndCallback(itemSunLighter, "itemSunLighter"));
         OTHItemList.LeekBox.set(registryAndCallback(itemLeekBox, "itemLeekBox"));
         OTHItemList.NukeThrowable.set(registryAndCallback(itemNukeThrowable, "itemNukeThrowable"));
+        OTHItemList.PositronCannon.set(registryAndCallback(itemPositronCannon, "itemPositronCannon"));
         OTHItemList.RecordPRKA.set(registryAndCallback(RecordPRKA, "attackingBattle"));
         OTHItemList.RecordPRKB.set(registryAndCallback(RecordPRKB, "runningHorse"));
         OTHItemList.RecordEVAA.set(registryAndCallback(RecordEVAA, "EVAA"));

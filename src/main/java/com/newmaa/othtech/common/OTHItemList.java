@@ -81,6 +81,7 @@ public enum OTHItemList {
     LeekBox,
     itemTST,
     NukeThrowable,
+    PositronCannon,
     RecordPRKA,
     RecordPRKB,
     RecordEVAA,
