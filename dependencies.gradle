@@ -2,8 +2,8 @@
 elytraModpackVersion {
     // 在这配置的gtnh版本 用于自动拉取依赖版本
     gtnhVersion = "2.9.0"
-    // 是否不缓存拉取的依赖清单文件
-    manifestNoCache = false
+    // Elytra conventions v1.1.1 将此值直接作为 allowFromCaching 传入；设为 true 才会读取本地清单。
+    manifestNoCache = true
     // 是否自动为输出的jar添加 `gtnhVersion` 后缀
     attachManifestVersionToJar = false
 }

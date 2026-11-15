@@ -17,6 +17,7 @@ public class EntityLoader {
         registerEntity(EntityDogRed.class, "DogRed", 3, 80, 3, true);
         registerEntity(EntityDogBlue.class, "DogBlue", 4, 80, 3, true);
         registerEntity(EntityNukeThrowable.class, "entityNukeThrowable", 1, 64, 10, true);
+        registerEntity(EntityPositronShot.class, "entityPositronShot", 5, 512, 1, true);
         registerEntity(EntityFakePlayer.class, "CustomPlayer", 0, 80, 3, true);
         registerSpawns();
     }

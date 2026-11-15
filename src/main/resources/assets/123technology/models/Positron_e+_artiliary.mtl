@@ -1,0 +1,8 @@
+# Positron cannon texture for the existing OBJ UV layout
+newmtl positron_cannon
+Ka 0.10 0.10 0.10
+Kd 1.00 1.00 1.00
+Ks 0.15 0.18 0.19
+Ns 32.0
+illum 2
+map_Kd Positron_e+_artiliary.png

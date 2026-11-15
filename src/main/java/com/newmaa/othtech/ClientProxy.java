@@ -19,6 +19,7 @@ import com.newmaa.othtech.common.entity.EntityDogRed;
 import com.newmaa.othtech.common.entity.EntityDogYellow;
 import com.newmaa.othtech.common.entity.EntityFakePlayer;
 import com.newmaa.othtech.common.entity.EntityNukeThrowable;
+import com.newmaa.othtech.common.entity.EntityPositronShot;
 import com.newmaa.othtech.common.entity.RenderDogColored;
 import com.newmaa.othtech.common.entity.RenderPlayer;
 import com.newmaa.othtech.common.item.ItemLoader;
@@ -26,7 +27,9 @@ import com.newmaa.othtech.common.item.itemArmor.ItemHelmTallHatRender;
 import com.newmaa.othtech.common.item.itemBlock.ItemModelAsukaRender;
 import com.newmaa.othtech.common.item.itemBlock.ItemModelAyanamiRender;
 import com.newmaa.othtech.common.item.itemBlock.ItemModelTallHatRender;
+import com.newmaa.othtech.common.item.itemWeapons.RenderPositronCannon;
 import com.newmaa.othtech.common.materials.OTHMaterials;
+import com.newmaa.othtech.common.render.RenderPositronShot;
 import com.newmaa.othtech.common.render.RiceBowlRenderer;
 import com.newmaa.othtech.common.render.RocketRenderOTH;
 
@@ -69,6 +72,7 @@ public class ClientProxy extends CommonProxy {
         new ItemModelTallHatRender();
 
         registerRenderers();
+        MinecraftForgeClient.registerItemRenderer(OTHItemList.PositronCannon.getItem(), new RenderPositronCannon());
         RenderingRegistry.registerEntityRenderingHandler(EntityFakePlayer.class, new RenderPlayer());
 
         OTEMaterialRenderEffects.install();
@@ -85,6 +89,7 @@ public class ClientProxy extends CommonProxy {
         RenderingRegistry.registerEntityRenderingHandler(
             EntityNukeThrowable.class,
             new RenderSnowball(ItemLoader.itemNukeThrowable));
+        RenderingRegistry.registerEntityRenderingHandler(EntityPositronShot.class, new RenderPositronShot());
 
     }
 

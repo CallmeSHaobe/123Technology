@@ -12,6 +12,6 @@
     "GTOrePrefixOTHMixin",
     "ItemDimensionDisplayRendererOTHMixin"
   ],
-  "client": ["RossRainSplashMixin"],
+  "client": ["RossRainSplashMixin", "PositronCannonArmsMixin"],
   "server": []
 }
