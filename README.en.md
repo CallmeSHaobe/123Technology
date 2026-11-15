@@ -2,64 +2,85 @@
 <p align="center">
   <img src="docs/assets/IrOsSm_logo.svg" alt="123Technology Logo" width="128" height="128">
 </p>
-<h3 align="center">An Unofficial Expansion Mod For The GTNH Modpack</h3>
+<h3 align="center">GTNH</h3>
 
-[Chinese Version Readme here | 中文readme 这里呐](README.md)
+[Chinese Version Readme | 中文 README](README.md)
 
-### About the mod
+## About the Mod
 
-As an unofficial expansion mod for the GTNH Modpack.
+Adds extra content to GTNH, including some references and jokes.
 
-Your ideas and contributions are welcome—please submit them in the Issues section.
+Ideas and suggestions are welcome. Please report bugs in Issues.
 
-They will be considered adding requested features where possible. UwU
+Some features draw inspiration from Twist Space Technology and other mods.
 
-If you notice any bugs in the game, please report them in the Issues section.
+Keep the language files up to date, or tooltips may display incorrectly.
 
-Some features are inspired by Twist Space Technology Mod, etc.
+Explosions for 123Technology's TecTech machines can be controlled in the config file.
 
-Remember to update the GregTech language files, otherwise machine tooltips may display incorrectly in English.
+To avoid bugs caused by the mod's name, the mod file is usually named OTHTechnology. Do not rename it; bugs caused by renaming are not supported.
 
-Regarding the **large explosion** of TecTech-style machines added by 123Technology:
+The ModID remains `123technology`.
 
-(Yes, I re-added the explosion effect when TecTech-style machines are destroyed.)
+TwistSpaceTechnology is required as a dependency.
 
-(This applies only to machines added by 123Technology.)
+## Thanks to the Contributors
 
-You can disable this in the config file.
+Textures:
 
-### To avoid the bugs caused by the Mod names. Please note the following -w-.
+JulianChum ABKQPO LyeeR
 
-1.The mod file name MUST be kept as OTHTechnology.
-
-(Note: The file has been renamed to OTHTechnology in the releases for clarity.)
-
-so DO NOT RENAME IT please.
-
-2.If you encounter bugs after renaming the Mod file, DO NOT REPORT THEM thanks, as they are caused by the modification.
-
-3.The ModID is still 123technology.
-
-### Thanks the Laodengs who helped with this mod
-
-Textures ：
-
-JulianChum  ABKQPO  LyeeR
-
-Machine Structure ：
+Some structures:
 
 JulianChum LyeeR 商陆 Tmeex
 
-Code Support ：
+Code support:
 
-EOHBUFFER : Safari_Xiu
+EOHBUFFER: Safari_Xiu
 
-NHU : Keriils TC_traveler
+NHU: Keriils TC_traveler
 
-BOXplusplus(?) luomolhx
+BOXplusplus(?): luomolhx
 
 kevenzh HuimaoX czqwq
 
-Translation :
+0g123451 Lokisiuds
 
-English ： Strata-su & czqwq
+Translation:
+
+English: Strata-su & czqwq
+
+Thanks to everyone who helped.
+
+***
+### GTNH Compatibility
+***
+
+Versions 1.3.0 and earlier support only GTNH 2.6.1. GTNH 2.6.0 may run, but is not guaranteed to be bug-free.
+
+Version 1.3.0+ supports GTNH 2.7.0 or 2.7.2.
+
+Version 2.1.1_GTNH2.8.0 supports the GTNH 2.8.0 beta. It runs, but may still have bugs.
+
+Version 2.1.6+ supports all GTNH 2.8.x versions.
+
+Version 2.1.9+ supports GTNH 2.9.0.
+
+~~Suggested mod: https://github.com/RetroForge/SkinPort~~
+
+***
+### Models
+***
+
+Rei Ayanami model: BlockBench `.bbmodel` file in `src/main/resources/assets/123technology/models`.
+
+Author: NewMaa 2025-1-17
+
+Asuka model: BlockBench `.bbmodel` file in `src/main/resources/assets/123technology/models`.
+
+Author: HuimaoX 2025-2-4
+
+Positron Cannon model
+
+Author:
+***
