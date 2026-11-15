@@ -213,7 +213,10 @@ public abstract class OTHSteamMultiBase<T extends OTHSteamMultiBase<T>> extends 
         if (aTileEntity == null) return false;
         final IMetaTileEntity aMetaTileEntity = aTileEntity.getMetaTileEntity();
         if (!(aMetaTileEntity instanceof MTEHatchSteamBusOutput steamBus)) return false;
-        return addToMachineListInternal(mSteamOutputs, steamBus, aBaseCasingIndex);
+        if (!addToMachineListInternal(mSteamOutputs, steamBus, aBaseCasingIndex)) return false;
+        // GT's output-space check and item insertion both read mOutputBusses.
+        mOutputBusses.add(steamBus);
+        return true;
     }
 
     @Override
@@ -254,16 +257,13 @@ public abstract class OTHSteamMultiBase<T extends OTHSteamMultiBase<T>> extends 
             tHatch.mRecipeMap = getRecipeMap();
             for (int i = tHatch.getBaseMetaTileEntity()
                 .getSizeInventory() - 1; i >= 0; i--) {
-                if (GTUtility.areStacksEqual(
-                    aStack,
+                ItemStack stored = tHatch.getBaseMetaTileEntity()
+                    .getStackInSlot(i);
+                if (stored != null && GTUtility.areStacksEqual(aStack, stored)
+                    && stored.stackSize >= aStack.stackSize) {
                     tHatch.getBaseMetaTileEntity()
-                        .getStackInSlot(i))) {
-                    if (tHatch.getBaseMetaTileEntity()
-                        .getStackInSlot(0).stackSize >= aStack.stackSize) {
-                        tHatch.getBaseMetaTileEntity()
-                            .decrStackSize(0, aStack.stackSize);
-                        return true;
-                    }
+                        .decrStackSize(i, aStack.stackSize);
+                    return true;
                 }
             }
         }

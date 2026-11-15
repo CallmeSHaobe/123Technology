@@ -30,8 +30,12 @@ public final class FishtorioLootTable {
 
     /** 全物品池屏蔽的 mod: GTNH核心 / 通用奇点 / 星门 / TST / GTNL */
     private static final Set<String> FULL_POOL_MOD_BLACKLIST = new HashSet<>(
-        Arrays.asList("dreamcraft", "universalsingularities", "sgcraft",
-            ModsEnum.TwistSpaceTechnology.ID, ModsEnum.GTNL.ID));
+        Arrays.asList(
+            "dreamcraft",
+            "universalsingularities",
+            "sgcraft",
+            ModsEnum.TwistSpaceTechnology.ID,
+            ModsEnum.GTNL.ID));
 
     private FishtorioLootTable() {}
 
