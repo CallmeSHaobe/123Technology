@@ -56,8 +56,8 @@ import net.minecraftforge.fluids.FluidStack;
 
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
-import com.newmaa.othtech.utils.RecipeBuilder;
 import com.newmaa.othtech.utils.ModsEnum;
+import com.newmaa.othtech.utils.RecipeBuilder;
 
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
