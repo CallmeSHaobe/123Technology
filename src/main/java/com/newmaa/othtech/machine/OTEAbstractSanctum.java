@@ -1028,7 +1028,7 @@ public class OTEAbstractSanctum extends OTHMultiMachineBase<OTEAbstractSanctum> 
                 .addElement('J', ofBlock(WayofTime.alchemicalWizardry.ModBlocks.bloodRune, 4))
                 // K：原黄色染色陶瓦位置，替换为黄桃罐头机械方块，不参与仓室替换。
                 .addElement('K', ofBlock(NailongCasings.nailongCasing, 1))
-                .addElement('L', ofBlock(WayofTime.alchemicalWizardry.ModBlocks.efficiencyRune, 0))
+                .addElement('L', ofBlock(WayofTime.alchemicalWizardry.ModBlocks.runeOfSelfSacrifice, 0))
                 // M-R：原版石英及植物魔法特殊石英。
                 .addElement('M', ofBlock(Blocks.quartz_block, 0))
                 .addElement('N', ofBlock(ModFluffBlocks.darkQuartzSlab, 0))

@@ -39,6 +39,7 @@ import com.newmaa.othtech.common.materials.BWLiquids;
 import com.newmaa.othtech.common.materials.BWMaterials;
 import com.newmaa.othtech.utils.RecipeBuilder;
 
+import bartworks.system.material.WerkstoffLoader;
 import goodgenerator.loader.Loaders;
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
@@ -1404,6 +1405,7 @@ public class RecipesMain implements IRecipePool {
             .eut(RECIPE_HV)
             .duration(123 * SECONDS)
             .addTo(assemblerRecipes);
+        // Fish
         GTValues.RA.stdBuilder()
             .metadata(RESEARCH_ITEM, ItemList.FishingPort.get(1))
             .metadata(SCANNING, new Scanning(1200, RECIPE_ZPM))
@@ -1429,6 +1431,7 @@ public class RecipesMain implements IRecipePool {
             .eut(RECIPE_ZPM)
             .duration(1)
             .addTo(AssemblyLine);
+
         // Large Qu
         RecipeBuilder.builder()
             .itemOutputs(OTHItemList.LargeQuHub.get(1))
@@ -1483,6 +1486,34 @@ public class RecipesMain implements IRecipePool {
             .eut(RECIPE_LuV)
             .duration(60 * 20)
             .addTo(assemblerRecipes);
-
+        // Positron_e+_artiliary
+        GTValues.RA.stdBuilder()
+            .metadata(RESEARCH_ITEM, OTHItemList.itemEnqingM.get(1))
+            .metadata(SCANNING, new Scanning(120, RECIPE_ZPM))
+            .itemInputs(
+                GTOreDictUnificator.get(OrePrefixes.frameGt, Materials.Tritanium, 4),
+                ItemList.Field_Generator_ZPM.get(16),
+                ItemList.Emitter_ZPM.get(4),
+                GTModHandler.getModItem("GoodGenerator", "advancedRadiationProtectionPlate", 16),
+                GTOreDictUnificator.get(OrePrefixes.wireGt01, Materials.SuperconductorZPM, 64),
+                ItemList.Energy_Module.get(1),
+                ItemList.Energy_Module.get(1),
+                GTOreDictUnificator.get(OrePrefixes.wireGt01, Materials.SuperconductorZPM, 64),
+                GTModHandler.getModItem(NewHorizonsCoreMod.ID, "HighEnergyFlowCircuit", 4),
+                GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 1, 10506),
+                GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 1, 10507),
+                GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 1, 10504),
+                new ItemStack(Blocks.stone_button, 1),
+                WerkstoffLoader.HDCS.get(OrePrefixes.stickLong, 4),
+                WerkstoffLoader.HDCS.get(OrePrefixes.plate, 6),
+                new ItemStack(Items.clock, 1))
+            .fluidInputs(
+                Materials.Iridium.getMolten(1440),
+                new FluidStack(FluidRegistry.getFluidID("molten.indalloy140"), 144000),
+                Materials.SuperCoolant.getFluid(32000))
+            .itemOutputs(OTHItemList.PositronCannon.get(1))
+            .eut(RECIPE_UV)
+            .duration(120)
+            .addTo(AssemblyLine);
     }
 }
