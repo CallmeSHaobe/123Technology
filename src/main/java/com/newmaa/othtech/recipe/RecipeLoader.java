@@ -6,7 +6,7 @@ import net.minecraftforge.fluids.FluidRegistry;
 
 import com.newmaa.othtech.OTHTechnology;
 import com.newmaa.othtech.machine.OTEMiniSteamNineInOne;
-import com.newmaa.othtech.utils.modsEnum;
+import com.newmaa.othtech.utils.ModsEnum;
 
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.TierEU;
@@ -28,10 +28,10 @@ public class RecipeLoader {
         OTHTechnology.LOG.info("RecipeLoader: Loading OTEMiniSteamNineInOne recipes...");
         OTEMiniSteamNineInOne.loadRecipes();
         OTHTechnology.LOG.info("RecipeLoader: OTEMiniSteamNineInOne done.");
-        if (modsEnum.NHUtilities.isModLoaded() && is_EggMachine_Recipes_For_NHU) {
+        if (ModsEnum.NHUtilities.isModLoaded() && is_EggMachine_Recipes_For_NHU) {
             new RecipesDE().loadRecipes();
         }
-        if (!modsEnum.GTNN.isModLoaded()) {
+        if (!ModsEnum.GTNN.isModLoaded()) {
             // 78water
             GTValues.RA.stdBuilder()
                 .itemOutputs(GTModHandler.getModItem("miscutils", "item.BasicGenericChemItem", 1, 30))

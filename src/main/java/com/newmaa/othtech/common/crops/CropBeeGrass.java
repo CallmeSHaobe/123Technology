@@ -5,7 +5,7 @@ import java.awt.Color;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.BiomeDictionary;
 
-import com.newmaa.othtech.utils.NbtHelper;
+import com.newmaa.othtech.utils.NBTHelper;
 
 public class CropBeeGrass extends CropPattern {
 
@@ -14,7 +14,7 @@ public class CropBeeGrass extends CropPattern {
     public CropBeeGrass() {
         super("beeGrass", new Color(0x2DCB12), new Color(0x2DCB12));
 
-        ItemStack queen = NbtHelper.grassothQueen();
+        ItemStack queen = NBTHelper.grassothQueen();
         if (queen != null) {
             this.addDrop(queen, 10000);
         }

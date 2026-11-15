@@ -14,6 +14,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import com.newmaa.othtech.Config;
+import com.newmaa.othtech.utils.ModsEnum;
 
 import cpw.mods.fml.common.registry.GameData;
 import gregtech.api.enums.OrePrefixes;
@@ -27,9 +28,10 @@ public final class FishtorioLootTable {
     private static final Map<Integer, List<ItemStack>> ORE_POOLS = new HashMap<>();
     private static List<ItemStack> everything = null;
 
-    /** 全物品池屏蔽的 mod: GTNH核心(dreamcraft) / 通用奇点 / 星门 */
+    /** 全物品池屏蔽的 mod: GTNH核心 / 通用奇点 / 星门 / TST / GTNL */
     private static final Set<String> FULL_POOL_MOD_BLACKLIST = new HashSet<>(
-        Arrays.asList("dreamcraft", "universalsingularities", "sgcraft"));
+        Arrays.asList("dreamcraft", "universalsingularities", "sgcraft",
+            ModsEnum.TwistSpaceTechnology.ID, ModsEnum.GTNL.ID));
 
     private FishtorioLootTable() {}
 
