@@ -2,7 +2,7 @@ package com.newmaa.othtech.common.beeyonds;
 
 import static com.newmaa.othtech.common.OTHItemList.itemEnqingM;
 import static com.newmaa.othtech.common.beeyonds.OTHBeeDefinitionReference.*;
-import static com.newmaa.othtech.utils.NbtHelper.cropsnhSeed;
+import static com.newmaa.othtech.utils.NBTHelper.cropsnhSeed;
 import static com.newmaa.othtech.utils.Utils.setStackSize;
 import static forestry.api.apiculture.EnumBeeChromosome.*;
 import static forestry.api.apiculture.EnumBeeChromosome.FLOWER_PROVIDER;

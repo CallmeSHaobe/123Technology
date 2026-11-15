@@ -57,7 +57,7 @@ import net.minecraftforge.fluids.FluidStack;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.utils.RecipeBuilder;
-import com.newmaa.othtech.utils.modsEnum;
+import com.newmaa.othtech.utils.ModsEnum;
 
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
@@ -306,7 +306,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.SuperconductorUMVBase, 1), 176))
             .fluidInputs(Materials.SpaceTime.getMolten(32 * 667))
             .itemOutputs(
-                setStackSize(GTModHandler.getModItem(modsEnum.TwistSpaceTechnology.ID, "MetaItem01", 1, 30), 2048 * a))
+                setStackSize(GTModHandler.getModItem(ModsEnum.TwistSpaceTechnology.ID, "MetaItem01", 1, 30), 2048 * a))
 
             .duration(22 * 20 * 32)
             .eut(TierEU.RECIPE_UEV)

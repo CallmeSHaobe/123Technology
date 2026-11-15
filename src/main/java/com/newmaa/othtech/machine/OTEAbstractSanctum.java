@@ -3,7 +3,7 @@ package com.newmaa.othtech.machine;
 import static com.gtnewhorizon.cropsnh.utility.ModUtils.ModIDs.GregTech;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
 import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlockUnlocalizedName;
-import static com.newmaa.othtech.utils.modsEnum.ThaumicBases;
+import static com.newmaa.othtech.utils.ModsEnum.ThaumicBases;
 import static gregtech.api.enums.HatchElement.Energy;
 import static gregtech.api.enums.HatchElement.ExoticEnergy;
 import static gregtech.api.enums.HatchElement.InputBus;

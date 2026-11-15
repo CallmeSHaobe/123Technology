@@ -12,9 +12,9 @@ import com.newmaa.othtech.common.beeyonds.OTHBeeDefinition;
 import cpw.mods.fml.common.registry.GameRegistry;
 import forestry.core.genetics.alleles.EnumAllele;
 
-public final class NbtHelper {
+public final class NBTHelper {
 
-    private NbtHelper() {}
+    private NBTHelper() {}
 
     public static ItemStack cropsnhSeed(String cropId, int growth, int gain, int resistance, boolean analyzed) {
         Item item = GameRegistry.findItem("cropsnh", "genericSeed");

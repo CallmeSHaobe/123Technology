@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
-import com.newmaa.othtech.utils.modsEnum;
+import com.newmaa.othtech.utils.ModsEnum;
 
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
@@ -40,11 +40,11 @@ public class RecipesDE implements IRecipePool {
         // Ancient Dragon Egg
         GTRecipeBuilder.builder()
             .itemInputs(
-                GTModHandler.getModItem(String.valueOf(modsEnum.NHUtilities), "AncientDragonEgg", 0),
+                GTModHandler.getModItem(String.valueOf(ModsEnum.NHUtilities), "AncientDragonEgg", 0),
                 new ItemStack(Items.egg, 8),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.DraconiumAwakened, 4))
             .fluidInputs(new FluidStack(FluidRegistry.getFluidID("biohmediumsterilized"), 2000))
-            .itemOutputs(GTModHandler.getModItem(String.valueOf(modsEnum.NHUtilities), "AncientDragonEgg", 1))
+            .itemOutputs(GTModHandler.getModItem(String.valueOf(ModsEnum.NHUtilities), "AncientDragonEgg", 1))
             .eut(TierEU.RECIPE_UV)
             .duration(2560)
             .metadata(DEFC_CASING_TIER, 1)
@@ -52,11 +52,11 @@ public class RecipesDE implements IRecipePool {
         // Chaos Dragon Egg
         GTRecipeBuilder.builder()
             .itemInputs(
-                GTModHandler.getModItem(String.valueOf(modsEnum.NHUtilities), "ChaosDragonEgg", 0),
+                GTModHandler.getModItem(String.valueOf(ModsEnum.NHUtilities), "ChaosDragonEgg", 0),
                 new ItemStack(Items.egg, 16),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Draconium, 4))
             .fluidInputs(new FluidStack(FluidRegistry.getFluidID("biohmediumsterilized"), 1000))
-            .itemOutputs(GTModHandler.getModItem(String.valueOf(modsEnum.NHUtilities), "ChaosDragonEgg", 1))
+            .itemOutputs(GTModHandler.getModItem(String.valueOf(ModsEnum.NHUtilities), "ChaosDragonEgg", 1))
             .eut(TierEU.RECIPE_UV)
             .duration(5120)
             .metadata(DEFC_CASING_TIER, 1)
