@@ -246,6 +246,17 @@ death.attack.Acid=虽然这可能很不科学,但%1$s还是被王水干死了
 #Machine_ToolTips
 oth.tm.pollution=§c注意 : 如遇跳电并报错“无法排出污染”, 请尝试放置多个消声仓
 
+#Thaumonomicon
+tc.research_category.123technology=123Technology
+tc.research_name.OTH_PEACH_CAN_INFUSION=黄桃罐头机械方块注魔
+tc.research_text.OTH_PEACH_CAN_INFUSION=以奈隆机械方块为引，注成昂贵的黄桃罐头机械方块
+tc.research_name.OTH_NAILONG_INFUSION=奈隆机械方块注魔
+tc.research_text.OTH_NAILONG_INFUSION=以 ZPM 机械方块为引，铸造真正的奈隆机械方块
+tc.research_name.OTH_ABSTRACT_SANCTUM=奈隆圣地主机
+tc.research_text.OTH_ABSTRACT_SANCTUM=将三大魔法之力熔铸为终焉主机
+tc.research_page.OTH_ABSTRACT_SANCTUM.1=以 LuV 机械外壳为核心，将盖亚之魂、血腥灵宝、注血钻石与奈隆机械方块熔为一体。组装完成的奈隆圣地主机能够接管并批量执行注魔、植物魔法与血魔法配方。
+tc.aspect.sechsieben=六七
+
 #Machine_Construction
 otht.con=搭建细节
 

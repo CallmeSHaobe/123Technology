@@ -249,6 +249,17 @@ death.attack.Acid=Although this may be unscientific, %1$s was killed by Aqua Reg
 #Machine_ToolTips
 oth.tm.pollution=§cNote: If power trips and reports "Cannot exhaust pollution", try placing multiple Muffler Hatches
 
+#Thaumonomicon
+tc.research_category.123technology=123Technology
+tc.research_name.OTH_PEACH_CAN_INFUSION=Canned Yellow Peach Casing Infusion
+tc.research_text.OTH_PEACH_CAN_INFUSION=Infuse a Nailong Casing into the expensive Canned Yellow Peach Casing
+tc.research_name.OTH_NAILONG_INFUSION=Nailong Casing Infusion
+tc.research_text.OTH_NAILONG_INFUSION=Infuse a ZPM Machine Casing into the true Nailong Casing
+tc.research_name.OTH_ABSTRACT_SANCTUM=Nailong Sanctum Controller
+tc.research_text.OTH_ABSTRACT_SANCTUM=Forge three schools of magic into a terminal controller
+tc.research_page.OTH_ABSTRACT_SANCTUM.1=Using an LuV Machine Casing as its core, bind Gaia Spirits, Bloody Ichorium, uncharged Blood Infused Diamonds and Nailong Casings together. The completed Nailong Sanctum Controller can take over and mass-produce infusion, Botania and Blood Magic recipes.
+tc.aspect.sechsieben=Sechsieben
+
 #Machine_Construction
 otht.con=Construction Details
 
