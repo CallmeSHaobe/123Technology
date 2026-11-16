@@ -28,6 +28,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
+import com.Nxer.TwistSpaceTechnology.common.GTCMItemList;
 import com.dreammaster.block.BlockList;
 import com.dreammaster.item.NHItemList;
 import com.newmaa.othtech.OTHTechnology;
@@ -1515,5 +1516,12 @@ public class RecipesMain implements IRecipePool {
             .eut(RECIPE_UV)
             .duration(120)
             .addTo(AssemblyLine);
+        // TST Burger
+        RecipeBuilder.builder()
+            .itemInputs(GTCMItemList.ProofOfHeroes.get(1), new ItemStack(Items.bread, 2))
+            .itemOutputs(OTHItemList.itemTST.get(1))
+            .duration(123 * SECONDS)
+            .eut(RECIPE_UXV)
+            .addTo(RecipeMaps.neutroniumCompressorRecipes);
     }
 }
