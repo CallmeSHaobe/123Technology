@@ -24,7 +24,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
@@ -786,8 +785,7 @@ public class OTELargeBin extends OTHMultiMachineBase<OTELargeBin> implements ICo
         float aX, float aY, float aZ, ItemStack aTool) {
         if (getBaseMetaTileEntity().isServerSide()) {
             this.progressingTickIndex = (byte) ((this.progressingTickIndex + 1) % 10);
-            GTUtility
-                .sendChatToPlayer(aPlayer, StatCollector.translateToLocal("目前耗时") + getBaseProgressingTick() + " tick");
+            aPlayer.addChatMessage(new ChatComponentTranslation("ote.bin.chat.processing_time", getBaseProgressingTick()));
 
             return true;
         }

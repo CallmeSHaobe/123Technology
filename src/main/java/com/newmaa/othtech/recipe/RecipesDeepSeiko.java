@@ -14,6 +14,7 @@ import java.util.Objects;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -641,7 +642,11 @@ public class RecipesDeepSeiko implements IRecipePool {
         int added = 0;
 
         if (!hasNullItem((Object) bec)) {
-            added += addUpgradeRecipeSafely("凝聚态解锁", bec, "机体升级 → 解锁凝聚态", "消耗 4×凝聚态适配舱");
+            added += addUpgradeRecipeSafely(
+                "BEC unlock",
+                bec,
+                StatCollector.translateToLocal("oth.recipe.deepSeiko.unlockCondensate"),
+                StatCollector.translateToLocal("oth.recipe.deepSeiko.condensateRequirement"));
         }
 
         // 蜂群逐级：T(k-1)→T(k) 必须用**第 k 级**的纳米蜂群（用户明确要求，不能拿一级碳蜂群连点到 10 级）
@@ -653,10 +658,13 @@ public class RecipesDeepSeiko implements IRecipePool {
             ItemStack sixtyFour = ref.copy();
             sixtyFour.stackSize = OTEDeepSeiko.NANITE_PER_TIER;
             variants += addUpgradeRecipeSafely(
-                "蜂群 T" + (tier - 1) + "→T" + tier,
+                "Nanite T" + (tier - 1) + " to T" + tier,
                 sixtyFour,
-                "机体升级 → 蜂群 T" + (tier - 1) + "→T" + tier,
-                "需要 " + OTEDeepSeiko.NANITE_PER_TIER + " 个第 " + tier + " 级蜂群");
+                StatCollector.translateToLocalFormatted("oth.recipe.deepSeiko.naniteUpgrade", tier - 1, tier),
+                StatCollector.translateToLocalFormatted(
+                    "oth.recipe.deepSeiko.naniteRequirement",
+                    OTEDeepSeiko.NANITE_PER_TIER,
+                    tier));
         }
         if (variants == 0) {
             OTHTechnology.LOG.warn("[DeepSeiko] 没能取到任何等级的纳米蜂群，蜂群升级的 NEI 配方已跳过");
@@ -673,12 +681,12 @@ public class RecipesDeepSeiko implements IRecipePool {
                     .eut(1)
                     .fake()
                     .setNEIDesc(
-                        "机体升级 → 终极任务（总算速 ×2）",
-                        "UXV 外壳 " + OTEDeepSeiko.getUltCasingCount()
-                            + " + 磁蜂群 "
-                            + OTEDeepSeiko.getUltMagmatterCount()
-                            + " + 星门板 "
-                            + OTEDeepSeiko.getUltStargateCount())
+                        StatCollector.translateToLocal("oth.recipe.deepSeiko.ultimateUpgrade"),
+                        StatCollector.translateToLocalFormatted(
+                            "oth.recipe.deepSeiko.ultimateRequirement",
+                            OTEDeepSeiko.getUltCasingCount(),
+                            OTEDeepSeiko.getUltMagmatterCount(),
+                            OTEDeepSeiko.getUltStargateCount()))
                     .addTo(Recipemaps.DeepSeikoUpgrade);
                 added++;
             } catch (Throwable t) {

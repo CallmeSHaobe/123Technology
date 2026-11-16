@@ -160,7 +160,7 @@ public class OTEMegaThermalCentrifuge extends OTHMultiMachineBase<OTEMegaThermal
     private static IStructureDefinition<OTEMegaThermalCentrifuge> STRUCTURE_DEFINITION = null;
     private static final String[] description = new String[] {
         EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":",
-        translateToLocal("1 - 消声仓, 能源仓, 输入输出总线, 输入输出仓 : 替换热力加工机械方块, 支持TecTech能源仓") };
+        translateToLocal("ote.cm.mtc.0") };
 
     @Override
     public String[] getStructureDescription(ItemStack stackSize) {
@@ -259,12 +259,12 @@ public class OTEMegaThermalCentrifuge extends OTHMultiMachineBase<OTEMegaThermal
             .addInfo("§aAdded by: 123Technology - §4MegaThermalCentrifuge")
             .addController(translateToLocal("ote.tn.mtc"))
             .beginStructureBlock(15, 15, 15, false)
-            .addInputBus("AnyInputBus", 1)
-            .addOutputBus("AnyOutputBus", 1)
-            .addInputHatch("AnyInputHatch", 1)
-            .addOutputHatch("AnyOutputHatch", 1)
-            .addEnergyHatch("AnyEnergyHatch", 1)
-            .addMufflerHatch("AnyMufflerHatch", 1)
+            .addInputBus(translateToLocal("oth.hint.any_input_bus"), 1)
+            .addOutputBus(translateToLocal("oth.hint.any_output_bus"), 1)
+            .addInputHatch(translateToLocal("oth.hint.any_input_hatch"), 1)
+            .addOutputHatch(translateToLocal("oth.hint.any_output_hatch"), 1)
+            .addEnergyHatch(translateToLocal("oth.hint.any_energy_hatch"), 1)
+            .addMufflerHatch(translateToLocal("oth.hint.any_muffler_hatch"), 1)
             .toolTipFinisher();
         return tt;
     }

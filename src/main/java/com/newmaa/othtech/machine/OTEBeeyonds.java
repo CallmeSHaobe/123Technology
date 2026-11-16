@@ -475,11 +475,11 @@ public class OTEBeeyonds extends OTHTTMultiMachineBaseEM implements IConstructab
             .addInfo("§aAdded by: 123Technology - Beeyonds")
             .beginStructureBlock(23, 22, 5, false)
             .addController(translateToLocal("ote.tn.bee"))
-            .addEnergyHatch("Any Plastic Concrete", 1)
-            .addInputBus("Any Plastic Concrete", 1)
-            .addOutputBus("Any Plastic Concrete", 1)
-            .addInputHatch("Any Plastic Concrete", 1)
-            .addOutputHatch("Any Plastic Concrete", 1)
+            .addEnergyHatch(translateToLocal("oth.hint.any_plastic_concrete"), 1)
+            .addInputBus(translateToLocal("oth.hint.any_plastic_concrete"), 1)
+            .addOutputBus(translateToLocal("oth.hint.any_plastic_concrete"), 1)
+            .addInputHatch(translateToLocal("oth.hint.any_plastic_concrete"), 1)
+            .addOutputHatch(translateToLocal("oth.hint.any_plastic_concrete"), 1)
             .toolTipFinisher();
         return tt;
     }

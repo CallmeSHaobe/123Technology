@@ -24,6 +24,7 @@ import static tectech.thing.CustomItemList.eM_Spacetime;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -316,7 +317,7 @@ public class RecipesMain implements IRecipePool {
         GTValues.RA.stdBuilder()
             .itemOutputs(
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 860)
-                    .setStackDisplayName("这曾经是九合一."))
+                    .setStackDisplayName(StatCollector.translateToLocal("oth.recipe.main.formerNineInOne")))
             .fluidInputs(FluidRegistry.getFluidStack("molten.staballoy", 2 * 144))
             .itemInputs(
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 245),
@@ -1297,12 +1298,14 @@ public class RecipesMain implements IRecipePool {
         RecipeBuilder.builder()
             .itemOutputs(
                 GTModHandler.getModItem(AppliedEnergistics2.ID, "item.ItemMultiMaterial", 1, 47)
-                    .setStackDisplayName("任意256,000物品每个"))
+                    .setStackDisplayName(StatCollector.translateToLocal("oth.recipe.main.any256000Items")))
             .addTo(AE2);
         // Scrap
         RecipeBuilder.builder()
             .itemOutputs(ItemList.IC2_Scrap.get(1))
-            .itemInputs(new ItemStack(Blocks.cobblestone, 1).setStackDisplayName("任何物品"))
+            .itemInputs(
+                new ItemStack(Blocks.cobblestone, 1)
+                    .setStackDisplayName(StatCollector.translateToLocal("oth.recipe.main.anyItem")))
             .eut(30)
             .addTo(RCY);
 

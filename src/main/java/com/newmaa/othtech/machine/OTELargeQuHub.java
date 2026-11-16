@@ -317,8 +317,8 @@ public class OTELargeQuHub extends OTHTTMultiMachineBaseEM
             .addInfo("§aAdded by: 123Technology - §4LargeQuHub")
             .addController(translateToLocal("ote.tn.quhub"))
             .beginStructureBlock(3, 3, 3, false)
-            .addEnergyHatch("AnyEnergyHatch", 1)
-            .addDynamoHatch("AnyDynamoHatch", 1)
+            .addEnergyHatch(translateToLocal("oth.hint.any_energy_hatch"), 1)
+            .addDynamoHatch(translateToLocal("oth.hint.any_dynamo_hatch"), 1)
             .toolTipFinisher();
         return tt;
     }

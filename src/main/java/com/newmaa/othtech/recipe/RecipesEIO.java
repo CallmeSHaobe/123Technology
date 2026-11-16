@@ -3,6 +3,7 @@ package com.newmaa.othtech.recipe;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.StatCollector;
 
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.utils.RecipeBuilder;
@@ -171,12 +172,12 @@ public class RecipesEIO implements IRecipePool {
         GTRecipeBuilder.builder()
             .itemInputs(
                 GTModHandler.getModItem(EnderIO.MODID, "itemSoulVessel", 1)
-                    .setStackDisplayName("任意灵魂瓶"),
+                    .setStackDisplayName(StatCollector.translateToLocal("oth.recipe.eio.anySoulVial")),
                 GTModHandler.getModItem(EnderIO.MODID, "itemBrokenSpawner", 1)
-                    .setStackDisplayName("任意刷怪笼"))
+                    .setStackDisplayName(StatCollector.translateToLocal("oth.recipe.eio.anySpawner")))
             .itemOutputs(
                 GTModHandler.getModItem(EnderIO.MODID, "itemBrokenSpawner", 1)
-                    .setStackDisplayName("绑定的刷怪笼"),
+                    .setStackDisplayName(StatCollector.translateToLocal("oth.recipe.eio.boundSpawner")),
                 GTModHandler.getModItem(EnderIO.MODID, "itemSoulVessel", 1))
             .eut(114)
             .duration(100)

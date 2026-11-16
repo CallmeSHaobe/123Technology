@@ -1313,11 +1313,11 @@ public class OTETangShanSteelFactory extends OTHMultiMachineBase<OTETangShanStee
             .addInfo("§aAdded by: 123Technology - Heavy industry - SteelFactory")
             .addController(translateToLocal("ote.tn.ts"))
             .beginStructureBlock(43, 41, 42, false)
-            .addInputBus("AnyInputBus", 1)
-            .addOutputBus("AnyOutputBus", 1)
-            .addInputHatch("AnyInputHatch", 1)
-            .addOutputHatch("AnyOutputHatch", 1)
-            .addEnergyHatch("AnyEnergyHatch", 1)
+            .addInputBus(translateToLocal("oth.hint.any_input_bus"), 1)
+            .addOutputBus(translateToLocal("oth.hint.any_output_bus"), 1)
+            .addInputHatch(translateToLocal("oth.hint.any_input_hatch"), 1)
+            .addOutputHatch(translateToLocal("oth.hint.any_output_hatch"), 1)
+            .addEnergyHatch(translateToLocal("oth.hint.any_energy_hatch"), 1)
             .toolTipFinisher();
         return tt;
     }

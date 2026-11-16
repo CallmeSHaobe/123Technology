@@ -1,3 +1,66 @@
+# 通用机器结构提示
+oth.hint.any_input_bus=任意输入总线
+oth.hint.any_output_bus=任意输出总线
+oth.hint.any_input_hatch=任意输入仓
+oth.hint.any_output_hatch=任意输出仓
+oth.hint.any_energy_hatch=任意能源仓
+oth.hint.any_muffler_hatch=任意消声仓
+oth.hint.any_dynamo_hatch=任意动力仓
+oth.hint.front_bottom=正面底部
+oth.hint.heat_proof_casing=耐热机械方块
+oth.hint.heating_coils=加热盘管（包括高级盘管）
+oth.hint.two_middle_layers=中间两层
+oth.hint.any_bottom_casing=任意底层机械方块
+oth.hint.top_middle=顶部中央
+oth.hint.fluid_outputs_bottom=流体输出，任意底层机械方块
+oth.hint.pollution_gases_top=污染气体（CO2/CO/SO2），任意顶层机械方块
+oth.hint.pollution_scales_muffler=污染气体输出量随消声仓等级提升
+oth.hint.any_plastic_concrete=任意塑料混凝土
+oth.hint.input_bus=输入总线
+oth.hint.output_bus=输出总线
+oth.hint.fluid_input_hatch=流体输入仓
+oth.hint.energy_hatch=能源仓
+oth.tooltip.author=作者：
+ote.cm.mtc.0=1 - 消声仓, 能源仓, 输入输出总线, 输入输出仓 : 替换热力加工机械方块, 支持TecTech能源仓
+
+# 机器名称
+ote.tn.imba=IMBA 超模高炉
+
+# 火箭装配车间（补齐原有未定义键）
+ote.tm.nasa.0=集成式"火"箭装配车间
+ote.tm.nasa.1=火箭部件与总装的一体化车间
+ote.tm.nasa.2=面向太空探索的装配生产线
+ote.tm.nasa.3=整合多种火箭制造流程
+ote.tm.nasa.4=支持多方块结构工作
+ote.tm.nasa.5=支持 TecTech 能源仓
+ote.tm.nasa.6=尚未完工
+otht.cm.nasa.0=1 - 能源仓、输入输出总线与输入输出仓可替换指定机械方块；具体结构请参照投影
+
+# 机器运行状态
+ote.computer.chat.wireless.enabled=无线模式已开启
+ote.computer.chat.wireless.disabled=无线模式已关闭
+ote.bin.chat.processing_time=目前耗时：%s tick
+otht.machine.mode.unknown=未知模式 %s
+
+# 配方展示
+oth.recipe.eio.anySoulVial=任意灵魂瓶
+oth.recipe.eio.anySpawner=任意刷怪笼
+oth.recipe.eio.boundSpawner=绑定的刷怪笼
+oth.recipe.main.formerNineInOne=这曾经是九合一.
+oth.recipe.main.any256000Items=任意256,000物品每个
+oth.recipe.main.anyItem=任何物品
+oth.recipe.wetware.humanReplica=§b§n人类复制体-RK800-01
+oth.recipe.deepSeiko.unlockCondensate=机体升级 → 解锁凝聚态
+oth.recipe.deepSeiko.condensateRequirement=消耗 4×凝聚态适配舱
+oth.recipe.deepSeiko.naniteUpgrade=机体升级 → 蜂群 T%s→T%s
+oth.recipe.deepSeiko.naniteRequirement=需要 %s 个第 %s 级蜂群
+oth.recipe.deepSeiko.ultimateUpgrade=机体升级 → 终极任务（总算速 ×2）
+oth.recipe.deepSeiko.ultimateRequirement=UXV 外壳 %s + 磁蜂群 %s + 星门板 %s
+
+# 物品与蜂种
+oth.item.tallHatLaodeng.tooltip=铁证如山
+oth.bee.mutation.activeMachineBelow=需要下方运行中的 GT 机器才能杂交
+
 #MetaItems
 MetaItemOTH.0.name=铱锇钐合金粉
 tt.123=§7IrOsSm☆
@@ -474,16 +537,16 @@ ote.cm.mebf.0=1 - 消声仓, 能源仓, 输入输出总线, 输入输出仓 : �
 #EEC
 ote.tm.eec.0=§e§l老登的终极造物 - 噬魂监狱(工业屠宰场)
 ote.tm.eec.1=§l§4“观自在菩萨, 行深般若波罗蜜多时照见五蕴皆空, 度一切苦厄.”
-ote.tm.eec.2=§l§4先进科技的操控致使此机器无法连接血魔法仪式, 自动销毁所有附魔以及有耐久损耗的装备
+ote.tm.eec.2=§l§4先进科技的操控致使此机器无法连接血魔法仪式, 自动销毁所有附魔以及有耐久损耗的装备, 所有电动刷怪笼置于HV输入总线内. 最大支持16*
 ote.tm.eec.3=§n§b工业化的魅力......?
-ote.tm.eec.4=并行: 134217728, 耗电固定为64A MAX, 时运等级64
+ote.tm.eec.4=并行: 134217728, 耗电固定为64A MAX/刷怪笼, 时运等级32
 ote.tm.eec.5=注意: 多方块结构方块数量过多 无法预览结构
 ote.tm.eec.6=统计 : 灵魂沙 * 2200 , 博特姆合金块 * 1493 , 放射硅岩合金机械方块 * 12309
 ote.tm.eec.7=黑曜石 * 611 , 钢框架 * 169 , 脱氧钢机械方块 * 100
 ote.tm.eec.8=硼玻璃系列方块 * 240 , 太空电梯支持结构方块 * 918 , 分子机械方块 * 2271
 ote.tm.eec.9=量子玻璃 * 1101 , 遏制场发生器 * 44 , 玄铁栅栏 * 111
 ote.tm.eec.10=维度桥接机械方块 * 233 , 维度注入机械方块 * 241 , 时空扭曲机械方块 * 32
-ote.cm.eec.0=1 - 消声仓, 能源仓, 输入输出总线, 输入输出仓 : 替换赤焱高炉机械方块, 支持TecTech能源仓, 有玻璃限制(真的!)
+ote.cm.eec.0=1 - 消声仓, 能源仓, 输入总线(HV), 输出总线, 输入输出仓 : 替换超维度机械方块, 支持TecTech能源仓. 希望怪物的灵魂不会纠缠你终生.
 
 #Freezer
 ote.tm.fz.0=§l老登的终极造物 - 真空冷冻机

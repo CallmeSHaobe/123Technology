@@ -1,3 +1,66 @@
+# Common machine structure hints
+oth.hint.any_input_bus=AnyInputBus
+oth.hint.any_output_bus=AnyOutputBus
+oth.hint.any_input_hatch=AnyInputHatch
+oth.hint.any_output_hatch=AnyOutputHatch
+oth.hint.any_energy_hatch=AnyEnergyHatch
+oth.hint.any_muffler_hatch=AnyMufflerHatch
+oth.hint.any_dynamo_hatch=AnyDynamoHatch
+oth.hint.front_bottom=Front bottom
+oth.hint.heat_proof_casing=Heat Proof Machine Casing
+oth.hint.heating_coils=Heating Coils (including advanced coils)
+oth.hint.two_middle_layers=Two middle Layers
+oth.hint.any_bottom_casing=Any bottom layer casing
+oth.hint.top_middle=Top middle
+oth.hint.fluid_outputs_bottom=Fluid outputs, Any bottom layer casing
+oth.hint.pollution_gases_top=Pollution gases (CO2/CO/SO2), Any top layer casing
+oth.hint.pollution_scales_muffler=Pollution gas output amount scales with Muffler Hatch tier
+oth.hint.any_plastic_concrete=Any Plastic Concrete
+oth.hint.input_bus=Input Bus
+oth.hint.output_bus=Output Bus
+oth.hint.fluid_input_hatch=Fluid Input Hatch
+oth.hint.energy_hatch=Energy Hatch
+oth.tooltip.author=Author:
+ote.cm.mtc.0=1 - Muffler, energy, item/fluid input/output hatches: replace Thermal Processing Machine Casings; supports TecTech energy hatches.
+
+# Machine names
+ote.tn.imba=The IMBA EBF
+
+# Rocket assembly workshop (previously missing keys)
+ote.tm.nasa.0=Integrated Rocket Assembly Workshop
+ote.tm.nasa.1=Integrated production of rocket components and final assembly
+ote.tm.nasa.2=An assembly line for space exploration
+ote.tm.nasa.3=Combines multiple rocket manufacturing processes
+ote.tm.nasa.4=Operates as a multiblock structure
+ote.tm.nasa.5=Supports TecTech energy hatches
+ote.tm.nasa.6=Work in progress
+otht.cm.nasa.0=1 - Energy hatch and input/output buses and hatches replace designated machine casings; consult the structure preview
+
+# Machine status
+ote.computer.chat.wireless.enabled=Wireless mode enabled
+ote.computer.chat.wireless.disabled=Wireless mode disabled
+ote.bin.chat.processing_time=Current processing time: %s tick
+otht.machine.mode.unknown=Unknown Mode %s
+
+# Recipe display
+oth.recipe.eio.anySoulVial=Any Soul Vial
+oth.recipe.eio.anySpawner=Any Spawner
+oth.recipe.eio.boundSpawner=Bound Spawner
+oth.recipe.main.formerNineInOne=This used to be nine-in-one.
+oth.recipe.main.any256000Items=Any 256,000 items each
+oth.recipe.main.anyItem=Any item
+oth.recipe.wetware.humanReplica=§b§nHuman Replica-RK800-01
+oth.recipe.deepSeiko.unlockCondensate=Machine upgrade → Unlock condensate
+oth.recipe.deepSeiko.condensateRequirement=Consumes 4× Condensate Adapters
+oth.recipe.deepSeiko.naniteUpgrade=Machine upgrade → Swarm T%s→T%s
+oth.recipe.deepSeiko.naniteRequirement=Requires %s tier-%s nanoswarms
+oth.recipe.deepSeiko.ultimateUpgrade=Machine upgrade → Ultimate objective (total compute ×2)
+oth.recipe.deepSeiko.ultimateRequirement=UXV casings %s + magnetic nanoswarms %s + stargate plates %s
+
+# Items and bee breeding
+oth.item.tallHatLaodeng.tooltip=Irrefutable evidence
+oth.bee.mutation.activeMachineBelow=Needs a running GT Machine below to breed
+
 #translated by DeepSeek,I hope someone can help to fix the mistakes of the translation.
 #Godbless. why the naquadah has been translated into silicon rock ? Unbengable
 #MetaItems
@@ -475,16 +538,16 @@ ote.cm.mebf.0=1 - Muffler Hatch, Energy Hatch, Input/Output Bus, Input/Output Ha
 #EEC
 ote.tm.eec.0=§e§lLaodeng's Ultimate Creation - Soul Devouring Prison (Industrial Slaughterhouse)
 ote.tm.eec.1=§l§4"The Bodhisattva Avalokiteshvara, practicing deep Prajna Paramita, clearly saw the emptiness of all five aggregates, transcending all suffering."
-ote.tm.eec.2=§l§4Advanced tech control prevents this machine from connecting to Blood Magic rituals, automatically destroys all enchanted and durability-damaged gear.
+ote.tm.eec.2=§l§4Advanced tech control prevents this machine from connecting to Blood Magic rituals, automatically destroys all enchanted and durability-damaged gear. Place all powered spawners in the HV input bus. Supports up to 16*.
 ote.tm.eec.3=§n§bThe charm of industrialization......?
-ote.tm.eec.4=Parallel: 134217728, Fixed Power: 64A MAX, Fortune Level 64.
+ote.tm.eec.4=Parallel: 134217728, Fixed Power: 64A MAX per spawner, Fortune Level 32.
 ote.tm.eec.5=Note: Multiblock structure has too many blocks, cannot preview structure.
 ote.tm.eec.6=Stats: Soul Sand * 2200, Botmium Alloy Block * 1493, Radioactive Naquadah Alloy Machine Casing * 12309
 ote.tm.eec.7=Obsidian * 611, Steel Frame * 169, Deoxidized Steel Machine Casing * 100
 ote.tm.eec.8=Boron Glass Series Block * 240, Space Elevator Support Structure Block * 918, Molecular Machine Casing * 2271
 ote.tm.eec.9=Quantum Glass * 1101, Containment Field Generator * 44, Shadow Iron Bars * 111
 ote.tm.eec.10=Dimension Bridge Machine Casing * 233, Dimension Infusion Machine Casing * 241, Spacetime Warp Machine Casing * 32
-ote.cm.eec.0=1 - Muffler Hatch, Energy Hatch, Input/Output Bus, Input/Output Hatch : Replace Blazing Blast Furnace Casing, supports TecTech Energy Hatch, has glass restriction (Really!)
+ote.cm.eec.0=1 - Muffler Hatch, Energy Hatch, Input Bus (HV), Output Bus, Input/Output Hatch: Replace Transdimensional Machine Casings; supports TecTech Energy Hatches. May the souls of the monsters never haunt you.
 
 #Freezer
 ote.tm.fz.0=§lLaodeng's Ultimate Creation - Vacuum Freezer
