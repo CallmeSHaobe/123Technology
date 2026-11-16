@@ -6,6 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
+import net.minecraft.util.StatCollector;
 
 import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
 
@@ -28,7 +29,7 @@ public class IngotHotDog extends ItemFood {
     public void addInformation(final ItemStack itemStack, final EntityPlayer player, final List toolTip,
         final boolean advancedToolTips) {
 
-        toolTip.add("§7Dog♢");
+        toolTip.add("§7" + StatCollector.translateToLocal("tt.dog") + "♢");
 
     }
 }

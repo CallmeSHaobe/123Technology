@@ -88,7 +88,7 @@ public class OTEIMBABlastFurnace extends MTEElectricBlastFurnace {
     // ===================== Constructors =====================
 
     public OTEIMBABlastFurnace(int aID, String aName) {
-        super(aID, aName, EnumChatFormatting.LIGHT_PURPLE + "The IMBA EBF");
+        super(aID, aName, EnumChatFormatting.LIGHT_PURPLE + translateToLocal("ote.tn.imba"));
     }
 
     public OTEIMBABlastFurnace(String aName) {
@@ -177,18 +177,19 @@ public class OTEIMBABlastFurnace extends MTEElectricBlastFurnace {
             .addInfo(translateToLocal("ote.tm.imba.10"))
             .addPollutionAmount(getPollutionPerSecond(null))
             .beginStructureBlock(5, 4, 5, true)
-            .addController("Front bottom")
-            .addCasingInfoRange("Heat Proof Machine Casing", 0, 15, false)
-            .addOtherStructurePart("Heating Coils (including advanced coils)", "Two middle Layers")
-            .addMaintenanceHatch("Any bottom layer casing", 3)
-            .addMufflerHatch("Top middle", 2)
-            .addInputBus("Any bottom layer casing", 3)
-            .addInputHatch("Any bottom layer casing", 3)
-            .addOutputBus("Any bottom layer casing", 3)
-            .addOutputHatch("Fluid outputs, Any bottom layer casing")
-            .addOutputHatch("Pollution gases (CO2/CO/SO2), Any top layer casing", 1)
-            .addStructureInfo("Pollution gas output amount scales with Muffler Hatch tier")
-            .addInfo("§7§lAuthor:§4§l§m勃艮第大公,疯狂的富婆§4§l---§c§lSafariXiu☆")
+            .addController(translateToLocal("oth.hint.front_bottom"))
+            .addCasingInfoRange(translateToLocal("oth.hint.heat_proof_casing"), 0, 15, false)
+            .addOtherStructurePart(translateToLocal("oth.hint.heating_coils"), translateToLocal("oth.hint.two_middle_layers"))
+            .addMaintenanceHatch(translateToLocal("oth.hint.any_bottom_casing"), 3)
+            .addMufflerHatch(translateToLocal("oth.hint.top_middle"), 2)
+            .addInputBus(translateToLocal("oth.hint.any_bottom_casing"), 3)
+            .addInputHatch(translateToLocal("oth.hint.any_bottom_casing"), 3)
+            .addOutputBus(translateToLocal("oth.hint.any_bottom_casing"), 3)
+            .addOutputHatch(translateToLocal("oth.hint.fluid_outputs_bottom"))
+            .addOutputHatch(translateToLocal("oth.hint.pollution_gases_top"), 1)
+            .addStructureInfo(translateToLocal("oth.hint.pollution_scales_muffler"))
+            .addInfo("§7§l" + translateToLocal("oth.tooltip.author")
+                + "§4§l§m勃艮第大公,疯狂的富婆§4§l---§c§lSafariXiu☆")
             .addSeparator()
             .addInfo("§4§lAdded by: 123Technology")
             .toolTipFinisher();

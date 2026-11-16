@@ -29,6 +29,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
@@ -62,7 +63,6 @@ import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.recipe.check.SimpleCheckRecipeResult;
 import gregtech.api.structure.error.StructureError;
-import gregtech.api.util.GTUtility;
 import gregtech.api.util.IGTHatchAdder;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.api.util.shutdown.ShutDownReason;
@@ -494,7 +494,7 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
             .addInputHatch(translateToLocal("ote.computer.coolantinput"), 1) // 新增冷却液输入
             .addEnergyHatch(translateToLocal("tt.keyword.Structure.AnyComputerCasing"), 1) // Energy
             .addSeparator()
-            .addInfo("Author:IDEA & DeepSeek")
+            .addInfo(translateToLocal("oth.tooltip.author") + "IDEA & DeepSeek")
             .addSeparator()
             .addInfo("§aAdded by: 123Technology - ExoicComputer")
             .toolTipFinisher();
@@ -653,10 +653,10 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
         if (getBaseMetaTileEntity().isServerSide()) {
             wirelessModeEnabled = !wirelessModeEnabled;
             if (wirelessModeEnabled) {
-                GTUtility.sendChatToPlayer(aPlayer, "Wireless mode enabled");
+                aPlayer.addChatMessage(new ChatComponentTranslation("ote.computer.chat.wireless.enabled"));
                 WirelessComputationPacket.enableWirelessNetWork(getBaseMetaTileEntity());
             } else {
-                GTUtility.sendChatToPlayer(aPlayer, "Wireless mode disabled");
+                aPlayer.addChatMessage(new ChatComponentTranslation("ote.computer.chat.wireless.disabled"));
                 WirelessComputationPacket.disableWirelessNetWork(getBaseMetaTileEntity());
             }
         }

@@ -10,6 +10,7 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.StatCollector;
 
 import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
 
@@ -52,7 +53,7 @@ public class ItemHelmTallHatLaodeng extends ItemArmor {
 
     @Override
     public void addInformation(final ItemStack stack, final EntityPlayer aPlayer, final List list, final boolean bool) {
-        list.add(EnumChatFormatting.RED + "铁证如山");
+        list.add(EnumChatFormatting.RED + StatCollector.translateToLocal("oth.item.tallHatLaodeng.tooltip"));
         super.addInformation(stack, aPlayer, list, bool);
     }
 

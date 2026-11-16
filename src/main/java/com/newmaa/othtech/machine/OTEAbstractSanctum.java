@@ -1097,10 +1097,10 @@ public class OTEAbstractSanctum extends OTHMultiMachineBase<OTEAbstractSanctum> 
 
             .addController(translateToLocal("ote.tn.abstract_sanctum"))
             .beginStructureBlock(3, 3, 3, false)
-            .addInputBus("Input Bus", 1)
-            .addOutputBus("Output Bus", 1)
-            .addInputHatch("Fluid Input Hatch", 1)
-            .addEnergyHatch("Energy Hatch", 1)
+            .addInputBus(translateToLocal("oth.hint.input_bus"), 1)
+            .addOutputBus(translateToLocal("oth.hint.output_bus"), 1)
+            .addInputHatch(translateToLocal("oth.hint.fluid_input_hatch"), 1)
+            .addEnergyHatch(translateToLocal("oth.hint.energy_hatch"), 1)
             .toolTipFinisher();
         return tt;
     }

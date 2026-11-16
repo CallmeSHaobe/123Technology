@@ -5,6 +5,7 @@ import static gregtech.api.enums.Mods.*;
 import java.util.HashMap;
 
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 
@@ -223,7 +224,7 @@ public class OTHBeeyonds {
 
         @Override
         public String getDescription() {
-            return "Needs a running GT Machine below to breed";
+            return StatCollector.translateToLocal("oth.bee.mutation.activeMachineBelow");
         }
     }
 }

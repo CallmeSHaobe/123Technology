@@ -337,12 +337,12 @@ public class OTELargeCircuitAssembler extends OTHMultiMachineBase<OTELargeCircui
             .addInfo("§aAdded by: 123Technology - Light Industry - LargeCircuitAssembler")
             .addController(translateToLocal("ote.tn.lca"))
             .beginStructureBlock(13, 6, 8, false)
-            .addInputBus("AnyInputBus", 3)
-            .addOutputBus("AnyOutputBus", 2)
-            .addInputHatch("AnyInputHatch", 3)
-            .addOutputHatch("AnyOutputHatch", 2)
-            .addEnergyHatch("AnyEnergyHatch", 1)
-            .addMufflerHatch("AnyMufflerHatch", 1)
+            .addInputBus(translateToLocal("oth.hint.any_input_bus"), 3)
+            .addOutputBus(translateToLocal("oth.hint.any_output_bus"), 2)
+            .addInputHatch(translateToLocal("oth.hint.any_input_hatch"), 3)
+            .addOutputHatch(translateToLocal("oth.hint.any_output_hatch"), 2)
+            .addEnergyHatch(translateToLocal("oth.hint.any_energy_hatch"), 1)
+            .addMufflerHatch(translateToLocal("oth.hint.any_muffler_hatch"), 1)
             .toolTipFinisher();
         return tt;
     }

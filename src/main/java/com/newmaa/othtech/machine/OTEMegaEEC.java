@@ -12,7 +12,10 @@ import static net.minecraft.util.StatCollector.translateToLocal;
 import static tectech.thing.casing.TTCasingsContainer.sBlockCasingsTT;
 
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
@@ -37,6 +40,8 @@ import org.jetbrains.annotations.NotNull;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
+import com.kuba6000.mobsinfo.api.IChanceModifier;
+import com.kuba6000.mobsinfo.api.MobDrop;
 import com.kuba6000.mobsinfo.api.utils.FastRandom;
 import com.mojang.authlib.GameProfile;
 import com.newmaa.othtech.machine.machineclass.OTHMobHandlerLoader;
@@ -48,6 +53,8 @@ import bartworks.API.BorosilicateGlass;
 import crazypants.enderio.EnderIO;
 import gregtech.api.GregTechAPI;
 import gregtech.api.enums.Materials;
+import gregtech.api.enums.TierEU;
+import gregtech.api.enums.VoidingMode;
 import gregtech.api.enums.SoundResource;
 import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
@@ -59,7 +66,9 @@ import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.recipe.check.SimpleCheckRecipeResult;
 import gregtech.api.render.TextureFactory;
+import gregtech.api.structure.error.ErrorType;
 import gregtech.api.structure.error.StructureError;
+import gregtech.api.structure.error.StructureErrors;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
@@ -76,6 +85,10 @@ public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> {
     private byte glassTier = 0;
 
     private static final Item poweredSpawnerItem = Item.getItemFromBlock(EnderIO.blockPoweredSpawner);
+    private static final int MAX_INPUT_BUS_TIER = 3;
+    private static final int PARALLELS_PER_SPAWNER = 134217728;
+    private static final int LOOTING_LEVEL = 32;
+    private static final int MAX_OUTPUT_STACKS = 16384;
 
     public final Random rand = new FastRandom();
 
@@ -91,7 +104,7 @@ public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> {
 
     private static final String[] description = new String[] {
         EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":",
-        translateToLocal("1 - 消声仓, 能源仓, 输入输出总线, 输入输出仓 : 替换分子机械方块, 支持TecTech能源仓") };
+        translateToLocal("ote.cm.eec.0") };
 
     private static final int SHAPE_WIDTH = 50;
 
@@ -236,46 +249,103 @@ public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> {
     @NotNull
     public CheckRecipeResult checkProcessing() {
         if (getBaseMetaTileEntity().isClientSide()) return CheckRecipeResultRegistry.NO_RECIPE;
-        ItemStack aStack = mInventory[1];
-        if (aStack == null) return SimpleCheckRecipeResult.ofFailure("EEC_nospawner");
-
-        if (aStack.getItem() != poweredSpawnerItem) return SimpleCheckRecipeResult.ofFailure("EEC_nospawner");
-
-        if (aStack.getTagCompound() == null) return SimpleCheckRecipeResult.ofFailure("EEC_invalidspawner");
-        String mobType = aStack.getTagCompound()
-            .getString("mobType");
-        if (mobType.isEmpty()) return SimpleCheckRecipeResult.ofFailure("EEC_invalidspawner");
-
-        if (mobType.equals("Skeleton") && getBaseMetaTileEntity().getWorld().provider instanceof WorldProviderHell
-            && rand.nextInt(5) > 0) mobType = "witherSkeleton";
-
-        OTHMobHandlerLoader.MobEECRecipe recipe = OTHMobHandlerLoader.recipeMap.get(mobType);
-
-        if (recipe == null) return CheckRecipeResultRegistry.NO_RECIPE;
-        if (!recipe.recipe.isPeacefulAllowed && this.getBaseMetaTileEntity()
-            .getWorld().difficultySetting == EnumDifficulty.PEACEFUL)
-            return SimpleCheckRecipeResult.ofFailure("EEC_peaceful");
-        {
-            double attackDamage = 114514;
-            weaponCheck: {
-                MTEHatchInputBus inputbus = this.mInputBusses.isEmpty() ? null : this.mInputBusses.get(0);
-                if (inputbus != null && !inputbus.isValid()) inputbus = null;
-                ItemStack lootingHolder = inputbus == null ? null : inputbus.getStackInSlot(0);
-                if (lootingHolder == null) break weaponCheck;
+        List<OTHMobHandlerLoader.MobEECRecipe> spawners = new ArrayList<>();
+        boolean foundSpawner = false;
+        boolean foundInvalidSpawner = false;
+        boolean foundPeacefulMob = false;
+        World world = getBaseMetaTileEntity().getWorld();
+        for (MTEHatchInputBus bus : GTUtility.validMTEList(mInputBusses)) {
+            if (bus.getTierForStructure() > MAX_INPUT_BUS_TIER) continue;
+            for (int slot = 0; slot < bus.getCircuitSlot(); slot++) {
+                ItemStack stack = bus.getStackInSlot(slot);
+                if (stack == null || stack.getItem() != poweredSpawnerItem) continue;
+                foundSpawner = true;
+                NBTTagCompound tag = stack.getTagCompound();
+                String mobType = tag == null ? "" : tag.getString("mobType");
+                if (mobType.isEmpty()) {
+                    foundInvalidSpawner = true;
+                    continue;
+                }
+                if (mobType.equals("Skeleton") && world.provider instanceof WorldProviderHell && rand.nextInt(5) > 0)
+                    mobType = "witherSkeleton";
+                OTHMobHandlerLoader.MobEECRecipe recipe = OTHMobHandlerLoader.recipeMap.get(mobType);
+                if (recipe == null) {
+                    foundInvalidSpawner = true;
+                    continue;
+                }
+                if (!recipe.recipe.isPeacefulAllowed && world.difficultySetting == EnumDifficulty.PEACEFUL) {
+                    foundPeacefulMob = true;
+                    continue;
+                }
+                spawners.add(recipe);
             }
-            if (EECPlayer == null) EECPlayer = new OTEMegaEEC.EECFakePlayer(this);
-            this.mOutputItems = recipe.generateOutputs(rand, this, attackDamage, 64, false, true);
-
-            EECPlayer.currentWeapon = null;
-
-            this.mOutputFluids = new FluidStack[] { FluidRegistry.getFluidStack("xpjuice", 2147483647) };
-            int times = 20;
         }
-        if (this.lEUt > 0) this.lEUt = -this.lEUt;
+        if (spawners.isEmpty()) {
+            if (foundPeacefulMob) return SimpleCheckRecipeResult.ofFailure("EEC_peaceful");
+            if (foundInvalidSpawner) return SimpleCheckRecipeResult.ofFailure("EEC_invalidspawner");
+            return SimpleCheckRecipeResult.ofFailure("EEC_nospawner");
+        }
+        if (EECPlayer == null) EECPlayer = new EECFakePlayer(this);
+        EECPlayer.currentWeapon = null;
+        ItemStack[] outputs = generateSpawnerOutputs(spawners);
+        if (outputs == null) return CheckRecipeResultRegistry.ITEM_OUTPUT_FULL;
+        if (getVoidingMode() != VoidingMode.VOID_ALL && !canOutputAll(outputs))
+            return CheckRecipeResultRegistry.ITEM_OUTPUT_FULL;
+        mOutputItems = outputs;
+        lEUt = -(TierEU.MAX * 64L * spawners.size());
+        mMaxProgresstime = 20;
+        mOutputFluids = new FluidStack[] { FluidRegistry.getFluidStack("xpjuice", 2147483647) };
         this.mEfficiency = (10000 - (getIdealStatus() - getRepairStatus()) * 1000);
         this.mEfficiencyIncrease = 10000;
         this.updateSlots();
         return CheckRecipeResultRegistry.SUCCESSFUL;
+    }
+
+    private ItemStack[] generateSpawnerOutputs(List<OTHMobHandlerLoader.MobEECRecipe> spawners) {
+        Map<GTUtility.ItemId, ItemStack> samples = new LinkedHashMap<>();
+        Map<GTUtility.ItemId, Long> amounts = new LinkedHashMap<>();
+        for (OTHMobHandlerLoader.MobEECRecipe recipe : spawners) {
+            List<ItemStack> modifierDrops = new ArrayList<>();
+            recipe.entityCopy.setPosition(getBaseMetaTileEntity().getXCoord(), getBaseMetaTileEntity().getYCoord(),
+                getBaseMetaTileEntity().getZCoord());
+            for (MobDrop drop : recipe.mOutputs) {
+                if (drop.stack == null || drop.damages != null || drop.enchantable != null) continue;
+                double chancePercent = drop.chance / 100D;
+                for (IChanceModifier modifier : drop.chanceModifiers) {
+                    chancePercent = modifier.apply(chancePercent, getBaseMetaTileEntity().getWorld(), modifierDrops,
+                        EECPlayer, recipe.entityCopy);
+                }
+                if (drop.playerOnly) chancePercent *= kubatech.config.Config.MobHandler.playerOnlyDropsModifier;
+                if (!Double.isFinite(chancePercent) || chancePercent <= 0D) continue;
+                double expected = (chancePercent / 100D) * drop.stack.stackSize * PARALLELS_PER_SPAWNER
+                    * (1D + LOOTING_LEVEL * 0.5D);
+                if (expected <= 0D) continue;
+                long count = expected >= Long.MAX_VALUE ? Long.MAX_VALUE : (long) expected;
+                if (count < Long.MAX_VALUE && rand.nextDouble() < expected - count) count++;
+                if (count <= 0) continue;
+                GTUtility.ItemId id = GTUtility.ItemId.createNoCopy(drop.stack);
+                samples.putIfAbsent(id, drop.stack);
+                amounts.merge(id, count,
+                    (left, right) -> left > Long.MAX_VALUE - right ? Long.MAX_VALUE : left + right);
+                modifierDrops.add(drop.stack);
+            }
+        }
+        long outputStacks = 0;
+        for (Map.Entry<GTUtility.ItemId, Long> entry : amounts.entrySet()) {
+            outputStacks += 1 + (entry.getValue() - 1) / Integer.MAX_VALUE;
+            if (outputStacks > MAX_OUTPUT_STACKS) return null;
+        }
+        List<ItemStack> outputs = new ArrayList<>((int) outputStacks);
+        for (Map.Entry<GTUtility.ItemId, Long> entry : amounts.entrySet()) {
+            ItemStack sample = samples.get(entry.getKey());
+            long remaining = entry.getValue();
+            while (remaining > 0) {
+                int count = (int) Math.min(Integer.MAX_VALUE, remaining);
+                outputs.add(GTUtility.copyAmountUnsafe(count, sample));
+                remaining -= count;
+            }
+        }
+        return outputs.toArray(new ItemStack[0]);
     }
 
     @Override
@@ -291,6 +361,10 @@ public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> {
     @Override
     public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
         if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
+        if (mInputBusses.size() > 1) {
+            errors.add(StructureErrors.hatchCount(ErrorType.TOO_MANY, InputBus, mInputBusses.size(), 1));
+            return;
+        }
         repairMachine();
     }
 
@@ -393,6 +467,8 @@ public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> {
 
     @Override
     public boolean addToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
+        if (aTileEntity != null && aTileEntity.getMetaTileEntity() instanceof MTEHatchInputBus bus
+            && bus.getTierForStructure() > MAX_INPUT_BUS_TIER) return false;
         return super.addToMachineList(aTileEntity, aBaseCasingIndex)
             || addExoticEnergyInputToMachineList(aTileEntity, aBaseCasingIndex);
     }
@@ -412,11 +488,11 @@ public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> {
             .addInfo("§aAdded by: 123Technology - §4EEC")
             .addController(translateToLocal("ote.tn.eec"))
             .beginStructureBlock(50, 143, 56, false)
-            .addInputBus("AnyInputBus", 1)
-            .addOutputBus("AnyOutputBus", 1)
-            .addInputHatch("AnyInputHatch", 1)
-            .addOutputHatch("AnyOutputHatch", 1)
-            .addEnergyHatch("AnyEnergyHatch", 1)
+            .addInputBus(translateToLocal("oth.hint.any_input_bus"), 1)
+            .addOutputBus(translateToLocal("oth.hint.any_output_bus"), 1)
+            .addInputHatch(translateToLocal("oth.hint.any_input_hatch"), 1)
+            .addOutputHatch(translateToLocal("oth.hint.any_output_hatch"), 1)
+            .addEnergyHatch(translateToLocal("oth.hint.any_energy_hatch"), 1)
             .toolTipFinisher();
         return tt;
     }

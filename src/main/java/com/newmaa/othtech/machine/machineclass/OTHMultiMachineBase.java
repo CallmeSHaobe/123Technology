@@ -757,7 +757,7 @@ public abstract class OTHMultiMachineBase<T extends OTHMultiMachineBase<T>> exte
     }
 
     public String getMachineModeName(int mode) {
-        return "Unknown Mode " + mode;
+        return StatCollector.translateToLocalFormatted("otht.machine.mode.unknown", mode);
     }
 
     @Override
@@ -824,7 +824,7 @@ public abstract class OTHMultiMachineBase<T extends OTHMultiMachineBase<T>> exte
         final NBTTagCompound tag = accessor.getNBTData();
         if (tag.hasKey("mode")) {
             currentTip.add(
-                StatCollector.translateToLocal("Mode :") + " "
+                StatCollector.translateToLocal("otht.waila.mode") + ": "
                     + EnumChatFormatting.WHITE
                     + getMachineModeName(tag.getInteger("mode"))
                     + EnumChatFormatting.RESET);

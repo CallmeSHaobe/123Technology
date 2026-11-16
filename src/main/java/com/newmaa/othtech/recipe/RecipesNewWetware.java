@@ -5,6 +5,7 @@ import static gregtech.api.util.GTRecipeBuilder.SECONDS;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -135,7 +136,7 @@ public class RecipesNewWetware implements IRecipePool {
                 Materials.Polycaprolactam.getIngots(10),
                 ItemList.Electric_Motor_LuV.get(4),
                 ItemList.Electric_Pump_LuV.get(1))
-            .itemOutputs(YourTag.setStackDisplayName("§b§n人类复制体-RK800-01"))
+            .itemOutputs(YourTag.setStackDisplayName(StatCollector.translateToLocal("oth.recipe.wetware.humanReplica")))
             .fluidInputs(BWLiquids.LCL.getFluidOrGas(64000))
             .requiresCleanRoom()
             .duration(800 * 20)

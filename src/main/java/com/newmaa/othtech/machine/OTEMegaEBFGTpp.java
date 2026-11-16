@@ -391,12 +391,12 @@ public class OTEMegaEBFGTpp extends OTHMultiMachineBase<OTEMegaEBFGTpp> {
             .addInfo("§aAdded by: 123Technology - EBF")
             .addController(translateToLocal("ote.tn.mebf"))
             .beginStructureBlock(15, 20, 15, false)
-            .addInputBus("AnyInputBus", 1)
-            .addOutputBus("AnyOutputBus", 1)
-            .addInputHatch("AnyInputHatch", 1)
-            .addOutputHatch("AnyOutputHatch", 1)
-            .addEnergyHatch("AnyEnergyHatch", 1)
-            .addMufflerHatch("AnyMufflerHatch", 2)
+            .addInputBus(translateToLocal("oth.hint.any_input_bus"), 1)
+            .addOutputBus(translateToLocal("oth.hint.any_output_bus"), 1)
+            .addInputHatch(translateToLocal("oth.hint.any_input_hatch"), 1)
+            .addOutputHatch(translateToLocal("oth.hint.any_output_hatch"), 1)
+            .addEnergyHatch(translateToLocal("oth.hint.any_energy_hatch"), 1)
+            .addMufflerHatch(translateToLocal("oth.hint.any_muffler_hatch"), 2)
             .addSubChannelUsage(GTStructureChannels.HEATING_COIL)
             .toolTipFinisher();
         return tt;
