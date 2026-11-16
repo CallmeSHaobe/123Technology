@@ -957,6 +957,11 @@ public class OTEAbstractSanctum extends OTHMultiMachineBase<OTEAbstractSanctum> 
 
     @Override
     public void construct(ItemStack stackSize, boolean hintsOnly) {
+        if (isPreviewWorld()) {
+            buildPreviewPieceOnce(stackSize, hintsOnly);
+            return;
+        }
+        repairMachine();
         buildPiece(
             STRUCTURE_PIECE_MAIN,
             stackSize,
@@ -970,26 +975,7 @@ public class OTEAbstractSanctum extends OTHMultiMachineBase<OTEAbstractSanctum> 
     public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
         if (mMachine) return -1;
         if (isPreviewWorld()) {
-            IGregTechTileEntity base = getBaseMetaTileEntity();
-            World world = base.getWorld();
-            int[] anchorOffset = new int[3];
-            getExtendedFacing().getWorldOffset(
-                new int[] { CONTROLLER_HORIZONTAL_OFFSET, CONTROLLER_VERTICAL_OFFSET + 1, CONTROLLER_DEPTH_OFFSET },
-                anchorOffset);
-            int anchorX = base.getXCoord() + anchorOffset[0];
-            int anchorY = base.getYCoord() + anchorOffset[1];
-            int anchorZ = base.getZCoord() + anchorOffset[2];
-            // BlockRenderer keeps the same dummy world but clears it whenever a slider changes.
-            // Rebuild only when the fixed anchor is missing, so repeated build rounds stop.
-            if (world.isAirBlock(anchorX, anchorY, anchorZ)) {
-                buildPiece(
-                    STRUCTURE_PIECE_MAIN,
-                    stackSize,
-                    false,
-                    CONTROLLER_HORIZONTAL_OFFSET,
-                    CONTROLLER_VERTICAL_OFFSET,
-                    CONTROLLER_DEPTH_OFFSET);
-            }
+            buildPreviewPieceOnce(stackSize, false);
             return 0;
         }
         return survivalBuildPiece(
@@ -1517,6 +1503,31 @@ public class OTEAbstractSanctum extends OTHMultiMachineBase<OTEAbstractSanctum> 
             .getClass()
             .getName();
         return name.contains("Dummy") || name.contains("Observer") || name.contains("Tracked");
+    }
+
+    /**
+     * BlockRenderer may invoke construct multiple times for tier estimation and preview placement.
+     * The full sanctum has over 45k shape cells, so rebuilding it for every pass is prohibitively slow.
+     */
+    private void buildPreviewPieceOnce(ItemStack stackSize, boolean hintsOnly) {
+        IGregTechTileEntity base = getBaseMetaTileEntity();
+        World world = base.getWorld();
+        int[] anchorOffset = new int[3];
+        getExtendedFacing().getWorldOffset(
+            new int[] { CONTROLLER_HORIZONTAL_OFFSET, CONTROLLER_VERTICAL_OFFSET + 1, CONTROLLER_DEPTH_OFFSET },
+            anchorOffset);
+        int anchorX = base.getXCoord() + anchorOffset[0];
+        int anchorY = base.getYCoord() + anchorOffset[1];
+        int anchorZ = base.getZCoord() + anchorOffset[2];
+        if (!world.isAirBlock(anchorX, anchorY, anchorZ)) return;
+
+        buildPiece(
+            STRUCTURE_PIECE_MAIN,
+            stackSize,
+            hintsOnly,
+            CONTROLLER_HORIZONTAL_OFFSET,
+            CONTROLLER_VERTICAL_OFFSET,
+            CONTROLLER_DEPTH_OFFSET);
     }
 
     @Override
