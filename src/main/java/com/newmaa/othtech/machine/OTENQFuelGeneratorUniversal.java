@@ -596,7 +596,7 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
         }
         this.tEff = ((int) (Math.exp(-coefficient * (double) aFuel / (double) aPromoter) * 1.5D * 100)
             + (running_time));
-        this.tEff = Math.min(this.tEff, 1230);
+        this.tEff = Math.min(this.tEff, 200);
     }
 
     public long findLiquidAmount(FluidStack liquid, List<FluidStack> input) {

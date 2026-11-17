@@ -29,6 +29,7 @@ import com.newmaa.othtech.common.item.itemBlock.ItemModelAyanamiRender;
 import com.newmaa.othtech.common.item.itemBlock.ItemModelTallHatRender;
 import com.newmaa.othtech.common.item.itemWeapons.RenderPositronCannon;
 import com.newmaa.othtech.common.materials.OTHMaterials;
+import com.newmaa.othtech.common.render.RenderDrone;
 import com.newmaa.othtech.common.render.RenderPositronShot;
 import com.newmaa.othtech.common.render.RiceBowlRenderer;
 import com.newmaa.othtech.common.render.RocketRenderOTH;
@@ -73,6 +74,8 @@ public class ClientProxy extends CommonProxy {
 
         registerRenderers();
         MinecraftForgeClient.registerItemRenderer(OTHItemList.PositronCannon.getItem(), new RenderPositronCannon());
+        MinecraftForgeClient.registerItemRenderer(OTHItemList.SuicideDronePig.getItem(), new RenderDrone(1));
+        MinecraftForgeClient.registerItemRenderer(OTHItemList.SuicideDroneAngelica.getItem(), new RenderDrone(2));
         RenderingRegistry.registerEntityRenderingHandler(EntityFakePlayer.class, new RenderPlayer());
 
         OTEMaterialRenderEffects.install();

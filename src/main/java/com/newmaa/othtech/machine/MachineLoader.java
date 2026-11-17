@@ -204,6 +204,11 @@ public class MachineLoader {
             .set(new OTEAbstractSanctum(IDs + 65, "AbstractSanctum", translateToLocal("ote.tn.abstract_sanctum")));
 
         OTHItemList.LargeQuHub.set(new OTELargeQuHub(IDs + 69, "LargeQuHub", translateToLocal("ote.tn.quhub")));
+        OTHItemList.DroneLaunchPlatform.set(
+            new OTEDroneLaunchPlatform(
+                IDs + 70,
+                "OTEDroneLaunchPlatform",
+                translateToLocal("ote.tn.drone_launch_platform")));
 
         // 迪普西科 DeepSeiko（IDs+9..+12 与 +65..+68）
         OTHItemList.DeepSeiko.set(new OTEDeepSeiko(IDs + 9, "DeepSeiko", translateToLocal("ote.tn.ds")));
