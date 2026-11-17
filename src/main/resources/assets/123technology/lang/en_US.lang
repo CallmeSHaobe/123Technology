@@ -23,6 +23,12 @@ oth.hint.energy_hatch=Energy Hatch
 oth.tooltip.author=Author:
 ote.cm.mtc.0=1 - Muffler, energy, item/fluid input/output hatches: replace Thermal Processing Machine Casings; supports TecTech energy hatches.
 
+# Drone platform: final machine name and tooltip pending
+item.SuicideDronePig.name=PIG Suicide Drone
+item.SuicideDroneAngelica.name=Angelica Suicide Drone
+ote.tn.drone_launch_platform=Drone Launch Platform (Name Pending)
+ote.tm.drone_launch_platform.0=Tooltip pending
+
 # Machine names
 ote.tn.imba=The IMBA EBF
 
@@ -643,7 +649,7 @@ ote.tm.nfg.5=Consumes all fuel and promoter in input hatch at once.
 ote.tm.nfg.6=Thanks to the great Iridiosamarium, all output power will be tripled.
 ote.tm.nfg.7=Tier 2 Pipe Casing unlocks wireless mode, use Screwdriver to enable.
 ote.tm.nfg.8=§aHigher tier structure requires higher tier §cpromoter§a, Tier 1: Atomic Separation Promoter, Tier 2: Hyperdimensional Plasma Promoter.
-ote.tm.nfg.9=§aEfficiency increases with runtime, +1% per second, max always 1230%.
+ote.tm.nfg.9=§aEfficiency increases with runtime, +1% per second, max always 200%.
 ote.tm.nfg.10=Calculation: Total Power = Fuel Amount * Output Coefficient(3) * Efficiency * Fuel Output Power * Recipe Time.
 ote.tm.nfg.12=§aNote: If set time cost < 20 ticks, efficiency will not accumulate.
 ote.tm.nfg.13=§4You know what will happen.

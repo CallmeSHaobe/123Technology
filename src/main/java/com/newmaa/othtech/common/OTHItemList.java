@@ -109,7 +109,11 @@ public enum OTHItemList {
     /** 时空冷却核心（装配线产物） */
     SpacetimeCoolingCore,
 
+    SuicideDronePig,
+    SuicideDroneAngelica,
+
     // Machines
+    DroneLaunchPlatform,
     NASA,
     FISH,
     EXH,

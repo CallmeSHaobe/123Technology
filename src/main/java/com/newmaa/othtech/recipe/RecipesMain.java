@@ -21,6 +21,7 @@ import static tectech.thing.CustomItemList.eM_Hollow;
 import static tectech.thing.CustomItemList.eM_Power;
 import static tectech.thing.CustomItemList.eM_Spacetime;
 
+import com.newmaa.othtech.common.materials.OTHMaterials;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -1509,5 +1510,31 @@ public class RecipesMain implements IRecipePool {
             .duration(123 * SECONDS)
             .eut(RECIPE_UXV)
             .addTo(RecipeMaps.neutroniumCompressorRecipes);
+        //SnAs Dust
+        RecipeBuilder.builder()
+            .itemInputs(
+                Materials.Tin.getDust(1),
+                Materials.Arsenic.getDust(1)
+            )
+            .itemOutputs(
+                OTHItemList.dustSnAsM.get(1)
+            )
+            .duration(20)
+            .eut(RECIPE_LV)
+            .addTo(RecipeMaps.mixerNonCellRecipes);
+        //SnAs
+        RecipeBuilder.builder()
+            .itemOutputs(
+                OTHItemList.ingotSnAsM.get(1)
+            )
+            .itemInputs(
+                OTHItemList.dustSnAsM.get(1)
+            )
+            .fluidInputs(
+                OTHMaterials.LCL.getFluid(1000)
+            )
+            .duration(20)
+            .eut(RECIPE_EV)
+            .addTo(RecipeMaps.autoclaveRecipes);
     }
 }
