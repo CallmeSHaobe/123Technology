@@ -26,8 +26,24 @@ ote.cm.mtc.0=1 - Muffler, energy, item/fluid input/output hatches: replace Therm
 # Drone platform: final machine name and tooltip pending
 item.SuicideDronePig.name=PIG Suicide Drone
 item.SuicideDroneAngelica.name=Angelica Suicide Drone
+item.SuicideDroneNuclear.name=PIG Suicide Drone (Gray Nuclear Livery)
+item.SuicideDroneNvidia.name=PIG Suicide Drone (Black NVIDIA Livery)
 ote.tn.drone_launch_platform=Drone Launch Platform (Name Pending)
-ote.tm.drone_launch_platform.0=Tooltip pending
+ote.tm.drone_launch_platform.0=Consumes drone items to attack coordinates or automatically hunt drone downlinks in this dimension
+ote.drone.gui.target=Manual target (current dimension)
+ote.drone.gui.mode.coordinates=Mode: Coordinates
+ote.drone.gui.mode.downlink=Mode: Hunt Downlinks
+ote.drone.gui.mode.help=Auto: attacks the nearest loaded GT drone downlink 16–4096 blocks away in this dimension, regardless of ownership. Ignores manual coordinates. No target consumes no item. Switching disarms. No obstacle avoidance.
+ote.drone.gui.enabled=Continuous launch: ON
+ote.drone.gui.disabled=Continuous launch: OFF
+ote.drone.gui.help=Enter target and launch speed, leave the field, then enable. Uses 1 drone every 5s. Editing disarms the launcher.
+ote.drone.gui.speed=Speed km/h
+ote.drone.gui.speed.help=50–300 km/h, default 200; assumes 1 block = 1 meter at 20 TPS. Also sets powered cruise airspeed.
+ote.drone.info.1=Physical input buses only; no power required; launches once every 5 seconds
+ote.drone.info.2=Explosion strength: PIG 4, Angelica 8. Explosions destroy blocks.
+ote.drone.info.3=Catapulted toward the controller front; propeller thrust and wing lift sustain flight.
+ote.drone.info.4=Keep the forward launch path clear. No obstacle avoidance; route surroundings and destination chunks load automatically during flight.
+entity.123technology.entitySuicideDrone.name=Suicide Drone
 
 # Machine names
 ote.tn.imba=The IMBA EBF

@@ -7,7 +7,6 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 import com.newmaa.othtech.common.OTHItemList;
-import com.newmaa.othtech.utils.RecipeBuilder;
 
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
@@ -52,8 +51,8 @@ public class RecipesMixerRecipes implements IRecipePool {
             .duration(400)
             .eut(123123)
             .addTo(LMixer);
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 10096), 18),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Cerium, 1))
             .itemOutputs(setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 10097), 19))

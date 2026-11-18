@@ -26,8 +26,24 @@ ote.cm.mtc.0=1 - 消声仓, 能源仓, 输入输出总线, 输入输出仓 : 替
 # 无人机平台：正式机器名和 Tooltip 待定
 item.SuicideDronePig.name=P-1G型 "柳叶刀"自爆无人机
 item.SuicideDroneAngelica.name=安洁莉卡型 "柳叶刀"自爆无人机
+item.SuicideDroneNuclear.name=P-1G型 "柳叶刀"自爆无人机（灰色核标志涂装）
+item.SuicideDroneNvidia.name=P-1G型 "柳叶刀"自爆无人机（黑色 NVIDIA 涂装）
 ote.tn.drone_launch_platform=无人机发射平台（名称待定）
-ote.tm.drone_launch_platform.0=Tooltip 待定
+ote.tm.drone_launch_platform.0=消耗无人机物品，攻击指定坐标或自动搜寻当前维度的无人机下行仓
+ote.drone.gui.target=手动目标坐标（当前维度）
+ote.drone.gui.mode.coordinates=模式：坐标攻击
+ote.drone.gui.mode.downlink=模式：搜寻下行仓
+ote.drone.gui.mode.help=自动模式：攻击同维度16–4096格内最近的已加载GT无人机下行仓，不区分归属。忽略手动坐标；无目标不消耗物品。切换后需重新开启发射。不绕障。
+ote.drone.gui.enabled=连续发射：开启
+ote.drone.gui.disabled=连续发射：关闭
+ote.drone.gui.help=先输入目标和初速度并离开输入框，再开启；每5秒消耗1架。修改参数将关闭发射。
+ote.drone.gui.speed=初速度 km/h
+ote.drone.gui.speed.help=范围50–300 km/h，默认200；按1格=1米、20TPS换算。设置同时决定推进巡航空速。
+ote.drone.info.1=仅支持普通输入总线；无需供电，每5秒发射1架
+ote.drone.info.2=PIG爆炸强度4，安洁莉卡爆炸强度8；爆炸会破坏方块
+ote.drone.info.3=沿控制器正面弹射，螺旋桨推进、机翼升力；转弯修正后俯冲目标
+ote.drone.info.4=正面须留出起飞航道；不绕障，飞行期间自动加载航路周围及目的地区块
+entity.123technology.entitySuicideDrone.name=自爆无人机
 
 # 机器名称
 ote.tn.imba=IMBA 超模高炉

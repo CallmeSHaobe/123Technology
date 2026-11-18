@@ -71,23 +71,8 @@ public class OTEHeatExchanger extends OTHTTMultiMachineBaseEM implements ISurviv
         EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.exc.0") };
 
     // Structured by NewMaa
-    private final String[][] shapeMain = new String[][] {
-        { "             ", "             ", "             ", "   BBBBBBB   ", "   BBBBBBB   ", "   BDDDDDB   ",
-            "   BBBBBBB   ", "   BBBBBBB   ", "             ", "             ", "             " },
-        { "             ", " BBB BBB BBB ", " BBBBBBBBBBB ", " BBBBBBBBBBB ", " BBBBBBBBBBB ", " BBBBBBBBBBB ",
-            " BBBBBBBBBBB ", " BBBBBBBBBBB ", " BBBBBBBBBBB ", " BBB BBB BBB ", "             " },
-        { " EEE EEE EEE ", "EEEEEEEEEEEEE", "EEEEEEEEEEEEE", "EEEEEEEEEEEEE", "EEEEEEEEEEEEE", "EEEEEEEEEEEEE",
-            "EEEEEEEEEEEEE", "EEEEEEEEEEEEE", "EEEEEEEEEEEEE", "EEEEEEEEEEEEE", " EEE EEE EEE " },
-        { " EEE EEE EEE ", "ACCCACCCACCCA", "AFFFAFFFAFFFA", "ACCCACCCACCCA", "AFFFAFFFAFFFA", "ACCCACCCACCCA",
-            "AFFFAFFFAFFFA", "ACCCACCCACCCA", "AFFFAFFFAFFFA", "ACCCACCCACCCA", " EEE EEE EEE " },
-        { " EEE EEE EEE ", "ACCCACCCACCCA", "AFFFAFFFAFFFA", "ACCCACCCACCCA", "AFFFAFFFAFFFA", "ACCCACCCACCCA",
-            "AFFFAFFFAFFFA", "ACCCACCCACCCA", "AFFFAFFFAFFFA", "ACCCACCCACCCA", " EEE EEE EEE " },
-        { " EEE EEE EEE ", "ACCCACCCACCCA", "AFFFAFFFAFFFA", "ACCCACCCACCCA", "AFFFAFFFAFFFA", "ACCCACCCACCCA",
-            "AFFFAFFFAFFFA", "ACCCACCCACCCA", "AFFFAFFFAFFFA", "ACCCACCCACCCA", " EEE EEE EEE " },
-        { " EEE EEE EEE ", "ACCCACCCACCCA", "AFFFAFFFAFFFA", "ACCCACCCACCCA", "AFFFAFFFAFFFA", "ACCCACCCACCCA",
-            "AFFFAFFFAFFFA", "ACCCACCCACCCA", "AFFFAFFFAFFFA", "ACCCACCCACCCA", " EEE EEE EEE " },
-        { " EEE E~E EEE ", "EEEEEEEEEEEEE", "EEEEEEEEEEEEE", "EEEEEEEEEEEEE", "EEEEEEEEEEEEE", "EEEEEEEEEEEEE",
-            "EEEEEEEEEEEEE", "EEEEEEEEEEEEE", "EEEEEEEEEEEEE", "EEEEEEEEEEEEE", " EEE EEE EEE " } };
+    private final String[][] shapeMain = com.newmaa.othtech.utils.ShapeLoader
+        .loadCompressed("/assets/123technology/structures/ote/OTEHeatExchanger_shapeMain.shape.gz");
 
     // ===================== Constructors =====================
 

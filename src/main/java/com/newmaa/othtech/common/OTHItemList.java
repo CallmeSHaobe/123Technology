@@ -111,6 +111,8 @@ public enum OTHItemList {
 
     SuicideDronePig,
     SuicideDroneAngelica,
+    SuicideDroneNuclear,
+    SuicideDroneNvidia,
 
     // Machines
     DroneLaunchPlatform,

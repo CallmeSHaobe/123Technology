@@ -1,5 +1,7 @@
 package com.newmaa.othtech.common.compat.thaumcraft;
 
+import net.glease.tc4tweak.api.infusionrecipe.InfusionRecipeExt;
+import net.glease.tc4tweak.api.infusionrecipe.RecipeIngredient;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.oredict.OreDictionary;
@@ -17,8 +19,6 @@ import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TCAspects;
 import gregtech.api.util.GTOreDictUnificator;
-import net.glease.tc4tweak.api.infusionrecipe.InfusionRecipeExt;
-import net.glease.tc4tweak.api.infusionrecipe.RecipeIngredient;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.aspects.Aspect;
@@ -136,8 +136,7 @@ public final class ThaumcraftResearchCompat {
         ItemStack leek = OTHItemList.LeekBox.get(1);
         ItemStack motor = ItemList.Electric_Motor_LuV.get(1);
         RecipeIngredient circuit = circuitIngredient(Materials.LuV);
-        if (peach == null
-            || peach.getItem() == null
+        if (peach == null || peach.getItem() == null
             || glass == null
             || glass.getItem() == null
             || leek == null
@@ -197,8 +196,7 @@ public final class ThaumcraftResearchCompat {
         ItemStack peach = OTHItemList.YellowPeach.get(1);
         ItemStack motor = ItemList.Electric_Motor_LuV.get(1);
         RecipeIngredient circuit = circuitIngredient(Materials.IV);
-        if (input == null
-            || input.getItem() == null
+        if (input == null || input.getItem() == null
             || output == null
             || output.getItem() == null
             || peach == null
@@ -231,7 +229,8 @@ public final class ThaumcraftResearchCompat {
             return;
         }
 
-        AspectList researchAspects = new AspectList().add(sechsieben, 5).add(vesania, 5);
+        AspectList researchAspects = new AspectList().add(sechsieben, 5)
+            .add(vesania, 5);
         new ResearchItem(NAILONG_RESEARCH, CATEGORY, researchAspects, 0, 0, 1, output)
             .setPages(new ResearchPage(recipe))
             .setParents("INFUSION")
@@ -280,20 +279,8 @@ public final class ThaumcraftResearchCompat {
             .add(Aspect.CRAFT, 300)
             .add(Aspect.MIND, 300)
             .add(Aspect.TAINT, 300);
-        ItemStack[] components = {
-            gaia,
-            bloodyIchorium,
-            unchargedBloodDiamond,
-            nailong,
-            fieldGenerator,
-            nailong,
-            fieldGenerator,
-            fieldGenerator,
-            nailong,
-            fieldGenerator,
-            nailong,
-            unchargedBloodDiamond,
-            bloodyIchorium,
+        ItemStack[] components = { gaia, bloodyIchorium, unchargedBloodDiamond, nailong, fieldGenerator, nailong,
+            fieldGenerator, fieldGenerator, nailong, fieldGenerator, nailong, unchargedBloodDiamond, bloodyIchorium,
             gaia };
 
         InfusionRecipe recipe = ThaumcraftApi.addInfusionCraftingRecipe(
@@ -314,9 +301,7 @@ public final class ThaumcraftResearchCompat {
             .add(Aspect.CRAFT, 6);
 
         new ResearchItem(SANCTUM_RESEARCH, CATEGORY, researchAspects, 2, 0, 2, output)
-            .setPages(
-                new ResearchPage("tc.research_page." + SANCTUM_RESEARCH + ".1"),
-                new ResearchPage(recipe))
+            .setPages(new ResearchPage("tc.research_page." + SANCTUM_RESEARCH + ".1"), new ResearchPage(recipe))
             .setParents(NAILONG_RESEARCH, ICHOR_RESEARCH)
             .setConcealed()
             .registerResearchItem();

@@ -61,8 +61,13 @@ public class ItemLoader {
     public static Item itemRiceSingularity = new ItemRiceSingularity();
     public static Item itemSpacetimeCoolingCore = new ItemSpacetimeCoolingCore();
     public static Item dogSpawnEgg = new ItemDogSpawnEgg();
-    public static Item suicideDronePig = new ItemSuicideDrone("SuicideDronePig", ItemSuicideDrone.PIG);
-    public static Item suicideDroneAngelica = new ItemSuicideDrone("SuicideDroneAngelica", ItemSuicideDrone.ANGELICA);
+    public static Item suicideDronePig = new ItemSuicideDrone("SuicideDronePig", ItemSuicideDrone.PIG, 2F);
+    public static Item suicideDroneAngelica = new ItemSuicideDrone(
+        "SuicideDroneAngelica",
+        ItemSuicideDrone.ANGELICA,
+        8F);
+    public static Item suicideDroneNuclear = new ItemSuicideDrone("SuicideDroneNuclear", ItemSuicideDrone.NUCLEAR, 64F);
+    public static Item suicideDroneNvidia = new ItemSuicideDrone("SuicideDroneNvidia", ItemSuicideDrone.NVIDIA, 48F);
 
     public ItemLoader(FMLPreInitializationEvent event) {
         OTHItemList.Zhangww.set(registryAndCallback(itemZhangww, "itemZhangww"));
@@ -93,6 +98,8 @@ public class ItemLoader {
 
         OTHItemList.SuicideDronePig.set(registryAndCallback(suicideDronePig, "suicideDronePig"));
         OTHItemList.SuicideDroneAngelica.set(registryAndCallback(suicideDroneAngelica, "suicideDroneAngelica"));
+        OTHItemList.SuicideDroneNuclear.set(registryAndCallback(suicideDroneNuclear, "suicideDroneNuclear"));
+        OTHItemList.SuicideDroneNvidia.set(registryAndCallback(suicideDroneNvidia, "suicideDroneNvidia"));
 
         // 三种狗共用一个刷怪蛋物品，靠 metadata 区分（registryAndCallback 里已经 registerItem 过一次）
         OTHItemList.DogYellowSpawnEgg.set(registryAndCallback(dogSpawnEgg, "dogSpawnEgg"));

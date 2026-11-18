@@ -39,9 +39,9 @@ import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTHSteamMultiBase;
-import com.newmaa.othtech.utils.RecipeBuilder;
 
 import gregtech.api.GregTechAPI;
+import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
@@ -109,19 +109,7 @@ public class OTEMiniSteamNineInOne extends OTHSteamMultiBase<OTEMiniSteamNineInO
         EnumChatFormatting.GOLD + translateToLocal("ote.cm.s9in1.2") };
 
     // spotless:off
-        private final String[][] shapeMain = new String[][]{{
-        "AHHHA",
-        "GH~HG",
-        "AHHHA"
-    },{
-        "AECEA",
-        "FBDBF",
-        "AECEA"
-    },{
-        "AAAAA",
-        "FFFFF",
-        "AAAAA"
-    }};
+        private final String[][] shapeMain = com.newmaa.othtech.utils.ShapeLoader.loadCompressed("/assets/123technology/structures/ote/OTEMiniSteamNineInOne_shapeMain.shape.gz");
 
     // ===================== Constructors =====================
 
@@ -522,8 +510,8 @@ public class OTEMiniSteamNineInOne extends OTHSteamMultiBase<OTEMiniSteamNineInO
     }
 
     public static void loadRecipes() {
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(1)
             )
             .fluidOutputs(

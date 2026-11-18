@@ -17,11 +17,8 @@ import static gregtech.api.util.GTRecipeBuilder.HOURS;
 import static gregtech.api.util.GTRecipeBuilder.INGOTS;
 import static gregtech.api.util.GTRecipeBuilder.SECONDS;
 import static gregtech.api.util.GTRecipeConstants.*;
-import static tectech.thing.CustomItemList.eM_Hollow;
 import static tectech.thing.CustomItemList.eM_Power;
-import static tectech.thing.CustomItemList.eM_Spacetime;
 
-import com.newmaa.othtech.common.materials.OTHMaterials;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -31,8 +28,6 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 import com.Nxer.TwistSpaceTechnology.common.GTCMItemList;
-import com.dreammaster.block.BlockList;
-import com.dreammaster.item.NHItemList;
 import com.newmaa.othtech.OTHTechnology;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.blocks.nailong.NailongCasingMeta;
@@ -40,7 +35,7 @@ import com.newmaa.othtech.common.blocks.nailong.NailongCasings;
 import com.newmaa.othtech.common.item.ItemLoader;
 import com.newmaa.othtech.common.materials.BWLiquids;
 import com.newmaa.othtech.common.materials.BWMaterials;
-import com.newmaa.othtech.utils.RecipeBuilder;
+import com.newmaa.othtech.common.materials.OTHMaterials;
 
 import bartworks.system.material.WerkstoffLoader;
 import goodgenerator.loader.Loaders;
@@ -476,8 +471,8 @@ public class RecipesMain implements IRecipePool {
             .eut(123)
             .addTo(RecipeMaps.laserEngraverRecipes);
         // LCL
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 16),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Phosphorus, 7))
             .fluidInputs(
@@ -488,7 +483,7 @@ public class RecipesMain implements IRecipePool {
             .eut(480)
             .duration(1200 * 20)
             .addTo(RecipeMaps.multiblockChemicalReactorRecipes);
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 16),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Phosphorus, 7))
@@ -500,9 +495,9 @@ public class RecipesMain implements IRecipePool {
             .eut(1920)
             .duration(80 * 20)
             .addTo(RecipeMaps.electrolyzerNonCellRecipes);
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .fluidInputs(BWLiquids.LCL.getFluidOrGas(50000))
-            .itemInputs(
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.02", 8, 32429),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.02", 8, 32420),
@@ -512,9 +507,9 @@ public class RecipesMain implements IRecipePool {
             .duration(40 * 20)
             .addTo(assemblerRecipes);
         // Asuka Model
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .fluidInputs(BWLiquids.LCL.getFluidOrGas(50000))
-            .itemInputs(
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.02", 8, 32428),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.02", 8, 32420),
@@ -524,8 +519,8 @@ public class RecipesMain implements IRecipePool {
             .duration(40 * 20)
             .addTo(assemblerRecipes);
         // ZPM Module
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 32555),
                 GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 32575),
@@ -537,8 +532,8 @@ public class RecipesMain implements IRecipePool {
             .eut(TierEU.UHV)
             .addTo(assemblerRecipes);
         // Record EVA
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 GTModHandler.getModItem(OTHTechnology.MODID, "modelAyanami", 0),
                 new ItemStack(Items.diamond, 3))
@@ -550,15 +545,15 @@ public class RecipesMain implements IRecipePool {
             .eut(30)
             .addTo(assemblerRecipes);
         // Record Never gonna give you up
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(new ItemStack(ItemLoader.RecordNGGU))
-            .itemInputs(GTUtility.getIntegratedCircuit(17), new ItemStack(ItemLoader.itemLeekBox))
+            .itemInputsUnsafe(GTUtility.getIntegratedCircuit(17), new ItemStack(ItemLoader.itemLeekBox))
             .duration(20)
             .eut(114)
             .addTo(assemblerRecipes);
         // MISA FACTORY
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 31027),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 15560),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 995),
@@ -569,9 +564,9 @@ public class RecipesMain implements IRecipePool {
             .eut(123123123)
             .addTo(Chem);
         // FOOD GENERATOR
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(OTHItemList.FooD.get(1))
-            .itemInputs(
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 ItemList.Electric_Motor_HV.get(64),
                 ItemList.Casing_HV.get(16),
@@ -581,8 +576,8 @@ public class RecipesMain implements IRecipePool {
             .addTo(Assem);
 
         // DTPF timing
-        RecipeBuilder.builder()
-            .itemInputs(new ItemStack(Blocks.cobblestone, 1))
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(new ItemStack(Blocks.cobblestone, 1))
             .itemOutputs(new ItemStack(Blocks.stone, 1))
             .duration(3600 * 64 * 20)
             .eut(7680)
@@ -590,8 +585,8 @@ public class RecipesMain implements IRecipePool {
         // Lasers
         // LV
 
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 ItemList.Emitter_LV.get(64),
                 ItemList.Emitter_LV.get(64),
@@ -604,8 +599,8 @@ public class RecipesMain implements IRecipePool {
             .duration(3600 * 20)
             .eut(30)
             .addTo(Assem);
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 ItemList.Sensor_LV.get(64),
                 ItemList.Sensor_LV.get(64),
@@ -619,8 +614,8 @@ public class RecipesMain implements IRecipePool {
             .eut(30)
             .addTo(Assem);
         // MV
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 ItemList.Emitter_MV.get(64),
                 ItemList.Emitter_MV.get(64),
@@ -633,8 +628,8 @@ public class RecipesMain implements IRecipePool {
             .duration(3600 * 20)
             .eut(RECIPE_MV)
             .addTo(Assem);
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 ItemList.Sensor_MV.get(64),
                 ItemList.Sensor_MV.get(64),
@@ -648,8 +643,8 @@ public class RecipesMain implements IRecipePool {
             .eut(RECIPE_MV)
             .addTo(Assem);
         // HV
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 ItemList.Emitter_HV.get(64),
                 ItemList.Emitter_HV.get(64),
@@ -662,8 +657,8 @@ public class RecipesMain implements IRecipePool {
             .duration(3600 * 20)
             .eut(RECIPE_HV)
             .addTo(Assem);
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 ItemList.Sensor_HV.get(64),
                 ItemList.Sensor_HV.get(64),
@@ -677,8 +672,8 @@ public class RecipesMain implements IRecipePool {
             .eut(RECIPE_HV)
             .addTo(Assem);
         // EV
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 ItemList.Emitter_EV.get(64),
                 ItemList.Emitter_EV.get(64),
@@ -691,8 +686,8 @@ public class RecipesMain implements IRecipePool {
             .duration(3600 * 20)
             .eut(RECIPE_EV)
             .addTo(Assem);
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 ItemList.Sensor_EV.get(64),
                 ItemList.Sensor_EV.get(64),
@@ -706,8 +701,8 @@ public class RecipesMain implements IRecipePool {
             .eut(RECIPE_EV)
             .addTo(Assem);
         // IV
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 ItemList.Emitter_IV.get(64),
                 ItemList.Emitter_IV.get(64),
@@ -720,8 +715,8 @@ public class RecipesMain implements IRecipePool {
             .duration(3600 * 20)
             .eut(RECIPE_IV)
             .addTo(Assem);
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 ItemList.Sensor_IV.get(64),
                 ItemList.Sensor_IV.get(64),
@@ -735,8 +730,8 @@ public class RecipesMain implements IRecipePool {
             .eut(RECIPE_IV)
             .addTo(Assem);
         // LuV
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 ItemList.Emitter_LuV.get(64),
                 ItemList.Emitter_LuV.get(64),
@@ -749,8 +744,8 @@ public class RecipesMain implements IRecipePool {
             .duration(3600 * 20)
             .eut(RECIPE_LuV)
             .addTo(Assem);
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 ItemList.Sensor_LuV.get(64),
                 ItemList.Sensor_LuV.get(64),
@@ -764,8 +759,8 @@ public class RecipesMain implements IRecipePool {
             .eut(RECIPE_LuV)
             .addTo(Assem);
         // ZPM
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 ItemList.Emitter_ZPM.get(64),
                 ItemList.Emitter_ZPM.get(64),
@@ -778,8 +773,8 @@ public class RecipesMain implements IRecipePool {
             .duration(3600 * 20)
             .eut(RECIPE_ZPM)
             .addTo(Assem);
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 ItemList.Sensor_ZPM.get(64),
                 ItemList.Sensor_ZPM.get(64),
@@ -793,8 +788,8 @@ public class RecipesMain implements IRecipePool {
             .eut(RECIPE_ZPM)
             .addTo(Assem);
         // UV
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 ItemList.Emitter_UV.get(64),
                 ItemList.Emitter_UV.get(64),
@@ -807,8 +802,8 @@ public class RecipesMain implements IRecipePool {
             .duration(3600 * 20)
             .eut(RECIPE_UV)
             .addTo(Assem);
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 ItemList.Sensor_UV.get(64),
                 ItemList.Sensor_UV.get(64),
@@ -822,8 +817,8 @@ public class RecipesMain implements IRecipePool {
             .eut(RECIPE_UV)
             .addTo(Assem);
         // UHV
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 ItemList.Emitter_UHV.get(64),
                 ItemList.Emitter_UHV.get(64),
@@ -836,8 +831,8 @@ public class RecipesMain implements IRecipePool {
             .duration(3600 * 20)
             .eut(RECIPE_UHV)
             .addTo(Assem);
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 ItemList.Sensor_UHV.get(64),
                 ItemList.Sensor_UHV.get(64),
@@ -851,8 +846,8 @@ public class RecipesMain implements IRecipePool {
             .eut(RECIPE_UHV)
             .addTo(Assem);
         // UEV
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 ItemList.Emitter_UEV.get(64),
                 ItemList.Emitter_UEV.get(64),
@@ -865,8 +860,8 @@ public class RecipesMain implements IRecipePool {
             .duration(3600 * 20)
             .eut(RECIPE_UEV)
             .addTo(Assem);
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 ItemList.Sensor_UEV.get(64),
                 ItemList.Sensor_UEV.get(64),
@@ -880,8 +875,8 @@ public class RecipesMain implements IRecipePool {
             .eut(RECIPE_UEV)
             .addTo(Assem);
         // UIV
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 ItemList.Emitter_UIV.get(64),
                 ItemList.Emitter_UIV.get(64),
@@ -894,8 +889,8 @@ public class RecipesMain implements IRecipePool {
             .duration(3600 * 20)
             .eut(RECIPE_UIV)
             .addTo(Assem);
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 ItemList.Sensor_UIV.get(64),
                 ItemList.Sensor_UIV.get(64),
@@ -909,8 +904,8 @@ public class RecipesMain implements IRecipePool {
             .eut(RECIPE_UIV)
             .addTo(Assem);
         // UMV
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 ItemList.Emitter_UMV.get(64),
                 ItemList.Emitter_UMV.get(64),
@@ -923,8 +918,8 @@ public class RecipesMain implements IRecipePool {
             .duration(3600 * 20)
             .eut(RECIPE_UMV)
             .addTo(Assem);
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 ItemList.Sensor_UMV.get(64),
                 ItemList.Sensor_UMV.get(64),
@@ -938,8 +933,8 @@ public class RecipesMain implements IRecipePool {
             .eut(RECIPE_UMV)
             .addTo(Assem);
         // UXV
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 ItemList.Field_Generator_UXV.get(64),
                 ItemList.Hatch_Energy_UXV.get(64))
@@ -1093,35 +1088,36 @@ public class RecipesMain implements IRecipePool {
             .duration(600 * 20)
             .addTo(AssemblyLine);
         // spacetime-casing
-        GTValues.RA.stdBuilder()
-            .metadata(RESEARCH_ITEM, GTModHandler.getModItem(GTPlusPlus.ID, "particleBase", 1, 14))
-            .metadata(SCANNING, new Scanning(Integer.MAX_VALUE, RECIPE_UXV))
-            .itemInputs(
-                GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.CosmicNeutronium, 64),
-                GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.CosmicNeutronium, 64),
-                GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.CosmicNeutronium, 64),
-                GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.CosmicNeutronium, 64),
-                eM_Hollow.get(4),
-                GTModHandler.getModItem("eternalsingularity", "eternal_singularity", 2),
-                GTModHandler.getModItem(GTPlusPlus.ID, "particleBase", 2, 14),
-                GTModHandler.getModItem(GTPlusPlus.ID, "particleBase", 2, 14),
-                GTModHandler.getModItem(TecTech.ID, "tile.quantumGlass", 4),
-                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UXV, 32),
-                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UMV, 48),
-                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UIV, 64),
-                GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Neutronium, 64),
-                GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Neutronium, 64),
-                GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Neutronium, 64),
-                GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Neutronium, 64))
-            .itemOutputs(eM_Spacetime.get(1))
-            .fluidInputs(
-                Materials.WhiteDwarfMatter.getMolten(INGOTS * 1024),
-                Materials.Infinity.getMolten(INGOTS * 1024),
-                Materials.SpaceTime.getMolten(INGOTS * 256))
-            .duration(114514 * 20)
-            .eut(RECIPE_UMV)
-            .addTo(AssemblyLine);
-
+        /*
+         * GTValues.RA.stdBuilder()
+         * .metadata(RESEARCH_ITEM, GTModHandler.getModItem(GTPlusPlus.ID, "particleBase", 1, 14))
+         * .metadata(SCANNING, new Scanning(Integer.MAX_VALUE, RECIPE_UXV))
+         * .itemInputs(
+         * GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.CosmicNeutronium, 64),
+         * GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.CosmicNeutronium, 64),
+         * GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.CosmicNeutronium, 64),
+         * GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.CosmicNeutronium, 64),
+         * eM_Hollow.get(4),
+         * GTModHandler.getModItem("eternalsingularity", "eternal_singularity", 2),
+         * GTModHandler.getModItem(GTPlusPlus.ID, "particleBase", 2, 14),
+         * GTModHandler.getModItem(GTPlusPlus.ID, "particleBase", 2, 14),
+         * GTModHandler.getModItem(TecTech.ID, "tile.quantumGlass", 4),
+         * GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UXV, 32),
+         * GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UMV, 48),
+         * GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UIV, 64),
+         * GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Neutronium, 64),
+         * GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Neutronium, 64),
+         * GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Neutronium, 64),
+         * GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Neutronium, 64))
+         * .itemOutputs(eM_Spacetime.get(1))
+         * .fluidInputs(
+         * Materials.WhiteDwarfMatter.getMolten(INGOTS * 1024),
+         * Materials.Infinity.getMolten(INGOTS * 1024),
+         * Materials.SpaceTime.getMolten(INGOTS * 256))
+         * .duration(114514 * 20)
+         * .eut(RECIPE_UMV)
+         * .addTo(AssemblyLine);
+         */
         // OTEComputer
         GTValues.RA.stdBuilder()
             .metadata(RESEARCH_ITEM, OTHItemList.OTEHatchRack.get(1))
@@ -1162,9 +1158,9 @@ public class RecipesMain implements IRecipePool {
             .eut(TierEU.RECIPE_ZPM)
             .addTo(assemblerRecipes);
         // MINI NUKE
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(OTHItemList.AF.get(1))
-            .itemInputs(
+            .itemInputsUnsafe(
                 OTHItemList.LargeQuHub.get(4),
                 ItemList.IV_Coil.get(16),
                 ItemList.Casing_IV.get(1),
@@ -1174,8 +1170,8 @@ public class RecipesMain implements IRecipePool {
             .eut(4096)
             .addTo(Assem);
         // KOH
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 OTHItemList.dustLookNEIM.get(0),
                 Materials.Potassium.getDust(64))
@@ -1276,44 +1272,47 @@ public class RecipesMain implements IRecipePool {
             123 * 20,
             (int) TierEU.RECIPE_UXV);
         // bin
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(OTHItemList.TP.get(1))
-            .itemInputs(GTUtility.getIntegratedCircuit(17), Materials.Steel.getPlates(4))
+            .itemInputsUnsafe(GTUtility.getIntegratedCircuit(17), Materials.Steel.getPlates(4))
             .eut(1)
             .duration(1)
             .addTo(Assem);
         // Bedrock
-        RecipeBuilder.builder()
-            .itemInputs(Materials.Bedrockium.getDust(1))
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(Materials.Bedrockium.getDust(1))
             .itemOutputs(setStackSize(Materials.SiliconDioxide.getDust(1), 26244), Materials.Carbon.getDust(9))
             .eut(RECIPE_UIV)
             .duration(40)
             .addTo(RecipeMaps.centrifugeNonCellRecipes);
-        RecipeBuilder.builder()
-            .itemInputs(Materials.Bedrockium.getDust(1))
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(Materials.Bedrockium.getDust(1))
             .itemOutputs(setStackSize(Materials.SiliconDioxide.getDust(1), 26244), Materials.Carbon.getDust(9))
             .eut(RECIPE_UIV)
             .duration(40)
             .addTo(centrifugeRecipes);
         // AE2singularity
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(
                 GTModHandler.getModItem(AppliedEnergistics2.ID, "item.ItemMultiMaterial", 1, 47)
                     .setStackDisplayName(StatCollector.translateToLocal("oth.recipe.main.any256000Items")))
+            .duration(0)
+            .eut(0)
             .addTo(AE2);
         // Scrap
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(ItemList.IC2_Scrap.get(1))
-            .itemInputs(
+            .itemInputsUnsafe(
                 new ItemStack(Blocks.cobblestone, 1)
                     .setStackDisplayName(StatCollector.translateToLocal("oth.recipe.main.anyItem")))
             .eut(30)
+            .duration(0)
             .addTo(RCY);
 
         // EIOM
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(OTHItemList.EIO.get(1))
-            .itemInputs(
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 ItemList.Electric_Motor_HV.get(16),
                 ItemList.Casing_HV.get(1),
@@ -1365,18 +1364,18 @@ public class RecipesMain implements IRecipePool {
             .eut(TierEU.RECIPE_UIV)
             .addTo(AssemblyLine);
         // Egg
-        RecipeBuilder.builder()
-            .itemInputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Antimony, 1))
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Antimony, 1))
             .fluidInputs(Materials.Nitrogen.getGas(4000))
             .itemOutputs(new ItemStack(Items.egg, 3))
             .eut(114514)
             .duration(60)
             .addTo(RecipeMaps.multiblockChemicalReactorRecipes);
         // Salt Wasser
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Aluminium, 2))
             .fluidInputs(Materials.SaltWater.getFluid(2000))
-            .itemInputs(GTUtility.getIntegratedCircuit(17), OTHItemList.dustIrOsSmM.get(0))
+            .itemInputsUnsafe(GTUtility.getIntegratedCircuit(17), OTHItemList.dustIrOsSmM.get(0))
             .fluidOutputs(Materials.Nitrogen.getGas(1000), FluidRegistry.getFluidStack("fluid.formaldehyde", 2000))
             .duration(100)
             .eut(123123)
@@ -1400,8 +1399,8 @@ public class RecipesMain implements IRecipePool {
                 'I', getGM(23540, 1) });
         // Beeyonds House
         //
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 4, 9399),
                 ItemList.AcceleratorMV.get(4),
                 ItemList.Field_Generator_LV.get(4))
@@ -1438,9 +1437,9 @@ public class RecipesMain implements IRecipePool {
             .addTo(AssemblyLine);
 
         // Large Qu
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(OTHItemList.LargeQuHub.get(1))
-            .itemInputs(
+            .itemInputsUnsafe(
                 ItemList.Casing_LV.get(1),
                 ItemList.LV_Coil.get(4),
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.LV, 4))
@@ -1504,35 +1503,24 @@ public class RecipesMain implements IRecipePool {
             .duration(120)
             .addTo(AssemblyLine);
         // TST Burger
-        RecipeBuilder.builder()
-            .itemInputs(GTCMItemList.ProofOfHeroes.get(1), new ItemStack(Items.bread, 2))
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(GTCMItemList.ProofOfHeroes.get(1), new ItemStack(Items.bread, 2))
             .itemOutputs(OTHItemList.itemTST.get(1))
             .duration(123 * SECONDS)
             .eut(RECIPE_UXV)
             .addTo(RecipeMaps.neutroniumCompressorRecipes);
-        //SnAs Dust
-        RecipeBuilder.builder()
-            .itemInputs(
-                Materials.Tin.getDust(1),
-                Materials.Arsenic.getDust(1)
-            )
-            .itemOutputs(
-                OTHItemList.dustSnAsM.get(1)
-            )
+        // SnAs Dust
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(Materials.Tin.getDust(1), Materials.Arsenic.getDust(1))
+            .itemOutputs(OTHItemList.dustSnAsM.get(1))
             .duration(20)
             .eut(RECIPE_LV)
             .addTo(RecipeMaps.mixerNonCellRecipes);
-        //SnAs
-        RecipeBuilder.builder()
-            .itemOutputs(
-                OTHItemList.ingotSnAsM.get(1)
-            )
-            .itemInputs(
-                OTHItemList.dustSnAsM.get(1)
-            )
-            .fluidInputs(
-                OTHMaterials.LCL.getFluid(1000)
-            )
+        // SnAs
+        GTValues.RA.stdBuilder()
+            .itemOutputs(OTHItemList.ingotSnAsM.get(1))
+            .itemInputsUnsafe(OTHItemList.dustSnAsM.get(1))
+            .fluidInputs(OTHMaterials.LCL.getFluid(1000))
             .duration(20)
             .eut(RECIPE_EV)
             .addTo(RecipeMaps.autoclaveRecipes);

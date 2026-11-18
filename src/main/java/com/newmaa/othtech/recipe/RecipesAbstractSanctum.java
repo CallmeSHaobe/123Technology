@@ -63,7 +63,7 @@ import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.block.tile.TileTerraPlate;
 import vazkii.botania.common.item.ModItems;
 
-public class AbstractSanctumRecipes implements IRecipePool {
+public class RecipesAbstractSanctum implements IRecipePool {
 
     public static final RecipeMetadataKey<Integer> INFUSION_ENCHANTMENT_EFFECT = SimpleRecipeMetadataKey
         .create(Integer.class, "otht.abstractSanctum.infusionEnchantment");
@@ -416,7 +416,7 @@ public class AbstractSanctumRecipes implements IRecipePool {
         }
 
         // Keep hard-coded shard signatures stable regardless of recipe registration order.
-        crucibleRecipes.sort(Comparator.comparing(AbstractSanctumRecipes::crucibleSortKey));
+        crucibleRecipes.sort(Comparator.comparing(RecipesAbstractSanctum::crucibleSortKey));
         int shardPairIndex = 0;
         for (CrucibleRecipe crucible : crucibleRecipes) {
             try {

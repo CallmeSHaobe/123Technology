@@ -98,15 +98,8 @@ public class OTELargeCircuitAssembler extends OTHMultiMachineBase<OTELargeCircui
         translateToLocal("ote.cm.lca.1") + ":", translateToLocal("ote.cm.lca.2") + ":",
         translateToLocal("ote.cm.lca.3") };
 
-    private final String[][] shapeMain = new String[][] {
-        { "             ", "             ", "             ", "             ", "             ", "EEEEEEEEEEEEE" },
-        { " IIIIIIIIIII ", " I         I ", " I         I ", " I         I ", " II       II ", "EEEEEEEEEEEEE" },
-        { " IHHHHHHHHHI ", "             ", "             ", "             ", " IHHHH~HHHHI ", "EEEEEEEEEEEEE" },
-        { " IHHHHHHHHHI ", "   HAAAAAF   ", "   HAAAAAF   ", "   HAAAAAF   ", " IGHBHHHBHFI ", "EEEEEEEEEEEEE" },
-        { " IHHHHHHHHHI ", "   H     F   ", "   G     F   ", "   G     F   ", " IGHBCCCBHFI ", "EEEEEEEEEEEEE" },
-        { " IHHHHHHHHHI ", "  HHHHHHHHH  ", "  HHDDDDDHH  ", "  HHDDDDDHH  ", " IHHHHHHHHHI ", "EEEEEEEEEEEEE" },
-        { " IIIIIIIIIII ", " I         I ", " I         I ", " I         I ", " II       II ", "EEEEEEEEEEEEE" },
-        { "             ", "             ", "             ", "             ", "             ", "EEEEEEEEEEEEE" } };
+    private final String[][] shapeMain = com.newmaa.othtech.utils.ShapeLoader
+        .loadCompressed("/assets/123technology/structures/ote/OTELargeCircuitAssembler_shapeMain.shape.gz");
 
     // ===================== Constructors =====================
 

@@ -18,7 +18,7 @@ import com.gtnewhorizons.modularui.api.screen.ModularWindow;
 import com.gtnewhorizons.modularui.common.widget.DrawableWidget;
 import com.gtnewhorizons.modularui.common.widget.ProgressBar;
 import com.gtnewhorizons.modularui.common.widget.SlotWidget;
-import com.newmaa.othtech.recipe.AbstractSanctumRecipes;
+import com.newmaa.othtech.recipe.RecipesAbstractSanctum;
 
 import codechicken.nei.PositionedStack;
 import gregtech.api.gui.modularui.GTUITextures;
@@ -88,7 +88,7 @@ public class AbstractSanctumFrontend extends RecipeMapFrontend {
             }
             if (fixed.isFluid()) {
                 fluidInputs.add(fixed);
-            } else if (fixed.item != null && AbstractSanctumRecipes.isWorldSalt(fixed.item)) {
+            } else if (fixed.item != null && RecipesAbstractSanctum.isWorldSalt(fixed.item)) {
                 worldSaltInputs.add(fixed);
             } else {
                 regularInputs.add(fixed);
@@ -281,7 +281,7 @@ public class AbstractSanctumFrontend extends RecipeMapFrontend {
 
     @Override
     protected void drawNEIOverlayForInput(GTNEIDefaultHandler.FixedPositionedStack stack) {
-        if (stack.item == null || !AbstractSanctumRecipes.isWorldSalt(stack.item)) {
+        if (stack.item == null || !RecipesAbstractSanctum.isWorldSalt(stack.item)) {
             return;
         }
 

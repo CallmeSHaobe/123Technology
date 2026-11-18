@@ -80,21 +80,8 @@ public class OTELaoBaChemicalReactor extends OTHMultiMachineBase<OTELaoBaChemica
         EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.chem.0") };
 
     // Structured by LyeeR
-    private final String[][] shapeMain = new String[][] {
-        { "FFFFFFF", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G",
-            "G     G", "G     G", "FFF~FFF" },
-        { "FFFFFFF", " BBBBB ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ",
-            " AAAAA ", " BBBBB ", "FFFFFFF" },
-        { "FFFFFFF", " BDDDB ", " A G A ", " A E A ", " A E A ", " A G A ", " ADDDA ", " A G A ", " A E A ", " A E A ",
-            " A G A ", " BDDDB ", "FFFFFFF" },
-        { "FFFFFFF", " BDCDB ", " AGCGA ", " AECEA ", " AECEA ", " AGCGA ", " ADCDA ", " AGCGA ", " AECEA ", " AECEA ",
-            " AGCGA ", " BDCDB ", "FFFFFFF" },
-        { "FFFFFFF", " BDDDB ", " A G A ", " A E A ", " A E A ", " A G A ", " ADDDA ", " A G A ", " A E A ", " A E A ",
-            " A G A ", " BDDDB ", "FFFFFFF" },
-        { "FFFFFFF", " BBBBB ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ", " AAAAA ",
-            " AAAAA ", " BBBBB ", "FFFFFFF" },
-        { "FFFFFFF", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G", "G     G",
-            "G     G", "G     G", "FFFFFFF" } };
+    private final String[][] shapeMain = com.newmaa.othtech.utils.ShapeLoader
+        .loadCompressed("/assets/123technology/structures/ote/OTELaoBaChemicalReactor_shapeMain.shape.gz");
 
     private static ITexture CASING_TEXTURE = null;
 
