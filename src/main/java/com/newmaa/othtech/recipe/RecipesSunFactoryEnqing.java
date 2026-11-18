@@ -57,8 +57,8 @@ import net.minecraftforge.fluids.FluidStack;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.utils.ModsEnum;
+import com.newmaa.othtech.utils.RecipeBuilder;
 
-import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
@@ -82,8 +82,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
         Fluid water2 = FluidRegistry.getFluid("water");
         // PCB
         // T3
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 GTUtility.getIntegratedCircuit(23),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Copper, 1), 180),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 1), 6),
@@ -96,8 +96,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .duration(4 * 20 * 64)
             .eut(TierEU.RECIPE_EV)
             .addTo(PCB);
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 GTUtility.getIntegratedCircuit(24),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Copper, 1), 180),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 1), 6),
@@ -110,8 +110,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(TierEU.RECIPE_EV)
             .addTo(PCB);
         // T4
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 GTUtility.getIntegratedCircuit(23),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Gold, 1), 120),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Electrum, 1), 120),
@@ -125,8 +125,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .duration(6 * 20 * 64)
             .eut(TierEU.RECIPE_IV)
             .addTo(PCB);
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 GTUtility.getIntegratedCircuit(24),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Gold, 1), 120),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Electrum, 1), 120),
@@ -140,8 +140,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(TierEU.RECIPE_IV)
             .addTo(PCB);
         // T5
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 GTUtility.getIntegratedCircuit(23),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Aluminium, 1), 156),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.EnergeticAlloy, 1), 156),
@@ -155,8 +155,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .duration(8 * 20 * 64)
             .eut(TierEU.RECIPE_LuV)
             .addTo(PCB);
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 GTUtility.getIntegratedCircuit(24),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Aluminium, 1), 156),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.EnergeticAlloy, 1), 156),
@@ -170,8 +170,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(TierEU.RECIPE_LuV)
             .addTo(PCB);
         // T6
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 GTUtility.getIntegratedCircuit(23),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Palladium, 1), 194),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Platinum, 1), 194),
@@ -185,8 +185,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .duration(10 * 20 * 64)
             .eut(TierEU.RECIPE_ZPM)
             .addTo(PCB);
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 GTUtility.getIntegratedCircuit(24),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Palladium, 1), 194),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Platinum, 1), 194),
@@ -200,8 +200,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(TierEU.RECIPE_ZPM)
             .addTo(PCB);
         // T7
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 GTUtility.getIntegratedCircuit(23),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.EnrichedHolmium, 1), 204),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.NiobiumTitanium, 1), 204),
@@ -216,8 +216,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .duration(12 * 20 * 64)
             .eut(TierEU.RECIPE_UV)
             .addTo(PCB);
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 GTUtility.getIntegratedCircuit(24),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.EnrichedHolmium, 1), 204),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.NiobiumTitanium, 1), 204),
@@ -232,10 +232,10 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(TierEU.RECIPE_UV)
             .addTo(PCB);
         // T8
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 GTUtility.getIntegratedCircuit(23),
-                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.SuperconductorUV, 1), 300),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.SuperconductorUVBase, 1), 300),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Neutronium, 1), 300),
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32076), 64),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Iron, 1), 59),
@@ -248,10 +248,10 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .duration(14 * 20 * 64)
             .eut(RECIPE_UHV)
             .addTo(PCB);
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 GTUtility.getIntegratedCircuit(24),
-                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.SuperconductorUV, 1), 300),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.SuperconductorUVBase, 1), 300),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Neutronium, 1), 300),
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32076), 64),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Iron, 1), 59),
@@ -264,8 +264,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(RECIPE_UHV)
             .addTo(PCB);
         // T9
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 GTUtility.getIntegratedCircuit(23),
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 10106), 352),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.InfinityCatalyst, 1), 352),
@@ -281,8 +281,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .duration(16 * 20 * 64)
             .eut(TierEU.RECIPE_UEV)
             .addTo(PCB);
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 GTUtility.getIntegratedCircuit(24),
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 10106), 352),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.InfinityCatalyst, 1), 352),
@@ -298,8 +298,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(TierEU.RECIPE_UEV)
             .addTo(PCB);
         // TST PCB
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 GTUtility.getIntegratedCircuit(24),
                 Materials.CosmicNeutronium.getDust(32),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.SuperconductorUIVBase, 1), 176),
@@ -313,8 +313,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .addTo(PCB);
         // SMD
         // Yellow
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Polyethylene, 1), 217),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tantalum, 1), 58),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 1), 32),
@@ -336,8 +336,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .duration(20 * 64)
             .eut(TierEU.RECIPE_ZPM)
             .addTo(SMD);
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Polyethylene, 1), 217),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tantalum, 1), 58),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 1), 32),
@@ -360,8 +360,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(TierEU.RECIPE_ZPM)
             .addTo(SMD);
         // Red
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Polybenzimidazole, 1), 272),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.TungstenSteel, 1), 32),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Graphene, 1), 32),
@@ -383,8 +383,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .duration(20 * 64)
             .eut(RECIPE_UHV)
             .addTo(SMD);
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Polybenzimidazole, 1), 272),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.TungstenSteel, 1), 32),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Graphene, 1), 32),
@@ -407,8 +407,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(RECIPE_UHV)
             .addTo(SMD);
         // Purple -1
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 1), 83),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.CosmicNeutronium, 1), 72),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Draconium, 1), 32),
@@ -435,8 +435,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .duration(20 * 64)
             .eut(TierEU.RECIPE_UIV)
             .addTo(SMD);
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 1), 83),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.CosmicNeutronium, 1), 72),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Draconium, 1), 32),
@@ -464,8 +464,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(TierEU.RECIPE_UIV)
             .addTo(SMD);
         // Purple -2
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 1), 83),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.CosmicNeutronium, 1), 72),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Draconium, 1), 32),
@@ -494,8 +494,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .duration(20 * 64)
             .eut(TierEU.RECIPE_UIV)
             .addTo(SMD);
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 1), 83),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.CosmicNeutronium, 1), 72),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Draconium, 1), 32),
@@ -524,8 +524,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .duration(20 * 64)
             .eut(TierEU.RECIPE_UIV)
             .addTo(SMD);
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.01", 0, 32398),
                 Materials.SiliconSG.getDust(16),
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.03", 64, 32030))
@@ -534,8 +534,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(30)
             .addTo(NMD);
         // P
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.01", 0, 32398),
                 Materials.SiliconSG.getDust(32),
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.03", 64, 32031))
@@ -544,8 +544,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(120)
             .addTo(NMD);
         // Nq
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.01", 0, 32398),
                 Materials.SiliconSG.getDust(64),
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.03", 64, 32032))
@@ -554,8 +554,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(480)
             .addTo(NMD);
         // Eu
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.01", 0, 32398),
                 setStackSize(Materials.SiliconSG.getDust(1), 128),
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.03", 64, 32150))
@@ -564,8 +564,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(1920)
             .addTo(NMD);
         // Am
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.01", 0, 32398),
                 setStackSize(Materials.SiliconSG.getDust(1), 256),
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.03", 64, 32152))
@@ -574,8 +574,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(7680)
             .addTo(NMD);
         // Optical
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.01", 0, 32398),
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.03", 64, 32721))
             .fluidInputs(new FluidStack(water, 64000))
@@ -586,9 +586,9 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
 
         // Circuit Wafers
         // CPU
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Wafer_CPU.get(1), 1024 * a))
-            .itemInputsUnsafe(
+            .itemInputs(
                 GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.cpu", 0),
                 GTUtility.getIntegratedCircuit(1),
                 Circuit_Silicon_Wafer6.get(2))
@@ -596,9 +596,9 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(1920)
             .addTo(NMD);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Chip_CPU.get(1), 1024 * 8 * a))
-            .itemInputsUnsafe(
+            .itemInputs(
                 GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.cpu", 0),
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.01", 0, 32398),
                 GTUtility.getIntegratedCircuit(24),
@@ -607,9 +607,9 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(1920)
             .addTo(NMD);
         // NAND
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Wafer_NAND.get(1), 1024 * a))
-            .itemInputsUnsafe(
+            .itemInputs(
                 GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.nand", 0),
                 GTUtility.getIntegratedCircuit(1),
                 Circuit_Silicon_Wafer6.get(4))
@@ -617,9 +617,9 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(1920)
             .addTo(NMD);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Chip_NAND.get(1), 1024 * 32 * a))
-            .itemInputsUnsafe(
+            .itemInputs(
                 GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.nand", 0),
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.01", 0, 32398),
                 GTUtility.getIntegratedCircuit(24),
@@ -628,9 +628,9 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(1920)
             .addTo(NMD);
         // NOR
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Wafer_NOR.get(1), 1024 * a))
-            .itemInputsUnsafe(
+            .itemInputs(
                 GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.nor", 0),
                 GTUtility.getIntegratedCircuit(1),
                 Circuit_Silicon_Wafer6.get(4))
@@ -638,9 +638,9 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(1920)
             .addTo(NMD);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Chip_NOR.get(1), 1024 * 16 * a))
-            .itemInputsUnsafe(
+            .itemInputs(
                 GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.nor", 0),
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.01", 0, 32398),
                 GTUtility.getIntegratedCircuit(24),
@@ -649,9 +649,9 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(1920)
             .addTo(NMD);
         // RAM
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Wafer_Ram.get(1), 1024 * a))
-            .itemInputsUnsafe(
+            .itemInputs(
                 GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.ram", 0),
                 GTUtility.getIntegratedCircuit(1),
                 Circuit_Silicon_Wafer6.get(4))
@@ -659,9 +659,9 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(1920)
             .addTo(NMD);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Chip_Ram.get(1), 1024 * 32 * a))
-            .itemInputsUnsafe(
+            .itemInputs(
                 GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.ram", 0),
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.01", 0, 32398),
                 GTUtility.getIntegratedCircuit(24),
@@ -670,9 +670,9 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(1920)
             .addTo(NMD);
         // Logic
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Wafer_ILC.get(1), 1024 * a))
-            .itemInputsUnsafe(
+            .itemInputs(
                 GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.ilc", 0),
                 GTUtility.getIntegratedCircuit(1),
                 Circuit_Silicon_Wafer6.get(4))
@@ -680,9 +680,9 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(1920)
             .addTo(NMD);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Chip_ILC.get(1), 1024 * 8 * a))
-            .itemInputsUnsafe(
+            .itemInputs(
                 GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.ilc", 0),
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.01", 0, 32398),
                 GTUtility.getIntegratedCircuit(24),
@@ -691,9 +691,9 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(1920)
             .addTo(NMD);
         // SoC
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Wafer_SoC.get(1), 1024 * a))
-            .itemInputsUnsafe(
+            .itemInputs(
                 GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.soc", 0),
                 GTUtility.getIntegratedCircuit(1),
                 Circuit_Silicon_Wafer6.get(4))
@@ -701,9 +701,9 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(1920)
             .addTo(NMD);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Chip_SoC.get(1), 1024 * 6 * a))
-            .itemInputsUnsafe(
+            .itemInputs(
                 GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.soc", 0),
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.01", 0, 32398),
                 GTUtility.getIntegratedCircuit(24),
@@ -712,9 +712,9 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(1920)
             .addTo(NMD);
         // SSoC
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Wafer_Simple_SoC.get(1), 1024 * a))
-            .itemInputsUnsafe(
+            .itemInputs(
                 GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.ssoc", 0),
                 GTUtility.getIntegratedCircuit(1),
                 Circuit_Silicon_Wafer6.get(4))
@@ -722,9 +722,9 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(1920)
             .addTo(NMD);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Chip_Simple_SoC.get(1), 1024 * 6 * a))
-            .itemInputsUnsafe(
+            .itemInputs(
                 GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.ssoc", 0),
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.01", 0, 32398),
                 GTUtility.getIntegratedCircuit(24),
@@ -733,9 +733,9 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(1920)
             .addTo(NMD);
         // ASoC
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Wafer_SoC2.get(1024 * 6 * a), 1024 * a))
-            .itemInputsUnsafe(
+            .itemInputs(
                 GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.asoc", 0),
                 GTUtility.getIntegratedCircuit(1),
                 Circuit_Silicon_Wafer6.get(4))
@@ -743,9 +743,9 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(1920)
             .addTo(NMD);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Chip_SoC2.get(1024 * 6 * a), 1024 * 6 * a))
-            .itemInputsUnsafe(
+            .itemInputs(
                 GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.asoc", 0),
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.01", 0, 32398),
                 GTUtility.getIntegratedCircuit(24),
@@ -754,9 +754,9 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(1920)
             .addTo(NMD);
         // Nano CPU
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Wafer_NanoCPU.get(1), 1024 * a))
-            .itemInputsUnsafe(
+            .itemInputs(
                 GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.ncpu", 0),
                 GTUtility.getIntegratedCircuit(1),
                 Circuit_Silicon_Wafer6.get(4))
@@ -764,9 +764,9 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(1920)
             .addTo(NMD);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Chip_NanoCPU.get(1), 1024 * 8 * a))
-            .itemInputsUnsafe(
+            .itemInputs(
                 GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.ncpu", 0),
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.01", 0, 32398),
                 GTUtility.getIntegratedCircuit(24),
@@ -775,9 +775,9 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(1920)
             .addTo(NMD);
         // Q CPU
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Wafer_QuantumCPU.get(1), 1024 * a))
-            .itemInputsUnsafe(
+            .itemInputs(
                 GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.qbit", 0),
                 GTUtility.getIntegratedCircuit(1),
                 Circuit_Silicon_Wafer6.get(4))
@@ -785,9 +785,9 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(7680)
             .addTo(NMD);
 
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Chip_QuantumCPU.get(1), 1024 * 4 * a))
-            .itemInputsUnsafe(
+            .itemInputs(
                 GTModHandler.getModItem(GTNHLanthanides.ID, "item.photomask.qbit", 0),
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.01", 0, 32398),
                 GTUtility.getIntegratedCircuit(24),
@@ -796,10 +796,10 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(7680)
             .addTo(NMD);
         // BIO
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Wafer_Bioware.get(1), 1024 * a))
             .fluidInputs(FluidRegistry.getFluidStack("biohmediumsterilized", 8000 * 1024))
-            .itemInputsUnsafe(
+            .itemInputs(
                 GTUtility.getIntegratedCircuit(14),
                 setStackSize(Circuit_Silicon_Wafer7.get(1), 256),
                 setStackSize(GTModHandler.getModItem(GTPlusPlus.ID, "itemDustHypogen", 1), 1024))
@@ -807,9 +807,9 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(RECIPE_UHV)
             .addTo(NMD);
         // Optical Enhanced
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemOutputs(setStackSize(Circuit_Silicon_Wafer7.get(1), 512 * a))
-            .itemInputsUnsafe(
+            .itemInputs(
                 OTHItemList.dustIrOsSmM.get(0),
                 setStackSize(Circuit_Silicon_Wafer6.get(1), 1024),
                 setStackSize(Materials.Glowstone.getNanite(1), 1024))
@@ -820,15 +820,15 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
 
         // POWER IC
         // UL Power IC
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(GTUtility.getIntegratedCircuit(2), setStackSize(Circuit_Silicon_Wafer2.get(1), 128))
+        RecipeBuilder.builder()
+            .itemInputs(GTUtility.getIntegratedCircuit(2), setStackSize(Circuit_Silicon_Wafer2.get(1), 128))
             .itemOutputs(setStackSize(Circuit_Wafer_ULPIC.get(1), 1024 * a))
             .duration(10 * 20)
             .eut(120)
             .addTo(NMD);
 
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.01", 0, 32398),
                 GTUtility.getIntegratedCircuit(18),
                 setStackSize(Circuit_Silicon_Wafer2.get(1), 128))
@@ -837,15 +837,15 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(120)
             .addTo(NMD);
         // L Power IC
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(GTUtility.getIntegratedCircuit(3), setStackSize(Circuit_Silicon_Wafer.get(1), 256))
+        RecipeBuilder.builder()
+            .itemInputs(GTUtility.getIntegratedCircuit(3), setStackSize(Circuit_Silicon_Wafer.get(1), 256))
             .itemOutputs(setStackSize(Circuit_Wafer_LPIC.get(1), 1024 * a))
             .duration(10 * 20)
             .eut(480)
             .addTo(NMD);
 
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.01", 0, 32398),
                 GTUtility.getIntegratedCircuit(17),
                 setStackSize(Circuit_Silicon_Wafer.get(1), 256))
@@ -854,8 +854,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(480)
             .addTo(NMD);
         // Power IC
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(GTUtility.getIntegratedCircuit(4), setStackSize(Circuit_Silicon_Wafer3.get(1), 256))
+        RecipeBuilder.builder()
+            .itemInputs(GTUtility.getIntegratedCircuit(4), setStackSize(Circuit_Silicon_Wafer3.get(1), 256))
             .fluidInputs(new FluidStack(water, 1440))
             .fluidOutputs(new FluidStack(water2, 1440))
             .itemOutputs(setStackSize(Circuit_Wafer_PIC.get(1), 1024 * a))
@@ -863,8 +863,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .duration(60 * 64 * 20)
             .eut(TierEU.EV)
             .addTo(NMD);
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(GTUtility.getIntegratedCircuit(4), setStackSize(Circuit_Silicon_Wafer6.get(1), 4))
+        RecipeBuilder.builder()
+            .itemInputs(GTUtility.getIntegratedCircuit(4), setStackSize(Circuit_Silicon_Wafer6.get(1), 4))
             .fluidOutputs(new FluidStack(water2, 1440))
             .itemOutputs(setStackSize(Circuit_Wafer_PIC.get(1), 1024 * a))
 
@@ -872,8 +872,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(TierEU.EV)
             .addTo(NMD);
 
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.01", 0, 32398),
                 GTUtility.getIntegratedCircuit(16),
                 setStackSize(Circuit_Silicon_Wafer3.get(1), 256))
@@ -884,8 +884,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .duration(60 * 64 * 20)
             .eut(TierEU.EV)
             .addTo(NMD);
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.01", 0, 32398),
                 GTUtility.getIntegratedCircuit(16),
                 setStackSize(Circuit_Silicon_Wafer6.get(1), 4))
@@ -896,8 +896,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(TierEU.EV)
             .addTo(NMD);
         // Power IC High
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 GTUtility.getIntegratedCircuit(5),
                 setStackSize(Circuit_Silicon_Wafer3.get(1), 256),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.IndiumGalliumPhosphide, 1), 2048),
@@ -909,8 +909,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .duration(60 * 64 * 20)
             .eut(TierEU.LuV)
             .addTo(NMD);
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 GTUtility.getIntegratedCircuit(5),
                 setStackSize(Circuit_Silicon_Wafer6.get(1), 8),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.IndiumGalliumPhosphide, 1), 2048),
@@ -922,8 +922,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(TierEU.LuV)
             .addTo(NMD);
 
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.01", 0, 32398),
                 GTUtility.getIntegratedCircuit(23),
                 setStackSize(Circuit_Silicon_Wafer3.get(1), 256),
@@ -936,8 +936,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .duration(60 * 64 * 20)
             .eut(TierEU.LuV)
             .addTo(NMD);
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.01", 0, 32398),
                 GTUtility.getIntegratedCircuit(23),
                 setStackSize(Circuit_Silicon_Wafer6.get(1), 8),
@@ -950,8 +950,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(TierEU.LuV)
             .addTo(NMD);
         // Power IC SuperHigh
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 GTUtility.getIntegratedCircuit(6),
                 setStackSize(Circuit_Silicon_Wafer3.get(1), 256),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.IndiumGalliumPhosphide, 1), 10240),
@@ -964,8 +964,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .duration(60 * 64 * 20)
             .eut(TierEU.ZPM)
             .addTo(NMD);
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 GTUtility.getIntegratedCircuit(6),
                 setStackSize(Circuit_Silicon_Wafer6.get(1), 16),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.IndiumGalliumPhosphide, 1), 10240),
@@ -978,8 +978,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(TierEU.ZPM)
             .addTo(NMD);
 
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.01", 0, 32398),
                 GTUtility.getIntegratedCircuit(22),
                 setStackSize(Circuit_Silicon_Wafer3.get(1), 256),
@@ -993,8 +993,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .duration(60 * 64 * 20)
             .eut(TierEU.ZPM)
             .addTo(NMD);
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.01", 0, 32398),
                 GTUtility.getIntegratedCircuit(22),
                 setStackSize(Circuit_Silicon_Wafer6.get(1), 16),
@@ -1008,8 +1008,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(TierEU.ZPM)
             .addTo(NMD);
         // Power IC Pm
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 GTUtility.getIntegratedCircuit(7),
                 setStackSize(Circuit_Silicon_Wafer7.get(1), 32),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.IndiumGalliumPhosphide, 1), 65536),
@@ -1021,8 +1021,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(TierEU.UV)
             .addTo(NMD);
 
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.01", 0, 32398),
                 GTUtility.getIntegratedCircuit(21),
                 setStackSize(Circuit_Silicon_Wafer7.get(1), 32),
@@ -1035,15 +1035,15 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(TierEU.UV)
             .addTo(NMD);
         // Nano Power IC
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(GTUtility.getIntegratedCircuit(8), setStackSize(Circuit_Silicon_Wafer6.get(1), 32))
+        RecipeBuilder.builder()
+            .itemInputs(GTUtility.getIntegratedCircuit(8), setStackSize(Circuit_Silicon_Wafer6.get(1), 32))
             .itemOutputs(setStackSize(Circuit_Wafer_NPIC.get(1), 1024 * a))
             .duration(10 * 20)
             .eut(120)
             .addTo(NMD);
 
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.01", 0, 32398),
                 GTUtility.getIntegratedCircuit(20),
                 setStackSize(Circuit_Silicon_Wafer6.get(1), 32))
@@ -1052,15 +1052,15 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(120)
             .addTo(NMD);
         // Quantum Power ic
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(GTUtility.getIntegratedCircuit(9), setStackSize(Circuit_Silicon_Wafer6.get(1), 32))
+        RecipeBuilder.builder()
+            .itemInputs(GTUtility.getIntegratedCircuit(9), setStackSize(Circuit_Silicon_Wafer6.get(1), 32))
             .itemOutputs(setStackSize(Circuit_Wafer_QPIC.get(1), 1024 * a))
             .duration(10 * 20)
             .eut(120)
             .addTo(NMD);
 
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 GTModHandler.getModItem(GregTech.ID, "gt.metaitem.01", 0, 32398),
                 GTUtility.getIntegratedCircuit(19),
                 setStackSize(Circuit_Silicon_Wafer6.get(1), 32))
@@ -1069,8 +1069,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(120)
             .addTo(NMD);
         // Adv Crystal
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.plate, Materials.Olivine, 1), 1024),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Europium, 1), 144),
                 GTUtility.getIntegratedCircuit(4))
@@ -1080,8 +1080,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .duration(60 * 64 * 20)
             .eut(TierEU.UV)
             .addTo(NMD);
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.plate, Materials.Emerald, 1), 1024),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Europium, 1), 144),
                 GTUtility.getIntegratedCircuit(4))
@@ -1093,8 +1093,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .addTo(NMD);
         // UNI
         // Crystal Processing Unit
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.plate, Materials.Emerald, 1), 1024),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Europium, 1), 144),
                 GTUtility.getIntegratedCircuit(1))
@@ -1105,8 +1105,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .duration(123 * 64 * 20)
             .eut(TierEU.EV)
             .addTo(UNI);
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.plate, Materials.Olivine, 1), 1024),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Europium, 1), 144),
                 GTUtility.getIntegratedCircuit(1))
@@ -1118,8 +1118,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(TierEU.EV)
             .addTo(UNI);
         // Crystal SoC
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.plate, Materials.Olivine, 1), 1024),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Europium, 1), 144),
                 GTUtility.getIntegratedCircuit(2))
@@ -1130,8 +1130,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .duration(123 * 64 * 20)
             .eut(TierEU.EV)
             .addTo(UNI);
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.plate, Materials.Emerald, 1), 1024),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Europium, 1), 144),
                 GTUtility.getIntegratedCircuit(2))
@@ -1143,8 +1143,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(TierEU.EV)
             .addTo(UNI);
         // Wetware SoC
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.plate, Materials.Olivine, 1), 1024),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Europium, 1), 144),
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32073), 5),
@@ -1157,8 +1157,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .duration(240 * 64 * 20)
             .eut(TierEU.UHV)
             .addTo(UNI);
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.plate, Materials.Emerald, 1), 1024),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Europium, 1), 144),
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32073), 5),
@@ -1172,8 +1172,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(TierEU.UHV)
             .addTo(UNI);
         // Adv Crystal
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.plate, Materials.Olivine, 1), 1024),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Europium, 1), 144),
                 GTUtility.getIntegratedCircuit(4))
@@ -1184,8 +1184,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .duration(60 * 64 * 20)
             .eut(TierEU.UV)
             .addTo(UNI);
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.plate, Materials.Emerald, 1), 1024),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Europium, 1), 144),
                 GTUtility.getIntegratedCircuit(4))
@@ -1197,8 +1197,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(TierEU.UV)
             .addTo(UNI);
         // Bio SoC
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 setStackSize(GTModHandler.getModItem("miscutils", "itemDustHypogen", 1), 64),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.block, Materials.SiliconSG, 1), 64),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.GalliumArsenide, 1), 8),
@@ -1213,8 +1213,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(TierEU.UIV)
             .addTo(UNI);
         // Optically RAM
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Sunnarium, 1), 4608),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Uranium, 1), 4608),
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 15470), 2048),
@@ -1235,8 +1235,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .duration(10 * 64 * 20)
             .eut(TierEU.UMV)
             .addTo(UNI);
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Sunnarium, 1), 4608),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Uranium, 1), 4608),
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 15470), 2048),
@@ -1259,8 +1259,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(TierEU.UMV)
             .addTo(UNI);
         // Optically CPU Shell
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32704), 64),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Bedrockium, 1), 1024),
                 setStackSize(GTModHandler.getModItem("miscutils", "itemDustBotmium", 1), 256),
@@ -1277,8 +1277,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .duration(10 * 64 * 20)
             .eut(TierEU.UMV)
             .addTo(UNI);
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32704), 64),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Bedrockium, 1), 1024),
                 setStackSize(GTModHandler.getModItem("miscutils", "itemDustBotmium", 1), 256),
@@ -1296,8 +1296,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(TierEU.UIV)
             .addTo(UNI);
         // Optically CPU
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32724), 768),
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32727), 768),
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 15470), 768),
@@ -1314,8 +1314,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .duration(20 * 64 * 20)
             .eut(TierEU.UMV)
             .addTo(UNI);
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32724), 768),
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32727), 768),
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 15470), 768),
@@ -1334,8 +1334,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(TierEU.UMV)
             .addTo(UNI);
         // Optically Die
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.ElectrumFlux, 1), 9216),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Glowstone, 1), 2560),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.block, Materials.SiliconSG, 1), 1024),
@@ -1349,8 +1349,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(TierEU.UXV)
             .addTo(UNI);
         // Item Processing Unit IV
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Redstone, 1), 2048),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Silicon, 1), 1024),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Diamond, 1), 1024),
@@ -1364,8 +1364,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(TierEU.IV)
             .addTo(UNI);
         // Gravity Engine
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Steel, 1), 256),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Lead, 1), 36),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Aluminium, 1), 24),
@@ -1391,8 +1391,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(TierEU.EV)
             .addTo(UNI);
         // shit
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Copper, 1), 64),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.IndiumGalliumPhosphide, 1), 64),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Boron, 1), 64),
@@ -1412,8 +1412,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(TierEU.LuV)
             .addTo(UNI);
         // HighTemp Carbon Web
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Neutronium, 1), 40),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 1), 20),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tantalum, 1), 16),
@@ -1430,8 +1430,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .duration(100 * 20)
             .eut(TierEU.LuV)
             .addTo(UNI);
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Neutronium, 1), 40),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 1), 20),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tantalum, 1), 16),
@@ -1449,8 +1449,8 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(TierEU.LuV)
             .addTo(UNI);
         // Iridium Adv Plate
-        GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
+        RecipeBuilder.builder()
+            .itemInputs(
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 17588), 64),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.plate, Materials.Iridium, 1), 64),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Diamond, 1), 1024),
@@ -1462,9 +1462,9 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(TierEU.UHV)
             .addTo(UNI);
         // Inf Chest
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemOutputs(setStackSize(GTModHandler.getModItem("avaritiaddons", "InfinityChest", 1), 256 * a))
-            .itemInputsUnsafe(
+            .itemInputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Silicon, 1), 256 * 256),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Bedrockium, 1), 144 * 256),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Draconium, 1), 144 * 256),
@@ -1485,9 +1485,9 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(TierEU.UV)
             .addTo(UNI);
         // Solar Panel (UV)
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemOutputs(setStackSize(ItemList.Cover_SolarPanel_UV.get(1), 256 * a))
-            .itemInputsUnsafe(
+            .itemInputs(
                 GTUtility.getIntegratedCircuit(16),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Steeleaf, 1), 4 * 256),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.FierySteel, 1), 4 * 256),
@@ -1502,7 +1502,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 FluidRegistry.getFluidStack("molten.sunnarium", 9216 * 256),
                 FluidRegistry.getFluidStack("molten.epoxid", 1152 * 256),
                 FluidRegistry.getFluidStack("molten.polybenzimidazole", 1152 * 256),
-                FluidRegistry.getFluidStack("molten.Polytetrafluoroethylene", 1152 * 256),
+                FluidRegistry.getFluidStack("molten.polytetrafluoroethylene", 1152 * 256),
                 FluidRegistry.getFluidStack("molten.solderingalloy", 128123 * 256),
                 FluidRegistry.getFluidStack("molten.neutronium", 9216 * 256))
 
@@ -1510,9 +1510,9 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .eut(TierEU.UMV)
             .addTo(UNI);
         // Dyson Sphere module
-        GTValues.RA.stdBuilder()
+        RecipeBuilder.builder()
             .itemOutputs(setStackSize(GTModHandler.getModItem(GTNHIntergalactic.ID, "item.DysonSwarmParts"), 256 * a))
-            .itemInputsUnsafe(
+            .itemInputs(
                 GTUtility.getIntegratedCircuit(7),
                 ItemList.Cover_SolarPanel_UV.get(4),
                 setStackSize(ItemList.Sensor_UEV.get(1), 4),

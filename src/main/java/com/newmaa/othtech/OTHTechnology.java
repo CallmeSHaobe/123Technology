@@ -83,7 +83,7 @@ import gtnhintergalactic.recipe.SpacePumpingRecipes;
         + "required-after:miscutils;"
         + "required-after:dreamcraft;"
         + "required-after:gregtech;"
-        + "required-after:TwistSpaceTechnology;"
+        + "required-before:TwistSpaceTechnology;"
         + "after:cropsnh;"
         + "required-after:GalaxySpace;",
     acceptedMinecraftVersions = "1.7.10")
