@@ -1,8 +1,16 @@
 package com.newmaa.othtech.common.item.itemMisc;
 
+import java.util.List;
+
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.StatCollector;
 
 import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 /** Model variants are shared by the item renderer and the launch platform's synchronized state. */
 public class ItemSuicideDrone extends Item {
@@ -21,8 +29,9 @@ public class ItemSuicideDrone extends Item {
 
     private final int variant;
     private final float explosionPower;
+    private final String[] tooltipLines;
 
-    public ItemSuicideDrone(String name, int variant, float explosionPower) {
+    public ItemSuicideDrone(String name, int variant, float explosionPower, String... tooltipLines) {
         if (!isValidVariant(variant)) {
             throw new IllegalArgumentException("Unknown drone variant: " + variant);
         }
@@ -34,11 +43,22 @@ public class ItemSuicideDrone extends Item {
         }
         this.variant = variant;
         this.explosionPower = explosionPower;
+        this.tooltipLines = tooltipLines == null ? new String[0] : tooltipLines.clone();
         REGISTERED_POWERS[variant] = explosionPower;
         setUnlocalizedName(name);
         setTextureName("minecraft:fireworks");
         setCreativeTab(CreativeTabsLoader.tabothtech);
         setMaxStackSize(64);
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    public void addInformation(ItemStack stack, EntityPlayer player, List tooltip, boolean advanced) {
+        super.addInformation(stack, player, tooltip, advanced);
+        for (String line : tooltipLines) {
+            if (line != null) tooltip.add(StatCollector.translateToLocal(line));
+        }
     }
 
     public float getExplosionPower() {

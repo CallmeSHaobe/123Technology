@@ -61,13 +61,26 @@ public class ItemLoader {
     public static Item itemRiceSingularity = new ItemRiceSingularity();
     public static Item itemSpacetimeCoolingCore = new ItemSpacetimeCoolingCore();
     public static Item dogSpawnEgg = new ItemDogSpawnEgg();
-    public static Item suicideDronePig = new ItemSuicideDrone("SuicideDronePig", ItemSuicideDrone.PIG, 2F);
+    public static Item suicideDronePig = new ItemSuicideDrone(
+        "SuicideDronePig",
+        ItemSuicideDrone.PIG,
+        2F,
+        "ote.drone.tooltip.pig");
     public static Item suicideDroneAngelica = new ItemSuicideDrone(
         "SuicideDroneAngelica",
         ItemSuicideDrone.ANGELICA,
-        8F);
-    public static Item suicideDroneNuclear = new ItemSuicideDrone("SuicideDroneNuclear", ItemSuicideDrone.NUCLEAR, 64F);
-    public static Item suicideDroneNvidia = new ItemSuicideDrone("SuicideDroneNvidia", ItemSuicideDrone.NVIDIA, 48F);
+        8F,
+        "ote.drone.tooltip.angelica");
+    public static Item suicideDroneNuclear = new ItemSuicideDrone(
+        "SuicideDroneNuclear",
+        ItemSuicideDrone.NUCLEAR,
+        64F,
+        "ote.drone.tooltip.nuclear");
+    public static Item suicideDroneNvidia = new ItemSuicideDrone(
+        "SuicideDroneNvidia",
+        ItemSuicideDrone.NVIDIA,
+        48F,
+        "ote.drone.tooltip.nvidia");
 
     public ItemLoader(FMLPreInitializationEvent event) {
         OTHItemList.Zhangww.set(registryAndCallback(itemZhangww, "itemZhangww"));

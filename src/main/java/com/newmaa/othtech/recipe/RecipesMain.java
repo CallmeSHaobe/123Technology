@@ -53,6 +53,7 @@ import gregtech.api.util.recipe.Scanning;
 import gregtech.common.items.CombType;
 import gregtech.loaders.misc.GTBees;
 import gtPlusPlus.xmod.gregtech.api.enums.GregtechItemList;
+import gtnhlanth.common.register.WerkstoffMaterialPool;
 import tectech.recipe.TTRecipeAdder;
 import tectech.thing.CustomItemList;
 
@@ -75,6 +76,47 @@ public class RecipesMain implements IRecipePool {
         final RecipeMap<?> Chem = RecipeMaps.multiblockChemicalReactorRecipes;
         // final RecipeMap<?> MT = new getRecipeMapsFromOtherMods().get();
         final int IDs = 23520;
+
+        GTValues.RA.stdBuilder()
+            .itemInputs(
+                Materials.Samarium.getBlocks(64),
+                Materials.Cerium.getDust(64),
+                Materials.Europium.getIngots(64),
+                WerkstoffLoader.Zirconium.get(OrePrefixes.dust, 64),
+                GTUtility.getIntegratedCircuit(17))
+            .itemOutputs(OTHItemList.PrimitiveRareEarthCatalyst.get(1))
+            .duration(150 * SECONDS)
+            .eut(RECIPE_LuV)
+            .addTo(assemblerRecipes);
+
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
+                GTOreDictUnificator.get(OrePrefixes.crushed, Materials.Monazite, 64),
+                Materials.Sodium.getDust(100),
+                new ItemStack(Items.sugar, 64),
+                OTHItemList.PrimitiveRareEarthCatalyst.get(0))
+            .fluidInputs(
+                Materials.NitricAcid.getFluid(14_400),
+                Materials.Water.getFluid(144_000),
+                WerkstoffMaterialPool.AmmoniumNitrate.getFluidOrGas(25_600),
+                WerkstoffLoader.AmmoniumChloride.getFluidOrGas(32_000),
+                Materials.Acetone.getFluid(14_400),
+                Materials.HydrofluoricAcid.getFluid(24_000))
+            .itemOutputs(
+                WerkstoffLoader.Zirconium.get(OrePrefixes.dust, 6),
+                WerkstoffMaterialPool.Hafnia.get(OrePrefixes.dust, 6),
+                Materials.Cerium.getDust(9),
+                Materials.Europium.getDust(24),
+                Materials.Samarium.getDust(108),
+                Materials.Gadolinium.getDust(54),
+                WerkstoffLoader.Zirconium.get(OrePrefixes.dust, 2))
+            .fluidOutputs(
+                Materials.Hydrogen.getGas(270_000),
+                Materials.Oxygen.getGas(50_000),
+                Materials.Ammonia.getGas(330_000))
+            .duration(160 * SECONDS)
+            .eut(RECIPE_ZPM)
+            .addTo(RecipeMaps.chemicalPlantRecipes);
 
         GTModHandler.addCraftingRecipe(
             OTHItemList.LargeSteamHatch.get(1),

@@ -169,7 +169,8 @@ public enum OTHItemList {
     LargeQuHub, // 大型可堆叠变压器(暂定)
 
     DeepSeiko,
-    DeepSeikoNaniteCell;
+    DeepSeikoNaniteCell,
+    PrimitiveRareEarthCatalyst;
 
     private boolean mHasNotBeenSet;
     private boolean mDeprecated;
