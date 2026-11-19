@@ -235,10 +235,7 @@ public class RecipesMegaQFT implements IRecipePool {
         GTValues.RA.stdBuilder()
             .fluidOutputs(BWLiquids.Void.getFluidOrGas(4000))
             .itemInputs(GTUtility.getIntegratedCircuit(24), OTHItemList.beeISAM.get(0))
-            .fluidInputs(
-                new FluidStack(FluidRegistry.getFluidID("lubricant"), 64000),
-                new FluidStack(FluidRegistry.getFluidID("cryotheum"), 32000),
-                BWLiquids.Galaxy.getFluidOrGas(20 * 144))
+            .fluidInputs(Materials.BoundlessCosmicSolder.getFluid(1000), BWLiquids.Galaxy.getFluidOrGas(20 * 144))
 
             .duration(100 * 20)
             .eut(TierEU.UXV)

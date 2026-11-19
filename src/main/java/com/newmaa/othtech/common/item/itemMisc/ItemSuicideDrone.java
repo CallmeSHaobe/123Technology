@@ -25,30 +25,35 @@ public class ItemSuicideDrone extends Item {
         return variant >= PIG && variant <= VARIANT_COUNT;
     }
 
-    private static final float[] REGISTERED_POWERS = new float[VARIANT_COUNT + 1];
+    private static final ItemSuicideDrone[] REGISTERED_VARIANTS = new ItemSuicideDrone[VARIANT_COUNT + 1];
 
     private final int variant;
-    private final float explosionPower;
+    private final float explosionSize;
+    private final float entityDamage;
+    private final float shockwaveRange;
     private final String[] tooltipLines;
 
-    public ItemSuicideDrone(String name, int variant, float explosionPower, String... tooltipLines) {
+    public ItemSuicideDrone(String name, int variant, float explosionSize, float entityDamage, float shockwaveRange,
+        String... tooltipLines) {
         if (!isValidVariant(variant)) {
             throw new IllegalArgumentException("Unknown drone variant: " + variant);
         }
-        if (!Float.isFinite(explosionPower) || explosionPower <= 0F) {
-            throw new IllegalArgumentException("Drone explosion power must be finite and positive: " + explosionPower);
-        }
-        if (REGISTERED_POWERS[variant] != 0F) {
+        validateBlastValue("Explosion size", explosionSize, 0.1F, 64F);
+        validateBlastValue("Entity damage", entityDamage, 0F, 100000F);
+        validateBlastValue("Shockwave range", shockwaveRange, 0F, 256F);
+        if (REGISTERED_VARIANTS[variant] != null) {
             throw new IllegalArgumentException("Drone variant already registered: " + variant);
         }
         this.variant = variant;
-        this.explosionPower = explosionPower;
+        this.explosionSize = explosionSize;
+        this.entityDamage = entityDamage;
+        this.shockwaveRange = shockwaveRange;
         this.tooltipLines = tooltipLines == null ? new String[0] : tooltipLines.clone();
-        REGISTERED_POWERS[variant] = explosionPower;
         setUnlocalizedName(name);
         setTextureName("minecraft:fireworks");
         setCreativeTab(CreativeTabsLoader.tabothtech);
         setMaxStackSize(64);
+        REGISTERED_VARIANTS[variant] = this;
     }
 
     @Override
@@ -61,16 +66,31 @@ public class ItemSuicideDrone extends Item {
         }
     }
 
-    public float getExplosionPower() {
-        return explosionPower;
+    private static void validateBlastValue(String name, float value, float minimum, float maximum) {
+        if (!Float.isFinite(value) || value < minimum || value > maximum) {
+            throw new IllegalArgumentException(
+                name + " must be finite and in [" + minimum + ", " + maximum + "]: " + value);
+        }
     }
 
-    /** Used only when old or malformed entity data has no valid saved power. */
-    public static float getRegisteredExplosionPower(int variant) {
-        if (!isValidVariant(variant) || REGISTERED_POWERS[variant] == 0F) {
-            throw new IllegalStateException("Drone variant has no registered explosion power: " + variant);
+    public float getExplosionSize() {
+        return explosionSize;
+    }
+
+    public float getEntityDamage() {
+        return entityDamage;
+    }
+
+    public float getShockwaveRange() {
+        return shockwaveRange;
+    }
+
+    /** Used to fill missing blast settings in older saves and spawn data. */
+    public static ItemSuicideDrone getRegisteredVariant(int variant) {
+        if (!isValidVariant(variant) || REGISTERED_VARIANTS[variant] == null) {
+            throw new IllegalStateException("Drone variant has no registered item: " + variant);
         }
-        return REGISTERED_POWERS[variant];
+        return REGISTERED_VARIANTS[variant];
     }
 
     public int getVariant() {

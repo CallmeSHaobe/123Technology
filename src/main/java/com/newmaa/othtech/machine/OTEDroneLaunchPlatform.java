@@ -268,7 +268,9 @@ public class OTEDroneLaunchPlatform extends OTHMultiMachineBase<OTEDroneLaunchPl
                     aimX,
                     aimY,
                     aimZ,
-                    drone.getExplosionPower());
+                    drone.getExplosionSize(),
+                    drone.getEntityDamage(),
+                    drone.getShockwaveRange());
                 ForgeDirection launchDirection = tile.getFrontFacing();
                 float launchYaw = (float) Math.toDegrees(Math.atan2(-launchDirection.offsetX, launchDirection.offsetZ));
                 entity.initializeLaunch(launchYaw, launchSpeedKmh);

@@ -60,6 +60,7 @@ dependencies {
     implementation(gtnhDev("Universal-Singularities"))
     implementation(gtnhDev("BetterQuesting"))
     implementation(gtnhDev("supersolarpanels"))
+    implementation(gtnhDev("SimpleSkinBackport"))
     implementation(rfg.deobf('curse.maven:advsolar-362768:2885953'))
     implementation ("net.industrial-craft:industrialcraft-2:2.2.828-experimental:dev")
     runtimeOnlyNonPublishable(rfg.deobf("curse.maven:BiomesOPlenty-220318:2499612"))

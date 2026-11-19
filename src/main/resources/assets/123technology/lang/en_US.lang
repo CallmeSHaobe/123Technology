@@ -30,6 +30,7 @@ item.SuicideDroneNuclear.name=PIG Suicide Drone (Gray Nuclear Livery)
 item.SuicideDroneNvidia.name=PIG Suicide Drone (Black NVIDIA Livery)
 ote.drone.tooltip.pig=Standard P-1G livery
 ote.drone.tooltip.angelica=Angelica edition
+death.attack.droneBlast=%1$s was caught in the blast from %2$s
 ote.drone.tooltip.nuclear=Gray livery with a radiation symbol
 ote.drone.tooltip.nvidia=Black livery with a green NVIDIA logo
 ote.tn.drone_launch_platform=Drone Launch Platform (Name Pending)

@@ -65,21 +65,29 @@ public class ItemLoader {
         "SuicideDronePig",
         ItemSuicideDrone.PIG,
         2F,
+        16F,
+        24F,
         "ote.drone.tooltip.pig");
     public static Item suicideDroneAngelica = new ItemSuicideDrone(
         "SuicideDroneAngelica",
         ItemSuicideDrone.ANGELICA,
         8F,
+        64F,
+        64F,
         "ote.drone.tooltip.angelica");
     public static Item suicideDroneNuclear = new ItemSuicideDrone(
         "SuicideDroneNuclear",
         ItemSuicideDrone.NUCLEAR,
         64F,
+        512F,
+        128F,
         "ote.drone.tooltip.nuclear");
     public static Item suicideDroneNvidia = new ItemSuicideDrone(
         "SuicideDroneNvidia",
         ItemSuicideDrone.NVIDIA,
         48F,
+        384F,
+        112F,
         "ote.drone.tooltip.nvidia");
 
     public ItemLoader(FMLPreInitializationEvent event) {

@@ -12,6 +12,7 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 import com.newmaa.othtech.common.OTHItemList;
+import com.newmaa.othtech.common.item.OTHCircuitComponent;
 import com.newmaa.othtech.common.materials.BWLiquids;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 
@@ -87,8 +88,8 @@ public class RecipesCircuit implements IRecipePool {
             .itemOutputs(OTHItemList.NukeThrowable.get(1))
             .itemInputs(
                 CircuitComponent.ProcessedBasicMainframeCasing.getFakeStack(1),
-                GTOreDictUnificator.get(OrePrefixes.pipeTiny, Materials.Copper, 16),
-                OTHItemList.AF.get(1),
+                CircuitComponent.ProcessedWireElectrum.getFakeStack(160),
+                OTHCircuitComponent.AF.getFakeStack(1),
                 CircuitComponent.ProcessedBoardMultifiberglassElite.getFakeStack(4),
                 setStackSize(CircuitComponent.Microprocessor.getFakeStack(1), 256),
                 setStackSize(CircuitComponent.ProcessedChipNanoCPU.getFakeStack(1), 3072),
@@ -100,22 +101,12 @@ public class RecipesCircuit implements IRecipePool {
                 setStackSize(CircuitComponent.ProcessedOpticalSMDInductor.getFakeStack(1), 240),
                 CircuitComponent.ProcessedSuperconductorZPM.getFakeStack(32))
             .fluidInputs(
-                Materials.Copper.getMolten(9216),
+                Materials.Iridium.getMolten(1440),
                 Materials.SolderingAlloy.getMolten(6144),
                 Materials.SuperCoolant.getFluid(2000),
                 Materials.Gold.getMolten(1440))
             .duration(150 * 20)
             .eut(RECIPE_UEV)
-            .addTo(nanochipAssemblyMatrixRecipes);
-
-        GTValues.RA.stdBuilder()
-            .itemInputs(CircuitComponent.NanoProcessor.getFakeStack(1))
-            .fluidInputs(Materials.SolderingAlloy.getMolten(144))
-            .itemOutputs(CircuitComponent.QuantumProcessor.getFakeStack(1))
-            .duration(10 * 20)
-            .eut(RECIPE_UV)
-            .metadata(NanochipAssemblyMatrixTierKey.INSTANCE, VoltageIndex.UV)
-            .metadata(GTRecipeConstants.CIRCUIT_CALIBRATION_TYPE, CircuitCalibration.PRIMITIVE)
             .addTo(nanochipAssemblyMatrixRecipes);
 
         // 超时空电路基板

@@ -139,9 +139,7 @@ public class RecipesDeepSeiko implements IRecipePool {
             OTHTechnology.LOG.warn("[DeepSeiko] 控制器凝聚态配方缺少物品（检查 OpenComputers/computronics/gt.metaitem），本次跳过");
             return;
         }
-        // 凝聚态的量必须是 unit/2 = 72 的整数倍（CondensateType.getEntangled 会硬校验，
-        // 之前写 123321 直接抛 IllegalArgumentException: not cleanly divisible by 144 or half that）。
-        final int condAmount = 123_336; // = 72 * 1713，最接近 123321 的合法值
+        final int condAmount = 123_264; // 856 次完整的 144 L 纠缠配方
         FluidStack[] fluids = new FluidStack[] { entangled(CondensateType.Time, condAmount),
             entangled(CondensateType.Space, condAmount), entangled(CondensateType.Infinity, condAmount),
             entangled(CondensateType.TranscendentMetal, condAmount) };
@@ -401,11 +399,10 @@ public class RecipesDeepSeiko implements IRecipePool {
             OTHTechnology.LOG.warn("[DeepSeiko] 凝聚态适配舱配方缺少物品，本次跳过");
             return;
         }
-        // 凝聚态量必须是 72 的倍数（unit 144 的一半）
         FluidStack time = entangled(CondensateType.Time, 1_008_000);
         FluidStack space = entangled(CondensateType.Space, 1_008_000);
         FluidStack spacetime = entangled(CondensateType.SpaceTime, 3_024_000);
-        FluidStack hypogen = entangled(CondensateType.Hypogen, 1_481_400);
+        FluidStack hypogen = entangled(CondensateType.Hypogen, 1_481_328);
         if (hasNullItem((Object[]) new FluidStack[] { time, space, spacetime, hypogen })) {
             OTHTechnology.LOG.warn("[DeepSeiko] 凝聚态适配舱配方缺少凝聚态流体，本次跳过");
             return;
@@ -503,7 +500,7 @@ public class RecipesDeepSeiko implements IRecipePool {
                     .itemInputs(d99Inputs)
                     .fluidInputs(
                         entangled(CondensateType.QuarkGluonPlasma, 7200),
-                        entangled(CondensateType.BoundlessCosmicSolder, 14_400),
+                        entangled(CondensateType.BoundlessCosmicSolder, 15000),
                         entangled(CondensateType.Universium, 3600))
                     .itemOutputs(computeCenter(8, 0))
                     .metadata(

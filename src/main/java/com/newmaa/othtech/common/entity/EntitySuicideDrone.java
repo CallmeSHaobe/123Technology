@@ -1,23 +1,20 @@
 package com.newmaa.othtech.common.entity;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ChunkCoordinates;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 
 import com.newmaa.othtech.common.item.itemMisc.ItemSuicideDrone;
 
 import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
-import gregtech.api.GregTechAPI;
 import io.netty.buffer.ByteBuf;
 
 /** Server-authoritative, same-dimension point-target drone. The large model is cosmetic. */
@@ -35,7 +32,9 @@ public class EntitySuicideDrone extends Entity implements IEntityAdditionalSpawn
     private int targetX;
     private int targetY;
     private int targetZ;
-    private float explosionPower;
+    private float explosionSize;
+    private float entityDamage;
+    private float shockwaveRange;
     private double speed = 0.8D;
     private int phase = ASCEND;
     private double cruiseHeight;
@@ -70,14 +69,17 @@ public class EntitySuicideDrone extends Entity implements IEntityAdditionalSpawn
         launchDimension = world.provider.dimensionId;
     }
 
+    /** explosionSize is the terrain and damage radius in blocks; entityDamage is the peak damage. */
     public EntitySuicideDrone(World world, double x, double y, double z, int variant, int targetX, int targetY,
-        int targetZ, float explosionPower) {
+        int targetZ, float explosionSize, float entityDamage, float shockwaveRange) {
         this(world);
         this.variant = normalizeVariant(variant);
         this.targetX = targetX;
         this.targetY = targetY;
         this.targetZ = targetZ;
-        this.explosionPower = sanitizePower(explosionPower, this.variant);
+        this.explosionSize = sanitizeExplosionSize(explosionSize, this.variant);
+        this.entityDamage = sanitizeEntityDamage(entityDamage, this.variant);
+        this.shockwaveRange = sanitizeShockwaveRange(shockwaveRange, this.variant);
         if (!validPosition(x, y, z) || !validTarget()) {
             setDead();
             return;
@@ -95,14 +97,33 @@ public class EntitySuicideDrone extends Entity implements IEntityAdditionalSpawn
         return variant;
     }
 
+    private static DamageSource blastDamageSource(Entity drone) {
+        return new EntityDamageSource("droneBlast", drone).setExplosion();
+    }
+
     private static int normalizeVariant(int variant) {
         return ItemSuicideDrone.isValidVariant(variant) ? variant : ItemSuicideDrone.PIG;
     }
 
-    private static float sanitizePower(float power, int variant) {
-        return Float.isNaN(power) || Float.isInfinite(power) || power <= 0F
-            ? ItemSuicideDrone.getRegisteredExplosionPower(variant)
-            : power;
+    private static float sanitizeExplosionSize(float value, int variant) {
+        return Float.isNaN(value) || Float.isInfinite(value) || value <= 0F
+            ? ItemSuicideDrone.getRegisteredVariant(variant)
+                .getExplosionSize()
+            : Math.min(64F, value);
+    }
+
+    private static float sanitizeEntityDamage(float value, int variant) {
+        return Float.isNaN(value) || Float.isInfinite(value) || value < 0F
+            ? ItemSuicideDrone.getRegisteredVariant(variant)
+                .getEntityDamage()
+            : Math.min(100000F, value);
+    }
+
+    private static float sanitizeShockwaveRange(float value, int variant) {
+        return Float.isNaN(value) || Float.isInfinite(value) || value < 0F
+            ? ItemSuicideDrone.getRegisteredVariant(variant)
+                .getShockwaveRange()
+            : Math.min(256F, value);
     }
 
     private static boolean finite(double value) {
@@ -173,12 +194,12 @@ public class EntitySuicideDrone extends Entity implements IEntityAdditionalSpawn
             setDead();
             return;
         }
-        if (!ensureFlightChunks()) {
-            pauseForChunks();
-            return;
-        }
         if (pendingImpact) {
             detonate();
+            return;
+        }
+        if (!ensureFlightChunks()) {
+            pauseForChunks();
             return;
         }
         if (!virtualFlight) super.onUpdate();
@@ -219,12 +240,12 @@ public class EntitySuicideDrone extends Entity implements IEntityAdditionalSpawn
             setPosition(flight.x, flight.y, flight.z);
         }
         double traceX = flight.x - posX, traceY = flight.y - posY, traceZ = flight.z - posZ;
-        if ((traceX != 0D || traceY != 0D || traceZ != 0D) && traceMovement(traceX, traceY, traceZ) != null) {
-            if (inLanding && inLandingWindow(posX, posZ) && phase != FlightDynamics.LAUNCH && phase != ASCEND) {
-                detonate();
-            } else {
-                setDead();
-            }
+        MovingObjectPosition hit = traceX != 0D || traceY != 0D || traceZ != 0D ? traceMovement(traceX, traceY, traceZ)
+            : null;
+        if (hit != null) {
+            setPosition(hit.hitVec.xCoord, hit.hitVec.yCoord, hit.hitVec.zCoord);
+            unloadedWait = 0;
+            detonate();
             return;
         }
         setPosition(flight.x, flight.y, flight.z);
@@ -290,7 +311,7 @@ public class EntitySuicideDrone extends Entity implements IEntityAdditionalSpawn
     public boolean ensureFlightChunks() {
         return !isDead && !worldObj.isRemote
             && configured
-            && DroneChunkLoader.update(this, launchX, launchZ, targetX, targetZ, explosionPower);
+            && DroneChunkLoader.update(this, launchX, launchZ, targetX, targetZ, explosionSize, shockwaveRange);
     }
 
     @Override
@@ -306,53 +327,91 @@ public class EntitySuicideDrone extends Entity implements IEntityAdditionalSpawn
 
     private void detonate() {
         if (worldObj.isRemote || isDead) return;
-        if (virtualFlight || !inLandingWindow(posX, posZ)) return;
+        if (virtualFlight) return;
         pendingImpact = true;
-        if (!ensureFlightChunks() || !loadedArea(posX, posZ, posX, posZ, explosionPower * 2D + 2D)) {
+        double margin = DroneChunkLoader.blastMargin(explosionSize, shockwaveRange);
+        if (!DroneChunkLoader.holdImpact(this, launchX, launchZ, explosionSize, shockwaveRange)
+            || !loadedArea(posX, posZ, posX, posZ, margin)) {
             pauseForChunks();
             return;
         }
         try {
-            worldObj.newExplosion(this, posX, posY, posZ, explosionPower, false, true);
-            if (variant == ItemSuicideDrone.ANGELICA) generateAngelicaResidue();
+            applyBlast();
+            clearBlastSphere();
         } finally {
             setDead();
         }
     }
 
-    /** Place physical debris after the explosion, while the impact chunks are still held. */
-    private void generateAngelicaResidue() {
-        int centerX = MathHelper.floor_double(posX);
-        int centerY = MathHelper.floor_double(posY);
-        int centerZ = MathHelper.floor_double(posZ);
-        List<ChunkCoordinates> positions = new ArrayList<>();
-        for (int dx = -3; dx <= 3; dx++) {
-            for (int dy = -3; dy <= 3; dy++) {
-                for (int dz = -3; dz <= 3; dz++) {
-                    if (dx * dx + dy * dy + dz * dz > 9) continue;
-                    int x = centerX + dx, y = centerY + dy, z = centerZ + dz;
-                    if (y >= 0 && y < worldObj.getActualHeight()
-                        && worldObj.blockExists(x, y, z)
-                        && worldObj.isAirBlock(x, y, z)) {
-                        positions.add(new ChunkCoordinates(x, y, z));
+    /** Clear the sphere by block centers, without ray tracing or generating drops. */
+    private void clearBlastSphere() {
+        double radius = explosionSize;
+        double radiusSquared = radius * radius;
+        int minX = (int) Math.ceil(posX - radius - 0.5D);
+        int maxX = MathHelper.floor_double(posX + radius - 0.5D);
+        int minY = Math.max(0, (int) Math.ceil(posY - radius - 0.5D));
+        int maxY = Math.min(worldObj.getActualHeight() - 1, MathHelper.floor_double(posY + radius - 0.5D));
+        for (int x = minX; x <= maxX; x++) {
+            double dx = x + 0.5D - posX;
+            double remainingX = radiusSquared - dx * dx;
+            for (int y = minY; y <= maxY; y++) {
+                double dy = y + 0.5D - posY;
+                double remaining = remainingX - dy * dy;
+                if (remaining < 0D) continue;
+                double halfSpan = Math.sqrt(remaining);
+                int minZ = (int) Math.ceil(posZ - halfSpan - 0.5D);
+                int maxZ = MathHelper.floor_double(posZ + halfSpan - 0.5D);
+                for (int z = minZ; z <= maxZ; z++) {
+                    Block block = worldObj.getBlock(x, y, z);
+                    if (!block.isAir(worldObj, x, y, z) && block.getBlockHardness(worldObj, x, y, z) >= 0F) {
+                        worldObj.setBlockToAir(x, y, z);
                     }
                 }
             }
         }
-        Collections.shuffle(positions, rand);
-        placeResidue(positions, GregTechAPI.sBlockCasings4, 2 + rand.nextInt(4));
-        placeResidue(positions, GregTechAPI.sBlockOres1, 6 + rand.nextInt(7));
     }
 
-    private void placeResidue(List<ChunkCoordinates> positions, Block block, int count) {
-        if (block == null) return;
-        int placed = 0;
-        while (placed < count && !positions.isEmpty()) {
-            ChunkCoordinates position = positions.remove(positions.size() - 1);
-            if (worldObj.isAirBlock(position.posX, position.posY, position.posZ)
-                && worldObj.setBlock(position.posX, position.posY, position.posZ, block, 0, 3)) {
-                placed++;
+    private void applyBlast() {
+        double horizontalRadius = Math.max(explosionSize, shockwaveRange);
+        double shockwaveHeight = shockwaveRange * 0.65D;
+        double verticalRadius = Math.max(explosionSize, shockwaveHeight);
+        AxisAlignedBB bounds = AxisAlignedBB.getBoundingBox(
+            posX - horizontalRadius,
+            posY - verticalRadius,
+            posZ - horizontalRadius,
+            posX + horizontalRadius,
+            posY + verticalRadius,
+            posZ + horizontalRadius);
+        double damageRadiusSquared = (double) explosionSize * explosionSize;
+        double shockRadiusSquared = (double) shockwaveRange * shockwaveRange;
+        DamageSource damageSource = blastDamageSource(this);
+        for (Entity entity : worldObj.getEntitiesWithinAABBExcludingEntity(this, bounds)) {
+            if (entity.isDead) continue;
+            double dx = entity.posX - posX;
+            double dy = entity.posY + entity.getEyeHeight() - posY;
+            double dz = entity.posZ - posZ;
+            double damageDistanceSquared = dx * dx + dy * dy + dz * dz;
+            if (entityDamage > 0F && damageDistanceSquared < damageRadiusSquared) {
+                double falloff = 1D - Math.sqrt(damageDistanceSquared) / explosionSize;
+                entity.attackEntityFrom(damageSource, (float) (entityDamage * falloff));
             }
+            if (entity.isDead || shockwaveRange <= 0F) continue;
+            double normalizedShockDistance = (dx * dx + dz * dz) / shockRadiusSquared
+                + (dy / shockwaveHeight) * (dy / shockwaveHeight);
+            if (normalizedShockDistance >= 1D) continue;
+            double impulse = 1.5D * (1D - Math.sqrt(normalizedShockDistance));
+            double directionLength = Math.sqrt(damageDistanceSquared);
+            if (directionLength < 1.0E-6D) {
+                entity.addVelocity(0D, impulse, 0D);
+            } else {
+                double scale = impulse / directionLength;
+                entity.addVelocity(dx * scale, dy * scale, dz * scale);
+            }
+            entity.velocityChanged = true;
+        }
+        worldObj.playSoundEffect(posX, posY, posZ, "random.explode", 4F, 0.7F);
+        if (worldObj instanceof WorldServer server) {
+            server.func_147487_a("hugeexplosion", posX, posY, posZ, 1, 0D, 0D, 0D, 0D);
         }
     }
 
@@ -414,7 +473,10 @@ public class EntitySuicideDrone extends Entity implements IEntityAdditionalSpawn
         tag.setInteger("TargetX", targetX);
         tag.setInteger("TargetY", targetY);
         tag.setInteger("TargetZ", targetZ);
-        tag.setFloat("ExplosionPower", explosionPower);
+        tag.setFloat("ExplosionPower", explosionSize);
+        tag.setFloat("ExplosionSize", explosionSize);
+        tag.setFloat("EntityDamage", entityDamage);
+        tag.setFloat("ShockwaveRange", shockwaveRange);
         tag.setDouble("Speed", speed);
         tag.setInteger("Phase", phase);
         tag.setDouble("CruiseHeight", cruiseHeight);
@@ -447,7 +509,15 @@ public class EntitySuicideDrone extends Entity implements IEntityAdditionalSpawn
         targetX = tag.getInteger("TargetX");
         targetY = tag.getInteger("TargetY");
         targetZ = tag.getInteger("TargetZ");
-        explosionPower = sanitizePower(tag.getFloat("ExplosionPower"), variant);
+        explosionSize = sanitizeExplosionSize(
+            tag.hasKey("ExplosionSize") ? tag.getFloat("ExplosionSize") : tag.getFloat("ExplosionPower"),
+            variant);
+        entityDamage = sanitizeEntityDamage(
+            tag.hasKey("EntityDamage") ? tag.getFloat("EntityDamage") : Float.NaN,
+            variant);
+        shockwaveRange = sanitizeShockwaveRange(
+            tag.hasKey("ShockwaveRange") ? tag.getFloat("ShockwaveRange") : Float.NaN,
+            variant);
         speed = tag.getDouble("Speed");
         if (!finite(speed) || speed < 0.1D || speed > 2D) speed = 0.8D;
         phase = tag.getInteger("Phase");
@@ -459,7 +529,7 @@ public class EntitySuicideDrone extends Entity implements IEntityAdditionalSpawn
         launchY = tag.hasKey("LaunchY") ? tag.getDouble("LaunchY") : posY;
         launchZ = tag.hasKey("LaunchZ") ? tag.getDouble("LaunchZ") : posZ;
         setVirtualFlight(tag.getBoolean("VirtualFlight"));
-        pendingImpact = !virtualFlight && inLandingWindow(posX, posZ) && tag.getBoolean("PendingImpact");
+        pendingImpact = !virtualFlight && tag.getBoolean("PendingImpact");
         flight.x = tag.hasKey("FlightX") ? tag.getDouble("FlightX") : posX;
         flight.y = tag.hasKey("FlightY") ? tag.getDouble("FlightY") : posY;
         flight.z = tag.hasKey("FlightZ") ? tag.getDouble("FlightZ") : posZ;
@@ -527,13 +597,15 @@ public class EntitySuicideDrone extends Entity implements IEntityAdditionalSpawn
         buffer.writeInt(targetX);
         buffer.writeInt(targetY);
         buffer.writeInt(targetZ);
-        buffer.writeFloat(explosionPower);
+        buffer.writeFloat(explosionSize);
         buffer.writeDouble(speed);
         buffer.writeInt(phase);
         buffer.writeDouble(cruiseHeight);
         buffer.writeInt(flightAge);
         buffer.writeFloat((float) flight.bank);
         buffer.writeInt(flight.speedKmh);
+        buffer.writeFloat(entityDamage);
+        buffer.writeFloat(shockwaveRange);
     }
 
     @Override
@@ -542,7 +614,7 @@ public class EntitySuicideDrone extends Entity implements IEntityAdditionalSpawn
         targetX = buffer.readInt();
         targetY = buffer.readInt();
         targetZ = buffer.readInt();
-        explosionPower = sanitizePower(buffer.readFloat(), variant);
+        explosionSize = sanitizeExplosionSize(buffer.readFloat(), variant);
         double receivedSpeed = buffer.readDouble();
         speed = finite(receivedSpeed) ? Math.max(0.1D, Math.min(2D, receivedSpeed)) : 0.8D;
         phase = Math.max(ASCEND, Math.min(FlightDynamics.APPROACH, buffer.readInt()));
@@ -552,6 +624,8 @@ public class EntitySuicideDrone extends Entity implements IEntityAdditionalSpawn
         float bank = buffer.readableBytes() >= 4 ? buffer.readFloat() : 0F;
         int receivedSpeedKmh = buffer.readableBytes() >= 4 ? buffer.readInt() : 0;
         flight.speedKmh = receivedSpeedKmh == 0 ? 0 : FlightDynamics.sanitizeSpeedKmh(receivedSpeedKmh);
+        entityDamage = sanitizeEntityDamage(buffer.readableBytes() >= 4 ? buffer.readFloat() : Float.NaN, variant);
+        shockwaveRange = sanitizeShockwaveRange(buffer.readableBytes() >= 4 ? buffer.readFloat() : Float.NaN, variant);
         previousBank = finite(bank) ? Math.max(-55F, Math.min(55F, bank)) : 0F;
         dataWatcher.updateObject(BANK_WATCHER, Float.valueOf(previousBank));
     }

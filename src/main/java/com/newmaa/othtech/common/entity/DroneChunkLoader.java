@@ -56,7 +56,36 @@ public final class DroneChunkLoader implements ForgeChunkManager.LoadingCallback
 
     /** Returns false without retaining tickets if the fixed endpoint windows cannot be held. */
     public static boolean update(EntitySuicideDrone drone, double launchX, double launchZ, int targetX, int targetZ,
-        float explosionPower) {
+        float explosionSize, float shockwaveRange) {
+        return updateWindow(
+            drone,
+            launchX,
+            launchZ,
+            targetX + 0.5D,
+            targetZ + 0.5D,
+            LANDING_RADIUS + DETECTION_PADDING + blastMargin(explosionSize, shockwaveRange),
+            false);
+    }
+
+    static double blastMargin(float explosionSize, float shockwaveRange) {
+        return Math.max(explosionSize, shockwaveRange) + World.MAX_ENTITY_RADIUS;
+    }
+
+    static boolean holdImpact(EntitySuicideDrone drone, double launchX, double launchZ, float explosionSize,
+        float shockwaveRange) {
+        // Reuse the destination tickets now that the actual impact replaces the planned destination.
+        return updateWindow(
+            drone,
+            launchX,
+            launchZ,
+            drone.posX,
+            drone.posZ,
+            blastMargin(explosionSize, shockwaveRange),
+            true);
+    }
+
+    private static boolean updateWindow(EntitySuicideDrone drone, double launchX, double launchZ, double centerX,
+        double centerZ, double margin, boolean impact) {
         releaseDead();
         if (drone == null) return false;
         if (drone.isDead || drone.worldObj == null || drone.worldObj.isRemote || modHandle == null) {
@@ -72,16 +101,12 @@ public final class DroneChunkLoader implements ForgeChunkManager.LoadingCallback
             pair = new Tickets(drone.worldObj);
             ACTIVE.put(drone, pair);
         }
-        if (pair.ready) return true;
+        if (pair.ready && pair.impact == impact) return true;
         try {
             int depth = ticketDepth(ForgeChunkManager.getMaxChunkDepthFor(OTHTechnology.MODID));
             long budget = (long) ForgeChunkManager.getMaxTicketLengthFor(OTHTechnology.MODID) * depth;
             Set<ChunkCoordIntPair> launch = window(launchX, launchZ, LAUNCH_RADIUS + DETECTION_PADDING, budget);
-            Set<ChunkCoordIntPair> target = window(
-                targetX + 0.5D,
-                targetZ + 0.5D,
-                LANDING_RADIUS + DETECTION_PADDING + explosionPower * 2D + 2D,
-                budget);
+            Set<ChunkCoordIntPair> target = window(centerX, centerZ, margin, budget);
             if (launch == null || target == null) {
                 release(drone);
                 return false;
@@ -99,6 +124,7 @@ public final class DroneChunkLoader implements ForgeChunkManager.LoadingCallback
             }
             applyWindow(pair.route, launch, depth);
             applyWindow(pair.target, target, depth);
+            pair.impact = impact;
             pair.ready = true;
             return true;
         } catch (RuntimeException e) {
@@ -328,6 +354,7 @@ public final class DroneChunkLoader implements ForgeChunkManager.LoadingCallback
 
         private final World world;
         private boolean ready;
+        private boolean impact;
         private final List<Ticket> route = new ArrayList<>();
         private final List<Ticket> target = new ArrayList<>();
 
