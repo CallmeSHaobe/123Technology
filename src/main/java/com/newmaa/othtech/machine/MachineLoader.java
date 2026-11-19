@@ -5,6 +5,7 @@ import static net.minecraft.util.StatCollector.translateToLocal;
 import com.gtnewhorizon.gtnhlib.util.AnimatedTooltipHandler;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.machine.hatch.OTEDeepSeikoNaniteCell;
+import com.newmaa.othtech.machine.hatch.OTEEssentiaStockingInputBusME;
 import com.newmaa.othtech.machine.hatch.OTEHatchRack;
 import com.newmaa.othtech.machine.hatch.OTEWTFHatch;
 import com.newmaa.othtech.utils.AuthorAnimation;
@@ -204,6 +205,18 @@ public class MachineLoader {
             .set(new OTEAbstractSanctum(IDs + 65, "AbstractSanctum", translateToLocal("ote.tn.abstract_sanctum")));
 
         OTHItemList.LargeQuHub.set(new OTELargeQuHub(IDs + 69, "LargeQuHub", translateToLocal("ote.tn.quhub")));
+        OTHItemList.VoidNexusMatrix
+            .set(new OTEVoidNexusMatrix(IDs + 70, "VoidNexusMatrix", translateToLocal("ote.tn.void_nexus")));
+        OTHItemList.PsionicManifestationModule.set(
+            new OTEPsionicManifestationModule(
+                IDs + 71,
+                "PsionicManifestationModule",
+                translateToLocal("123technology.psionic_module.name")));
+        OTHItemList.VoidNexusEssentiaBus.set(
+            new OTEEssentiaStockingInputBusME(
+                IDs + 72,
+                "VoidNexusEssentiaBusME",
+                translateToLocal("123technology.essentia_stocking_bus.name")));
 
         // 迪普西科 DeepSeiko（IDs+9..+12 与 +65..+68）
         OTHItemList.DeepSeiko.set(new OTEDeepSeiko(IDs + 9, "DeepSeiko", translateToLocal("ote.tn.ds")));

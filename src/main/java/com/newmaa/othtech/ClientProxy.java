@@ -9,6 +9,7 @@ import net.minecraftforge.common.MinecraftForge;
 
 import com.newmaa.othtech.client.OTEEntangledFluidRenderer;
 import com.newmaa.othtech.client.OTEMaterialRenderEffects;
+import com.newmaa.othtech.client.OTEVoidNexusClientEffects;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.blocks.deepseiko.TEDeepSeikoHolo;
 import com.newmaa.othtech.common.blocks.fluids.RossFluids;
@@ -77,6 +78,7 @@ public class ClientProxy extends CommonProxy {
 
         OTEMaterialRenderEffects.install();
         OTEEntangledFluidRenderer.register();
+        OTEVoidNexusClientEffects.install();
 
         ClientRegistry.bindTileEntitySpecialRenderer(TEDeepSeikoHolo.class, new RiceBowlRenderer());
 

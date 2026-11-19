@@ -18,6 +18,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.newmaa.othtech.common.ItemAndBlockHandler;
+import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.OreDictionaryLoader;
 import com.newmaa.othtech.common.beeyonds.OTHBeeyonds;
 import com.newmaa.othtech.common.blocks.antimonia.AntimoniaBlocks;
@@ -27,6 +28,7 @@ import com.newmaa.othtech.common.blocks.fluids.RossFluids;
 import com.newmaa.othtech.common.blocks.nailong.NailongCasings;
 import com.newmaa.othtech.common.blocks.oterender.BlockRocketRender;
 import com.newmaa.othtech.common.blocks.oterender.OTERocketRender;
+import com.newmaa.othtech.common.compat.thaumcraft.VoidNexusResearchCompat;
 import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
 import com.newmaa.othtech.common.dimensions.AntimoniaUndergroundFluids;
 import com.newmaa.othtech.common.dimensions.OTHDimensionIntegration;
@@ -63,6 +65,8 @@ import cpw.mods.fml.common.registry.GameRegistry.Type;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import gregtech.api.GregTechAPI;
+import gregtech.api.enums.OrePrefixes;
+import gregtech.api.util.GTOreDictUnificator;
 import gtnhintergalactic.recipe.SpacePumpingRecipes;
 
 @Mod(
@@ -78,6 +82,7 @@ import gtnhintergalactic.recipe.SpacePumpingRecipes;
         + "required-after:miscutils;"
         + "required-after:dreamcraft;"
         + "required-after:gregtech;"
+        + "required-after:Thaumcraft;"
         + "required-after:TwistSpaceTechnology;"
         + "after:cropsnh;"
         + "required-after:GalaxySpace;",
@@ -149,6 +154,10 @@ public class OTHTechnology {
     public void init(FMLInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(new EventPlayerDied());
         proxy.init(event);
+        if (OTHMaterials.ManifestedPsionics != null) {
+            ItemStack psionicIngot = GTOreDictUnificator.get(OrePrefixes.ingot, OTHMaterials.ManifestedPsionics, 1);
+            if (psionicIngot != null) OTHItemList.ManifestedPsionics.set(psionicIngot);
+        }
         MachineLoader.loadMachines();
         new RegisterDimensions().init();
         AntimoniaUndergroundFluids.register();
@@ -215,6 +224,7 @@ public class OTHTechnology {
         safeStep("RecipeLoader.loadRecipes", RecipeLoader::loadRecipes);
         safeStep("DeepSeikoBECRecipeLoader", DeepSeikoBECRecipeLoader::load);
         safeStep("DeepSeikoALRecipeLoader", DeepSeikoALRecipeLoader::load);
+        safeStep("VoidNexusResearchCompat", VoidNexusResearchCompat::register);
         safeStep("OTHBeeyonds", OTHBeeyonds::new);
         LOG.info("completeInit: finished.");
     }

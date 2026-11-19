@@ -75,6 +75,7 @@ dependencies {
     runtimeOnlyNonPublishable(gtnhDev("CropsNH"))
     runtimeOnlyNonPublishable(gtnhDev("BetterBuildersWands"))
     runtimeOnlyNonPublishable(gtnhDev("AspectRecipeIndex"))
+    compileOnly(gtnhDev("AspectRecipeIndex"))
     runtimeOnlyNonPublishable(rfg.deobf('curse.maven:thaumcraft-nei-plugin-225095:2241913'))
 
 
@@ -83,6 +84,7 @@ dependencies {
     runtimeOnlyNonPublishable(gtnhDev("Chisel")) { transitive = false }
     runtimeOnlyNonPublishable(gtnhDev("StructureLib"))
     runtimeOnlyNonPublishable(gtnhDev("BlockRenderer6343")) { transitive = false }
+    compileOnly(gtnhDev("BlockRenderer6343")) { transitive = false }
     runtimeOnlyNonPublishable('com.github.GTNewHorizons:Railcraft:9.17.34:dev') { transitive = false }
 
     annotationProcessor('com.google.auto.value:auto-value:1.10.1')

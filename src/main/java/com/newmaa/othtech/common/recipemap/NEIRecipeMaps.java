@@ -11,6 +11,7 @@ public class NEIRecipeMaps {
         sendCatalyst("otht.recipe.MCA", "gregtech:gt.blockmachines:23549");
         sendCatalyst("bw.recipe.cal", "gregtech:gt.blockmachines:23549");
         sendCatalyst("otht.recipe.RCY", "gregtech:gt.blockmachines:23519");
+        sendCatalyst("otht.recipe.void_nexus_upgrades", "gregtech:gt.blockmachines:23590");
         sendCatalyst("mobsinfo.mobhandler", "gregtech:gt.blockmachines:23536");
         // 迪普西科（双模式共用主机作为 NEI 催化剂）
         sendCatalyst("otht.recipe.DeepSeikoAL", "gregtech:gt.blockmachines:23529");

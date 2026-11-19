@@ -3,6 +3,7 @@ package com.newmaa.othtech.client;
 import com.newmaa.othtech.common.materials.OTHMaterials;
 import com.newmaa.othtech.common.render.OTEGunmuObservableRenderer;
 import com.newmaa.othtech.common.render.OTEGunmuUnobservableRenderer;
+import com.newmaa.othtech.common.render.OTEPsionicMaterialRenderer;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -14,6 +15,7 @@ public final class OTEMaterialRenderEffects {
 
     private static final OTEGunmuObservableRenderer OBSERVABLE = new OTEGunmuObservableRenderer();
     private static final OTEGunmuUnobservableRenderer UNOBSERVABLE = new OTEGunmuUnobservableRenderer();
+    private static final OTEPsionicMaterialRenderer PSIONIC = new OTEPsionicMaterialRenderer();
 
     private OTEMaterialRenderEffects() {}
 
@@ -21,5 +23,6 @@ public final class OTEMaterialRenderEffects {
         if (!ENABLED) return;
         if (OTHMaterials.Gunmu != null) OTHMaterials.Gunmu.renderer = OBSERVABLE;
         if (OTHMaterials.DeGunmu != null) OTHMaterials.DeGunmu.renderer = UNOBSERVABLE;
+        if (OTHMaterials.ManifestedPsionics != null) OTHMaterials.ManifestedPsionics.renderer = PSIONIC;
     }
 }

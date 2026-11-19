@@ -8,9 +8,11 @@ import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.blocks.deepseiko.DeepSeikoBlocks;
 import com.newmaa.othtech.common.blocks.deepseiko.DeepSeikoCasingMeta;
 import com.newmaa.othtech.common.recipemap.formatter.MISASpecialValueFormatter;
+import com.newmaa.othtech.common.recipemap.formatter.VoidNexusHeatFormatter;
 import com.newmaa.othtech.common.recipemap.recipeMapFrontends.AbstractSanctumFrontend;
 import com.newmaa.othtech.common.recipemap.recipeMapFrontends.OTH_GeneralFrontend;
 import com.newmaa.othtech.common.recipemap.recipeMapFrontends.OTH_GeneralFrontendFireRocket;
+import com.newmaa.othtech.common.recipemap.recipeMapFrontends.VoidNexusUpgradeFrontend;
 
 import goodgenerator.client.GUI.GGUITextures;
 import goodgenerator.loader.Loaders;
@@ -149,6 +151,36 @@ public class Recipemaps {
         .neiRecipeComparator(Comparator.comparing(recipe -> recipe.mSpecialValue))
         .dontUseProgressBar()
         .addSpecialTexture(59, 20, 58, 42, GGUITextures.PICTURE_NAQUADAH_REACTOR)
+        .build();
+    public static final RecipeMap<RecipeMapBackend> VOID_NEXUS = RecipeMapBuilder.of("otht.recipe.void_nexus")
+        .maxIO(1, 0, 0, 0)
+        .minInputs(1, 0)
+        .dontUseProgressBar()
+        .frontend(OTH_GeneralFrontend::new)
+        .neiSpecialInfoFormatter(VoidNexusHeatFormatter.INSTANCE)
+        .neiHandlerInfo(
+            builder -> builder.setDisplayStack(OTHItemList.VoidNexusMatrix.get(1))
+                .setMaxRecipesPerPage(3))
+        .build();
+    public static final RecipeMap<RecipeMapBackend> VOID_NEXUS_UPGRADES = RecipeMapBuilder
+        .of("otht.recipe.void_nexus_upgrades")
+        .maxIO(16, 1, 1, 0)
+        .minInputs(1, 0)
+        .dontUseProgressBar()
+        .frontend(VoidNexusUpgradeFrontend::new)
+        .neiRecipeComparator(Comparator.comparingInt(recipe -> recipe.mSpecialValue))
+        .neiHandlerInfo(
+            builder -> builder.setDisplayStack(OTHItemList.VoidNexusMatrix.get(1))
+                .setMaxRecipesPerPage(1))
+        .build();
+    public static final RecipeMap<RecipeMapBackend> PSIONIC_MANIFESTATION = RecipeMapBuilder
+        .of("otht.recipe.psionic_manifestation")
+        .maxIO(4, 1, 1, 0)
+        .minInputs(1, 0)
+        .frontend(OTH_GeneralFrontend::new)
+        .neiHandlerInfo(
+            builder -> builder.setDisplayStack(OTHItemList.PsionicManifestationModule.get(1))
+                .setMaxRecipesPerPage(1))
         .build();
     public static final RecipeMap<RecipeMapBackend> MegaCAL = RecipeMapBuilder.of("otht.recipe.MCA")
         .maxIO(6, 1, 1, 0)
