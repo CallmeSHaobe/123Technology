@@ -23,6 +23,12 @@ oth.hint.energy_hatch=能源仓
 oth.tooltip.author=作者：
 ote.cm.mtc.0=1 - 消声仓, 能源仓, 输入输出总线, 输入输出仓 : 替换热力加工机械方块, 支持TecTech能源仓
 
+# 无人机平台：正式机器名和 Tooltip 待定
+item.SuicideDronePig.name=P-1G型 "柳叶刀"自爆无人机
+item.SuicideDroneAngelica.name=安洁莉卡型 "柳叶刀"自爆无人机
+ote.tn.drone_launch_platform=无人机发射平台（名称待定）
+ote.tm.drone_launch_platform.0=Tooltip 待定
+
 # 机器名称
 ote.tn.imba=IMBA 超模高炉
 
@@ -245,6 +251,17 @@ death.attack.Acid=虽然这可能很不科学,但%1$s还是被王水干死了
 
 #Machine_ToolTips
 oth.tm.pollution=§c注意 : 如遇跳电并报错“无法排出污染”, 请尝试放置多个消声仓
+
+#Thaumonomicon
+tc.research_category.123technology=123Technology
+tc.research_name.OTH_PEACH_CAN_INFUSION=黄桃罐头机械方块注魔
+tc.research_text.OTH_PEACH_CAN_INFUSION=以奈隆机械方块为引，注成昂贵的黄桃罐头机械方块
+tc.research_name.OTH_NAILONG_INFUSION=奈隆机械方块注魔
+tc.research_text.OTH_NAILONG_INFUSION=以 ZPM 机械方块为引，铸造真正的奈隆机械方块
+tc.research_name.OTH_ABSTRACT_SANCTUM=奈隆圣地主机
+tc.research_text.OTH_ABSTRACT_SANCTUM=将三大魔法之力熔铸为终焉主机
+tc.research_page.OTH_ABSTRACT_SANCTUM.1=以 LuV 机械外壳为核心，将盖亚之魂、血腥灵宝、注血钻石与奈隆机械方块熔为一体。组装完成的奈隆圣地主机能够接管并批量执行注魔、植物魔法与血魔法配方。
+tc.aspect.sechsieben=六七
 
 #Machine_Construction
 otht.con=搭建细节
@@ -634,7 +651,7 @@ ote.tm.nfg.5=一次消耗输入仓内所有燃料和助燃剂
 ote.tm.nfg.6=感谢伟大的铱锇钐大人，所有输出功率都将为原来的三倍
 ote.tm.nfg.7=二级管道方块解锁无线模式, 使用螺丝刀开启
 ote.tm.nfg.8=§a更高级的结构意味着更高级的§c助燃剂, §a一级结构:原子分离助燃剂, 二级结构:超维度等离子助燃剂
-ote.tm.nfg.9=§a效率随着运行时间提升, 每秒提升1%效率，最高始终为1230%
+ote.tm.nfg.9=§a效率随着运行时间提升, 每秒提升1%效率，最高始终为200%
 ote.tm.nfg.10=计算公式：总发电量=燃料数量*输出系数(3)*效率*燃料输出功率*配方时间
 ote.tm.nfg.12=§a注意 : 如果设置耗时小于20ticks, 则效率不会累加
 ote.tm.nfg.13=§4你知道会发生什么。

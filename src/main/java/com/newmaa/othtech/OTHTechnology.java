@@ -28,6 +28,7 @@ import com.newmaa.othtech.common.blocks.fluids.RossFluids;
 import com.newmaa.othtech.common.blocks.nailong.NailongCasings;
 import com.newmaa.othtech.common.blocks.oterender.BlockRocketRender;
 import com.newmaa.othtech.common.blocks.oterender.OTERocketRender;
+import com.newmaa.othtech.common.compat.thaumcraft.ThaumcraftResearchCompat;
 import com.newmaa.othtech.common.compat.thaumcraft.VoidNexusResearchCompat;
 import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
 import com.newmaa.othtech.common.dimensions.AntimoniaUndergroundFluids;
@@ -74,6 +75,10 @@ import gtnhintergalactic.recipe.SpacePumpingRecipes;
     version = OTHTechnology.VERSION,
     name = OTHTechnology.modName,
     dependencies = "required-after:IC2;" + "required-after:structurelib;"
+        + "required-after:Thaumcraft;"
+        + "required-after:ForbiddenMagic;"
+        + "required-after:ThaumicTinkerer;"
+        + "required-after:BloodArsenal;"
         + "required-after:Avaritia;"
         + "required-after:eternalsingularity;"
         + "required-after:modularui;"
@@ -205,6 +210,7 @@ public class OTHTechnology {
         LOG.info("The Isa Mill is invincible!");
         LOG.info("NewMaa的恩情还不完!");// 这个不是我写的。
         MachineLoader.loadMachinePostInit();
+        ThaumcraftResearchCompat.register();
         // RecipeLoader.loadRecipesPostInit();
         // 添加自定义配方
         SpacePumpingRecipes.RECIPES.put(Pair.of(2, 2), FluidRegistry.getFluidStack("lava", 1792000));

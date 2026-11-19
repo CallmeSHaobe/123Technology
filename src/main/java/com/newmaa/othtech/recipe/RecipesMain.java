@@ -21,6 +21,7 @@ import static tectech.thing.CustomItemList.eM_Hollow;
 import static tectech.thing.CustomItemList.eM_Power;
 import static tectech.thing.CustomItemList.eM_Spacetime;
 
+import com.newmaa.othtech.common.materials.OTHMaterials;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -1448,23 +1449,6 @@ public class RecipesMain implements IRecipePool {
             .duration(120)
             .addTo(assemblerRecipes);
 
-        // AbstractSanctum controller
-        GTValues.RA.stdBuilder()
-            .itemInputs(
-                ItemList.Hull_LuV.get(1),
-                new ItemStack(NailongCasings.nailongCasing, 16, NailongCasingMeta.NAILONG),
-                new ItemStack(NailongCasings.nailongCasing, 16, NailongCasingMeta.PEACH_CAN),
-                NHItemList.CircuitZPM.get(8),
-                BlockList.Gaia.get(4),
-                GTModHandler.getModItem("GoodGenerator", "essentiaCell", 4, 2),
-                BlockList.BloodyIchorium.get(4),
-                GTOreDictUnificator.get(OrePrefixes.plate, Materials.ElvenElementium, 64),
-                GTModHandler.getModItem("BloodArsenal", "blood_infused_diamond_unactive", 64))
-            .itemOutputs(OTHItemList.AbstractSanctum.get(1))
-            .eut(RECIPE_LuV)
-            .duration(600 * SECONDS)
-            .addTo(assemblerRecipes);
-
         // nail
         GTValues.RA.stdBuilder()
             .itemInputs(
@@ -1526,5 +1510,31 @@ public class RecipesMain implements IRecipePool {
             .duration(123 * SECONDS)
             .eut(RECIPE_UXV)
             .addTo(RecipeMaps.neutroniumCompressorRecipes);
+        //SnAs Dust
+        RecipeBuilder.builder()
+            .itemInputs(
+                Materials.Tin.getDust(1),
+                Materials.Arsenic.getDust(1)
+            )
+            .itemOutputs(
+                OTHItemList.dustSnAsM.get(1)
+            )
+            .duration(20)
+            .eut(RECIPE_LV)
+            .addTo(RecipeMaps.mixerNonCellRecipes);
+        //SnAs
+        RecipeBuilder.builder()
+            .itemOutputs(
+                OTHItemList.ingotSnAsM.get(1)
+            )
+            .itemInputs(
+                OTHItemList.dustSnAsM.get(1)
+            )
+            .fluidInputs(
+                OTHMaterials.LCL.getFluid(1000)
+            )
+            .duration(20)
+            .eut(RECIPE_EV)
+            .addTo(RecipeMaps.autoclaveRecipes);
     }
 }

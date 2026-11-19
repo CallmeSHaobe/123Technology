@@ -23,6 +23,12 @@ oth.hint.energy_hatch=Energy Hatch
 oth.tooltip.author=Author:
 ote.cm.mtc.0=1 - Muffler, energy, item/fluid input/output hatches: replace Thermal Processing Machine Casings; supports TecTech energy hatches.
 
+# Drone platform: final machine name and tooltip pending
+item.SuicideDronePig.name=PIG Suicide Drone
+item.SuicideDroneAngelica.name=Angelica Suicide Drone
+ote.tn.drone_launch_platform=Drone Launch Platform (Name Pending)
+ote.tm.drone_launch_platform.0=Tooltip pending
+
 # Machine names
 ote.tn.imba=The IMBA EBF
 
@@ -248,6 +254,17 @@ death.attack.Acid=Although this may be unscientific, %1$s was killed by Aqua Reg
 
 #Machine_ToolTips
 oth.tm.pollution=§cNote: If power trips and reports "Cannot exhaust pollution", try placing multiple Muffler Hatches
+
+#Thaumonomicon
+tc.research_category.123technology=123Technology
+tc.research_name.OTH_PEACH_CAN_INFUSION=Canned Yellow Peach Casing Infusion
+tc.research_text.OTH_PEACH_CAN_INFUSION=Infuse a Nailong Casing into the expensive Canned Yellow Peach Casing
+tc.research_name.OTH_NAILONG_INFUSION=Nailong Casing Infusion
+tc.research_text.OTH_NAILONG_INFUSION=Infuse a ZPM Machine Casing into the true Nailong Casing
+tc.research_name.OTH_ABSTRACT_SANCTUM=Nailong Sanctum Controller
+tc.research_text.OTH_ABSTRACT_SANCTUM=Forge three schools of magic into a terminal controller
+tc.research_page.OTH_ABSTRACT_SANCTUM.1=Using an LuV Machine Casing as its core, bind Gaia Spirits, Bloody Ichorium, uncharged Blood Infused Diamonds and Nailong Casings together. The completed Nailong Sanctum Controller can take over and mass-produce infusion, Botania and Blood Magic recipes.
+tc.aspect.sechsieben=Sechsieben
 
 #Machine_Construction
 otht.con=Construction Details
@@ -635,7 +652,7 @@ ote.tm.nfg.5=Consumes all fuel and promoter in input hatch at once.
 ote.tm.nfg.6=Thanks to the great Iridiosamarium, all output power will be tripled.
 ote.tm.nfg.7=Tier 2 Pipe Casing unlocks wireless mode, use Screwdriver to enable.
 ote.tm.nfg.8=§aHigher tier structure requires higher tier §cpromoter§a, Tier 1: Atomic Separation Promoter, Tier 2: Hyperdimensional Plasma Promoter.
-ote.tm.nfg.9=§aEfficiency increases with runtime, +1% per second, max always 1230%.
+ote.tm.nfg.9=§aEfficiency increases with runtime, +1% per second, max always 200%.
 ote.tm.nfg.10=Calculation: Total Power = Fuel Amount * Output Coefficient(3) * Efficiency * Fuel Output Power * Recipe Time.
 ote.tm.nfg.12=§aNote: If set time cost < 20 ticks, efficiency will not accumulate.
 ote.tm.nfg.13=§4You know what will happen.

@@ -121,7 +121,11 @@ public enum OTHItemList {
     EndlessPsionicGlass,
     SpacetimePotentialGlass,
 
+    SuicideDronePig,
+    SuicideDroneAngelica,
+
     // Machines
+    DroneLaunchPlatform,
     NASA,
     FISH,
     EXH,

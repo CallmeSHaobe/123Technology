@@ -21,6 +21,7 @@ import com.newmaa.othtech.common.item.itemMisc.ItemDeepSeikoTokenSilver;
 import com.newmaa.othtech.common.item.itemMisc.ItemPsionicStabilizer;
 import com.newmaa.othtech.common.item.itemMisc.ItemRiceSingularity;
 import com.newmaa.othtech.common.item.itemMisc.ItemSpacetimeCoolingCore;
+import com.newmaa.othtech.common.item.itemMisc.ItemSuicideDrone;
 import com.newmaa.othtech.common.item.itemMisc.ItemVoidPotential;
 import com.newmaa.othtech.common.item.itemSpawnEgg.ItemDogSpawnEgg;
 import com.newmaa.othtech.common.item.itemTools.Dasima;
@@ -64,6 +65,8 @@ public class ItemLoader {
     public static Item itemPsionicStabilizer = new ItemPsionicStabilizer();
     public static Item itemVoidPotential = new ItemVoidPotential();
     public static Item dogSpawnEgg = new ItemDogSpawnEgg();
+    public static Item suicideDronePig = new ItemSuicideDrone("SuicideDronePig", ItemSuicideDrone.PIG);
+    public static Item suicideDroneAngelica = new ItemSuicideDrone("SuicideDroneAngelica", ItemSuicideDrone.ANGELICA);
 
     public ItemLoader(FMLPreInitializationEvent event) {
         OTHItemList.Zhangww.set(registryAndCallback(itemZhangww, "itemZhangww"));
@@ -93,6 +96,9 @@ public class ItemLoader {
         OTHItemList.SpacetimeCoolingCore.set(registryAndCallback(itemSpacetimeCoolingCore, "SpacetimeCoolingCore"));
         OTHItemList.PsionicStabilizer.set(registryAndCallback(itemPsionicStabilizer, "PsionicStabilizer"));
         OTHItemList.VoidPotential.set(registryAndCallback(itemVoidPotential, "VoidPotential"));
+
+        OTHItemList.SuicideDronePig.set(registryAndCallback(suicideDronePig, "suicideDronePig"));
+        OTHItemList.SuicideDroneAngelica.set(registryAndCallback(suicideDroneAngelica, "suicideDroneAngelica"));
 
         // 三种狗共用一个刷怪蛋物品，靠 metadata 区分（registryAndCallback 里已经 registerItem 过一次）
         OTHItemList.DogYellowSpawnEgg.set(registryAndCallback(dogSpawnEgg, "dogSpawnEgg"));

@@ -205,16 +205,21 @@ public class MachineLoader {
             .set(new OTEAbstractSanctum(IDs + 65, "AbstractSanctum", translateToLocal("ote.tn.abstract_sanctum")));
 
         OTHItemList.LargeQuHub.set(new OTELargeQuHub(IDs + 69, "LargeQuHub", translateToLocal("ote.tn.quhub")));
+        OTHItemList.DroneLaunchPlatform.set(
+            new OTEDroneLaunchPlatform(
+                IDs + 70,
+                "OTEDroneLaunchPlatform",
+                translateToLocal("ote.tn.drone_launch_platform")));
         OTHItemList.VoidNexusMatrix
-            .set(new OTEVoidNexusMatrix(IDs + 70, "VoidNexusMatrix", translateToLocal("ote.tn.void_nexus")));
+            .set(new OTEVoidNexusMatrix(IDs + 71, "VoidNexusMatrix", translateToLocal("ote.tn.void_nexus")));
         OTHItemList.PsionicManifestationModule.set(
             new OTEPsionicManifestationModule(
-                IDs + 71,
+                IDs + 72,
                 "PsionicManifestationModule",
                 translateToLocal("123technology.psionic_module.name")));
         OTHItemList.VoidNexusEssentiaBus.set(
             new OTEEssentiaStockingInputBusME(
-                IDs + 72,
+                IDs + 73,
                 "VoidNexusEssentiaBusME",
                 translateToLocal("123technology.essentia_stocking_bus.name")));
 
