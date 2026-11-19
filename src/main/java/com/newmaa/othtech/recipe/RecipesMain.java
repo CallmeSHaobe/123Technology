@@ -1558,6 +1558,12 @@ public class RecipesMain implements IRecipePool {
             .duration(20)
             .eut(RECIPE_LV)
             .addTo(RecipeMaps.mixerNonCellRecipes);
+        GTValues.RA.stdBuilder()
+            .itemInputs(OTHItemList.ingotSnAsM.get(1))
+            .itemOutputs(OTHItemList.dustSnAsM.get(1))
+            .duration(100)
+            .eut(RECIPE_LV)
+            .addTo(RecipeMaps.maceratorRecipes);
         // SnAs
         GTValues.RA.stdBuilder()
             .itemOutputs(OTHItemList.ingotSnAsM.get(1))

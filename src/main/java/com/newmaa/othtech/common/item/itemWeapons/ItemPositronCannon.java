@@ -102,7 +102,7 @@ public class ItemPositronCannon extends Item implements ISpecialElectricItem {
             player.addChatMessage(new ChatComponentTranslation("tt.positron.noEnergy"));
             return;
         }
-        world.spawnEntityInWorld(new EntityPositronShot(world, player, 500F));
+        world.spawnEntityInWorld(new EntityPositronShot(world, player, 5000F));
         world.playSoundAtEntity(player, "random.explode", 1.5F, 1.4F);
     }
 

@@ -60,6 +60,8 @@ public class Config {
             "默认屏蔽: AE2 创造ME存储元件/创造ME流体存储元件, 源质元件, ExU2 漆黑之门, 储物抽屉 创造模式取出升级.\n" + "改完需要重新进入世界或重启游戏(池子是启动后构建一次并缓存的).");
         is_Abstract_Sanctum_HAHAHAH = configuration
             .getBoolean("OTHTechnology : 开启奈隆圣地的诡异大笑, true为是, false为否", "A", is_Abstract_Sanctum_HAHAHAH, "A");
+        renderDeepSeikoRiceBowl = configuration
+            .getBoolean("renderDeepSeikoRiceBowl", "client", true, "是否显示迪普西科装配机的米饭投影。仅影响客户端画面，修改后需重启客户端。");
         if (configuration.hasChanged()) {
             configuration.save();
         }
@@ -80,10 +82,11 @@ public class Config {
 
     public static String[] fishtorioFullPoolItemBlacklist = DEFAULT_FISHTORIO_FULL_POOL_ITEM_BLACKLIST;
 
+    public static boolean renderDeepSeikoRiceBowl = true;
     public static boolean DEFAULT_BATCH_MODE = false;
     public static boolean NEIFrontend = true;
     public static boolean is_TT_Boom = true;
-    public static float ENQING_MULTI = 1.5f;
+    public static float ENQING_MULTI = 1f;
     public static boolean is_MISA_IMBA_Recipes_Enabled = true;
     public static boolean is_EggMachine_Recipes_For_NHU = true;
     public static int tier_Antimonia = 4;

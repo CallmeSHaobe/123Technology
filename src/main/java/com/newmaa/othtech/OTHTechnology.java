@@ -37,9 +37,6 @@ import com.newmaa.othtech.common.dimensions.gtoregen.VisualProspectingOreVeinBri
 import com.newmaa.othtech.common.item.ItemLoader;
 import com.newmaa.othtech.common.materials.MaterialsLoader;
 import com.newmaa.othtech.common.materials.OTHMaterials;
-import com.newmaa.othtech.common.recipemap.DeepSeikoALRecipeLoader;
-import com.newmaa.othtech.common.recipemap.DeepSeikoBECRecipeLoader;
-import com.newmaa.othtech.common.recipemap.MegaCALRecipeLoader;
 import com.newmaa.othtech.common.recipemap.NEIRecipeMaps;
 import com.newmaa.othtech.event.EventPlayerDied;
 import com.newmaa.othtech.event.EventWorldLoad;
@@ -47,6 +44,8 @@ import com.newmaa.othtech.machine.MachineLoader;
 import com.newmaa.othtech.machine.machineclass.OTHMobHandlerLoader;
 import com.newmaa.othtech.quest.QuestLoader;
 import com.newmaa.othtech.recipe.RecipeLoader;
+import com.newmaa.othtech.recipe.RecipesDeepSeiko;
+import com.newmaa.othtech.recipe.RecipesMCATransformer;
 
 import codechicken.nei.api.API;
 import cpw.mods.fml.common.Mod;
@@ -122,15 +121,13 @@ public class OTHTechnology {
         // 进阶高能电路装配线的配方池：在 FML load complete 阶段（dreamcraft 注册完 CAL 配方之后）
         // 拷贝 CAL 配方并去掉压印电路需求
         if (GregTechAPI.sGTCompleteLoad != null) {
-            GregTechAPI.sGTCompleteLoad.add(MegaCALRecipeLoader::load);
-            // 迪普西科凝聚态配方池：拷贝 BEC 配方并把纠缠凝聚态换成普通形态流体（GT 会先跑完
-            // BECRecipes.runLateRecipes() 再遍历 sGTCompleteLoad，时序必然安全）
-            GregTechAPI.sGTCompleteLoad.add(DeepSeikoBECRecipeLoader::load);
-            GregTechAPI.sGTCompleteLoad.add(DeepSeikoALRecipeLoader::load);
+            GregTechAPI.sGTCompleteLoad.add(RecipesMCATransformer::load);
+            GregTechAPI.sGTCompleteLoad.add(RecipesDeepSeiko::loadCondensateRecipes);
+            GregTechAPI.sGTCompleteLoad.add(RecipesDeepSeiko::loadAssemblyLineRecipes);
         } else {
-            MegaCALRecipeLoader.load();
-            DeepSeikoBECRecipeLoader.load();
-            DeepSeikoALRecipeLoader.load();
+            RecipesMCATransformer.load();
+            RecipesDeepSeiko.loadCondensateRecipes();
+            RecipesDeepSeiko.loadAssemblyLineRecipes();
         }
 
         new CreativeTabsLoader(event);
@@ -219,8 +216,8 @@ public class OTHTechnology {
     @Mod.EventHandler
     public void completeInit(FMLLoadCompleteEvent event) {
         safeStep("RecipeLoader.loadRecipes", RecipeLoader::loadRecipes);
-        safeStep("DeepSeikoBECRecipeLoader", DeepSeikoBECRecipeLoader::load);
-        safeStep("DeepSeikoALRecipeLoader", DeepSeikoALRecipeLoader::load);
+        safeStep("RecipesDeepSeiko.loadCondensateRecipes", RecipesDeepSeiko::loadCondensateRecipes);
+        safeStep("RecipesDeepSeiko.loadAssemblyLineRecipes", RecipesDeepSeiko::loadAssemblyLineRecipes);
         safeStep("OTHBeeyonds", OTHBeeyonds::new);
         LOG.info("completeInit: finished.");
     }

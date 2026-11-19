@@ -11,6 +11,8 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 
+import com.newmaa.othtech.Config;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -74,7 +76,7 @@ public class RiceBowlRenderer extends TileEntitySpecialRenderer {
 
     @Override
     public void renderTileEntityAt(TileEntity te, double x, double y, double z, float partialTicks) {
-        if (!(te instanceof IRiceBowlHolo)) return;
+        if (!Config.renderDeepSeikoRiceBowl || !(te instanceof IRiceBowlHolo)) return;
         IRiceBowlHolo holo = (IRiceBowlHolo) te;
 
         // ---- 1) 毫秒差插值：帧率无关，卡顿不跳帧
