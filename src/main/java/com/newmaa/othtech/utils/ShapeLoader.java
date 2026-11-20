@@ -1,94 +1,72 @@
 package com.newmaa.othtech.utils;
 
-import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.zip.GZIPInputStream;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.google.gson.Gson;
+import com.google.gson.JsonParseException;
 
+/** Loads external GZIP-compressed UTF-8 JSON structures without trimming or transposing their rows. */
 public final class ShapeLoader {
 
-    private static final Logger LOG = LogManager.getLogger("123Technology/ShapeLoader");
-
-    /** 形状文件里的空位字符。用 '.' 而不是空格，避免被 IDE/脚本的 trim trailing whitespace 静默吃掉 */
-    public static final char EMPTY = '.';
+    private static final int MAX_UNCOMPRESSED_BYTES = 64 * 1024 * 1024;
+    private static final Gson GSON = new Gson();
+    private static final Map<String, String[][]> CACHE = new ConcurrentHashMap<>();
 
     private ShapeLoader() {}
 
     /**
-     * 读取并校验形状。
-     *
-     * @param resourcePath classpath 绝对路径，例如 {@code "/assets/123technology/structures/megaeec_shape.txt"}
-     * @param width        每行字符数（x 方向）
-     * @param height       每层行数（z 方向）
-     * @param layers       层数（y 方向）
-     * @return {@code [layer][row]} 的形状；资源缺失或解析失败时返回空数组并记录 ERROR，不抛异常
+     * Decompress once per resource and return an independent array on each call. Strings, including
+     * trailing spaces and empty rows, are retained exactly. Ragged layer sizes are valid StructureLib data.
+     * Missing or corrupt resources fail explicitly instead of creating an accidentally empty structure.
      */
-    public static String[][] load(String resourcePath, int width, int height, int layers) {
-        if (width <= 0 || height <= 0 || layers <= 0) {
-            LOG.error("ShapeLoader: invalid shape size {}x{}x{} for {}", width, height, layers, resourcePath);
-            return new String[0][];
+    public static String[][] loadCompressed(String resourcePath) {
+        if (resourcePath == null || !resourcePath.startsWith("/assets/123technology/structures/")
+            || !resourcePath.endsWith(".shape.gz")
+            || resourcePath.contains("..")) {
+            throw new IllegalArgumentException("Invalid compressed structure resource: " + resourcePath);
         }
-        List<String> rows = new ArrayList<>(height * layers);
-        try (InputStream in = ShapeLoader.class.getResourceAsStream(resourcePath)) {
-            if (in == null) {
-                LOG.error("ShapeLoader: resource {} not found, structure will be empty", resourcePath);
-                return new String[0][];
-            }
-            BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
-            String line;
-            int lineNo = 0;
-            while ((line = reader.readLine()) != null) {
-                lineNo++;
-                if (line.endsWith("\r")) line = line.substring(0, line.length() - 1);
-                String trimmed = line.trim();
-                if (trimmed.isEmpty() || trimmed.charAt(0) == '#') continue;
-                if (line.length() > width) {
-                    LOG.error(
-                        "ShapeLoader: {}:{} is {} chars, wider than {}; truncated",
-                        resourcePath,
-                        lineNo,
-                        line.length(),
-                        width);
-                    line = line.substring(0, width);
-                } else if (line.length() < width) {
-                    LOG.error(
-                        "ShapeLoader: {}:{} is {} chars, narrower than {}; padded",
-                        resourcePath,
-                        lineNo,
-                        line.length(),
-                        width);
-                    line = String.format("%-" + width + "s", line);
-                }
-                rows.add(line.replace(EMPTY, ' '));
-            }
-        } catch (Exception e) {
-            LOG.error("ShapeLoader: failed to read " + resourcePath, e);
-            return new String[0][];
+        String[][] cached = CACHE.computeIfAbsent(resourcePath, ShapeLoader::readCompressed);
+        String[][] copy = new String[cached.length][];
+        for (int layer = 0; layer < cached.length; layer++) {
+            copy[layer] = cached[layer].clone();
         }
+        return copy;
+    }
 
-        int expected = height * layers;
-        if (rows.size() != expected) {
-            LOG.error(
-                "ShapeLoader: {} has {} shape rows, expected {} ({}x{})",
-                resourcePath,
-                rows.size(),
-                expected,
-                height,
-                layers);
-        }
-        String[][] shape = new String[layers][height];
-        for (int y = 0; y < layers; y++) {
-            for (int z = 0; z < height; z++) {
-                int idx = y * height + z;
-                shape[y][z] = idx < rows.size() ? rows.get(idx) : "";
+    private static String[][] readCompressed(String resourcePath) {
+        try (InputStream resource = ShapeLoader.class.getResourceAsStream(resourcePath)) {
+            if (resource == null) throw new IOException("Resource not found");
+            try (GZIPInputStream gzip = new GZIPInputStream(resource);
+                ByteArrayOutputStream output = new ByteArrayOutputStream()) {
+                byte[] buffer = new byte[8192];
+                int count;
+                while ((count = gzip.read(buffer)) != -1) {
+                    if (output.size() > MAX_UNCOMPRESSED_BYTES - count) {
+                        throw new IOException("Expanded structure exceeds " + MAX_UNCOMPRESSED_BYTES + " bytes");
+                    }
+                    output.write(buffer, 0, count);
+                }
+                String[][] shape = GSON
+                    .fromJson(new String(output.toByteArray(), StandardCharsets.UTF_8), String[][].class);
+                if (shape == null || shape.length == 0) throw new IOException("Structure has no layers");
+                for (int layer = 0; layer < shape.length; layer++) {
+                    if (shape[layer] == null || shape[layer].length == 0) {
+                        throw new IOException("Structure has a missing or empty layer " + layer);
+                    }
+                    for (String row : shape[layer]) {
+                        if (row == null) throw new IOException("Structure has a null row in layer " + layer);
+                    }
+                }
+                return shape;
             }
+        } catch (IOException | JsonParseException e) {
+            throw new IllegalStateException("Cannot load compressed structure " + resourcePath, e);
         }
-        LOG.info("ShapeLoader: loaded {} ({} layers x {} rows x {} cols)", resourcePath, layers, height, width);
-        return shape;
     }
 }

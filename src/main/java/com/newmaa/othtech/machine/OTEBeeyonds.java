@@ -104,47 +104,8 @@ public class OTEBeeyonds extends OTHTTMultiMachineBaseEM implements IConstructab
         .<OTEBeeyonds>builder()
         .addShape(
             STRUCTURE_PIECE_MAIN,
-            new String[][] {
-                { "                       ", "                       ", "                       ",
-                    "                       ", "                       ", "                       ",
-                    "                       ", "                       ", "                       ",
-                    "                       ", "                       ", "                       ",
-                    "                       ", "        BBBBBBB        ", "       BCCCCCCCB       ",
-                    "     BBBCCCCCCCBBB     ", "   BBBBBCCCCCCCBBBBB   ", "     BBBCCCCCCCBBB     ",
-                    "       BCCCCCCCB       ", "        BBBBBBB        ", "                       ",
-                    "                       " },
-                { "                       ", "       BBB    BBB      ", "      BBBBB  BBBBB     ",
-                    "      BBBBBBBBBBBB     ", "       BBBBBBBBBB      ", "        AAEAEAE        ",
-                    "       AAAAEAEAE       ", "      AEAEAEAEAEA      ", "      AAAAAEAEAEAE     ",
-                    "      AABAAEAEAEA      ", "       AAAAEAEAE       ", "        AAEAEAE        ",
-                    "                       ", "       BBBBBBBBB       ", "    BBBBCCCCCCCBBBB    ",
-                    "    BBBBCCCCCCCBBBB    ", "  BBBBBBC     CBBBBBB  ", "    BBBBC     CBBBB    ",
-                    "    BBBBC     CBBBB    ", "       BBDDDDDBB       ", "          F~F          ",
-                    "          FFF          " },
-                { "       BBB    BBB      ", "      BBBBB  BBBBB     ", "     BBBBBBBBBBBBBB    ",
-                    "     BBBBBBBBBBBBBB    ", "      BBBBBBBBBBBB     ", "       AAAEAEAEE       ",
-                    "      AAAAAEAEAEA      ", "     AAEAEAEAEAEAE     ", "     AAAAAAEAEAEAEEE   ",
-                    "     AAABAAEAEAEAE     ", "      AAAAAEAEAEA      ", "       AAAEAEAEE       ",
-                    "        AAEAEAE        ", "       BBBBBBBBB       ", "    BBBBC     CBBBB    ",
-                    "   BBBBBC     CBBBBB   ", "BBBBBBBBC     CBBBBBBBB", "   BBBBBC     CBBBBB   ",
-                    "    BBBBC     CBBBB    ", "       BBDDDDDBB       ", "         FFBFF         ",
-                    "          FFF          " },
-                { "                       ", "       BBB    BBB      ", "      BBBBB  BBBBB     ",
-                    "      BBBBBBBBBBBB     ", "       BBBBBBBBBB      ", "        AAEAEAE        ",
-                    "       AAAAEAEAE       ", "      AAAAAEAEAEA      ", "      AAAAAEAEAEAE     ",
-                    "      AAAAAEAEAEA      ", "       AAAAEAEAE       ", "        AAEAEAE        ",
-                    "                       ", "       BBBBBBBBB       ", "    BBBBCCCCCCCBBBB    ",
-                    "    BBBBCCCCCCCBBBB    ", "  BBBBBBC     CBBBBBB  ", "    BBBBC     CBBBB    ",
-                    "    BBBBC     CBBBB    ", "       BBDDDDDBB       ", "          FFF          ",
-                    "          FFF          " },
-                { "                       ", "                       ", "                       ",
-                    "                       ", "                       ", "                       ",
-                    "                       ", "                       ", "                       ",
-                    "                       ", "                       ", "                       ",
-                    "                       ", "        BBBBBBB        ", "       BCCCCCCCB       ",
-                    "     BBBCCCCCCCBBB     ", "   BBBBBCCCCCCCBBBBB   ", "     BBBCCCCCCCBBB     ",
-                    "       BCCCCCCCB       ", "        BBBBBBB        ", "                       ",
-                    "                       " } })
+            com.newmaa.othtech.utils.ShapeLoader
+                .loadCompressed("/assets/123technology/structures/ote/OTEBeeyonds_1.shape.gz"))
         .addElement('A', ofBlock(sBlockCasings1, 10))
         .addElement('B', ofBlock(sBlockReinforced, 2))
         .addElement('C', ofBlock(Blocks.glass, 0))

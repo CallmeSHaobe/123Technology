@@ -46,7 +46,7 @@ public class OTEBBPlasmaForgeGui extends MTEMultiBlockBaseGui<OTEBBPlasmaForge> 
             }))
             .onMousePressed(mouseButton -> {
                 // 亿万火种之怒,燃尽此身!
-                if (!multiblock.hasCalibrationMatrix()) return false;
+                if (!multiblock.hasAstralArrayFabricators()) return false;
                 wirelessSyncer.setBoolValue(!wirelessSyncer.getBoolValue());
                 return true;
             });

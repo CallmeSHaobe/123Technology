@@ -68,9 +68,8 @@ public class OTEFishtorio extends OTHMultiMachineBase<OTEFishtorio> {
         EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.ft.0") };
 
     /** 7×4×5 的空心壳体, 切片顺序是 [深度][高度][宽度] */
-    private final String[][] shapeMain = new String[][] { { "CCCCCCC", "CCCCCCC", "CCCCCCC", "CCC~CCC" },
-        { "CCCCCCC", "C     C", "C     C", "CCCCCCC" }, { "CCCCCCC", "C     C", "C     C", "CCCCCCC" },
-        { "CCCCCCC", "C     C", "C     C", "CCCCCCC" }, { "CCCCCCC", "CCCCCCC", "CCCCCCC", "CCCCCCC" } };
+    private final String[][] shapeMain = com.newmaa.othtech.utils.ShapeLoader
+        .loadCompressed("/assets/123technology/structures/ote/OTEFishtorio_shapeMain.shape.gz");
 
     // ===================== Constructors =====================
 

@@ -1,11 +1,14 @@
 package com.newmaa.othtech.utils;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import com.gtnewhorizon.gtnhmixins.ILateMixinLoader;
 import com.gtnewhorizon.gtnhmixins.LateMixin;
+
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.relauncher.Side;
 
 /**
  * 晚注册的 mixins。
@@ -28,6 +31,7 @@ public class LateMixins implements ILateMixinLoader {
 
     private static final String MIXIN_CONFIG = "mixins.123technology.late.json";
     private static final String CROPSNH_MODID = "cropsnh";
+    private static final String BLOCK_RENDERER_MODID = "blockrenderer6343";
     /** 相对 config 的 {@code package}（com.newmaa.othtech.mixin）的短类名。 */
     private static final String CROP_LOADER_MIXIN = "MixinCropLoader";
 
@@ -38,9 +42,13 @@ public class LateMixins implements ILateMixinLoader {
 
     @Override
     public List<String> getMixins(Set<String> loadedMods) {
-        if (!loadedMods.contains(CROPSNH_MODID)) {
-            return Collections.emptyList();
+        List<String> mixins = new ArrayList<>(3);
+        if (loadedMods.contains("etfuturum") && FMLCommonHandler.instance()
+            .getSide() == Side.CLIENT) {
+            mixins.add("PoweredElytraTextureMixin");
         }
-        return Collections.singletonList(CROP_LOADER_MIXIN);
+        if (loadedMods.contains(CROPSNH_MODID)) mixins.add(CROP_LOADER_MIXIN);
+        if (loadedMods.contains(BLOCK_RENDERER_MODID)) mixins.add("VoidNexusStructureScanMixin");
+        return mixins;
     }
 }

@@ -60,52 +60,8 @@ public class OTEMegaFreezerGTpp extends OTHMultiMachineBase<OTEMegaFreezerGTpp> 
         EnumChatFormatting.GOLD + translateToLocal("ote.cm.fz.0") };
 
     // Structured by BW
-    private final String[][] shapeMain = new String[][] {
-        { "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA",
-            "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA",
-            "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA" },
-        { "AAAAAAAAAAAAAAA", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "AAAAAAAAAAAAAAA" },
-        { "AAAAAAAAAAAAAAA", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "AAAAAAAAAAAAAAA" },
-        { "AAAAAAAAAAAAAAA", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "AAAAAAAAAAAAAAA" },
-        { "AAAAAAAAAAAAAAA", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "AAAAAAAAAAAAAAA" },
-        { "AAAAAAAAAAAAAAA", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "AAAAAAAAAAAAAAA" },
-        { "AAAAAAAAAAAAAAA", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "AAAAAAAAAAAAAAA" },
-        { "AAAAAAA~AAAAAAA", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "AAAAAAAAAAAAAAA" },
-        { "AAAAAAAAAAAAAAA", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "AAAAAAAAAAAAAAA" },
-        { "AAAAAAAAAAAAAAA", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "AAAAAAAAAAAAAAA" },
-        { "AAAAAAAAAAAAAAA", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "AAAAAAAAAAAAAAA" },
-        { "AAAAAAAAAAAAAAA", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "AAAAAAAAAAAAAAA" },
-        { "AAAAAAAAAAAAAAA", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "AAAAAAAAAAAAAAA" },
-        { "AAAAAAAAAAAAAAA", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "AAAAAAAAAAAAAAA" },
-        { "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA",
-            "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA",
-            "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA" } };
+    private final String[][] shapeMain = com.newmaa.othtech.utils.ShapeLoader
+        .loadCompressed("/assets/123technology/structures/ote/OTEMegaFreezerGTpp_shapeMain.shape.gz");
 
     // ===================== Constructors =====================
 

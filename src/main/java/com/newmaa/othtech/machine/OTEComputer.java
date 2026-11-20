@@ -115,39 +115,8 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
     };
 
     @SuppressWarnings("SpellCheckingInspection")
-    private final String[][] shapeMain = new String[][] {
-        { "           ", "           ", "           ", "           ", "           ", "           ", "  EDE      ",
-            "           ", "           ", "           ", "  FFF      " },
-        { "           ", "           ", "           ", "           ", "           ", "   F       ", "  EDE      ",
-            "           ", "           ", "           ", "  FFF      " },
-        { "           ", "           ", "           ", "           ", "           ", "   F       ", "  EDE      ",
-            "   D       ", "   ~       ", "   D       ", "  FFF      " },
-        { "           ", "           ", "           ", "           ", "           ", "   F       ", "  EDE      ",
-            "           ", "           ", "           ", "  FFF      " },
-        { "           ", " FFFFFFFFF ", " FDDDCCCCF ", " FDDDCCCCF ", " FDDDCCCCF ", " FDDDCCCCF ", " FDDDCCCCF ",
-            " FDDDCCCCF ", " FDDDCCCCF ", " FFFFFFFFF ", "  FFF      " },
-        { "FFFFFFFFFFF", "DIIIIIIIIID", "DIIIIIIIIID", "DIIIIIIIIID", "DIIIIIIIIID", "DIIIIIIIIID", "DIIIIIIIIID",
-            "DIIIIIIIIID", "DIIIIIIIIID", "DIIIIIIIIID", "FFFFFFFFFFF" },
-        { "FEEEEEEEEEF", "IHHHHHHHHHI", "IHBBBBBBBHI", "IHBBBBBBBHI", "IHBBBBBBBHI", "IHBBBBBBBHI", "IHBBBBBBBHI",
-            "IHBBBBBBBHI", "IHBBBBBBBHI", "IHHHHHHHHHI", "FBBBBBBBBBF" },
-        { "FEEEEEEEEEF", "IHHHHHHHHHI", "IBGGGGGGGBI", "IBGGGGGGGBI", "IBGGGGGGGBI", "IBGGGGGGGBI", "IBGGGGGGGBI",
-            "IBGGGGGGGBI", "IBGGGGGGGBI", "IHHHHHHHHHI", "FBBBBBBBBBF" },
-        { "FEEEEEEEEEF", "IHHHHHHHHHI", "IBGGGGGGGBI", "IBGLAAALGBI", "IBGALALAGBI", "IBGAALAAGBI", "IBGALALAGBI",
-            "IBGLALALGBI", "IBGGGGGGGBI", "IHHHHHHHHHI", "FBBBBBBBBBF" },
-        { "FEEEEEEEEEF", "IHHHHHHHHHI", "IBGGGGGGGBI", "IBGALALAGBI", "IBGLAAALGBI", "IBGAALAAGBI", "IBGLAAALGBI",
-            "IBGALALAGBI", "IBGGGGGGGBI", "IHHHHHHHHHI", "FBBBBBBBBBF" },
-        { "FEEEEEEEEEF", "IHHHHHHHHHI", "IBGGGGGGGBI", "IBGAALAAGBI", "IBGAALAAGBI", "IBGLLJLLGBI", "IBGAALAAGBI",
-            "IBGLALALGBI", "IBGGGGGGGBI", "IHHHHHHHHHI", "FBBBBBBBBBF" },
-        { "FEEEEEEEEEF", "IHHHHHHHHHI", "IBGGGGGGGBI", "IBGALALAGBI", "IBGLAAALGBI", "IBGAALAAGBI", "IBGLAAALGBI",
-            "IBGALALAGBI", "IBGGGGGGGBI", "IHHHHHHHHHI", "FBBBBBBBBBF" },
-        { "FEEEEEEEEEF", "IHHHHHHHHHI", "IBGGGGGGGBI", "IBGLAAALGBI", "IBGALALAGBI", "IBGAALAAGBI", "IBGALALAGBI",
-            "IBGLALALGBI", "IBGGGGGGGBI", "IHHHHHHHHHI", "FBBBBBBBBBF" },
-        { "FEEEEEEEEEF", "IHHHHHHHHHI", "IBGGGGGGGBI", "IBGGGGGGGBI", "IBGGGGGGGBI", "IBGGGGGGGBI", "IBGGGGGGGBI",
-            "IBGGGGGGGBI", "IBGGGGGGGBI", "IHHHHHHHHHI", "FBBBBBBBBBF" },
-        { "FEEEEEEEEEF", "IHHHHHHHHHI", "IHBBBBBBBHI", "IHBBBBBBBHI", "IHBBBBBBBHI", "IHBBBBBBBHI", "IHBBBBBBBHI",
-            "IHBBBBBBBHI", "IHBBBBBBBHI", "IHHHHHHHHHI", "FBBBBBBBBBF" },
-        { "FFFFFFFFFFF", "DIIIIIIIIID", "DIIIIIIIIID", "DIIIIIIIIID", "DIIIIIIIIID", "DIIIIIIIIID", "DIIIIIIIIID",
-            "DIIIIIIIIID", "DIIIIIIIIID", "DIIIIIIIIID", "FFFFFFFFFFF" } };
+    private final String[][] shapeMain = com.newmaa.othtech.utils.ShapeLoader
+        .loadCompressed("/assets/123technology/structures/ote/OTEComputer_shapeMain.shape.gz");
 
     protected Parameters.Group.ParameterIn overclock, overvolt;
 
@@ -223,14 +192,14 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
         super(aID, aName, aNameRegional);
         eCertainMode = 5;
         eCertainStatus = -128; // no-brain value
-        eAvailableData = 0; // 确保初始化时为0
+        eAvailableData = 0;
     }
 
     public OTEComputer(String aName) {
         super(aName);
         eCertainMode = 5;
         eCertainStatus = -128; // no-brain value
-        eAvailableData = 0; // 确保初始化时为0
+        eAvailableData = 0;
     }
 
     // ===================== NBT =====================
@@ -493,8 +462,6 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
             .addOtherStructurePart(translateToLocal("ote.calc.rank"), translateToLocal("gt.blockcasingsTT.0.name"), 2)
             .addInputHatch(translateToLocal("ote.computer.coolantinput"), 1) // 新增冷却液输入
             .addEnergyHatch(translateToLocal("tt.keyword.Structure.AnyComputerCasing"), 1) // Energy
-            .addSeparator()
-            .addInfo(translateToLocal("oth.tooltip.author") + "IDEA & DeepSeek")
             .addSeparator()
             .addInfo("§aAdded by: 123Technology - ExoicComputer")
             .toolTipFinisher();

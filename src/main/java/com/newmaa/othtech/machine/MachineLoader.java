@@ -5,6 +5,7 @@ import static net.minecraft.util.StatCollector.translateToLocal;
 import com.gtnewhorizon.gtnhlib.util.AnimatedTooltipHandler;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.machine.hatch.OTEDeepSeikoNaniteCell;
+import com.newmaa.othtech.machine.hatch.OTEEssentiaStockingInputBusME;
 import com.newmaa.othtech.machine.hatch.OTEHatchRack;
 import com.newmaa.othtech.machine.hatch.OTEWTFHatch;
 import com.newmaa.othtech.utils.AuthorAnimation;
@@ -186,10 +187,11 @@ public class MachineLoader {
         OTHItemList.Beeyonds.set(new OTEBeeyonds(IDs + 58, "IndustrialBeeHouse", translateToLocal("ote.tn.bee")));
         OTHItemList.OTEBBPlasmaForge
             .set(new OTEBBPlasmaForge(IDs + 59, "OTEBBPlasmaForge", translateToLocal("ote.tn.bbpf")));
-        // 注册实时动画作者行(gtnhlib AnimatedTooltipHandler 在渲染时逐帧求值,同 GT5U LoaderMetaTileEntities 的做法)
         AnimatedTooltipHandler
-            .addItemTooltip(OTHItemList.OTEBBPlasmaForge.get(1), AuthorAnimation.getTooltipSupplier());
+            .addItemTooltip(OTHItemList.OTEBBPlasmaForge.get(1), AuthorAnimation.getTooltipSupplier("czqwq"));
         OTHItemList.OTEComputer.set(new OTEComputer(IDs + 60, "OTEComputer", translateToLocal("ote.computer.name")));
+        AnimatedTooltipHandler
+            .addItemTooltip(OTHItemList.OTEComputer.get(1), AuthorAnimation.getTooltipSupplier("czqwq"));
         OTHItemList.OTEHatchRack
             .set(new OTEHatchRack(IDs + 61, "OTEHatchRack", translateToLocal("ote.calc.rank"), 11).getStackForm(1L));
 
@@ -209,8 +211,12 @@ public class MachineLoader {
                 IDs + 70,
                 "OTEDroneLaunchPlatform",
                 translateToLocal("ote.tn.drone_launch_platform")));
-
-        // 迪普西科 DeepSeiko（IDs+9..+12 与 +65..+68）
+        OTHItemList.VoidNexusMatrix
+            .set(new OTEVoidNexusMatrix(IDs + 71, "VoidNexusMatrix", translateToLocal("ote.tn.vnm")));
+        OTHItemList.PsionicManifestationModule.set(
+            new OTEPsionicManifestationModule(IDs + 72, "PsionicManifestationModule", translateToLocal("ote.tn.pmm")));
+        OTHItemList.VoidNexusEssentiaBus.set(
+            new OTEEssentiaStockingInputBusME(IDs + 73, "VoidNexusEssentiaBusME", translateToLocal("ote.tn.esib")));
         OTHItemList.DeepSeiko.set(new OTEDeepSeiko(IDs + 9, "DeepSeiko", translateToLocal("ote.tn.ds")));
         OTHItemList.DeepSeikoNaniteCell.set(
             new OTEDeepSeikoNaniteCell(IDs + 67, "DeepSeikoNaniteCell", translateToLocal("ote.tn.nanite"), 0)

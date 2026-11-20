@@ -9,6 +9,9 @@ import gregtech.api.recipe.metadata.IRecipeMetadataStorage;
 import gregtech.api.recipe.metadata.RecipeMetadataStorage;
 import gregtech.api.util.GTRecipe;
 
+/**
+ * Original : TST
+ */
 public class RecipeBuilder {
 
     public static RecipeBuilder builder() {

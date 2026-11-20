@@ -114,7 +114,7 @@ public final class Utils {
         return newArray;
     }
 
-    public static <T> T[] mergeArrayss(/* @NotNull IntFunction<T[]> generator, */T[]... arrays) {
+    public static <T> T[] mergeArrayss(T[]... arrays) {
         IntFunction<T[]> generator = null;
         for (T[] array : arrays) {
             if (array == null) continue;
@@ -192,7 +192,6 @@ public final class Utils {
     public static ItemStack copyAmount(int aAmount, ItemStack aStack) {
         if (isStackInvalid(aStack)) return null;
         ItemStack rStack = aStack.copy();
-        // if (aAmount > 64) aAmount = 64;
         if (aAmount == -1) aAmount = 111;
         else if (aAmount < 0) aAmount = 0;
         rStack.stackSize = aAmount;

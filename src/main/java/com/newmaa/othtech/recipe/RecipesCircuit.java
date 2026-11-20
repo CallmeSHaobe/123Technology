@@ -1,6 +1,10 @@
 package com.newmaa.othtech.recipe;
 
 import static com.newmaa.othtech.utils.Utils.setStackSize;
+import static gregtech.api.enums.TierEU.*;
+import static gregtech.api.recipe.RecipeMaps.nanochipAssemblyMatrixRecipes;
+import static gregtech.api.util.GTRecipeBuilder.HOURS;
+import static gregtech.api.util.GTRecipeConstants.*;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
@@ -8,9 +12,9 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 import com.newmaa.othtech.common.OTHItemList;
+import com.newmaa.othtech.common.item.OTHCircuitComponent;
 import com.newmaa.othtech.common.materials.BWLiquids;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
-import com.newmaa.othtech.utils.RecipeBuilder;
 
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
@@ -25,10 +29,12 @@ import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTRecipeConstants;
 import gregtech.api.util.GTUtility;
+import gregtech.api.util.recipe.Scanning;
 import gregtech.common.tileentities.machines.multi.nanochip.util.CircuitCalibration;
 import gregtech.common.tileentities.machines.multi.nanochip.util.CircuitComponent;
 import gtPlusPlus.core.material.MaterialsElements;
 import gtnhlanth.common.register.WerkstoffMaterialPool;
+import li.cil.oc.OpenComputers;
 import tectech.thing.CustomItemList;
 import tectech.thing.item.ItemAstralArrayFabricator;
 
@@ -47,16 +53,61 @@ public class RecipesCircuit implements IRecipePool {
         final RecipeMap<?> MQFT = Recipemaps.QFTMega;
         final RecipeMap<?> Assem = RecipeMaps.assemblerRecipes;
         final int eut = 1000000000;
+        // 690
+        GTValues.RA.stdBuilder()
+            .metadata(RESEARCH_ITEM, GTModHandler.getModItem(OpenComputers.ID(), "item", 1, 103))
+            .metadata(SCANNING, new Scanning(HOURS * 2, RECIPE_MV))
+            .itemOutputs(OTHItemList.NukeThrowable.get(1))
+            .itemInputs(
+                GTModHandler.getModItem(OpenComputers.ID(), "item", 1, 33),
+                OTHItemList.AF.get(1),
+                setStackSize(GTModHandler.getModItem(OpenComputers.ID(), "item", 1, 27), 3072),
+                setStackSize(GTModHandler.getModItem(OpenComputers.ID(), "item", 1, 28), 256 + 64 + 16),
+                GTModHandler.getModItem(OpenComputers.ID(), "item", 2, 90),
+                setStackSize(ItemList.Circuit_Chip_Ram.get(1), 4096),
+                setStackSize(ItemList.Circuit_Parts_ResistorASMD.get(1), 512),
+                setStackSize(ItemList.Circuit_Parts_DiodeASMD.get(1), 512),
+                setStackSize(ItemList.Circuit_Parts_TransistorASMD.get(1), 512),
+                setStackSize(ItemList.Circuit_Parts_CapacitorASMD.get(1), 512),
+                setStackSize(ItemList.Circuit_Parts_InductorASMD.get(1), 512),
+                setStackSize(GTModHandler.getModItem("IC2", "reactorVentDiamond", 1, 1), 48),
+                GTOreDictUnificator.get(OrePrefixes.pipeTiny, Materials.Copper, 16),
+                GTOreDictUnificator.get(OrePrefixes.wireGt01, Materials.SuperconductorLuV, 64))
+            .fluidInputs(
+                Materials.Copper.getMolten(9216),
+                Materials.SolderingAlloy.getMolten(6144),
+                Materials.SuperCoolant.getFluid(2000),
+                Materials.Gold.getMolten(1440))
+            .duration(150 * 20)
+            .eut(RECIPE_UV)
+            .addTo(AssemblyLine);
 
         GTValues.RA.stdBuilder()
-            .itemInputs(CircuitComponent.NanoProcessor.getFakeStack(1))
-            .fluidInputs(Materials.SolderingAlloy.getMolten(144))
-            .itemOutputs(CircuitComponent.QuantumProcessor.getFakeStack(1))
-            .duration(10 * 20)
-            .eut(TierEU.RECIPE_UV)
-            .metadata(NanochipAssemblyMatrixTierKey.INSTANCE, VoltageIndex.UV)
-            .metadata(GTRecipeConstants.CIRCUIT_CALIBRATION_TYPE, CircuitCalibration.PRIMITIVE)
-            .addTo(RecipeMaps.nanochipAssemblyMatrixRecipes);
+            .metadata(NanochipAssemblyMatrixTierKey.INSTANCE, VoltageIndex.ZPM)
+            .metadata(GTRecipeConstants.CIRCUIT_CALIBRATION_TYPE, CircuitCalibration.SPECIAL)
+            .itemOutputs(OTHItemList.NukeThrowable.get(1))
+            .itemInputs(
+                CircuitComponent.ProcessedBasicMainframeCasing.getFakeStack(1),
+                CircuitComponent.ProcessedWireElectrum.getFakeStack(160),
+                OTHCircuitComponent.AF.getFakeStack(1),
+                CircuitComponent.ProcessedBoardMultifiberglassElite.getFakeStack(4),
+                setStackSize(CircuitComponent.Microprocessor.getFakeStack(1), 256),
+                setStackSize(CircuitComponent.ProcessedChipNanoCPU.getFakeStack(1), 3072),
+                setStackSize(CircuitComponent.ProcessedChipRAM.getFakeStack(1), 4096),
+                setStackSize(CircuitComponent.ProcessedOpticalSMDResistor.getFakeStack(1), 240),
+                setStackSize(CircuitComponent.ProcessedOpticalSMDDiode.getFakeStack(1), 240),
+                setStackSize(CircuitComponent.ProcessedOpticalSMDTransistor.getFakeStack(1), 240),
+                setStackSize(CircuitComponent.ProcessedOpticalSMDCapacitor.getFakeStack(1), 240),
+                setStackSize(CircuitComponent.ProcessedOpticalSMDInductor.getFakeStack(1), 240),
+                CircuitComponent.ProcessedSuperconductorZPM.getFakeStack(32))
+            .fluidInputs(
+                Materials.Iridium.getMolten(1440),
+                Materials.SolderingAlloy.getMolten(6144),
+                Materials.SuperCoolant.getFluid(2000),
+                Materials.Gold.getMolten(1440))
+            .duration(150 * 20)
+            .eut(RECIPE_UEV)
+            .addTo(nanochipAssemblyMatrixRecipes);
 
         // 超时空电路基板
         GTValues.RA.stdBuilder()
@@ -291,7 +342,7 @@ public class RecipesCircuit implements IRecipePool {
             .addTo(MQFT);
         // ULV - ZPM general soc recipes
         // ULV
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(1),
                 ItemList.Circuit_Board_Plastic.get(4),
@@ -302,7 +353,7 @@ public class RecipesCircuit implements IRecipePool {
             .eut(30)
             .addTo(ISA);
         // LV
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(2),
                 ItemList.Circuit_Board_Plastic_Advanced.get(8),
@@ -313,7 +364,7 @@ public class RecipesCircuit implements IRecipePool {
             .eut(120)
             .addTo(ISA);
         // MV
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(3),
                 ItemList.Circuit_Board_Plastic_Advanced.get(16),
@@ -324,7 +375,7 @@ public class RecipesCircuit implements IRecipePool {
             .eut(480)
             .addTo(ISA);
         // HV
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemInputs(ItemList.Circuit_Board_Plastic_Advanced.get(16), OTHItemList.socNorM.get(1))
             .itemOutputs(setStackSize(ItemList.Circuit_Nanoprocessor.get(1), 512))
             .fluidInputs(new FluidStack(i140, 2304))
@@ -332,7 +383,7 @@ public class RecipesCircuit implements IRecipePool {
             .eut(1920)
             .addTo(ISA);
         // EV
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemInputs(ItemList.Circuit_Board_Advanced.get(32), OTHItemList.socNorM.get(2))
             .itemOutputs(setStackSize(ItemList.Circuit_Quantumprocessor.get(1), 256))
             .fluidInputs(new FluidStack(i140, 2304 * 4))
@@ -340,7 +391,7 @@ public class RecipesCircuit implements IRecipePool {
             .eut(7680)
             .addTo(ISA);
         // IV
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemInputs(ItemList.Circuit_Board_Multifiberglass_Elite.get(32), OTHItemList.socNorM.get(2))
             .itemOutputs(setStackSize(ItemList.Circuit_Crystalprocessor.get(1), 128))
             .fluidInputs(new FluidStack(bio, 576))
@@ -348,7 +399,7 @@ public class RecipesCircuit implements IRecipePool {
             .eut(7680 * 4)
             .addTo(ISA);
         // LuV
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemInputs(ItemList.Circuit_Board_Wetware_Extreme.get(16), OTHItemList.socNorM.get(4))
             .itemOutputs(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 32092))
             .fluidInputs(new FluidStack(bio, 576))
@@ -356,7 +407,7 @@ public class RecipesCircuit implements IRecipePool {
             .eut(7680 * 16)
             .addTo(ISA);
         // ZPM
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemInputs(ItemList.Circuit_Board_Bio_Ultra.get(8), OTHItemList.socNorM.get(16))
             .itemOutputs(setStackSize(ItemList.Circuit_Bioprocessor.get(1), 32))
             .fluidInputs(

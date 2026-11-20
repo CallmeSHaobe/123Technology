@@ -20,10 +20,6 @@ public class ItemStaticDataClientOnly {
     @SideOnly(Side.CLIENT)
     public static Map<Integer, IIcon> iconsMapIzumik = new HashMap<>();
 
-    /**
-     * @param aMetaName The Name of the Icon.
-     * @return Return the Path of the Icon.
-     */
     @SideOnly(Side.CLIENT)
     public static String getIconPath01(String aMetaName) {
         return "gtnhcommunitymod:MetaItem01/" + aMetaName;

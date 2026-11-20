@@ -7,8 +7,8 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 import com.newmaa.othtech.common.recipemap.Recipemaps;
-import com.newmaa.othtech.utils.RecipeBuilder;
 
+import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.util.GTModHandler;
@@ -17,25 +17,35 @@ import gregtech.api.util.GTOreDictUnificator;
 public class RecipesEpicCokeOvenFake implements IRecipePool {
 
     public void loadRecipes() {
-        RecipeBuilder.builder()
-            .itemInputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Diamond, 1))
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Diamond, 1))
             .itemOutputs(setStackSize(GTModHandler.getModItem("Railcraft", "fuel.coke", 1), 1024))
+            .duration(0)
+            .eut(0)
             .addTo(Recipemaps.COC);
-        RecipeBuilder.builder()
-            .itemInputs(new ItemStack(Items.diamond, 1))
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(new ItemStack(Items.diamond, 1))
             .itemOutputs(setStackSize(GTModHandler.getModItem("Railcraft", "fuel.coke", 1), 1024))
+            .duration(0)
+            .eut(0)
             .addTo(Recipemaps.COC);
-        RecipeBuilder.builder()
-            .itemInputs(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Coal, 1))
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Coal, 1))
             .itemOutputs(setStackSize(GTModHandler.getModItem("Railcraft", "fuel.coke", 1), 16))
+            .duration(0)
+            .eut(0)
             .addTo(Recipemaps.COC);
-        RecipeBuilder.builder()
-            .itemInputs(new ItemStack(Items.coal, 1))
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(new ItemStack(Items.coal, 1))
             .itemOutputs(setStackSize(GTModHandler.getModItem("Railcraft", "fuel.coke", 1), 16))
+            .duration(0)
+            .eut(0)
             .addTo(Recipemaps.COC);
-        RecipeBuilder.builder()
-            .itemInputs(new ItemStack(Blocks.dirt, 1))
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(new ItemStack(Blocks.dirt, 1))
             .itemOutputs(setStackSize(GTModHandler.getModItem("Railcraft", "fuel.coke", 1), 1))
+            .duration(0)
+            .eut(0)
             .addTo(Recipemaps.COC);
 
     }

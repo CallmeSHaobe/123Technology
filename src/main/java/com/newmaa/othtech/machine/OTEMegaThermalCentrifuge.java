@@ -159,8 +159,7 @@ public class OTEMegaThermalCentrifuge extends OTHMultiMachineBase<OTEMegaThermal
 
     private static IStructureDefinition<OTEMegaThermalCentrifuge> STRUCTURE_DEFINITION = null;
     private static final String[] description = new String[] {
-        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":",
-        translateToLocal("ote.cm.mtc.0") };
+        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.mtc.0") };
 
     @Override
     public String[] getStructureDescription(ItemStack stackSize) {
@@ -194,52 +193,8 @@ public class OTEMegaThermalCentrifuge extends OTHMultiMachineBase<OTEMegaThermal
 
     // Structure: 15x15x15 hollow cube of Thermal Processing Casings
     // Same layout as OTEMegaFreezerGTpp — controller at front center, layer 7 (0-indexed)
-    private final String[][] shapeMain = new String[][] {
-        { "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA",
-            "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA",
-            "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA" },
-        { "AAAAAAAAAAAAAAA", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "AAAAAAAAAAAAAAA" },
-        { "AAAAAAAAAAAAAAA", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "AAAAAAAAAAAAAAA" },
-        { "AAAAAAAAAAAAAAA", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "AAAAAAAAAAAAAAA" },
-        { "AAAAAAAAAAAAAAA", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "AAAAAAAAAAAAAAA" },
-        { "AAAAAAAAAAAAAAA", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "AAAAAAAAAAAAAAA" },
-        { "AAAAAAAAAAAAAAA", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "AAAAAAAAAAAAAAA" },
-        { "AAAAAAA~AAAAAAA", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "AAAAAAAAAAAAAAA" },
-        { "AAAAAAAAAAAAAAA", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "AAAAAAAAAAAAAAA" },
-        { "AAAAAAAAAAAAAAA", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "AAAAAAAAAAAAAAA" },
-        { "AAAAAAAAAAAAAAA", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "AAAAAAAAAAAAAAA" },
-        { "AAAAAAAAAAAAAAA", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "AAAAAAAAAAAAAAA" },
-        { "AAAAAAAAAAAAAAA", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "AAAAAAAAAAAAAAA" },
-        { "AAAAAAAAAAAAAAA", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "A             A",
-            "A             A", "A             A", "A             A", "A             A", "AAAAAAAAAAAAAAA" },
-        { "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA",
-            "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA",
-            "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA" } };
+    private final String[][] shapeMain = com.newmaa.othtech.utils.ShapeLoader
+        .loadCompressed("/assets/123technology/structures/ote/OTEMegaThermalCentrifuge_shapeMain.shape.gz");
 
     // ===================== Tooltip =====================
 

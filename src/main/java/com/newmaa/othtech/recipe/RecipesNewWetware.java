@@ -122,7 +122,7 @@ public class RecipesNewWetware implements IRecipePool {
         // FakePlayer
         final ItemStack YourTag = GTModHandler.getModItem(EnderIO.MODID, "itemSoulVessel", 1);
         NBTTagCompound You = new NBTTagCompound();
-        You.setString("id", "123Technology.CustomPlayer");
+        You.setString("id", "123technology.CustomPlayer");
         YourTag.setTagCompound(You);
 
         GTRecipeBuilder.builder()

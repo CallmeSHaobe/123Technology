@@ -1,0 +1,32 @@
+[
+  {
+    "source": "megaeec_shape.txt",
+    "resource": "OTEMegaEEC_main.shape.gz",
+    "width": 50,
+    "rows_per_layer": 143,
+    "layers": 56,
+    "canonical_sha256": "eab1ef64055de0f49c13a73e85a3937c33aac9b4bae55cc7ce7e8b66424a1984",
+    "uncompressed_bytes": 424537,
+    "compressed_bytes": 7808
+  },
+  {
+    "source": "abstract_sanctum_shape.txt",
+    "resource": "OTEAbstractSanctum_main.shape.gz",
+    "width": 41,
+    "rows_per_layer": 27,
+    "layers": 41,
+    "canonical_sha256": "538a18709b9349f762078327c502879e88f9df25d2285cfa56d67c203b00f3c2",
+    "uncompressed_bytes": 48791,
+    "compressed_bytes": 2027
+  },
+  {
+    "source": "void_nexus_matrix_shape.txt",
+    "resource": "OTEVoidNexusMatrix_main.shape.gz",
+    "width": 266,
+    "rows_per_layer": 233,
+    "layers": 266,
+    "canonical_sha256": "64608f7fa8b91af0413291623d3ed232c3d9969911ea9fbaf022d5e76c0ce93f",
+    "uncompressed_bytes": 16672615,
+    "compressed_bytes": 100529
+  }
+]

@@ -21,10 +21,10 @@ public class BiomeDecOreAntimonia extends BiomeDecoratorSpace {
     private final WorldGenerator glassBoron;
 
     public BiomeDecOreAntimonia() {
-        // (方块, metadata, 每簇方块数, 被替换的方块)
+
         final Block antiStone = AntimoniaBlocks.antimoniaBlockStone;
-        this.blockAntimony = new WorldGenMinable(sBlockMetal1, 4, 50, antiStone);
-        this.blockNiobium = new WorldGenMinable(sBlockMetal5, 5, 40, antiStone);
+        this.blockAntimony = new WorldGenMinable(sBlockMetal1, 4, 2, antiStone);
+        this.blockNiobium = new WorldGenMinable(sBlockMetal5, 5, 2, antiStone);
         this.oreSalfur = new WorldGenMinable(sBlockReinforced, 5, 20, antiStone);
         this.glassBoron = new WorldGenMinable(BorosilicateGlass.getGlassBlock(), 15, antiStone);
     }

@@ -12,6 +12,8 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ItemRegister {
 
+    public static final int PRIMITIVE_RARE_EARTH_CATALYST_META = 65;
+
     public static void registryItems() {
         Item[] itemsToReg = { MetaItem };
 
@@ -64,6 +66,8 @@ public class ItemRegister {
             .set(initItem("wrapBrains", 26, new String[] { texter("wrapBrains", "tt.wrapBrains") }));
         OTHItemList.AntimoniaPlanetDust
             .set(initItem("antimoniaPlanetDust", 64, new String[] { texter("antimoniaPlanetDust", "tt.ani") }));
+        OTHItemList.PrimitiveRareEarthCatalyst
+            .set(initItem("Primitive Rare Earth Catalyst", PRIMITIVE_RARE_EARTH_CATALYST_META));
 
     }
 }

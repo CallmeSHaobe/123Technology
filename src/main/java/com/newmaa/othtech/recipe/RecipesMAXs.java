@@ -24,7 +24,6 @@ import com.newmaa.othtech.common.materials.BWLiquids;
 import com.newmaa.othtech.common.materials.BWMaterials;
 import com.newmaa.othtech.common.materials.OTHEntangled;
 import com.newmaa.othtech.common.materials.OTHMaterials;
-import com.newmaa.othtech.utils.RecipeBuilder;
 
 import gregtech.api.enums.CondensateType;
 import gregtech.api.enums.GTValues;
@@ -80,8 +79,8 @@ public class RecipesMAXs implements IRecipePool {
     private void loadStandaloneRecipes() {
         final RecipeMap<?> Assembler = RecipeMaps.assemblerRecipes;
         final RecipeMap<?> Tower = RecipeMaps.distillationTowerRecipes;
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTOreDictUnificator.get(OrePrefixes.stick, Materials.MHDCSM, 1),
                 BWMaterials.Gunmu.get(OrePrefixes.wireFine, 16))
             .itemOutputs(ItemList.MAX_Coil.get(1))

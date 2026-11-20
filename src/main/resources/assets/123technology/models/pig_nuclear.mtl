@@ -1,0 +1,8 @@
+newmtl pig_nuclear
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.12 0.12 0.12
+Ns 32
+d 1
+illum 2
+map_Kd pig_nuclear.png

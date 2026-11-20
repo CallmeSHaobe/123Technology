@@ -16,15 +16,14 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class ModelAsuka extends BaseBlockContainer implements IRegistry<ModelAsuka> {
 
     public ModelAsuka() {
-        super(Material.iron); // 可以更改为其他材质
+        super(Material.iron);
         this.setHardness(2.0f);
         this.setResistance(10.0F);
-        this.setBlockName("modelAsuka"); // 设置新方块的名称
+        this.setBlockName("modelAsuka");
     }
 
     @Override
     public ModelAsuka register() {
-        // 注册方块、物品和 TileEntity
         GameRegistry.registerBlock(this, ItemModelAsuka.class, "modelAsuka");
         GameRegistry.registerTileEntity(OTEModelAsuka.class, "modelAsuka");
         setCreativeTab(CreativeTabsLoader.tabothtech);
@@ -48,7 +47,7 @@ public class ModelAsuka extends BaseBlockContainer implements IRegistry<ModelAsu
 
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
-        return new OTEModelAsuka(); // 需要创建一个与方块对应的 TileEntity 类
+        return new OTEModelAsuka();
     }
 
     @Override

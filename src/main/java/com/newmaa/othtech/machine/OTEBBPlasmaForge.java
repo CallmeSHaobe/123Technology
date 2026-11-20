@@ -67,7 +67,6 @@ import gregtech.api.structure.error.ErrorType;
 import gregtech.api.structure.error.StructureError;
 import gregtech.api.structure.error.StructureErrorRegistry;
 import gregtech.api.structure.error.StructureErrors;
-import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTRecipeConstants;
 import gregtech.api.util.GTUtility;
@@ -77,6 +76,7 @@ import gregtech.common.gui.modularui.multiblock.base.MTEMultiBlockBaseGui;
 import gregtech.common.misc.GTStructureChannels;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
+import tectech.thing.CustomItemList;
 import tectech.thing.block.BlockQuantumGlass;
 
 public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> implements ISurvivalConstructable {
@@ -100,289 +100,9 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
     private OverclockCalculator overclockCalculator;
 
     @SuppressWarnings("SpellCheckingInspection")
-    private final String[][] shapeMain = new String[][] {
-        { "                                               ", "                                               ",
-            "                                               ", "                                               ",
-            "                                               ", "                                               ",
-            "                                               ", "                                               ",
-            "                                               ", "                                               ",
-            "                                               " },
-        { "                                               ", "                                               ",
-            "                                               ", "                                               ",
-            "                    BAAAAAB                    ", "                    BACCCAB                    ",
-            "                    BAAAAAB                    ", "                                               ",
-            "                                               ", "                                               ",
-            "                                               " },
-        { "                                               ", "                                               ",
-            "                                               ", "                    BACCCAB                    ",
-            "                   AA     AA                   ", "                   AA     AA                   ",
-            "                   AA     AA                   ", "                    BACCCAB                    ",
-            "                                               ", "                                               ",
-            "                                               " },
-        { "                                               ", "                                               ",
-            "                    BAAAAAB                    ", "                   AA     AA                   ",
-            "                AAAAA     AAAAA                ", "                AAADDDDDDDDDAAA                ",
-            "                AAAAA     AAAAA                ", "                   AA     AA                   ",
-            "                    BAAAAAB                    ", "                                               ",
-            "                                               " },
-        { "                                               ", "                                               ",
-            "                    BACCCAB                    ", "                AAAAA     AAAAA                ",
-            "              AAAAADDDDDDDDDAAAAA              ", "              AADDDDDDDDDDDDDDDAA              ",
-            "              AAAAADDDDDDDDDAAAAA              ", "                AAAAA     AAAAA                ",
-            "                    BACCCAB                    ", "                                               ",
-            "                                               " },
-        { "                                               ", "                                               ",
-            "                    BAAAAAB                    ", "              AAAAAAA     AAAAAAA              ",
-            "            AAAADDDAA     AADDDAAAA            ", "            AADDDDDDDDDDDDDDDDDDDAA            ",
-            "            AAAADDDAA     AADDDAAAA            ", "              AAAAAAA     AAAAAAA              ",
-            "                    BAAAAAB                    ", "                                               ",
-            "                                               " },
-        { "                                               ", "                                               ",
-            "                                               ", "            AAAAAAA BACCCAB AAAAAAA            ",
-            "           AAADDAAAAA     AAAAADDAAA           ", "           ADDDDDDDAA     AADDDDDDDA           ",
-            "           AAADDAAAAA     AAAAADDAAA           ", "            AAAAAAA BACCCAB AAAAAAA            ",
-            "                                               ", "                                               ",
-            "                                               " },
-        { "                                               ", "                                               ",
-            "                                               ", "           AAAAA               AAAAA           ",
-            "          AADDAAAAA BAAAAAB AAAAADDAA          ", "          ADDDDDAAA BACCCAB AAADDDDDA          ",
-            "          AADDAAAAA BAAAAAB AAAAADDAA          ", "           AAAAA               AAAAA           ",
-            "                                               ", "                                               ",
-            "                                               " },
-        { "                                               ", "                                               ",
-            "                                               ", "          AAAA                   AAAA          ",
-            "         AADAAAA               AAAADAA         ", "         ADDDDAA               AADDDDA         ",
-            "         AADAAAA               AAAADAA         ", "          AAAA                   AAAA          ",
-            "                                               ", "                                               ",
-            "                                               " },
-        { "                                               ", "                                               ",
-            "                                               ", "         AAA                       AAA         ",
-            "        AADAAA                   AAADAA        ", "        ADDDAA                   AADDDA        ",
-            "        AADAAA                   AAADAA        ", "         AAA                       AAA         ",
-            "                                               ", "                                               ",
-            "                                               " },
-        { "                                               ", "                                               ",
-            "                                               ", "        AAA                         AAA        ",
-            "       AADAA                       AADAA       ", "       ADDDA                       ADDDA       ",
-            "       AADAA                       AADAA       ", "        AAA                         AAA        ",
-            "                                               ", "                                               ",
-            "                                               " },
-        { "                                               ", "                                               ",
-            "                                               ", "       AAA                           AAA       ",
-            "      AADAA                         AADAA      ", "      ADDDA                         ADDDA      ",
-            "      AADAA                         AADAA      ", "       AAA                           AAA       ",
-            "                                               ", "                                               ",
-            "                                               " },
-        { "                                               ", "                                               ",
-            "                                               ", "      AAA                             AAA      ",
-            "     AADAA                           AADAA     ", "     ADDDA                           ADDDA     ",
-            "     AADAA                           AADAA     ", "      AAA                             AAA      ",
-            "                                               ", "                                               ",
-            "                                               " },
-        { "                                               ", "                                               ",
-            "                                               ", "     AAA                               AAA     ",
-            "    AADAA                             AADAA    ", "    ADDDA                             ADDDA    ",
-            "    AADAA                             AADAA    ", "     AAA                               AAA     ",
-            "                                               ", "                                               ",
-            "                                               " },
-        { "                                               ", "                                               ",
-            "                                               ", "     AAA                               AAA     ",
-            "    AADAA                             AADAA    ", "    ADDDA                             ADDDA    ",
-            "    AADAA                             AADAA    ", "     AAA                               AAA     ",
-            "                                               ", "                                               ",
-            "                                               " },
-        { "                                               ", "                                               ",
-            "                                               ", "    AAA                                 AAA    ",
-            "   AADAA                               AADAA   ", "   ADDDA                               ADDDA   ",
-            "   AADAA                               AADAA   ", "    AAA                                 AAA    ",
-            "                                               ", "                                               ",
-            "                                               " },
-        { "                                               ", "                                               ",
-            "                                               ", "    AAA                                 AAA    ",
-            "   AADAA                               AADAA   ", "   ADDDA                               ADDDA   ",
-            "   AADAA                               AADAA   ", "    AAA                                 AAA    ",
-            "                                               ", "                                               ",
-            "                                               " },
-        { "                                               ", "                                               ",
-            "                                               ", "   AAA                                   AAA   ",
-            "  AADAA                                 AADAA  ", "  ADDDA                                 ADDDA  ",
-            "  AADAA                                 AADAA  ", "   AAA                                   AAA   ",
-            "                                               ", "                                               ",
-            "                                               " },
-        { "                                               ", "                                               ",
-            "                                               ", "   AAA                                   AAA   ",
-            "  AADAA                                 ADDAA  ", "  ADDDA                                 ADDDA  ",
-            "  AADAA                                 AADAA  ", "   AAA                                   AAA   ",
-            "                                               ", "                                               ",
-            "                                               " },
-        { "                                               ", "                                               ",
-            "                                               ", "   AAA                                   AAA   ",
-            "  AADAA                                 AADAA  ", "  ADDDA                                 ADDDA  ",
-            "  AADAA                                 AADAA  ", "   AAA                                   AAA   ",
-            "                                               ", "                                               ",
-            "                                               " },
-        { "                                               ", "                                               ",
-            "                      AAA                      ", "  AAA                ABBBA                AAA  ",
-            " AADAA              ABBBBBA              AADAA ", " ADDDA              ABB~BBA              ADDDA ",
-            " AADAA              ABBBBBA              AADAA ", "  AAA                ABBBA                AAA  ",
-            "                      AAA                      ", "                                               ",
-            "                                               " },
-        { "                                               ", "                      AAA                      ",
-            "  BBB                AAAAA                BBB  ", " BAAAB              ABBBBBA              BAAAB ",
-            "BAADAAB            AABCCCBAA            BAADAAB", "BADDDAB            AABCCCBAA            BADDDAB",
-            "BAADAAB            AABCCCBAA            BAADAAB", " BAAAB              ABBBBBA              BAAAB ",
-            "  BBB                AAAAA                BBB  ", "                      AAA                      ",
-            "                                               " },
-        { "                                               ", "                     AAAAA                     ",
-            "  AAA               ABCBCBA               AAA  ", " A   A             ABDDDDDBA             A   A ",
-            "A  D  A             BDGGGDB             A  D  A", "A DDD A             BDGGGDB             A DDD A",
-            "A  D  A             BDGGGDB             A  D  A", " A   A             ABDDDDDBA             A   A ",
-            "  AAA               ABCBCBA               AAA  ", "                     AAAAA                     ",
-            "                                               " },
-        { "                                               ", "                    AABBBAA                    ",
-            "  ACA              AACBCBCAA              ACA  ", " C   C              BDGGGDB              C   C ",
-            "A  D  A             CGEEEGC             A  D  A", "C DDD C             CGEEEGC             C DDD C",
-            "A  D  A             CGEEEGC             A  D  A", " C   C              BDGGGDB              C   C ",
-            "  ACA              AACBCBCAA              ACA  ", "                    AABBBAA                    ",
-            "                                               " },
-        { "                                               ", "                    AABBBAA                    ",
-            "  ACA              AABCBCBAA              ACA  ", " C   C              BDGGGDB              C   C ",
-            "A  D  A             CGEEEGC             A  D  A", "C DDD C             CGEFEGC             C DDD C",
-            "A  D  A             CGEEEGC             A  D  A", " C   C              BDGGGDB              C   C ",
-            "  ACA              AABCBCBAA              ACA  ", "                    AABBBAA                    ",
-            "                                               " },
-        { "                                               ", "                    AABBBAA                    ",
-            "  ACA              AACBCBCAA              ACA  ", " C   C              BDGGGDB              C   C ",
-            "A  D  A             CGEEEGC             A  D  A", "C DDD C             CGEEEGC             C DDD C",
-            "A  D  A             CGEEEGC             A  D  A", " C   C              BDGGGDB              C   C ",
-            "  ACA              AACBCBCAA              ACA  ", "                    AABBBAA                    ",
-            "                                               " },
-        { "                                               ", "                     AAAAA                     ",
-            "  AAA               ABCBCBAA              AAA  ", " A   A             ABDDDDDBA             A   A ",
-            "A  D  A             BDGGGDB             A  D  A", "A DDD A             BDGGGDB             A DDD A",
-            "A  D  A             BDGGGDB             A  D  A", " A   A             ABDDDDDBA             A   A ",
-            "  AAA               ABCBCBA               AAA  ", "                     AAAAA                     ",
-            "                                               " },
-        { "                                               ", "                      AAA                      ",
-            "  BBB                AAAAA                BBB  ", " BAAAB              ABBBBBA              BAAAB ",
-            "BAADAAB            AABCCCBAA            BAADAAB", "BADDDAB            AABCCCBAA            BADDDAB",
-            "BAADAAB            AABCCCBAA            BAADAAB", " BAAAB              ABBBBBA              BAAAB ",
-            "  BBB                AAAAA                BBB  ", "                      AAA                      ",
-            "                                               " },
-        { "                                               ", "                                               ",
-            "                      AAA                      ", "  AAA                A   A                AAA  ",
-            " AADAA              A     A              AADAA ", " ADDDA              A     A              ADDDA ",
-            " AADAA              A     A              AADAA ", "  AAA                A   A                AAA  ",
-            "                      AAA                      ", "                                               ",
-            "                                               " },
-        { "                                               ", "                                               ",
-            "                                               ", "   AAA                                   AAA   ",
-            "  AADAA                                 AADAA  ", "  ADDDA                                 ADDDA  ",
-            "  AADAA                                 AADAA  ", "   AAA                                   AAA   ",
-            "                                               ", "                                               ",
-            "                                               " },
-        { "                                               ", "                                               ",
-            "                                               ", "   AAA                                   AAA   ",
-            "  AADAA                                 AADAA  ", "  ADDDA                                 ADDDA  ",
-            "  AADAA                                 AADAA  ", "   AAA                                   AAA   ",
-            "                                               ", "                                               ",
-            "                                               " },
-        { "                                               ", "                                               ",
-            "                                               ", "   AAA                                   AAA   ",
-            "  AADAA                                 AADAA  ", "  ADDDA                                 ADDDA  ",
-            "  AADAA                                 AADAA  ", "   AAA                                   AAA   ",
-            "                                               ", "                                               ",
-            "                                               " },
-        { "                                               ", "                                               ",
-            "                                               ", "    AAA                                 AAA    ",
-            "   AADAA                               AADAA   ", "   ADDDA                               ADDDA   ",
-            "   AADAA                               AADAA   ", "    AAA                                 AAA    ",
-            "                                               ", "                                               ",
-            "                                               " },
-        { "                                               ", "                                               ",
-            "                                               ", "    AAA                                 AAA    ",
-            "   AADAA                               AADAA   ", "   ADDDA                               ADDDA   ",
-            "   AADAA                               AADAA   ", "    AAA                                 AAA    ",
-            "                                               ", "                                               ",
-            "                                               " },
-        { "                                               ", "                                               ",
-            "                                               ", "     AAA                               AAA     ",
-            "    AADAA                             AADAA    ", "    ADDDA                             ADDDA    ",
-            "    AADAA                             AADAA    ", "     AAA                               AAA     ",
-            "                                               ", "                                               ",
-            "                                               " },
-        { "                                               ", "                                               ",
-            "                                               ", "     AAA                               AAA     ",
-            "    AADAA                             AADAA    ", "    ADDDA                             ADDDA    ",
-            "    AADAA                             AADAA    ", "     AAA                               AAA     ",
-            "                                               ", "                                               ",
-            "                                               " },
-        { "                                               ", "                                               ",
-            "                                               ", "      AAA                             AAA      ",
-            "     AADAA                           AADAA     ", "     ADDDA                           ADDDA     ",
-            "     AADAA                           AADAA     ", "      AAA                             AAA      ",
-            "                                               ", "                                               ",
-            "                                               " },
-        { "                                               ", "                                               ",
-            "                                               ", "       AAA                           AAA       ",
-            "      AADAA                         AADAA      ", "      ADDDA                         ADDDA      ",
-            "      AADAA                         AADAA      ", "       AAA                           AAA       ",
-            "                                               ", "                                               ",
-            "                                               " },
-        { "                                               ", "                                               ",
-            "                                               ", "        AAA                         AAA        ",
-            "       AADAA                       AADAA       ", "       ADDDA                       ADDDA       ",
-            "       AADAA                       AADAA       ", "        AAA                         AAA        ",
-            "                                               ", "                                               ",
-            "                                               " },
-        { "                                               ", "                                               ",
-            "                                               ", "         AAA                       AAA         ",
-            "        AADAAA                   AAADAA        ", "        ADDDAA                   AADDDA        ",
-            "        AADAAA                   AAADAA        ", "         AAA                       AAA         ",
-            "                                               ", "                                               ",
-            "                                               " },
-        { "                                               ", "                                               ",
-            "                                               ", "          AAAA                   AAAA          ",
-            "         AADAAAA               AAAADAA         ", "         ADDDDAA               AADDDDA         ",
-            "         AADAAAA               AAAADAA         ", "          AAAA                   AAAA          ",
-            "                                               ", "                                               ",
-            "                                               " },
-        { "                                               ", "                                               ",
-            "                                               ", "           AAAAA               AAAAA           ",
-            "          AADDAAAAA BAAAAAB AAAAADDAA          ", "          ADDDDDAAA BACCCAB AAADDDDDA          ",
-            "          AADDAAAAA BAAAAAB AAAAADDAA          ", "           AAAAA               AAAAA           ",
-            "                                               ", "                                               ",
-            "                                               " },
-        { "                                               ", "                                               ",
-            "                                               ", "            AAAAAAA BACCCAB AAAAAAA            ",
-            "           AAADDAAAAA     AAAAADDAAA           ", "           ADDDDDDDAA     AADDDDDDDA           ",
-            "           AAADDAAAAA     AAAAADDAAA           ", "            AAAAAAA BACCCAB AAAAAAA            ",
-            "                                               ", "                                               ",
-            "                                               " },
-        { "                                               ", "                                               ",
-            "                    BAAAAAB                    ", "              AAAAAAA     AAAAAAA              ",
-            "            AAAADDDAA     AADDDAAAA            ", "            AADDDDDDDDDDDDDDDDDDDAA            ",
-            "            AAAADDDAA     AADDDAAAA            ", "              AAAAAAA     AAAAAAA              ",
-            "                    BAAAAAB                    ", "                                               ",
-            "                                               " },
-        { "                                               ", "                                               ",
-            "                    BACCCAB                    ", "                AAAAA     AAAAA                ",
-            "              AAAAADDDDDDDDDAAAAA              ", "              AADDDDDDDDDDDDDDDAA              ",
-            "              AAAAADDDDDDDDDAAAAA              ", "                AAAAA     AAAAA                ",
-            "                    BACCCAB                    ", "                                               ",
-            "                                               " },
-        { "                                               ", "                                               ",
-            "                    BAAAAAB                    ", "                   AA     AA                   ",
-            "                AAAAA     AAAAA                ", "                AAADDDDDDDDDAAA                ",
-            "                AAAAA     AAAAA                ", "                   AA     AA                   ",
-            "                    BAAAAAB                    ", "                                               ",
-            "                                               " },
-        { "                                               ", "                                               ",
-            "                                               ", "                    BACCCAB                    ",
-            "                   AA     AA                   ", "                   AA     AA                   ",
-            "                   AA     AA                   ", "                    BACCCAB                    ",
-            "                                               ", "                                               ",
-            "                                               " } };
+    // About the structure error, never fix that, won't fix that :L
+    private final String[][] shapeMain = com.newmaa.othtech.utils.ShapeLoader
+        .loadCompressed("/assets/123technology/structures/ote/OTEBBPlasmaForge_shapeMain.shape.gz");
 
     protected static final int DIM_INJECTION_CASING = 13;
 
@@ -711,18 +431,15 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
         MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-        // ── 序章:中二宣言 ──
         tt.addMachineType(translateToLocal("ote.bbpf.0"))
             .addInfo(translateToLocal("ote.bbpf.1"))
             .addInfo(translateToLocal("ote.bbpf.8"))
             .addSeparator()
-            // ── 核心数值:并行 / 线圈效率 / 上限突破 ──
             .addInfo(translateToLocal("ote.bbpf.2"))
             .addInfo(translateToLocal("ote.bbpf.9"))
             .addInfo(translateToLocal("ote.bbpf.10"))
             .addInfo(translateToLocal("ote.bbpf.3"))
             .addSeparator()
-            // ── 强化:校准矩阵 → 完美超频 + 无线模式 ──
             .addInfo(translateToLocal("ote.bbpf.4"))
             .addInfo(translateToLocal("ote.bbpf.11"))
             .addInfo(translateToLocal("ote.bbpf.6"))
@@ -730,7 +447,6 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
             .addInfo(translateToLocal("ote.bbpf.7"))
             .addSeparator()
             .addInfo("§aAdded by: 123Technology - PlasmaForge")
-            // ── 结构(按 SHIFT 查看)──
             .addController(translateToLocal("ote.bbpf.0"))
             .beginStructureBlock(47, 11, 47, false)
             .addStructureInfo(translateToLocal("ote.bbpf.12"))
@@ -879,17 +595,16 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
 
     // 老大哥锻炉,老大哥的恩情还不完
     protected void updatetier() {
-        if (hasCalibrationMatrix()) {
+        if (hasAstralArrayFabricators()) {
             this.MLevel = 2;
         } else {
             this.MLevel = 1;
         }
     }
 
-    public boolean hasCalibrationMatrix() {
+    public boolean hasAstralArrayFabricators() {
         ItemStack aGuiStack = this.getControllerSlot();
-        return aGuiStack != null
-            && GTUtility.areStacksEqual(aGuiStack, GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32758));
+        return aGuiStack != null && GTUtility.areStacksEqual(aGuiStack, CustomItemList.astralArrayFabricator.get(1));
     }
 
     @Override

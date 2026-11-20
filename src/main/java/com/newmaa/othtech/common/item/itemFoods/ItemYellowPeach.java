@@ -17,9 +17,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemYellowPeach extends ItemFood {
 
-    /** 饥饿值回复量 */
     public static final int HUNGER = 12;
-    /** 饱食度系数 */
     public static final float SATURATION = 0.6F;
     /** 速度 V：amplifier 4 = 五级 */
     public static final int SPEED_AMPLIFIER = 4;

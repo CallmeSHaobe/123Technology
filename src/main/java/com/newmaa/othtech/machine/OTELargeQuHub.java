@@ -66,11 +66,14 @@ public class OTELargeQuHub extends OTHTTMultiMachineBaseEM
 
     private static final int MAX_BUILD_SLICES = 64;
 
-    private static final String[][] SHAPE_MAIN = new String[][] { { "111", "1~1", "111" } };
+    private static final String[][] SHAPE_MAIN = com.newmaa.othtech.utils.ShapeLoader
+        .loadCompressed("/assets/123technology/structures/ote/OTELargeQuHub_SHAPE_MAIN.shape.gz");
 
-    private static final String[][] SHAPE_COIL = new String[][] { { "111", "1K1", "111" } };
+    private static final String[][] SHAPE_COIL = com.newmaa.othtech.utils.ShapeLoader
+        .loadCompressed("/assets/123technology/structures/ote/OTELargeQuHub_SHAPE_COIL.shape.gz");
 
-    private static final String[][] SHAPE_SLICE = new String[][] { { "111", "111", "111" } };
+    private static final String[][] SHAPE_SLICE = com.newmaa.othtech.utils.ShapeLoader
+        .loadCompressed("/assets/123technology/structures/ote/OTELargeQuHub_SHAPE_SLICE.shape.gz");
 
     private static IStructureDefinition<OTELargeQuHub> STRUCTURE_DEFINITION = null;
 

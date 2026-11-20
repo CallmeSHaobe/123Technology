@@ -9,6 +9,8 @@ import net.minecraftforge.common.MinecraftForge;
 
 import com.newmaa.othtech.client.OTEEntangledFluidRenderer;
 import com.newmaa.othtech.client.OTEMaterialRenderEffects;
+import com.newmaa.othtech.client.OTEVoidNexusClientEffects;
+import com.newmaa.othtech.client.PoweredElytraSpeedHud;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.blocks.deepseiko.TEDeepSeikoHolo;
 import com.newmaa.othtech.common.blocks.fluids.RossFluids;
@@ -20,6 +22,7 @@ import com.newmaa.othtech.common.entity.EntityDogYellow;
 import com.newmaa.othtech.common.entity.EntityFakePlayer;
 import com.newmaa.othtech.common.entity.EntityNukeThrowable;
 import com.newmaa.othtech.common.entity.EntityPositronShot;
+import com.newmaa.othtech.common.entity.EntitySuicideDrone;
 import com.newmaa.othtech.common.entity.RenderDogColored;
 import com.newmaa.othtech.common.entity.RenderPlayer;
 import com.newmaa.othtech.common.item.ItemLoader;
@@ -27,16 +30,19 @@ import com.newmaa.othtech.common.item.itemArmor.ItemHelmTallHatRender;
 import com.newmaa.othtech.common.item.itemBlock.ItemModelAsukaRender;
 import com.newmaa.othtech.common.item.itemBlock.ItemModelAyanamiRender;
 import com.newmaa.othtech.common.item.itemBlock.ItemModelTallHatRender;
+import com.newmaa.othtech.common.item.itemMisc.ItemSuicideDrone;
 import com.newmaa.othtech.common.item.itemWeapons.RenderPositronCannon;
 import com.newmaa.othtech.common.materials.OTHMaterials;
 import com.newmaa.othtech.common.render.RenderDrone;
 import com.newmaa.othtech.common.render.RenderPositronShot;
+import com.newmaa.othtech.common.render.RenderSuicideDrone;
 import com.newmaa.othtech.common.render.RiceBowlRenderer;
 import com.newmaa.othtech.common.render.RocketRenderOTH;
 
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -76,10 +82,18 @@ public class ClientProxy extends CommonProxy {
         MinecraftForgeClient.registerItemRenderer(OTHItemList.PositronCannon.getItem(), new RenderPositronCannon());
         MinecraftForgeClient.registerItemRenderer(OTHItemList.SuicideDronePig.getItem(), new RenderDrone(1));
         MinecraftForgeClient.registerItemRenderer(OTHItemList.SuicideDroneAngelica.getItem(), new RenderDrone(2));
+        MinecraftForgeClient
+            .registerItemRenderer(OTHItemList.SuicideDroneNuclear.getItem(), new RenderDrone(ItemSuicideDrone.NUCLEAR));
+        MinecraftForgeClient
+            .registerItemRenderer(OTHItemList.SuicideDroneNvidia.getItem(), new RenderDrone(ItemSuicideDrone.NVIDIA));
         RenderingRegistry.registerEntityRenderingHandler(EntityFakePlayer.class, new RenderPlayer());
 
         OTEMaterialRenderEffects.install();
         OTEEntangledFluidRenderer.register();
+        OTEVoidNexusClientEffects.install();
+        if (Loader.isModLoaded("etfuturum")) {
+            MinecraftForge.EVENT_BUS.register(new PoweredElytraSpeedHud());
+        }
 
         ClientRegistry.bindTileEntitySpecialRenderer(TEDeepSeikoHolo.class, new RiceBowlRenderer());
 
@@ -93,6 +107,7 @@ public class ClientProxy extends CommonProxy {
             EntityNukeThrowable.class,
             new RenderSnowball(ItemLoader.itemNukeThrowable));
         RenderingRegistry.registerEntityRenderingHandler(EntityPositronShot.class, new RenderPositronShot());
+        RenderingRegistry.registerEntityRenderingHandler(EntitySuicideDrone.class, new RenderSuicideDrone());
 
     }
 
@@ -109,10 +124,7 @@ public class ClientProxy extends CommonProxy {
         super.postInit(event);
     }
 
-    // Override CommonProxy methods here, if you want a different behaviour on the client (e.g. registering renders).
-    // Don't forget to call the super methods as well.
     public void registerRenderers() {
-        // 注册物品渲染器
         MinecraftForgeClient
             .registerItemRenderer(OTHItemList.Tallhat.getItem(), new ItemHelmTallHatRender(objHelmetRaw));
     }

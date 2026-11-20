@@ -8,9 +8,12 @@ import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.blocks.deepseiko.DeepSeikoBlocks;
 import com.newmaa.othtech.common.blocks.deepseiko.DeepSeikoCasingMeta;
 import com.newmaa.othtech.common.recipemap.formatter.MISASpecialValueFormatter;
+import com.newmaa.othtech.common.recipemap.formatter.VoidNexusHeatFormatter;
 import com.newmaa.othtech.common.recipemap.recipeMapFrontends.AbstractSanctumFrontend;
+import com.newmaa.othtech.common.recipemap.recipeMapFrontends.DeepSeikoBECFrontend;
 import com.newmaa.othtech.common.recipemap.recipeMapFrontends.OTH_GeneralFrontend;
 import com.newmaa.othtech.common.recipemap.recipeMapFrontends.OTH_GeneralFrontendFireRocket;
+import com.newmaa.othtech.common.recipemap.recipeMapFrontends.VoidNexusUpgradeFrontend;
 
 import goodgenerator.client.GUI.GGUITextures;
 import goodgenerator.loader.Loaders;
@@ -150,6 +153,36 @@ public class Recipemaps {
         .dontUseProgressBar()
         .addSpecialTexture(59, 20, 58, 42, GGUITextures.PICTURE_NAQUADAH_REACTOR)
         .build();
+    public static final RecipeMap<RecipeMapBackend> VOID_NEXUS = RecipeMapBuilder.of("otht.recipe.void_nexus")
+        .maxIO(1, 0, 0, 0)
+        .minInputs(1, 0)
+        .dontUseProgressBar()
+        .frontend(OTH_GeneralFrontend::new)
+        .neiSpecialInfoFormatter(VoidNexusHeatFormatter.INSTANCE)
+        .neiHandlerInfo(
+            builder -> builder.setDisplayStack(OTHItemList.VoidNexusMatrix.get(1))
+                .setMaxRecipesPerPage(3))
+        .build();
+    public static final RecipeMap<RecipeMapBackend> VOID_NEXUS_UPGRADES = RecipeMapBuilder
+        .of("otht.recipe.void_nexus_upgrades")
+        .maxIO(16, 1, 1, 0)
+        .minInputs(1, 0)
+        .dontUseProgressBar()
+        .frontend(VoidNexusUpgradeFrontend::new)
+        .neiRecipeComparator(Comparator.comparingInt(recipe -> recipe.mSpecialValue))
+        .neiHandlerInfo(
+            builder -> builder.setDisplayStack(OTHItemList.VoidNexusMatrix.get(1))
+                .setMaxRecipesPerPage(1))
+        .build();
+    public static final RecipeMap<RecipeMapBackend> PSIONIC_MANIFESTATION = RecipeMapBuilder
+        .of("otht.recipe.psionic_manifestation")
+        .maxIO(4, 1, 1, 0)
+        .minInputs(1, 0)
+        .frontend(OTH_GeneralFrontend::new)
+        .neiHandlerInfo(
+            builder -> builder.setDisplayStack(OTHItemList.PsionicManifestationModule.get(1))
+                .setMaxRecipesPerPage(1))
+        .build();
     public static final RecipeMap<RecipeMapBackend> MegaCAL = RecipeMapBuilder.of("otht.recipe.MCA")
         .maxIO(6, 1, 1, 0)
         .progressBar(GTUITextures.PROGRESSBAR_CIRCUIT_ASSEMBLER)
@@ -261,8 +294,7 @@ public class Recipemaps {
         .neiHandlerInfo(b -> b.setDisplayStack(OTHItemList.DeepSeikoToken.get(1)))
         .build();
 
-    // 迪普西科·装配线配方（模式 A）：由 DeepSeikoALRecipeLoader 拷贝 GT 装配线可视化配方
-    // （去 fake、去数据棒）而来，只收装配线（不收电路装配线 CAL），零维护直跑。
+    // 迪普西科装配线（模式 A）：导入 GT 装配线配方，同产物优先使用 TST 手写版本。
     public static final RecipeMap<OTH_RecipeMapBackend> DeepSeikoAL = RecipeMapBuilder
         .of("otht.recipe.DeepSeikoAL", OTH_RecipeMapBackend::new)
         // 装配线版式：16 物品输入 / 1 输出 / 4 流体（和 GT 装配线一致）

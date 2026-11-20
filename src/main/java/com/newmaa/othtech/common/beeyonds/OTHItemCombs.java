@@ -15,11 +15,11 @@ import net.minecraftforge.fluids.FluidRegistry;
 
 import com.newmaa.othtech.OTHTechnology;
 import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
-import com.newmaa.othtech.utils.RecipeBuilder;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
@@ -104,8 +104,8 @@ public class OTHItemCombs extends Item {
 
     public static void initCombsRecipes() {
         // HYPOGEN COMB FOR DTPF RECIPES
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 OTHCombTypes.HYPOGEN.getStackForType(1),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Neutronium, 1), 40))
@@ -120,8 +120,8 @@ public class OTHItemCombs extends Item {
             .eut(1200000000)
             .duration(75 * 20)
             .addTo(RecipeMaps.plasmaForgeRecipes);
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 OTHCombTypes.HYPOGEN.getStackForType(1),
                 GTModHandler.getModItem("miscutils", "MU-metaitem.01", 0, 32100),
@@ -137,8 +137,8 @@ public class OTHItemCombs extends Item {
             .eut(1600000000)
             .duration(75 * 20)
             .addTo(RecipeMaps.plasmaForgeRecipes);
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 OTHCombTypes.HYPOGEN.getStackForType(1),
                 GTModHandler.getModItem("miscutils", "MU-metaitem.01", 0, 32100),
@@ -155,11 +155,11 @@ public class OTHItemCombs extends Item {
             .duration(75 * 20)
             .addTo(RecipeMaps.plasmaForgeRecipes);
         // SHABI QUANTUM ALLOY
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 OTHCombTypes.HYPOGEN.getStackForType(4),
-                GTModHandler.getModItem(NewHorizonsCoreMod.ID, "tile.Quantinum", 4),
+                GTModHandler.getModItem(NewHorizonsCoreMod.ID, "Quantinum", 4),
                 GTModHandler.getModItem("miscutils", "MU-metaitem.01", 3, 32105))
             .itemOutputs(GTModHandler.getModItem(GTPlusPlus.ID, "blockBlockAstralTitanium", 4))
             .fluidInputs(
@@ -175,11 +175,11 @@ public class OTHItemCombs extends Item {
             .eut(534141769)
             .duration(13 * 20)
             .addTo(RecipeMaps.plasmaForgeRecipes);
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 OTHCombTypes.HYPOGEN.getStackForType(2),
-                GTModHandler.getModItem(NewHorizonsCoreMod.ID, "tile.Quantinum", 2),
+                GTModHandler.getModItem(NewHorizonsCoreMod.ID, "Quantinum", 2),
                 GTModHandler.getModItem("miscutils", "MU-metaitem.01", 2, 32105))
             .itemOutputs(GTModHandler.getModItem(GTPlusPlus.ID, "blockBlockAstralTitanium", 2))
             .fluidInputs(
@@ -196,8 +196,8 @@ public class OTHItemCombs extends Item {
             .duration(27 * 20)
             .addTo(RecipeMaps.plasmaForgeRecipes);
         // BYD CHROMATIC GLASS
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 OTHCombTypes.CHROMATICGLASS.getStackForType(4),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Glass, 1), 256))
@@ -209,8 +209,8 @@ public class OTHItemCombs extends Item {
             .eut(50331648 * 4)
             .duration(150 / 4 * 20)
             .addTo(RecipeMaps.plasmaForgeRecipes);
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 OTHCombTypes.CHROMATICGLASS.getStackForType(4),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Glass, 1), 512))
@@ -222,8 +222,8 @@ public class OTHItemCombs extends Item {
             .eut(100663296 * 4)
             .duration(75 * 20 / 4)
             .addTo(RecipeMaps.plasmaForgeRecipes);
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 OTHCombTypes.CHROMATICGLASS.getStackForType(4),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Glass, 1), 1024))
@@ -235,8 +235,8 @@ public class OTHItemCombs extends Item {
             .eut(201326592 * 4)
             .duration(187)
             .addTo(RecipeMaps.plasmaForgeRecipes);
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 OTHCombTypes.CHROMATICGLASS.getStackForType(4),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Glass, 1), 2048))
@@ -248,8 +248,8 @@ public class OTHItemCombs extends Item {
             .eut(402653184 * 4)
             .duration(93)
             .addTo(RecipeMaps.plasmaForgeRecipes);
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(24),
                 OTHCombTypes.CHROMATICGLASS.getStackForType(4),
                 GTModHandler.getModItem("miscutils", "MU-metaitem.01", 0, 32105))
@@ -257,8 +257,8 @@ public class OTHItemCombs extends Item {
             .duration(250 * 20)
             .eut(TierEU.RECIPE_UHV)
             .addTo(RecipeMaps.laserEngraverRecipes);
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 OTHCombTypes.CHROMATICGLASS.getStackForType(1),
                 new ItemStack(Blocks.glass, 32),
@@ -268,15 +268,15 @@ public class OTHItemCombs extends Item {
             .eut(TierEU.RECIPE_UEV)
             .addTo(RecipeMaps.laserEngraverRecipes);
         // Mad Glass
-        RecipeBuilder.builder()
-            .itemInputs(OTHCombTypes.NORMALGLASS.getStackForType(1))
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(OTHCombTypes.NORMALGLASS.getStackForType(1))
             .itemOutputs(new ItemStack(Blocks.glass, 1), GTModHandler.getModItem(Forestry.ID, "honeyDrop", 1))
             .outputChances(100, 25)
             .eut(TierEU.HV)
             .duration(20 * 20)
             .addTo(RecipeMaps.centrifugeRecipes);
-        RecipeBuilder.builder()
-            .itemInputs(OTHCombTypes.NORMALGLASS.getStackForType(1))
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(OTHCombTypes.NORMALGLASS.getStackForType(1))
             .itemOutputs(new ItemStack(Blocks.glass, 1), GTModHandler.getModItem(Forestry.ID, "honeyDrop", 1))
             .outputChances(100, 25)
             .eut(TierEU.HV)

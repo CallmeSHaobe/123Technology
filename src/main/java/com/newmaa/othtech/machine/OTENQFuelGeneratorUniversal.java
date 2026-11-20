@@ -263,11 +263,8 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
                 .addShape(
                     mName,
                     transpose(
-                        new String[][] {
-                            { "TTTTT", "TTMMT", "TTMMT", "TTMMT", "TTMMT", "TTMMT", "TTMMT", "TTMMT", "TTTTT" },
-                            { "TTTTT", "SPCCI-", "SPCCI-", "SPCCI-", "SPCCI-", "SPCCI-", "SPCCI-", "SPCCI-", "TTTTT" },
-                            { "TT~TT", "SPGGI-", "SPGGI-", "SPGGI-", "SPGGI-", "SPGGI-", "SPGGI-", "SPGGI-", "TTETT" },
-                            { "TTTTT", "TTTTT", "TTTTT", "TTTTT", "TTTTT", "TTTTT", "TTTTT", "TTTTT", "TTTTT" } }))
+                        com.newmaa.othtech.utils.ShapeLoader.loadCompressed(
+                            "/assets/123technology/structures/ote/OTENQFuelGeneratorUniversal_1.shape.gz")))
                 .addElement('T', ofBlock(sBlockCasings8, 10))
                 .addElement(
                     'M',
@@ -652,7 +649,7 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
 
     public int getPipeTier() {
         return this.pipeTier;
-    }// 可以没用但是不能没有,lol
+    }
 
     @Override
     public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,
