@@ -1103,64 +1103,34 @@ public class RecipesMain implements IRecipePool {
             .addTo(AssemblyLine);
         // BBPF
         GTValues.RA.stdBuilder()
-            .metadata(RESEARCH_ITEM, OTHItemList.UEVA.get(1))
-            .metadata(SCANNING, new Scanning(HOURS / 2, RECIPE_MV))
-            .itemInputs(
-                GTOreDictUnificator.get(OrePrefixes.block, Materials.Infinity, 64),
-                ItemList.Machine_Multi_PlasmaForge.get(16),
-                ItemList.Electric_Motor_UEV.get(64),
-                ItemList.Electric_Piston_UEV.get(64),
-                ItemList.Electric_Pump_UEV.get(64),
-                ItemList.Electric_Piston_UEV.get(64),
-                ItemList.Robot_Arm_UEV.get(64),
-                ItemList.Field_Generator_UEV.get(16),
-                ItemList.Casing_Coil_Infinity.get(64),
-                ItemList.EnergisedTesseract.get(16),
-                OTHItemList.UEVA.get(4),
+            .metadata(RESEARCH_ITEM, OTHItemList.UXVA.get(1))
+            .metadata(SCANNING, new Scanning(10 * HOURS / 2, RECIPE_UXV))
+            .itemInputsUnsafe(
+                GTOreDictUnificator.get(OrePrefixes.block, Materials.Universium, 64),
+                GTUtility.copyAmountUnsafe(640, ItemList.Machine_Multi_PlasmaForge.get(1)),
+                GTUtility.copyAmountUnsafe(256, ItemList.Electric_Motor_UXV.get(1)),
+                GTUtility.copyAmountUnsafe(256, ItemList.Electric_Piston_UXV.get(1)),
+                GTUtility.copyAmountUnsafe(256, ItemList.Electric_Pump_UXV.get(1)),
+                GTUtility.copyAmountUnsafe(256, ItemList.Electric_Piston_UXV.get(1)),
+                GTUtility.copyAmountUnsafe(256, ItemList.Robot_Arm_UXV.get(1)),
+                GTUtility.copyAmountUnsafe(128, ItemList.Field_Generator_UXV.get(1)),
+                GTUtility.copyAmountUnsafe(2112, ItemList.Casing_Coil_Eternal.get(2112)),
+                ItemList.EnergisedTesseract.get(64),
+                OTHItemList.UXVA.get(4),
                 OTHItemList.UEVB.get(4),
-                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UIV, 64),
-                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UEV, 64),
-                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UHV, 64),
-                GTOreDictUnificator.get(OrePrefixes.wireGt04, Materials.SuperconductorUEV, 64))
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.MAX, 64),
+                GTUtility.copyAmountUnsafe(128, GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UXV, 1)),
+                GTUtility.copyAmountUnsafe(256, GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UMV, 1)),
+                GTOreDictUnificator.get(OrePrefixes.wireGt16, Materials.SpaceTime, 64))
             .fluidInputs(
-                Materials.SuperCoolant.getFluid(123123),
-                (Materials.TranscendentMetal.getMolten(114514)),
-                (Materials.Infinity.getMolten(144 * 1024)))
+                Materials.DimensionallyShiftedSuperfluid.getFluid(123123),
+                (Materials.Infinity.getMolten(114514)),
+                (Materials.Eternity.getMolten(144 * 1024)),
+                Materials.Universium.getMolten(144 * 256))
             .itemOutputs(OTHItemList.OTEBBPlasmaForge.get(1))
-            .eut(RECIPE_UEV)
-            .duration(600 * 20)
+            .eut(RECIPE_MAX)
+            .duration(HOURS * 24)
             .addTo(AssemblyLine);
-        // spacetime-casing
-        /*
-         * GTValues.RA.stdBuilder()
-         * .metadata(RESEARCH_ITEM, GTModHandler.getModItem(GTPlusPlus.ID, "particleBase", 1, 14))
-         * .metadata(SCANNING, new Scanning(Integer.MAX_VALUE, RECIPE_UXV))
-         * .itemInputs(
-         * GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.CosmicNeutronium, 64),
-         * GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.CosmicNeutronium, 64),
-         * GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.CosmicNeutronium, 64),
-         * GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.CosmicNeutronium, 64),
-         * eM_Hollow.get(4),
-         * GTModHandler.getModItem("eternalsingularity", "eternal_singularity", 2),
-         * GTModHandler.getModItem(GTPlusPlus.ID, "particleBase", 2, 14),
-         * GTModHandler.getModItem(GTPlusPlus.ID, "particleBase", 2, 14),
-         * GTModHandler.getModItem(TecTech.ID, "tile.quantumGlass", 4),
-         * GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UXV, 32),
-         * GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UMV, 48),
-         * GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UIV, 64),
-         * GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Neutronium, 64),
-         * GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Neutronium, 64),
-         * GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Neutronium, 64),
-         * GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Neutronium, 64))
-         * .itemOutputs(eM_Spacetime.get(1))
-         * .fluidInputs(
-         * Materials.WhiteDwarfMatter.getMolten(INGOTS * 1024),
-         * Materials.Infinity.getMolten(INGOTS * 1024),
-         * Materials.SpaceTime.getMolten(INGOTS * 256))
-         * .duration(114514 * 20)
-         * .eut(RECIPE_UMV)
-         * .addTo(AssemblyLine);
-         */
         // OTEComputer
         GTValues.RA.stdBuilder()
             .metadata(RESEARCH_ITEM, OTHItemList.OTEHatchRack.get(1))

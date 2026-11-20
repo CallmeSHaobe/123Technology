@@ -1,4 +1,10 @@
 repositories { handler ->
+    maven {
+        url 'https://jitpack.io'
+        content {
+            includeGroup 'com.github.Nxer'
+        }
+    }
     exclusiveContent {
         forRepository {
             handler.ivy {

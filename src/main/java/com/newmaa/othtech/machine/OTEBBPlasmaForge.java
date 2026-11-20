@@ -67,7 +67,6 @@ import gregtech.api.structure.error.ErrorType;
 import gregtech.api.structure.error.StructureError;
 import gregtech.api.structure.error.StructureErrorRegistry;
 import gregtech.api.structure.error.StructureErrors;
-import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTRecipeConstants;
 import gregtech.api.util.GTUtility;
@@ -77,6 +76,7 @@ import gregtech.common.gui.modularui.multiblock.base.MTEMultiBlockBaseGui;
 import gregtech.common.misc.GTStructureChannels;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
+import tectech.thing.CustomItemList;
 import tectech.thing.block.BlockQuantumGlass;
 
 public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> implements ISurvivalConstructable {
@@ -100,6 +100,7 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
     private OverclockCalculator overclockCalculator;
 
     @SuppressWarnings("SpellCheckingInspection")
+    // About the structure error, never fix that, won't fix that :L
     private final String[][] shapeMain = com.newmaa.othtech.utils.ShapeLoader
         .loadCompressed("/assets/123technology/structures/ote/OTEBBPlasmaForge_shapeMain.shape.gz");
 
@@ -594,17 +595,16 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
 
     // 老大哥锻炉,老大哥的恩情还不完
     protected void updatetier() {
-        if (hasCalibrationMatrix()) {
+        if (hasAstralArrayFabricators()) {
             this.MLevel = 2;
         } else {
             this.MLevel = 1;
         }
     }
 
-    public boolean hasCalibrationMatrix() {
+    public boolean hasAstralArrayFabricators() {
         ItemStack aGuiStack = this.getControllerSlot();
-        return aGuiStack != null
-            && GTUtility.areStacksEqual(aGuiStack, GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32758));
+        return aGuiStack != null && GTUtility.areStacksEqual(aGuiStack, CustomItemList.astralArrayFabricator.get(1));
     }
 
     @Override

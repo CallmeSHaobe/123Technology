@@ -6,28 +6,6 @@ elytraModpackVersion {
     attachManifestVersionToJar = false
 }
 
-// TST：GitHub releases 的 dev jar 拉到 libs/（已被 .gitignore 忽略），首次编译前自动下载。
-// 0.8.1 的 Bottled Chaos 需要没人注册的 mutagen 流体，进存档会 NPE，dev 先钉 0.8.0。
-def tstVersion = (project.findProperty('tstVersion') ?: '0.8.0').toString()
-def tstJar = file("libs/TwistSpaceTechnology-${tstVersion}-dev.jar")
-def tstReleaseUrl = "https://github.com/Nxer/Twist-Space-Technology-Mod/releases/download/${tstVersion}/${tstJar.name}"
-
-tasks.register('downloadTwistSpaceTechnology') {
-    group = 'dependencies'
-    description = "下载 TST ${tstVersion} 的 dev jar 到 libs/（GitHub releases，无 maven 坐标）"
-    outputs.file(tstJar)
-    doLast {
-        if (tstJar.exists()) return
-        tstJar.parentFile.mkdirs()
-        logger.lifecycle("TST: downloading ${tstReleaseUrl}")
-        ant.get(src: tstReleaseUrl, dest: tstJar, skipexisting: true, verbose: true)
-    }
-}
-
-tasks.withType(JavaCompile).configureEach {
-    dependsOn 'downloadTwistSpaceTechnology'
-}
-
 dependencies {
     implementation(gtnhDev("GT5-Unofficial"))
     compileOnly(gtnhDev("CropsNH"))
@@ -71,8 +49,8 @@ dependencies {
     implementation('com.github.GTNewHorizons:worldedit-gtnh:v0.0.8:dev')
     compileOnly(rfg.deobf("maven.modrinth:journeymap:5.2.23"))
     compileOnly(gtnhDev("VisualProspecting"))
-    compileOnly(files(tstJar))
-    runtimeOnlyNonPublishable(files(tstJar))
+    compileOnly("com.github.Nxer:Twist-Space-Technology-Mod:0.8.0:dev") {transitive=false}
+    runtimeOnlyNonPublishable("com.github.Nxer:Twist-Space-Technology-Mod:0.8.0:dev") {transitive=false}
     runtimeOnlyNonPublishable(gtnhDev("Electro-Magic-Tools")) {
         exclude group: 'curse.maven', module: 'thaumcraft-nei-plugin-225095'
     }
