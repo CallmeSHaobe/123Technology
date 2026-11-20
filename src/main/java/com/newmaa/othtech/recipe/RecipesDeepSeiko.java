@@ -59,6 +59,7 @@ import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.oredict.OreDictionary;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -837,22 +838,73 @@ public class RecipesDeepSeiko implements IRecipePool {
 
     private static int copyVisualAssemblyLine(Set<GTItemStack> specialOutputs) {
         int copied = 0;
+        String uhvCircuitOre = OrePrefixes.circuit.get(Materials.UHV)
+            .toString();
+        Set<GTItemStack> uhvCircuits = new HashSet<>();
+        int uhvCircuitOreId = OreDictionary.getOreID(uhvCircuitOre);
+        GTOreDictUnificator.getOres(uhvCircuitOre)
+            .forEach(stack -> uhvCircuits.add(new GTItemStack(stack)));
         for (GTRecipe recipe : RecipeMaps.assemblylineVisualRecipes.getAllRecipes()) {
             if (recipe == null || recipe.mHidden || hasSpecialOutput(recipe, specialOutputs)) continue;
             try {
-                GTValues.RA.stdBuilder()
-                    .itemInputs(filled(recipe.mInputs, GTValues.emptyItemStackArray))
+                GTRecipeBuilder builder = GTValues.RA.stdBuilder()
                     .fluidInputs(filled(recipe.mFluidInputs, GTValues.emptyFluidStackArray))
                     .itemOutputs(filled(recipe.mOutputs, GTValues.emptyItemStackArray))
                     .duration(recipe.mDuration)
-                    .eut(recipe.mEUt)
-                    .addTo(DeepSeikoAL);
-                copied++;
+                    .eut(recipe.mEUt);
+                ItemStack[] inputs = filled(recipe.mInputs, GTValues.emptyItemStackArray);
+                Object[] oreInputs = restoreUhvCircuitSlots(
+                    recipe,
+                    inputs,
+                    uhvCircuitOre,
+                    uhvCircuitOreId,
+                    uhvCircuits);
+                // Forwarding every visual alternative multiplies the paths in GT's recipe lookup tree.
+                if (oreInputs == null) builder.itemInputs(inputs);
+                else builder.itemInputs(oreInputs);
+                copied += builder.addTo(DeepSeikoAL)
+                    .size();
             } catch (Throwable t) {
                 AL_LOG.warn("Failed to copy an AL visual recipe into DeepSeikoAL", t);
             }
         }
         return copied;
+    }
+
+    private static Object[] restoreUhvCircuitSlots(GTRecipe recipe, ItemStack[] inputs, String uhvCircuitOre,
+        int uhvCircuitOreId, Set<GTItemStack> uhvCircuits) {
+        if (uhvCircuits.size() < 2 || !(recipe instanceof GTRecipe.GTRecipe_WithAlt withAlt) || recipe.mInputs == null)
+            return null;
+        Object[] oreInputs = null;
+        int target = 0;
+        for (int i = 0; i < recipe.mInputs.length; i++) {
+            ItemStack input = recipe.mInputs[i];
+            if (input == null) continue;
+            ItemStack[] alternatives = withAlt.mOreDictAlt != null && i < withAlt.mOreDictAlt.length
+                ? withAlt.mOreDictAlt[i]
+                : null;
+            int oreId = withAlt.mOreDictIds != null && i < withAlt.mOreDictIds.length ? withAlt.mOreDictIds[i] : -1;
+            boolean tagged = oreId == uhvCircuitOreId;
+            if (tagged || isCompleteUhvGroup(input, alternatives, uhvCircuits)) {
+                if (oreInputs == null) oreInputs = Arrays.copyOf(inputs, inputs.length, Object[].class);
+                oreInputs[target] = new Object[] { uhvCircuitOre, input.stackSize };
+            }
+            target++;
+        }
+        return oreInputs;
+    }
+
+    private static boolean isCompleteUhvGroup(ItemStack input, ItemStack[] alternatives, Set<GTItemStack> uhvCircuits) {
+        if (alternatives == null || alternatives.length < uhvCircuits.size()
+            || !uhvCircuits.contains(new GTItemStack(input))) return false;
+        Set<GTItemStack> candidates = new HashSet<>();
+        for (ItemStack alternative : alternatives) {
+            if (alternative == null || alternative.stackSize != input.stackSize) return false;
+            GTItemStack key = new GTItemStack(alternative);
+            if (!uhvCircuits.contains(key)) return false;
+            candidates.add(key);
+        }
+        return candidates.size() == uhvCircuits.size();
     }
 
     private static boolean hasSpecialOutput(GTRecipe recipe, Set<GTItemStack> outputs) {

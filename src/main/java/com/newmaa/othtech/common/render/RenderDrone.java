@@ -23,6 +23,8 @@ public final class RenderDrone implements IItemRenderer {
     public static final int ANGELICA = ItemSuicideDrone.ANGELICA;
 
     private static final float PREVIEW_EXTENT = 8.75F;
+    // The propeller blades sit at this local OBJ Z in all four variants.
+    private static final float PROPELLER_Z = 1.59F;
     private static final DroneModel[] MODELS = new DroneModel[ItemSuicideDrone.VARIANT_COUNT];
     private final int variant;
 
@@ -98,6 +100,12 @@ public final class RenderDrone implements IItemRenderer {
             GL11.glPopAttrib();
             GL11.glMatrixMode(matrixMode);
         }
+    }
+
+    /** Distance from the centered render origin to the propeller plane along positive Z. */
+    public static double getPropellerOffset(int variant) {
+        DroneModel model = getModel(variant);
+        return (PROPELLER_Z - model.centerZ) * model.scale;
     }
 
     private static DroneModel getModel(int variant) {

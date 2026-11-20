@@ -46,9 +46,22 @@ public final class ShapeLoaderCheck {
                 loaded++;
             }
         }
+        checkDronePlatformPieces();
         System.out.println(
             "PASS: " + loaded
                 + " production structures; exact whitespace, ragged layers, cache isolation, corrupt/missing resource rejection");
+    }
+
+    private static void checkDronePlatformPieces() {
+        String prefix = "/assets/123technology/structures/ote/OTEDroneLaunchPlatform_shape";
+        String[] names = { "Main", "Rail", "End" };
+        String[][][] expected = { { { "---", "---", "---", "BDB", "A~A" } }, { { "---", "---", "---", "BDB", "ACA" } },
+            { { "---", "---", "---", "AAA", "AAA" } } };
+        for (int i = 0; i < names.length; i++) {
+            if (!Arrays.deepEquals(ShapeLoader.loadCompressed(prefix + names[i] + ".shape.gz"), expected[i])) {
+                throw new AssertionError("Incorrect drone platform piece: " + names[i]);
+            }
+        }
     }
 
     private static void write(Path path, String json) throws Exception {

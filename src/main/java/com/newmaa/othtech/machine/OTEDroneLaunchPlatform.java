@@ -1,21 +1,26 @@
 package com.newmaa.othtech.machine;
 
+import static com.gtnewhorizon.structurelib.structure.StructureUtility.ofBlock;
 import static gregtech.api.enums.HatchElement.InputBus;
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static net.minecraft.util.StatCollector.translateToLocal;
 
 import java.util.List;
 
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ChunkCoordinates;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.opengl.GL11;
 
+import com.dreammaster.block.BlockList;
 import com.gtnewhorizon.structurelib.alignment.IAlignmentLimits;
+import com.gtnewhorizon.structurelib.alignment.constructable.ChannelDataAccessor;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
@@ -25,11 +30,14 @@ import com.newmaa.othtech.common.item.itemMisc.ItemSuicideDrone;
 import com.newmaa.othtech.common.render.RenderDrone;
 import com.newmaa.othtech.machine.gui.OTEDroneLaunchPlatformGui;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
+import com.newmaa.othtech.utils.ShapeLoader;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import gregtech.api.GregTechAPI;
 import gregtech.api.casing.Casings;
 import gregtech.api.enums.Textures;
+import gregtech.api.interfaces.IIconContainer;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
@@ -38,6 +46,7 @@ import gregtech.api.recipe.check.CheckRecipeResult;
 import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.structure.error.StructureError;
+import gregtech.api.structure.error.StructureErrorRegistry;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.api.util.shutdown.ShutDownReason;
 import gregtech.common.gui.modularui.multiblock.base.MTEMultiBlockBaseGui;
@@ -67,6 +76,13 @@ public class OTEDroneLaunchPlatform extends OTHMultiMachineBase<OTEDroneLaunchPl
     /** 两次发射间隔（tick）。 */
     private static final int LAUNCH_INTERVAL = 100;
     private static final int WORLD_LIMIT = 29999900;
+    private static final int STRUCTURE_HEIGHT = 5;
+    private static final String RAIL_CHANNEL = "rail";
+    private static final int MIN_RAIL_PIECES = 7;
+    private static final int MAX_RAIL_PIECES = 64;
+    private static final int LAUNCH_HEIGHT = STRUCTURE_HEIGHT;
+    // The rail sits one block above the controller. Leave clearance above its top surface.
+    private static final double DRONE_RENDER_HEIGHT = 1.55D;
 
     // ===================== Constructors =====================
 
@@ -82,6 +98,7 @@ public class OTEDroneLaunchPlatform extends OTHMultiMachineBase<OTEDroneLaunchPl
 
     /** 当前无人机模型类型；0 表示不显示预览。 */
     private int droneVariant;
+    private int formedRailPieces;
     private int targetX;
     private int targetY = 64;
     private int targetZ;
@@ -249,9 +266,10 @@ public class OTEDroneLaunchPlatform extends OTHMultiMachineBase<OTEDroneLaunchPl
         if (aimY < 0 || aimY >= tile.getWorld()
             .getActualHeight()) return CheckRecipeResultRegistry.NO_RECIPE;
         ForgeDirection back = getExtendedFacing().getRelativeBackInWorld();
-        double x = tile.getXCoord() + 0.5D + back.offsetX;
-        double y = tile.getYCoord() + 1.5D;
-        double z = tile.getZCoord() + 0.5D + back.offsetZ;
+        ForgeDirection up = getExtendedFacing().getRelativeUpInWorld();
+        double x = tile.getXCoord() + 0.5D + back.offsetX + up.offsetX * LAUNCH_HEIGHT;
+        double y = tile.getYCoord() + 0.5D + back.offsetY + up.offsetY * LAUNCH_HEIGHT;
+        double z = tile.getZCoord() + 0.5D + back.offsetZ + up.offsetZ * LAUNCH_HEIGHT;
         for (MTEHatchInputBus bus : mInputBusses) {
             if (!bus.isValid()) continue;
             IGregTechTileEntity inventory = bus.getBaseMetaTileEntity();
@@ -340,34 +358,95 @@ public class OTEDroneLaunchPlatform extends OTHMultiMachineBase<OTEDroneLaunchPl
     @Override
     public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
         if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
+        int rails = 0;
+        while (hasRailMarker(aBaseMetaTileEntity, rails + 1)) {
+            if (rails == MAX_RAIL_PIECES) {
+                errors.add(StructureErrorRegistry.TOO_LONG);
+                return;
+            }
+            if (!checkPiece(STRUCTURE_PIECE_RAIL, horizontalOffSet, verticalOffSet, -1 - rails, errors)) return;
+            rails++;
+        }
+        if (rails < MIN_RAIL_PIECES) {
+            errors.add(StructureErrorRegistry.TOO_SHORT_LENGTH);
+            return;
+        }
+        if (!checkPiece(STRUCTURE_PIECE_END, horizontalOffSet, verticalOffSet, -1 - rails, errors)) return;
         checkHasInputBus(errors);
-        repairMachine();
+        if (errors.isEmpty()) {
+            repairMachine();
+            if (formedRailPieces != rails) {
+                formedRailPieces = rails;
+                if (aBaseMetaTileEntity.isServerSide()) aBaseMetaTileEntity.issueTileUpdate();
+            }
+        }
     }
 
     @Override
     public void construct(ItemStack stackSize, boolean hintsOnly) {
         buildPiece(STRUCTURE_PIECE_MAIN, stackSize, hintsOnly, horizontalOffSet, verticalOffSet, depthOffSet);
+        int rails = requestedRailPieces(stackSize);
+        for (int i = 0; i < rails; i++) {
+            buildPiece(STRUCTURE_PIECE_RAIL, stackSize, hintsOnly, horizontalOffSet, verticalOffSet, -1 - i);
+        }
+        buildPiece(STRUCTURE_PIECE_END, stackSize, hintsOnly, horizontalOffSet, verticalOffSet, -1 - rails);
+    }
+
+    private static int requestedRailPieces(ItemStack blueprint) {
+        int requested = blueprint == null ? MIN_RAIL_PIECES
+            : ChannelDataAccessor.getChannelData(blueprint, RAIL_CHANNEL);
+        return Math.max(MIN_RAIL_PIECES, Math.min(MAX_RAIL_PIECES, requested));
+    }
+
+    /** The magnetic block distinguishes a rail slice from the solid end cap without probing hatch adders twice. */
+    private boolean hasRailMarker(IGregTechTileEntity tile, int depth) {
+        int[] xyz = new int[3];
+        getExtendedFacing().getWorldOffset(new int[] { 0, 0, depth }, xyz);
+        int x = tile.getXCoord() + xyz[0];
+        int y = tile.getYCoord() + xyz[1];
+        int z = tile.getZCoord() + xyz[2];
+        return tile.getWorld()
+            .blockExists(x, y, z)
+            && tile.getWorld()
+                .getBlock(x, y, z) == GregTechAPI.sBlockMetal5
+            && tile.getWorld()
+                .getBlockMetadata(x, y, z) == 1;
     }
 
     @Override
     public int survivalConstruct(ItemStack stackSize, int elementBudget, ISurvivalBuildEnvironment env) {
-        if (this.mMachine) return -1;
-        return this.survivalBuildPiece(
-            STRUCTURE_PIECE_MAIN,
-            stackSize,
-            horizontalOffSet,
-            verticalOffSet,
-            depthOffSet,
-            elementBudget,
-            env,
-            false,
-            true);
+        if (mMachine) return -1;
+        int rails = requestedRailPieces(stackSize);
+        int built = 0;
+        for (int depth = 0; depth <= rails + 1; depth++) {
+            String piece = depth == 0 ? STRUCTURE_PIECE_MAIN
+                : depth == rails + 1 ? STRUCTURE_PIECE_END : STRUCTURE_PIECE_RAIL;
+            int result = survivalBuildPiece(
+                piece,
+                stackSize,
+                horizontalOffSet,
+                verticalOffSet,
+                -depth,
+                elementBudget - built,
+                env,
+                false,
+                false);
+            if (result >= 0) {
+                built += result;
+                checkStructure(true, getBaseMetaTileEntity());
+                return built;
+            }
+        }
+        checkStructure(true, getBaseMetaTileEntity());
+        return -1;
     }
 
     private static final String STRUCTURE_PIECE_MAIN = "main";
+    private static final String STRUCTURE_PIECE_RAIL = "rail";
+    private static final String STRUCTURE_PIECE_END = "end";
 
     private final int horizontalOffSet = 1;
-    private final int verticalOffSet = 0;
+    private final int verticalOffSet = STRUCTURE_HEIGHT - 1;
     private final int depthOffSet = 0;
 
     private static IStructureDefinition<OTEDroneLaunchPlatform> STRUCTURE_DEFINITION = null;
@@ -376,26 +455,37 @@ public class OTEDroneLaunchPlatform extends OTHMultiMachineBase<OTEDroneLaunchPl
     public IStructureDefinition<OTEDroneLaunchPlatform> getStructureDefinition() {
         if (STRUCTURE_DEFINITION == null) {
             STRUCTURE_DEFINITION = StructureDefinition.<OTEDroneLaunchPlatform>builder()
+                // NEI's auto-detection stops at identical sizes 1 and 2 (both clamp to seven rails).
+                .addChannel(RAIL_CHANNEL, MIN_RAIL_PIECES, MAX_RAIL_PIECES)
                 .addShape(STRUCTURE_PIECE_MAIN, shapeMain)
+                .addShape(STRUCTURE_PIECE_RAIL, shapeRail)
+                .addShape(STRUCTURE_PIECE_END, shapeEnd)
                 .addElement(
                     'A',
                     buildHatchAdder(OTEDroneLaunchPlatform.class).atLeast(InputBus)
                         .casingIndex(Casings.SolidSteelMachineCasing.textureId)
                         .hint(1)
                         .buildAndChain(Casings.SolidSteelMachineCasing.asElement()))
+                .addElement('B', Casings.IronFence.asElement())
+                .addElement('C', ofBlock(GregTechAPI.sBlockMetal5, 1))
+                .addElement('D', ofBlock(BlockList.TungstenSteelBars.block, 0))
                 .build();
         }
         return STRUCTURE_DEFINITION;
     }
 
-    // 临时结构：3x1x3 平台，控制器位于正面中央，输入总线替换坚实钢机器方块。
-    private final String[][] shapeMain = com.newmaa.othtech.utils.ShapeLoader
+    // The scan is stored depth-first, with each slice ordered from top to bottom.
+    private final String[][] shapeMain = ShapeLoader
         .loadCompressed("/assets/123technology/structures/ote/OTEDroneLaunchPlatform_shapeMain.shape.gz");
+    private final String[][] shapeRail = ShapeLoader
+        .loadCompressed("/assets/123technology/structures/ote/OTEDroneLaunchPlatform_shapeRail.shape.gz");
+    private final String[][] shapeEnd = ShapeLoader
+        .loadCompressed("/assets/123technology/structures/ote/OTEDroneLaunchPlatform_shapeEnd.shape.gz");
 
     @Override
     protected IAlignmentLimits getInitialAlignmentLimits() {
-        return (direction, rotation, flip) -> direction != ForgeDirection.UP && direction != ForgeDirection.DOWN
-            && rotation.isNotRotated()
+        return (direction, rotation, flip) -> direction != ForgeDirection.UNKNOWN && direction.offsetY == 0
+            && !rotation.isUpsideDown()
             && !flip.isVerticallyFliped();
     }
 
@@ -404,17 +494,25 @@ public class OTEDroneLaunchPlatform extends OTHMultiMachineBase<OTEDroneLaunchPl
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
         final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-        tt
-            // TODO: 正式机器名与 Tooltip 待定，修改中英文 .lang 中的对应键。
-            .addMachineType(translateToLocal("ote.tn.drone_launch_platform"))
-            .addInfo(translateToLocal("ote.tm.drone_launch_platform.0"))
+        tt.addMachineType(translateToLocal("ote.tt.drone_launch_platform"))
+            .addInfo(EnumChatFormatting.RED + translateToLocal("ote.tm.drone_launch_platform.0"))
             .addInfo(translateToLocal("ote.drone.info.1"))
             .addInfo(translateToLocal("ote.drone.info.2"))
             .addInfo(translateToLocal("ote.drone.info.3"))
             .addInfo(translateToLocal("ote.drone.info.4"))
-            .beginStructureBlock(3, 1, 3, false)
+            .addInfo(translateToLocal("ote.drone.info.rail_length"))
+            .addSeparator()
+            .addInfo("§aAdded by: 123Technology - SuicideDronePlatform")
+            .beginVariableStructureBlock(
+                3,
+                3,
+                STRUCTURE_HEIGHT,
+                STRUCTURE_HEIGHT,
+                MIN_RAIL_PIECES + 2,
+                MAX_RAIL_PIECES + 2,
+                false)
             .addController(translateToLocal("oth.hint.front_bottom"))
-            .addInputBus(translateToLocal("oth.hint.any_bottom_casing"), 1)
+            .addInputBus(translateToLocal("ote.drone.hint.input_bus"), 1)
             .toolTipFinisher();
         return tt;
     }
@@ -440,15 +538,25 @@ public class OTEDroneLaunchPlatform extends OTHMultiMachineBase<OTEDroneLaunchPl
     public void writeToStream(ByteBuf buffer) {
         super.writeToStream(buffer);
         buffer.writeInt(droneVariant);
+        buffer.writeByte(formedRailPieces);
     }
 
     @Override
     public void readFromStream(ByteBuf buffer) {
         super.readFromStream(buffer);
         droneVariant = buffer.readInt();
+        formedRailPieces = buffer.readUnsignedByte();
     }
 
     // ===================== Textures =====================
+    private static IIconContainer ScreenON;
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister aBlockIconRegister) {
+        ScreenON = Textures.BlockIcons.custom("123technology:iconSetOTH/fire");
+        super.registerIcons(aBlockIconRegister);
+    }
 
     @Override
     public ITexture[] getTexture(IGregTechTileEntity aBaseMetaTileEntity, ForgeDirection side, ForgeDirection facing,
@@ -456,9 +564,7 @@ public class OTEDroneLaunchPlatform extends OTHMultiMachineBase<OTEDroneLaunchPl
         final ITexture casing = Casings.SolidSteelMachineCasing.getCasingTexture();
         if (side != facing) return new ITexture[] { casing };
         return new ITexture[] { casing, TextureFactory.builder()
-            .addIcon(
-                aActive ? Textures.BlockIcons.OVERLAY_FRONT_ASSEMBLY_LINE_ACTIVE
-                    : Textures.BlockIcons.OVERLAY_FRONT_ASSEMBLY_LINE)
+            .addIcon(ScreenON)
             .extFacing()
             .build() };
     }
@@ -467,18 +573,28 @@ public class OTEDroneLaunchPlatform extends OTHMultiMachineBase<OTEDroneLaunchPl
     @SideOnly(Side.CLIENT)
     public void renderTESR(double x, double y, double z, float partialTicks) {
         IGregTechTileEntity tile = getBaseMetaTileEntity();
-        if (tile == null || droneVariant == 0) return;
+        if (tile == null || formedRailPieces < MIN_RAIL_PIECES || !ItemSuicideDrone.isValidVariant(droneVariant))
+            return;
         ForgeDirection back = getExtendedFacing().getRelativeBackInWorld();
+        ForgeDirection up = getExtendedFacing().getRelativeUpInWorld();
+        // Depth zero is the controller. The fixed end cap follows the last repeatable rail slice.
+        double renderDepth = formedRailPieces + 1 - RenderDrone.getPropellerOffset(droneVariant);
         GL11.glPushMatrix();
         try {
-            GL11.glTranslated(x + 0.5 + back.offsetX, y + 1.05, z + 0.5 + back.offsetZ);
-            float yaw = switch (tile.getFrontFacing()) {
-                case SOUTH -> 180F;
-                case WEST -> 90F;
-                case EAST -> -90F;
+            GL11.glTranslated(
+                x + 0.5D + back.offsetX * renderDepth + up.offsetX * DRONE_RENDER_HEIGHT,
+                y + 0.5D + back.offsetY * renderDepth + up.offsetY * DRONE_RENDER_HEIGHT,
+                z + 0.5D + back.offsetZ * renderDepth + up.offsetZ * DRONE_RENDER_HEIGHT);
+            // The OBJ's propeller is on +Z. Align +Z with the structure's back.
+            float yaw = switch (back) {
+                case NORTH -> 180F;
+                case EAST -> 90F;
+                case WEST -> -90F;
                 default -> 0F;
             };
             GL11.glRotatef(yaw, 0F, 1F, 0F);
+            int upAlongModelX = up.offsetX * back.offsetZ - up.offsetZ * back.offsetX;
+            if (upAlongModelX != 0) GL11.glRotatef(-90F * upAlongModelX, 0F, 0F, 1F);
             RenderDrone.render(droneVariant);
         } finally {
             GL11.glPopMatrix();
@@ -487,6 +603,18 @@ public class OTEDroneLaunchPlatform extends OTHMultiMachineBase<OTEDroneLaunchPl
 
     @Override
     public AxisAlignedBB getRenderBoundingBox(int x, int y, int z) {
-        return IMTERenderer.super.getRenderBoundingBox(x, y, z).expand(6, 10, 6);
+        AxisAlignedBB bounds = IMTERenderer.super.getRenderBoundingBox(x, y, z);
+        if (formedRailPieces < MIN_RAIL_PIECES) return bounds;
+        ForgeDirection back = getExtendedFacing().getRelativeBackInWorld();
+        int endDepth = formedRailPieces + 1;
+        return bounds.addCoord(back.offsetX * endDepth, back.offsetY * endDepth, back.offsetZ * endDepth)
+            .expand(3, 4, 3);
+    }
+
+    @Override
+    public double getMaxRenderDistanceSquared() {
+        // GT measures distance from the controller, even when the model is at the far end.
+        double distance = Math.sqrt(IMTERenderer.super.getMaxRenderDistanceSquared()) + formedRailPieces;
+        return distance * distance;
     }
 }

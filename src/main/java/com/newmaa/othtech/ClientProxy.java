@@ -10,6 +10,7 @@ import net.minecraftforge.common.MinecraftForge;
 import com.newmaa.othtech.client.OTEEntangledFluidRenderer;
 import com.newmaa.othtech.client.OTEMaterialRenderEffects;
 import com.newmaa.othtech.client.OTEVoidNexusClientEffects;
+import com.newmaa.othtech.client.PoweredElytraSpeedHud;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.blocks.deepseiko.TEDeepSeikoHolo;
 import com.newmaa.othtech.common.blocks.fluids.RossFluids;
@@ -41,6 +42,7 @@ import com.newmaa.othtech.common.render.RocketRenderOTH;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -89,6 +91,9 @@ public class ClientProxy extends CommonProxy {
         OTEMaterialRenderEffects.install();
         OTEEntangledFluidRenderer.register();
         OTEVoidNexusClientEffects.install();
+        if (Loader.isModLoaded("etfuturum")) {
+            MinecraftForge.EVENT_BUS.register(new PoweredElytraSpeedHud());
+        }
 
         ClientRegistry.bindTileEntitySpecialRenderer(TEDeepSeikoHolo.class, new RiceBowlRenderer());
 

@@ -2091,14 +2091,14 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
         MultiblockTooltipBuilder tooltip = new MultiblockTooltipBuilder();
-        tooltip.addMachineType(translateToLocal("ote.tn.vnm"));
+        tooltip.addMachineType(translateToLocal("ote.tt.vnm"));
         for (int line = 1; line <= VOID_NEXUS_TOOLTIP_LINES; line++) {
             tooltip.addInfo(translateToLocal("ote.tm.vnm." + line));
         }
         tooltip.addTecTechHatchInfo()
             .addSeparator()
             .addInfo("§aAdded by: 123Technology - Void Nexus Matrix")
-            .addController(translateToLocal("ote.tn.vnm"))
+            .addController(translateToLocal("ote.tt.vnm"))
             .beginStructureBlock(266, 233, 266, false)
             .addInputBus(translateToLocal("oth.hint.any_input_bus"), 1)
             .addOutputBus(translateToLocal("oth.hint.any_output_bus"), 1)

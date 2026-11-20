@@ -35,6 +35,7 @@ dependencies {
     implementation('com.github.GTNewHorizons:Mobs-Info:0.6.0-GTNH:dev')
     implementation(gtnhDev("Infernal-Mobs"))
     implementation(gtnhDev("Galaxy-Space-GTNH"))
+    devOnlyNonPublishable('ganymedes01.etfuturum:etfuturum:2.7.3-GTNH:dev')
     implementation(gtnhDev("SGCraft"))
     implementation(gtnhDev("twilightforest"))
     implementation(gtnhDev("AE2FluidCraft-Rework"))

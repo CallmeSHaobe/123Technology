@@ -1,6 +1,21 @@
 repositories { handler ->
     exclusiveContent {
         forRepository {
+            handler.ivy {
+                name = 'etFuturumGitHubReleases'
+                url = 'https://github.com/GTNewHorizons/Et-Futurum-Requiem/releases/download'
+                patternLayout {
+                    artifact '[revision]/[artifact]-[revision](-[classifier]).[ext]'
+                }
+                metadataSources { artifact() }
+            }
+        }
+        filter {
+            includeModule('ganymedes01.etfuturum', 'etfuturum')
+        }
+    }
+    exclusiveContent {
+        forRepository {
             handler.maven {
                 name = 'glease'
                 url = 'https://maven.glease.net/repos/releases/'

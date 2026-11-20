@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.item.itemArmor.ItemHelmTallHatLaodeng;
+import com.newmaa.othtech.common.item.itemArmor.ItemPoweredElytra;
 import com.newmaa.othtech.common.item.itemFoods.IngotHotDog;
 import com.newmaa.othtech.common.item.itemFoods.ItemBrain;
 import com.newmaa.othtech.common.item.itemFoods.ItemLeekBox;
@@ -31,6 +32,7 @@ import com.newmaa.othtech.common.item.itemWeapons.ItemNukeThrowable;
 import com.newmaa.othtech.common.item.itemWeapons.ItemPositronCannon;
 import com.newmaa.othtech.common.item.itemWeapons.ShikanokoNoko;
 
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -103,6 +105,10 @@ public class ItemLoader {
         OTHItemList.LeekBox.set(registryAndCallback(itemLeekBox, "itemLeekBox"));
         OTHItemList.NukeThrowable.set(registryAndCallback(itemNukeThrowable, "itemNukeThrowable"));
         OTHItemList.PositronCannon.set(registryAndCallback(itemPositronCannon, "itemPositronCannon"));
+        if (Loader.isModLoaded("etfuturum")) {
+            OTHItemList.PoweredElytra
+                .set(registryAndCallback(new ItemPoweredElytra(), ItemPoweredElytra.REGISTRY_NAME));
+        }
         OTHItemList.RecordPRKA.set(registryAndCallback(RecordPRKA, "attackingBattle"));
         OTHItemList.RecordPRKB.set(registryAndCallback(RecordPRKB, "runningHorse"));
         OTHItemList.RecordEVAA.set(registryAndCallback(RecordEVAA, "EVAA"));

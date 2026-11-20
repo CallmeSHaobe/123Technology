@@ -82,6 +82,7 @@ public enum OTHItemList {
     itemTST,
     NukeThrowable,
     PositronCannon,
+    PoweredElytra,
     RecordPRKA,
     RecordPRKB,
     RecordEVAA,
@@ -178,7 +179,7 @@ public enum OTHItemList {
     LargeSteamHatch,
     MegaThermalCentrifuge, // 乌拉尔山脉热分离厂 - 巨热力离心
     AbstractSanctum,
-    LargeQuHub, // 大型可堆叠变压器(暂定)
+    LargeQuHub, //
     VoidNexusMatrix,
     PsionicManifestationModule,
     VoidNexusEssentiaBus,

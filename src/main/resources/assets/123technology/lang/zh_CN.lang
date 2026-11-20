@@ -23,18 +23,19 @@ oth.hint.energy_hatch=能源仓
 oth.tooltip.author=作者:
 ote.cm.mtc.0=1 - 消声仓, 能源仓, 输入输出总线, 输入输出仓 : 替换热力加工机械方块, 支持TecTech能源仓
 
-# 无人机平台：正式机器名和 Tooltip 待定
+# SuicideDronePlatform
 item.SuicideDronePig.name=P-1G型 "柳叶刀"自爆无人机
 item.SuicideDroneAngelica.name=安洁莉卡型 "柳叶刀"自爆无人机
 item.SuicideDroneNuclear.name=P-1G型 "柳叶刀"自爆无人机(灰色核标志涂装)
 item.SuicideDroneNvidia.name=P-1G型 "柳叶刀"自爆无人机(黑色 NVIDIA 涂装)
 ote.drone.tooltip.pig=P-1G 标准涂装(听说这个小猪喜欢搬史(放心不会炸出来什么不好的东西的.))
 ote.drone.tooltip.angelica=安洁莉卡特装型
-death.attack.droneBlast=%1$s 被 %2$s 的爆炸击倒了
+death.attack.droneBlast=%1$s 被 %2$s 的爆炸炸的粉碎了
 ote.drone.tooltip.nuclear=带辐射警示标志的灰色涂装(威力比氢弹爆炸还要大)
 ote.drone.tooltip.nvidia=带绿色 NVIDIA 标志的黑色涂装(似乎内含某个战术核显卡.)
-ote.tn.drone_launch_platform=无人机发射平台(名称待定)
-ote.tm.drone_launch_platform.0=消耗无人机物品,攻击指定坐标或自动搜寻当前维度的无人机下行仓
+ote.tn.drone_launch_platform="柳叶刀"型自杀式无人机发射平台
+ote.tt.drone_launch_platform=小登的决战兵器 - 无人机发射平台OTH
+ote.tm.drone_launch_platform.0=发射"柳叶刀"型自杀无人机, 摧毁一切. 
 ote.drone.gui.target=手动目标坐标(当前维度)
 ote.drone.gui.mode.coordinates=模式:坐标攻击
 ote.drone.gui.mode.downlink=模式:搜寻下行仓
@@ -44,11 +45,13 @@ ote.drone.gui.disabled=连续发射:关闭
 ote.drone.gui.help=先输入目标和初速度并离开输入框,再开启;每5秒消耗1架.修改参数将关闭发射.
 ote.drone.gui.speed=初速度 km/h
 ote.drone.gui.speed.help=范围50-300 km/h,默认200;按1格=1米,20TPS换算.设置同时决定推进巡航空速.
-ote.drone.info.1=仅支持普通输入总线;无需供电,每5秒发射1架
-ote.drone.info.2=PIG爆炸强度4,安洁莉卡爆炸强度8;爆炸会破坏方块
-ote.drone.info.3=沿控制器正面弹射,螺旋桨推进,机翼升力;转弯修正后俯冲目标
-ote.drone.info.4=正面须留出起飞航道;不绕障,飞行期间自动加载航路周围及目的地区块
-entity.123technology.entitySuicideDrone.name=自爆无人机
+ote.drone.info.1=只支持普通输入总线.
+ote.drone.hint.input_bus=任意脱氧钢机器方块
+ote.drone.info.rail_length=蓝图堆叠数决定轨道堆叠片数.
+ote.drone.info.2=最好不要拿这个瞄准你的邻居家里....
+ote.drone.info.3=无人机沿控制器正面弹射, 后切换螺旋桨推进, 自动制导; 转弯修正后俯冲目标.
+ote.drone.info.4=正面须留出起飞航道; 不绕障, 飞行期间自动加载航路周围及目的地区块.
+entity.123technology.entitySuicideDrone.name=OTH自爆无人机
 
 # 机器名称
 ote.tn.imba=IMBA 超模高炉
@@ -178,6 +181,9 @@ item.Dasima.name=大司马之镐
 item.ShikanokoNoko.name=鹿乃子乃子专武
 item.itemSunLighter.name=§c§o太阳能打火机
 item.itemNukeThrowable.name=GTX690战术核显卡
+item.itemPoweredElytra.name=电力助推碳纤维强化鞘翅
+tt.poweredElytra.boost=滑翔时按住前进键（默认 W）助推，助推速度上限为 80 格/秒。
+tt.poweredElytra.cost=助推时，速度每增加 1 格/秒，每秒耗电增加 10,000 EU。可用 UV 级充电器充电。
 item.itemPositronCannon.name=§q§lOTH手持式阳电子炮试做型Mk. II
 tt.positron.charge=储存能量
 tt.positron.use=按住右键蓄力2秒后自动发射; 提前松手不会发射. 高速子弹贯穿沿途实体和方块后爆炸.
@@ -1177,7 +1183,8 @@ fluid.molten.degunmu.name=熔融不可观测态棍木-超理学聚合物
 
 
 # Void Nexus Matrix
-ote.tn.vnm=老登们的魔法与科技的最终造物 - 巨型源质发电机┊灵能产生器
+ote.tn.vnm=虚境链接矩阵
+ote.tt.vnm=老登们的魔法与科技的最终造物 - 巨型源质发电机 ┊ 灵能产生器
 Material.ManifestedPsionics=具象化灵能
 Material.manifestedpsionics=具象化灵能
 item.VoidPotential.name=虚境势能

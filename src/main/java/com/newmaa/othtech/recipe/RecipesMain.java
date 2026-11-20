@@ -54,6 +54,7 @@ import gregtech.common.items.CombType;
 import gregtech.loaders.misc.GTBees;
 import gtPlusPlus.xmod.gregtech.api.enums.GregtechItemList;
 import gtnhlanth.common.register.WerkstoffMaterialPool;
+import ic2.core.IC2;
 import tectech.recipe.TTRecipeAdder;
 import tectech.thing.CustomItemList;
 
@@ -1572,5 +1573,18 @@ public class RecipesMain implements IRecipePool {
             .duration(20)
             .eut(RECIPE_EV)
             .addTo(RecipeMaps.autoclaveRecipes);
+        // Elytra
+        GTValues.RA.stdBuilder()
+            .itemOutputs(OTHItemList.PoweredElytra.get(1))
+            .itemInputs(
+                GTModHandler.getModItem(EtFuturumRequiem.ID, "elytra", 1),
+                GTModHandler.getModItem(IC2.MODID, "itemPartCarbonPlate", 4),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.LuV, 4),
+                GTModHandler.getModItem(GraviSuite.ID, "itemSimpleItem", 2, 3),
+                ItemList.Energy_LapotronicOrb.get(1))
+            .fluidInputs(Materials.ReinforcedGlass.getMolten(2880))
+            .eut(RECIPE_IV)
+            .duration(120 * 20)
+            .addTo(assemblerRecipes);
     }
 }

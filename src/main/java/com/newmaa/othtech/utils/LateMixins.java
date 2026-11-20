@@ -7,6 +7,9 @@ import java.util.Set;
 import com.gtnewhorizon.gtnhmixins.ILateMixinLoader;
 import com.gtnewhorizon.gtnhmixins.LateMixin;
 
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.relauncher.Side;
+
 /**
  * 晚注册的 mixins。
  *
@@ -39,7 +42,11 @@ public class LateMixins implements ILateMixinLoader {
 
     @Override
     public List<String> getMixins(Set<String> loadedMods) {
-        List<String> mixins = new ArrayList<>(2);
+        List<String> mixins = new ArrayList<>(3);
+        if (loadedMods.contains("etfuturum") && FMLCommonHandler.instance()
+            .getSide() == Side.CLIENT) {
+            mixins.add("PoweredElytraTextureMixin");
+        }
         if (loadedMods.contains(CROPSNH_MODID)) mixins.add(CROP_LOADER_MIXIN);
         if (loadedMods.contains(BLOCK_RENDERER_MODID)) mixins.add("VoidNexusStructureScanMixin");
         return mixins;
