@@ -43,9 +43,9 @@ import thaumicenergistics.api.ThEApi;
  * These recipes do not perform purchases or consume materials. The runtime upgrade purchase path remains
  * {@code OTEVoidNexusMatrix.tryPurchaseUpgrade(int)}.
  */
-public final class VoidNexusUpgradePreviewRecipes {
+public final class RecipesVoidNexusUpgradePreview {
 
-    private VoidNexusUpgradePreviewRecipes() {}
+    private RecipesVoidNexusUpgradePreview() {}
 
     public static void register() {
         add(1, "无（免费升级）");

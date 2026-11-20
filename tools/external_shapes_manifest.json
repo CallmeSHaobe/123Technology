@@ -18,5 +18,15 @@
     "canonical_sha256": "538a18709b9349f762078327c502879e88f9df25d2285cfa56d67c203b00f3c2",
     "uncompressed_bytes": 48791,
     "compressed_bytes": 2027
+  },
+  {
+    "source": "void_nexus_matrix_shape.txt",
+    "resource": "OTEVoidNexusMatrix_main.shape.gz",
+    "width": 266,
+    "rows_per_layer": 233,
+    "layers": 266,
+    "canonical_sha256": "64608f7fa8b91af0413291623d3ed232c3d9969911ea9fbaf022d5e76c0ce93f",
+    "uncompressed_bytes": 16672615,
+    "compressed_bytes": 100529
   }
 ]

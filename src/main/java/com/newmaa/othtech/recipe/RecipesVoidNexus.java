@@ -46,7 +46,7 @@ import tectech.thing.CustomItemList;
 import thaumcraft.api.aspects.Aspect;
 import thaumicenergistics.api.ThEApi;
 
-public class VoidNexusRecipes implements IRecipePool {
+public class RecipesVoidNexus implements IRecipePool {
 
     private static final int CONTROLLER_RESEARCH_POINTS = 100_000_000;
     private static final int RESEARCH_COMPUTATION_PER_TICK = 4_096;
@@ -62,7 +62,7 @@ public class VoidNexusRecipes implements IRecipePool {
         registerManifestedPsionicsRecipe();
         registerPsionicStabilizerRecipe();
         registerManifestedPsionicModuleRecipe();
-        VoidNexusUpgradePreviewRecipes.register();
+        RecipesVoidNexusUpgradePreview.register();
     }
 
     private void registerFuelPreviewRecipes() {

@@ -27,10 +27,8 @@ public abstract class GTOreLayerHelperOTHMixin {
     @Inject(method = "init", at = @At("TAIL"), remap = false)
     private static void oth$appendCustomVeins(CallbackInfo ci) {
 
-        // 1. 保留 GT 原有的 NEI 矿脉数据
         Map<String, GT5OreLayerHelper.OreLayerWrapper> byName = new HashMap<>(ORE_VEINS_BY_NAME);
 
-        // 2. 将自定义 Builder 转换成 NEI 使用的包装对象
         for (OreMixBuilder builder : AntimoniaGTOreVeinReg.getBuilders()) {
 
             if (byName.containsKey(builder.oreMixName)) {
@@ -42,7 +40,6 @@ public abstract class GTOreLayerHelperOTHMixin {
             byName.put(builder.oreMixName, wrapper);
         }
 
-        // 3. 根据全部矿脉重新建立维度索引
         Map<String, GT5OreLayerHelper.NormalOreDimensionWrapper> byDim = new HashMap<>();
 
         for (GT5OreLayerHelper.OreLayerWrapper wrapper : byName.values()) {
@@ -56,7 +53,6 @@ public abstract class GTOreLayerHelperOTHMixin {
             }
         }
 
-        // 4. 重新计算每个维度中各矿脉的相对权重
         for (GT5OreLayerHelper.NormalOreDimensionWrapper dimension : byDim.values()) {
 
             int totalWeight = 0;
@@ -75,7 +71,6 @@ public abstract class GTOreLayerHelperOTHMixin {
             }
         }
 
-        // 5. 替换为包含自定义矿脉的新缓存
         ORE_VEINS_BY_NAME = ImmutableMap.copyOf(byName);
         ORE_VEINS_BY_DIM = ImmutableMap.copyOf(byDim);
     }

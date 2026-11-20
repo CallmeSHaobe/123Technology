@@ -89,12 +89,6 @@ public class ItemAdder extends ItemAdder_Basic {
             : ItemStaticDataClientOnly.iconsMap01.get(0);
     }
 
-    /**
-     * Handle the tooltips.
-     *
-     * @param aItemStack
-     * @param theTooltipsList
-     */
     @SideOnly(Side.CLIENT)
     @Override
     @SuppressWarnings({ "unchecked" })
@@ -107,13 +101,6 @@ public class ItemAdder extends ItemAdder_Basic {
         }
     }
 
-    /**
-     * Override this method to show all ItemStack of MetaItem.
-     *
-     * @param aItem
-     * @param aCreativeTabs
-     * @param aList
-     */
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item aItem, CreativeTabs aCreativeTabs, List aList) {

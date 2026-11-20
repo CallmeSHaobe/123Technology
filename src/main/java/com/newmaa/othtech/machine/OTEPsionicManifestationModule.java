@@ -287,7 +287,7 @@ public class OTEPsionicManifestationModule extends OTHTTMultiMachineBaseEM
 
     @Override
     public String[] getStructureDescription(ItemStack stackSize) {
-        return new String[] { translateToLocal("123technology.psionic_module.structure.description") };
+        return new String[] { translateToLocal("ote.pmm.struct.description") };
     }
 
     @Override
@@ -678,17 +678,17 @@ public class OTEPsionicManifestationModule extends OTHTTMultiMachineBaseEM
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
         MultiblockTooltipBuilder tooltip = new MultiblockTooltipBuilder();
-        tooltip.addMachineType(translateToLocal("123technology.psionic_module.machine_type"))
-            .addInfo(translateToLocal("123technology.psionic_module.tooltip.1"))
-            .addInfo(EnumChatFormatting.LIGHT_PURPLE + translateToLocal("123technology.psionic_module.tooltip.2"))
-            .addInfo(translateToLocal("123technology.psionic_module.tooltip.3"))
-            .addInfo(translateToLocal("123technology.psionic_module.tooltip.4"))
-            .addInfo(translateToLocal("123technology.psionic_module.tooltip.5"))
+        tooltip.addMachineType(translateToLocal("ote.tm.pmm.machine_type"))
+            .addInfo(translateToLocal("ote.tm.pmm.1"))
+            .addInfo(EnumChatFormatting.LIGHT_PURPLE + translateToLocal("ote.tm.pmm.2"))
+            .addInfo(translateToLocal("ote.tm.pmm.3"))
+            .addInfo(translateToLocal("ote.tm.pmm.4"))
+            .addInfo(translateToLocal("ote.tm.pmm.5"))
             .addInputBus(translateToLocal("oth.hint.any_input_bus"), 1)
             .addInputHatch(translateToLocal("oth.hint.any_input_hatch"), 1)
             .addOutputBus(translateToLocal("oth.hint.any_output_bus"), 1)
             .beginStructureBlock(5, 2, 5, false)
-            .addController(translateToLocal("123technology.psionic_module.controller"))
+            .addController(translateToLocal("ote.tm.pmm.controller"))
             .toolTipFinisher();
         return tooltip;
     }

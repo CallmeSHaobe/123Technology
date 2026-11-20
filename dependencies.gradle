@@ -1,10 +1,8 @@
 
 elytraModpackVersion {
-    // 在这配置的gtnh版本 用于自动拉取依赖版本
     gtnhVersion = "2.9.0"
     // Elytra conventions v1.1.1 将此值直接作为 allowFromCaching 传入；设为 true 才会读取本地清单。
     manifestNoCache = true
-    // 是否自动为输出的jar添加 `gtnhVersion` 后缀
     attachManifestVersionToJar = false
 }
 
@@ -84,7 +82,6 @@ dependencies {
     runtimeOnlyNonPublishable(rfg.deobf('curse.maven:thaumcraft-nei-plugin-225095:2241913'))
 
 
-    // runtime
     runtimeOnlyNonPublishable(gtnhDev("BetterP2P"))
     runtimeOnlyNonPublishable(gtnhDev("Chisel")) { transitive = false }
     runtimeOnlyNonPublishable(gtnhDev("StructureLib"))
@@ -95,7 +92,6 @@ dependencies {
     annotationProcessor('com.google.auto.value:auto-value:1.10.1')
     implementation('com.google.auto.value:auto-value-annotations:1.10.1')
 
-    // jvmDowngrader
     compileOnly("javax.xml.bind:jaxb-api:2.3.1")
     compileOnly("org.jetbrains:annotations:26.0.1")
     compileOnly("org.projectlombok:lombok:1.18.42") { transitive = false }
@@ -118,5 +114,3 @@ dependencies {
 String gtnhDev(String name, String classifier = "dev") {
     return elytraModpackVersion.gtnh(name, classifier)
 }
-
-//i guess no one will read the example XD

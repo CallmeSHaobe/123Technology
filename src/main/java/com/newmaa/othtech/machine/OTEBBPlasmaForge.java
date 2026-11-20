@@ -430,18 +430,15 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
         MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-        // ── 序章:中二宣言 ──
         tt.addMachineType(translateToLocal("ote.bbpf.0"))
             .addInfo(translateToLocal("ote.bbpf.1"))
             .addInfo(translateToLocal("ote.bbpf.8"))
             .addSeparator()
-            // ── 核心数值:并行 / 线圈效率 / 上限突破 ──
             .addInfo(translateToLocal("ote.bbpf.2"))
             .addInfo(translateToLocal("ote.bbpf.9"))
             .addInfo(translateToLocal("ote.bbpf.10"))
             .addInfo(translateToLocal("ote.bbpf.3"))
             .addSeparator()
-            // ── 强化:校准矩阵 → 完美超频 + 无线模式 ──
             .addInfo(translateToLocal("ote.bbpf.4"))
             .addInfo(translateToLocal("ote.bbpf.11"))
             .addInfo(translateToLocal("ote.bbpf.6"))
@@ -449,7 +446,6 @@ public class OTEBBPlasmaForge extends OTHMultiMachineBase<OTEBBPlasmaForge> impl
             .addInfo(translateToLocal("ote.bbpf.7"))
             .addSeparator()
             .addInfo("§aAdded by: 123Technology - PlasmaForge")
-            // ── 结构(按 SHIFT 查看)──
             .addController(translateToLocal("ote.bbpf.0"))
             .beginStructureBlock(47, 11, 47, false)
             .addStructureInfo(translateToLocal("ote.bbpf.12"))

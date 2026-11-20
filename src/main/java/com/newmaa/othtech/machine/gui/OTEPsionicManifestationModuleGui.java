@@ -92,56 +92,49 @@ public class OTEPsionicManifestationModuleGui extends MTEMultiBlockBaseGui<OTEPs
         IntSyncValue progress = syncManager.findSyncHandler("psionicProgress", IntSyncValue.class);
         IntSyncValue progressMax = syncManager.findSyncHandler("psionicProgressMax", IntSyncValue.class);
 
-        return super.createTerminalTextWidget(syncManager, parent)
-            .child(statusLine("123technology.psionic_module.gui.header"))
+        return super.createTerminalTextWidget(syncManager, parent).child(statusLine("ote.pmm.gui.header"))
             .child(
                 statusLine(
-                    "123technology.psionic_module.gui.link",
-                    () -> StatCollector.translateToLocal(
-                        connected.getBoolValue() ? "123technology.psionic_module.gui.linked"
-                            : "123technology.psionic_module.gui.unlinked")))
+                    "ote.pmm.gui.link",
+                    () -> StatCollector
+                        .translateToLocal(connected.getBoolValue() ? "ote.pmm.gui.linked" : "ote.pmm.gui.unlinked")))
+            .child(statusLine("ote.pmm.gui.host", () -> "T" + hostTier.getIntValue() + " // " + hostStage.getValue()))
             .child(
                 statusLine(
-                    "123technology.psionic_module.gui.host",
-                    () -> "T" + hostTier.getIntValue() + " // " + hostStage.getValue()))
-            .child(
-                statusLine(
-                    "123technology.psionic_module.gui.parallel_limit",
+                    "ote.pmm.gui.parallel_limit",
                     () -> GTUtility.formatShortenedLong(parallelLimit.getIntValue())))
             .child(
                 statusLine(
-                    "123technology.psionic_module.gui.rated",
+                    "ote.pmm.gui.rated",
                     () -> "1A UXV (" + GTUtility.formatShortenedLong(536_870_912L) + " EU/t)"))
             .child(
                 statusLine(
-                    "123technology.psionic_module.gui.oc_limit",
+                    "ote.pmm.gui.oc_limit",
                     () -> GTUtility.formatShortenedLong(availableAmperage.getLongValue()) + "A UXV"))
             .child(
                 statusLine(
-                    "123technology.psionic_module.gui.host_buffer",
+                    "ote.pmm.gui.host_buffer",
                     () -> GTUtility.formatShortenedLong(hostPower.getLongValue()) + " EU"))
             .child(
                 statusLine(
-                    "123technology.psionic_module.gui.buffer",
+                    "ote.pmm.gui.buffer",
                     () -> GTUtility.formatShortenedLong(buffer.getLongValue()) + " / "
                         + GTUtility.formatShortenedLong(bufferMax.getLongValue())
                         + " EU"))
             .child(
                 statusLine(
-                    "123technology.psionic_module.gui.usage",
+                    "ote.pmm.gui.usage",
                     () -> GTUtility.formatShortenedLong(recipePower.getLongValue()) + " EU/t"))
-            .child(statusLine("123technology.psionic_module.gui.separator"))
+            .child(statusLine("ote.pmm.gui.separator"))
             .child(
                 statusLine(
-                    "123technology.psionic_module.gui.nanite",
+                    "ote.pmm.gui.nanite",
                     () -> "T" + naniteTier.getIntValue() + "  +" + nanitePct.getIntValue() + "%"))
-            .child(
-                statusLine("123technology.psionic_module.gui.potential", () -> "+" + potentialPct.getIntValue() + "%"))
-            .child(
-                statusLine("123technology.psionic_module.gui.permanent", () -> "+" + permanentPct.getIntValue() + "%"))
+            .child(statusLine("ote.pmm.gui.potential", () -> "+" + potentialPct.getIntValue() + "%"))
+            .child(statusLine("ote.pmm.gui.permanent", () -> "+" + permanentPct.getIntValue() + "%"))
             .child(
                 statusLine(
-                    "123technology.psionic_module.gui.total_speed",
+                    "ote.pmm.gui.total_speed",
                     () -> String.format(
                         Locale.ROOT,
                         "+%d%%  |  %s",
@@ -149,12 +142,12 @@ public class OTEPsionicManifestationModuleGui extends MTEMultiBlockBaseGui<OTEPs
                         speedDuration.getValue())))
             .child(
                 statusLine(
-                    "123technology.psionic_module.gui.overclock",
+                    "ote.pmm.gui.overclock",
                     () -> overclockSteps.getIntValue() + " rounds  |  /" + overclockDivisor.getIntValue()))
-            .child(statusLine("123technology.psionic_module.gui.final_duration", finalDuration::getValue))
+            .child(statusLine("ote.pmm.gui.final_duration", finalDuration::getValue))
             .child(
                 statusLine(
-                    "123technology.psionic_module.gui.progress",
+                    "ote.pmm.gui.progress",
                     () -> progress.getIntValue() + " / " + progressMax.getIntValue() + " ticks"));
     }
 

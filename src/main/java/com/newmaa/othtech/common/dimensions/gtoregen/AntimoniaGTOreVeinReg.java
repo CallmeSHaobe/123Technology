@@ -14,7 +14,6 @@ import gregtech.common.WorldgenGTOreLayer;
 
 public final class AntimoniaGTOreVeinReg {
 
-    // GPT NIUBI
     private static final List<OreMixBuilder> BUILDERS = new ArrayList<>();
 
     private static final Set<String> REGISTERED_NAMES = new HashSet<>();
@@ -49,7 +48,6 @@ public final class AntimoniaGTOreVeinReg {
         // 保存 Builder，供 NEI 生成显示数据
         BUILDERS.add(builder);
 
-        // 注册真正的 GT 大矿脉生成器
         new WorldgenGTOreLayer(builder);
     }
 

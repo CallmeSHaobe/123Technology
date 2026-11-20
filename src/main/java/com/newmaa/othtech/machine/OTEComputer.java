@@ -192,14 +192,14 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
         super(aID, aName, aNameRegional);
         eCertainMode = 5;
         eCertainStatus = -128; // no-brain value
-        eAvailableData = 0; // 确保初始化时为0
+        eAvailableData = 0;
     }
 
     public OTEComputer(String aName) {
         super(aName);
         eCertainMode = 5;
         eCertainStatus = -128; // no-brain value
-        eAvailableData = 0; // 确保初始化时为0
+        eAvailableData = 0;
     }
 
     // ===================== NBT =====================
@@ -462,8 +462,6 @@ public class OTEComputer extends OTHTTMultiMachineBaseEM implements IConstructab
             .addOtherStructurePart(translateToLocal("ote.calc.rank"), translateToLocal("gt.blockcasingsTT.0.name"), 2)
             .addInputHatch(translateToLocal("ote.computer.coolantinput"), 1) // 新增冷却液输入
             .addEnergyHatch(translateToLocal("tt.keyword.Structure.AnyComputerCasing"), 1) // Energy
-            .addSeparator()
-            .addInfo(translateToLocal("oth.tooltip.author") + "IDEA & DeepSeek")
             .addSeparator()
             .addInfo("§aAdded by: 123Technology - ExoicComputer")
             .toolTipFinisher();

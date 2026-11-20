@@ -154,7 +154,6 @@ public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> {
 
     // ===================== NBT =====================
 
-    // public final Random rand = new FastRandom();
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
         super.saveNBTData(aNBT);
@@ -393,9 +392,11 @@ public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> {
                         verticalOffSet,
                         depthOffSet);
                 } catch (Throwable t) {
-                    LOG_PREVIEW.error("MegaEEC 预览整建抛异常", t);
+                    LOG_PREVIEW.error("Soul Devouring Prison (Mega EEC): Full structure preview build failed", t);
                 }
-                LOG_PREVIEW.info("MegaEEC 预览整建完成：{} ms", (System.nanoTime() - t0) / 1000000L);
+                LOG_PREVIEW.info(
+                    "Soul Devouring Prison (Mega EEC): Full structure preview build finished in {} ms",
+                    (System.nanoTime() - t0) / 1000000L);
             }
             return 0;
         }

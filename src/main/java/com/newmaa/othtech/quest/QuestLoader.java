@@ -146,7 +146,6 @@ public class QuestLoader {
      * @return the jar {@link File}, or {@code null} if not running from a jar.
      */
     private static File resolveJarFile() {
-        // Method 1: getProtectionDomain().getCodeSource().getLocation()
         try {
             ProtectionDomain pd = QuestLoader.class.getProtectionDomain();
             if (pd != null) {
@@ -166,7 +165,6 @@ public class QuestLoader {
             }
         } catch (Exception ignored) {}
 
-        // Method 2: class resource URL with proper URI percent-decode
         URL classUrl = QuestLoader.class.getResource(
             "/" + QuestLoader.class.getName()
                 .replace('.', '/') + ".class");

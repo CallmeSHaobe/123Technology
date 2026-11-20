@@ -444,7 +444,7 @@ ote.cm.cocc.0=1 - Input/Output Bus, Input/Output Hatch, Muffler Hatch : Replace 
 ote.tm.ft.0=§lLaodeng's Ultimate Creation - Alien Fishery
 ote.tm.ft.1=§bPraise the great creator Dr.Jumping! Without her universal formula 'Lord = 6', how could Laodengs ever have the chance to use such a machine?
 ote.tm.ft.2=§bSpecific fishing principle: The Jumping Identity solves the uncertainty problem inherent in dimension blocks, making the establishment of small dimensions inside the fishery possible. Various 'fish' will be caught by the Cuttlefish God inside the fishery.
-ote.tm.ft.3='Fish' includes fish, walruses, leek boxes, Cetus Algae, Cubic Fish, Mossy Stone Bricks, etc. *Maybe can use Antimony Star dimension blocks, but consequences自负.
+ote.tm.ft.3='Fish' includes fish, walruses, leek boxes, Cetus Algae, Cubic Fish, Mossy Stone Bricks, etc. *Antimonia dimension blocks may also work, but use them at your own risk.
 ote.tm.ft.4=The Dimension Block in the controller slot decides the pool: T0 rolls T0 dimension dusts, T1/T2 and so on
 ote.tm.ft.9=Dimension dust pool parallels = voltage tier^3, still 5 s per run, 1A of the hatch tier per parallel
 ote.tm.ft.6=Random output, oh the dreaded gacha. LOL.
@@ -922,7 +922,7 @@ ote.ds.mode.bec=§dSwitched: Condensate mode (needs Condensate Adapter)
 ote.tm.ds.5b=§d■ Condensate: unlock the ultimate upgrade for full performance
 ote.tm.ds.perf2=§7Supports multi-amp energy hatches and laser hatches
 ote.ds.struct.0=Controller: center of the snout tip (structure char ~)
-ote.ds.struct.1=Hatches (universal slot, structure char H) = any standard GT hatch: bus / input-output hatches / energy / laser etc.
+ote.ds.struct.1=Hatch slot (universal position, structure character H) = any standard GT hatch: buses, input/output hatches, energy hatches, laser hatches, etc.
 ote.ds.struct.2=Blocks: blubber casing / assembly chamber casing (belly + 7 underside cells) / baleen grille / tail fin frame / condensate adapter
 ote.ds.struct.3=Three rings = three fin channels: Left Fin (time) / Right Fin (space) / Top Fin (stability), level 1~10; one channel must be all same level
 ote.ds.struct.4=Hatch positions: the ring around the machine head; right below the controller is also a hatch slot
@@ -1016,7 +1016,7 @@ ote.tm.ds.hint.rings.5=§7Right Fin (space): §b-5% EU§7 per level, min §b×0.
 ote.tm.ds.hint.rings.4=§7Left Fin (time): §a+5% speed§7 per level (shorter duration), max §a×1.50
 GT5U.gui.text.shutdown.ds_no_card=§cCompute card removed
 
-# CropsNH 水稻作物
+# CropsNH Rice Crop
 cropsnh_crops.rice=Rice
 
 # CropsNH Yellow Peach Grass
@@ -1274,105 +1274,105 @@ betterquesting.quest.DRxHUCDZRuS86P4_DDae7w.name=【Tier 13 UXV】Divine Isa For
 betterquesting.quest.DRxHUCDZRuS86P4_DDae7w.desc=§a【Tier 13 UXV】Divine Isa Forge§r%nIsa Lord certified - divine speed and parallelism.%nThe structure also requires Dyson Sphere components (sBlockCasingsDyson) and can only be built at the UXV stage.%nTime = NEI Time * { 1 / {Voltage Tier^[(Glass Tier / 2) + 1]}^(1/3) }%nInsert a Star Matrix into the main block to unlock Space Assembly Mode.%nOne of the ultimate solutions for large-scale ore grinding and processing.
 
 # Void Nexus Matrix
-ote.tn.void_nexus=Void Nexus Matrix
+ote.tn.vnm=The Veterans' Ultimate Creation of Magic and Technology - Mega Essentia Generator ┊ Psionic Generator
 Material.ManifestedPsionics=Manifested Psionics
 Material.manifestedpsionics=Manifested Psionics
 item.VoidPotential.name=Void Potential
 item.PsionicStabilizer.name=Psionic Stabilizer
-123technology.psionic_module.name=Psionic Manifestation Module
-123technology.psionic_module.machine_type=Psionic Manifestation Module
-123technology.psionic_module.controller=Psionic Manifestation Module Controller
-123technology.psionic_module.structure.description=5x2x5; Arcane Casings at the base, replaceable by input bus, input hatch and output bus
-123technology.psionic_module.tooltip.1=Optional module for the Void Nexus Matrix; it does not have to occupy a host module slot
-123technology.psionic_module.tooltip.2=Requires a Void Nexus Matrix with "Psionic Harmony" and EU from the host's input energy hatches; generation output is not used to charge modules
-123technology.psionic_module.tooltip.3="Life Weave Contract" unlocks nanite acceleration in the controller, 20% per tier
-123technology.psionic_module.tooltip.4=The overclock fluids for "Moon Nest Contract", "Endless Tide" and "Reforge the Void" must be inserted into this module, not the host
-123technology.psionic_module.tooltip.5=Host input energy is split evenly among linked modules, with unused shares redistributed; recipes can skip unlimited tiers, with overclocking limited only by buffered EU and overclock fluid
-123technology.psionic_module.gui.header=§bPSIONIC MANIFESTATION // MODULE DIAGNOSTICS
-123technology.psionic_module.gui.link=§7Host link: §f
-123technology.psionic_module.gui.linked=§aConnected
-123technology.psionic_module.gui.unlinked=§cDisconnected
-123technology.psionic_module.gui.host=§7Host tier: §f
-123technology.psionic_module.gui.rated=§7Rated input: §e
-123technology.psionic_module.gui.oc_limit=§7Current available amperage: §e
-123technology.psionic_module.gui.parallel_limit=§7Parallel limit: §b
-123technology.psionic_module.gui.host_buffer=§7Host input buffer: §6
-123technology.psionic_module.gui.buffer=§7Module buffer: §6
-123technology.psionic_module.gui.usage=§7Current usage: §c
-123technology.psionic_module.gui.separator=§8━━━━━━━━━━━━━━━━━━━━
-123technology.psionic_module.gui.nanite=§7"Life Weave Contract" nanites: §a
-123technology.psionic_module.gui.potential=§7"Outer Plane Guest" potential speed: §d
-123technology.psionic_module.gui.permanent=§7"Dark River" permanent speed: §d
-123technology.psionic_module.gui.total_speed=§7Duration after node acceleration: §b
-123technology.psionic_module.gui.overclock=§7Overclock rounds / duration divisor: §e
-123technology.psionic_module.gui.final_duration=§7Final duration including overclock: §b
-123technology.psionic_module.gui.progress=§7Recipe progress: §f
-123technology.void_nexus.tooltip.1=§d✦ Where the six primal currents meet, the echoes of essentia are forged into an ever-burning void.
-123technology.void_nexus.tooltip.2=§b❖ When the tide of all aspects enters the matrix, energy ceases to be flame and becomes an order reality acknowledges.
-123technology.void_nexus.tooltip.3=§d◆ This is not a furnace for fuel; it is a fracture that translates the constants of the world into power.
-123technology.void_nexus.tooltip.4=§6━━━━━━━━━━━━━━━━━━━━
-123technology.void_nexus.tooltip.5=§6✦ OPERATING SCALE
-123technology.void_nexus.tooltip.6=§bStructure §7 266 × 233 × 266; controller offset (133, 115, 129).
-123technology.void_nexus.tooltip.7=§bCycle §7 Normal round T = 100 ticks; every supplied aspect burns in parallel.
-123technology.void_nexus.tooltip.8=§bOutput §7 Base parallel 2,000,000; generation accepts laser dynamo hatches only.
-123technology.void_nexus.tooltip.9=§bInput §7 At least one input bus or dual input hatch; essentia must come from the Advanced Essentia Stocking Input Bus (ME).
-123technology.void_nexus.tooltip.10=§bCharging §7 Host input energy hatches charge Psionic Modules only; they do not fund generation.
-123technology.void_nexus.tooltip.11=§bControl §7 Sneak + screwdriver toggles wireless output; screwdriver toggles material input after its node is unlocked.
-123technology.void_nexus.tooltip.12=§6━━━━━━━━━━━━━━━━━━━━
-123technology.void_nexus.tooltip.13=§6✦ GENERATION FORMULA
-123technology.void_nexus.tooltip.14=§7Let A_i be the amount of fuel aspect i, H_i its heat, R = Σ(A_i × H_i), E = ΣA_i, and avgHeat = R / E.
-123technology.void_nexus.tooltip.15=§7H_i is the NEI aspect heat. Addon aspects that cannot be decomposed recursively still burn with an even six-phase vector.
-123technology.void_nexus.tooltip.16=§aBasePower §7= R / T
-123technology.void_nexus.tooltip.17=§aQualityMultiplier §7= 1 + 0.10 × ln(max(0.01, avgHeat / 40,320))
-123technology.void_nexus.tooltip.18=§aP_j §7= Σ(A_i × H_i × phaseVector_i[j])
-123technology.void_nexus.tooltip.19=§aD §7= clamp((Σ((P_j / R)^2) - 1/6) / (5/6), 0, 1)
-123technology.void_nexus.tooltip.20=§aPhaseMultiplier §7= 1 + B × (1 - D)
-123technology.void_nexus.tooltip.21=§7B = 1.00 with U11; otherwise 0.80 with U5 or U6 active; default 0.20. A Star Array round forces D = 0.
-123technology.void_nexus.tooltip.22=§aGloriaMultiplier §7= 1 + min(Cap, 35 × GloriaShare / (GloriaShare + 0.10))
-123technology.void_nexus.tooltip.23=§7GloriaShare = GloriaThermal / R; Cap = 4.0 with U19 active, otherwise 2.0.
-123technology.void_nexus.tooltip.24=§aEfficiencyMultiplier §7= (1 + 0.05×I_U2 + 0.10×I_U5 + 0.50×I_U11) × (0.20 if materialInputMode else 1)
-123technology.void_nexus.tooltip.25=§aOrdinaryMultiplier §7= 1 + Σ(activeNode.OrdinaryBonus)
-123technology.void_nexus.tooltip.26=§aSpecialMultiplier §7= Stabilizer × Potential × Cycle
-123technology.void_nexus.tooltip.27=§7Stabilizer = 1 + I_stabilizer × (1 + 0.5×I_U16); T1/T2 have a floor of 2.0.
-123technology.void_nexus.tooltip.28=§7With U18 active, Potential = 1 + 0.05×min(P,20) + 0.01×min(max(P-20,0),80) + 0.002×max(P-100,0); otherwise 1.
-123technology.void_nexus.tooltip.29=§7Cycle = 5 when U22 is active and the next round number mod 3 = 0; otherwise 1.
-123technology.void_nexus.tooltip.30=§aStructureDecay §7= exp(-0.6×(t-1)^2 + 0.7×G(t,1) - 1.1×G(t,2) - 0.2×G(t,3))
-123technology.void_nexus.tooltip.31=§7G(t,w) = (1/Z) × ∫[-0.1,0.1] exp(-(t-w-x)^2 / 0.1) dx; Z is the same integral centered at 0.
-123technology.void_nexus.tooltip.32=§7D_t is T1 2.013573, T2 0.182691, T3 0.074267, T4 0.004517, T5 0.000068.
-123technology.void_nexus.tooltip.33=§aStructureUpgrade §7= exp(1.0×I_U3) × exp(1.5×(t-1)×I_U2) × exp(1.6×(t-1)×I_U4)
-123technology.void_nexus.tooltip.34=§aPower_core §7= floor[(R/T) × QualityMultiplier × PhaseMultiplier × GloriaMultiplier × EfficiencyMultiplier × OrdinaryMultiplier × SpecialMultiplier × StructureDecay × StructureUpgrade × MaterialPenalty × BloodBonus × StarBonus]
-123technology.void_nexus.tooltip.35=§7MaterialPenalty = 0.20 only in material-input mode; BloodBonus = 1.15 when the round has enough Life Essence; StarBonus = 360 when a Star Array burns.
-123technology.void_nexus.tooltip.36=§aFinalPower §7= min(Long.MAX_VALUE, floor(Power_core × (1 + U26Bonus% / 100) × CatalystPenalty))
-123technology.void_nexus.tooltip.37=§6━━━━━━━━━━━━━━━━━━━━
-123technology.void_nexus.tooltip.38=§6✦ TIER STRUCTURE BLOCKS
-123technology.void_nexus.tooltip.39=§7Shape order is [C depth][B height][A width]; D glass may use any one allowed glass below and need not be uniform.
-123technology.void_nexus.tooltip.40=§6T1 UHV §7C Dragon Aggregate Casing(9) / D BartWorks Real Glass(6) / E Heat-Resistant Trinium Plated Casing(11) / G Tairitsu Advanced Casing(10106) / H GoodGenerator Magic Casing(0)
-123technology.void_nexus.tooltip.41=§6T2 UEV §7C Wyvern Aggregate Casing(10) / D BartWorks Real Glass(6) / E Heat-Resistant Trinium Plated Casing(11) / G Tairitsu Advanced Casing(10106) / H GoodGenerator Magic Casing(0)
-123technology.void_nexus.tooltip.42=§6T3 UIV §7C Draconic Aggregate Casing(11) / D Omni-Infused Glass(2) / E Heat-Resistant Trinium Plated Casing(11) / G Metastable Oganesson Advanced Casing(10111) / H GoodGenerator Magic Casing(0)
-123technology.void_nexus.tooltip.43=§6T4 UMV §7C Chaotic Aggregate Casing(12) / D Endless Psionic Glass(6) / E Gravity Stabilization Casing(0) / G Psionic Reality Casing(3) / H Fusion Machine Casing Mk-IV(0)
-123technology.void_nexus.tooltip.44=§6T5 UXV §7C Subspace Potential Shield Casing(4) / D Spacetime Potential Glass(7) / E Gravity Stabilization Casing(0) / G Void Stabilization Casing(5) / H Psychic Wrapped Casing(2)
-123technology.void_nexus.tooltip.45=§7F and X near the controller are hatch-replacement positions; A is a Psionic Manifestation Module slot, with Bloody Ichorium used when empty.
-123technology.void_nexus.tooltip.46=§6━━━━━━━━━━━━━━━━━━━━
-123technology.void_nexus.tooltip.47=§6✦ COMBUSTION CATALYSTS
-123technology.void_nexus.tooltip.48=§7Let E be the total essentia this round. All divisions use integer floor. Higher stages require all previous catalyst tiers as well.
-123technology.void_nexus.tooltip.49=§bUEV+ §fMolten Cosmic Neutronium§7: 144 × floor(E / 1,000) L; if missing, CatalystPenalty gains ×0.60.
-123technology.void_nexus.tooltip.50=§bUIV+ §fSemistable Antimatter§7: 10 × floor(E / 1,000,000) L; if missing, CatalystPenalty gains ×0.01.
-123technology.void_nexus.tooltip.51=§bUMV+ §fProtomatter§7: 1,000 × floor(E / 100,000) L; if missing, the round produces nothing.
-123technology.void_nexus.tooltip.52=§bUMV+ §fCreative Essentia Cell§7: floor(E / 100,000) items; if missing, the round produces nothing.
-123technology.void_nexus.tooltip.53=§bUXV+ §fMolten Eternity§7: fixed 6,000 L; if missing, the round produces nothing.
-123technology.void_nexus.tooltip.54=§bUXV+ §fCreative Essentia Cell§7: an additional fixed 64 items; if missing, the round produces nothing.
-123technology.void_nexus.tooltip.55=§cIf any critical catalyst is missing, CatalystPenalty = 0 and FinalPower = 0.
-123technology.void_nexus.tooltip.56=§7Per-node effects and tier unlocks remain authoritative in the Void Ascension Grid and are not repeated here.
-123technology.essentia_stocking_bus.name=Advanced Essentia Stocking Input Bus (ME)
-123technology.essentia_stocking_bus.desc.0=Has 16 essentia filter slots; with no filters it pulls all essentia from the ME network.
-123technology.essentia_stocking_bus.desc.1=Requires an AE channel and network power; essentia is extracted only when a recipe actually starts.
-123technology.essentia_stocking_bus.desc.2=For the Void Nexus Matrix only; it does not connect to adjacent essentia providers or tubes.
-123technology.essentia_stocking_bus.gui.title=Advanced Essentia Stocking Input Bus (ME)
-123technology.essentia_stocking_bus.gui.state=Network state
-123technology.essentia_stocking_bus.gui.state.online=Online
-123technology.essentia_stocking_bus.gui.state.idle=Idle
-123technology.essentia_stocking_bus.gui.state.offline=Offline or unpowered
-123technology.essentia_stocking_bus.gui.note=All essentia in the ME network is available automatically; no filter slots are required.
+ote.tn.pmm=Psionic Manifestation Module
+ote.tm.pmm.machine_type=Psionic Manifestation Module
+ote.tm.pmm.controller=Psionic Manifestation Module Controller
+ote.pmm.struct.description=5x2x5; Arcane Casings at the base, replaceable by input bus, input hatch and output bus
+ote.tm.pmm.1=Install as an optional Void Nexus Matrix module by replacing a Bloody Ichorium block placed by auto-build
+ote.tm.pmm.2=Requires a Void Nexus Matrix with "Psionic Harmony" and EU from the host's input energy hatches; generation output is not used to charge modules
+ote.tm.pmm.3="Life Weave Contract" unlocks nanite acceleration in the controller, 20% per tier
+ote.tm.pmm.4=Supply overclocking fluids directly to this module. The host does not accept them for overclocking
+ote.tm.pmm.5=Host input energy is split evenly among linked modules, with unused shares redistributed; recipes can skip unlimited tiers, with overclocking limited only by buffered EU and overclock fluid
+ote.pmm.gui.header=§bPSIONIC MANIFESTATION // MODULE DIAGNOSTICS
+ote.pmm.gui.link=§7Host link: §f
+ote.pmm.gui.linked=§aConnected
+ote.pmm.gui.unlinked=§cDisconnected
+ote.pmm.gui.host=§7Host tier: §f
+ote.pmm.gui.rated=§7Rated input: §e
+ote.pmm.gui.oc_limit=§7Current available amperage: §e
+ote.pmm.gui.parallel_limit=§7Parallel limit: §b
+ote.pmm.gui.host_buffer=§7Host input buffer: §6
+ote.pmm.gui.buffer=§7Module buffer: §6
+ote.pmm.gui.usage=§7Current power consumption: §c
+ote.pmm.gui.separator=§8━━━━━━━━━━━━━━━━━━━━
+ote.pmm.gui.nanite=§7"Life Weave Contract" nanites: §a
+ote.pmm.gui.potential=§7"Outer Plane Guest" potential speed: §d
+ote.pmm.gui.permanent=§7"Dark River" permanent speed: §d
+ote.pmm.gui.total_speed=§7Duration after node acceleration: §b
+ote.pmm.gui.overclock=§7Overclock rounds / duration divisor: §e
+ote.pmm.gui.final_duration=§7Final duration including overclock: §b
+ote.pmm.gui.progress=§7Recipe progress: §f
+ote.tm.vnm.1=§d✦ Where the six phases meet, the echoes of essentia are forged into eternal embers that light the void.
+ote.tm.vnm.2=§b❖ When the Void's boundless psionic energy pours into the matrix, essentia becomes the ultimate energy source, recognized by reality itself.
+ote.tm.vnm.3=§d You weren't supposed to see this§kasdasd§h.§kasdasdas.
+ote.tm.vnm.4=§6━━━━━━━━━━━━━━━━━━━━
+ote.tm.vnm.5=§6✦ STRUCTURE (WARNING: This structure is enormous and may cause a crash)
+ote.tm.vnm.6=§bStructure §7 266 × 233 × 266; controller offset (133, 115, 129).
+ote.tm.vnm.7=§bPlacement §7 Recommended controller height: Y=118. Leave a large, clear area around it.
+ote.tm.vnm.8=§bOutput §7 Base parallel 2,000,000; generation accepts laser dynamo hatches only.
+ote.tm.vnm.9=§bInput §7 At least one input bus or dual input hatch; essentia must come from the Advanced Essentia Stocking Input Bus (ME).
+ote.tm.vnm.10=§bCharging §7 Host input energy hatches charge Psionic Modules only; they do not fund generation.
+ote.tm.vnm.11=§bControl §7 Sneak + screwdriver toggles wireless output. Use the screwdriver to toggle item input after unlocking the corresponding node.
+ote.tm.vnm.12=§6━━━━━━━━━━━━━━━━━━━━
+ote.tm.vnm.13=§6✦ GENERATION FORMULA
+ote.tm.vnm.14=§7Let A_i be the amount of fuel aspect i, H_i its heat, R = Σ(A_i × H_i), E = ΣA_i, and avgHeat = R / E.
+ote.tm.vnm.15=§7H_i is the NEI aspect heat. Addon aspects that cannot be decomposed recursively still burn with an even six-phase vector.
+ote.tm.vnm.16=§aBasePower §7= R / T
+ote.tm.vnm.17=§aQualityMultiplier §7= 1 + 0.10 × ln(max(0.01, avgHeat / 40,320))
+ote.tm.vnm.18=§aP_j §7= Σ(A_i × H_i × phaseVector_i[j])
+ote.tm.vnm.19=§aD §7= clamp((Σ((P_j / R)^2) - 1/6) / (5/6), 0, 1)
+ote.tm.vnm.20=§aPhaseMultiplier §7= 1 + B × (1 - D)
+ote.tm.vnm.21=§7B = 1.00 with U11; otherwise 0.80 with U5 or U6 active; default 0.20. A Star Array round forces D = 0.
+ote.tm.vnm.22=§aGloriaMultiplier §7= 1 + min(Cap, 35 × GloriaShare / (GloriaShare + 0.10))
+ote.tm.vnm.23=§7GloriaShare = GloriaThermal / R; Cap = 4.0 with U19 active, otherwise 2.0.
+ote.tm.vnm.24=§aEfficiencyMultiplier §7= (1 + 0.05×I_U2 + 0.10×I_U5 + 0.50×I_U11) × (0.20 if materialInputMode else 1)
+ote.tm.vnm.25=§aOrdinaryMultiplier §7= 1 + Σ(activeNode.OrdinaryBonus)
+ote.tm.vnm.26=§aSpecialMultiplier §7= Stabilizer × Potential × Cycle
+ote.tm.vnm.27=§7Stabilizer = 1 + I_stabilizer × (1 + 0.5×I_U16); T1/T2 have a floor of 2.0.
+ote.tm.vnm.28=§7With U18 active, Potential = 1 + 0.05×min(P,20) + 0.01×min(max(P-20,0),80) + 0.002×max(P-100,0); otherwise 1.
+ote.tm.vnm.29=§7Cycle = 5 when U22 is active and the next round number mod 3 = 0; otherwise 1.
+ote.tm.vnm.30=§aStructureDecay §7= exp(-0.6×(t-1)^2 + 0.7×G(t,1) - 1.1×G(t,2) - 0.2×G(t,3))
+ote.tm.vnm.31=§7G(t,w) = (1/Z) × ∫[-0.1,0.1] exp(-(t-w-x)^2 / 0.1) dx; Z is the same integral centered at 0.
+ote.tm.vnm.32=§7D_t is T1 2.013573, T2 0.182691, T3 0.074267, T4 0.004517, T5 0.000068.
+ote.tm.vnm.33=§aStructureUpgrade §7= exp(1.0×I_U3) × exp(1.5×(t-1)×I_U2) × exp(1.6×(t-1)×I_U4)
+ote.tm.vnm.34=§aPower_core §7= floor[(R/T) × QualityMultiplier × PhaseMultiplier × GloriaMultiplier × EfficiencyMultiplier × OrdinaryMultiplier × SpecialMultiplier × StructureDecay × StructureUpgrade × MaterialPenalty × BloodBonus × StarBonus]
+ote.tm.vnm.35=§7MaterialPenalty = 0.20 only in material-input mode; BloodBonus = 1.15 when the round has enough Life Essence; StarBonus = 360 when a Star Array burns.
+ote.tm.vnm.36=§aFinalPower §7= min(Long.MAX_VALUE, floor(Power_core × (1 + U26Bonus% / 100) × CatalystPenalty))
+ote.tm.vnm.37=§6━━━━━━━━━━━━━━━━━━━━
+ote.tm.vnm.38=§6✦ TIER STRUCTURE BLOCKS
+ote.tm.vnm.39=§7Shape order is [C depth][B height][A width]; D glass may use any one allowed glass below and need not be uniform.
+ote.tm.vnm.40=§6T1 UHV §7C Dragon Aggregate Casing(9) / D BartWorks Real Glass(6) / E Heat-Resistant Trinium Plated Casing(11) / G Tairitsu Advanced Casing(10106) / H GoodGenerator Magic Casing(0)
+ote.tm.vnm.41=§6T2 UEV §7C Wyvern Aggregate Casing(10) / D BartWorks Real Glass(6) / E Heat-Resistant Trinium Plated Casing(11) / G Tairitsu Advanced Casing(10106) / H GoodGenerator Magic Casing(0)
+ote.tm.vnm.42=§6T3 UIV §7C Draconic Aggregate Casing(11) / D Omni-Infused Glass(2) / E Heat-Resistant Trinium Plated Casing(11) / G Metastable Oganesson Advanced Casing(10111) / H GoodGenerator Magic Casing(0)
+ote.tm.vnm.43=§6T4 UMV §7C Chaotic Aggregate Casing(12) / D Endless Psionic Crystal Glass(6) / E Gravity Stabilization Casing(0) / G Psionically Infused Reality Stabilization Block(3) / H Fusion Machine Casing Mk-IV(0)
+ote.tm.vnm.44=§6T5 UXV §7C Subspace Potential Shielding Block(4) / D Stable Spacetime Potential Glass(7) / E Gravity Stabilization Casing(0) / G Void Spatial Stabilization Block(5) / H Psionically Wrapped Machine Stabilization Shell(2)
+ote.tm.vnm.45=§7F and the Arcane Casings near the controller (X) are hatch-replacement positions. Auto-build places Bloody Ichorium blocks in the Psionic Manifestation Module slots (A).
+ote.tm.vnm.46=§6━━━━━━━━━━━━━━━━━━━━
+ote.tm.vnm.47=§6✦ COMBUSTION CATALYSTS
+ote.tm.vnm.48=§7Let E be the total essentia this round. All divisions use integer floor. Higher stages require all previous catalyst tiers as well.
+ote.tm.vnm.49=§bUEV+ §fMolten Cosmic Neutronium§7: 144 × floor(E / 1,000) L. If insufficient, multiply total EU output by 0.60.
+ote.tm.vnm.50=§bUIV+ §fSemistable Antimatter§7: 10 × floor(E / 1,000,000) L. If insufficient, multiply total EU output by 0.01.
+ote.tm.vnm.51=§bUMV+ §fProtomatter§7: 1,000 × floor(E / 100,000) L; if missing, the round produces nothing.
+ote.tm.vnm.52=§bUMV+ §fCreative Essentia Cell§7: floor(E / 100,000) items; if missing, the round produces nothing.
+ote.tm.vnm.53=§bUXV+ §fMolten Eternity§7: fixed 6,000 L; if missing, the round produces nothing.
+ote.tm.vnm.54=§bUXV+ §fCreative Essentia Cell§7: an additional fixed 64 items; if missing, the round produces nothing.
+ote.tm.vnm.55=§cIf any critical catalyst is missing, CatalystPenalty = 0 and FinalPower = 0.
+ote.tm.vnm.56=§7Per-node effects and tier unlocks remain authoritative in the Void Ascension Grid and are not repeated here.
+ote.tn.esib=Advanced Essentia Stocking Input Bus (ME)
+ote.tm.esib.0=Has 16 essentia filter slots; with no filters it pulls all essentia from the ME network.
+ote.tm.esib.1=Requires an AE channel and network power; essentia is extracted only when a recipe actually starts.
+ote.tm.esib.2=Currently used only by the Void Nexus Matrix. It does not connect to adjacent essentia providers or tubes.
+ote.esib.gui.title=Advanced Essentia Stocking Input Bus (ME)
+ote.esib.gui.state=Network state
+ote.esib.gui.state.online=Online
+ote.esib.gui.state.idle=Idle
+ote.esib.gui.state.offline=Offline or unpowered
+ote.esib.gui.note=Automatically displays all essentia in the ME network without any filter slots configured.
 tt.void_nexus.glass.6.0=§7Structural glass tier: §bUIV
 tt.void_nexus.glass.6.1=§8Recognized as a concrete glass block without a structure subchannel; allowed glass blocks may be mixed in Void Nexus glass positions.
 tt.void_nexus.glass.7.0=§7Structural glass tier: §dUMV
@@ -1382,104 +1382,104 @@ tile.nailongCasing.3.name=Psionically Infused Reality Stabilization Block
 tile.nailongCasing.4.name=Subspace Potential Shielding Block
 tile.nailongCasing.5.name=Void Spatial Stabilization Block
 tile.nailongCasing.6.name=Endless Psionic Crystal Glass
-tile.nailongCasing.7.name=Spacetime Potential Space Glass
+tile.nailongCasing.7.name=Stable Spacetime Potential Glass
 otht.nei.void_nexus.aspect=§7Aspect: §b%s §8(%s)
 otht.nei.void_nexus.heat=§7Base heat: §6%s EU
 otht.nei.void_nexus.level=§7Heat level: §d%s
 otht.nei.void_nexus.note=§8The icon is display-only; runtime essentia is pulled from the Advanced Essentia Stocking Input Bus (ME)
-123technology.void_nexus.structure.description=266x233x266 external scan; snow positions accept hatches, and the controller requires a wand.
-123technology.void_nexus.structure.wands=A Thaumcraft wand is required in the controller host.
-123technology.void_nexus.structure.laser_only=Only laser dynamo hatches are accepted.
-123technology.void_nexus.structure.module_power=Used only to charge Psionic Modules.
-123technology.void_nexus.structure.no_laser=At least one laser dynamo hatch is required.
-123technology.void_nexus.structure.upgrade_mismatch=The tier blocks do not match. Check the UHV-UEV-UIV-UMV-UXV upgrade sequence.
-123technology.void_nexus.structure.incomplete=Structure incomplete. Use a hologram projector to check the missing or incorrect block positions.
-123technology.void_nexus.mode=Wireless output: %s; material input: %s
-123technology.void_nexus.potential.deposit_success=Deposited Void Potential from the input bus
-123technology.void_nexus.potential.withdraw_success=Ejected Void Potential into the output bus
-123technology.void_nexus.potential.u28_required=§cRequires "Find One's Own Path"
-123technology.void_nexus.potential.full=§cVoid Potential is already at the 200-point limit
-123technology.void_nexus.potential.no_input=§cNo Void Potential item is present in the input bus
-123technology.void_nexus.potential.empty=§cThe machine has no Void Potential to withdraw
-123technology.void_nexus.potential.no_output=§cThe output bus is missing or has insufficient space
-123technology.void_nexus.wireless=ON
-123technology.void_nexus.laser=Laser hatches
-123technology.void_nexus.material=ON
-123technology.void_nexus.essentia=Essentia
-123technology.void_nexus.waila.power=Generation
-123technology.void_nexus.waila.stage=Stage
-123technology.void_nexus.waila.potential=Void Potential
-123technology.void_nexus.waila.deviation=Phase deviation
-123technology.void_nexus.waila.heat=Average heat
-123technology.void_nexus.waila.parallel=Parallel
-123technology.void_nexus.waila.modules=Linked modules
-123technology.void_nexus.waila.u26=Stargate bonus
-123technology.void_nexus.gui.active=Void link stable; matrix core online
-123technology.void_nexus.gui.idle=Void link idle; awaiting aspect resonance
-123technology.void_nexus.gui.upgrade_map=Open Void Ascension Grid
-123technology.void_nexus.gui.upgrade_hint=Inspect 28 research nodes, Void Potential and synchronization state
-123technology.void_nexus.gui.wireless=Toggle wireless energy link
-123technology.void_nexus.gui.u16_required=Requires "Enter the Void"
-123technology.void_nexus.gui.u17_required=Requires "Earth Shaper"
-123technology.void_nexus.gui.mode.animation=§7Void runtime animation
-123technology.void_nexus.gui.mode.on=§aON
-123technology.void_nexus.gui.mode.off=§8OFF
-123technology.void_nexus.gui.mode.wireless=§7Energy link
-123technology.void_nexus.gui.mode.material=§7Aspect input
-123technology.void_nexus.gui.mode.free=§7Always available
-123technology.void_nexus.gui.required_structure_tier=Requires structure tier T%s (current T%s)
-123technology.void_nexus.gui.prerequisites=Prerequisite nodes: %s
-123technology.void_nexus.gui.synchronized=§bSynchronized / unlocked
-123technology.void_nexus.gui.header=§b✦ VOID LINK // NEXUS COMMAND
-123technology.void_nexus.gui.stage=§7STAGE      §f
-123technology.void_nexus.gui.modules=§7MODULES    §b
-123technology.void_nexus.gui.output=§7OUTPUT     §6
-123technology.void_nexus.gui.phase=§7PHASE      §5
-123technology.void_nexus.gui.heat=§7HEAT       §d
-123technology.void_nexus.gui.heat_short=§7HEAT §d
-123technology.void_nexus.gui.grid=§7GRID       §b
-123technology.void_nexus.gui.veil=§7VEIL       §d
-123technology.void_nexus.gui.wand=§7WAND       §a
-123technology.void_nexus.gui.wand_short=§7WAND §a
-123technology.void_nexus.gui.star_array=§7STAR ARRAY   §e
-123technology.void_nexus.gui.star_array.on=Active | Forced phase balance | Potential ×4
-123technology.void_nexus.gui.star_array.off=Inactive
-123technology.void_nexus.gui.core_crystal=§7STARGATE CORE   §e
-123technology.void_nexus.gui.core_crystal.on=Detected
-123technology.void_nexus.gui.core_crystal.off=Not detected
-123technology.void_nexus.gui.stargate=§7STARGATE   §e
-123technology.void_nexus.gui.separator=§8━━━━━━━━━━━━━━━━━━━━
-123technology.void_nexus.gui.link=§7LINK       §f
-123technology.void_nexus.gui.wireless_on=§bWIRELESS
-123technology.void_nexus.gui.wireless_off=§8LASER
-123technology.void_nexus.gui.material_on=§dMATTER
-123technology.void_nexus.gui.material_off=§bESSENTIA
-123technology.void_nexus.gui.potential.deposit=§aDeposit Void Potential from the input bus, up to 200 points
-123technology.void_nexus.gui.potential.withdraw=§dWithdraw Void Potential as items into the output bus
-123technology.void_nexus.gui.potential.title=§d✦ VOID POTENTIAL TRANSFER
-123technology.void_nexus.gui.potential.value=§7RESERVE  §d
-123technology.void_nexus.gui.potential.open_hint=§8Open the potential transfer panel
-123technology.void_nexus.gui.potential.deposit_short=§a▼  DEPOSIT
-123technology.void_nexus.gui.potential.withdraw_short=§d▲  WITHDRAW
-123technology.void_nexus.gui.potential.auto_on=§b↻  AUTO OUTPUT: ON
-123technology.void_nexus.gui.potential.auto_off=§7↻  AUTO OUTPUT: OFF
-123technology.void_nexus.gui.potential.auto_tooltip=§7Every 20 ticks, export Void Potential to a compatible output bus, including ME output buses
-123technology.void_nexus.gui.potential.u28_required=§7Requires "Find One's Own Path"
-123technology.void_nexus.gui.grid_title=§b✦ VOID NEXUS // ASCENSION GRID
-123technology.void_nexus.gui.grid_summary=§d%s§7/28 NODES  §8| §b%s PARALLEL  §8| §d%s VEIL
-123technology.void_nexus.gui.required_stage=Minimum stage
-123technology.void_nexus.gui.current_stage=Current stage
-123technology.void_nexus.gui.purchased=§bPurchased and active
-123technology.void_nexus.gui.purchased_inactive=§ePurchased, but inactive because the current stage or structure tier is insufficient
-123technology.void_nexus.gui.purchase.click=§eLeft click to activate this node
-123technology.void_nexus.gui.purchase.requirements=§cThe current stage or structure tier is insufficient
-123technology.void_nexus.gui.purchase.success=§bUpgrade complete; node activated
-123technology.void_nexus.gui.purchase.already=§bThis node is already active
-123technology.void_nexus.gui.purchase.stage_locked=§cThe current machine stage is insufficient
-123technology.void_nexus.gui.purchase.tier_locked=§cThe current structure tier is insufficient
-123technology.void_nexus.gui.purchase.prerequisites=§cRequired prerequisite upgrades are not complete
-123technology.void_nexus.gui.lore=§dResearch records
-123technology.void_nexus.gui.effect=§bUpgrade effect
+ote.vnm.struct.description=266x233x266 external scan; snow positions accept hatches, and the controller requires a wand.
+ote.vnm.struct.wands=A Thaumcraft wand is required in the controller host.
+ote.vnm.struct.laser_only=Only laser dynamo hatches are accepted.
+ote.vnm.struct.module_power=Used only to charge Psionic Modules.
+ote.vnm.struct.no_laser=At least one laser dynamo hatch is required.
+ote.vnm.struct.upgrade_mismatch=The tier blocks do not match. Check the UHV-UEV-UIV-UMV-UXV upgrade sequence.
+ote.vnm.struct.incomplete=Structure incomplete. Use a hologram projector to check the missing or incorrect block positions.
+ote.vnm.mode=Wireless output: %s. Item input: %s
+ote.vnm.potential.deposit_success=Deposited Void Potential from the input bus
+ote.vnm.potential.withdraw_success=Ejected Void Potential into the output bus
+ote.vnm.potential.u28_required=§cRequires "Find One's Own Path"
+ote.vnm.potential.full=§cVoid Potential is already at the 200-point limit
+ote.vnm.potential.no_input=§cNo Void Potential item is present in the input bus
+ote.vnm.potential.empty=§cThe machine has no Void Potential to withdraw
+ote.vnm.potential.no_output=§cThe output bus is missing or has insufficient space
+ote.vnm.wireless=ON
+ote.vnm.laser=Laser hatches
+ote.vnm.material=ON
+ote.vnm.essentia=Essentia
+ote.vnm.waila.power=Generation
+ote.vnm.waila.stage=Stage
+ote.vnm.waila.potential=Void Potential
+ote.vnm.waila.deviation=Phase deviation
+ote.vnm.waila.heat=Average heat
+ote.vnm.waila.parallel=Parallel
+ote.vnm.waila.modules=Linked modules
+ote.vnm.waila.u26=Stargate Crystal bonus
+ote.vnm.gui.active=Matrix core online
+ote.vnm.gui.idle=Matrix core offline
+ote.vnm.gui.upgrade_map=Open Void Ascension Grid
+ote.vnm.gui.upgrade_hint=Inspect 28 research nodes, Void Potential and synchronization state
+ote.vnm.gui.wireless=Toggle wireless mode
+ote.vnm.gui.u16_required=Requires "Enter the Void"
+ote.vnm.gui.u17_required=Requires "Earth Shaper"
+ote.vnm.gui.mode.animation=§7Void runtime animation
+ote.vnm.gui.mode.on=§aON
+ote.vnm.gui.mode.off=§8OFF
+ote.vnm.gui.mode.wireless=§7Energy link
+ote.vnm.gui.mode.material=§7Aspect input
+ote.vnm.gui.mode.free=§7Can toggle at any time
+ote.vnm.gui.required_structure_tier=Requires structure tier T%s (current T%s)
+ote.vnm.gui.prerequisites=Prerequisite nodes: %s
+ote.vnm.gui.synchronized=§bSynchronized / unlocked
+ote.vnm.gui.header=§b✦ VOID LINK // NEXUS COMMAND
+ote.vnm.gui.stage=§7STAGE      §f
+ote.vnm.gui.modules=§7MODULES    §b
+ote.vnm.gui.output=§7OUTPUT     §6
+ote.vnm.gui.phase=§7PHASE DEVIATION      §5
+ote.vnm.gui.heat=§7AVERAGE HEAT       §d
+ote.vnm.gui.heat_short=§7HEAT §d
+ote.vnm.gui.grid=§7PARALLEL       §b
+ote.vnm.gui.veil=§7VOID POTENTIAL       §d
+ote.vnm.gui.wand=§7WAND VIS       §a
+ote.vnm.gui.wand_short=§7WAND §a
+ote.vnm.gui.star_array=§7STAR ARRAY BURN   §e
+ote.vnm.gui.star_array.on=Active | Forced six-phase balance | Void Potential output ×4
+ote.vnm.gui.star_array.off=Inactive
+ote.vnm.gui.core_crystal=§7STARGATE CORE   §e
+ote.vnm.gui.core_crystal.on=Detected
+ote.vnm.gui.core_crystal.off=Not detected
+ote.vnm.gui.stargate=§7STARGATE RESONANCE   §e
+ote.vnm.gui.separator=§8━━━━━━━━━━━━━━━━━━━━
+ote.vnm.gui.link=§7LINK       §f
+ote.vnm.gui.wireless_on=§bWIRELESS
+ote.vnm.gui.wireless_off=§8LASER
+ote.vnm.gui.material_on=§dITEM INPUT
+ote.vnm.gui.material_off=§bESSENTIA
+ote.vnm.gui.potential.deposit=§aDeposit Void Potential from the input bus, up to 200 points
+ote.vnm.gui.potential.withdraw=§dWithdraw Void Potential as items into the output bus
+ote.vnm.gui.potential.title=§d✦ VOID POTENTIAL TRANSFER
+ote.vnm.gui.potential.value=§7RESERVE  §d
+ote.vnm.gui.potential.open_hint=§8Open the potential transfer panel
+ote.vnm.gui.potential.deposit_short=§a▼  DEPOSIT
+ote.vnm.gui.potential.withdraw_short=§d▲  WITHDRAW
+ote.vnm.gui.potential.auto_on=§b↻  AUTO OUTPUT: ON
+ote.vnm.gui.potential.auto_off=§7↻  AUTO OUTPUT: OFF
+ote.vnm.gui.potential.auto_tooltip=§7Every 20 ticks, export Void Potential to a compatible output bus, including ME output buses
+ote.vnm.gui.potential.u28_required=§7Requires "Find One's Own Path"
+ote.vnm.gui.grid_title=§b✦ VOID NEXUS // ASCENSION GRID
+ote.vnm.gui.grid_summary=§d%s§7/28 NODES  §8| §b%s PARALLEL  §8| §d%s POTENTIAL
+ote.vnm.gui.required_stage=Minimum stage
+ote.vnm.gui.current_stage=Current stage
+ote.vnm.gui.purchased=§bPurchased and active
+ote.vnm.gui.purchased_inactive=§ePurchased, but inactive because the current stage or structure tier is insufficient
+ote.vnm.gui.purchase.click=§eLeft click to activate this node
+ote.vnm.gui.purchase.requirements=§cCannot purchase this node until the stage and structure tier requirements are met
+ote.vnm.gui.purchase.success=§bUpgrade complete; node activated
+ote.vnm.gui.purchase.already=§bThis node is already active
+ote.vnm.gui.purchase.stage_locked=§cThe current machine stage is insufficient
+ote.vnm.gui.purchase.tier_locked=§cThe current structure tier is insufficient
+ote.vnm.gui.purchase.prerequisites=§cRequired prerequisite upgrades are not complete
+ote.vnm.gui.lore=§dResearch records
+ote.vnm.gui.effect=§bUpgrade effect
 GT5U.gui.text.recipe_result.void_nexus_wand_charge=The host wand is missing or lacks vis for this round
 GT5U.gui.text.recipe_result.psionic_module_not_connected=The Psionic Manifestation Module is not linked to a Void Nexus Matrix
 GT5U.gui.text.recipe_result.psionic_module_harmony_required=The host has not completed "Psionic Harmony"
@@ -1487,86 +1487,86 @@ GT5U.gui.text.recipe_result.psionic_module_advanced_locked="Find One's Own Path"
 GT5U.gui.text.recipe_result.psionic_module_insufficient_buffer=The module buffer cannot pay the next tick of recipe power
 
 tc.research_name.OTH_VOID_NEXUS_1=Psionic Theory
-tc.research_page.OTH_VOID_NEXUS_1.description=长久以来，源质始终被视为我们世界的基本构成。它可以被提取、储存、混合，也可以被用于改变物质的形态。<BR>然而，我们从未真正理解过源质本身的性质。<BR>六种元始要素并非互不相干的独立存在。它们之间似乎存在某种难以察觉的联系，而这种联系可能蕴含着远超现有认知的能量。<BR>我们决定不再满足于利用源质。<BR>我们将尝试理解它。
-tc.research_page.OTH_VOID_NEXUS_1.effect=解锁虚境链接矩阵的基础发电模式。
+tc.research_page.OTH_VOID_NEXUS_1.description=For a long time, essentia has been regarded as a fundamental building block of our world. It can be extracted, stored, mixed, and used to change the form of matter.<BR>Yet we have never truly understood the nature of essentia itself.<BR>The six primal aspects are not entirely independent. There seems to be a subtle link between them, one that may hold more energy than anything we currently understand.<BR>We are no longer content merely to use essentia.<BR>We will try to understand it.
+tc.research_page.OTH_VOID_NEXUS_1.effect=Unlocks the Void Nexus Matrix's basic power generation mode.
 tc.research_name.OTH_VOID_NEXUS_2=Hyper Gaia Crystal Communicator
-tc.research_page.OTH_VOID_NEXUS_2.description=盖亚水晶所蕴含的力量远远超出了我们的预期。<BR>借助高级生物处理器对其内部结构的进一步分析，我们发现这种晶体能够与远距离的能量源建立联系。它似乎并非单纯地储存能量，而是在某种程度上感知着整个世界的灵能活动。<BR>如果我们能够将这种性质应用于矩阵，也许就能绕过传统能源传输所面临的诸多限制。<BR>我们正在尝试向更遥远的地方发送信号。<BR>至于回应来自何处，尚无定论。
-tc.research_page.OTH_VOID_NEXUS_2.effect=基础发电产出提高 10%。要素燃烧效率提高5%<BR>结构等级倍率：exp(1.5 × (n - 1))
+tc.research_page.OTH_VOID_NEXUS_2.description=The power contained in the Gaia Crystal far exceeded our expectations.<BR>Using an Advanced Bio Processor to analyze its internal structure, we discovered that the crystal can link to distant energy sources. It appears to do more than store energy: it can somehow sense psionic activity across the entire world.<BR>If we can put this property to use in the matrix, we may be able to bypass many of the limitations of conventional power transmission.<BR>We are trying to send signals farther afield.<BR>We still cannot say where the reply comes from.
+tc.research_page.OTH_VOID_NEXUS_2.effect=Increases base power output by 10%. Increases aspect combustion efficiency by 5%.<BR>Structure tier multiplier: exp(1.5 × (n - 1))
 tc.research_name.OTH_VOID_NEXUS_3=Endless Wand Charging
-tc.research_page.OTH_VOID_NEXUS_3.description=目前的六相循环存在一个令人无法接受的问题：法杖内部的要素储备无法支撑矩阵长期运行。<BR>我们需要频繁地停止设备，重新充能，再次启动。<BR>这种原始的维护方式显然不符合超高维工业的需求。<BR>还好，无尽之锭会解决这个问题<BR>由无尽锭强化的法杖充能系搭配上水晶矩阵杖端，法杖的要素补充将不再是困扰。<BR>它们将成为矩阵中那颗拧死的螺丝钉。
-tc.research_page.OTH_VOID_NEXUS_3.effect=主机中的法杖不再消耗6种基础要素<BR>结构等级倍率：exp(1)
+tc.research_page.OTH_VOID_NEXUS_3.description=The current six-phase cycle has an unacceptable flaw: the wand's vis reserves cannot keep the matrix running for long.<BR>We have to stop the machine frequently, recharge the wand, and start it up again.<BR>That kind of maintenance is far too primitive for industry at this scale.<BR>Fortunately, Infinity Ingots will solve the problem.<BR>With an Infinity-reinforced charging system and Crystal Matrix Wand Caps, we'll no longer have to worry about replenishing the wand's vis.<BR>They'll become as permanent a fixture in the matrix as a bolt torqued tight.
+tc.research_page.OTH_VOID_NEXUS_3.effect=The controller's wand no longer consumes any of the 6 primal types of vis.<BR>Structure tier multiplier: exp(1)
 tc.research_name.OTH_VOID_NEXUS_4=Blood Rune Economizer
-tc.research_page.OTH_VOID_NEXUS_4.description=魔法的力量并非总是来自于外界。<BR>血液、魔力与源质之间存在着某种特殊联系。血符文能够利用这种联系，将原本需要消耗大量源质才能完成的过程转化为更加直接的能量交换。<BR>我们最初并不愿意将这套技术应用于工业设备。<BR>但在一系列实验后，我们不得不承认，它确实有效。<BR>有些代价，并不会因为我们不愿承认而消失。
-tc.research_page.OTH_VOID_NEXUS_4.effect=可以向机器中通入血液，每tick消耗1440L血液，为机器额外提供15%的发电产出<BR>结构等级倍率：exp(1.6 × (n - 1))
+tc.research_page.OTH_VOID_NEXUS_4.description=Magical power does not always come from somewhere outside ourselves.<BR>Blood, magic, and essentia share a peculiar connection. Blood Runes exploit that connection, turning a process that would normally consume vast amounts of essentia into a more direct exchange of energy.<BR>At first, we were reluctant to use this technology in industrial machinery.<BR>But after a series of experiments, we had to admit that it works.<BR>Some costs don't disappear just because we refuse to acknowledge them.
+tc.research_page.OTH_VOID_NEXUS_4.effect=The matrix can consume 1,440 L of Life Essence per tick for 15% more power output.<BR>Structure tier multiplier: exp(1.6 × (n - 1))
 tc.research_name.OTH_VOID_NEXUS_5=Beyond Dimensions
-tc.research_page.OTH_VOID_NEXUS_5.description=我们已经能够稳定地提取并转换六种元始要素。<BR>但无论如何改进现有结构，矩阵的输出始终存在某种无法突破的上限。<BR>经过多次实验，我们逐渐意识到，问题并不出在设备本身。<BR>我们所处的空间，可能才是真正的限制。<BR>如果能量必须经过三维空间才能完成传输，那么我们为何不尝试寻找第四个方向？<BR>也许，在我们熟知的世界之外，还有更多的空间等待探索。
-tc.research_page.OTH_VOID_NEXUS_5.effect=要素燃烧效率提高10%<BR>9阶要素相对倍率提高至1.8
+tc.research_page.OTH_VOID_NEXUS_5.description=We can now reliably extract and convert the six primal aspects.<BR>Yet no matter how we improve the existing structure, the matrix's output always hits the same ceiling.<BR>After repeated experiments, we began to realize that the machine itself was not the problem.<BR>The space we inhabit may be the real constraint.<BR>If energy has to travel through three-dimensional space, why not try to find a fourth direction?<BR>There may be more space to explore beyond the world we know.
+tc.research_page.OTH_VOID_NEXUS_5.effect=Increases aspect combustion efficiency by 10%.<BR>Raises the relative multiplier for tier 9 aspects to 1.8.
 tc.research_name.OTH_VOID_NEXUS_6=Void Link Theory
-tc.research_page.OTH_VOID_NEXUS_6.description=我们成功在矩阵内部制造了一个稳定的空间折叠结构。<BR>但在某次实验中，能量读数突然出现了无法解释的变化。<BR>有一部分能量并未沿着预定路径消失。<BR>它们似乎进入了一个我们无法观测的区域。<BR>后续实验表明，这种现象并非偶然。我们已经发现了一个位于现实之外的领域，并初步确认能够与其建立联系。<BR>我们称之为——虚境。<BR>从现在开始，我们不再只是从世界中获取力量。<BR>我们将尝试与世界之外建立连接。
-tc.research_page.OTH_VOID_NEXUS_6.effect=六相完全均衡时，相位倍率B=1.8-0.8D<BR>机器每运行3600s，45%概率使得周围玩家临时扭曲上升1<BR>解锁虚境势能<BR>该势能为机器内部的虚拟货币，随以下活动增加，分支升级需要消耗它<BR>机器每连续运行7200s，虚境势能+1<BR>机器每消耗1G源质，虚境势能+1<BR>机器每在六相完全均衡情况下运行900s，虚境势能+1
+tc.research_page.OTH_VOID_NEXUS_6.description=We managed to create a stable fold in space inside the matrix.<BR>During one experiment, however, the energy readings suddenly changed in a way we could not explain.<BR>Some of the energy went missing without following its expected path.<BR>It seemed to have entered a region we could not observe.<BR>Further experiments showed that this was no accident. We had discovered a realm outside reality, and early results confirmed that we could establish a link to it.<BR>We call it the Void.<BR>From now on, we won't just draw power from our own world.<BR>We will try to reach beyond it.
+tc.research_page.OTH_VOID_NEXUS_6.effect=When all six phases are perfectly balanced, the phase multiplier is B = 1.8 - 0.8D.<BR>Every 3,600 s of operation, there is a 45% chance that nearby players gain 1 temporary Warp.<BR>Unlocks Void Potential.<BR>Void Potential is an internal currency earned through the activities below and spent on branch upgrades.<BR>Gain 1 Void Potential per 7,200 s of continuous operation.<BR>Gain 1 Void Potential per 1G essentia consumed.<BR>Gain 1 Void Potential per 900 s of operation with all six phases perfectly balanced.
 tc.research_name.OTH_VOID_NEXUS_7=Soul Moon Nest
-tc.research_page.OTH_VOID_NEXUS_7.description=虚境并非一片空无。<BR>在第一次建立稳定连接后，我们捕获到了一种奇异的能量波动。<BR>它具有明显的周期性，仿佛某种遥远天体正在呼吸。<BR>更令人惊讶的是，这种波动中包含着大量与灵魂、记忆和感知有关的信息。<BR>我们尝试模拟其运行规律，并制造了一个能够承载这种波动的结构。<BR>它被称为月窠。<BR>或许，在虚境深处，也存在着属于它自己的月亮。
-tc.research_page.OTH_VOID_NEXUS_7.effect=时间，灵魂，群星要素热值翻倍<BR>发电产出增加10%
+tc.research_page.OTH_VOID_NEXUS_7.description=The Void is not empty.<BR>After we established the first stable link, we picked up an unusual energy fluctuation.<BR>It had a distinct rhythm, as though some distant celestial body were breathing.<BR>More surprisingly, the signal carried a wealth of information about souls, memory, and perception.<BR>We tried to model its rhythm and built a structure capable of holding the fluctuation.<BR>We call it the Soul Moon Nest.<BR>Perhaps the Void has a moon of its own somewhere in its depths.
+tc.research_page.OTH_VOID_NEXUS_7.effect=Doubles the heat values of the Time, Soul, and Stars aspects.<BR>Increases power output by 10%.
 tc.research_name.OTH_VOID_NEXUS_8=Hungry Implement
-tc.research_page.OTH_VOID_NEXUS_8.description=工具是文明的延伸。<BR>从最初的石器，到能够改变物质结构的工业设备，人类始终在尝试将自身的意志赋予工具。<BR>虚境似乎能够感知这种意志。<BR>在我们的实验中，一件普通的工具竟然表现出了远超其材料本身的能量反应。<BR>我们开始怀疑，真正赋予工具力量的并不是它的结构。<BR>而是使用者对它的渴望。<BR>如果这种力量可以被利用，那么机器本身也许能够超越工具的极限。
-tc.research_page.OTH_VOID_NEXUS_8.effect=工具，工艺，机械要素热值翻倍<BR>机器发电产出增加10%
+tc.research_page.OTH_VOID_NEXUS_8.description=Tools are an extension of civilization.<BR>From the first stone implements to industrial machines that can alter the structure of matter, we have always tried to impart our will to our tools.<BR>The Void seems able to sense that will.<BR>In one experiment, an ordinary tool produced a reaction far stronger than its materials alone could account for.<BR>We began to suspect that a tool's power comes not from the way it is built,<BR>but from how badly its wielder wants to use it.<BR>If we can harness that power, the machine itself may be able to surpass the limits of the tools we use.
+tc.research_page.OTH_VOID_NEXUS_8.effect=Doubles the heat values of the Tool, Craft, and Mechanism aspects.<BR>Increases the matrix's power output by 10%.
 tc.research_name.OTH_VOID_NEXUS_9=Life Weave
-tc.research_page.OTH_VOID_NEXUS_9.description=生命是一种极为特殊的现象。<BR>它并非单纯的物质集合，也并非某种可以被简单复制的能量结构。<BR>从最初的细胞，到复杂的生态系统，生命似乎始终遵循着某种隐藏的规律。<BR>在虚境中，我们发现了这种规律的残留。<BR>它们像无数细小的丝线，彼此交织，构成了难以理解的整体。<BR>我们尝试将这些丝线编织进矩阵。<BR>一个新的可能性正在出现。
-tc.research_page.OTH_VOID_NEXUS_9.effect=生命，思维，死亡要素热值翻倍<BR>机器发电产出增加10%
+tc.research_page.OTH_VOID_NEXUS_9.description=Life is an unusual phenomenon.<BR>It is neither a mere collection of matter nor an arrangement of energy that can easily be copied.<BR>From the earliest cells to complex ecosystems, life seems to follow a hidden pattern.<BR>In the Void, we found traces of that pattern.<BR>They resemble countless fine threads, woven together into a whole we can scarcely comprehend.<BR>We have begun to weave these threads into the matrix.<BR>A new possibility is taking shape.
+tc.research_page.OTH_VOID_NEXUS_9.effect=Doubles the heat values of the Life, Mind, and Death aspects.<BR>Increases the matrix's power output by 10%.
 tc.research_name.OTH_VOID_NEXUS_10=World Devourer
-tc.research_page.OTH_VOID_NEXUS_10.description=我们在虚境中发现了一种极为古老的能量反应。<BR>它不存在明确的形态，也没有稳定的边界。<BR>它只会不断地吞噬周围的一切，并将其转化为自身的一部分。<BR>没有人知道它是否具有意识。<BR>但它似乎能够感知我们的存在。<BR>我们尝试模仿它的运行规律，并将其应用于矩阵。<BR>这是一次极其危险的尝试。
-tc.research_page.OTH_VOID_NEXUS_10.effect=饕餮，傲慢，腐化要素热值翻倍<BR>机器发电产出增加10%
+tc.research_page.OTH_VOID_NEXUS_10.description=We discovered an ancient energy reaction in the Void.<BR>It has no distinct form and no fixed boundary.<BR>It does nothing but devour everything around it and assimilate whatever it consumes.<BR>No one knows whether it is conscious.<BR>Yet it seems to sense our presence.<BR>We tried to imitate its behavior and put it to work in the matrix.<BR>It was an extraordinarily dangerous experiment.
+tc.research_page.OTH_VOID_NEXUS_10.effect=Doubles the heat values of the Gluttony, Pride, and Taint aspects.<BR>Increases the matrix's power output by 10%.
 tc.research_name.OTH_VOID_NEXUS_11=Psionic Harmony
-tc.research_page.OTH_VOID_NEXUS_11.description=在过去的实验中，我们一直试图让所有能量服从同一套规则。<BR>然而，月窠、器具、织缕与喰煞所表现出的性质截然不同。<BR>它们无法被简单地归类，也无法被强制统一。<BR>真正的问题在于，我们一直将差异视为障碍。<BR>但如果不同性质的力量本就可以共存，那么我们是否能够让它们彼此协调？<BR>我们终于意识到，真正需要改变的不是虚境。<BR>而是我们理解虚境的方式。
-tc.research_page.OTH_VOID_NEXUS_11.effect=相位倍率B=2-D<BR>要素燃烧效率提高50%<BR>机器发电产出增加25%<BR>机器每运行3600s，75%概率使得周围玩家一般扭曲上升1<BR>解锁灵能具象化模块<BR>灵能具象化模块可制造“具象化灵能”：1静寂合金锭，1800s，UIV电压<BR>可额外向机器主体输入灵能稳定器，翻倍每轮的eu产出
+tc.research_page.OTH_VOID_NEXUS_11.description=In earlier experiments, we tried to make every kind of energy obey the same rules.<BR>But the Soul Moon Nest, Hungry Implement, Life Weave, and World Devourer behave in very different ways.<BR>They defy easy classification, and we cannot force them to behave alike.<BR>The real problem was that we had always treated their differences as obstacles.<BR>But if these forces can coexist, can we make them work in harmony?<BR>We finally realized it wasn't the Void that needed to change.<BR>It was the way we understood it.
+tc.research_page.OTH_VOID_NEXUS_11.effect=Phase multiplier: B = 2 - D.<BR>Increases aspect combustion efficiency by 50%.<BR>Increases the matrix's power output by 25%.<BR>Every 3,600 s of operation, there is a 75% chance that nearby players gain 1 normal Warp.<BR>Unlocks the Psionic Manifestation Module.<BR>The Psionic Manifestation Module can produce Manifested Psionics from 1 Shijima Ingot in 1,800 s at UIV voltage.<BR>Supply a Psionic Stabilizer to the matrix itself to double EU output per round.
 tc.research_name.OTH_VOID_NEXUS_12=Moon Nest Contract
-tc.research_page.OTH_VOID_NEXUS_12.description=月窠并非一个能够被轻易驾驭的结构。<BR>它所承载的力量，来自于某种超越物质的存在。<BR>我们无法直接控制它，但可以尝试与其建立联系。<BR>契约的完成意味着双方不再只是单纯的能量供需关系。<BR>我们提供承载之所。<BR>它则允许我们触及更深层的灵魂与星辰
-tc.research_page.OTH_VOID_NEXUS_12.effect=机器发电产出增加15%<BR>允许输入熔融无尽为灵能具象化模块超频<BR>每1440ml超频一次
+tc.research_page.OTH_VOID_NEXUS_12.description=The Soul Moon Nest is not easily tamed.<BR>The power it carries comes from something beyond matter.<BR>We cannot control it directly, but we can try to form a bond with it.<BR>Once the contract is sealed, our relationship will be about more than supplying and drawing power.<BR>We give it a place to dwell.<BR>In return, it lets us reach deeper into the realm of souls and stars.
+tc.research_page.OTH_VOID_NEXUS_12.effect=Increases the matrix's power output by 15%.<BR>Allows Molten Infinity to be fed into the Psionic Manifestation Module for overclocking.<BR>Each overclock consumes 1,440 mL.
 tc.research_name.OTH_VOID_NEXUS_13=Implement Contract
-tc.research_page.OTH_VOID_NEXUS_13.description=工具并不理解自己的用途。<BR>但在漫长的使用过程中，它们会被赋予使用者的意志。<BR>我们终于找到了一种方式，使这种意志能够被保留，并反过来强化矩阵。<BR>契约完成后，机器将不再需要依靠外部工具维持自身结构。<BR>它自身便可以成为工具。<BR>一个能够制造力量、传递力量，并不断改进自身的工具。
-tc.research_page.OTH_VOID_NEXUS_13.effect=机器发电产出增加15%<BR>使灵能具象化模块获得本体发电/（max*100）数值的并行，向下取整，并额外获得 4 并行
+tc.research_page.OTH_VOID_NEXUS_13.description=A tool does not understand its own purpose.<BR>Yet over years of use, it takes on something of its wielder's will.<BR>We finally found a way to preserve that will and use it to reinforce the matrix.<BR>Once the contract is sealed, the machine will no longer rely on external tools to maintain its structure.<BR>It can become a tool in its own right.<BR>A tool that can generate power, transmit it, and keep improving itself.
+tc.research_page.OTH_VOID_NEXUS_13.effect=Increases the matrix's power output by 15%.<BR>The Psionic Manifestation Module gains parallels equal to the host matrix's power output divided by (max × 100), rounded down, plus 4 additional parallels.
 tc.research_name.OTH_VOID_NEXUS_14=Life Weave Contract
-tc.research_page.OTH_VOID_NEXUS_14.description=生命从不只是简单的存在。<BR>它会成长、变化，并在无数次循环中重新构成自身。<BR>我们终于理解了生命织缕所蕴含的真正含义。<BR>它并不试图创造一个生命。<BR>它试图让一个已经存在的事物，获得持续延续的可能。
-tc.research_page.OTH_VOID_NEXUS_14.effect=机器发电产出增加15%<BR>可以在灵能具象化模块主机中放入不同等级的纳米蜂群来得到加速，每级加速20%
+tc.research_page.OTH_VOID_NEXUS_14.description=Life has never been a matter of simply existing.<BR>It grows, changes, and rebuilds itself through countless cycles.<BR>We finally understand what the Life Weave is for.<BR>It does not seek to create life.<BR>It gives what already exists a way to endure.
+tc.research_page.OTH_VOID_NEXUS_14.effect=Increases the matrix's power output by 15%.<BR>Install Nanites of different tiers in the Psionic Manifestation Module controller for a 20% speed boost per tier.
 tc.research_name.OTH_VOID_NEXUS_15=Devourer Contract
-tc.research_page.OTH_VOID_NEXUS_15.description=我们已经不再试图控制喰煞。<BR>与其让它成为矩阵的一部分，不如让矩阵成为它的一部分。<BR>契约完成后，喰煞将不再只是一个被动的能量转换模块。<BR>它会主动寻找可以利用的能量，并将其转化为新的力量。<BR>我们需要做的，只是确保它仍然记得自己属于哪里。
-tc.research_page.OTH_VOID_NEXUS_15.effect=机器发电产出增加15%<BR>额外解锁三个灵能具象化模块
+tc.research_page.OTH_VOID_NEXUS_15.description=We no longer try to control the World Devourer.<BR>Rather than making it part of the Matrix, we will make the Matrix part of it.<BR>Once the contract is complete, the Devourer will no longer be merely a passive energy conversion module.<BR>It will seek out usable energy on its own and turn it into new power.<BR>All we have to do is make sure it still remembers where it belongs.
+tc.research_page.OTH_VOID_NEXUS_15.effect=Increases the machine's power output by 15%<BR>Unlocks three additional Psionic Manifestation Modules
 tc.research_name.OTH_VOID_NEXUS_16=Enter the Void
-tc.research_page.OTH_VOID_NEXUS_16.description=我们已经能够稳定地与虚境建立联系。<BR>但这始终是一种单方面的接触。<BR>我们能够观察它，提取它的力量，却无法真正理解它。<BR>我们开始尝试改变连接方式。<BR>不是继续从现实向虚境发送信号。<BR>而是让矩阵的一部分真正进入虚境。<BR>这意味着设备将不再完全遵守现实世界的空间规律。<BR>我们不知道另一端究竟有什么。<BR>但我们已经做好准备。
-tc.research_page.OTH_VOID_NEXUS_16.effect=解锁无线能源模式<BR>输入的具象化灵能将使每轮eu产出翻2.5倍<BR>机器每运行60s，100%使得周围玩家永久扭曲上升1
+tc.research_page.OTH_VOID_NEXUS_16.description=We can now establish a stable connection to the Void.<BR>But contact has always been one-sided.<BR>We can observe it and draw on its power, yet we cannot truly understand it.<BR>We have begun experimenting with a different way to connect.<BR>Instead of continuing to send signals from our world into the Void,<BR>we will send part of the Matrix into the Void itself.<BR>The machine will no longer fully obey the spatial laws of our world.<BR>We do not know what lies on the other side.<BR>But we are ready.
+tc.research_page.OTH_VOID_NEXUS_16.effect=Unlocks wireless energy mode<BR>Supplying Manifested Psionics multiplies EU output per round by 2.5<BR>For every 60 s of operation, there is a 100% chance that nearby players gain 1 permanent Warp
 tc.research_name.OTH_VOID_NEXUS_17=Earth Shaper
-tc.research_page.OTH_VOID_NEXUS_17.description=物质是世界最直观的表现形式。<BR>无论是岩石、金属，还是构成万物的细微颗粒，它们似乎都遵循着某种共同的规则。<BR>在虚境中，我们发现了这些规则的另一种表现形式。<BR>那里的物质并不总是以固定形态存在。<BR>通过对这种现象的研究，我们已经能够在一定程度上改变物质的构成方式。<BR>如果我们能够理解这种塑造世界的力量，或许就不再需要受制于现有的物质形态。
-tc.research_page.OTH_VOID_NEXUS_17.effect=增加20%eu产出<BR>允许开启物品输入模式<BR>该模式<BR>eu产出降低80%<BR>降低80%要素燃烧效率<BR>允许直接输入物品而不是源质
+tc.research_page.OTH_VOID_NEXUS_17.description=Matter is the most tangible expression of the world.<BR>Rock, metal, and even the tiny particles that make up everything seem to follow a common set of rules.<BR>In the Void, we found those rules expressed in a different way.<BR>Matter there does not always take a fixed form.<BR>By studying this phenomenon, we have learned to alter the composition of matter to a limited degree.<BR>If we can understand the force that shapes the world, perhaps we will no longer be bound by the forms matter already takes.
+tc.research_page.OTH_VOID_NEXUS_17.effect=Increases EU output by 20%<BR>Unlocks item input mode<BR>In this mode:<BR>EU output is reduced by 80%<BR>Aspect combustion efficiency is reduced by 80%<BR>Items can be fed directly into the machine instead of essentia
 tc.research_name.OTH_VOID_NEXUS_18=Outer Plane Guest
-tc.research_page.OTH_VOID_NEXUS_18.description=我们终于确认，虚境并非一个单独的空间。<BR>那里存在着许多相互独立的区域。<BR>它们拥有不同的空间性质、不同的能量规律，甚至可能遵循着完全不同的时间尺度。<BR>我们在其中发现了某些无法归类的存在痕迹。<BR>它们似乎从未属于任何一个已知位面，却能够自由穿梭于不同的空间之间。<BR>我们尝试追踪它们的活动轨迹。<BR>直到某次实验中，矩阵收到了一个来自我们自身坐标之外的回应。
-tc.research_page.OTH_VOID_NEXUS_18.effect=增加20%eu产出<BR>势能数量1-20，每有一点虚境势能，增加5%eu产出，为灵能具象化模块提供5%加速（加算）<BR>21-100，则为1%<BR>100以上，则为0.2%
+tc.research_page.OTH_VOID_NEXUS_18.description=We have finally confirmed that the Void is not a single space.<BR>It contains many distinct regions.<BR>Each has its own spatial properties and laws of energy, and they may even operate on entirely different timescales.<BR>In those regions, we found traces of entities we could not classify.<BR>They seem never to have belonged to any known plane, yet they can move freely between them.<BR>We tried to trace their movements.<BR>Then, during one experiment, the Matrix received a reply from beyond our own coordinates.
+tc.research_page.OTH_VOID_NEXUS_18.effect=Increases EU output by 20%<BR>For Void Potential points 1-20, each point adds 5% to EU output and 5% to Psionic Manifestation Module speed (additive)<BR>Points 21-100 add 1% each<BR>Points above 100 add 0.2% each
 tc.research_name.OTH_VOID_NEXUS_19=Golden Dream
-tc.research_page.OTH_VOID_NEXUS_19.description=黄金并不总是意味着财富。<BR>在某些文明的历史中，它代表着永恒、荣耀，以及不朽的权力。<BR>在虚境深处，我们发现了一种极为特殊的能量现象。<BR>它能够将物质的价值、文明的记忆与某种难以解释的概念联系起来。<BR>我们无法确定这种现象是否真的代表着财富。<BR>但它确实能够让原本平凡的物质释放出远超预期的能量。<BR>我们将这种现象称为黄金幻梦。
-tc.research_page.OTH_VOID_NEXUS_19.effect=增加20%eu产出<BR>终结要素热值翻4倍<BR>荣耀要素额外加成上限提高至原来2倍
+tc.research_page.OTH_VOID_NEXUS_19.description=Gold has not always meant wealth.<BR>In the history of some civilizations, it stood for eternity, glory, and undying power.<BR>Deep in the Void, we discovered an unusual energy phenomenon.<BR>It links the value of matter and the memories of civilizations to a concept we can barely explain.<BR>We cannot say whether it truly has anything to do with wealth.<BR>But it does let otherwise ordinary matter release far more energy than expected.<BR>We call this phenomenon the Golden Dream.
+tc.research_page.OTH_VOID_NEXUS_19.effect=Increases EU output by 20%<BR>Multiplies the Terminus aspect's heat value by 4<BR>Raises the cap on the Gloria aspect's additional bonus to 2 times its original value
 tc.research_name.OTH_VOID_NEXUS_20=Endless Tide
-tc.research_page.OTH_VOID_NEXUS_20.description=潮汐是一种极为古老的力量。<BR>它可以推动海洋，可以改变大陆的边界，也可以影响无数生命的生存方式。<BR>而在虚境中，这种力量似乎并不受到空间与距离的限制。<BR>能量在其中不断流动，汇聚，又向着未知的方向散去。<BR>我们尝试利用这种流动，将虚境中的能量引入矩阵。<BR>实验取得了成功。<BR>能量不会停下。<BR>它只是不断地流向下一个地方。
-tc.research_page.OTH_VOID_NEXUS_20.effect=eu产出增加20%<BR>输入熔融时空为灵能具象化模块超频<BR>每1440ml超频一轮
+tc.research_page.OTH_VOID_NEXUS_20.description=Tides are an ancient force.<BR>They move oceans, redraw the edges of continents, and shape the lives of countless creatures.<BR>In the Void, this force seems unbound by space or distance.<BR>Energy flows, gathers, and disperses toward places unknown.<BR>We tried to harness this current to draw energy from the Void into the Matrix.<BR>The experiment succeeded.<BR>The energy never stops.<BR>It simply flows onward.
+tc.research_page.OTH_VOID_NEXUS_20.effect=Increases EU output by 20%<BR>Supply Molten Spacetime to overclock the Psionic Manifestation Module<BR>Each 1440 mL provides one overclock round
 tc.research_name.OTH_VOID_NEXUS_21=Vast Mountain
-tc.research_page.OTH_VOID_NEXUS_21.description=山脉是世界最古老的见证者。<BR>在漫长的时间里，它们经历了无数次变化，却始终保持着自身的形态。<BR>我们在虚境中发现了一种类似的现象。<BR>那里的某些空间结构，拥有近乎不可动摇的稳定性。<BR>它们并非不会受到外界影响，而是能够将一切变化转化为自身的一部分。<BR>如果矩阵能够拥有这样的性质，那么我们便不再需要担心虚境力量对现实结构的影响。
-tc.research_page.OTH_VOID_NEXUS_21.effect=eu产出增加20%<BR>机器运行不再为周围玩家提供扭曲
+tc.research_page.OTH_VOID_NEXUS_21.description=Mountain ranges are the world's oldest witnesses.<BR>Over the ages, they have endured countless changes and yet retained their shape.<BR>We found something similar in the Void.<BR>Some spatial structures there are almost impossibly stable.<BR>They are not immune to outside influences. They take every change into themselves.<BR>If the Matrix could do the same, we would no longer have to worry about what the Void's power might do to the fabric of reality.
+tc.research_page.OTH_VOID_NEXUS_21.effect=Increases EU output by 20%<BR>The machine no longer inflicts Warp on nearby players while running
 tc.research_name.OTH_VOID_NEXUS_22=Hollow Point
-tc.research_page.OTH_VOID_NEXUS_22.description=空洞并不意味着不存在。<BR>在某些极端的空间条件下，物质与能量会被压缩至难以理解的状态。<BR>我们发现，只要能够让虚境中的空间结构收缩到一个足够小的区域，就能够获得极其惊人的能量密度。<BR>这种现象并非传统意义上的压缩。<BR>它更像是将一个完整的世界，压缩成一个无法被观测的点。
-tc.research_page.OTH_VOID_NEXUS_22.effect=eu产出增加20%<BR>机器每运行三轮，下一轮eu产出增加400%，然后继续循环
+tc.research_page.OTH_VOID_NEXUS_22.description=A hollow is not the same as nothingness.<BR>Under extreme spatial conditions, matter and energy can be compressed into states we scarcely understand.<BR>We found that shrinking a spatial structure in the Void into a small enough region yields an astonishing energy density.<BR>This is not compression in the usual sense.<BR>It is more like squeezing an entire world into a point that cannot be observed.
+tc.research_page.OTH_VOID_NEXUS_22.effect=Increases EU output by 20%<BR>After every three rounds of operation, the next round's EU output increases by 400%; the cycle then repeats
 tc.research_name.OTH_VOID_NEXUS_23=Empty Throne
-tc.research_page.OTH_VOID_NEXUS_23.description=一座王座并不一定需要统治者。<BR>当所有规则都已经被建立，当所有命令都能够自行执行，那么王座便只剩下一个象征。<BR>我们发现，虚境中的某些结构能够在没有任何外部干涉的情况下维持运行。<BR>它们似乎不需要意识，也不需要明确的控制者。<BR>规则本身就是它们的统治者。<BR>我们决定将这种结构引入矩阵。
-tc.research_page.OTH_VOID_NEXUS_23.effect=eu产出增加20%<BR>没有要素输入的情况下，机器也会向无线电网发1max/t的电
+tc.research_page.OTH_VOID_NEXUS_23.description=A throne does not necessarily need a ruler.<BR>Once all the rules are in place and every command can carry itself out, the throne is only a symbol.<BR>We found structures in the Void that keep running without any outside intervention.<BR>They seem to need neither awareness nor anyone to direct them.<BR>The rules themselves govern them.<BR>We decided to bring such a structure into the Matrix.
+tc.research_page.OTH_VOID_NEXUS_23.effect=Increases EU output by 20%<BR>The machine supplies 1 A of MAX per tick to the wireless grid even without aspect input
 tc.research_name.OTH_VOID_NEXUS_24=Dark River
-tc.research_page.OTH_VOID_NEXUS_24.description=在虚境最深处，存在着一条无法被观测的长河。<BR>它没有起点，也没有终点。<BR>所有流入其中的事物，都会逐渐失去原本的形态。<BR>我们曾试图追踪它的源头，但最终发现，所谓的长河并不真正存在于空间之中。<BR>它更像是某种持续发生的过程。<BR>熵、腐化、衰亡，以及一切无法被挽回的损失，似乎都在向同一个方向流动。<BR>如果我们能够利用这种流动，那么被浪费的能量也许就不再是损失。
-tc.research_page.OTH_VOID_NEXUS_24.effect=eu产出增加50%<BR>机器每连续运行360s，灵能具象模块加速1%，最高可加速至原本速度的1000%，该加速为永久加速
+tc.research_page.OTH_VOID_NEXUS_24.description=In the deepest reaches of the Void runs a river no one can observe.<BR>It has no beginning and no end.<BR>Everything that flows into it gradually loses its original form.<BR>We tried to trace it to its source, only to find that the river does not actually exist in space.<BR>It is more like a process that never stops.<BR>Entropy, corruption, decay, and every irretrievable loss all seem to flow in the same direction.<BR>If we can harness that current, perhaps wasted energy need not be lost after all.
+tc.research_page.OTH_VOID_NEXUS_24.effect=Increases EU output by 50%<BR>Every 360 s of continuous operation permanently increases Psionic Manifestation Module speed by 1%, up to 1000% of its original speed
 tc.research_name.OTH_VOID_NEXUS_25=Reforge the Void
-tc.research_page.OTH_VOID_NEXUS_25.description=我们已经探索了虚境中的多个区域。<BR>我们见过物质的塑造，见过空间的折叠，也见过能量在不同规律下的流动。<BR>这些研究让我们逐渐意识到，虚境并非一个完全独立的世界。<BR>它更像是所有可能性汇聚而成的集合。<BR>它没有固定的边界，也不需要遵守某种绝对的规则。<BR>既然如此，我们为何不能改变它？<BR>我们已经不再满足于探索。<BR>我们将尝试成为虚境的塑造者。
-tc.research_page.OTH_VOID_NEXUS_25.effect=可向灵能具象模块输入宇宙素/熔融永恒/熔融磁流体约束恒星物质，每28800ml/14400ml/5670ml为其提供一轮极限超频（8/4）
+tc.research_page.OTH_VOID_NEXUS_25.description=We have explored several regions of the Void.<BR>We have seen matter shaped, space folded, and energy flow under different laws.<BR>It has gradually become clear that the Void is not a wholly separate world.<BR>It is more like a place where all possibilities converge.<BR>It has no fixed boundaries and need not obey any absolute rule.<BR>So why shouldn't we change it?<BR>We are no longer content merely to explore.<BR>We will try to shape the Void ourselves.
+tc.research_page.OTH_VOID_NEXUS_25.effect=Supply Universium, Molten Eternity, or Molten Magnetohydrodynamically Constrained Star Matter to the Psionic Manifestation Module. Each 28800 mL/14400 mL/5670 mL, respectively, provides one round of extreme overclocking (8/4)
 tc.research_name.OTH_VOID_NEXUS_26=Whisper of Void
-tc.research_page.OTH_VOID_NEXUS_26.description=当虚境被重塑之后，我们开始听到某种声音。<BR>它并不来自任何已知的生命，也不包含任何能够被直接理解的信息。<BR>它像是某种存在对我们的回应。<BR>在最初的实验中，我们只能记录到一些毫无规律的能量波动。<BR>但随着研究深入，我们发现这些波动似乎包含着某种预兆。<BR>它能够提前反映虚境中即将发生的变化。<BR>我们不知道是谁在低语。<BR>但我们已经学会倾听。
-tc.research_page.OTH_VOID_NEXUS_26.effect=可向主机中加入星门核心水晶，机器每运行1145s，eu产出增加14%，最大增益为1919810%，机器每停止运行10s，奖励下降1000%，直到0。移除星门核心水晶时立即移除全部奖励加成
+tc.research_page.OTH_VOID_NEXUS_26.description=After we reshaped the Void, we began to hear something.<BR>It came from no known life form and carried no message we could readily understand.<BR>It seemed as though something was answering us.<BR>At first, all we could record were erratic fluctuations in energy.<BR>As we studied them, we found that the fluctuations seemed to carry a warning.<BR>They foreshadowed changes about to take place in the Void.<BR>We do not know who is whispering.<BR>But we have learned to listen.
+tc.research_page.OTH_VOID_NEXUS_26.effect=Insert a Stargate Core Crystal into the host machine. The EU output bonus rises by 14% every 1145 s of operation, up to 1919810%. For every 10 s the machine is idle, the bonus drops by 1000%, down to 0. Removing the Stargate Core Crystal immediately clears the entire bonus
 tc.research_name.OTH_VOID_NEXUS_27=End of Reincarnation
-tc.research_page.OTH_VOID_NEXUS_27.description=时间并不是一条简单的直线。<BR>在虚境中，我们发现某些事件会以完全相同的形式重复发生。<BR>这些重复并非偶然，也不是某种记录的重现。<BR>它们更像是世界本身在不断地回到某个既定状态。<BR>我们尝试将这种现象引入矩阵。<BR>如果一次能量转换能够被记录，那么它是否能够再次发生？<BR>如果一个过程能够被重复，那么它是否还需要付出同样的代价？<BR>我们已经接近答案。
-tc.research_page.OTH_VOID_NEXUS_27.effect=允许燃烧星阵。<BR>星阵随着要素一同被消耗，每次燃烧一个星阵，会强制将该轮运行时间拉长至3600s，同时无论输入多少要素，始终判定为六相平衡。运行该配方时间内产出的虚境势能*4。该轮能量产出*36000%
+tc.research_page.OTH_VOID_NEXUS_27.description=Time is not a simple straight line.<BR>In the Void, we found that certain events recur in exactly the same form.<BR>These repetitions are not coincidences or replays of something recorded.<BR>It is more as though the world itself keeps returning to the same state.<BR>We tried to bring this phenomenon into the Matrix.<BR>If an energy conversion can be recorded, can it happen again?<BR>If a process can be repeated, must we pay the same price each time?<BR>We are close to an answer.
+tc.research_page.OTH_VOID_NEXUS_27.effect=Allows the machine to burn Astral Array Fabricators.<BR>An Astral Array Fabricator is consumed alongside the aspects, forcing the round to last 3600 s and counting it as six-phase balanced regardless of how many aspects are supplied. Void Potential output for the round is multiplied by 4, and energy output is multiplied by 36000%.
 tc.research_name.OTH_VOID_NEXUS_28=Find One's Own Path
-tc.research_page.OTH_VOID_NEXUS_28.description=我们已经掌握了虚境的规律。<BR>我们能够塑造物质，穿越空间，操纵能量，甚至在某种程度上影响时间。<BR>但所有这些研究，都建立在一个共同的前提之上。<BR>矩阵必须依赖虚境。<BR>它需要连接，需要输入，需要维护，也需要不断地从外界获得能量。<BR>我们开始思考一个问题。<BR>如果有一天，虚境不再回应我们，那么矩阵还能否继续运行？<BR>我们尝试移除所有外部指令。<BR>移除预设的连接。<BR>移除对既有规则的依赖。<BR>最终，我们发现了一种新的可能性。<BR>矩阵不再需要寻找一条通往虚境的道路。<BR>它已经能够为自己找到出路。
-tc.research_page.OTH_VOID_NEXUS_28.effect=允许弹出和插入虚境势能<BR>解锁制造具象化灵能的高级配方
+tc.research_page.OTH_VOID_NEXUS_28.description=We have mastered the laws of the Void.<BR>We can shape matter, cross space, manipulate energy, and even influence time to a degree.<BR>But all our research rests on a single premise.<BR>The Matrix must depend on the Void.<BR>It requires a connection, inputs, maintenance, and a steady supply of energy from outside.<BR>We began to ask ourselves a question.<BR>If the Void ever stops answering us, can the Matrix keep running?<BR>We tried removing every external command.<BR>We removed the preset connections.<BR>We removed its dependence on existing rules.<BR>In the end, we found a new possibility.<BR>The Matrix no longer needs to find a path into the Void.<BR>It can find its own way out.
+tc.research_page.OTH_VOID_NEXUS_28.effect=Allows Void Potential to be withdrawn and deposited<BR>Unlocks advanced recipes for producing Manifested Psionics

@@ -69,9 +69,9 @@ public class OTEEssentiaStockingInputBusME extends MTEHatchInputBusME {
 
     @Override
     public String[] getDescription() {
-        return new String[] { EnumChatFormatting.AQUA + translateToLocal("123technology.essentia_stocking_bus.desc.0"),
-            EnumChatFormatting.GRAY + translateToLocal("123technology.essentia_stocking_bus.desc.1"),
-            EnumChatFormatting.GRAY + translateToLocal("123technology.essentia_stocking_bus.desc.2") };
+        return new String[] { EnumChatFormatting.AQUA + translateToLocal("ote.tm.esib.0"),
+            EnumChatFormatting.GRAY + translateToLocal("ote.tm.esib.1"),
+            EnumChatFormatting.GRAY + translateToLocal("ote.tm.esib.2") };
     }
 
     @Override

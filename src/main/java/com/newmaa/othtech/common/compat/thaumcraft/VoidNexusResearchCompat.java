@@ -18,6 +18,8 @@ import thaumcraft.api.research.ResearchPage;
 public final class VoidNexusResearchCompat {
 
     public static final String CATEGORY = "123technology";
+    // Leave columns 0 through 2 for the existing Thaumcraft research.
+    private static final int BRANCH_COLUMN_OFFSET = 4;
 
     private VoidNexusResearchCompat() {}
 
@@ -50,7 +52,7 @@ public final class VoidNexusResearchCompat {
             key,
             CATEGORY,
             aspects,
-            getColumn(upgrade),
+            BRANCH_COLUMN_OFFSET + getColumn(upgrade),
             getRow(upgrade),
             upgrade.id < 5 ? 1 : (upgrade.id < 16 ? 2 : 3),
             Aspect.ELDRITCH.getImage());

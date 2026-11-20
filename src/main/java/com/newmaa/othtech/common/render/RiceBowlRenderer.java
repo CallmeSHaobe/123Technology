@@ -119,7 +119,6 @@ public class RiceBowlRenderer extends TileEntitySpecialRenderer {
         // ---- 2) 全息渲染状态
         GL11.glPushMatrix();
         GL11.glTranslated(ox, oy, oz);
-        // 整体压低一点（-0.35 格）+ 放大 2 倍
         GL11.glTranslatef(0F, -0.35F, 0F);
         GL11.glScalef(2F, 2F, 2F);
 
@@ -137,8 +136,6 @@ public class RiceBowlRenderer extends TileEntitySpecialRenderer {
         GL11.glDepthMask(false); // 地面辉光不参与深度
 
         Tessellator tes = Tessellator.instance;
-
-        // ---- 3) （已按用户要求删掉地面光圈/光环）
 
         // ★ 碗与米饭都接近不透明（α 0.92~0.97），必须写深度，
         // 否则"碗壁先画、米饭后画"时米饭会直接从碗壁上糊出来

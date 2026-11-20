@@ -173,7 +173,7 @@ public class OTEVoidNexusMatrixGui extends MTEMultiBlockBaseGui<OTEVoidNexusMatr
                         () -> animation.getBoolValue()
                             ? CORE_FRAMES[(int) ((System.currentTimeMillis() / 160L) % CORE_FRAMES.length)]
                             : NODE_OFF),
-                    "123technology.void_nexus.gui.mode.animation",
+                    "ote.vnm.gui.mode.animation",
                     null,
                     upgrades,
                     tier,
@@ -182,7 +182,7 @@ public class OTEVoidNexusMatrixGui extends MTEMultiBlockBaseGui<OTEVoidNexusMatr
                 createModeToggleButton(
                     wireless,
                     new DynamicDrawable(() -> wireless.getBoolValue() ? WIRELESS_ON : WIRELESS_OFF),
-                    "123technology.void_nexus.gui.mode.wireless",
+                    "ote.vnm.gui.mode.wireless",
                     VoidNexusUpgrade.ENTER_THE_VOID,
                     upgrades,
                     tier,
@@ -191,7 +191,7 @@ public class OTEVoidNexusMatrixGui extends MTEMultiBlockBaseGui<OTEVoidNexusMatr
                 createModeToggleButton(
                     material,
                     new DynamicDrawable(() -> material.getBoolValue() ? NODE_BRANCH_ON : NODE_OFF),
-                    "123technology.void_nexus.gui.mode.material",
+                    "ote.vnm.gui.mode.material",
                     VoidNexusUpgrade.EARTH_SHAPER,
                     upgrades,
                     tier,
@@ -217,73 +217,62 @@ public class OTEVoidNexusMatrixGui extends MTEMultiBlockBaseGui<OTEVoidNexusMatr
         BooleanSyncValue wireless = syncManager.findSyncHandler("voidWireless", BooleanSyncValue.class);
         BooleanSyncValue material = syncManager.findSyncHandler("voidMaterialInput", BooleanSyncValue.class);
 
-        return super.createTerminalTextWidget(syncManager, parent)
-            .child(statusLine("123technology.void_nexus.gui.header"))
+        return super.createTerminalTextWidget(syncManager, parent).child(statusLine("ote.vnm.gui.header"))
+            .child(statusLine("ote.vnm.gui.stage", () -> "T" + tier.getIntValue() + " // " + stage.getValue()))
             .child(
                 statusLine(
-                    "123technology.void_nexus.gui.stage",
-                    () -> "T" + tier.getIntValue() + " // " + stage.getValue()))
-            .child(
-                statusLine(
-                    "123technology.void_nexus.gui.modules",
+                    "ote.vnm.gui.modules",
                     () -> String.valueOf(modules.getIntValue()),
                     () -> isPurchased(upgrades, VoidNexusUpgrade.PSIONIC_HARMONY)))
             .child(
-                statusLine(
-                    "123technology.void_nexus.gui.output",
-                    () -> GTUtility.formatShortenedLong(power.getLongValue()) + " EU/t"))
+                statusLine("ote.vnm.gui.output", () -> GTUtility.formatShortenedLong(power.getLongValue()) + " EU/t"))
             .child(
                 statusLine(
-                    "123technology.void_nexus.gui.phase",
+                    "ote.vnm.gui.phase",
                     () -> "Δ " + deviation.getValue()
                         + "  §8|  "
-                        + StatCollector.translateToLocal("123technology.void_nexus.gui.heat_short")
+                        + StatCollector.translateToLocal("ote.vnm.gui.heat_short")
                         + heat.getValue()
                         + " EU"))
             .child(
                 statusLine(
-                    "123technology.void_nexus.gui.grid",
+                    "ote.vnm.gui.grid",
                     () -> GTUtility.formatShortenedLong(consumed.getLongValue()) + " / "
                         + GTUtility.formatShortenedLong(parallel.getLongValue())))
             .child(
                 statusLine(
-                    "123technology.void_nexus.gui.veil",
+                    "ote.vnm.gui.veil",
                     () -> potential.getLongValue() + " / "
                         + OTEVoidNexusMatrix.MAX_VIRTUAL_POTENTIAL
                         + "  §8|  "
-                        + StatCollector.translateToLocal("123technology.void_nexus.gui.wand_short")
+                        + StatCollector.translateToLocal("ote.vnm.gui.wand_short")
                         + wandVis.getValue()
                         + " vis"))
             .child(
                 statusLine(
-                    "123technology.void_nexus.gui.star_array",
+                    "ote.vnm.gui.star_array",
                     () -> StatCollector.translateToLocal(
-                        starArray.getBoolValue() ? "123technology.void_nexus.gui.star_array.on"
-                            : "123technology.void_nexus.gui.star_array.off"),
+                        starArray.getBoolValue() ? "ote.vnm.gui.star_array.on" : "ote.vnm.gui.star_array.off"),
                     () -> isPurchased(upgrades, VoidNexusUpgrade.END_OF_REINCARNATION)))
             .child(
                 statusLine(
-                    "123technology.void_nexus.gui.core_crystal",
+                    "ote.vnm.gui.core_crystal",
                     () -> StatCollector.translateToLocal(
-                        stargateCore.getBoolValue() ? "123technology.void_nexus.gui.core_crystal.on"
-                            : "123technology.void_nexus.gui.core_crystal.off"),
+                        stargateCore.getBoolValue() ? "ote.vnm.gui.core_crystal.on" : "ote.vnm.gui.core_crystal.off"),
                     () -> isPurchased(upgrades, VoidNexusUpgrade.WHISPER_OF_VOID)))
             .child(
                 statusLine(
-                    "123technology.void_nexus.gui.stargate",
+                    "ote.vnm.gui.stargate",
                     () -> imagePercent(u26.getValue()),
                     () -> isPurchased(upgrades, VoidNexusUpgrade.WHISPER_OF_VOID)))
-            .child(statusLine("123technology.void_nexus.gui.separator"))
+            .child(statusLine("ote.vnm.gui.separator"))
             .child(
                 statusLine(
-                    "123technology.void_nexus.gui.link",
+                    "ote.vnm.gui.link",
                     () -> StatCollector.translateToLocal(
-                        wireless.getBoolValue() ? "123technology.void_nexus.gui.wireless_on"
-                            : "123technology.void_nexus.gui.wireless_off")
-                        + " §8| "
+                        wireless.getBoolValue() ? "ote.vnm.gui.wireless_on" : "ote.vnm.gui.wireless_off") + " §8| "
                         + StatCollector.translateToLocal(
-                            material.getBoolValue() ? "123technology.void_nexus.gui.material_on"
-                                : "123technology.void_nexus.gui.material_off")));
+                            material.getBoolValue() ? "ote.vnm.gui.material_on" : "ote.vnm.gui.material_off")));
     }
 
     private static IWidget statusLine(String translationKey, java.util.function.Supplier<String> value) {
@@ -318,8 +307,7 @@ public class OTEVoidNexusMatrixGui extends MTEMultiBlockBaseGui<OTEVoidNexusMatr
                     tooltip -> tooltip.addLine(
                         IKey.dynamic(
                             () -> StatCollector.translateToLocal(
-                                baseMetaTileEntity.isActive() ? "123technology.void_nexus.gui.active"
-                                    : "123technology.void_nexus.gui.idle"))));
+                                baseMetaTileEntity.isActive() ? "ote.vnm.gui.active" : "ote.vnm.gui.idle"))));
     }
 
     @Override
@@ -345,15 +333,12 @@ public class OTEVoidNexusMatrixGui extends MTEMultiBlockBaseGui<OTEVoidNexusMatr
                     .addLine(
                         IKey.dynamic(
                             () -> StatCollector.translateToLocal(
-                                value.getBoolValue() ? "123technology.void_nexus.gui.mode.on"
-                                    : "123technology.void_nexus.gui.mode.off")))
+                                value.getBoolValue() ? "ote.vnm.gui.mode.on" : "ote.vnm.gui.mode.off")))
                     .addLine(
                         IKey.lang(
-                            requiredUpgrade == VoidNexusUpgrade.ENTER_THE_VOID
-                                ? "123technology.void_nexus.gui.u16_required"
-                                : requiredUpgrade == VoidNexusUpgrade.EARTH_SHAPER
-                                    ? "123technology.void_nexus.gui.u17_required"
-                                    : "123technology.void_nexus.gui.mode.free")));
+                            requiredUpgrade == VoidNexusUpgrade.ENTER_THE_VOID ? "ote.vnm.gui.u16_required"
+                                : requiredUpgrade == VoidNexusUpgrade.EARTH_SHAPER ? "ote.vnm.gui.u17_required"
+                                    : "ote.vnm.gui.mode.free")));
     }
 
     private static String potentialStatusText(StringSyncValue status) {
@@ -381,14 +366,14 @@ public class OTEVoidNexusMatrixGui extends MTEMultiBlockBaseGui<OTEVoidNexusMatr
                 return true;
             })
             .tooltipBuilder(
-                tooltip -> tooltip.addLine(IKey.lang("123technology.void_nexus.gui.potential.title"))
+                tooltip -> tooltip.addLine(IKey.lang("ote.vnm.gui.potential.title"))
                     .addLine(
                         IKey.dynamic(
-                            () -> StatCollector.translateToLocal("123technology.void_nexus.gui.potential.value")
+                            () -> StatCollector.translateToLocal("ote.vnm.gui.potential.value")
                                 + potential.getLongValue()
                                 + " / "
                                 + OTEVoidNexusMatrix.MAX_VIRTUAL_POTENTIAL))
-                    .addLine(IKey.lang("123technology.void_nexus.gui.potential.open_hint")));
+                    .addLine(IKey.lang("ote.vnm.gui.potential.open_hint")));
     }
 
     private ModularPanel createPotentialPanel(PanelSyncManager syncManager, IPanelHandler[] panelHolder) {
@@ -399,7 +384,7 @@ public class OTEVoidNexusMatrixGui extends MTEMultiBlockBaseGui<OTEVoidNexusMatr
         panel.child(box(5, 5, 168, 1, solid(0xFFBA91FF)));
         panel.child(box(5, 28, 168, 1, solid(0x6639D7FF)));
         panel.child(
-            IKey.lang("123technology.void_nexus.gui.potential.title")
+            IKey.lang("ote.vnm.gui.potential.title")
                 .asWidget()
                 .left(11)
                 .top(11));
@@ -423,8 +408,7 @@ public class OTEVoidNexusMatrixGui extends MTEMultiBlockBaseGui<OTEVoidNexusMatr
 
         panel.child(
             IKey.dynamic(
-                () -> StatCollector.translateToLocal("123technology.void_nexus.gui.potential.value")
-                    + potential.getLongValue()
+                () -> StatCollector.translateToLocal("ote.vnm.gui.potential.value") + potential.getLongValue()
                     + " / "
                     + OTEVoidNexusMatrix.MAX_VIRTUAL_POTENTIAL)
                 .asWidget()
@@ -432,7 +416,7 @@ public class OTEVoidNexusMatrixGui extends MTEMultiBlockBaseGui<OTEVoidNexusMatr
                 .top(35));
         panel.child(
             createPotentialActionButton(
-                "123technology.void_nexus.gui.potential.deposit_short",
+                "ote.vnm.gui.potential.deposit_short",
                 true,
                 1L,
                 potentialTransfer,
@@ -442,7 +426,7 @@ public class OTEVoidNexusMatrixGui extends MTEMultiBlockBaseGui<OTEVoidNexusMatr
                     .top(50));
         panel.child(
             createPotentialActionButton(
-                "123technology.void_nexus.gui.potential.withdraw_short",
+                "ote.vnm.gui.potential.withdraw_short",
                 false,
                 2L,
                 potentialTransfer,
@@ -457,7 +441,7 @@ public class OTEVoidNexusMatrixGui extends MTEMultiBlockBaseGui<OTEVoidNexusMatr
             IKey.dynamic(
                 () -> isUpgradeActive(upgrades, tier, stage, VoidNexusUpgrade.FIND_ONES_OWN_PATH)
                     ? potentialStatusText(potentialStatus)
-                    : StatCollector.translateToLocal("123technology.void_nexus.gui.potential.u28_required"))
+                    : StatCollector.translateToLocal("ote.vnm.gui.potential.u28_required"))
                 .asWidget()
                 .left(11)
                 .right(11)
@@ -487,8 +471,8 @@ public class OTEVoidNexusMatrixGui extends MTEMultiBlockBaseGui<OTEVoidNexusMatr
                 IKey.dynamic(
                     () -> (isUpgradeActive(upgrades, tier, stage, VoidNexusUpgrade.FIND_ONES_OWN_PATH) ? "" : "§8")
                         + StatCollector.translateToLocal(
-                            autoPotential.getBoolValue() ? "123technology.void_nexus.gui.potential.auto_on"
-                                : "123technology.void_nexus.gui.potential.auto_off"))
+                            autoPotential.getBoolValue() ? "ote.vnm.gui.potential.auto_on"
+                                : "ote.vnm.gui.potential.auto_off"))
                     .scale(0.82F)
                     .alignment(Alignment.Center))
             .onMousePressed(button -> {
@@ -499,8 +483,8 @@ public class OTEVoidNexusMatrixGui extends MTEMultiBlockBaseGui<OTEVoidNexusMatr
             })
             .tooltipAutoUpdate(true)
             .tooltipBuilder(
-                tooltip -> tooltip.addLine(IKey.lang("123technology.void_nexus.gui.potential.auto_tooltip"))
-                    .addLine(IKey.lang("123technology.void_nexus.gui.potential.u28_required")));
+                tooltip -> tooltip.addLine(IKey.lang("ote.vnm.gui.potential.auto_tooltip"))
+                    .addLine(IKey.lang("ote.vnm.gui.potential.u28_required")));
     }
 
     private ButtonWidget<?> createPotentialActionButton(String labelKey, boolean deposit, long operation,
@@ -535,11 +519,8 @@ public class OTEVoidNexusMatrixGui extends MTEMultiBlockBaseGui<OTEVoidNexusMatr
             .tooltipAutoUpdate(true)
             .tooltipBuilder(
                 tooltip -> tooltip
-                    .addLine(
-                        IKey.lang(
-                            deposit ? "123technology.void_nexus.gui.potential.deposit"
-                                : "123technology.void_nexus.gui.potential.withdraw"))
-                    .addLine(IKey.lang("123technology.void_nexus.gui.potential.u28_required")));
+                    .addLine(IKey.lang(deposit ? "ote.vnm.gui.potential.deposit" : "ote.vnm.gui.potential.withdraw"))
+                    .addLine(IKey.lang("ote.vnm.gui.potential.u28_required")));
     }
 
     private static IDrawable potentialPanelBackground() {
@@ -593,8 +574,8 @@ public class OTEVoidNexusMatrixGui extends MTEMultiBlockBaseGui<OTEVoidNexusMatr
                 return true;
             })
             .tooltipBuilder(
-                tooltip -> tooltip.addLine(IKey.lang("123technology.void_nexus.gui.upgrade_map"))
-                    .addLine(IKey.lang("123technology.void_nexus.gui.upgrade_hint")));
+                tooltip -> tooltip.addLine(IKey.lang("ote.vnm.gui.upgrade_map"))
+                    .addLine(IKey.lang("ote.vnm.gui.upgrade_hint")));
     }
 
     private ModularPanel createUpgradePanel(PanelSyncManager syncManager, IPanelHandler[] panelHolder) {
@@ -606,7 +587,7 @@ public class OTEVoidNexusMatrixGui extends MTEMultiBlockBaseGui<OTEVoidNexusMatr
         panel.child(box(6, 4, PANEL_WIDTH - 12, 1, solid(0xFF7D5CFF)));
         panel.child(box(6, 33, PANEL_WIDTH - 12, 1, solid(0x5520D8FF)));
         panel.child(
-            IKey.lang("123technology.void_nexus.gui.grid_title")
+            IKey.lang("ote.vnm.gui.grid_title")
                 .asWidget()
                 .left(10)
                 .top(7));
@@ -631,7 +612,7 @@ public class OTEVoidNexusMatrixGui extends MTEMultiBlockBaseGui<OTEVoidNexusMatr
         panel.child(
             IKey.dynamic(
                 () -> StatCollector.translateToLocalFormatted(
-                    "123technology.void_nexus.gui.grid_summary",
+                    "ote.vnm.gui.grid_summary",
                     activeNodeCount(upgrades.getLongValue()),
                     GTUtility.formatShortenedLong(parallel.getLongValue()),
                     GTUtility.formatShortenedLong(potential.getLongValue())))
@@ -742,55 +723,50 @@ public class OTEVoidNexusMatrixGui extends MTEMultiBlockBaseGui<OTEVoidNexusMatr
         tooltip.addLine(IKey.str("§d✦ U" + upgrade.id + "  §f" + researchName(upgrade)))
             .addLine(
                 IKey.str(
-                    "§8" + StatCollector.translateToLocal("123technology.void_nexus.gui.required_stage")
+                    "§8" + StatCollector.translateToLocal("ote.vnm.gui.required_stage")
                         + ": "
                         + (stageMet ? "§a" : "§c")
                         + upgrade.minimumStage
                         + " §8/ "
-                        + StatCollector.translateToLocal("123technology.void_nexus.gui.current_stage")
+                        + StatCollector.translateToLocal("ote.vnm.gui.current_stage")
                         + " "
                         + stage.getValue()))
             .addLine(
                 IKey.str(
                     (tierMet ? "§a" : "§c") + StatCollector.translateToLocalFormatted(
-                        "123technology.void_nexus.gui.required_structure_tier",
+                        "ote.vnm.gui.required_structure_tier",
                         upgrade.minimumStructureTier,
                         tier.getIntValue())));
         if (upgrade.getPrerequisiteIds().length > 0) {
             tooltip.addLine(
                 IKey.str(
-                    (prerequisitesMet ? "§a" : "§c") + StatCollector.translateToLocalFormatted(
-                        "123technology.void_nexus.gui.prerequisites",
-                        prerequisiteLabel(upgrade))));
+                    (prerequisitesMet ? "§a" : "§c") + StatCollector
+                        .translateToLocalFormatted("ote.vnm.gui.prerequisites", prerequisiteLabel(upgrade))));
         }
         tooltip
             .addLine(
                 IKey.str(
-                    purchased ? "§b" + StatCollector.translateToLocal(
-                        active ? "123technology.void_nexus.gui.purchased"
-                            : "123technology.void_nexus.gui.purchased_inactive")
+                    purchased
+                        ? "§b" + StatCollector
+                            .translateToLocal(active ? "ote.vnm.gui.purchased" : "ote.vnm.gui.purchased_inactive")
                         : ""))
             .addLine(IKey.str(""))
-            .addLine(IKey.str("§d◆ " + StatCollector.translateToLocal("123technology.void_nexus.gui.lore")))
+            .addLine(IKey.str("§d◆ " + StatCollector.translateToLocal("ote.vnm.gui.lore")))
             .addLine(IKey.str(""));
         addLocalizedResearchText(tooltip, upgrade.getDescriptionKey(), "§7");
         tooltip.addLine(IKey.str(""))
-            .addLine(IKey.str("§b◆ " + StatCollector.translateToLocal("123technology.void_nexus.gui.effect")))
+            .addLine(IKey.str("§b◆ " + StatCollector.translateToLocal("ote.vnm.gui.effect")))
             .addLine(IKey.str(""));
         addLocalizedResearchText(tooltip, upgrade.getEffectKey(), "§b");
         tooltip.addLine(IKey.str(""));
         if (active) {
-            tooltip
-                .addLine(IKey.str("§b" + StatCollector.translateToLocal("123technology.void_nexus.gui.synchronized")));
+            tooltip.addLine(IKey.str("§b" + StatCollector.translateToLocal("ote.vnm.gui.synchronized")));
         } else if (purchased) {
-            tooltip.addLine(
-                IKey.str("§e" + StatCollector.translateToLocal("123technology.void_nexus.gui.purchase.requirements")));
+            tooltip.addLine(IKey.str("§e" + StatCollector.translateToLocal("ote.vnm.gui.purchase.requirements")));
         } else if (!stageMet || !tierMet || !prerequisitesMet) {
-            tooltip.addLine(
-                IKey.str("§c" + StatCollector.translateToLocal("123technology.void_nexus.gui.purchase.requirements")));
+            tooltip.addLine(IKey.str("§c" + StatCollector.translateToLocal("ote.vnm.gui.purchase.requirements")));
         } else {
-            tooltip.addLine(
-                IKey.str("§e" + StatCollector.translateToLocal("123technology.void_nexus.gui.purchase.click")));
+            tooltip.addLine(IKey.str("§e" + StatCollector.translateToLocal("ote.vnm.gui.purchase.click")));
         }
         if (!status.getValue()
             .isEmpty()) {

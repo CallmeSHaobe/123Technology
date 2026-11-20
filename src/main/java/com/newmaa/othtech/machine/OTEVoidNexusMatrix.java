@@ -122,9 +122,6 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
     private static final int HORIZONTAL_OFFSET = 133;
     private static final int VERTICAL_OFFSET = 115;
     private static final int DEPTH_OFFSET = 129;
-    private static final int SHAPE_WIDTH = 266;
-    private static final int SHAPE_HEIGHT = 233;
-    private static final int SHAPE_LAYERS = 266;
     private static final int VOID_NEXUS_TOOLTIP_LINES = 56;
     private static final int TAIRITSU_ADVANCED_CASING_META = 10106;
     private static final int METASTABLE_OGANESSON_ADVANCED_CASING_META = 10111;
@@ -1013,24 +1010,24 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
         if (upgrade == null) return false;
         long bit = 1L << (upgrade.id - 1);
         if ((purchasedUpgradeMask & bit) != 0L) {
-            upgradeStatusKey = "123technology.void_nexus.gui.purchase.already";
+            upgradeStatusKey = "ote.vnm.gui.purchase.already";
             return false;
         }
         if (stage.index < upgrade.minimumStage.index) {
-            upgradeStatusKey = "123technology.void_nexus.gui.purchase.stage_locked";
+            upgradeStatusKey = "ote.vnm.gui.purchase.stage_locked";
             return false;
         }
         if (structureTier < upgrade.minimumStructureTier) {
-            upgradeStatusKey = "123technology.void_nexus.gui.purchase.tier_locked";
+            upgradeStatusKey = "ote.vnm.gui.purchase.tier_locked";
             return false;
         }
         if (!areUpgradePrerequisitesPurchased(upgrade)) {
-            upgradeStatusKey = "123technology.void_nexus.gui.purchase.prerequisites";
+            upgradeStatusKey = "ote.vnm.gui.purchase.prerequisites";
             return false;
         }
 
         purchasedUpgradeMask |= bit;
-        upgradeStatusKey = "123technology.void_nexus.gui.purchase.success";
+        upgradeStatusKey = "ote.vnm.gui.purchase.success";
         connectPsionicModules();
         updateSlots();
         return true;
@@ -1067,28 +1064,28 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
         IGregTechTileEntity base = getBaseMetaTileEntity();
         if (base == null || !base.isServerSide()) return false;
         if (!hasUpgrade(FIND_ONES_OWN_PATH)) {
-            potentialTransferStatusKey = "123technology.void_nexus.potential.u28_required";
+            potentialTransferStatusKey = "ote.vnm.potential.u28_required";
             return false;
         }
         if (virtualPotential >= MAX_VIRTUAL_POTENTIAL) {
-            potentialTransferStatusKey = "123technology.void_nexus.potential.full";
+            potentialTransferStatusKey = "ote.vnm.potential.full";
             return false;
         }
 
         ItemStack potentialItem = new ItemStack(ItemLoader.itemVoidPotential, 1);
         long available = countItemAmount(potentialItem, getStoredInputs());
         if (available <= 0L) {
-            potentialTransferStatusKey = "123technology.void_nexus.potential.no_input";
+            potentialTransferStatusKey = "ote.vnm.potential.no_input";
             return false;
         }
 
         long accepted = addVirtualPotential(available);
         if (accepted <= 0L) {
-            potentialTransferStatusKey = "123technology.void_nexus.potential.full";
+            potentialTransferStatusKey = "ote.vnm.potential.full";
             return false;
         }
         consumeItemAmount(potentialItem, accepted);
-        potentialTransferStatusKey = "123technology.void_nexus.potential.deposit_success";
+        potentialTransferStatusKey = "ote.vnm.potential.deposit_success";
         updateSlots();
         return true;
     }
@@ -1097,16 +1094,16 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
         IGregTechTileEntity base = getBaseMetaTileEntity();
         if (base == null || !base.isServerSide()) return false;
         if (!hasUpgrade(FIND_ONES_OWN_PATH)) {
-            potentialTransferStatusKey = "123technology.void_nexus.potential.u28_required";
+            potentialTransferStatusKey = "ote.vnm.potential.u28_required";
             return false;
         }
         if (virtualPotential <= 0L) {
-            potentialTransferStatusKey = "123technology.void_nexus.potential.empty";
+            potentialTransferStatusKey = "ote.vnm.potential.empty";
             return false;
         }
         List<IOutputBus> outputBusses = getOutputBusses();
         if (outputBusses.isEmpty()) {
-            potentialTransferStatusKey = "123technology.void_nexus.potential.no_output";
+            potentialTransferStatusKey = "ote.vnm.potential.no_output";
             return false;
         }
 
@@ -1125,12 +1122,12 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
             remaining -= inserted;
         }
         if (moved <= 0L) {
-            potentialTransferStatusKey = "123technology.void_nexus.potential.no_output";
+            potentialTransferStatusKey = "ote.vnm.potential.no_output";
             return false;
         }
 
         virtualPotential -= moved;
-        potentialTransferStatusKey = "123technology.void_nexus.potential.withdraw_success";
+        potentialTransferStatusKey = "ote.vnm.potential.withdraw_success";
         updateSlots();
         return true;
     }
@@ -1231,7 +1228,7 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
         clearStructureHatches();
         if (!checkPiece(STRUCTURE_PIECE_MAIN, HORIZONTAL_OFFSET, VERTICAL_OFFSET, DEPTH_OFFSET, errors)) {
             if (errors.isEmpty()) {
-                errors.add(StructureErrors.of("123technology.void_nexus.structure.incomplete"));
+                errors.add(StructureErrors.of("ote.vnm.struct.incomplete"));
             }
             return;
         }
@@ -1242,7 +1239,7 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
         stage = VoidNexusCalculator.Stage.fromCasingTier(structureTier - 1);
         ItemStack controller = getControllerSlot();
         if (controller == null || !(controller.getItem() instanceof ItemWandCasting)) {
-            errors.add(StructureErrors.of("123technology.void_nexus.structure.wands"));
+            errors.add(StructureErrors.of("ote.vnm.struct.wands"));
         }
         if (mInputBusses.size() + mDualInputHatches.size() < INPUT_BUS_MIN) {
             errors.add(StructureErrors.of("GT5U.gui.text.structure_error.no_input"));
@@ -1263,8 +1260,8 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
                 invalidDynamo = true;
             }
         }
-        if (invalidDynamo) errors.add(StructureErrors.of("123technology.void_nexus.structure.laser_only"));
-        if (!hasLaser) errors.add(StructureErrors.of("123technology.void_nexus.structure.no_laser"));
+        if (invalidDynamo) errors.add(StructureErrors.of("ote.vnm.struct.laser_only"));
+        if (!hasLaser) errors.add(StructureErrors.of("ote.vnm.struct.no_laser"));
         repairMachine();
         connectPsionicModules();
     }
@@ -1517,7 +1514,7 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
     @Override
     public String[] getStructureDescription(ItemStack stackSize) {
         return new String[] { EnumChatFormatting.AQUA + translateToLocal("otht.con"),
-            translateToLocal("123technology.void_nexus.structure.description") };
+            translateToLocal("ote.vnm.struct.description") };
     }
 
     @Override
@@ -1530,11 +1527,8 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
     private static synchronized IStructureDefinition<OTEVoidNexusMatrix> createStructureDefinition() {
         IStructureDefinition<OTEVoidNexusMatrix> definition = STRUCTURE_DEFINITION;
         if (definition != null) return definition;
-        String[][] shape = ShapeLoader.load(
-            "/assets/123technology/structures/void_nexus_matrix_shape.txt",
-            SHAPE_WIDTH,
-            SHAPE_HEIGHT,
-            SHAPE_LAYERS);
+        String[][] shape = ShapeLoader
+            .loadCompressed("/assets/123technology/structures/ote/OTEVoidNexusMatrix_main.shape.gz");
         markControllerHatchPositions(shape);
         preparePreviewCells(shape);
         definition = StructureDefinition.<OTEVoidNexusMatrix>builder()
@@ -1950,13 +1944,13 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
     private boolean validateUpgradeVariants(List<StructureError> errors) {
         int level = upgradeVariants[0];
         if (level < 1 || level > MAX_STRUCTURE_TIER) {
-            errors.add(StructureErrors.of("123technology.void_nexus.structure.upgrade_mismatch"));
+            errors.add(StructureErrors.of("ote.vnm.struct.upgrade_mismatch"));
             return false;
         }
         for (int slot = 0; slot < TIERED_SLOT_SYMBOLS.length; slot++) {
             int expected = canonicalTierToken(TIERED_SLOT_SYMBOLS[slot], level);
             if (upgradeVariants[TIERED_SLOT_INDEXES[slot]] != expected) {
-                errors.add(StructureErrors.of("123technology.void_nexus.structure.upgrade_mismatch"));
+                errors.add(StructureErrors.of("ote.vnm.struct.upgrade_mismatch"));
                 return false;
             }
         }
@@ -2097,19 +2091,19 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
         MultiblockTooltipBuilder tooltip = new MultiblockTooltipBuilder();
-        tooltip.addMachineType(translateToLocal("ote.tn.void_nexus"));
+        tooltip.addMachineType(translateToLocal("ote.tn.vnm"));
         for (int line = 1; line <= VOID_NEXUS_TOOLTIP_LINES; line++) {
-            tooltip.addInfo(translateToLocal("123technology.void_nexus.tooltip." + line));
+            tooltip.addInfo(translateToLocal("ote.tm.vnm." + line));
         }
         tooltip.addTecTechHatchInfo()
             .addSeparator()
             .addInfo("§aAdded by: 123Technology - Void Nexus Matrix")
-            .addController(translateToLocal("ote.tn.void_nexus"))
+            .addController(translateToLocal("ote.tn.vnm"))
             .beginStructureBlock(266, 233, 266, false)
             .addInputBus(translateToLocal("oth.hint.any_input_bus"), 1)
             .addOutputBus(translateToLocal("oth.hint.any_output_bus"), 1)
-            .addEnergyHatch(translateToLocal("123technology.void_nexus.structure.module_power"), 1)
-            .addDynamoHatch(translateToLocal("123technology.void_nexus.structure.laser_only"), 1)
+            .addEnergyHatch(translateToLocal("ote.vnm.struct.module_power"), 1)
+            .addDynamoHatch(translateToLocal("ote.vnm.struct.laser_only"), 1)
             .toolTipFinisher();
         return tooltip;
     }
@@ -2137,11 +2131,9 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
         }
         player.addChatMessage(
             new net.minecraft.util.ChatComponentTranslation(
-                "123technology.void_nexus.mode",
-                wirelessMode ? translateToLocal("123technology.void_nexus.wireless")
-                    : translateToLocal("123technology.void_nexus.laser"),
-                materialInputMode ? translateToLocal("123technology.void_nexus.material")
-                    : translateToLocal("123technology.void_nexus.essentia")));
+                "ote.vnm.mode",
+                wirelessMode ? translateToLocal("ote.vnm.wireless") : translateToLocal("ote.vnm.laser"),
+                materialInputMode ? translateToLocal("ote.vnm.material") : translateToLocal("ote.vnm.essentia")));
     }
 
     @Override
@@ -2167,40 +2159,38 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
         super.getWailaBody(itemStack, currentTip, accessor, config);
         NBTTagCompound tag = accessor.getNBTData();
         currentTip.add(
-            translateToLocal("123technology.void_nexus.waila.power") + ": "
+            translateToLocal("ote.vnm.waila.power") + ": "
                 + EnumChatFormatting.GOLD
                 + tag.getString("vnPower")
                 + " EU/t");
+        currentTip
+            .add(translateToLocal("ote.vnm.waila.stage") + ": " + EnumChatFormatting.AQUA + tag.getString("vnStage"));
         currentTip.add(
-            translateToLocal("123technology.void_nexus.waila.stage") + ": "
-                + EnumChatFormatting.AQUA
-                + tag.getString("vnStage"));
-        currentTip.add(
-            translateToLocal("123technology.void_nexus.waila.potential") + ": "
+            translateToLocal("ote.vnm.waila.potential") + ": "
                 + EnumChatFormatting.LIGHT_PURPLE
                 + tag.getLong("vnPotential")
                 + " / "
                 + MAX_VIRTUAL_POTENTIAL);
         currentTip.add(
-            translateToLocal("123technology.void_nexus.waila.deviation") + ": "
+            translateToLocal("ote.vnm.waila.deviation") + ": "
                 + EnumChatFormatting.YELLOW
                 + String.format("%.4f", tag.getDouble("vnDeviation")));
         currentTip.add(
-            translateToLocal("123technology.void_nexus.waila.heat") + ": "
+            translateToLocal("ote.vnm.waila.heat") + ": "
                 + EnumChatFormatting.GOLD
                 + String.format("%.2f", tag.getDouble("vnAverageHeat")));
         currentTip.add(
-            translateToLocal("123technology.void_nexus.waila.parallel") + ": "
+            translateToLocal("ote.vnm.waila.parallel") + ": "
                 + EnumChatFormatting.AQUA
                 + GTUtility.formatShortenedLong(tag.getLong("vnConsumedEssentia"))
                 + " / "
                 + GTUtility.formatShortenedLong(tag.getLong("vnParallel")));
         currentTip.add(
-            translateToLocal("123technology.void_nexus.waila.modules") + ": "
+            translateToLocal("ote.vnm.waila.modules") + ": "
                 + EnumChatFormatting.LIGHT_PURPLE
                 + tag.getInteger("vnModules"));
         currentTip.add(
-            translateToLocal("123technology.void_nexus.waila.u26") + ": "
+            translateToLocal("ote.vnm.waila.u26") + ": "
                 + EnumChatFormatting.LIGHT_PURPLE
                 + tag.getInteger("vnU26Bonus")
                 + "%");

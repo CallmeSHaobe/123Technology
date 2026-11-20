@@ -649,7 +649,7 @@ public class OTENQFuelGeneratorUniversal extends OTHTTMultiMachineBaseEM
 
     public int getPipeTier() {
         return this.pipeTier;
-    }// 可以没用但是不能没有,lol
+    }
 
     @Override
     public final void onScrewdriverRightClick(ForgeDirection side, EntityPlayer aPlayer, float aX, float aY, float aZ,

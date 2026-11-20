@@ -19,7 +19,7 @@ public class ItemAdder_Basic extends Item {
 
     public String unlocalizedName;
 
-    public ItemAdder_Basic(String Name, String MetaName, CreativeTabs aCreativeTabs/* , String aIconPath */) {
+    public ItemAdder_Basic(String Name, String MetaName, CreativeTabs aCreativeTabs) {
         super();
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
@@ -44,8 +44,6 @@ public class ItemAdder_Basic extends Item {
         return this;
     }
 
-    //
-    //
     @Override
     public String getUnlocalizedName(ItemStack aItemStack) {
         return this.unlocalizedName + "." + aItemStack.getItemDamage();

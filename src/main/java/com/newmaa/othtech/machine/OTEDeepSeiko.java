@@ -491,7 +491,9 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
                     .addChannel(CH_FIN_SPACE, 1, 10)
                     .addChannel(CH_FIN_STAB, 1, 10);
             } catch (Throwable t) {
-                LOG.debug("StructureLib 无信道定义 API（<1.4.46），跳过三环信道显式注册", t);
+                LOG.debug(
+                    "StructureLib < 1.4.46 has no channel definition API; skipping explicit registration of the three fin channels",
+                    t);
             }
             STRUCTURE_DEFINITION = builder.build();
         }
@@ -865,7 +867,7 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
         sReqUltMagmatter = lookup("gregtech", "gt.metaitem.03", 4143, 1234);
         sReqUltStargate = lookup("dreamcraft", "StargateShieldingFoil", 0, 1);
         LOG.info(
-            "[DeepSeiko] 升级需求解析: bec=" + sReqBec
+            "[DeepSeiko] Resolved upgrade requirements: bec=" + sReqBec
                 + " nanite="
                 + sReqNanite
                 + " ultCasing="

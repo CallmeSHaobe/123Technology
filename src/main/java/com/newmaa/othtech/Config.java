@@ -11,10 +11,6 @@ public class Config {
     public static void synchronizeConfiguration(File configFile) {
 
         Configuration configuration = new Configuration(configFile);
-        // TODO NEED ENGLISH TRANSLATION O.O
-
-        // greeting = configuration.getString("greeting", Configuration.CATEGORY_GENERAL, greeting, "How shall I
-        // greet?");
         is_TT_Boom = configuration.getBoolean("OTHTechnology : 控制TT模版机器爆炸", "憋憋", is_TT_Boom, "憋憋");
         NEIFrontend = configuration
             .getBoolean("OTHTechnology : 123机器配方池界面使用铱锇钐合金粉替换GT齿轮, true为是, false为替换成憋憋", "A", NEIFrontend, "A");

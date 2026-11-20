@@ -1,4 +1,4 @@
-"""Migrate the two pre-existing ShapeLoader text resources to exact GZIP JSON arrays.
+"""Migrate legacy ShapeLoader text resources to exact GZIP JSON arrays.
 Run before deleting old text files. Legacy parsing is reproduced, including dot-to-space conversion.
 """
 import gzip
@@ -9,7 +9,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 BASE = ROOT / 'src/main/resources/assets/123technology/structures'
 SPECS = [('megaeec_shape.txt', 'OTEMegaEEC_main.shape.gz', 50, 143, 56),
-         ('abstract_sanctum_shape.txt', 'OTEAbstractSanctum_main.shape.gz', 41, 27, 41)]
+         ('abstract_sanctum_shape.txt', 'OTEAbstractSanctum_main.shape.gz', 41, 27, 41),
+         ('void_nexus_matrix_shape.txt', 'OTEVoidNexusMatrix_main.shape.gz', 266, 233, 266)]
 manifest = []
 for source_name, dest_name, width, height, layers in SPECS:
     source = BASE / source_name

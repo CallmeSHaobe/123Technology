@@ -165,7 +165,7 @@ public class RecipesDeepSeiko implements IRecipePool {
 
         if (Arrays.stream(inputs)
             .anyMatch(Objects::isNull)) {
-            OTHTechnology.LOG.warn("时空冷却核心配方缺少物品，本次跳过");
+            OTHTechnology.LOG.warn("Spacetime Cooling Core recipe skipped: missing item inputs");
             return;
         }
 
@@ -174,7 +174,7 @@ public class RecipesDeepSeiko implements IRecipePool {
         FluidStack superCoolant = Materials.SuperCoolant.getFluid(123321);
         FluidStack spacetime = FluidRegistry.getFluidStack("molten.spacetime", 1017);
         if (water == null || coolant == null || superCoolant == null || spacetime == null) {
-            OTHTechnology.LOG.warn("时空冷却核心配方缺少流体，本次跳过");
+            OTHTechnology.LOG.warn("Spacetime Cooling Core recipe skipped: missing fluid inputs");
             return;
         }
 
@@ -190,7 +190,8 @@ public class RecipesDeepSeiko implements IRecipePool {
             OTHItemList.SpacetimeCoolingCore.get(1),
             6000,
             500_000_000);
-        if (!ok) OTHTechnology.LOG.warn("时空冷却核心配方注册失败（addResearchableAssemblylineRecipe 返回 false）");
+        if (!ok) OTHTechnology.LOG.warn(
+            "Failed to register Spacetime Cooling Core recipe (addResearchableAssemblylineRecipe returned false)");
     }
 
     // ===================== [Casings and Machine Components] =====================
@@ -236,7 +237,7 @@ public class RecipesDeepSeiko implements IRecipePool {
             GTModHandler.getModItem("gregtech", "gt.blockframes", 32, 154),
             GTModHandler.getModItem("gregtech", "gt.sheetmetal", 64, 582) };
         if (hasNullItem((Object[]) inputs)) {
-            OTHTechnology.LOG.warn("[DeepSeiko] 鲸脂外壳装配线配方缺少物品，本次跳过");
+            OTHTechnology.LOG.warn("[DeepSeiko] Blubber Casing assembly line recipe skipped: missing item inputs");
             return;
         }
 
@@ -245,13 +246,14 @@ public class RecipesDeepSeiko implements IRecipePool {
         FluidStack superconductor = moltenOrFluid(Materials.SuperconductorUIVBase, 5000);
         FluidStack shiftedSuperfluid = Materials.DimensionallyShiftedSuperfluid.getFluid(100_000);
         if (hasNullItem((Object[]) new FluidStack[] { spacetime, solder, superconductor, shiftedSuperfluid })) {
-            OTHTechnology.LOG.warn("[DeepSeiko] 鲸脂外壳装配线配方缺少流体，本次跳过");
+            OTHTechnology.LOG.warn("[DeepSeiko] Blubber Casing assembly line recipe skipped: missing fluid inputs");
             return;
         }
 
         ItemStack research = OTHItemList.RiceSingularity.get(1);
         if (hasNullItem((Object) research)) {
-            OTHTechnology.LOG.warn("[DeepSeiko] 米饭奇点不存在，鲸脂外壳装配线配方跳过");
+            OTHTechnology.LOG
+                .warn("[DeepSeiko] Blubber Casing assembly line recipe skipped: Rice Singularity not found");
             return;
         }
         try {
@@ -267,12 +269,15 @@ public class RecipesDeepSeiko implements IRecipePool {
                 20 * 300,
                 (int) RECIPE_UMV);
             if (ok) {
-                OTHTechnology.LOG.info("[DeepSeiko] 鲸脂外壳研究站/装配线配方已注册（16777216/2048 → 8192s 研究，装配 6000 tick）");
+                OTHTechnology.LOG.info(
+                    "[DeepSeiko] Registered Blubber Casing Research Station/assembly line recipe (16777216/2048 → 8192 s of research, 6000 ticks of assembly)");
             } else {
-                OTHTechnology.LOG.warn("[DeepSeiko] 鲸脂外壳研究站/装配线配方注册失败（TTRecipeAdder 返回 false）");
+                OTHTechnology.LOG.warn(
+                    "[DeepSeiko] Failed to register Blubber Casing Research Station/assembly line recipe (TTRecipeAdder returned false)");
             }
         } catch (Throwable t) {
-            OTHTechnology.LOG.error("[DeepSeiko] 鲸脂外壳研究站/装配线配方注册异常", t);
+            OTHTechnology.LOG
+                .error("[DeepSeiko] Exception registering Blubber Casing Research Station/assembly line recipe", t);
         }
     }
 
@@ -290,7 +295,8 @@ public class RecipesDeepSeiko implements IRecipePool {
             GTModHandler.getModItem("gregtech", "gt.sheetmetal", 2, 588),
             new ItemStack(DeepSeikoBlocks.dsCasing, 1, DeepSeikoCasingMeta.BLUBBER_CASING) };
         if (hasNullItem((Object[]) inputs)) {
-            OTHTechnology.LOG.warn("[DeepSeiko] 装配腔方块装配线配方缺少物品，本次跳过");
+            OTHTechnology.LOG
+                .warn("[DeepSeiko] Assembly Chamber Casing assembly line recipe skipped: missing item inputs");
             return;
         }
         FluidStack solder = mutatedLivingSolder(12_000);
@@ -298,12 +304,14 @@ public class RecipesDeepSeiko implements IRecipePool {
         FluidStack hypogen = fluidByNames(30_000, "molten.hypogen", "hypogen", "liquid_hypogen");
         FluidStack superconductor = moltenOrFluid(Materials.SuperconductorUIVBase, 6000);
         if (hasNullItem((Object[]) new FluidStack[] { solder, spacetime, hypogen, superconductor })) {
-            OTHTechnology.LOG.warn("[DeepSeiko] 装配腔方块装配线配方缺少流体，本次跳过");
+            OTHTechnology.LOG
+                .warn("[DeepSeiko] Assembly Chamber Casing assembly line recipe skipped: missing fluid inputs");
             return;
         }
         ItemStack research = OTHItemList.SpacetimeCoolingCore.get(1);
         if (hasNullItem((Object) research)) {
-            OTHTechnology.LOG.warn("[DeepSeiko] 时空冷却核心不存在，装配腔方块装配线配方跳过");
+            OTHTechnology.LOG.warn(
+                "[DeepSeiko] Assembly Chamber Casing assembly line recipe skipped: Spacetime Cooling Core not found");
             return;
         }
         try {
@@ -319,12 +327,16 @@ public class RecipesDeepSeiko implements IRecipePool {
                 20 * 300,
                 (int) RECIPE_UMV);
             if (ok) {
-                OTHTechnology.LOG.info("[DeepSeiko] 装配腔方块研究站/装配线配方已注册（32777216/4096 → 8000s）");
+                OTHTechnology.LOG.info(
+                    "[DeepSeiko] Registered Assembly Chamber Casing Research Station/assembly line recipe (32777216/4096 → 8000 s)");
             } else {
-                OTHTechnology.LOG.warn("[DeepSeiko] 装配腔方块研究站/装配线配方注册失败（TTRecipeAdder 返回 false）");
+                OTHTechnology.LOG.warn(
+                    "[DeepSeiko] Failed to register Assembly Chamber Casing Research Station/assembly line recipe (TTRecipeAdder returned false)");
             }
         } catch (Throwable t) {
-            OTHTechnology.LOG.error("[DeepSeiko] 装配腔方块研究站/装配线配方注册异常", t);
+            OTHTechnology.LOG.error(
+                "[DeepSeiko] Exception registering Assembly Chamber Casing Research Station/assembly line recipe",
+                t);
         }
     }
 
@@ -345,10 +357,10 @@ public class RecipesDeepSeiko implements IRecipePool {
                     .eut(TierEU.RECIPE_UIV)
                     .addTo(RecipeMaps.assemblerRecipes);
             } catch (Throwable t) {
-                OTHTechnology.LOG.error("[DeepSeiko] 墨黑外壳配方注册失败", t);
+                OTHTechnology.LOG.error("[DeepSeiko] Failed to register Blubber Casing (Dark) recipe", t);
             }
         } else {
-            OTHTechnology.LOG.warn("[DeepSeiko] 墨黑外壳配方缺少物品，本次跳过");
+            OTHTechnology.LOG.warn("[DeepSeiko] Blubber Casing (Dark) recipe skipped: missing item inputs");
         }
 
         ItemStack[] lightInputs = new ItemStack[] { blubber, GTUtility.getIntegratedCircuit(5),
@@ -365,10 +377,10 @@ public class RecipesDeepSeiko implements IRecipePool {
                     .eut(TierEU.RECIPE_UIV)
                     .addTo(RecipeMaps.assemblerRecipes);
             } catch (Throwable t) {
-                OTHTechnology.LOG.error("[DeepSeiko] 浅蓝外壳配方注册失败", t);
+                OTHTechnology.LOG.error("[DeepSeiko] Failed to register Blubber Casing (Light Blue) recipe", t);
             }
         } else {
-            OTHTechnology.LOG.warn("[DeepSeiko] 浅蓝外壳配方缺少物品，本次跳过");
+            OTHTechnology.LOG.warn("[DeepSeiko] Blubber Casing (Light Blue) recipe skipped: missing item inputs");
         }
 
         ItemStack[] grilleInputs = new ItemStack[] { GTUtility.getIntegratedCircuit(7),
@@ -387,25 +399,26 @@ public class RecipesDeepSeiko implements IRecipePool {
                     .duration(20 * 120)
                     .eut(TierEU.RECIPE_UIV)
                     .addTo(RecipeMaps.assemblerRecipes);
-                OTHTechnology.LOG.info("[DeepSeiko] 鲸须格栅配方已注册（原稿是粉碎机，粉碎机只有 1 输入格，已改组装机）");
+                OTHTechnology.LOG.info(
+                    "[DeepSeiko] Registered Baleen Grille recipe in the Assembler because the original Macerator has only one input slot");
             } catch (Throwable t) {
-                OTHTechnology.LOG.error("[DeepSeiko] 鲸须格栅配方注册失败", t);
+                OTHTechnology.LOG.error("[DeepSeiko] Failed to register Baleen Grille recipe", t);
             }
         } else {
-            OTHTechnology.LOG.warn("[DeepSeiko] 鲸须格栅配方缺少物品，本次跳过");
+            OTHTechnology.LOG.warn("[DeepSeiko] Baleen Grille recipe skipped: missing item inputs");
         }
     }
 
     private void addFinCasingRecipes() {
         int[] circuits = { 2, 3, 4 };
         int[] metas = { DeepSeikoCasingMeta.FIN_TIME, DeepSeikoCasingMeta.FIN_SPACE, DeepSeikoCasingMeta.FIN_STAB };
-        String[] names = { "左鳍（时间）", "右鳍（空间）", "顶鳍（稳定）" };
+        String[] names = { "Left Fin (time)", "Right Fin (space)", "Top Fin (stability)" };
         for (int i = 0; i < metas.length; ++i) {
             ItemStack casing = new ItemStack(DeepSeikoBlocks.dsCasing, 1, DeepSeikoCasingMeta.BLUBBER_CASING);
             ItemStack rice = OTHItemList.WhiteRice.get(1);
             ItemStack output = new ItemStack(DeepSeikoBlocks.dsCasing, 1, metas[i]);
             if (hasNullItem(casing, rice, output)) {
-                OTHTechnology.LOG.warn("[DeepSeiko] {} 配方缺少物品，本次跳过", names[i]);
+                OTHTechnology.LOG.warn("[DeepSeiko] {} recipe skipped: missing item inputs", names[i]);
                 continue;
             }
             try {
@@ -416,10 +429,11 @@ public class RecipesDeepSeiko implements IRecipePool {
                     .eut(RECIPE_UMV)
                     .addTo(RecipeMaps.assemblerRecipes);
             } catch (Throwable t) {
-                OTHTechnology.LOG.error("[DeepSeiko] {} 配方注册失败", names[i], t);
+                OTHTechnology.LOG.error("[DeepSeiko] Failed to register {} recipe", names[i], t);
             }
         }
-        OTHTechnology.LOG.info("[DeepSeiko] 三个鳍方块配方已注册（左 2 / 右 3 / 顶 4 编程电路）");
+        OTHTechnology.LOG.info(
+            "[DeepSeiko] Registered all three fin recipes (programmed circuits: Left Fin 2 / Right Fin 3 / Top Fin 4)");
     }
 
     // ===================== [Condensate Assembly Recipes] =====================
@@ -428,7 +442,8 @@ public class RecipesDeepSeiko implements IRecipePool {
         ItemStack exoticCircuit = GTOreDictUnificator.get("circuitExotic", 48);
         if (exoticCircuit == null) {
             exoticCircuit = ItemList.Circuit_ExoticMainframe.get(48);
-            OTHTechnology.LOG.warn("[DeepSeiko] 矿辞 circuitExotic 不存在，回退为 Circuit_ExoticMainframe ×48");
+            OTHTechnology.LOG.warn(
+                "[DeepSeiko] Ore Dictionary entry circuitExotic not found. Falling back to Circuit_ExoticMainframe ×48");
         }
         ItemStack[] inputs = new ItemStack[] { OTHItemList.RiceSingularity.get(8),
             OTHItemList.SpacetimeCoolingCore.get(16), exoticCircuit, new ItemStack(GregTechAPI.sBlockCasings8, 32, 14),
@@ -443,7 +458,8 @@ public class RecipesDeepSeiko implements IRecipePool {
             GTModHandler.getModItem("OpenComputers", "item", 32, 10),
             GTModHandler.getModItem("computronics", "computronics.ocSpecialParts", 8) };
         if (hasNullItem((Object[]) inputs)) {
-            OTHTechnology.LOG.warn("[DeepSeiko] 控制器凝聚态配方缺少物品（检查 OpenComputers/computronics/gt.metaitem），本次跳过");
+            OTHTechnology.LOG.warn(
+                "[DeepSeiko] DeepSeiko the Big Fat Fish controller condensate recipe skipped: missing item inputs (check OpenComputers/computronics/gt.metaitem)");
             return;
         }
         final int condAmount = 123_264;
@@ -451,7 +467,8 @@ public class RecipesDeepSeiko implements IRecipePool {
             entangled(CondensateType.Space, condAmount), entangled(CondensateType.Infinity, condAmount),
             entangled(CondensateType.TranscendentMetal, condAmount) };
         if (hasNullItem((Object[]) fluids)) {
-            OTHTechnology.LOG.warn("[DeepSeiko] 控制器凝聚态配方缺少凝聚态流体，本次跳过");
+            OTHTechnology.LOG.warn(
+                "[DeepSeiko] DeepSeiko the Big Fat Fish controller condensate recipe skipped: missing condensate fluids");
             return;
         }
         NaniteTier[] nanites = new NaniteTier[] { NaniteTier.Gold, NaniteTier.Gold, NaniteTier.Gold, NaniteTier.Gold,
@@ -467,9 +484,13 @@ public class RecipesDeepSeiko implements IRecipePool {
                 .duration(20 * 300_000)
                 .eut(RECIPE_UMV)
                 .addTo(TecTechRecipeMaps.condensateAssemblingRecipes);
-            OTHTechnology.LOG.info("[DeepSeiko] 控制器凝聚态（BEC）配方已注册：14 输入 / 4 凝聚态 / 6000000 tick / 凝聚态量 {}", condAmount);
+            OTHTechnology.LOG.info(
+                "[DeepSeiko] Registered DeepSeiko the Big Fat Fish controller condensate (BEC) recipe (14 item inputs, 4 condensates, 6000000 ticks, condensate amount {})",
+                condAmount);
         } catch (Throwable t) {
-            OTHTechnology.LOG.error("[DeepSeiko] 控制器凝聚态（BEC）配方注册失败", t);
+            OTHTechnology.LOG.error(
+                "[DeepSeiko] Failed to register DeepSeiko the Big Fat Fish controller condensate (BEC) recipe",
+                t);
         }
     }
 
@@ -490,7 +511,7 @@ public class RecipesDeepSeiko implements IRecipePool {
             GTModHandler.getModItem("dreamcraft", "HeavenlyPikoCircuit", 16),
             GTModHandler.getModItem(OTHTechnology.MODID, "WhiteRice", 64) };
         if (hasNullItem((Object[]) inputs)) {
-            OTHTechnology.LOG.warn("[DeepSeiko] 凝聚态适配舱配方缺少物品，本次跳过");
+            OTHTechnology.LOG.warn("[DeepSeiko] Condensate Adapter recipe skipped: missing item inputs");
             return;
         }
         FluidStack time = entangled(CondensateType.Time, 1_008_000);
@@ -498,7 +519,7 @@ public class RecipesDeepSeiko implements IRecipePool {
         FluidStack spacetime = entangled(CondensateType.SpaceTime, 3_024_000);
         FluidStack hypogen = entangled(CondensateType.Hypogen, 1_481_328);
         if (hasNullItem((Object[]) new FluidStack[] { time, space, spacetime, hypogen })) {
-            OTHTechnology.LOG.warn("[DeepSeiko] 凝聚态适配舱配方缺少凝聚态流体，本次跳过");
+            OTHTechnology.LOG.warn("[DeepSeiko] Condensate Adapter recipe skipped: missing condensate fluids");
             return;
         }
         NaniteTier[] nanites = new NaniteTier[] { NaniteTier.SixPhasedCopper, NaniteTier.Carbon, NaniteTier.Silver,
@@ -514,9 +535,10 @@ public class RecipesDeepSeiko implements IRecipePool {
                 .duration(20 * 999_999)
                 .eut(RECIPE_UMV)
                 .addTo(TecTechRecipeMaps.condensateAssemblingRecipes);
-            OTHTechnology.LOG.info("[DeepSeiko] 凝聚态适配舱凝聚态配方已注册（16 输入 / 4 凝聚态）");
+            OTHTechnology.LOG
+                .info("[DeepSeiko] Registered Condensate Adapter condensate recipe (16 item inputs, 4 condensates)");
         } catch (Throwable t) {
-            OTHTechnology.LOG.error("[DeepSeiko] 凝聚态适配舱凝聚态配方注册失败", t);
+            OTHTechnology.LOG.error("[DeepSeiko] Failed to register Condensate Adapter condensate recipe", t);
         }
     }
 
@@ -529,7 +551,7 @@ public class RecipesDeepSeiko implements IRecipePool {
             GTModHandler.getModItem("gregtech", "gt.metaitem.01", 32, 28139),
             OTHItemList.SpacetimeCoolingCore.get(16) };
         if (hasNullItem((Object[]) d99Inputs)) {
-            OTHTechnology.LOG.warn("[DeepSeiko] D99 算力中心配方缺少物品，本次跳过");
+            OTHTechnology.LOG.warn("[DeepSeiko] D99 Compute Center recipe skipped: missing item inputs");
         } else {
             try {
                 GTValues.RA.stdBuilder()
@@ -547,9 +569,10 @@ public class RecipesDeepSeiko implements IRecipePool {
                     .duration(20 * 999_999)
                     .eut(TierEU.RECIPE_UXV)
                     .addTo(TecTechRecipeMaps.condensateAssemblingRecipes);
-                OTHTechnology.LOG.info("[DeepSeiko] D99 算力中心凝聚态配方已注册（7 输入 / 3 凝聚态）");
+                OTHTechnology.LOG
+                    .info("[DeepSeiko] Registered D99 Compute Center condensate recipe (7 item inputs, 3 condensates)");
             } catch (Throwable t) {
-                OTHTechnology.LOG.error("[DeepSeiko] D99 算力中心配方注册失败", t);
+                OTHTechnology.LOG.error("[DeepSeiko] Failed to register D99 Compute Center recipe", t);
             }
         }
 
@@ -561,7 +584,7 @@ public class RecipesDeepSeiko implements IRecipePool {
             GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 32047), computeCenter(8, 0),
             OTHItemList.SpacetimeCoolingCore.get(32) };
         if (hasNullItem((Object[]) d199Inputs)) {
-            OTHTechnology.LOG.warn("[DeepSeiko] D199 算力中心配方缺少物品，本次跳过");
+            OTHTechnology.LOG.warn("[DeepSeiko] D199 Compute Center recipe skipped: missing item inputs");
         } else {
             try {
                 GTValues.RA.stdBuilder()
@@ -579,9 +602,10 @@ public class RecipesDeepSeiko implements IRecipePool {
                     .duration(20 * 2_999_999)
                     .eut(TierEU.RECIPE_UXV)
                     .addTo(TecTechRecipeMaps.condensateAssemblingRecipes);
-                OTHTechnology.LOG.info("[DeepSeiko] D199 算力中心凝聚态配方已注册（8 输入 / 3 凝聚态）");
+                OTHTechnology.LOG.info(
+                    "[DeepSeiko] Registered D199 Compute Center condensate recipe (8 item inputs, 3 condensates)");
             } catch (Throwable t) {
-                OTHTechnology.LOG.error("[DeepSeiko] D199 算力中心配方注册失败", t);
+                OTHTechnology.LOG.error("[DeepSeiko] Failed to register D199 Compute Center recipe", t);
             }
         }
 
@@ -601,7 +625,7 @@ public class RecipesDeepSeiko implements IRecipePool {
             GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 6583),
             GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 32039) };
         if (hasNullItem((Object[]) d999Inputs)) {
-            OTHTechnology.LOG.warn("[DeepSeiko] D999 算力中心配方缺少物品，本次跳过");
+            OTHTechnology.LOG.warn("[DeepSeiko] D999 Compute Center recipe skipped: missing item inputs");
         } else {
             try {
                 GTValues.RA.stdBuilder()
@@ -622,9 +646,10 @@ public class RecipesDeepSeiko implements IRecipePool {
                     .duration(20 * 9_999_999)
                     .eut(TierEU.RECIPE_MAX)
                     .addTo(TecTechRecipeMaps.condensateAssemblingRecipes);
-                OTHTechnology.LOG.info("[DeepSeiko] D999 算力中心凝聚态配方已注册（16 输入 / 4 凝聚态）");
+                OTHTechnology.LOG.info(
+                    "[DeepSeiko] Registered D999 Compute Center condensate recipe (16 item inputs, 4 condensates)");
             } catch (Throwable t) {
-                OTHTechnology.LOG.error("[DeepSeiko] D999 算力中心配方注册失败", t);
+                OTHTechnology.LOG.error("[DeepSeiko] Failed to register D999 Compute Center recipe", t);
             }
         }
     }
@@ -661,7 +686,8 @@ public class RecipesDeepSeiko implements IRecipePool {
                     tier));
         }
         if (variants == 0) {
-            OTHTechnology.LOG.warn("[DeepSeiko] 没能取到任何等级的纳米蜂群，蜂群升级的 NEI 配方已跳过");
+            OTHTechnology.LOG
+                .warn("[DeepSeiko] Skipped swarm upgrade NEI recipes because no nanites were available at any tier");
         }
         added += variants;
 
@@ -682,11 +708,13 @@ public class RecipesDeepSeiko implements IRecipePool {
                     .addTo(Recipemaps.DeepSeikoUpgrade);
                 added++;
             } catch (Throwable t) {
-                OTHTechnology.LOG.error("[DeepSeiko] 终极升级 NEI 配方生成失败，已跳过（不影响机器功能）", t);
+                OTHTechnology.LOG.error(
+                    "[DeepSeiko] Skipped Ultimate upgrade NEI recipe after a generation error (machine functionality is unaffected)",
+                    t);
             }
         }
 
-        OTHTechnology.LOG.info("[DeepSeiko] 机体升级 NEI 配方已写入 {} 条", added);
+        OTHTechnology.LOG.info("[DeepSeiko] Added {} Machine Upgrade NEI recipes", added);
     }
 
     private int addUpgradeRecipeSafely(String label, ItemStack input, String... neiDesc) {
@@ -700,7 +728,8 @@ public class RecipesDeepSeiko implements IRecipePool {
                 .addTo(Recipemaps.DeepSeikoUpgrade);
             return 1;
         } catch (Throwable t) {
-            OTHTechnology.LOG.error("[DeepSeiko] 机体升级 NEI 配方生成失败（" + label + "），已跳过", t);
+            OTHTechnology.LOG
+                .error("[DeepSeiko] Failed to generate Machine Upgrade NEI recipe (" + label + "), skipped", t);
             return 0;
         }
     }
@@ -728,7 +757,9 @@ public class RecipesDeepSeiko implements IRecipePool {
         ItemStack stack = GTOreDictUnificator.get("circuitExotic", amount);
         if (stack == null) {
             stack = ItemList.Circuit_ExoticMainframe.get(amount);
-            OTHTechnology.LOG.warn("[DeepSeiko] 矿辞 circuitExotic 不存在，回退为 Circuit_ExoticMainframe ×{}", amount);
+            OTHTechnology.LOG.warn(
+                "[DeepSeiko] Ore Dictionary entry circuitExotic not found. Falling back to Circuit_ExoticMainframe ×{}",
+                amount);
         }
         return stack;
     }
@@ -741,7 +772,9 @@ public class RecipesDeepSeiko implements IRecipePool {
         ItemStack stack = GTOreDictUnificator.get("circuitCosmic", amount);
         if (stack == null) {
             stack = ItemList.Circuit_CosmicMainframe.get(amount);
-            OTHTechnology.LOG.warn("[DeepSeiko] 矿辞 circuitCosmic 不存在，回退为 Circuit_CosmicMainframe ×{}", amount);
+            OTHTechnology.LOG.warn(
+                "[DeepSeiko] Ore Dictionary entry circuitCosmic not found. Falling back to Circuit_CosmicMainframe ×{}",
+                amount);
         }
         return stack;
     }
@@ -753,7 +786,12 @@ public class RecipesDeepSeiko implements IRecipePool {
         int amount = (wanted - down <= up - wanted) ? down : up;
         if (amount < step) amount = step;
         if (amount != wanted) {
-            OTHTechnology.LOG.warn("[DeepSeiko] 凝聚态 {} 的量 {} 不是步长 {} 的倍数，已调整为 {}", type.name(), wanted, step, amount);
+            OTHTechnology.LOG.warn(
+                "[DeepSeiko] Condensate {} amount {} is not a multiple of step size {}. Adjusted to {}",
+                type.name(),
+                wanted,
+                step,
+                amount);
         }
         return type.getEntangled(amount);
     }

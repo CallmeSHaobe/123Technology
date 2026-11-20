@@ -15,17 +15,14 @@ public class SatFakePlayer extends ModelBiped {
         super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, entity);
 
         if (entity instanceof EntityFakePlayer && ((EntityFakePlayer) entity).isSitting()) {
-            // 腿部弯曲（模拟坐下）
             this.bipedLeftLeg.rotateAngleX = -1.5F;
             this.bipedRightLeg.rotateAngleX = -1.5F;
             this.bipedLeftLeg.rotateAngleY = -0.1F;
             this.bipedRightLeg.rotateAngleY = 0.1F;
 
-            // 手臂自然下垂
             this.bipedLeftArm.rotateAngleX = -0.5F;
             this.bipedRightArm.rotateAngleX = -0.5F;
 
-            // 头部保持水平
             this.bipedHead.rotateAngleX = this.bipedHeadwear.rotateAngleX = 0.0F;
             this.bipedHead.rotateAngleY = this.bipedHeadwear.rotateAngleY = 0.0F;
         }

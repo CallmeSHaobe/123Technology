@@ -24,7 +24,7 @@ public class RecipeLoader {
             new RecipesTangshanSteelFactory(), new RecipesSunFactoryEnqing(), new RecipesEpicCokeOvenFake(),
             new RecipesWoodenFusionReactor(), new RecipesMISA(), new RecipesNaquadah(), new RecipesEIO(),
             new RecipesEXH(), new RecipesNewWetware(), new RecipesAntimonia(), new RecipesNASA(), new RecipesOTHOre(),
-            new RecipesAbstractSanctum(), new RecipesDeepSeiko(), new RecipesTSTPatch() };
+            new RecipesAbstractSanctum(), new RecipesDeepSeiko(), new RecipesTSTPatch(), new RecipesVoidNexus() };
         OTHTechnology.LOG.info("RecipeLoader: Loading OTEMiniSteamNineInOne recipes...");
         OTEMiniSteamNineInOne.loadRecipes();
         OTHTechnology.LOG.info("RecipeLoader: OTEMiniSteamNineInOne done.");
@@ -57,8 +57,12 @@ public class RecipeLoader {
                 recipePool.loadRecipes();
             } catch (Throwable t) {
                 loaded = false;
-                OTHTechnology.LOG
-                    .error("RecipeLoader: [{}/{}] {} FAILED（已跳过该配方池，继续加载其它）", idx, recipePools.length, poolName, t);
+                OTHTechnology.LOG.error(
+                    "RecipeLoader: [{}/{}] {} FAILED; skipping this pool and continuing",
+                    idx,
+                    recipePools.length,
+                    poolName,
+                    t);
             }
             if (loaded) {
                 OTHTechnology.LOG.info("RecipeLoader: [{}/{}] {} done.", idx, recipePools.length, poolName);

@@ -3,11 +3,7 @@ package com.newmaa.othtech;
 import static com.newmaa.othtech.CommonProxy.RocketRenderBlock;
 import static com.newmaa.othtech.common.OTHItemList.SpaceElevatorModulePumpT4;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -62,8 +58,6 @@ import cpw.mods.fml.common.event.FMLServerStartedEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.GameRegistry.Type;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import gregtech.api.GregTechAPI;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.util.GTOreDictUnificator;
@@ -74,7 +68,6 @@ import gtnhintergalactic.recipe.SpacePumpingRecipes;
     version = OTHTechnology.VERSION,
     name = OTHTechnology.modName,
     dependencies = "required-after:IC2;" + "required-after:structurelib;"
-        + "required-after:Thaumcraft;"
         + "required-after:ForbiddenMagic;"
         + "required-after:ThaumicTinkerer;"
         + "required-after:BloodArsenal;"
@@ -87,7 +80,7 @@ import gtnhintergalactic.recipe.SpacePumpingRecipes;
         + "required-after:dreamcraft;"
         + "required-after:gregtech;"
         + "required-after:Thaumcraft;"
-        + "required-after:TwistSpaceTechnology;"
+        + "required-before:TwistSpaceTechnology;"
         + "after:cropsnh;"
         + "required-after:GalaxySpace;",
     acceptedMinecraftVersions = "1.7.10")
@@ -111,20 +104,14 @@ public class OTHTechnology {
 
     public OTHTechnology() {
         MinecraftForge.EVENT_BUS.register(new EventPlayerDied());
-        // VisualProspecting（旅行地图的矿脉/流体叠层）的锑星矿脉补注册；世界加载时兜底执行
         MinecraftForge.EVENT_BUS.register(new EventWorldLoad());
         OTHMaterials.install();
     }
 
     @Mod.EventHandler
-    // preInit "Run before anything else. Read your config, create blocks, items, etc, and register them with the
-    // GameRegistry." (Remove if not needed)
     public void preInit(FMLPreInitializationEvent event) {
-        // 锑星的 NEI 维度数据与 GT 矿脉注册（替代原 GTNEIDimensionHelperOTHMixin / GTOreGenOTHMixin）
         OTHDimensionIntegration.registerNEIDimension();
         OTHDimensionIntegration.scheduleOreVeinRegistration();
-        // 进阶高能电路装配线的配方池：在 FML load complete 阶段（dreamcraft 注册完 CAL 配方之后）
-        // 拷贝 CAL 配方并去掉压印电路需求
         if (GregTechAPI.sGTCompleteLoad != null) {
             GregTechAPI.sGTCompleteLoad.add(RecipesMCATransformer::load);
             GregTechAPI.sGTCompleteLoad.add(RecipesDeepSeiko::loadCondensateRecipes);
@@ -152,7 +139,6 @@ public class OTHTechnology {
     }
 
     @Mod.EventHandler
-    // load "Do your mod setup. Build whatever data structures you care about. Register recipes." (Remove if not needed)
     public void init(FMLInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(new EventPlayerDied());
         proxy.init(event);
@@ -165,7 +151,6 @@ public class OTHTechnology {
         AntimoniaUndergroundFluids.register();
         Ross123bUndergroundFluids.register();
         NEIRecipeMaps.IMCSender();
-        // 迪普西科的米饭投影影子方块是纯技术方块，别让它在 NEI 里冒出来
         API.hideItem(new ItemStack(DeepSeikoBlocks.dsHolo));
         API.hideItem(new ItemStack(AntimoniaFluids.BlockAquaRegia));
         API.hideItem(new ItemStack(RossFluids.BlockLCL));
@@ -197,25 +182,24 @@ public class OTHTechnology {
         }
     }
 
-    @SideOnly(Side.CLIENT)
-    public static void registerRenderers() {}
-
     @Mod.EventHandler
-    // postInit "Handle interaction with other mods, complete your setup based on this." (Remove if not needed)
     public void postInit(FMLPostInitializationEvent event) {
         proxy.postInit(event);
+        // I Love Isa Mill
         LOG.info("The Isa Mill is invincible!");
-        LOG.info("NewMaa的恩情还不完!");// 这个不是我写的。
+        /**
+         * By czqwq
+         *
+         */
+        LOG.info("We can never repay NewMaa's kindness!");
+
         MachineLoader.loadMachinePostInit();
         ThaumcraftResearchCompat.register();
-        // RecipeLoader.loadRecipesPostInit();
-        // 添加自定义配方
         SpacePumpingRecipes.RECIPES.put(Pair.of(2, 2), FluidRegistry.getFluidStack("lava", 1792000));
         SpacePumpingRecipes.RECIPES.put(Pair.of(2, 3), FluidRegistry.getFluidStack("cryotheum", 1792000));
         SpacePumpingRecipes.RECIPES.put(Pair.of(2, 4), FluidRegistry.getFluidStack("pyrotheum", 1792000));
         SpacePumpingRecipes.RECIPES.put(Pair.of(2, 5), FluidRegistry.getFluidStack("liquiddna", 1792000));
         SpacePumpingRecipes.RECIPES.put(Pair.of(2, 6), FluidRegistry.getFluidStack("chlorine", 1230000));
-        // // load SpacePumpingT4 to NEIRecipes
         API.addRecipeCatalyst(
             SpaceElevatorModulePumpT4.getInternalStack_unsafe(),
             "gtnhintergalactic.nei.SpacePumpModuleRecipeHandler");
@@ -227,11 +211,11 @@ public class OTHTechnology {
         safeStep("RecipeLoader.loadRecipes", RecipeLoader::loadRecipes);
         safeStep("RecipesDeepSeiko.loadCondensateRecipes", RecipesDeepSeiko::loadCondensateRecipes);
         safeStep("RecipesDeepSeiko.loadAssemblyLineRecipes", RecipesDeepSeiko::loadAssemblyLineRecipes);
+        safeStep("VoidNexusResearchCompat", VoidNexusResearchCompat::register);
         safeStep("OTHBeeyonds", OTHBeeyonds::new);
         LOG.info("completeInit: finished.");
     }
 
-    /** 执行一个初始化步骤；任何异常/错误都吞掉并记日志，保证 completeInit 不会把世界挡在门外 */
     private static void safeStep(String name, Runnable step) {
         try {
             step.run();
@@ -241,7 +225,6 @@ public class OTHTechnology {
     }
 
     @Mod.EventHandler
-    // register server commands in this event handler (Remove if not needed)
     public void serverStarting(FMLServerStartingEvent event) {
         proxy.serverStarting(event);
 
@@ -249,8 +232,6 @@ public class OTHTechnology {
 
     @Mod.EventHandler
     public void serverAboutToStart(FMLServerAboutToStartEvent event) {
-        // 服务端在 FMLServerStartingEvent 阶段会加载 VisualProspecting 的矿脉缓存，
-        // 必须赶在那之前把锑星的自定义矿脉补进 VP 的矿脉表，否则旧存档里的锑星矿脉会被读成 NO_VEIN。
         VisualProspectingOreVeinBridge.ensureRegistered();
     }
 
@@ -270,7 +251,5 @@ public class OTHTechnology {
         proxy.onLoadComplete(event);
 
     }
-
-    private final Map<EntityPlayer, Integer> playerTimerMap = new HashMap<>();
 
 }

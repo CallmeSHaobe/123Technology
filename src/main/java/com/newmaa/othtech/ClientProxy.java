@@ -119,10 +119,7 @@ public class ClientProxy extends CommonProxy {
         super.postInit(event);
     }
 
-    // Override CommonProxy methods here, if you want a different behaviour on the client (e.g. registering renders).
-    // Don't forget to call the super methods as well.
     public void registerRenderers() {
-        // 注册物品渲染器
         MinecraftForgeClient
             .registerItemRenderer(OTHItemList.Tallhat.getItem(), new ItemHelmTallHatRender(objHelmetRaw));
     }
