@@ -1,4 +1,4 @@
-package com.newmaa.othtech.common.recipemap;
+package com.newmaa.othtech.common.recipemap.recipeMapFrontends;
 
 import net.minecraft.util.StatCollector;
 

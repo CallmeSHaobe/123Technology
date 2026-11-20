@@ -24,7 +24,7 @@ public class RecipeLoader {
             new RecipesTangshanSteelFactory(), new RecipesSunFactoryEnqing(), new RecipesEpicCokeOvenFake(),
             new RecipesWoodenFusionReactor(), new RecipesMISA(), new RecipesNaquadah(), new RecipesEIO(),
             new RecipesEXH(), new RecipesNewWetware(), new RecipesAntimonia(), new RecipesNASA(), new RecipesOTHOre(),
-            new AbstractSanctumRecipes(), new RecipesDeepSeiko(), new VoidNexusRecipes() };
+            new RecipesAbstractSanctum(), new RecipesDeepSeiko(), new RecipesTSTPatch() };
         OTHTechnology.LOG.info("RecipeLoader: Loading OTEMiniSteamNineInOne recipes...");
         OTEMiniSteamNineInOne.loadRecipes();
         OTHTechnology.LOG.info("RecipeLoader: OTEMiniSteamNineInOne done.");

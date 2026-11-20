@@ -83,7 +83,7 @@ public enum OTHBeeDefinition implements IBeeDefinition {
     }),
 
     GATE(OTHBranchDefinition.OTHBYDS, "Gate", true, new Color(0x3808A0), new Color(0x3808A0), beeSpecies -> {
-        beeSpecies.addProduct(GTModHandler.getModItem(NewHorizonsCoreMod.ID, "item.StargateCrystalDust", 1), 0.00810f);
+        beeSpecies.addProduct(GTModHandler.getModItem(NewHorizonsCoreMod.ID, "StargateCrystalDust", 1), 0.00810f);
         beeSpecies.setHumidity(DAMP);
         beeSpecies.setTemperature(EnumTemperature.NORMAL);
     }, template -> {
@@ -221,7 +221,7 @@ public enum OTHBeeDefinition implements IBeeDefinition {
                 EnumBeeChromosome.EFFECT,
                 binnie.genetics.genetics.AlleleHelper.getAllele(ExtraBeesEffect.BIRTHDAY.getUID()));
         }, dis -> {
-            IBeeMutationCustom tMutation = dis.registerMutation(WEIWEI, GATE, 100);
+            IBeeMutationCustom tMutation = dis.registerMutation(ENQING, GATE, 100);
             tMutation.requireResource(Blocks.dirt, 0);// block of dirt
         });
 

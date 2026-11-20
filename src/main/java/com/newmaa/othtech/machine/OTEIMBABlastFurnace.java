@@ -51,9 +51,8 @@ public class OTEIMBABlastFurnace extends MTEElectricBlastFurnace {
         .addShape(
             STRUCTURE_PIECE_MAIN,
             transpose(
-                new String[][] { { "ttttt", "ttttt", "ttmtt", "ttttt", "ttttt" },
-                    { "CCCCC", "C---C", "C---C", "C---C", "CCCCC" }, { "CCCCC", "C---C", "C---C", "C---C", "CCCCC" },
-                    { "bb~bb", "bbbbb", "bbbbb", "bbbbb", "bbbbb" } }))
+                com.newmaa.othtech.utils.ShapeLoader
+                    .loadCompressed("/assets/123technology/structures/ote/OTEIMBABlastFurnace_1.shape.gz")))
         .addElement(
             't',
             buildHatchAdder(MTEElectricBlastFurnace.class)
@@ -179,7 +178,9 @@ public class OTEIMBABlastFurnace extends MTEElectricBlastFurnace {
             .beginStructureBlock(5, 4, 5, true)
             .addController(translateToLocal("oth.hint.front_bottom"))
             .addCasingInfoRange(translateToLocal("oth.hint.heat_proof_casing"), 0, 15, false)
-            .addOtherStructurePart(translateToLocal("oth.hint.heating_coils"), translateToLocal("oth.hint.two_middle_layers"))
+            .addOtherStructurePart(
+                translateToLocal("oth.hint.heating_coils"),
+                translateToLocal("oth.hint.two_middle_layers"))
             .addMaintenanceHatch(translateToLocal("oth.hint.any_bottom_casing"), 3)
             .addMufflerHatch(translateToLocal("oth.hint.top_middle"), 2)
             .addInputBus(translateToLocal("oth.hint.any_bottom_casing"), 3)
@@ -188,8 +189,7 @@ public class OTEIMBABlastFurnace extends MTEElectricBlastFurnace {
             .addOutputHatch(translateToLocal("oth.hint.fluid_outputs_bottom"))
             .addOutputHatch(translateToLocal("oth.hint.pollution_gases_top"), 1)
             .addStructureInfo(translateToLocal("oth.hint.pollution_scales_muffler"))
-            .addInfo("§7§l" + translateToLocal("oth.tooltip.author")
-                + "§4§l§m勃艮第大公,疯狂的富婆§4§l---§c§lSafariXiu☆")
+            .addInfo("§7§l" + translateToLocal("oth.tooltip.author") + "§4§l§m勃艮第大公,疯狂的富婆§4§l---§c§lSafariXiu☆")
             .addSeparator()
             .addInfo("§4§lAdded by: 123Technology")
             .toolTipFinisher();

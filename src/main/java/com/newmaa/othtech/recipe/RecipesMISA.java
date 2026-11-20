@@ -8,8 +8,8 @@ import net.minecraftforge.fluids.FluidRegistry;
 
 import com.newmaa.othtech.Config;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
-import com.newmaa.othtech.utils.RecipeBuilder;
 
+import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.util.GTModHandler;
 import gregtech.common.items.CombType;
@@ -19,13 +19,13 @@ public class RecipesMISA implements IRecipePool {
 
     public void loadRecipes() {
         // Pyrope
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(
                 setStackSize(Materials.Magnesium.getDust(1), 16 * 110),
                 setStackSize(Materials.Manganese.getDust(1), 16 * 70),
                 setStackSize(Materials.Borax.getDust(1), 16 * 60),
                 setStackSize(GTModHandler.getModItem("miscutils", "itemDustRhenium", 1), 16 * 20))
-            .itemInputs(
+            .itemInputsUnsafe(
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5835), 16 * 256),
                 setStackSize(Materials.Carbon.getDust(1), 40),
                 Materials.Sulfur.getDust(80),
@@ -40,13 +40,13 @@ public class RecipesMISA implements IRecipePool {
             .addTo(Recipemaps.MISA);
 
         // Copper
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(
                 setStackSize(Materials.Copper.getDust(1), 16 * 180),
                 setStackSize(Materials.Iron.getDust(1), 16 * 120),
                 setStackSize(Materials.Cadmium.getDust(1), 16 * 50),
                 setStackSize(Materials.Indium.getDust(1), 16 * 10))
-            .itemInputs(
+            .itemInputsUnsafe(
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5855), 16 * 256),
                 setStackSize(Materials.Carbon.getDust(1), 40),
                 Materials.Sulfur.getDust(80),
@@ -60,13 +60,13 @@ public class RecipesMISA implements IRecipePool {
             .duration(400 * 20)
             .addTo(Recipemaps.MISA);
         // Nickel
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(
                 setStackSize(Materials.Magnesium.getDust(1), 16 * 150),
                 setStackSize(Materials.Manganese.getDust(1), 16 * 110),
                 setStackSize(Materials.Borax.getDust(1), 16 * 32),
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 64), 16 * 16))
-            .itemInputs(
+            .itemInputsUnsafe(
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5034), 16 * 256),
                 setStackSize(Materials.Carbon.getDust(1), 40),
                 Materials.Sulfur.getDust(80),
@@ -80,13 +80,13 @@ public class RecipesMISA implements IRecipePool {
             .duration(400 * 20)
             .addTo(Recipemaps.MISA);
         // Red Stone
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(
                 setStackSize(Materials.Redstone.getDust(1), 16 * 300),
                 setStackSize(Materials.Chrome.getDust(1), 16 * 60),
                 setStackSize(Materials.Firestone.getDust(1), 16 * 45),
                 setStackSize(Materials.Dysprosium.getDust(1), 16 * 16))
-            .itemInputs(
+            .itemInputsUnsafe(
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5810), 16 * 256),
                 setStackSize(Materials.Carbon.getDust(1), 40),
                 Materials.Sulfur.getDust(80),
@@ -100,13 +100,13 @@ public class RecipesMISA implements IRecipePool {
             .duration(400 * 20)
             .addTo(Recipemaps.MISA);
         // Zinc
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(
                 setStackSize(Materials.Zinc.getDust(1), 16 * 180),
                 setStackSize(Materials.Iron.getDust(1), 16 * 120),
                 setStackSize(Materials.Indium.getDust(1), 16 * 64),
                 setStackSize(GTModHandler.getModItem("miscutils", "itemDustGermanium", 1), 16 * 15))
-            .itemInputs(
+            .itemInputsUnsafe(
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5839), 16 * 256),
                 setStackSize(Materials.Carbon.getDust(1), 40),
                 Materials.Sulfur.getDust(80),
@@ -120,13 +120,13 @@ public class RecipesMISA implements IRecipePool {
             .duration(400 * 20)
             .addTo(Recipemaps.MISA);
         // Platinum
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(
                 setStackSize(Materials.Platinum.getDust(1), 16 * 128),
                 setStackSize(Materials.Tellurium.getDust(1), 16 * 70),
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 78), 16 * 60),
                 setStackSize(GTModHandler.getModItem("miscutils", "itemDustSelenium", 1, 0), 16 * 40))
-            .itemInputs(
+            .itemInputsUnsafe(
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5085), 16 * 256),
                 setStackSize(Materials.Carbon.getDust(1), 40),
                 Materials.Sulfur.getDust(80),
@@ -140,13 +140,13 @@ public class RecipesMISA implements IRecipePool {
             .duration(400 * 20)
             .addTo(Recipemaps.MISA);
         // Pentlandite
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(
                 setStackSize(Materials.Iron.getDust(1), 16 * 150),
                 setStackSize(Materials.Nickel.getDust(1), 16 * 100),
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 11000), 16 * 10),
                 setStackSize(Materials.Promethium.getDust(1), 16 * 20))
-            .itemInputs(
+            .itemInputsUnsafe(
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5909), 16 * 256),
                 setStackSize(Materials.Carbon.getDust(1), 40),
                 Materials.Sulfur.getDust(80),
@@ -160,13 +160,13 @@ public class RecipesMISA implements IRecipePool {
             .duration(400 * 20)
             .addTo(Recipemaps.MISA);
         // Spessartine
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(
                 setStackSize(Materials.Manganese.getDust(1), 16 * 150),
                 setStackSize(Materials.Aluminium.getDust(1), 16 * 90),
                 setStackSize(Materials.Osmium.getDust(1), 16 * 30),
                 setStackSize(Materials.Strontium.getDust(1), 16 * 20))
-            .itemInputs(
+            .itemInputsUnsafe(
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5838), 16 * 256),
                 setStackSize(Materials.Carbon.getDust(1), 40),
                 Materials.Sulfur.getDust(80),
@@ -180,13 +180,13 @@ public class RecipesMISA implements IRecipePool {
             .duration(400 * 20)
             .addTo(Recipemaps.MISA);
         // Grossualr
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(
                 setStackSize(Materials.Calcium.getDust(1), 16 * 180),
                 setStackSize(Materials.Aluminium.getDust(1), 16 * 110),
                 setStackSize(Materials.Tungsten.getDust(1), 16 * 60),
                 setStackSize(GTModHandler.getModItem("miscutils", "itemDustThallium", 1), 16 * 15))
-            .itemInputs(
+            .itemInputsUnsafe(
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5831), 16 * 256),
                 setStackSize(Materials.Carbon.getDust(1), 40),
                 Materials.Sulfur.getDust(80),
@@ -200,13 +200,13 @@ public class RecipesMISA implements IRecipePool {
             .duration(400 * 20)
             .addTo(Recipemaps.MISA);
         // Almandine
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(
                 setStackSize(Materials.Aluminium.getDust(1), 16 * 150),
                 setStackSize(Materials.Magnesium.getDust(1), 16 * 75),
                 setStackSize(Materials.Yttrium.getDust(1), 16 * 25),
                 setStackSize(Materials.Ytterbium.getDust(1), 16 * 15))
-            .itemInputs(
+            .itemInputsUnsafe(
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5820), 16 * 256),
                 setStackSize(Materials.Carbon.getDust(1), 40),
                 Materials.Sulfur.getDust(80),
@@ -220,13 +220,13 @@ public class RecipesMISA implements IRecipePool {
             .duration(400 * 20 * 4)
             .addTo(Recipemaps.MISA);
         // Monazite
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(
                 setStackSize(Materials.Erbium.getDust(1), 16 * 64),
                 setStackSize(Materials.Lanthanum.getDust(1), 16 * 32),
                 setStackSize(Materials.Lutetium.getDust(1), 16 * 16),
                 setStackSize(Materials.Europium.getDust(1), 16 * 8))
-            .itemInputs(
+            .itemInputsUnsafe(
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5520), 16 * 256),
                 setStackSize(Materials.Carbon.getDust(1), 40),
                 Materials.Sulfur.getDust(80),
@@ -240,20 +240,20 @@ public class RecipesMISA implements IRecipePool {
             .duration(200 * 20)
             .addTo(Recipemaps.MISA);
         // Indium Plus
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(setStackSize(Materials.Indium.getDust(1), 16 * 256))
-            .itemInputs(setStackSize(GTBees.combs.getStackForType(CombType.INDIUM, 1), 256))
+            .itemInputsUnsafe(setStackSize(GTBees.combs.getStackForType(CombType.INDIUM, 1), 256))
             .fluidInputs(Materials.HydrochloricAcid.getFluid(32000))
             .duration(240 * 20)
             .eut(123123)
             .specialValue(2)
             .addTo(Recipemaps.MISA);
         // Osmium
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(
                 setStackSize(Materials.Iridium.getDust(1), 16 * 60),
                 setStackSize(Materials.Osmium.getDust(1), 16 * 20))
-            .itemInputs(
+            .itemInputsUnsafe(
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5083), 16 * 256),
                 setStackSize(Materials.Carbon.getDust(1), 40),
                 Materials.Sulfur.getDust(80),
@@ -270,7 +270,7 @@ public class RecipesMISA implements IRecipePool {
             .duration(400 * 20)
             .addTo(Recipemaps.MISA);
         // Netherite
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(
                 setStackSize(Materials.Sulfur.getDust(1), 16 * 256),
                 setStackSize(Materials.Antimony.getDust(1), 16 * 55),
@@ -278,7 +278,7 @@ public class RecipesMISA implements IRecipePool {
                 setStackSize(Materials.NetherQuartz.getDust(1), 16 * 40),
                 setStackSize(Materials.Ardite.getDust(1), 16 * 32),
                 setStackSize(Materials.Cobalt.getDust(1), 16 * 32))
-            .itemInputs(setStackSize(new ItemStack(Blocks.netherrack, 1), 2048))
+            .itemInputsUnsafe(setStackSize(new ItemStack(Blocks.netherrack, 1), 2048))
             .fluidInputs(Materials.NefariousGas.getFluid(64000 * 3))
             .fluidOutputs(Materials.PoorNetherWaste.getFluid(256_000))
             .specialValue(1)
@@ -287,8 +287,9 @@ public class RecipesMISA implements IRecipePool {
             .addTo(Recipemaps.MISA);
         if (Config.is_MISA_IMBA_Recipes_Enabled) {
             // Cosmic Neut
-            RecipeBuilder.builder()
-                .itemInputs(setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5388), 16 * 256))
+            GTValues.RA.stdBuilder()
+                .itemInputsUnsafe(
+                    setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5388), 16 * 256))
                 .itemOutputs(
                     setStackSize(Materials.BlackPlutonium.getDust(1), 16 * 120),
                     setStackSize(Materials.CosmicNeutronium.getDust(1), 16 * 32))
@@ -299,13 +300,13 @@ public class RecipesMISA implements IRecipePool {
                 .specialValue(2)
                 .addTo(Recipemaps.MISA);
             // Inf
-            RecipeBuilder.builder()
+            GTValues.RA.stdBuilder()
                 .itemOutputs(
                     setStackSize(Materials.Infinity.getDust(1), 16 * 5),
                     setStackSize(Materials.InfinityCatalyst.getDust(1), 16 * 100),
                     setStackSize(Materials.CosmicNeutronium.getDust(1), 16 * 10),
                     setStackSize(Materials.Neutronium.getDust(1), 16 * 20))
-                .itemInputs(
+                .itemInputsUnsafe(
                     setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5394), 16 * 256),
                     setStackSize(Materials.Carbon.getDust(1), 40),
                     Materials.Sulfur.getDust(80),
@@ -317,13 +318,13 @@ public class RecipesMISA implements IRecipePool {
                 .duration(500 * 20)
                 .addTo(Recipemaps.MISA);
             // Dragon Blood
-            RecipeBuilder.builder()
+            GTValues.RA.stdBuilder()
                 .itemOutputs(
                     setStackSize(Materials.DraconiumAwakened.getDust(1), 16 * 110),
                     setStackSize(Materials.Draconium.getDust(1), 16 * 40),
                     setStackSize(Materials.NetherStar.getDust(1), 16 * 35),
                     setStackSize(GTModHandler.getModItem("miscutils", "itemDustDragonblood", 1), 16 * 4))
-                .itemInputs(
+                .itemInputsUnsafe(
                     setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5976), 16 * 256),
                     setStackSize(Materials.Carbon.getDust(1), 40),
                     Materials.Sulfur.getDust(80),
@@ -337,8 +338,9 @@ public class RecipesMISA implements IRecipePool {
 
         } else {
             // Cosmic Neut
-            RecipeBuilder.builder()
-                .itemInputs(setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5388), 16 * 256))
+            GTValues.RA.stdBuilder()
+                .itemInputsUnsafe(
+                    setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5388), 16 * 256))
                 .itemOutputs(setStackSize(Materials.BlackPlutonium.getDust(1), 32 * 120))
                 .fluidInputs(Materials.Helium.getPlasma(16000))
                 .fluidOutputs(Materials.Helium.getGas(16000))
@@ -347,12 +349,12 @@ public class RecipesMISA implements IRecipePool {
                 .specialValue(2)
                 .addTo(Recipemaps.MISA);
             // Inf
-            RecipeBuilder.builder()
+            GTValues.RA.stdBuilder()
                 .itemOutputs(
                     setStackSize(Materials.InfinityCatalyst.getDust(1), 32 * 100),
                     setStackSize(Materials.CosmicNeutronium.getDust(1), 16 * 10),
                     setStackSize(Materials.Neutronium.getDust(1), 16 * 20))
-                .itemInputs(
+                .itemInputsUnsafe(
                     setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5394), 16 * 256),
                     setStackSize(Materials.Carbon.getDust(1), 40),
                     Materials.Sulfur.getDust(80),
@@ -364,13 +366,13 @@ public class RecipesMISA implements IRecipePool {
                 .duration(500 * 20)
                 .addTo(Recipemaps.MISA);
             // Dragon Blood
-            RecipeBuilder.builder()
+            GTValues.RA.stdBuilder()
                 .itemOutputs(
                     setStackSize(Materials.DraconiumAwakened.getDust(1), 16 * 110),
                     setStackSize(Materials.Draconium.getDust(1), 16 * 40),
                     setStackSize(Materials.NetherStar.getDust(1), 16 * 35),
                     setStackSize(GTModHandler.getModItem("miscutils", "itemDustDragonblood", 1), 2 * 4))
-                .itemInputs(
+                .itemInputsUnsafe(
                     setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5976), 16 * 256),
                     setStackSize(Materials.Carbon.getDust(1), 40),
                     Materials.Sulfur.getDust(80),

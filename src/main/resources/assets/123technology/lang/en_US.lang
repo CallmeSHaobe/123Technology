@@ -26,8 +26,29 @@ ote.cm.mtc.0=1 - Muffler, energy, item/fluid input/output hatches: replace Therm
 # Drone platform: final machine name and tooltip pending
 item.SuicideDronePig.name=PIG Suicide Drone
 item.SuicideDroneAngelica.name=Angelica Suicide Drone
+item.SuicideDroneNuclear.name=PIG Suicide Drone (Gray Nuclear Livery)
+item.SuicideDroneNvidia.name=PIG Suicide Drone (Black NVIDIA Livery)
+ote.drone.tooltip.pig=Standard P-1G livery
+ote.drone.tooltip.angelica=Angelica edition
+death.attack.droneBlast=%1$s was caught in the blast from %2$s
+ote.drone.tooltip.nuclear=Gray livery with a radiation symbol
+ote.drone.tooltip.nvidia=Black livery with a green NVIDIA logo
 ote.tn.drone_launch_platform=Drone Launch Platform (Name Pending)
-ote.tm.drone_launch_platform.0=Tooltip pending
+ote.tm.drone_launch_platform.0=Consumes drone items to attack coordinates or automatically hunt drone downlinks in this dimension
+ote.drone.gui.target=Manual target (current dimension)
+ote.drone.gui.mode.coordinates=Mode: Coordinates
+ote.drone.gui.mode.downlink=Mode: Hunt Downlinks
+ote.drone.gui.mode.help=Auto: attacks the nearest loaded GT drone downlink 16–4096 blocks away in this dimension, regardless of ownership. Ignores manual coordinates. No target consumes no item. Switching disarms. No obstacle avoidance.
+ote.drone.gui.enabled=Continuous launch: ON
+ote.drone.gui.disabled=Continuous launch: OFF
+ote.drone.gui.help=Enter target and launch speed, leave the field, then enable. Uses 1 drone every 5s. Editing disarms the launcher.
+ote.drone.gui.speed=Speed km/h
+ote.drone.gui.speed.help=50–300 km/h, default 200; assumes 1 block = 1 meter at 20 TPS. Also sets powered cruise airspeed.
+ote.drone.info.1=Physical input buses only; no power required; launches once every 5 seconds
+ote.drone.info.2=Explosion strength: PIG 4, Angelica 8. Explosions destroy blocks.
+ote.drone.info.3=Catapulted toward the controller front; propeller thrust and wing lift sustain flight.
+ote.drone.info.4=Keep the forward launch path clear. No obstacle avoidance; route surroundings and destination chunks load automatically during flight.
+entity.123technology.entitySuicideDrone.name=Suicide Drone
 
 # Machine names
 ote.tn.imba=The IMBA EBF
@@ -100,6 +121,7 @@ MetaItemOTH.23.name=§5Ultra-Range Telemetry Unit
 MetaItemOTH.25.name=§4Sliced Brain
 MetaItemOTH.26.name=§4Encapsulated Sliced Brain
 MetaItemOTH.64.name=Antimony Stardust
+MetaItemOTH.65.name=Primitive Rare Earth Catalyst
 IsaMillModule.1.name=§aNeI Alloy Grinder Complex
 IsaMillModule.2.name=§aIridiosamarium Alloy Grinder Complex
 IsaMillModule.3.name=§cHypogen Grinder Complex
@@ -726,7 +748,7 @@ ote.tm.sf.3=§5Utilizes the power of 「Enqing」 to transform raw materials int
 ote.tm.sf.4=§5Possesses a fearsome yield rate and flawless precision.
 ote.tm.sf.attention=§c§lAttention: Enqing input is not allow to use ME crafting buffer!
 ote.tm.sf.5=§aConsumes Enqing to operate: 1t/each.
-ote.tm.sf.6=Set recipe NEI output multiplier in config, default 1.5, rounded.
+ote.tm.sf.6=Set recipe NEI output multiplier in config, default 1x, rounded.
 ote.tm.sf.7=§bInsert a Nanoswarm into main block, gain acceleration based on stack size (log2(swarm count), floor decimal).
 ote.tm.sf.8=§bCarbon Nanoswarm -- -2%
 ote.tm.sf.9=§bSpacetime Nanoswarm -- 30%

@@ -6,9 +6,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
 
 import com.newmaa.othtech.common.recipemap.Recipemaps;
-import com.newmaa.othtech.utils.RecipeBuilder;
 
 import crazypants.enderio.EnderIO;
+import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.util.GTModHandler;
@@ -185,9 +185,9 @@ public class RecipesEIO implements IRecipePool {
             .addTo(EIO);
 
         // SkullAssembler
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(GTModHandler.getModItem(EnderIO.MODID, "itemFrankenSkull", 1, 0))
-            .itemInputs(
+            .itemInputsUnsafe(
                 new ItemStack(Items.skull, 1),
                 Materials.EnergeticAlloy.getIngots(2),
                 Materials.Silicon.getPlates(2),
@@ -196,9 +196,9 @@ public class RecipesEIO implements IRecipePool {
             .duration(60 * 20)
             .addTo(EIO);
 
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(GTModHandler.getModItem(EnderIO.MODID, "itemFrankenSkull", 1, 1))
-            .itemInputs(
+            .itemInputsUnsafe(
                 new ItemStack(Items.skull, 1),
                 Materials.Soularium.getIngots(2),
                 Materials.Silicon.getPlates(2),
@@ -207,9 +207,9 @@ public class RecipesEIO implements IRecipePool {
             .duration(60 * 20)
             .addTo(EIO);
 
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(GTModHandler.getModItem(EnderIO.MODID, "blockEndermanSkull", 1, 2))
-            .itemInputs(
+            .itemInputsUnsafe(
                 GTModHandler.getModItem(EnderIO.MODID, "itemBasicCapacitor", 1),
                 Materials.Soularium.getIngots(2),
                 new ItemStack(Items.potionitem, 2),
@@ -218,9 +218,9 @@ public class RecipesEIO implements IRecipePool {
             .duration(60 * 20)
             .addTo(EIO);
 
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(GTModHandler.getModItem(EnderIO.MODID, "itemFrankenSkull", 1, 3))
-            .itemInputs(
+            .itemInputsUnsafe(
                 Materials.VibrantAlloy.getIngots(1),
                 Materials.Soularium.getIngots(2),
                 Materials.Silicon.getPlates(2),
@@ -229,9 +229,9 @@ public class RecipesEIO implements IRecipePool {
             .duration(60 * 20)
             .addTo(EIO);
 
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(GTModHandler.getModItem(EnderIO.MODID, "itemFrankenSkull", 1, 5))
-            .itemInputs(
+            .itemInputsUnsafe(
                 new ItemStack(Items.skull, 1),
                 Materials.Soularium.getIngots(2),
                 Materials.Silicon.getPlates(1),
@@ -240,9 +240,9 @@ public class RecipesEIO implements IRecipePool {
             .duration(60 * 20)
             .addTo(EIO);
 
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(GTModHandler.getModItem(EnderIO.MODID, "itemFrankenSkull", 1, 6))
-            .itemInputs(
+            .itemInputsUnsafe(
                 Materials.EnergeticAlloy.getIngots(1),
                 Materials.Soularium.getIngots(2),
                 Materials.Silicon.getPlates(1),
@@ -251,9 +251,9 @@ public class RecipesEIO implements IRecipePool {
             .duration(60 * 20)
             .addTo(EIO);
 
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(GTModHandler.getModItem(EnderIO.MODID, "itemBasicCapacitor", 1, 6))
-            .itemInputs(
+            .itemInputsUnsafe(
                 new ItemStack(Items.golden_apple, 1, 1),
                 Materials.Soularium.getIngots(2),
                 GTModHandler.getModItem(EnderIO.MODID, "itemMaterial", 2, 15),

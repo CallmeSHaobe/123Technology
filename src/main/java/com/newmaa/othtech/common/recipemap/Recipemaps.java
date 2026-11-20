@@ -10,6 +10,7 @@ import com.newmaa.othtech.common.blocks.deepseiko.DeepSeikoCasingMeta;
 import com.newmaa.othtech.common.recipemap.formatter.MISASpecialValueFormatter;
 import com.newmaa.othtech.common.recipemap.formatter.VoidNexusHeatFormatter;
 import com.newmaa.othtech.common.recipemap.recipeMapFrontends.AbstractSanctumFrontend;
+import com.newmaa.othtech.common.recipemap.recipeMapFrontends.DeepSeikoBECFrontend;
 import com.newmaa.othtech.common.recipemap.recipeMapFrontends.OTH_GeneralFrontend;
 import com.newmaa.othtech.common.recipemap.recipeMapFrontends.OTH_GeneralFrontendFireRocket;
 import com.newmaa.othtech.common.recipemap.recipeMapFrontends.VoidNexusUpgradeFrontend;
@@ -293,8 +294,7 @@ public class Recipemaps {
         .neiHandlerInfo(b -> b.setDisplayStack(OTHItemList.DeepSeikoToken.get(1)))
         .build();
 
-    // 迪普西科·装配线配方（模式 A）：由 DeepSeikoALRecipeLoader 拷贝 GT 装配线可视化配方
-    // （去 fake、去数据棒）而来，只收装配线（不收电路装配线 CAL），零维护直跑。
+    // 迪普西科装配线（模式 A）：导入 GT 装配线配方，同产物优先使用 TST 手写版本。
     public static final RecipeMap<OTH_RecipeMapBackend> DeepSeikoAL = RecipeMapBuilder
         .of("otht.recipe.DeepSeikoAL", OTH_RecipeMapBackend::new)
         // 装配线版式：16 物品输入 / 1 输出 / 4 流体（和 GT 装配线一致）

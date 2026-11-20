@@ -65,8 +65,34 @@ public class ItemLoader {
     public static Item itemPsionicStabilizer = new ItemPsionicStabilizer();
     public static Item itemVoidPotential = new ItemVoidPotential();
     public static Item dogSpawnEgg = new ItemDogSpawnEgg();
-    public static Item suicideDronePig = new ItemSuicideDrone("SuicideDronePig", ItemSuicideDrone.PIG);
-    public static Item suicideDroneAngelica = new ItemSuicideDrone("SuicideDroneAngelica", ItemSuicideDrone.ANGELICA);
+    public static Item suicideDronePig = new ItemSuicideDrone(
+        "SuicideDronePig",
+        ItemSuicideDrone.PIG,
+        2F,
+        16F,
+        24F,
+        "ote.drone.tooltip.pig");
+    public static Item suicideDroneAngelica = new ItemSuicideDrone(
+        "SuicideDroneAngelica",
+        ItemSuicideDrone.ANGELICA,
+        8F,
+        64F,
+        64F,
+        "ote.drone.tooltip.angelica");
+    public static Item suicideDroneNuclear = new ItemSuicideDrone(
+        "SuicideDroneNuclear",
+        ItemSuicideDrone.NUCLEAR,
+        64F,
+        512F,
+        128F,
+        "ote.drone.tooltip.nuclear");
+    public static Item suicideDroneNvidia = new ItemSuicideDrone(
+        "SuicideDroneNvidia",
+        ItemSuicideDrone.NVIDIA,
+        48F,
+        384F,
+        112F,
+        "ote.drone.tooltip.nvidia");
 
     public ItemLoader(FMLPreInitializationEvent event) {
         OTHItemList.Zhangww.set(registryAndCallback(itemZhangww, "itemZhangww"));
@@ -99,6 +125,8 @@ public class ItemLoader {
 
         OTHItemList.SuicideDronePig.set(registryAndCallback(suicideDronePig, "suicideDronePig"));
         OTHItemList.SuicideDroneAngelica.set(registryAndCallback(suicideDroneAngelica, "suicideDroneAngelica"));
+        OTHItemList.SuicideDroneNuclear.set(registryAndCallback(suicideDroneNuclear, "suicideDroneNuclear"));
+        OTHItemList.SuicideDroneNvidia.set(registryAndCallback(suicideDroneNvidia, "suicideDroneNvidia"));
 
         // 三种狗共用一个刷怪蛋物品，靠 metadata 区分（registryAndCallback 里已经 registerItem 过一次）
         OTHItemList.DogYellowSpawnEgg.set(registryAndCallback(dogSpawnEgg, "dogSpawnEgg"));

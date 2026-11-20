@@ -49,7 +49,10 @@ public class OTEMiniActiveTransformer extends OTHTTMultiMachineBaseEM
 
     private static final IStructureDefinition<OTEMiniActiveTransformer> STRUCTURE_DEFINITION = IStructureDefinition
         .<OTEMiniActiveTransformer>builder()
-        .addShape("main", new String[][] { { "1", "~", "1", } })
+        .addShape(
+            "main",
+            com.newmaa.othtech.utils.ShapeLoader
+                .loadCompressed("/assets/123technology/structures/ote/OTEMiniActiveTransformer_1.shape.gz"))
         .addElement(
             '1',
             buildHatchAdder(OTEMiniActiveTransformer.class)

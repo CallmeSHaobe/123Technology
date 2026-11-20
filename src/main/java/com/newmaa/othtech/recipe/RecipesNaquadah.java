@@ -141,7 +141,7 @@ public class RecipesNaquadah implements IRecipePool {
         int[] TimeFuel = new int[] { 8 * SECOND, 36 * SECOND, 10 * SECOND, 4 * SECOND, 4 * SECOND, 6 * SECOND,
             6 * SECOND, 12 * SECOND, 18 * SECOND, (int) (1.5 * SECOND), (int) (1.5 * SECOND), 53 * SECOND };
         for (int i = 0; i < inputs.length; i++) {
-            GTValues.RA.stdBuilder()
+            RecipeBuilder.builder()
                 .fluidInputs(inputs[i])
                 .fluidOutputs(outputs[i])
                 .duration(TimeFuel[i])
@@ -151,7 +151,7 @@ public class RecipesNaquadah implements IRecipePool {
 
         }
         // CHEM FUEL
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .fluidOutputs(BWLiquids.FUELA.getFluidOrGas(1000))
             .fluidInputs(
                 Materials.Naquadah.getMolten(864),
@@ -160,7 +160,7 @@ public class RecipesNaquadah implements IRecipePool {
             .eut(TierEU.RECIPE_ZPM)
             .duration(5)
             .addTo(RecipeMaps.mixerRecipes);
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .fluidOutputs(BWLiquids.FUELA.getFluidOrGas(1000))
             .fluidInputs(
                 Materials.Naquadah.getMolten(864),
@@ -169,37 +169,37 @@ public class RecipesNaquadah implements IRecipePool {
             .eut(TierEU.RECIPE_ZPM)
             .duration(5)
             .addTo(RecipeMaps.mixerNonCellRecipes);
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .fluidInputs(BWLiquids.FUELA_DE.getFluidOrGas(500))
             .itemOutputs(Materials.Naquadah.getDust(2), Materials.Carbon.getDust(48))
             .eut(TierEU.RECIPE_MV)
             .duration(800)
             .addTo(RecipeMaps.centrifugeRecipes);
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .fluidInputs(BWLiquids.FUELA_DE.getFluidOrGas(500))
             .itemOutputs(Materials.Naquadah.getDust(2), Materials.Carbon.getDust(48))
             .eut(TierEU.RECIPE_MV)
             .duration(800)
             .addTo(RecipeMaps.centrifugeNonCellRecipes);
         // Promoter
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .fluidOutputs(BWLiquids.PromoterZPM.getFluidOrGas(800))
             .fluidInputs(
                 GGMaterial.atomicSeparationCatalyst.getMolten(144),
                 FluidRegistry.getFluidStack("combustionpromotor", 1000),
                 Materials.LiquidAir.getFluid(4000))
-            .itemInputs(OTHItemList.dustLookNEIM.get(0))
+            .itemInputsUnsafe(OTHItemList.dustLookNEIM.get(0))
             .eut(114514)
             .duration(5)
             .specialValue(2)
             .addTo(RecipeMaps.chemicalPlantRecipes);
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .fluidOutputs(BWLiquids.PromoterUEV.getFluidOrGas(4000))
             .fluidInputs(
                 BWLiquids.PromoterZPM.getFluidOrGas(1600),
                 Materials.Helium.getPlasma(288),
                 Materials.Oxygen.getPlasma(288))
-            .itemInputs(OTHItemList.dustLookNEIM.get(0))
+            .itemInputsUnsafe(OTHItemList.dustLookNEIM.get(0))
             .eut(2097152)
             .duration(5)
             .specialValue(-114)

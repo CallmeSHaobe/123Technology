@@ -53,10 +53,10 @@ import bartworks.API.BorosilicateGlass;
 import crazypants.enderio.EnderIO;
 import gregtech.api.GregTechAPI;
 import gregtech.api.enums.Materials;
-import gregtech.api.enums.TierEU;
-import gregtech.api.enums.VoidingMode;
 import gregtech.api.enums.SoundResource;
 import gregtech.api.enums.Textures;
+import gregtech.api.enums.TierEU;
+import gregtech.api.enums.VoidingMode;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
@@ -103,17 +103,10 @@ public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> {
     private static IStructureDefinition<OTEMegaEEC> STRUCTURE_DEFINITION = null;
 
     private static final String[] description = new String[] {
-        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":",
-        translateToLocal("ote.cm.eec.0") };
-
-    private static final int SHAPE_WIDTH = 50;
-
-    private static final int SHAPE_HEIGHT = 143;
-
-    private static final int SHAPE_LAYERS = 56;
+        EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.eec.0") };
 
     private static final String[][] shapeMain = ShapeLoader
-        .load("/assets/123technology/structures/megaeec_shape.txt", SHAPE_WIDTH, SHAPE_HEIGHT, SHAPE_LAYERS);
+        .loadCompressed("/assets/123technology/structures/ote/OTEMegaEEC_main.shape.gz");
 
     public OTEMegaEEC.EECFakePlayer EECPlayer = null;
 
@@ -306,18 +299,25 @@ public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> {
         Map<GTUtility.ItemId, Long> amounts = new LinkedHashMap<>();
         for (OTHMobHandlerLoader.MobEECRecipe recipe : spawners) {
             List<ItemStack> modifierDrops = new ArrayList<>();
-            recipe.entityCopy.setPosition(getBaseMetaTileEntity().getXCoord(), getBaseMetaTileEntity().getYCoord(),
+            recipe.entityCopy.setPosition(
+                getBaseMetaTileEntity().getXCoord(),
+                getBaseMetaTileEntity().getYCoord(),
                 getBaseMetaTileEntity().getZCoord());
             for (MobDrop drop : recipe.mOutputs) {
                 if (drop.stack == null || drop.damages != null || drop.enchantable != null) continue;
                 double chancePercent = drop.chance / 100D;
                 for (IChanceModifier modifier : drop.chanceModifiers) {
-                    chancePercent = modifier.apply(chancePercent, getBaseMetaTileEntity().getWorld(), modifierDrops,
-                        EECPlayer, recipe.entityCopy);
+                    chancePercent = modifier.apply(
+                        chancePercent,
+                        getBaseMetaTileEntity().getWorld(),
+                        modifierDrops,
+                        EECPlayer,
+                        recipe.entityCopy);
                 }
                 if (drop.playerOnly) chancePercent *= kubatech.config.Config.MobHandler.playerOnlyDropsModifier;
                 if (!Double.isFinite(chancePercent) || chancePercent <= 0D) continue;
-                double expected = (chancePercent / 100D) * drop.stack.stackSize * PARALLELS_PER_SPAWNER
+                double expected = (chancePercent / 100D) * drop.stack.stackSize
+                    * PARALLELS_PER_SPAWNER
                     * (1D + LOOTING_LEVEL * 0.5D);
                 if (expected <= 0D) continue;
                 long count = expected >= Long.MAX_VALUE ? Long.MAX_VALUE : (long) expected;
@@ -325,8 +325,8 @@ public class OTEMegaEEC extends OTHMultiMachineBase<OTEMegaEEC> {
                 if (count <= 0) continue;
                 GTUtility.ItemId id = GTUtility.ItemId.createNoCopy(drop.stack);
                 samples.putIfAbsent(id, drop.stack);
-                amounts.merge(id, count,
-                    (left, right) -> left > Long.MAX_VALUE - right ? Long.MAX_VALUE : left + right);
+                amounts
+                    .merge(id, count, (left, right) -> left > Long.MAX_VALUE - right ? Long.MAX_VALUE : left + right);
                 modifierDrops.add(drop.stack);
             }
         }

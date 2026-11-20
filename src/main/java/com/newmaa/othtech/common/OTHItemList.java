@@ -123,6 +123,8 @@ public enum OTHItemList {
 
     SuicideDronePig,
     SuicideDroneAngelica,
+    SuicideDroneNuclear,
+    SuicideDroneNvidia,
 
     // Machines
     DroneLaunchPlatform,
@@ -182,7 +184,8 @@ public enum OTHItemList {
     VoidNexusEssentiaBus,
 
     DeepSeiko,
-    DeepSeikoNaniteCell;
+    DeepSeikoNaniteCell,
+    PrimitiveRareEarthCatalyst;
 
     private boolean mHasNotBeenSet;
     private boolean mDeprecated;

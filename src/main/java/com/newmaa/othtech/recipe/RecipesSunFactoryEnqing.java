@@ -235,7 +235,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
         RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(23),
-                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.SuperconductorUV, 1), 300),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.SuperconductorUVBase, 1), 300),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Neutronium, 1), 300),
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32076), 64),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Iron, 1), 59),
@@ -251,7 +251,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
         RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(24),
-                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.SuperconductorUV, 1), 300),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.SuperconductorUVBase, 1), 300),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Neutronium, 1), 300),
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32076), 64),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Iron, 1), 59),
@@ -1502,7 +1502,7 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
                 FluidRegistry.getFluidStack("molten.sunnarium", 9216 * 256),
                 FluidRegistry.getFluidStack("molten.epoxid", 1152 * 256),
                 FluidRegistry.getFluidStack("molten.polybenzimidazole", 1152 * 256),
-                FluidRegistry.getFluidStack("molten.Polytetrafluoroethylene", 1152 * 256),
+                FluidRegistry.getFluidStack("molten.polytetrafluoroethylene", 1152 * 256),
                 FluidRegistry.getFluidStack("molten.solderingalloy", 128123 * 256),
                 FluidRegistry.getFluidStack("molten.neutronium", 9216 * 256))
 

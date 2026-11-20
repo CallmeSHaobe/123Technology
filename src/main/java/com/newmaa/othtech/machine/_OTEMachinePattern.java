@@ -205,8 +205,8 @@ public class _OTEMachinePattern extends OTHMultiMachineBase<_OTEMachinePattern> 
     }
 
     // 示例结构：3x3x3 空心中空，控制器位于正面中心（换正式结构后连同本注释一起替换）
-    private final String[][] shapeMain = new String[][] { { "AAA", "A~A", "AAA" }, { "AAA", "A A", "AAA" },
-        { "AAA", "AAA", "AAA" } };
+    private final String[][] shapeMain = com.newmaa.othtech.utils.ShapeLoader
+        .loadCompressed("/assets/123technology/structures/ote/_OTEMachinePattern_shapeMain.shape.gz");
 
     // ===================== Tooltip =====================
 

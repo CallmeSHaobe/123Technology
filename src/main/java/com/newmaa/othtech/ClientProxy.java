@@ -21,6 +21,7 @@ import com.newmaa.othtech.common.entity.EntityDogYellow;
 import com.newmaa.othtech.common.entity.EntityFakePlayer;
 import com.newmaa.othtech.common.entity.EntityNukeThrowable;
 import com.newmaa.othtech.common.entity.EntityPositronShot;
+import com.newmaa.othtech.common.entity.EntitySuicideDrone;
 import com.newmaa.othtech.common.entity.RenderDogColored;
 import com.newmaa.othtech.common.entity.RenderPlayer;
 import com.newmaa.othtech.common.item.ItemLoader;
@@ -28,10 +29,12 @@ import com.newmaa.othtech.common.item.itemArmor.ItemHelmTallHatRender;
 import com.newmaa.othtech.common.item.itemBlock.ItemModelAsukaRender;
 import com.newmaa.othtech.common.item.itemBlock.ItemModelAyanamiRender;
 import com.newmaa.othtech.common.item.itemBlock.ItemModelTallHatRender;
+import com.newmaa.othtech.common.item.itemMisc.ItemSuicideDrone;
 import com.newmaa.othtech.common.item.itemWeapons.RenderPositronCannon;
 import com.newmaa.othtech.common.materials.OTHMaterials;
 import com.newmaa.othtech.common.render.RenderDrone;
 import com.newmaa.othtech.common.render.RenderPositronShot;
+import com.newmaa.othtech.common.render.RenderSuicideDrone;
 import com.newmaa.othtech.common.render.RiceBowlRenderer;
 import com.newmaa.othtech.common.render.RocketRenderOTH;
 
@@ -77,6 +80,10 @@ public class ClientProxy extends CommonProxy {
         MinecraftForgeClient.registerItemRenderer(OTHItemList.PositronCannon.getItem(), new RenderPositronCannon());
         MinecraftForgeClient.registerItemRenderer(OTHItemList.SuicideDronePig.getItem(), new RenderDrone(1));
         MinecraftForgeClient.registerItemRenderer(OTHItemList.SuicideDroneAngelica.getItem(), new RenderDrone(2));
+        MinecraftForgeClient
+            .registerItemRenderer(OTHItemList.SuicideDroneNuclear.getItem(), new RenderDrone(ItemSuicideDrone.NUCLEAR));
+        MinecraftForgeClient
+            .registerItemRenderer(OTHItemList.SuicideDroneNvidia.getItem(), new RenderDrone(ItemSuicideDrone.NVIDIA));
         RenderingRegistry.registerEntityRenderingHandler(EntityFakePlayer.class, new RenderPlayer());
 
         OTEMaterialRenderEffects.install();
@@ -95,6 +102,7 @@ public class ClientProxy extends CommonProxy {
             EntityNukeThrowable.class,
             new RenderSnowball(ItemLoader.itemNukeThrowable));
         RenderingRegistry.registerEntityRenderingHandler(EntityPositronShot.class, new RenderPositronShot());
+        RenderingRegistry.registerEntityRenderingHandler(EntitySuicideDrone.class, new RenderSuicideDrone());
 
     }
 

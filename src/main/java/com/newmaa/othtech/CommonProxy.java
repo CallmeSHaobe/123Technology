@@ -6,6 +6,7 @@ import net.minecraftforge.common.MinecraftForge;
 import com.newmaa.othtech.common.blocks.oterender.BlockRocketRender;
 import com.newmaa.othtech.common.dimensions.ross123b.Ross123bBiomeMigration;
 import com.newmaa.othtech.common.dimensions.ross123b.Ross123bSpawnHandler;
+import com.newmaa.othtech.common.entity.DroneChunkLoader;
 import com.newmaa.othtech.common.entity.EntityLoader;
 
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -20,7 +21,13 @@ public class CommonProxy {
 
     // preInit "Run before anything else. Read your config, create blocks, items, etc, and register them with the
     // GameRegistry." (Remove if not needed)
-    public void preInit(FMLPreInitializationEvent event) {}
+    public void preInit(FMLPreInitializationEvent event) {
+        DroneChunkLoader.register(
+            cpw.mods.fml.common.Loader.instance()
+                .getIndexedModList()
+                .get(OTHTechnology.MODID)
+                .getMod());
+    }
 
     // load "Do your mod setup. Build whatever data structures you care about. Register recipes." (Remove if not needed)
     public void init(FMLInitializationEvent event) {

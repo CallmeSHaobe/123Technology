@@ -26,8 +26,8 @@ public class SatFakePlayer extends ModelBiped {
             this.bipedRightArm.rotateAngleX = -0.5F;
 
             // 头部保持水平
-            this.bipedHead.rotateAngleX = 0.0F;
-            this.bipedHead.rotateAngleY = 0.0F;
+            this.bipedHead.rotateAngleX = this.bipedHeadwear.rotateAngleX = 0.0F;
+            this.bipedHead.rotateAngleY = this.bipedHeadwear.rotateAngleY = 0.0F;
         }
     }
 }
