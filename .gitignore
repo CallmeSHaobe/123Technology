@@ -1,4 +1,6 @@
 .gradle
+/.gradle-user/
+/.gradle-shared/
 .settings
 /.idea/
 /tmp/
@@ -43,6 +45,7 @@ layout.json
 /libs/*.jar
 !/libs/chisel-2.17.27-GTNH.jar
 /*.png
+/OTHTechnology-*-test.jar
 /_whale/
 /CropsNH-水稻种子/
 /米饭投影-验收/

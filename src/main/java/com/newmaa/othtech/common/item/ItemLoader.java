@@ -18,9 +18,11 @@ import com.newmaa.othtech.common.item.itemFoods.ItemZhangww;
 import com.newmaa.othtech.common.item.itemMisc.ItemComputeCenter;
 import com.newmaa.othtech.common.item.itemMisc.ItemDeepSeikoToken;
 import com.newmaa.othtech.common.item.itemMisc.ItemDeepSeikoTokenSilver;
+import com.newmaa.othtech.common.item.itemMisc.ItemPsionicStabilizer;
 import com.newmaa.othtech.common.item.itemMisc.ItemRiceSingularity;
 import com.newmaa.othtech.common.item.itemMisc.ItemSpacetimeCoolingCore;
 import com.newmaa.othtech.common.item.itemMisc.ItemSuicideDrone;
+import com.newmaa.othtech.common.item.itemMisc.ItemVoidPotential;
 import com.newmaa.othtech.common.item.itemSpawnEgg.ItemDogSpawnEgg;
 import com.newmaa.othtech.common.item.itemTools.Dasima;
 import com.newmaa.othtech.common.item.itemTools.ItemRecord;
@@ -60,6 +62,8 @@ public class ItemLoader {
     public static Item itemComputeCenter = new ItemComputeCenter();
     public static Item itemRiceSingularity = new ItemRiceSingularity();
     public static Item itemSpacetimeCoolingCore = new ItemSpacetimeCoolingCore();
+    public static Item itemPsionicStabilizer = new ItemPsionicStabilizer();
+    public static Item itemVoidPotential = new ItemVoidPotential();
     public static Item dogSpawnEgg = new ItemDogSpawnEgg();
     public static Item suicideDronePig = new ItemSuicideDrone(
         "SuicideDronePig",
@@ -116,6 +120,8 @@ public class ItemLoader {
         OTHItemList.ComputeCenter.set(registryAndCallback(itemComputeCenter, "ComputeCenter"));
         OTHItemList.RiceSingularity.set(registryAndCallback(itemRiceSingularity, "RiceSingularity"));
         OTHItemList.SpacetimeCoolingCore.set(registryAndCallback(itemSpacetimeCoolingCore, "SpacetimeCoolingCore"));
+        OTHItemList.PsionicStabilizer.set(registryAndCallback(itemPsionicStabilizer, "PsionicStabilizer"));
+        OTHItemList.VoidPotential.set(registryAndCallback(itemVoidPotential, "VoidPotential"));
 
         OTHItemList.SuicideDronePig.set(registryAndCallback(suicideDronePig, "suicideDronePig"));
         OTHItemList.SuicideDroneAngelica.set(registryAndCallback(suicideDroneAngelica, "suicideDroneAngelica"));
