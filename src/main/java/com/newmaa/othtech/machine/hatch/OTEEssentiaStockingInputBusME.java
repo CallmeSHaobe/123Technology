@@ -3,7 +3,9 @@ package com.newmaa.othtech.machine.hatch;
 import static net.minecraft.util.StatCollector.translateToLocal;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
@@ -15,14 +17,9 @@ import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.util.ForgeDirection;
 
-import com.cleanroommc.modularui.factory.PosGuiData;
-import com.cleanroommc.modularui.screen.ModularPanel;
-import com.cleanroommc.modularui.screen.UISettings;
-import com.cleanroommc.modularui.value.sync.PanelSyncManager;
 import com.gtnewhorizons.aspectrecipeindex.ModItems;
 import com.gtnewhorizons.aspectrecipeindex.common.items.ItemAspect;
 
-import appeng.api.networking.IGrid;
 import appeng.api.networking.energy.IEnergyGrid;
 import appeng.api.storage.IMEMonitor;
 import appeng.me.GridAccessException;
@@ -39,15 +36,6 @@ import thaumcraft.api.aspects.Aspect;
 import thaumicenergistics.common.storage.AEEssentiaStack;
 import thaumicenergistics.common.storage.AEEssentiaStackType;
 
-/**
- * Advanced stocking ME input bus whose stock is the essentia channel of the connected AE network.
- *
- * <p>
- * Unlike the item stocking bus, this hatch has no item filter. Each Void Nexus recipe check sees all essentia
- * currently available on the network. Essentia is extracted only after the recipe passes validation, using AE grid
- * power in the same way as the advanced item stocking bus.
- * </p>
- */
 public class OTEEssentiaStockingInputBusME extends MTEHatchInputBusME {
 
     private boolean essentiaAutoPull = true;
@@ -87,11 +75,6 @@ public class OTEEssentiaStockingInputBusME extends MTEHatchInputBusME {
     public void onPostTick(IGregTechTileEntity base, long timer) {
         super.onPostTick(base, timer);
         if (base.isServerSide() && essentiaAutoPull && timer % 20L == 0L) refreshEssentiaStock();
-    }
-
-    @Override
-    public ModularPanel buildUI(PosGuiData data, PanelSyncManager syncManager, UISettings uiSettings) {
-        return super.buildUI(data, syncManager, uiSettings);
     }
 
     @Override
@@ -156,9 +139,10 @@ public class OTEEssentiaStockingInputBusME extends MTEHatchInputBusME {
 
     @Override
     public boolean pasteCopiedData(EntityPlayer player, NBTTagCompound tag) {
-        if (!super.pasteCopiedData(player, tag)) return false;
-        essentiaAutoPull = !tag.hasKey("essentiaAutoPull") || tag.getBoolean("essentiaAutoPull");
-        Arrays.fill(slots, null);
+        if (tag == null) return false;
+        NBTTagCompound config = (NBTTagCompound) tag.copy();
+        config.setBoolean("autoPull", !tag.hasKey("essentiaAutoPull") || tag.getBoolean("essentiaAutoPull"));
+        if (!super.pasteCopiedData(player, config)) return false;
         if (essentiaAutoPull) {
             refreshEssentiaStock();
         } else {
@@ -171,47 +155,69 @@ public class OTEEssentiaStockingInputBusME extends MTEHatchInputBusME {
     public NBTTagCompound getCopiedData(EntityPlayer player) {
         NBTTagCompound tag = super.getCopiedData(player);
         tag.setBoolean("essentiaAutoPull", essentiaAutoPull);
+        tag.setBoolean("autoPull", essentiaAutoPull);
+        if (essentiaAutoPull) tag.removeTag("itemsToStock");
         return tag;
     }
 
-    public Object getNetworkIdentity() {
+    private Object getNetworkIdentity() {
         try {
-            IGrid grid = getProxy().getGrid();
-            return grid == null ? null : grid;
+            return getProxy().getGrid();
         } catch (GridAccessException ignored) {
             return null;
         }
     }
 
-    /**
-     * Adds every available essentia aspect to {@code output}, stopping after {@code limit} units.
-     *
-     * @return number of essentia units added
-     */
-    public long collectAvailableEssentia(Map<Aspect, Long> output, long limit) {
-        if (limit <= 0L || !isActive()) return 0L;
-        IMEMonitor<AEEssentiaStack> monitor = getEssentiaMonitor();
-        if (monitor == null) return 0L;
-
-        Set<Aspect> filters = essentiaAutoPull ? Collections.emptySet() : getAspectFilters();
-        long remaining = limit;
-        for (AEEssentiaStack stack : monitor.getStorageList()) {
-            if (remaining <= 0L) break;
-            if (stack == null || stack.getAspect() == null || stack.getStackSize() <= 0L) continue;
-            if (!filters.isEmpty() && !filters.contains(stack.getAspect())) continue;
-            long amount = Math.min(remaining, stack.getStackSize());
-            output.merge(stack.getAspect(), amount, Long::sum);
-            remaining -= amount;
+    /** Buses on one grid share stock, but each bus can expose a different set of aspects. */
+    public static void collectAvailableEssentia(Collection<OTEEssentiaStockingInputBusME> buses,
+        Map<Aspect, Long> output, long limit) {
+        if (limit <= 0L) return;
+        Map<Object, Map<Aspect, Long>> stocks = new LinkedHashMap<>();
+        for (OTEEssentiaStockingInputBusME bus : buses) {
+            if (bus.getBaseMetaTileEntity() == null || bus.getBaseMetaTileEntity()
+                .isDead() || !bus.isAllowedToWork()) continue;
+            Object grid = bus.getNetworkIdentity();
+            if (grid != null) bus.collectNetworkStock(stocks.computeIfAbsent(grid, ignored -> new LinkedHashMap<>()));
         }
-        return limit - remaining;
+        for (Map<Aspect, Long> stock : stocks.values()) {
+            for (Map.Entry<Aspect, Long> entry : stock.entrySet()) {
+                long amount = Math.min(limit, entry.getValue());
+                output.merge(entry.getKey(), amount, Long::sum);
+                limit -= amount;
+                if (limit == 0L) return;
+            }
+        }
     }
 
-    /**
-     * Extracts essentia from the ME network with AE power. A partial result is returned when the network does not
-     * contain the full request.
-     */
-    public long extractEssentia(Aspect aspect, long amount) {
-        if (aspect == null || amount <= 0L || !isActive()) return 0L;
+    private void collectNetworkStock(Map<Aspect, Long> stock) {
+        IMEMonitor<AEEssentiaStack> monitor = getEssentiaMonitor();
+        if (monitor == null) return;
+
+        Set<Aspect> filters = essentiaAutoPull ? Collections.emptySet() : getAspectFilters();
+        for (AEEssentiaStack stack : monitor.getStorageList()) {
+            if (stack == null || stack.getAspect() == null || stack.getStackSize() <= 0L) continue;
+            if (!filters.isEmpty() && !filters.contains(stack.getAspect())) continue;
+            stock.merge(stack.getAspect(), stack.getStackSize(), Math::max);
+        }
+    }
+
+    public static long extractEssentia(Collection<OTEEssentiaStockingInputBusME> buses, Aspect aspect, long amount) {
+        long remaining = amount;
+        for (OTEEssentiaStockingInputBusME bus : buses) {
+            if (bus.getBaseMetaTileEntity() == null || bus.getBaseMetaTileEntity()
+                .isDead()) continue;
+            remaining -= bus.extractEssentia(aspect, remaining);
+            if (remaining == 0L) break;
+        }
+        return amount - remaining;
+    }
+
+    private long extractEssentia(Aspect aspect, long amount) {
+        if (aspect == null || amount <= 0L || !isAllowedToWork()) return 0L;
+        if (!essentiaAutoPull) {
+            Set<Aspect> filters = getAspectFilters();
+            if (!filters.isEmpty() && !filters.contains(aspect)) return 0L;
+        }
         IMEMonitor<AEEssentiaStack> monitor = getEssentiaMonitor();
         if (monitor == null) return 0L;
         IEnergyGrid energy = getProxyEnergy();
@@ -222,14 +228,9 @@ public class OTEEssentiaStockingInputBusME extends MTEHatchInputBusME {
         return extracted == null ? 0L : Math.min(amount, extracted.getStackSize());
     }
 
-    /**
-     * Do not participate in GT's item-stocking transaction. Aspect markers in the display slots are metadata,
-     * not item requests, and Void Nexus extracts them through the essentia channel itself.
-     */
+    /** The display uses item markers. Transactions use the AE essentia channel. */
     @Override
-    public void startRecipeProcessing() {
-        // Custom essentia extraction is performed by VoidNexusMatrix after recipe validation.
-    }
+    public void startRecipeProcessing() {}
 
     @Override
     public CheckRecipeResult endRecipeProcessing(MTEMultiBlockBase machine) {
