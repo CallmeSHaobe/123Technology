@@ -183,6 +183,7 @@ public enum OTHItemList {
     VoidNexusMatrix,
     PsionicManifestationModule,
     VoidNexusEssentiaBus,
+    LargeEssentiaGenerator,
 
     DeepSeiko,
     DeepSeikoNaniteCell,

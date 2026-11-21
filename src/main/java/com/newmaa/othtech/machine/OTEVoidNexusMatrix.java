@@ -61,7 +61,10 @@ import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.gui.OTEVoidNexusMatrixGui;
 import com.newmaa.othtech.machine.hatch.OTEEssentiaStockingInputBusME;
 import com.newmaa.othtech.machine.machineclass.OTHTTMultiMachineBaseEM;
+import com.newmaa.othtech.machine.voidnexus.PsionicOutputQueue;
 import com.newmaa.othtech.machine.voidnexus.VoidNexusCalculator;
+import com.newmaa.othtech.machine.voidnexus.VoidNexusControllerTextures;
+import com.newmaa.othtech.machine.voidnexus.VoidNexusEssentiaBuffer;
 import com.newmaa.othtech.utils.ShapeLoader;
 
 import appeng.api.networking.IGrid;
@@ -73,7 +76,6 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
-import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.IOutputBus;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
@@ -115,6 +117,7 @@ import thaumicenergistics.common.storage.EnumEssentiaStorageTypes;
 public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
     implements IConstructable, ISurvivalConstructable, IMTERenderer {
 
+    private static final VoidNexusControllerTextures CONTROLLER_TEXTURES = VoidNexusControllerTextures.MATRIX;
     private static final String STRUCTURE_PIECE_MAIN = "main";
     private static final char CONTROLLER_HATCH_SYMBOL = 'X';
     private static final int CONTROLLER_HATCH_RADIUS = 6;
@@ -142,7 +145,6 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
     private static final int U26_MAX_PERCENT = 1_919_810;
     private static final int U26_LOSS_PERCENT_PER_10_SECONDS = 1_000;
     private static final int U26_DOWNTIME_INTERVAL_TICKS = 10 * 20;
-    private static final int MODULE_POWER_INTERVAL_TICKS = 1;
     private static final byte WARP_PERMANENT = 0;
     private static final byte WARP_STICKY = 1;
     private static final byte WARP_TEMPORARY = 2;
@@ -154,6 +156,7 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
     private static volatile List<PreviewCell> PREVIEW_CELLS = Collections.emptyList();
 
     private VoidNexusCalculator.Stage stage = VoidNexusCalculator.Stage.UHV;
+    private final VoidNexusEssentiaBuffer bufferedEssentia = new VoidNexusEssentiaBuffer();
     private int structureTier = 1;
     private long activePower;
     private long activeGeneratedPower;
@@ -200,12 +203,16 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
             this.stack = stack;
             this.amount = amount;
         }
+
+        private void consume() {
+            stack.stackSize -= amount;
+        }
     }
 
     private final class CatalystPlan {
 
         private final List<FluidRequirement> fluids = new ArrayList<>();
-        private final List<ItemRequirement> items = new ArrayList<>();
+        private final List<StackConsumption> items = new ArrayList<>();
         private boolean blocked;
         private double penaltyMultiplier = 1.0D;
 
@@ -216,7 +223,7 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
         private void consume() {
             if (blocked) return;
             for (FluidRequirement requirement : fluids) requirement.consume(OTEVoidNexusMatrix.this);
-            for (ItemRequirement requirement : items) requirement.consume(OTEVoidNexusMatrix.this);
+            for (StackConsumption item : items) item.consume();
         }
     }
 
@@ -236,23 +243,6 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
 
         private void consume(OTEVoidNexusMatrix machine) {
             machine.consumeFluidAmount(fluid, amount);
-        }
-    }
-
-    private final class ItemRequirement {
-
-        private final ItemStack item;
-        private final long amount;
-        private final boolean critical;
-
-        private ItemRequirement(ItemStack item, long amount, boolean critical) {
-            this.item = item;
-            this.amount = amount;
-            this.critical = critical;
-        }
-
-        private void consume(OTEVoidNexusMatrix machine) {
-            machine.consumeItemAmount(item, amount);
         }
     }
 
@@ -278,6 +268,7 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
 
     @Override
     public void saveNBTData(NBTTagCompound tag) {
+        bufferedEssentia.writeToNBT(tag);
         tag.setLong("voidRound", roundCounter);
         tag.setLong("voidRunTicks", continuousTicks);
         tag.setLong("voidBalancedTicks", balancedTicks);
@@ -305,7 +296,14 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
     }
 
     @Override
+    public void setItemNBT(NBTTagCompound tag) {
+        super.setItemNBT(tag);
+        bufferedEssentia.writeToNBT(tag);
+    }
+
+    @Override
     public void loadNBTData(NBTTagCompound tag) {
+        bufferedEssentia.readFromNBT(tag);
         roundCounter = tag.getLong("voidRound");
         continuousTicks = tag.getLong("voidRunTicks");
         balancedTicks = tag.getLong("voidBalancedTicks");
@@ -429,14 +427,16 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
             stopRoundBeforeStart();
             return WAND_CHARGE_MISSING;
         }
-        if (starArray && !depleteInput(copyOne(starArrayStack), true)) {
-            stopRoundBeforeStart();
-            return CheckRecipeResultRegistry.NO_FUEL_FOUND;
-        }
 
         Map<Aspect, Long> fuelAmounts = new LinkedHashMap<>();
         long remainingParallel = getMaxVoidParallel();
-        if (materialInputMode && hasUpgrade(EARTH_SHAPER)) {
+        boolean useMaterials = isMaterialInputModeEnabled();
+        List<OTEEssentiaStockingInputBusME> essentiaBusses = useMaterials ? Collections.emptyList()
+            : getEssentiaBusses();
+        if (useMaterials) {
+            ItemStack catalystCell = stage.index >= VoidNexusCalculator.Stage.UMV.index
+                ? EnumEssentiaStorageTypes.Type_Creative.getCell()
+                : null;
             for (ItemStack stack : storedInputs) {
                 if (stack == null || stack.getItem() == null
                     || stack.stackSize <= 0
@@ -444,6 +444,7 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
                     || isVoidPotential(stack)
                     || isStarArray(stack)
                     || isStargateCoreCrystal(stack)
+                    || (catalystCell != null && stack.isItemEqual(catalystCell))
                     || remainingParallel <= 0L) continue;
                 AspectList aspects = ThaumcraftApiHelper.getObjectAspects(stack);
                 if (aspects == null || aspects.size() <= 0) continue;
@@ -462,10 +463,12 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
                 }
             }
         } else {
-            readStockingBusEssentia(fuelAmounts, remainingParallel);
+            remainingParallel -= bufferedEssentia.addToPlan(fuelAmounts, remainingParallel);
+            OTEEssentiaStockingInputBusME.collectAvailableEssentia(essentiaBusses, fuelAmounts, remainingParallel);
         }
 
-        boolean idleMode = hasUpgrade(THRONE_OF_EMPTINESS) && stage.index >= VoidNexusCalculator.Stage.UMV.index;
+        boolean idleMode = fuelAmounts.isEmpty() && hasUpgrade(THRONE_OF_EMPTINESS)
+            && stage.index >= VoidNexusCalculator.Stage.UMV.index;
         if (fuelAmounts.isEmpty() && !idleMode) {
             stopRoundBeforeStart();
             return CheckRecipeResultRegistry.NO_FUEL_FOUND;
@@ -484,20 +487,22 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
             bloodApplied,
             hasUpgrade(HOLLOW_POINT) && positiveModulo(nextRound, 3L) == 0L);
 
-        VoidNexusCalculator.Result result = idleMode && fuels.isEmpty() ? createIdleResult()
+        VoidNexusCalculator.Result result = idleMode ? createIdleResult()
             : VoidNexusCalculator.calculate(stage, fuels, config);
         CatalystPlan catalystPlan = buildCatalystPlan(result.totalEssentia, storedInputs);
         activePowerBeforeBonuses = result.power;
         activeCatalystBlocked = !catalystPlan.canRun();
         activeCatalystMultiplier = activeCatalystBlocked ? 0.0D : catalystPlan.penaltyMultiplier;
         applyCatalystPenalties(result, catalystPlan);
-        if (result.power <= 0L && !idleMode) {
+        if (result.power <= 0L) {
             stopRoundBeforeStart();
             return CheckRecipeResultRegistry.NO_FUEL_FOUND;
         }
 
-        boolean consumeStockedEssentia = !materialInputMode || !hasUpgrade(EARTH_SHAPER);
-        if (consumeStockedEssentia && !extractStockingBusEssentia(fuelAmounts)) {
+        if (!useMaterials && !bufferedEssentia.pay(
+            fuelAmounts,
+            (aspect, amount) -> OTEEssentiaStockingInputBusME.extractEssentia(essentiaBusses, aspect, amount))) {
+            markDirty();
             stopRoundBeforeStart();
             return CheckRecipeResultRegistry.NO_FUEL_FOUND;
         }
@@ -506,13 +511,9 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
         lastConsumedEssentia = result.totalEssentia;
         if (bloodApplied) consumeBloodForRound(duration);
         catalystPlan.consume();
-        for (StackConsumption fuel : fuelStacks) {
-            ItemStack stack = fuel.stack.copy();
-            stack.stackSize = fuel.amount;
-            depleteInput(stack);
-        }
-        if (hasPsionicStabilizer && stabilizerStack != null) depleteInput(copyOne(stabilizerStack));
-        if (starArray && starArrayStack != null) depleteInput(copyOne(starArrayStack));
+        for (StackConsumption fuel : fuelStacks) fuel.consume();
+        if (stabilizerStack != null) stabilizerStack.stackSize--;
+        if (starArrayStack != null) starArrayStack.stackSize--;
         creditSourcePotential(result.totalEssentia, starArray);
 
         activeGeneratedPower = calculateCurrentPower(activePowerBeforeBonuses);
@@ -526,6 +527,7 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
         mMaxProgresstime = duration;
         mEfficiency = 10_000;
         updateSlots();
+        markDirty();
         return CheckRecipeResultRegistry.GENERATING;
     }
 
@@ -560,10 +562,8 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
         super.onPostTick(base, tick);
         if (!base.isServerSide()) return;
 
-        if (tick % MODULE_POWER_INTERVAL_TICKS == 0L) {
-            allocatePsionicModulePower();
-            if (automaticPotentialOutput && virtualPotential > 0L) withdrawPotentialToOutputBus();
-        }
+        allocatePsionicModulePower();
+        if (automaticPotentialOutput && virtualPotential > 0L) withdrawPotentialToOutputBus();
         boolean renderActive = isRenderActiveOnServer();
         if (renderActive != lastSentRenderActive || tick % 20L == 0L) {
             lastSentRenderActive = renderActive;
@@ -710,7 +710,7 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
         config.weaveContract = hasUpgrade(WEAVE_CONTRACT);
         config.devourerContract = hasUpgrade(DEVOURER_CONTRACT);
         config.enteredVoid = hasUpgrade(ENTER_THE_VOID);
-        config.materialInputMode = materialInputMode && hasUpgrade(EARTH_SHAPER);
+        config.materialInputMode = isMaterialInputModeEnabled();
         config.alienVisitor = hasUpgrade(OUTER_PLANE_GUEST);
         config.goldenDream = hasUpgrade(GOLDEN_DREAM);
         config.endlessTide = hasUpgrade(ENDLESS_TIDE);
@@ -787,7 +787,6 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
 
     private void stopRoundBeforeStart() {
         clearRunState();
-        activeGeneratedPower = 0L;
         activePower = 0L;
         lEUt = 0L;
         mEUt = 0;
@@ -821,9 +820,6 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
 
         if (stage.index >= VoidNexusCalculator.Stage.UEV.index) {
             long amount = safeMultiply(144L, totalEssentia / 1_000L);
-            // Avaritia's Cosmic Neutronium is unified as this molten fluid; Universium is a
-            // different
-            // material.
             addFluidRequirement(plan, storedFluids, getAvaritiaCosmicNeutroniumMolten(1), amount, false, 0.60D);
         }
         if (stage.index >= VoidNexusCalculator.Stage.UIV.index) {
@@ -853,10 +849,14 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
         }
         if (cells > 0L) {
             ItemStack cell = EnumEssentiaStorageTypes.Type_Creative.getCell();
-            long available = countItemAmount(cell, storedInputs);
-            ItemRequirement requirement = new ItemRequirement(cell, cells, true);
-            plan.items.add(requirement);
-            if (available < cells) plan.blocked = true;
+            for (ItemStack stack : storedInputs) {
+                if (stack == null || stack.stackSize <= 0 || !stack.isItemEqual(cell)) continue;
+                int amount = (int) Math.min(cells, stack.stackSize);
+                plan.items.add(new StackConsumption(stack, amount));
+                cells -= amount;
+                if (cells == 0L) break;
+            }
+            if (cells > 0L) plan.blocked = true;
         }
 
         for (FluidRequirement requirement : plan.fluids) {
@@ -919,24 +919,14 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
         }
     }
 
-    private long countItemAmount(ItemStack target, List<ItemStack> available) {
-        if (target == null || available == null) return 0L;
-        long result = 0L;
-        for (ItemStack stack : available) {
-            if (stack != null && stack.getItem() != null && stack.isItemEqual(target)) {
-                result = saturatingAdd(result, stack.stackSize);
-            }
-        }
-        return result;
-    }
-
-    private void consumeItemAmount(ItemStack target, long amount) {
+    private long consumeItemAmount(ItemStack target, long amount) {
         long remaining = amount;
         ItemStack unit = copyOne(target);
         while (remaining > 0L) {
-            if (!depleteInput(unit.copy())) return;
+            if (!depleteInput(unit)) break;
             remaining--;
         }
+        return amount - remaining;
     }
 
     private ItemStack getHostWand() {
@@ -949,9 +939,12 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
         if (stack == null) return false;
         if (hasUpgrade(ENDLESS_WAND_SYSTEM)) return true;
         ItemWandCasting wand = (ItemWandCasting) stack.getItem();
-        // TC4 stores vis in hundredths. One point of vis is therefore 100 stored units.
-        return wand.getAllVis(stack)
-            .visSize() >= duration * 100L;
+        long usableVis = 0L;
+        for (int i = 0; i < VoidNexusFuelProfiles.PRIMAL_COUNT; i++) {
+            Aspect aspect = VoidNexusFuelProfiles.getPrimal(i);
+            if (aspect != null) usableVis += wand.getVis(stack, aspect) / 100;
+        }
+        return usableVis >= duration;
     }
 
     private boolean consumeHostWandVisPerTick() {
@@ -1073,18 +1066,14 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
         }
 
         ItemStack potentialItem = new ItemStack(ItemLoader.itemVoidPotential, 1);
-        long available = countItemAmount(potentialItem, getStoredInputs());
-        if (available <= 0L) {
+        long deposited = consumeItemAmount(potentialItem, MAX_VIRTUAL_POTENTIAL - virtualPotential);
+        if (deposited == 0L) {
             potentialTransferStatusKey = "ote.vnm.potential.no_input";
             return false;
         }
 
-        long accepted = addVirtualPotential(available);
-        if (accepted <= 0L) {
-            potentialTransferStatusKey = "ote.vnm.potential.full";
-            return false;
-        }
-        consumeItemAmount(potentialItem, accepted);
+        virtualPotential += deposited;
+        markDirty();
         potentialTransferStatusKey = "ote.vnm.potential.deposit_success";
         updateSlots();
         return true;
@@ -1107,80 +1096,33 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
             return false;
         }
 
-        long remaining = virtualPotential;
-        long moved = 0L;
-        while (remaining > 0L) {
-            int batch = (int) Math.min(64L, remaining);
-            int inserted = 0;
-            for (int candidate = batch; candidate > 0; candidate >>= 1) {
-                ItemStack stack = new ItemStack(ItemLoader.itemVoidPotential, candidate);
-                inserted = storePotentialStack(stack, outputBusses);
-                if (inserted > 0) break;
-            }
-            if (inserted <= 0) break;
-            moved += inserted;
-            remaining -= inserted;
-        }
-        if (moved <= 0L) {
+        ItemStack remaining = new ItemStack(ItemLoader.itemVoidPotential, (int) virtualPotential);
+        PsionicOutputQueue.insert(remaining, outputBusses);
+        if (remaining.stackSize == virtualPotential) {
             potentialTransferStatusKey = "ote.vnm.potential.no_output";
             return false;
         }
 
-        virtualPotential -= moved;
+        virtualPotential = remaining.stackSize;
+        markDirty();
         potentialTransferStatusKey = "ote.vnm.potential.withdraw_success";
         updateSlots();
         return true;
     }
 
-    private static int storePotentialStack(ItemStack stack, List<IOutputBus> outputBusses) {
-        int offered = stack.stackSize;
-        for (IOutputBus outputBus : outputBusses) {
-            ItemStack simulated = stack.copy();
-            if (!outputBus.storePartial(simulated, true)) continue;
-            ItemStack stored = stack.copy();
-            outputBus.storePartial(stored, false);
-            int accepted = offered - stored.stackSize;
-            if (accepted > 0) return accepted;
-        }
-        return 0;
+    @Override
+    protected boolean shouldCheckRecipeThisTick(long tick) {
+        return super.shouldCheckRecipeThisTick(tick) || (tick % 20L == 0L && !isMaterialInputModeEnabled()
+            && mInputBusses.stream()
+                .anyMatch(OTEEssentiaStockingInputBusME.class::isInstance));
     }
 
-    private void readStockingBusEssentia(Map<Aspect, Long> output, long limit) {
-        long remaining = Math.max(0L, limit);
-        Set<Object> networks = Collections.newSetFromMap(new IdentityHashMap<>());
+    private List<OTEEssentiaStockingInputBusME> getEssentiaBusses() {
+        List<OTEEssentiaStockingInputBusME> busses = new ArrayList<>();
         for (MTEHatchInputBus inputBus : filterValidMTEs(mInputBusses)) {
-            if (remaining <= 0L) return;
-            if (!(inputBus instanceof OTEEssentiaStockingInputBusME essentiaBus)) continue;
-            Object network = essentiaBus.getNetworkIdentity();
-            if (network != null && !networks.add(network)) continue;
-            remaining -= essentiaBus.collectAvailableEssentia(output, remaining);
+            if (inputBus instanceof OTEEssentiaStockingInputBusME essentiaBus) busses.add(essentiaBus);
         }
-    }
-
-    private boolean extractStockingBusEssentia(Map<Aspect, Long> consumed) {
-        if (consumed.isEmpty()) return true;
-
-        Map<Aspect, Long> remaining = new LinkedHashMap<>(consumed);
-        Set<Object> networks = Collections.newSetFromMap(new IdentityHashMap<>());
-        for (MTEHatchInputBus inputBus : filterValidMTEs(mInputBusses)) {
-            if (remaining.isEmpty()) return true;
-            if (!(inputBus instanceof OTEEssentiaStockingInputBusME essentiaBus) || !essentiaBus.isActive()) continue;
-            Object network = essentiaBus.getNetworkIdentity();
-            if (network != null && !networks.add(network)) continue;
-
-            java.util.Iterator<Map.Entry<Aspect, Long>> iterator = remaining.entrySet()
-                .iterator();
-            while (iterator.hasNext()) {
-                Map.Entry<Aspect, Long> entry = iterator.next();
-                long extracted = essentiaBus.extractEssentia(entry.getKey(), entry.getValue());
-                if (extracted >= entry.getValue()) {
-                    iterator.remove();
-                } else if (extracted > 0L) {
-                    entry.setValue(entry.getValue() - extracted);
-                }
-            }
-        }
-        return remaining.isEmpty();
+        return busses;
     }
 
     @Override
@@ -1263,7 +1205,7 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
         if (invalidDynamo) errors.add(StructureErrors.of("ote.vnm.struct.laser_only"));
         if (!hasLaser) errors.add(StructureErrors.of("ote.vnm.struct.no_laser"));
         repairMachine();
-        connectPsionicModules();
+        if (errors.isEmpty()) connectPsionicModules();
     }
 
     private void clearStructureHatches() {
@@ -1284,7 +1226,8 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
         Set<Object> networks = Collections.newSetFromMap(new IdentityHashMap<>());
         List<MTEHatchInputBus> duplicates = new ArrayList<>();
         for (MTEHatchInputBus inputBus : filterValidMTEs(mInputBusses)) {
-            if (!(inputBus instanceof MTEHatchInputBusME stockingBus)) continue;
+            if (!(inputBus instanceof MTEHatchInputBusME stockingBus)
+                || inputBus instanceof OTEEssentiaStockingInputBusME) continue;
             try {
                 IGrid grid = stockingBus.getProxy()
                     .getGrid();
@@ -1336,11 +1279,7 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
 
     private void allocatePsionicModulePower() {
         IGregTechTileEntity hostBase = getBaseMetaTileEntity();
-        if (hostBase == null || !hostBase.isAllowedToWork()) {
-            for (OTEPsionicManifestationModule module : psionicModules) module.disconnect();
-            return;
-        }
-        if (!hasUpgrade(PSIONIC_HARMONY)) {
+        if (!mMachine || hostBase == null || !hostBase.isAllowedToWork() || !hasUpgrade(PSIONIC_HARMONY)) {
             for (OTEPsionicManifestationModule module : psionicModules) module.disconnect();
             return;
         }
@@ -1360,8 +1299,7 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
             }
             if (activeModules <= 0) return;
 
-            long share = available / activeModules * MODULE_POWER_INTERVAL_TICKS;
-            if (share <= 0L) return;
+            long share = Math.max(1L, available / activeModules);
             modulePowerRotation = Math.floorMod(modulePowerRotation, psionicModules.size());
             for (int offset = 0; offset < psionicModules.size() && available > 0L; offset++) {
                 OTEPsionicManifestationModule module = psionicModules
@@ -2111,13 +2049,7 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
     @Override
     public ITexture[] getTexture(IGregTechTileEntity base, ForgeDirection side, ForgeDirection facing, int colorIndex,
         boolean active, boolean redstone) {
-        ITexture casing = Textures.BlockIcons.getCasingTextureForId(
-            NailongCasings.nailongCasing.getTextureIndex(NailongCasingMeta.PSYCHIC_WRAPPED_CASING));
-        if (side == facing || (base == null && side == ForgeDirection.SOUTH)) {
-            return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(
-                NailongCasings.nailongCasing.getTextureIndex(NailongCasingMeta.VOID_NEXUS_CONTROLLER_FRONT)) };
-        }
-        return new ITexture[] { casing };
+        return CONTROLLER_TEXTURES.get(side, facing, active);
     }
 
     @Override
@@ -2127,13 +2059,14 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
         if (player.isSneaking()) {
             wirelessMode = hasUpgrade(ENTER_THE_VOID) && !wirelessMode;
         } else {
-            materialInputMode = hasUpgrade(EARTH_SHAPER) && !materialInputMode;
+            setMaterialInputModeEnabled(!isMaterialInputModeEnabled());
         }
         player.addChatMessage(
             new net.minecraft.util.ChatComponentTranslation(
                 "ote.vnm.mode",
                 wirelessMode ? translateToLocal("ote.vnm.wireless") : translateToLocal("ote.vnm.laser"),
-                materialInputMode ? translateToLocal("ote.vnm.material") : translateToLocal("ote.vnm.essentia")));
+                isMaterialInputModeEnabled() ? translateToLocal("ote.vnm.material")
+                    : translateToLocal("ote.vnm.essentia")));
     }
 
     @Override
@@ -2150,7 +2083,7 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
         tag.setInteger("vnModules", getConnectedPsionicModuleCount());
         tag.setInteger("vnU26Bonus", u26BonusPercent);
         tag.setBoolean("vnWireless", wirelessMode);
-        tag.setBoolean("vnMaterial", materialInputMode);
+        tag.setBoolean("vnMaterial", isMaterialInputModeEnabled());
     }
 
     @Override
@@ -2327,11 +2260,15 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
     }
 
     public boolean isMaterialInputModeEnabled() {
-        return materialInputMode;
+        return materialInputMode && hasUpgrade(EARTH_SHAPER);
     }
 
     public void setMaterialInputModeEnabled(boolean enabled) {
-        materialInputMode = enabled && hasUpgrade(EARTH_SHAPER);
+        boolean nextMode = enabled && hasUpgrade(EARTH_SHAPER);
+        if (nextMode == materialInputMode) return;
+        materialInputMode = nextMode;
+        scheduleRecipeCheckImmediate();
+        markDirty();
     }
 
     public boolean isVoidAnimationEnabled() {

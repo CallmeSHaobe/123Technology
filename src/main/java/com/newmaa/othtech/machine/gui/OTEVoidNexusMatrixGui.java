@@ -28,6 +28,7 @@ import com.cleanroommc.modularui.widget.Widget;
 import com.cleanroommc.modularui.widget.scroll.VerticalScrollData;
 import com.cleanroommc.modularui.widgets.ButtonWidget;
 import com.cleanroommc.modularui.widgets.ListWidget;
+import com.cleanroommc.modularui.widgets.ToggleButton;
 import com.cleanroommc.modularui.widgets.layout.Flow;
 import com.newmaa.othtech.common.compat.thaumcraft.VoidNexusUpgrade;
 import com.newmaa.othtech.machine.OTEVoidNexusMatrix;
@@ -46,9 +47,16 @@ public class OTEVoidNexusMatrixGui extends MTEMultiBlockBaseGui<OTEVoidNexusMatr
     private static final UITexture UPGRADE_ICON = transparentImage(TEXTURE_ROOT + "upgrade_icon");
     private static final UITexture WIRELESS_ON = transparentImage(TEXTURE_ROOT + "wireless_on");
     private static final UITexture WIRELESS_OFF = transparentImage(TEXTURE_ROOT + "wireless_off");
+    private static final UITexture POWER_ON = transparentImage(TEXTURE_ROOT + "control_power_on");
+    private static final UITexture POWER_OFF = transparentImage(TEXTURE_ROOT + "control_power_off");
+    private static final UITexture REFRESH = transparentImage(TEXTURE_ROOT + "control_refresh");
+    private static final UITexture SOUND_ON = transparentImage(TEXTURE_ROOT + "control_sound_on");
+    private static final UITexture SOUND_OFF = transparentImage(TEXTURE_ROOT + "control_sound_off");
+    private static final UITexture POWER_PANEL = transparentImage(TEXTURE_ROOT + "control_energy");
+    private static final UITexture ITEM_INPUT = transparentImage(TEXTURE_ROOT + "control_item");
+    private static final UITexture ESSENTIA_INPUT = transparentImage(TEXTURE_ROOT + "control_essentia");
     private static final UITexture NODE_MAIN_ON = transparentImage(TEXTURE_ROOT + "node_main_on");
     private static final UITexture NODE_BRANCH_ON = transparentImage(TEXTURE_ROOT + "node_branch_on");
-    private static final UITexture NODE_ON = transparentImage(TEXTURE_ROOT + "node_on");
     private static final UITexture NODE_OFF = transparentImage(TEXTURE_ROOT + "node_off");
     private static final UITexture[] CORE_FRAMES = { transparentImage(TEXTURE_ROOT + "core_0"),
         transparentImage(TEXTURE_ROOT + "core_1"), transparentImage(TEXTURE_ROOT + "core_2"),
@@ -190,7 +198,7 @@ public class OTEVoidNexusMatrixGui extends MTEMultiBlockBaseGui<OTEVoidNexusMatr
             .child(
                 createModeToggleButton(
                     material,
-                    new DynamicDrawable(() -> material.getBoolValue() ? NODE_BRANCH_ON : NODE_OFF),
+                    new DynamicDrawable(() -> material.getBoolValue() ? ITEM_INPUT : ESSENTIA_INPUT),
                     "ote.vnm.gui.mode.material",
                     VoidNexusUpgrade.EARTH_SHAPER,
                     upgrades,
@@ -311,13 +319,31 @@ public class OTEVoidNexusMatrixGui extends MTEMultiBlockBaseGui<OTEVoidNexusMatr
     }
 
     @Override
-    protected Flow createButtonColumn(ModularPanel panel, PanelSyncManager syncManager) {
-        return super.createButtonColumn(panel, syncManager);
+    protected ToggleButton createPowerSwitchButton() {
+        return voidButton(super.createPowerSwitchButton()).overlay(true, POWER_ON)
+            .overlay(false, POWER_OFF);
+    }
+
+    @Override
+    protected IWidget createStructureUpdateButton(PanelSyncManager syncManager) {
+        return voidButton(new ToggleButton().syncHandler("structureUpdateButton")).overlay(REFRESH)
+            .tooltipBuilder(t -> t.addLine(IKey.lang("GT5U.gui.button.structure_update")));
+    }
+
+    @Override
+    protected ToggleButton createMuffleButton() {
+        return voidButton(super.createMuffleButton()).overlay(true, SOUND_OFF)
+            .overlay(false, SOUND_ON);
+    }
+
+    @Override
+    protected ButtonWidget<?> createPowerPanelButton(PanelSyncManager sync, ModularPanel panel) {
+        return voidButton(super.createPowerPanelButton(sync, panel)).overlay(POWER_PANEL);
     }
 
     private ButtonWidget<?> createModeToggleButton(BooleanSyncValue value, IDrawable icon, String labelKey,
         VoidNexusUpgrade requiredUpgrade, LongSyncValue upgrades, IntSyncValue tier, StringSyncValue stage) {
-        return new ButtonWidget<>().size(16)
+        return voidButton(new ButtonWidget<>()).size(16)
             .overlay(icon)
             .setEnabledIf(button -> requiredUpgrade == null || isUpgradeActive(upgrades, tier, stage, requiredUpgrade))
             .onMousePressed(button -> {
@@ -333,7 +359,9 @@ public class OTEVoidNexusMatrixGui extends MTEMultiBlockBaseGui<OTEVoidNexusMatr
                     .addLine(
                         IKey.dynamic(
                             () -> StatCollector.translateToLocal(
-                                value.getBoolValue() ? "ote.vnm.gui.mode.on" : "ote.vnm.gui.mode.off")))
+                                requiredUpgrade == VoidNexusUpgrade.EARTH_SHAPER
+                                    ? (value.getBoolValue() ? "ote.vnm.gui.mode.items" : "ote.vnm.gui.mode.essentia")
+                                    : (value.getBoolValue() ? "ote.vnm.gui.mode.on" : "ote.vnm.gui.mode.off"))))
                     .addLine(
                         IKey.lang(
                             requiredUpgrade == VoidNexusUpgrade.ENTER_THE_VOID ? "ote.vnm.gui.u16_required"
@@ -354,12 +382,8 @@ public class OTEVoidNexusMatrixGui extends MTEMultiBlockBaseGui<OTEVoidNexusMatr
             (panelSyncManager, syncHandler) -> createPotentialPanel(syncManager, panelHolder));
         panelHolder[0] = potentialPanel;
         LongSyncValue potential = syncManager.findSyncHandler("voidPotential", LongSyncValue.class);
-        return new ButtonWidget<>().size(16)
-            .disableThemeBackground(true)
-            .disableHoverThemeBackground(true)
-            .background(potentialButtonBackground(false, false))
-            .hoverBackground(potentialButtonBackground(false, true))
-            .overlay(NODE_ON)
+        return voidButton(new ButtonWidget<>()).size(16)
+            .overlay(glyph("§d◆"))
             .onMousePressed(button -> {
                 if (potentialPanel.isPanelOpen()) potentialPanel.closePanel();
                 else potentialPanel.openPanel();
@@ -389,10 +413,10 @@ public class OTEVoidNexusMatrixGui extends MTEMultiBlockBaseGui<OTEVoidNexusMatr
                 .left(11)
                 .top(11));
         panel.child(
-            new ButtonWidget<>().right(8)
+            voidButton(new ButtonWidget<>()).right(8)
                 .top(9)
                 .size(14)
-                .overlay(IKey.str("§f×"))
+                .overlay(glyph("§f×"))
                 .onMousePressed(button -> {
                     if (panelHolder[0] != null) panelHolder[0].closePanel();
                     return true;
@@ -533,8 +557,21 @@ public class OTEVoidNexusMatrixGui extends MTEMultiBlockBaseGui<OTEVoidNexusMatr
             .cornerRadius(3);
     }
 
-    private static IDrawable potentialButtonBackground(boolean deposit, boolean hover) {
-        return potentialButtonBackground(deposit, hover, true);
+    private static <T extends Widget<?>> T voidButton(T button) {
+        button.disableThemeBackground(true)
+            .disableHoverThemeBackground(true)
+            .background(
+                new Rectangle().verticalGradient(0xFF493264, 0xFF191124)
+                    .cornerRadius(3))
+            .hoverBackground(
+                new Rectangle().verticalGradient(0xFF7651A3, 0xFF301D44)
+                    .cornerRadius(3));
+        return button;
+    }
+
+    private static IDrawable glyph(String text) {
+        return IKey.str(text)
+            .alignment(Alignment.Center);
     }
 
     private static IDrawable potentialButtonBackground(boolean deposit, boolean hover, boolean active) {
@@ -566,7 +603,7 @@ public class OTEVoidNexusMatrixGui extends MTEMultiBlockBaseGui<OTEVoidNexusMatr
             true,
             (panelSyncManager, syncHandler) -> createUpgradePanel(syncManager, panelHolder));
         panelHolder[0] = upgradePanel;
-        return new ButtonWidget<>().size(16)
+        return voidButton(new ButtonWidget<>()).size(16)
             .overlay(UPGRADE_ICON)
             .onMousePressed(button -> {
                 if (upgradePanel.isPanelOpen()) upgradePanel.closePanel();
@@ -592,10 +629,10 @@ public class OTEVoidNexusMatrixGui extends MTEMultiBlockBaseGui<OTEVoidNexusMatr
                 .left(10)
                 .top(7));
         panel.child(
-            new ButtonWidget<>().right(7)
+            voidButton(new ButtonWidget<>()).right(7)
                 .top(7)
                 .size(12)
-                .overlay(IKey.str("§f×"))
+                .overlay(glyph("§f×"))
                 .onMousePressed(button -> {
                     if (panelHolder[0] != null) panelHolder[0].closePanel();
                     return true;
@@ -692,10 +729,9 @@ public class OTEVoidNexusMatrixGui extends MTEMultiBlockBaseGui<OTEVoidNexusMatr
         StringSyncValue stage, StringSyncValue status, LongSyncValue purchase) {
         int index = upgrade.id - 1;
         boolean mainline = isMainline(upgrade);
-        return new ButtonWidget<>().left(NODE_X[index])
+        return voidButton(new ButtonWidget<>()).left(NODE_X[index])
             .top(NODE_Y[index])
             .size(NODE_SIZE)
-            .background(solid(mainline ? 0xC8140B2E : 0xC81B0C35))
             .overlay(
                 new DynamicDrawable(
                     () -> isUpgradeActive(upgrades, tier, stage, upgrade) ? (mainline ? NODE_MAIN_ON : NODE_BRANCH_ON)
