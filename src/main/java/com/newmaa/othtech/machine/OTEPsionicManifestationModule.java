@@ -13,13 +13,11 @@ import static net.minecraft.util.StatCollector.translateToLocal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.IdentityHashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
@@ -31,21 +29,19 @@ import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructa
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
-import com.newmaa.othtech.common.blocks.nailong.NailongCasingMeta;
-import com.newmaa.othtech.common.blocks.nailong.NailongCasings;
 import com.newmaa.othtech.common.compat.thaumcraft.VoidNexusUpgrade;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.gui.OTEPsionicManifestationModuleGui;
 import com.newmaa.othtech.machine.machineclass.OTHTTMultiMachineBaseEM;
+import com.newmaa.othtech.machine.voidnexus.PsionicOutputQueue;
 import com.newmaa.othtech.machine.voidnexus.VoidNexusCalculator;
+import com.newmaa.othtech.machine.voidnexus.VoidNexusControllerTextures;
 
 import appeng.api.networking.IGrid;
 import appeng.me.GridAccessException;
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.NaniteTier;
-import gregtech.api.enums.Textures;
-import gregtech.api.interfaces.IOutputBus;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
@@ -68,6 +64,7 @@ import gregtech.common.tileentities.machines.MTEHatchInputBusME;
 public class OTEPsionicManifestationModule extends OTHTTMultiMachineBaseEM
     implements IConstructable, ISurvivalConstructable {
 
+    private static final VoidNexusControllerTextures CONTROLLER_TEXTURES = VoidNexusControllerTextures.MODULE;
     private static final String STRUCTURE_PIECE_MAIN = "main";
     private static final int HORIZONTAL_OFFSET = 2;
     private static final int VERTICAL_OFFSET = 0;
@@ -88,7 +85,6 @@ public class OTEPsionicManifestationModule extends OTHTTMultiMachineBaseEM
     private static IStructureDefinition<OTEPsionicManifestationModule> STRUCTURE_DEFINITION;
 
     private OTEVoidNexusMatrix host;
-    private boolean connected;
     private FluidStack pendingOverclockFluid;
     private int pendingOverclockAmountPerStep;
     private int pendingOverclockRounds;
@@ -96,7 +92,7 @@ public class OTEPsionicManifestationModule extends OTHTTMultiMachineBaseEM
     private OverclockCalculator lastOverclockCalculator;
     private int lastOverclockSteps;
     private int lastOverclockDivisor = 2;
-    private final List<ItemStack> pendingOutputItems = new ArrayList<>();
+    private final PsionicOutputQueue pendingOutputs = new PsionicOutputQueue();
     private boolean recipePreflight;
 
     public OTEPsionicManifestationModule(int id, String name, String regionalName) {
@@ -121,17 +117,15 @@ public class OTEPsionicManifestationModule extends OTHTTMultiMachineBaseEM
 
     public void connect(OTEVoidNexusMatrix host) {
         this.host = host;
-        this.connected = host != null;
     }
 
     public void disconnect() {
         host = null;
-        connected = false;
         clearPendingOverclock();
     }
 
     public boolean isConnected() {
-        return connected && host != null;
+        return host != null;
     }
 
     public boolean ownsHatch(MTEHatch hatch) {
@@ -220,7 +214,7 @@ public class OTEPsionicManifestationModule extends OTHTTMultiMachineBaseEM
             stopMachine(gregtech.api.util.shutdown.ShutDownReasonRegistry.POWER_LOSS);
         }
         super.onPostTick(base, tick);
-        if (tick % 20L == 0L && !pendingOutputItems.isEmpty()) flushPendingOutputs();
+        if (tick % 20L == 0L && !pendingOutputs.isEmpty() && pendingOutputs.flush(mOutputBusses)) markDirty();
         if (tick % 200L == 0L) fixAllIssues();
     }
 
@@ -310,8 +304,6 @@ public class OTEPsionicManifestationModule extends OTHTTMultiMachineBaseEM
     }
 
     private static String[][] moduleShape() {
-        // StructureLib order is [depth slice][vertical line][horizontal column]. The supplied
-        // 5x2x5 scan therefore stays in its original axis order, making the controller flat.
         return new String[][] { { "     ", "BBBBB" }, { "     ", "BBBBB" }, { "  ~  ", "BBBBB" }, { "     ", "BBBBB" },
             { "     ", "BBBBB" } };
     }
@@ -393,8 +385,7 @@ public class OTEPsionicManifestationModule extends OTHTTMultiMachineBaseEM
     }
 
     private CheckRecipeResult runRecipeCheck(boolean preflight) {
-        // GT consumes matching inputs inside doCheckRecipe. Preflight on ParallelHelper's copied
-        // inputs so the whole-run buffer check can reject without touching buses, hatches, or AE.
+        // ParallelHelper must leave inputs intact until postCheckRecipe accepts the preview.
         recipePreflight = preflight;
         try {
             setupProcessingLogic(processingLogic);
@@ -486,37 +477,10 @@ public class OTEPsionicManifestationModule extends OTHTTMultiMachineBaseEM
 
     @Override
     public boolean addItemOutputs(ItemStack[] outputItems) {
-        flushPendingOutputs();
-        if (outputItems != null) {
-            for (ItemStack output : outputItems) {
-                if (output == null || output.stackSize <= 0) continue;
-                ItemStack remaining = output.copy();
-                if (!deliverOutputStack(remaining)) pendingOutputItems.add(remaining);
-            }
-        }
-        return pendingOutputItems.isEmpty();
-    }
-
-    private void flushPendingOutputs() {
-        for (Iterator<ItemStack> iterator = pendingOutputItems.iterator(); iterator.hasNext();) {
-            ItemStack pending = iterator.next();
-            if (deliverOutputStack(pending)) iterator.remove();
-        }
-    }
-
-    private boolean deliverOutputStack(ItemStack remaining) {
-        if (remaining == null || remaining.stackSize <= 0) return true;
-        for (IOutputBus outputBus : mOutputBusses) {
-            ItemStack simulated = remaining.copy();
-            if (!outputBus.storePartial(simulated, true)) continue;
-            ItemStack stored = remaining.copy();
-            outputBus.storePartial(stored, false);
-            int moved = remaining.stackSize - stored.stackSize;
-            if (moved <= 0) continue;
-            remaining.stackSize -= moved;
-            if (remaining.stackSize <= 0) return true;
-        }
-        return false;
+        pendingOutputs.add(outputItems);
+        pendingOutputs.flush(mOutputBusses);
+        markDirty();
+        return pendingOutputs.isEmpty();
     }
 
     private void clearPendingOverclock() {
@@ -532,14 +496,13 @@ public class OTEPsionicManifestationModule extends OTHTTMultiMachineBaseEM
         super.saveNBTData(tag);
         tag.setInteger("psionicLastOverclockSteps", lastOverclockSteps);
         tag.setInteger("psionicLastOverclockDivisor", lastOverclockDivisor);
-        NBTTagList outputs = new NBTTagList();
-        for (ItemStack stack : pendingOutputItems) {
-            if (stack == null || stack.stackSize <= 0) continue;
-            NBTTagCompound itemTag = new NBTTagCompound();
-            stack.writeToNBT(itemTag);
-            outputs.appendTag(itemTag);
-        }
-        tag.setTag("psionicPendingOutputs", outputs);
+        pendingOutputs.writeToNBT(tag);
+    }
+
+    @Override
+    public void setItemNBT(NBTTagCompound tag) {
+        super.setItemNBT(tag);
+        pendingOutputs.writeToNBT(tag);
     }
 
     @Override
@@ -549,12 +512,7 @@ public class OTEPsionicManifestationModule extends OTHTTMultiMachineBaseEM
         lastOverclockDivisor = tag.hasKey("psionicLastOverclockDivisor")
             ? Math.max(2, tag.getInteger("psionicLastOverclockDivisor"))
             : 2;
-        pendingOutputItems.clear();
-        NBTTagList outputs = tag.getTagList("psionicPendingOutputs", 10);
-        for (int index = 0; index < outputs.tagCount(); index++) {
-            ItemStack stack = ItemStack.loadItemStackFromNBT(outputs.getCompoundTagAt(index));
-            if (stack != null && stack.stackSize > 0) pendingOutputItems.add(stack);
-        }
+        pendingOutputs.readFromNBT(tag);
     }
 
     private double naniteTimeMultiplier() {
@@ -656,13 +614,7 @@ public class OTEPsionicManifestationModule extends OTHTTMultiMachineBaseEM
     @Override
     public ITexture[] getTexture(IGregTechTileEntity base, ForgeDirection side, ForgeDirection facing, int colorIndex,
         boolean active, boolean redstone) {
-        ITexture casing = Textures.BlockIcons.getCasingTextureForId(
-            NailongCasings.nailongCasing.getTextureIndex(NailongCasingMeta.PSYCHIC_WRAPPED_CASING));
-        if (side == facing || (base == null && side == ForgeDirection.SOUTH)) {
-            return new ITexture[] { Textures.BlockIcons.getCasingTextureForId(
-                NailongCasings.nailongCasing.getTextureIndex(NailongCasingMeta.VOID_NEXUS_CONTROLLER_FRONT)) };
-        }
-        return new ITexture[] { casing };
+        return CONTROLLER_TEXTURES.get(side, facing, active);
     }
 
     @Override

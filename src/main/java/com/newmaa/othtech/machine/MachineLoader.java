@@ -217,6 +217,11 @@ public class MachineLoader {
             new OTEPsionicManifestationModule(IDs + 72, "PsionicManifestationModule", translateToLocal("ote.tn.pmm")));
         OTHItemList.VoidNexusEssentiaBus.set(
             new OTEEssentiaStockingInputBusME(IDs + 73, "VoidNexusEssentiaBusME", translateToLocal("ote.tn.esib")));
+        OTHItemList.LargeEssentiaGenerator.set(
+            new OTELargeEssentiaGenerator(
+                IDs + 74,
+                "OTHLargeEssentiaGenerator",
+                translateToLocal("ote.tn.essentia_generator")));
         OTHItemList.DeepSeiko.set(new OTEDeepSeiko(IDs + 9, "DeepSeiko", translateToLocal("ote.tn.ds")));
         OTHItemList.DeepSeikoNaniteCell.set(
             new OTEDeepSeikoNaniteCell(IDs + 67, "DeepSeikoNaniteCell", translateToLocal("ote.tn.nanite"), 0)

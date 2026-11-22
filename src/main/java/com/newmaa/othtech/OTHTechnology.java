@@ -24,6 +24,7 @@ import com.newmaa.othtech.common.blocks.fluids.RossFluids;
 import com.newmaa.othtech.common.blocks.nailong.NailongCasings;
 import com.newmaa.othtech.common.blocks.oterender.BlockRocketRender;
 import com.newmaa.othtech.common.blocks.oterender.OTERocketRender;
+import com.newmaa.othtech.common.compat.thaumcraft.EssentiaGeneratorCompat;
 import com.newmaa.othtech.common.compat.thaumcraft.ThaumcraftResearchCompat;
 import com.newmaa.othtech.common.compat.thaumcraft.VoidNexusResearchCompat;
 import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
@@ -124,6 +125,7 @@ public class OTHTechnology {
         }
 
         new CreativeTabsLoader(event);
+        EssentiaGeneratorCompat.registerParts();
         new ItemLoader(event);
         new OreDictionaryLoader(event);
         OTHMobHandlerLoader.init();
@@ -213,6 +215,7 @@ public class OTHTechnology {
         safeStep("RecipesDeepSeiko.loadCondensateRecipes", RecipesDeepSeiko::loadCondensateRecipes);
         safeStep("RecipesDeepSeiko.loadAssemblyLineRecipes", RecipesDeepSeiko::loadAssemblyLineRecipes);
         safeStep("VoidNexusResearchCompat", VoidNexusResearchCompat::register);
+        safeStep("EssentiaGeneratorResearch", EssentiaGeneratorCompat::registerResearch);
         safeStep("OTHBeeyonds", OTHBeeyonds::new);
         LOG.info("completeInit: finished.");
     }

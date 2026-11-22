@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
@@ -40,6 +42,7 @@ public final class OTEVoidNexusClientEffects {
     private static final double FULL_EFFECT_RADIUS = 96.0D;
     private static final float GOLDEN_ANGLE = 2.39996323F;
     private static final float EFFECT_SCALE = 9.45F;
+    private static final int VORTEX_ARM_COUNT = 6;
 
     private final List<MachineFx> machines = new ArrayList<>();
     private static OTEVoidNexusClientEffects instance;
@@ -120,11 +123,9 @@ public final class OTEVoidNexusClientEffects {
             machine.onTicks = 0;
             machine.offTicks = Math.min(EFFECT_STOP_TICKS + 1, machine.offTicks + 1);
         }
-        float target;
-        if (animationRequested && machine.onTicks >= EFFECT_START_TICKS) target = 1F;
-        else if (!animationRequested && machine.offTicks <= EFFECT_STOP_TICKS) target = machine.fade;
-        else target = 0F;
-        machine.fade = target > machine.fade ? Math.min(1F, machine.fade + 0.07F) : Math.max(0F, machine.fade - 0.045F);
+        machine.previousFade = machine.fade;
+        if (machine.onTicks >= EFFECT_START_TICKS) machine.fade = Math.min(1F, machine.fade + 0.045F);
+        if (machine.offTicks > EFFECT_STOP_TICKS) machine.fade = Math.max(0F, machine.fade - 0.032F);
         return (!loaded || !inRange) && machine.fade <= 0.001F;
     }
 
@@ -139,7 +140,7 @@ public final class OTEVoidNexusClientEffects {
     public void onFogColors(EntityViewRenderEvent.FogColors event) {
         MachineFx machine = nearestMachine(event.entity, SKY_RADIUS);
         if (machine == null) return;
-        float strength = proximity(event.entity, machine);
+        float strength = distanceFade(distanceSq(event.entity, machine));
         event.red = lerp(event.red, 0.115F, 0.62F * strength);
         event.green = lerp(event.green, 0.012F, 0.72F * strength);
         event.blue = lerp(event.blue, 0.235F, 0.68F * strength);
@@ -149,8 +150,61 @@ public final class OTEVoidNexusClientEffects {
     public void onFogDensity(EntityViewRenderEvent.FogDensity event) {
         MachineFx machine = nearestMachine(event.entity, SKY_RADIUS);
         if (machine == null) return;
-        float strength = proximity(event.entity, machine);
+        float strength = distanceFade(distanceSq(event.entity, machine));
         event.density = Math.max(event.density, 0.018F + 0.042F * strength);
+    }
+
+    public static void renderSky(float partialTicks) {
+        if (instance == null) return;
+        Minecraft minecraft = Minecraft.getMinecraft();
+        EntityLivingBase viewer = minecraft.renderViewEntity;
+        MachineFx machine = instance.nearestMachine(viewer, SKY_RADIUS);
+        if (machine == null) return;
+        if (ActiveRenderInfo.getBlockAtEntityViewpoint(viewer.worldObj, viewer, partialTicks)
+            .getMaterial()
+            .isLiquid()) return;
+        float strength = machine.interpolatedFade(partialTicks) * atmosphereFade(distanceSq(viewer, machine));
+        if (strength <= 0.002F) return;
+
+        GL11.glPushAttrib(
+            GL11.GL_ENABLE_BIT | GL11.GL_COLOR_BUFFER_BIT
+                | GL11.GL_DEPTH_BUFFER_BIT
+                | GL11.GL_CURRENT_BIT
+                | GL11.GL_LIGHTING_BIT
+                | GL11.GL_TRANSFORM_BIT);
+        // Tint the background before terrain draws, using clip space so the horizon and FOV cannot leave a gap.
+        GL11.glMatrixMode(GL11.GL_PROJECTION);
+        GL11.glPushMatrix();
+        GL11.glLoadIdentity();
+        GL11.glMatrixMode(GL11.GL_MODELVIEW);
+        GL11.glPushMatrix();
+        GL11.glLoadIdentity();
+        try {
+            GL11.glDisable(GL11.GL_TEXTURE_2D);
+            GL11.glDisable(GL11.GL_FOG);
+            GL11.glDisable(GL11.GL_LIGHTING);
+            GL11.glDisable(GL11.GL_ALPHA_TEST);
+            GL11.glDisable(GL11.GL_CULL_FACE);
+            GL11.glDisable(GL11.GL_DEPTH_TEST);
+            GL11.glDepthMask(false);
+            GL11.glEnable(GL11.GL_BLEND);
+            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+            GL11.glShadeModel(GL11.GL_SMOOTH);
+            Tessellator mesh = Tessellator.instance;
+            mesh.startDrawingQuads();
+            mesh.setColorRGBA_F(0.245F, 0.085F, 0.36F, 0.63F * strength);
+            mesh.addVertex(-1D, -1D, 0D);
+            mesh.addVertex(1D, -1D, 0D);
+            mesh.setColorRGBA_F(0.135F, 0.03F, 0.275F, 0.82F * strength);
+            mesh.addVertex(1D, 1D, 0D);
+            mesh.addVertex(-1D, 1D, 0D);
+            mesh.draw();
+        } finally {
+            GL11.glPopMatrix();
+            GL11.glMatrixMode(GL11.GL_PROJECTION);
+            GL11.glPopMatrix();
+            GL11.glPopAttrib();
+        }
     }
 
     @SubscribeEvent
@@ -163,7 +217,7 @@ public final class OTEVoidNexusClientEffects {
     }
 
     private void drawMachineEffectsInWorld(Minecraft minecraft, float partialTicks, float time) {
-        Entity viewer = minecraft.thePlayer;
+        Entity viewer = minecraft.renderViewEntity;
         if (viewer == null) return;
         double cameraX = viewer.lastTickPosX + (viewer.posX - viewer.lastTickPosX) * partialTicks;
         double cameraY = viewer.lastTickPosY + (viewer.posY - viewer.lastTickPosY) * partialTicks;
@@ -196,7 +250,7 @@ public final class OTEVoidNexusClientEffects {
             GL11.glDepthMask(false);
             GL11.glShadeModel(GL11.GL_SMOOTH);
 
-            drawMachineEffects(machine, time);
+            drawMachineEffects(machine, partialTicks, time);
 
             GL11.glColor4f(1F, 1F, 1F, 1F);
             GL11.glPopMatrix();
@@ -204,21 +258,23 @@ public final class OTEVoidNexusClientEffects {
         }
     }
 
-    private static void drawMachineEffects(MachineFx machine, float time) {
+    private static void drawMachineEffects(MachineFx machine, float partialTicks, float time) {
         float pulse = 1F + 0.055F * (float) Math.sin(time * 0.11D);
-        float fade = machine.fade * distanceFade(machine.cameraDistanceSq);
+        float fade = machine.interpolatedFade(partialTicks) * distanceFade(machine.cameraDistanceSq);
         if (fade <= 0.001F) return;
-        float detailFade = clamp((72F - (float) Math.sqrt(machine.cameraDistanceSq)) / 24F, 0F, 1F);
+        float distance = (float) Math.sqrt(machine.cameraDistanceSq);
+        float detailFade = clamp((72F - distance) / 24F, 0F, 1F);
         GL11.glPushMatrix();
         GL11.glScalef(EFFECT_SCALE, EFFECT_SCALE, EFFECT_SCALE);
-        drawPortalCore(0.62F * pulse, fade);
-        drawEventHorizonShells(time, fade, true);
-        drawVoidMaw(time, fade);
+        float coreRadius = 0.62F * pulse;
+        float mistFade = fade * (0.65F + 0.35F * clamp((distance - 7F) / 12F, 0F, 1F));
+        drawPortalVortex(time, coreRadius, fade, mistFade, detailFade);
+        drawPortalCore(coreRadius, fade);
+        drawEventHorizonShells(time, fade, detailFade > 0.01F);
         drawOrbitingRiftRings(time, fade, 7);
         drawFracturedVoidLattice(time, fade);
         drawPrismaticShards(time, fade);
         drawNeuralWeb(time, fade * detailFade);
-        drawPsionicTendrils(time, fade * detailFade);
         drawEscapingParticles(time, fade * detailFade);
         drawMachineMist(time, fade);
         GL11.glPopMatrix();
@@ -247,10 +303,10 @@ public final class OTEVoidNexusClientEffects {
                 28);
             drawSphere(
                 1.13F + 0.035F * (float) Math.sin(time * 0.013D + 2.1D),
-                0.018F,
-                0.42F,
-                0.92F,
-                0.035F * fade,
+                0.14F,
+                0.18F,
+                0.33F,
+                0.022F * fade,
                 time * 0.0015F,
                 10,
                 24);
@@ -277,7 +333,7 @@ public final class OTEVoidNexusClientEffects {
             GL11.glTranslatef(0F, (ring % 3 - 1) * 0.075F, 0F);
             GL11.glRotatef(time * rotationSpeed, 0.82F, 0.42F + ring * 0.11F, 0.24F);
             GL11.glRotatef(18F * ring + 11F * (float) Math.sin(phase), 1F, 0F, 0F);
-            drawRiftTorus(radius, tube, 48, 8, 0.13F + ring * 0.045F, 0.46F + ring * 0.065F, fade);
+            drawRiftTorus(radius, tube, 48, 8, 0.20F + ring * 0.035F, 0.41F + ring * 0.036F, fade * 0.30F);
             GL11.glPopMatrix();
         }
     }
@@ -351,39 +407,111 @@ public final class OTEVoidNexusClientEffects {
             .addVertex(sinPhi * Math.cos(theta) * radius, Math.cos(phi) * radius, sinPhi * Math.sin(theta) * radius);
     }
 
-    private static void drawVoidMaw(float time, float fade) {
-        GL11.glPushMatrix();
-        GL11.glRotatef(time * 0.55F, 0F, 1F, 0F);
-        GL11.glRotatef(14F + 4F * (float) Math.sin(time * 0.035D), 1F, 0F, 0F);
-        Tessellator tessellator = Tessellator.instance;
-        int arms = 6;
-        int segments = 42;
-        tessellator.startDrawingQuads();
-        for (int arm = 0; arm < arms; arm++) {
-            float baseAngle = (float) (Math.PI * 2D * arm / arms);
+    private static void drawPortalVortex(float time, float coreRadius, float fade, float mistFade, float detailFade) {
+        Tessellator mesh = Tessellator.instance;
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        mesh.startDrawingQuads();
+        int segments = detailFade > 0.01F ? 48 : 28;
+        for (int arm = 0; arm < VORTEX_ARM_COUNT; arm++) {
+            double start = vortexArmAngle(arm, time);
+            float spread = 0.82F + 0.27F * hash(arm + 7F);
             for (int segment = 0; segment < segments; segment++) {
-                float progress0 = segment / (float) segments;
-                float progress1 = (segment + 1F) / segments;
-                float angle0 = baseAngle + progress0 * 5.6F + time * (0.018F + progress0 * 0.012F);
-                float angle1 = baseAngle + progress1 * 5.6F + time * (0.018F + progress1 * 0.012F);
-                float radius0 = 0.30F + (1F - progress0) * 1.08F;
-                float radius1 = 0.30F + (1F - progress1) * 1.08F;
-                float width0 = 0.055F + progress0 * 0.16F;
-                float width1 = 0.055F + progress1 * 0.16F;
-                float y0 = 0.64F - progress0 * 1.22F + 0.10F * (float) Math.sin(angle0 * 2F + time * 0.06D);
-                float y1 = 0.64F - progress1 * 1.22F + 0.10F * (float) Math.sin(angle1 * 2F + time * 0.06D);
-                tessellator.setColorRGBA_F(0.26F, 0.02F, 0.64F, (1F - progress0) * 0.08F * fade);
-                tessellator.addVertex(Math.cos(angle0) * (radius0 - width0), y0, Math.sin(angle0) * (radius0 - width0));
-                tessellator.setColorRGBA_F(0.40F, 0.05F, 0.94F, (1F - progress1) * 0.08F * fade);
-                tessellator.addVertex(Math.cos(angle1) * (radius1 - width1), y1, Math.sin(angle1) * (radius1 - width1));
-                tessellator.setColorRGBA_F(0.16F, 0.60F, 1F, (1F - progress1) * 0.42F * fade);
-                tessellator.addVertex(Math.cos(angle1) * (radius1 + width1), y1, Math.sin(angle1) * (radius1 + width1));
-                tessellator.setColorRGBA_F(0.16F, 0.60F, 1F, (1F - progress0) * 0.42F * fade);
-                tessellator.addVertex(Math.cos(angle0) * (radius0 + width0), y0, Math.sin(angle0) * (radius0 + width0));
+                float a = segment / (float) segments;
+                float b = (segment + 1F) / segments;
+                for (int strip = -1; strip < 1; strip++) {
+                    addVortexVertex(mesh, start, spread, time, coreRadius, a, strip, mistFade);
+                    addVortexVertex(mesh, start, spread, time, coreRadius, b, strip, mistFade);
+                    addVortexVertex(mesh, start, spread, time, coreRadius, b, strip + 1, mistFade);
+                    addVortexVertex(mesh, start, spread, time, coreRadius, a, strip + 1, mistFade);
+                }
             }
         }
-        tessellator.draw();
-        GL11.glPopMatrix();
+        mesh.draw();
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
+        if (detailFade > 0.01F) {
+            GL11.glLineWidth(2.1F);
+            drawVortexTrails(mesh, coreRadius, time, fade * detailFade);
+        }
+        drawPortalRim(mesh, coreRadius, time, fade);
+    }
+
+    private static void addVortexVertex(Tessellator mesh, double start, float spread, float time, float coreRadius,
+        float inward, int edge, float fade) {
+        float outside = 1F - inward;
+        float pulse = 0.5F + 0.5F * (float) Math.cos(inward * 16D - time * 0.24D + start);
+        float taper = clamp(inward * 6F, 0F, 1F) * clamp(outside * 12F, 0F, 1F);
+        float lip = 0.35F + 0.65F * inward;
+        mesh.setColorRGBA_F(
+            lerp(0.24F, 0.48F, inward),
+            lerp(0.35F, 0.59F, inward),
+            lerp(0.52F, 0.82F, inward),
+            edge == 0 ? taper * lip * (0.44F + 0.19F * pulse * pulse) * fade : 0F);
+        addVortexPoint(mesh, start, spread, coreRadius, inward, edge);
+    }
+
+    private static double vortexArmAngle(int arm, float time) {
+        return 2D * Math.PI * arm / VORTEX_ARM_COUNT - time * 0.017D;
+    }
+
+    private static void addVortexPoint(Tessellator mesh, double start, float spread, float coreRadius, float inward,
+        float edge) {
+        double angle = start + inward * (3.2D + 2.7D * inward);
+        float outside = 1F - inward;
+        float width = spread * (0.060F + 0.37F * outside);
+        double radius = coreRadius - 0.065D + (2.38D + 0.18D * spread) * outside * outside + edge * width;
+        double crest = Math.sin(inward * 8.5D + start);
+        double height = outside * crest * 0.12D + edge * width * 0.30D;
+        mesh.addVertex(Math.cos(angle) * radius, height, Math.sin(angle) * radius);
+    }
+
+    private static void drawVortexTrails(Tessellator mesh, float coreRadius, float time, float fade) {
+        mesh.startDrawing(GL11.GL_LINES);
+        for (int arm = 0; arm < VORTEX_ARM_COUNT; arm++) {
+            double start = vortexArmAngle(arm, time);
+            float spread = 0.82F + 0.27F * hash(arm + 7F);
+            for (int trace = 0; trace < 2; trace++) {
+                float phase = (time * 0.013F + arm * 0.173F + trace * 0.43F) % 1F;
+                float glow = fade * Math.min(1F, phase * 8F) * Math.min(1F, (1F - phase) * 10F);
+                float head = 0.16F + 0.81F * phase;
+                float tail = head - lerp(0.064F, 0.11F, phase);
+                float offset = trace == 0 ? -0.27F : 0.23F;
+                for (int segment = 0; segment < 5; segment++) {
+                    float a = segment / 5F;
+                    float b = (segment + 1F) / 5F;
+                    mesh.setColorRGBA_F(0.62F, 0.81F, 1F, glow * a * a * 0.86F);
+                    addVortexPoint(mesh, start, spread, coreRadius, lerp(tail, head, a), offset);
+                    mesh.setColorRGBA_F(0.62F, 0.81F, 1F, glow * b * b * 0.86F);
+                    addVortexPoint(mesh, start, spread, coreRadius, lerp(tail, head, b), offset);
+                }
+            }
+        }
+        mesh.draw();
+    }
+
+    private static void drawPortalRim(Tessellator mesh, float coreRadius, float time, float fade) {
+        int segments = 64;
+        mesh.startDrawingQuads();
+        for (int segment = 0; segment < segments; segment++) {
+            double a = 2D * Math.PI * segment / segments;
+            double b = 2D * Math.PI * (segment + 1) / segments;
+            for (int strip = -1; strip < 1; strip++) {
+                addRimVertex(mesh, coreRadius, a, strip, time, fade);
+                addRimVertex(mesh, coreRadius, b, strip, time, fade);
+                addRimVertex(mesh, coreRadius, b, strip + 1, time, fade);
+                addRimVertex(mesh, coreRadius, a, strip + 1, time, fade);
+            }
+        }
+        mesh.draw();
+    }
+
+    private static void addRimVertex(Tessellator mesh, float coreRadius, double angle, int edge, float time,
+        float fade) {
+        float sheen = Math.max(0F, (float) Math.cos(angle - vortexArmAngle(0, time)));
+        sheen *= sheen;
+        sheen *= sheen;
+        mesh.setColorRGBA_F(0.48F, 0.63F + 0.12F * sheen, 0.85F, edge == 0 ? (0.35F + 0.22F * sheen) * fade : 0F);
+        double radius = coreRadius + 0.09D + 0.16D * edge;
+        mesh.addVertex(Math.cos(angle) * radius, 0D, Math.sin(angle) * radius);
     }
 
     private static void drawFracturedVoidLattice(float time, float fade) {
@@ -531,7 +659,7 @@ public final class OTEVoidNexusClientEffects {
     private static void drawPrismaticShards(float time, float fade) {
         Tessellator tessellator = Tessellator.instance;
         tessellator.startDrawing(GL11.GL_TRIANGLES);
-        for (int shard = 0; shard < 24; shard++) {
+        for (int shard = 0; shard < 18; shard++) {
             float scatter = hash(shard * 17.17F + 0.41F);
             float blockOrbit = 20F + 80F * scatter + 1.8F * (float) Math.sin(time * 0.018D + shard * 2.07D);
             float orbit = blockOrbit / EFFECT_SCALE;
@@ -584,25 +712,6 @@ public final class OTEVoidNexusClientEffects {
             }
         }
         tessellator.draw();
-    }
-
-    private static void drawPsionicTendrils(float time, float fade) {
-        GL11.glLineWidth(2.4F);
-        Tessellator tessellator = Tessellator.instance;
-        for (int filament = 0; filament < 10; filament++) {
-            tessellator.startDrawing(GL11.GL_LINE_STRIP);
-            float baseAngle = filament * GOLDEN_ANGLE + time * 0.018F;
-            for (int segment = 0; segment <= 14; segment++) {
-                float progress = segment / 14F;
-                float angle = baseAngle + progress * 1.7F + (float) Math.sin(time * 0.07D + segment) * 0.08F;
-                float radius = 0.28F + 0.82F * (float) Math.sin(progress * Math.PI);
-                float y = -1.35F + progress * 1.35F;
-                tessellator
-                    .setColorRGBA_F(0.42F, 0.06F + progress * 0.22F, 0.92F, ((1F - progress) * 0.72F + 0.05F) * fade);
-                tessellator.addVertex(Math.cos(angle) * radius, y, Math.sin(angle) * radius);
-            }
-            tessellator.draw();
-        }
     }
 
     private static void drawEscapingParticles(float time, float fade) {
@@ -668,7 +777,7 @@ public final class OTEVoidNexusClientEffects {
         MachineFx nearest = null;
         double nearestDistance = radius * radius;
         for (MachineFx machine : machines) {
-            if (machine.fade <= 0.001F || machine.world != viewer.worldObj) continue;
+            if (machine.fade <= 0.001F || !machine.isLoaded(viewer.worldObj)) continue;
             double distance = distanceSq(viewer, machine);
             if (distance <= nearestDistance) {
                 nearestDistance = distance;
@@ -685,9 +794,9 @@ public final class OTEVoidNexusClientEffects {
         return dx * dx + dy * dy + dz * dz;
     }
 
-    private static float proximity(Entity viewer, MachineFx machine) {
-        if (viewer == null) return 0F;
-        return distanceFade(distanceSq(viewer, machine));
+    private static float atmosphereFade(double distanceSquared) {
+        float near = clamp((float) ((SKY_RADIUS - Math.sqrt(distanceSquared)) / 92D), 0F, 1F);
+        return near * near * (3F - 2F * near);
     }
 
     private static float distanceFade(double distanceSquared) {
@@ -715,6 +824,7 @@ public final class OTEVoidNexusClientEffects {
         private final World world;
         private boolean active;
         private float fade;
+        private float previousFade;
         private int onTicks;
         private int offTicks;
         private long lastFadeTick = Long.MIN_VALUE;
@@ -740,6 +850,10 @@ public final class OTEVoidNexusClientEffects {
             if (!isLoaded(activeWorld)) return false;
             OTEVoidNexusMatrix matrix = (OTEVoidNexusMatrix) base.getMetaTileEntity();
             return matrix.isClientRenderActive();
+        }
+
+        private float interpolatedFade(float partialTicks) {
+            return lerp(previousFade, fade, partialTicks);
         }
     }
 }
