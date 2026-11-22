@@ -281,8 +281,11 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
                     // 凝聚态：点数模型自己算时长，关掉超频
                     this.setOverclock(1.0D, 1.0D);
                 } else {
-                    // 装配线：无损超频（每级时长 /2，耗电 ×1）
-                    this.setOverclock(2.0D, 1.0D);
+                    // 装配线：无损超频 = 完美超频（每级时长 /4、耗电 ×4，总 EU 不变）。
+                    // 供电是总功率语义（setProcessingLogicPower），实际并行被功率预算 clamp 后，
+                    // GT 原生计算器自动"优先并行、剩余换超频"：级数 = log4(总功率 / (配方EUt × 实际并行))，
+                    // 材料不足时按材料数算级数，耗电尽量贴着总功率走不浪费。
+                    this.setOverclock(4.0D, 4.0D);
                 }
                 this.setEuModifier(
                     (double) Math
@@ -333,7 +336,8 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
                     return CheckRecipeResultRegistry.SUCCESSFUL;
                 }
 
-                // 装配线模式：不需要算力卡，加速只由三种结构方块（时间 + 稳定）决定
+                // 装配线模式：不需要算力卡，加速只由三种结构方块（时间 + 稳定）决定。
+                // 无损超频走 GT 原生完美超频（process() 里 setOverclock(4,4)），按实际并行自动分配预算。
                 float alSpeed = DeepSeikoMath
                     .alSpeed(OTEDeepSeiko.this.getTimeLevel(), OTEDeepSeiko.this.getStabLevel())
                     * OTEDeepSeiko.this.getThroughputFactor();
@@ -347,6 +351,25 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
                 return super.createParallelHelper(recipe).setConsumption(!OTEDeepSeiko.this.mRunningOnLoad);
             }
         }).setMaxParallelSupplier(this::getTrueParallel);
+    }
+
+    /**
+     * 装配线模式：能源仓等级不卡配方 —— 只看总功率 Σ(V×A)。
+     * <p>
+     * GT 标准语义（平均电压 × 总电流）会被混合等级能源仓拖低平均电压，MAX 级配方直接起不了跳；
+     * 改为总功率语义后：总功率供得起配方耗电就能跑，等级不再卡配方。
+     * 实际并行数仍受总功率预算约束（并行 N 组耗电 = 配方 EUt × N ≤ 总功率）。
+     * 凝聚态模式保持 GT 标准供电语义，不受本次改动影响。
+     */
+    @Override
+    protected void setProcessingLogicPower(ProcessingLogic logic) {
+        if (this.machineMode != 0) {
+            super.setProcessingLogicPower(logic);
+            return;
+        }
+        logic.setAvailableVoltage(getMaxInputEu());
+        logic.setAvailableAmperage(1);
+        logic.setAmperageOC(false);
     }
 
     @Override
@@ -1361,12 +1384,11 @@ public class OTEDeepSeiko extends OTHMultiMachineBase<OTEDeepSeiko> implements I
             }
             return null;
         }, reps, Integer.valueOf(0), setter, t -> Integer.valueOf(getter.applyAsInt(t)));
-        // 保持 ofChain 兜底（空位/普通机壳）——不然预览建到第一个鳍格就失败、塌成单方块。
-        // 等级滑条要生效，靠下面 registerFinChannel() 把 1~10 级对应的方块注册成信道指示物。
-        return StructureUtility.ofChain(
-            StructureUtility.withChannel(channel, tiered),
-            StructureUtility.ofBlock(DeepSeikoBlocks.dsCasing, 0),
-            StructureUtility.isAir());
+        // 三环槽位是结构必需件：只接受 1~10 级方块（鳍或各级发生器），拆掉 = 结构不完整、机器停机。
+        // 不能加机壳/空气兜底——兜底会让校验在方块被拆后落到兜底照样通过，永远不判结构不完整。
+        // 预览与放置走 ofBlocksTiered 自带的 hint/place/survival 路径（按手持物品数量选等级），
+        // 等级滑条则靠 registerFinChannel() 把 1~10 级方块注册成信道指示物，均无需兜底。
+        return StructureUtility.withChannel(channel, tiered);
     }
 
     private static Predicate<ItemStack> anyHatchItem() {
