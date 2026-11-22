@@ -1,33 +1,9 @@
 
 elytraModpackVersion {
-    // 在这配置的gtnh版本 用于自动拉取依赖版本
     gtnhVersion = "2.9.0"
     // Elytra conventions v1.1.1 将此值直接作为 allowFromCaching 传入；设为 true 才会读取本地清单。
     manifestNoCache = true
-    // 是否自动为输出的jar添加 `gtnhVersion` 后缀
     attachManifestVersionToJar = false
-}
-
-// TST：GitHub releases 的 dev jar 拉到 libs/（已被 .gitignore 忽略），首次编译前自动下载。
-// 0.8.1 的 Bottled Chaos 需要没人注册的 mutagen 流体，进存档会 NPE，dev 先钉 0.8.0。
-def tstVersion = (project.findProperty('tstVersion') ?: '0.8.0').toString()
-def tstJar = file("libs/TwistSpaceTechnology-${tstVersion}-dev.jar")
-def tstReleaseUrl = "https://github.com/Nxer/Twist-Space-Technology-Mod/releases/download/${tstVersion}/${tstJar.name}"
-
-tasks.register('downloadTwistSpaceTechnology') {
-    group = 'dependencies'
-    description = "下载 TST ${tstVersion} 的 dev jar 到 libs/（GitHub releases，无 maven 坐标）"
-    outputs.file(tstJar)
-    doLast {
-        if (tstJar.exists()) return
-        tstJar.parentFile.mkdirs()
-        logger.lifecycle("TST: downloading ${tstReleaseUrl}")
-        ant.get(src: tstReleaseUrl, dest: tstJar, skipexisting: true, verbose: true)
-    }
-}
-
-tasks.withType(JavaCompile).configureEach {
-    dependsOn 'downloadTwistSpaceTechnology'
 }
 
 dependencies {
@@ -37,6 +13,7 @@ dependencies {
     implementation('com.github.GTNewHorizons:Mobs-Info:0.6.0-GTNH:dev')
     implementation(gtnhDev("Infernal-Mobs"))
     implementation(gtnhDev("Galaxy-Space-GTNH"))
+    devOnlyNonPublishable('ganymedes01.etfuturum:etfuturum:2.7.3-GTNH:dev')
     implementation(gtnhDev("SGCraft"))
     implementation(gtnhDev("twilightforest"))
     implementation(gtnhDev("AE2FluidCraft-Rework"))
@@ -60,6 +37,7 @@ dependencies {
     implementation(gtnhDev("Universal-Singularities"))
     implementation(gtnhDev("BetterQuesting"))
     implementation(gtnhDev("supersolarpanels"))
+    implementation(gtnhDev("SimpleSkinBackport"))
     implementation(rfg.deobf('curse.maven:advsolar-362768:2885953'))
     implementation ("net.industrial-craft:industrialcraft-2:2.2.828-experimental:dev")
     runtimeOnlyNonPublishable(rfg.deobf("curse.maven:BiomesOPlenty-220318:2499612"))
@@ -71,28 +49,28 @@ dependencies {
     implementation('com.github.GTNewHorizons:worldedit-gtnh:v0.0.8:dev')
     compileOnly(rfg.deobf("maven.modrinth:journeymap:5.2.23"))
     compileOnly(gtnhDev("VisualProspecting"))
-    compileOnly(files(tstJar))
-    runtimeOnlyNonPublishable(files(tstJar))
+    compileOnly("com.github.Nxer:Twist-Space-Technology-Mod:0.8.0:dev") {transitive=false}
+    runtimeOnlyNonPublishable("com.github.Nxer:Twist-Space-Technology-Mod:0.8.0:dev") {transitive=false}
     runtimeOnlyNonPublishable(gtnhDev("Electro-Magic-Tools")) {
         exclude group: 'curse.maven', module: 'thaumcraft-nei-plugin-225095'
     }
     runtimeOnlyNonPublishable(gtnhDev("CropsNH"))
     runtimeOnlyNonPublishable(gtnhDev("BetterBuildersWands"))
     runtimeOnlyNonPublishable(gtnhDev("AspectRecipeIndex"))
+    compileOnly(gtnhDev("AspectRecipeIndex"))
     runtimeOnlyNonPublishable(rfg.deobf('curse.maven:thaumcraft-nei-plugin-225095:2241913'))
 
 
-    // runtime
     runtimeOnlyNonPublishable(gtnhDev("BetterP2P"))
     runtimeOnlyNonPublishable(gtnhDev("Chisel")) { transitive = false }
     runtimeOnlyNonPublishable(gtnhDev("StructureLib"))
     runtimeOnlyNonPublishable(gtnhDev("BlockRenderer6343")) { transitive = false }
+    compileOnly(gtnhDev("BlockRenderer6343")) { transitive = false }
     runtimeOnlyNonPublishable('com.github.GTNewHorizons:Railcraft:9.17.34:dev') { transitive = false }
 
     annotationProcessor('com.google.auto.value:auto-value:1.10.1')
     implementation('com.google.auto.value:auto-value-annotations:1.10.1')
 
-    // jvmDowngrader
     compileOnly("javax.xml.bind:jaxb-api:2.3.1")
     compileOnly("org.jetbrains:annotations:26.0.1")
     compileOnly("org.projectlombok:lombok:1.18.42") { transitive = false }
@@ -115,5 +93,3 @@ dependencies {
 String gtnhDev(String name, String classifier = "dev") {
     return elytraModpackVersion.gtnh(name, classifier)
 }
-
-//i guess no one will read the example XD

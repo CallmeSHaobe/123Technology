@@ -62,10 +62,8 @@ public class OTEEIO extends OTHMultiMachineBase<OTEEIO> {
         EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.eio.0") };
 
     // Structured by LyeeR
-    private final String[][] shapeMain = new String[][] { { "BBBBBBB", "BBBBBBB", "BBBBBBB", "BBBBBBB", "BBBBBBB" },
-        { "BCCCCCB", "B     B", "B     B", "B     B", "BBBBBBB" },
-        { "BCCCCCB", "B     B", "B     B", "B AAA B", "BBBBBBB" },
-        { "BBB~BBB", "BBBBBBB", "BBBBBBB", "BBBBBBB", "BBBBBBB" } };
+    private final String[][] shapeMain = com.newmaa.othtech.utils.ShapeLoader
+        .loadCompressed("/assets/123technology/structures/ote/OTEEIO_shapeMain.shape.gz");
 
     private static ITexture CASING_TEXTURE = null;
 

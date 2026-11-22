@@ -82,6 +82,8 @@ public enum OTHItemList {
     itemTST,
     NukeThrowable,
     PositronCannon,
+    Longinus,
+    PoweredElytra,
     RecordPRKA,
     RecordPRKB,
     RecordEVAA,
@@ -108,9 +110,23 @@ public enum OTHItemList {
     RiceSingularity,
     /** 时空冷却核心（装配线产物） */
     SpacetimeCoolingCore,
+    /** 灵能具象化模块使用的具象化灵能 */
+    ManifestedPsionics,
+    /** 可放入主机输入总线的灵能稳定器 */
+    PsionicStabilizer,
+    /** 可从矩阵取出或存入的虚境势能 */
+    VoidPotential,
+    PsychicWrappedCasing,
+    PsionicRealityCasing,
+    SubspaceShieldCasing,
+    VoidStabilizationCasing,
+    EndlessPsionicGlass,
+    SpacetimePotentialGlass,
 
     SuicideDronePig,
     SuicideDroneAngelica,
+    SuicideDroneNuclear,
+    SuicideDroneNvidia,
 
     // Machines
     DroneLaunchPlatform,
@@ -164,10 +180,15 @@ public enum OTHItemList {
     LargeSteamHatch,
     MegaThermalCentrifuge, // 乌拉尔山脉热分离厂 - 巨热力离心
     AbstractSanctum,
-    LargeQuHub, // 大型可堆叠变压器(暂定)
+    LargeQuHub, //
+    VoidNexusMatrix,
+    PsionicManifestationModule,
+    VoidNexusEssentiaBus,
+    LargeEssentiaGenerator,
 
     DeepSeiko,
-    DeepSeikoNaniteCell;
+    DeepSeikoNaniteCell,
+    PrimitiveRareEarthCatalyst;
 
     private boolean mHasNotBeenSet;
     private boolean mDeprecated;

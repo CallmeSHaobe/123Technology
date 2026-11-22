@@ -221,7 +221,7 @@ public enum OTHBeeDefinition implements IBeeDefinition {
                 EnumBeeChromosome.EFFECT,
                 binnie.genetics.genetics.AlleleHelper.getAllele(ExtraBeesEffect.BIRTHDAY.getUID()));
         }, dis -> {
-            IBeeMutationCustom tMutation = dis.registerMutation(WEIWEI, GATE, 100);
+            IBeeMutationCustom tMutation = dis.registerMutation(ENQING, GATE, 100);
             tMutation.requireResource(Blocks.dirt, 0);// block of dirt
         });
 

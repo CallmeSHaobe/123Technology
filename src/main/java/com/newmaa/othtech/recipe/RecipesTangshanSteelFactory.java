@@ -5,8 +5,8 @@ import static com.newmaa.othtech.utils.Utils.setStackSize;
 import net.minecraftforge.fluids.FluidRegistry;
 
 import com.newmaa.othtech.common.recipemap.Recipemaps;
-import com.newmaa.othtech.utils.RecipeBuilder;
 
+import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
@@ -21,8 +21,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
         RecipeMap<?> SF = Recipemaps.TSSF;
         // -----Of Fe
         // Fe50C
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 1), 256000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 1), 5120),
                 GTUtility.getIntegratedCircuit(24))
@@ -34,8 +34,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .duration(4000 * 20)
             .addTo(SF);
         // ele Fe
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 1), 64000 * 3),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Silver, 1), 64000 * 3),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Coal, 1), 64000),
@@ -50,8 +50,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .duration(512 * 120 * 20 * 9)
             .addTo(SF);
         // pul Fe
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 1), 64000 * 3),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.EnderPearl, 1), 64000 * 3),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Coal, 1), 64000),
@@ -66,8 +66,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .duration(512 * 160 * 20 * 9)
             .addTo(SF);
         // Fe Mix
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 1), 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Nickel, 1), 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Zinc, 1), 64000 * 4),
@@ -81,8 +81,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .duration(512 * 30 * 20)
             .addTo(SF);
         // Invar
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 1), 64000 * 2),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Nickel, 1), 64000),
                 GTUtility.getIntegratedCircuit(1))
@@ -93,8 +93,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .duration(512 * 10 * 20 * 3)
             .addTo(SF);
         // Eglin
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 1), 64000 * 23),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Aluminium, 1), 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Chrome, 1), 64000),
@@ -110,8 +110,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .duration(512 * 45 * 20 * 48)
             .addTo(SF);
         // Kant
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 1), 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Aluminium, 1), 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Chrome, 1), 64000),
@@ -123,8 +123,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .duration(512 * 60 * 20 * 3)
             .addTo(SF);
         // Stainless
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 1), 64000 * 6),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Chrome, 1), 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Manganese, 1), 64000),
@@ -138,8 +138,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .duration(512 * 85 * 20 * 9)
             .addTo(SF);
         // DS
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 1), 64000 * 23),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Chrome, 1), 64000 * 9),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Cobalt, 1), 64000 * 9),
@@ -152,8 +152,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .duration(512 * 37 * 20 * 50)
             .addTo(SF);
         // 020
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 1), 64000 * 10),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Chrome, 1), 64000 * 5),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Copper, 1), 64000),
@@ -166,8 +166,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .duration(512 * 37 * 20 * 25)
             .addTo(SF);
         // MA956
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 1), 64000 * 16),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Chrome, 1), 64000 * 5),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Aluminium, 1), 64000 * 3),
@@ -180,8 +180,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .duration(512 * 50 * 20 * 25)
             .addTo(SF);
         // HastW
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 1), 64000 * 3),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Chrome, 1), 64000 * 3),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Cobalt, 1), 64000),
@@ -195,8 +195,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .duration(512 * 20 * 20 * 50)
             .addTo(SF);
         // HastX
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 1), 64000 * 9),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Chrome, 1), 64000 * 11),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Silicon, 1), 64000),
@@ -211,8 +211,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .duration(512 * 20 * 20 * 50)
             .addTo(SF);
         // EnergeticSilver
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Redstone, 1), 64000 * 25),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Silicon, 1), 64000 * 25),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 1), 64000 * 3 * 25),
@@ -231,8 +231,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .eut(480)
             .addTo(SF);
         // EnergeticAlloy
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Redstone, 1), 64000 * 25),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Silicon, 1), 64000 * 25),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 1), 64000 * 3 * 25),
@@ -251,8 +251,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .eut(480)
             .addTo(SF);
         // VividAlloy
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Redstone, 1), 64000 * 25),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Chrome, 1), 64000 * 27 * 25),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.EnderEye, 1), 64000 * 27 * 25),
@@ -273,8 +273,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .eut(480)
             .addTo(SF);
         // VibrantAlloy
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Redstone, 1), 64000 * 25),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Chrome, 1), 64000 * 27 * 25),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.EnderEye, 1), 64000 * 27 * 25),
@@ -295,10 +295,10 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .eut(480)
             .addTo(SF);
         // Liuming
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedingot", 1, 10101), 5 * 64000))
-            .itemInputs(
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(19),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tin, 1), 20 * 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 1), 20 * 64000),
@@ -315,10 +315,10 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .addTo(SF);
         // -----Of Fe50C
         // highDur
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedingot", 1, 92), 297 * 64000))
-            .itemInputs(
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(11),
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 64), 18 * 64000),
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 36), 18 * 64000),
@@ -338,10 +338,10 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .eut(30720)
             .addTo(SF);
         // HardSteel
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedingot", 1, 96), 72 * 64000))
-            .itemInputs(
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(20),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Molybdenum, 1), 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Coal, 1), 64000),
@@ -358,10 +358,10 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .eut(7680)
             .addTo(SF);
         // MAR200
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedingot", 1, 10096), 59 * 64000))
-            .itemInputs(
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(21),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Aluminium, 1), 5 * 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Titanium, 1), 2 * 64000),
@@ -376,10 +376,10 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .eut(30720)
             .addTo(SF);
         // MARCe
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedingot", 1, 10097), 1121 * 64000))
-            .itemInputs(
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(19),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Aluminium, 1), 5 * 64000 * 59),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Cerium, 1), 64000 * 59),
@@ -395,10 +395,10 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .eut(TierEU.UV)
             .addTo(SF);
         // TungS
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.ingot, Materials.TungstenSteel, 1), 2 * 64000))
-            .itemInputs(
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(1),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Steel, 1), 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tungsten, 1), 64000))
@@ -408,9 +408,9 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .eut(TierEU.IV)
             .addTo(SF);
         // BlackSteel
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(setStackSize(GTOreDictUnificator.get(OrePrefixes.ingot, Materials.BlackSteel, 1), 25 * 64000))
-            .itemInputs(
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(14),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Nickel, 1), 5 * 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Copper, 1), 64000 * 3),
@@ -423,10 +423,10 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .eut(TierEU.HV)
             .addTo(SF);
         // Damascus
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.ingot, Materials.DamascusSteel, 1), 18 * 64000))
-            .itemInputs(
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(18),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Silicon, 1), 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Chrome, 1), 64000),
@@ -441,9 +441,9 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .eut(TierEU.HV)
             .addTo(SF);
         // RedSteel
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(setStackSize(GTOreDictUnificator.get(OrePrefixes.ingot, Materials.RedSteel, 1), 40 * 64000))
-            .itemInputs(
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(18),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Copper, 1), 4 * 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Zinc, 1), 64000),
@@ -457,9 +457,9 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .eut(TierEU.HV)
             .addTo(SF);
         // BlueSteel
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(setStackSize(GTOreDictUnificator.get(OrePrefixes.ingot, Materials.BlueSteel, 1), 160 * 64000))
-            .itemInputs(
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(18),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Copper, 1), 19 * 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Zinc, 1), 5 * 64000),
@@ -472,9 +472,9 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .eut(TierEU.HV)
             .addTo(SF);
         // DarkSteel
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(setStackSize(GTOreDictUnificator.get(OrePrefixes.ingot, Materials.DarkSteel, 1), 9 * 64000))
-            .itemInputs(
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(14),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Silicon, 1), 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Steel, 1), 64000),
@@ -486,10 +486,10 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .eut(TierEU.HV)
             .addTo(SF);
         // EleSteel
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.ingot, Materials.ElectricalSteel, 1), 3 * 64000))
-            .itemInputs(
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(2),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Silicon, 1), 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Steel, 1), 64000),
@@ -500,10 +500,10 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .eut(TierEU.HV)
             .addTo(SF);
         // VanSteel
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.ingot, Materials.VanadiumSteel, 1), 9 * 64000))
-            .itemInputs(
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(2),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Vanadium, 1), 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Steel, 1), 7 * 64000),
@@ -514,9 +514,9 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .eut(TierEU.HV)
             .addTo(SF);
         // EnderSteel
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(setStackSize(GTOreDictUnificator.get(OrePrefixes.ingot, Materials.EndSteel, 1), 27 * 64000))
-            .itemInputs(
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(16),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Silicon, 1), 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tungsten, 1), 9 * 64000),
@@ -530,9 +530,9 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .eut(TierEU.IV)
             .addTo(SF);
         // Alumite
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(setStackSize(GTOreDictUnificator.get(OrePrefixes.ingot, Materials.Alumite, 1), 9 * 64000))
-            .itemInputs(
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(2),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Aluminium, 1), 5 * 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Steel, 1), 2 * 64000),
@@ -543,10 +543,10 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .eut(TierEU.HV)
             .addTo(SF);
         // Melodic
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.ingot, Materials.MelodicAlloy, 1), 81 * 64000))
-            .itemInputs(
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(18),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Silicon, 1), 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tungsten, 1), 9 * 64000),
@@ -562,8 +562,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .eut(TierEU.IV)
             .addTo(SF);
         // Ma 250
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Titanium, 1), 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Cobalt, 1), 64000 * 2),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Nickel, 1), 64000 * 4),
@@ -577,8 +577,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .duration(512 * 25 * 20 * 24)
             .addTo(SF);
         // Ma 350
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Aluminium, 1), 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Cobalt, 1), 64000 * 2),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Nickel, 1), 64000 * 4),
@@ -592,8 +592,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .duration(512 * 20 * 20 * 24)
             .addTo(SF);
         // Ma 300
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Titanium, 1), 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Cobalt, 1), 64000 * 2),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Nickel, 1), 64000 * 4),
@@ -607,8 +607,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .duration(512 * 20 * 20 * 24)
             .addTo(SF);
         // WaterTightSteel
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Phosphorus, 1), 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Sulfur, 1), 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Aluminium, 1), 64000),
@@ -624,8 +624,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .duration(512 * 25 * 20 * 24)
             .addTo(SF);
         // Zeron - 100
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Chrome, 1), 64000 * 13),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Nickel, 1), 64000 * 3),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Molybdenum, 1), 64000 * 2),
@@ -640,8 +640,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .duration(512 * 360 * 20 * 50)
             .addTo(SF);
         // Titan Steel
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.InfusedEntropy, 1), 64000 * 20),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tungsten, 1), 64000 * 21),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 1), 64000 * 21),
@@ -656,8 +656,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .duration(512 * 500 * 20 * 120)
             .addTo(SF);
         // EightSteel
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 30), 64000 * 240),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tungsten, 1), 64000 * 105),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Steel, 1), 64000 * 120),
@@ -682,9 +682,9 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .duration(512 * 104 * 20 * 2000)
             .addTo(SF);
         // HSSG
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(setStackSize(GTOreDictUnificator.get(OrePrefixes.ingot, Materials.HSSG, 1), 18 * 64000))
-            .itemInputs(
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(18),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Vanadium, 1), 2 * 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Chrome, 1), 2 * 64000),
@@ -697,9 +697,9 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .eut(TierEU.IV)
             .addTo(SF);
         // HSSE
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(setStackSize(GTOreDictUnificator.get(OrePrefixes.ingot, Materials.HSSE, 1), 81 * 64000))
-            .itemInputs(
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(19),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Cobalt, 1), 9 * 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Manganese, 1), 9 * 64000),
@@ -715,9 +715,9 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .eut(TierEU.IV)
             .addTo(SF);
         // HSSS
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(setStackSize(GTOreDictUnificator.get(OrePrefixes.ingot, Materials.HSSS, 1), 81 * 64000))
-            .itemInputs(
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(19),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Iridium, 1), 18 * 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Osmium, 1), 9 * 64000),
@@ -732,8 +732,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .eut(TierEU.IV)
             .addTo(SF);
         // EnrichedNq
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 39), 64000 * 3),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.NaquadahEnriched, 1), 64000 * 8),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tritanium, 1), 64000 * 5),
@@ -747,8 +747,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .duration(512 * 54 * 20 * 18)
             .addTo(SF);
         // Goushi Alloy
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Palladium, 1), 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Osmium, 1), 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Iridium, 1), 64000),
@@ -764,8 +764,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .duration(512 * 54 * 20 * 6)
             .addTo(SF);
         // Ao SHI
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 30), 64000 * 4),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.InfusedOrder, 1), 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.InfusedEntropy, 1), 64000),
@@ -781,8 +781,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .duration(512 * 300 * 20 * 10)
             .addTo(SF);
         // Pika 64B
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tungsten, 1), 64000 * 1440),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Steel, 1), 64000 * 1440),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Aluminium, 1), 64000 * 1995),
@@ -806,8 +806,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .duration(512 * 104 * 20 * 2000)
             .addTo(SF);
         // Quantum
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Silicon, 1), 64000 * 10),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Palladium, 1), 64000 * 20),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Bismuth, 1), 64000 * 20),
@@ -831,8 +831,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .duration(512 * 625 * 20 * 200)
             .addTo(SF);
         // A243
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Molybdenum, 1), 64000 * 32),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tungsten, 1), 64000 * 32),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Steel, 1), 64000 * 320),
@@ -855,8 +855,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .duration(512 * 79 * 20 * 2650)
             .addTo(SF);
         // Guangsu
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tin, 1), 360 * 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 1), 360 * 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Glowstone, 1), 540 * 64000),
@@ -875,8 +875,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .duration(512 * 20 * 20 * 150)
             .addTo(SF);
         // Lufeien
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Molybdenum, 1), 64000 * 16),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tungsten, 1), 64000 * 50),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Nickel, 1), 64000 * 160),
@@ -896,8 +896,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .duration(512 * 375 * 20 * 450)
             .addTo(SF);
         // Botem
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 setStackSize(GTModHandler.getModItem("miscutils", "itemDustThallium", 1), 64000 * 15),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Titanium, 1), 64000 * 3),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Nickel, 1), 64000 * 2),
@@ -911,8 +911,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .duration(512 * 500 * 20 * 80)
             .addTo(SF);
         // Abyssal Alloy
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 setStackSize(GTModHandler.getModItem("miscutils", "itemDustGermanium", 1), 64000 * 180),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tungsten, 1), 64000 * 450),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Aluminium, 1), 64000 * 108),
@@ -934,8 +934,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .duration(512 * 562 * 20 * 373)
             .addTo(SF);
         // Black Titanium
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Titanium, 1), 64000 * 55),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Lanthanum, 1), 64000 * 12),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tungsten, 1), 64000 * 8),
@@ -953,8 +953,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .duration(512 * 480 * 20 * 100)
             .addTo(SF);
         // 2B
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Molybdenum, 1), 64000 * 2),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Steel, 1), 64000 * 56),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tungsten, 1), 64000 * 24),
@@ -973,8 +973,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .duration(512 * 438 * 20 * 132)
             .addTo(SF);
         // Mellion
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(6),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Rubidium, 1), 64000 * 11),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tritanium, 1), 64000 * 11),
@@ -996,10 +996,10 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .duration(80 * 512 * 20 * 63)
             .addTo(SF);
         // Six-Phased Copper
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.ingot, Materials.SixPhasedCopper, 1), 64000 * 72))
-            .itemInputs(
+            .itemInputsUnsafe(
                 setStackSize(GTModHandler.getModItem("Avaritia", "Singularity", 1, 5), 64000 * 8),
                 setStackSize(GTModHandler.getModItem("miscutils", "itemDustCelestialTungsten", 1), 64000 * 72),
                 setStackSize(GTModHandler.getModItem("miscutils", "itemDustAstralTitanium", 1), 64000 * 288),
@@ -1012,8 +1012,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .specialValue(13000)
             .addTo(SF);
         // Molten Halkonite
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.InfusedEntropy, 1), 1000 * 180),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tungsten, 1), 1000 * 829),
                 setStackSize(Materials.Tartarite.getDust(1), 1000 * 2160),

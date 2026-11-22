@@ -13,7 +13,6 @@ import net.minecraftforge.fluids.FluidStack;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.materials.BWLiquids;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
-import com.newmaa.othtech.utils.RecipeBuilder;
 
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
@@ -236,10 +235,7 @@ public class RecipesMegaQFT implements IRecipePool {
         GTValues.RA.stdBuilder()
             .fluidOutputs(BWLiquids.Void.getFluidOrGas(4000))
             .itemInputs(GTUtility.getIntegratedCircuit(24), OTHItemList.beeISAM.get(0))
-            .fluidInputs(
-                new FluidStack(FluidRegistry.getFluidID("lubricant"), 64000),
-                new FluidStack(FluidRegistry.getFluidID("cryotheum"), 32000),
-                BWLiquids.Galaxy.getFluidOrGas(20 * 144))
+            .fluidInputs(Materials.BoundlessCosmicSolder.getFluid(1000), BWLiquids.Galaxy.getFluidOrGas(20 * 144))
 
             .duration(100 * 20)
             .eut(TierEU.UXV)
@@ -267,8 +263,8 @@ public class RecipesMegaQFT implements IRecipePool {
             .eut(1919810)
             .addTo(MQFT);
         // Platinum
-        RecipeBuilder.builder()
-            .itemInputs(setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 47), 64))
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 47), 64))
             .itemOutputs(
                 Materials.Platinum.getDust(64),
                 Materials.Palladium.getDust(64),
@@ -280,8 +276,8 @@ public class RecipesMegaQFT implements IRecipePool {
             .eut(TierEU.UHV)
             .addTo(MQFT);
         // wasser
-        RecipeBuilder.builder()
-            .itemInputs(GTModHandler.getModItem("miscutils", "item.BasicGenericChemItem", 0, 30))
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(GTModHandler.getModItem("miscutils", "item.BasicGenericChemItem", 0, 30))
             .fluidInputs(Materials.Water.getFluid(123123123))
             .fluidOutputs(
                 Materials.Grade1PurifiedWater.getFluid(25600000),
@@ -297,7 +293,7 @@ public class RecipesMegaQFT implements IRecipePool {
             .eut(TierEU.RECIPE_MAX / 2)
             .addTo(MQFT);
         // Nq
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .fluidInputs(
                 Materials.NaquadahEnriched.getMolten(144 * 256),
                 Materials.Hydrogen.getGas(32000),
@@ -307,7 +303,7 @@ public class RecipesMegaQFT implements IRecipePool {
                 Materials.PrismaticNaquadah.getMolten(256 * 144),
                 Materials.Strontium.getMolten(256 * 144),
                 Materials.PrismaticAcid.getFluid(1000 * 1000))
-            .itemInputs(GTModHandler.getModItem(Mods.Botania.ID, "manaResource", 24, 10))
+            .itemInputsUnsafe(GTModHandler.getModItem(Mods.Botania.ID, "manaResource", 24, 10))
             .duration(123 * 20)
             .eut(RECIPE_UIV)
             .addTo(MQFT);

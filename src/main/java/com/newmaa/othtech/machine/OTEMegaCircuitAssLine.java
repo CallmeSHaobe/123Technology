@@ -82,46 +82,8 @@ public class OTEMegaCircuitAssLine extends OTHMultiMachineBase<OTEMegaCircuitAss
         EnumChatFormatting.AQUA + translateToLocal("otht.con") + ":", translateToLocal("ote.cm.mca.0") };
 
     // Structured by NewMaa
-    private final String[][] shapeMain = new String[][] {
-        { "                             ", "                             ", "                             ",
-            "                             ", "                             ", "                             ",
-            "                             ", "                             ", " HHHHHHHHHHHHHHHHHHHHHHHHHHH " },
-        { "                             ", "                             ", "                             ",
-            "                             ", "                             ", "                             ",
-            "                             ", "                             ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
-        { "                             ", "                             ", "                             ",
-            "                             ", "                             ", "                             ",
-            "                             ", "  I                       I  ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
-        { "                             ", "                             ", "                             ",
-            "                             ", "                             ", "                             ",
-            "  I~CCCCCCCCCCCCCCCCCCCCCCI  ", "  IGGGGGGGGGGGGGGGGGGGGGGGI  ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
-        { "                             ", "                             ", "  IIIIIIIIIIIIIIIIIIIIIIIII  ",
-            "  IAAAAAAAAAAAAAAAAAAAAAAAI  ", "  IAAAAAAAAAAAAAAAAAAAAAAAI  ", "  IAAAAAAAAAAAAAAAAAAAAAAAI  ",
-            "  IAAAAAAAAAAAAAAAAAAAAAAAI  ", " IICCCCCCCCCCCCCCCCCCCCCCCII ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
-        { "  I                       I  ", "  IJJJJJJJJJJJJJJJJJJJJJJJI  ", "  IJJJJJJJJJJJJJJJJJJJJJJJI  ",
-            "  I                       I  ", "  C                       C  ", "  C                       C  ",
-            "  CKLLLLLLLLLLLLLLLLLLLLLKC  ", " IIFFFFFFFFFFFFFFFFFFFFFFFII ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
-        { "  I                       I  ", "  IJJJJJJJJJJJJJJJJJJJJJJJI  ", "  CJBBBBBBBBBBBBBBBBBBBBBJC  ",
-            "  C                       C  ", "  C                       C  ", "  C                       D  ",
-            "  CK                     KC  ", " IIFEEEEEEEEEEEEEEEEEEEEEFII ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
-        { "  I                       I  ", "  IJJJJJJJJJJJJJJJJJJJJJJJI  ", "  IJJJJJJJJJJJJJJJJJJJJJJJI  ",
-            "  I                       I  ", "  C                       C  ", "  C                       C  ",
-            "  CKLLLLLLLLLLLLLLLLLLLLLKC  ", " IIFFFFFFFFFFFFFFFFFFFFFFFII ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
-        { "                             ", "                             ", "  IIIIIIIIIIIIIIIIIIIIIIIII  ",
-            "  IAAAAAAAAAAAAAAAAAAAAAAAI  ", "  IAAAAAAAAAAAAAAAAAAAAAAAI  ", "  IAAAAAAAAAAAAAAAAAAAAAAAI  ",
-            "  IAAAAAAAAAAAAAAAAAAAAAAAI  ", " IICCCCCCCCCCCCCCCCCCCCCCCII ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
-        { "                             ", "                             ", "                             ",
-            "                             ", "                             ", "                             ",
-            "  ICCCCCCCCCCCCCCCCCCCCCCCI  ", "  ICCCCCCCCCCCCCCCCCCCCCCCI  ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
-        { "                             ", "                             ", "                             ",
-            "                             ", "                             ", "                             ",
-            "                             ", "  I                       I  ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
-        { "                             ", "                             ", "                             ",
-            "                             ", "                             ", "                             ",
-            "                             ", "                             ", "HHHHHHHHHHHHHHHHHHHHHHHHHHHHH" },
-        { "                             ", "                             ", "                             ",
-            "                             ", "                             ", "                             ",
-            "                             ", "                             ", " HHHHHHHHHHHHHHHHHHHHHHHHHHH " } };
+    private final String[][] shapeMain = com.newmaa.othtech.utils.ShapeLoader
+        .loadCompressed("/assets/123technology/structures/ote/OTEMegaCircuitAssLine_shapeMain.shape.gz");
 
     // ===================== Constructors =====================
 

@@ -12,6 +12,12 @@ pluginManagement {
         gradlePluginPortal()
         mavenCentral()
         maven {
+            url = uri( "https://jitpack.io")
+            content {
+                includeGroup ("com.github.Nxer")
+            }
+        }
+        maven {
             name = "JitPack"
             url = uri("https://jitpack.io")
             mavenContent {

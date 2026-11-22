@@ -4,14 +4,18 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.entity.RenderBiped;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import roadhog360.simpleskinbackport.SimpleSkinBackport;
+import roadhog360.simpleskinbackport.core.DefaultPlayerSkin;
+import roadhog360.simpleskinbackport.ducks.IArmsState;
+import roadhog360.simpleskinbackport.ducks.INewBipedModel;
 import twilightforest.TwilightForestMod;
 import twilightforest.client.renderer.entity.RenderTFGiantSkinportIntegration;
 
@@ -19,90 +23,67 @@ import twilightforest.client.renderer.entity.RenderTFGiantSkinportIntegration;
 public class RenderPlayer extends RenderBiped {
 
     private static final ResourceLocation STEVE_SKIN = new ResourceLocation("textures/entity/steve.png");
+    private static final double SITTING_OFFSET = 0.6D;
 
     private final ModelRenderer normalRightArm;
     private final ModelRenderer normalLeftArm;
-    private ModelRenderer slimRightArm;
-    private ModelRenderer slimLeftArm;
+    private final ModelRenderer slimRightArm;
+    private final ModelRenderer slimLeftArm;
 
     public RenderPlayer() {
         super(new SatFakePlayer(), 0.5F);
-        // 记下默认（Steve）手臂，瘦皮肤切换回来时要还原
-        this.normalRightArm = this.modelBipedMain.bipedRightArm;
-        this.normalLeftArm = this.modelBipedMain.bipedLeftArm;
+        normalRightArm = modelBipedMain.bipedRightArm;
+        normalLeftArm = modelBipedMain.bipedLeftArm;
+        slimRightArm = createSlimArm(false);
+        slimLeftArm = createSlimArm(true);
+    }
+
+    private ModelRenderer createSlimArm(boolean left) {
+        ModelRenderer arm = new ModelRenderer(modelBipedMain, 40, 16);
+        arm.mirror = left;
+        arm.addBox(left ? -1.0F : -2.0F, -2.0F, -2.0F, 3, 12, 4, 0.0F);
+        arm.setRotationPoint(left ? 5.0F : -5.0F, 2.0F, 0.0F);
+        return arm;
     }
 
     @Override
-    protected ResourceLocation getEntityTexture(Entity entity) {
-        // 世界加载 / 退出时 Minecraft.thePlayer 会是 null，之前直接 take skin 会 NPE
+    protected ResourceLocation getEntityTexture(EntityLiving entity) {
         EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
-        if (player == null) {
-            return STEVE_SKIN;
+        ResourceLocation skin = player == null ? null : player.getLocationSkin();
+
+        if (Loader.isModLoaded(SimpleSkinBackport.MOD_ID) && modelBipedMain instanceof INewBipedModel model) {
+            // This mob is not an EntityPlayer, so SimpleSkinBackport does not upgrade its model automatically.
+            model.ssb$set64x();
+            // getLocationSkin() above also updates the arm type when the player uses a default skin.
+            model.ssb$setSlim(skin != null && player instanceof IArmsState arms && arms.ssb$isSlim());
+            return skin != null ? skin : DefaultPlayerSkin.STEVE.getResource();
         }
 
-        ResourceLocation skin = player.getLocationSkin();
-        if (skin == null) {
-            skin = STEVE_SKIN;
-        }
-        if (TwilightForestMod.isSkinportLoaded) {
-            skin = RenderTFGiantSkinportIntegration.getSkin(player, skin, STEVE_SKIN);
-        }
-        return skin;
+        boolean useSkinport = player != null && TwilightForestMod.isSkinportLoaded;
+        boolean slim = useSkinport && RenderTFGiantSkinportIntegration.isSlim(player);
+        modelBipedMain.bipedRightArm = slim ? slimRightArm : normalRightArm;
+        modelBipedMain.bipedLeftArm = slim ? slimLeftArm : normalLeftArm;
+
+        if (skin == null) skin = STEVE_SKIN;
+        return useSkinport ? RenderTFGiantSkinportIntegration.getSkin(player, skin, STEVE_SKIN) : skin;
     }
 
     @Override
-    protected void preRenderCallback(EntityLivingBase entity, float partialTicks) {
-        EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
-        boolean slim = player != null && TwilightForestMod.isSkinportLoaded
-            && RenderTFGiantSkinportIntegration.isSlim(player);
-        this.applyArms(slim);
-    }
-
-    private void applyArms(boolean slim) {
-        if (!slim) {
-            this.modelBipedMain.bipedRightArm = this.normalRightArm;
-            this.modelBipedMain.bipedLeftArm = this.normalLeftArm;
+    public void doRender(EntityLiving entity, double x, double y, double z, float yaw, float partialTicks) {
+        if (!(entity instanceof EntityFakePlayer fakePlayer) || !fakePlayer.isSitting()) {
+            super.doRender(entity, x, y, z, yaw, partialTicks);
             return;
         }
 
-        if (this.slimRightArm == null) {
-            this.slimRightArm = new ModelRenderer(this.modelBipedMain, 40, 16);
-            this.slimRightArm.addBox(-2.0F, -2.0F, -2.0F, 3, 12, 4, 0.0F);
-            this.slimRightArm.setRotationPoint(-5.0F, 2.0F, 0.0F);
-
-            this.slimLeftArm = new ModelRenderer(this.modelBipedMain, 40, 16);
-            this.slimLeftArm.mirror = true;
-            this.slimLeftArm.addBox(-1.0F, -2.0F, -2.0F, 3, 12, 4, 0.0F);
-            this.slimLeftArm.setRotationPoint(5.0F, 2.0F, 0.0F);
-        }
-
-        this.modelBipedMain.bipedRightArm = this.slimRightArm;
-        this.modelBipedMain.bipedLeftArm = this.slimLeftArm;
-    }
-
-    @Override
-    public void doRender(Entity entity, double x, double y, double z, float yaw, float partialTicks) {
-        EntityFakePlayer customPlayer = (EntityFakePlayer) entity;
-
-        // 调整坐下时的渲染位置
-        if (customPlayer.isSitting()) {
-            y -= 0.6D; // 降低高度
-        }
-
-        // 保存当前 OpenGL 状态
+        double sittingY = y - SITTING_OFFSET;
         GL11.glPushMatrix();
-
-        // 调整旋转（坐下时固定朝向）
-        if (customPlayer.isSitting()) {
-            GL11.glTranslatef((float) x, (float) y, (float) z);
+        try {
+            GL11.glTranslated(x, sittingY, z);
             GL11.glRotatef(180.0F - yaw, 0.0F, 1.0F, 0.0F);
-            GL11.glTranslatef(-(float) x, -(float) y, -(float) z);
+            GL11.glTranslated(-x, -sittingY, -z);
+            super.doRender(entity, x, sittingY, z, yaw, partialTicks);
+        } finally {
+            GL11.glPopMatrix();
         }
-
-        // 调用父类渲染逻辑
-        super.doRender(entity, x, y, z, yaw, partialTicks);
-
-        // 恢复 OpenGL 状态
-        GL11.glPopMatrix();
     }
 }

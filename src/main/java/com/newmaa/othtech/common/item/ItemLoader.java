@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.item.itemArmor.ItemHelmTallHatLaodeng;
+import com.newmaa.othtech.common.item.itemArmor.ItemPoweredElytra;
 import com.newmaa.othtech.common.item.itemFoods.IngotHotDog;
 import com.newmaa.othtech.common.item.itemFoods.ItemBrain;
 import com.newmaa.othtech.common.item.itemFoods.ItemLeekBox;
@@ -18,17 +19,21 @@ import com.newmaa.othtech.common.item.itemFoods.ItemZhangww;
 import com.newmaa.othtech.common.item.itemMisc.ItemComputeCenter;
 import com.newmaa.othtech.common.item.itemMisc.ItemDeepSeikoToken;
 import com.newmaa.othtech.common.item.itemMisc.ItemDeepSeikoTokenSilver;
+import com.newmaa.othtech.common.item.itemMisc.ItemPsionicStabilizer;
 import com.newmaa.othtech.common.item.itemMisc.ItemRiceSingularity;
 import com.newmaa.othtech.common.item.itemMisc.ItemSpacetimeCoolingCore;
 import com.newmaa.othtech.common.item.itemMisc.ItemSuicideDrone;
+import com.newmaa.othtech.common.item.itemMisc.ItemVoidPotential;
 import com.newmaa.othtech.common.item.itemSpawnEgg.ItemDogSpawnEgg;
 import com.newmaa.othtech.common.item.itemTools.Dasima;
 import com.newmaa.othtech.common.item.itemTools.ItemRecord;
 import com.newmaa.othtech.common.item.itemTools.ItemSunLighter;
+import com.newmaa.othtech.common.item.itemWeapons.ItemLonginus;
 import com.newmaa.othtech.common.item.itemWeapons.ItemNukeThrowable;
 import com.newmaa.othtech.common.item.itemWeapons.ItemPositronCannon;
 import com.newmaa.othtech.common.item.itemWeapons.ShikanokoNoko;
 
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -60,9 +65,37 @@ public class ItemLoader {
     public static Item itemComputeCenter = new ItemComputeCenter();
     public static Item itemRiceSingularity = new ItemRiceSingularity();
     public static Item itemSpacetimeCoolingCore = new ItemSpacetimeCoolingCore();
+    public static Item itemPsionicStabilizer = new ItemPsionicStabilizer();
+    public static Item itemVoidPotential = new ItemVoidPotential();
     public static Item dogSpawnEgg = new ItemDogSpawnEgg();
-    public static Item suicideDronePig = new ItemSuicideDrone("SuicideDronePig", ItemSuicideDrone.PIG);
-    public static Item suicideDroneAngelica = new ItemSuicideDrone("SuicideDroneAngelica", ItemSuicideDrone.ANGELICA);
+    public static Item suicideDronePig = new ItemSuicideDrone(
+        "SuicideDronePig",
+        ItemSuicideDrone.PIG,
+        2F,
+        16F,
+        24F,
+        "ote.drone.tooltip.pig");
+    public static Item suicideDroneAngelica = new ItemSuicideDrone(
+        "SuicideDroneAngelica",
+        ItemSuicideDrone.ANGELICA,
+        8F,
+        64F,
+        64F,
+        "ote.drone.tooltip.angelica");
+    public static Item suicideDroneNuclear = new ItemSuicideDrone(
+        "SuicideDroneNuclear",
+        ItemSuicideDrone.NUCLEAR,
+        64F,
+        512F,
+        128F,
+        "ote.drone.tooltip.nuclear");
+    public static Item suicideDroneNvidia = new ItemSuicideDrone(
+        "SuicideDroneNvidia",
+        ItemSuicideDrone.NVIDIA,
+        48F,
+        384F,
+        112F,
+        "ote.drone.tooltip.nvidia");
 
     public ItemLoader(FMLPreInitializationEvent event) {
         OTHItemList.Zhangww.set(registryAndCallback(itemZhangww, "itemZhangww"));
@@ -73,6 +106,11 @@ public class ItemLoader {
         OTHItemList.LeekBox.set(registryAndCallback(itemLeekBox, "itemLeekBox"));
         OTHItemList.NukeThrowable.set(registryAndCallback(itemNukeThrowable, "itemNukeThrowable"));
         OTHItemList.PositronCannon.set(registryAndCallback(itemPositronCannon, "itemPositronCannon"));
+        OTHItemList.Longinus.set(registryAndCallback(new ItemLonginus(), ItemLonginus.REGISTRY_NAME));
+        if (Loader.isModLoaded("etfuturum")) {
+            OTHItemList.PoweredElytra
+                .set(registryAndCallback(new ItemPoweredElytra(), ItemPoweredElytra.REGISTRY_NAME));
+        }
         OTHItemList.RecordPRKA.set(registryAndCallback(RecordPRKA, "attackingBattle"));
         OTHItemList.RecordPRKB.set(registryAndCallback(RecordPRKB, "runningHorse"));
         OTHItemList.RecordEVAA.set(registryAndCallback(RecordEVAA, "EVAA"));
@@ -90,9 +128,13 @@ public class ItemLoader {
         OTHItemList.ComputeCenter.set(registryAndCallback(itemComputeCenter, "ComputeCenter"));
         OTHItemList.RiceSingularity.set(registryAndCallback(itemRiceSingularity, "RiceSingularity"));
         OTHItemList.SpacetimeCoolingCore.set(registryAndCallback(itemSpacetimeCoolingCore, "SpacetimeCoolingCore"));
+        OTHItemList.PsionicStabilizer.set(registryAndCallback(itemPsionicStabilizer, "PsionicStabilizer"));
+        OTHItemList.VoidPotential.set(registryAndCallback(itemVoidPotential, "VoidPotential"));
 
         OTHItemList.SuicideDronePig.set(registryAndCallback(suicideDronePig, "suicideDronePig"));
         OTHItemList.SuicideDroneAngelica.set(registryAndCallback(suicideDroneAngelica, "suicideDroneAngelica"));
+        OTHItemList.SuicideDroneNuclear.set(registryAndCallback(suicideDroneNuclear, "suicideDroneNuclear"));
+        OTHItemList.SuicideDroneNvidia.set(registryAndCallback(suicideDroneNvidia, "suicideDroneNvidia"));
 
         // 三种狗共用一个刷怪蛋物品，靠 metadata 区分（registryAndCallback 里已经 registerItem 过一次）
         OTHItemList.DogYellowSpawnEgg.set(registryAndCallback(dogSpawnEgg, "dogSpawnEgg"));

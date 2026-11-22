@@ -10,8 +10,10 @@
     "GTStoneTypeOTHMixin",
     "GTOreLayerHelperOTHMixin",
     "GTOrePrefixOTHMixin",
-    "ItemDimensionDisplayRendererOTHMixin"
+    "CircuitComponentOTHMixin",
+    "ItemDimensionDisplayRendererOTHMixin",
+    "PoweredElytraMovementMixin"
   ],
-  "client": ["RossRainSplashMixin", "PositronCannonArmsMixin"],
+  "client": ["RossRainSplashMixin", "PositronCannonArmsMixin", "LonginusThrowPoseMixin", "VoidNexusSkyMixin"],
   "server": []
 }

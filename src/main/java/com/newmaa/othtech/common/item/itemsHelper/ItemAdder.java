@@ -14,6 +14,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
+import com.newmaa.othtech.common.item.ItemRegister;
 import com.newmaa.othtech.utils.MetaItemStackUtils;
 
 import cpw.mods.fml.relauncher.Side;
@@ -73,7 +74,10 @@ public class ItemAdder extends ItemAdder_Basic {
         super.registerIcons(iconRegister);
         this.itemIcon = iconRegister.registerIcon("123technology:MetaItem/0");
         for (int meta : MetaSet) {
-            ItemStaticDataClientOnly.iconsMap01.put(meta, iconRegister.registerIcon("123technology:MetaItem/" + meta));
+            String texture = meta == ItemRegister.PRIMITIVE_RARE_EARTH_CATALYST_META
+                ? "miscutils:science/general/MetaItem1/22"
+                : "123technology:MetaItem/" + meta;
+            ItemStaticDataClientOnly.iconsMap01.put(meta, iconRegister.registerIcon(texture));
         }
     }
 
@@ -85,12 +89,6 @@ public class ItemAdder extends ItemAdder_Basic {
             : ItemStaticDataClientOnly.iconsMap01.get(0);
     }
 
-    /**
-     * Handle the tooltips.
-     *
-     * @param aItemStack
-     * @param theTooltipsList
-     */
     @SideOnly(Side.CLIENT)
     @Override
     @SuppressWarnings({ "unchecked" })
@@ -103,13 +101,6 @@ public class ItemAdder extends ItemAdder_Basic {
         }
     }
 
-    /**
-     * Override this method to show all ItemStack of MetaItem.
-     *
-     * @param aItem
-     * @param aCreativeTabs
-     * @param aList
-     */
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item aItem, CreativeTabs aCreativeTabs, List aList) {

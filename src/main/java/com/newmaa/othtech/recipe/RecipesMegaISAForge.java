@@ -13,7 +13,6 @@ import net.minecraftforge.fluids.FluidStack;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.item.ItemLoader;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
-import com.newmaa.othtech.utils.RecipeBuilder;
 
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
@@ -25,7 +24,6 @@ import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTUtility;
 import gtPlusPlus.core.material.MaterialsElements;
-import li.cil.oc.OpenComputers;
 
 public class RecipesMegaISAForge implements IRecipePool {
 
@@ -275,10 +273,10 @@ public class RecipesMegaISAForge implements IRecipePool {
             .duration(20 * 20)
             .addTo(ISA);
         // NanoBee - GlowStone
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 4811), 512))
             .fluidInputs(FluidRegistry.getFluidStack("molten.spacetime", 288))
-            .itemInputs(
+            .itemInputsUnsafe(
                 setStackSize(new ItemStack(Blocks.glowstone, 1), 256),
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32049), 256))
 
@@ -286,10 +284,10 @@ public class RecipesMegaISAForge implements IRecipePool {
             .duration(123 * 20)
             .addTo(ISA);
         // NanoBee - Neut
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 4129), 512))
             .fluidInputs(FluidRegistry.getFluidStack("molten.spacetime", 288 * 4))
-            .itemInputs(
+            .itemInputsUnsafe(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.block, Materials.Neutronium, 1), 4096),
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32049), 20480))
 
@@ -297,10 +295,10 @@ public class RecipesMegaISAForge implements IRecipePool {
             .duration(114 * 20)
             .addTo(ISA);
         // IMBABlastFurnace
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .itemOutputs(setStackSize(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 23543), 1))
             .fluidInputs(FluidRegistry.getFluidStack("molten.solderingalloy", Integer.MAX_VALUE))
-            .itemInputs(
+            .itemInputsUnsafe(
                 setStackSize(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 15517), Integer.MAX_VALUE),
                 setStackSize(GTModHandler.getModItem("dreamcraft", "StargateShieldingFoil", 1), 114514),
                 setStackSize(GTModHandler.getModItem("dreamcraft", "StargateFramePart", 1), 114514),
@@ -313,32 +311,34 @@ public class RecipesMegaISAForge implements IRecipePool {
             .eut(TierEU.RECIPE_UXV)
             .duration(114 * 20)
             .addTo(ISA);
-        // GTX690
-        RecipeBuilder.builder()
-            .itemOutputs(new ItemStack(ItemLoader.itemNukeThrowable, 1, 0))
-            .itemInputs(
-                GTModHandler.getModItem(OpenComputers.ID(), "item", 1, 33),
-                GTModHandler.getModItem(OpenComputers.ID(), "item", 1, 90),
-                setStackSize(GTModHandler.getModItem(OpenComputers.ID(), "item", 1, 103), 3072),
-                setStackSize(GTModHandler.getModItem(OpenComputers.ID(), "item", 1, 39), 4096),
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 15300),
-                setStackSize(GTOreDictUnificator.get(OrePrefixes.wireFine, Materials.AnnealedCopper, 1), 16384),
-                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32178), 2048),
-                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32179), 2048),
-                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32180), 2048),
-                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32181), 2048),
-                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32184), 2048),
-                setStackSize(GTModHandler.getModItem("IC2", "reactorVentDiamond", 1, 1), 48),
-                GTOreDictUnificator.get(OrePrefixes.pipeTiny, Materials.Copper, 16))
-            .fluidInputs(
-                FluidRegistry.getFluidStack("molten.solderingalloy", 4096),
-                FluidRegistry.getFluidStack("supercoolant", 500))
-            .duration(3600 * 20)
-            .eut(220)
-            .addTo(ISA);
+        /*
+         * // GTX690
+         * GTValues.RA.stdBuilder()
+         * .itemOutputs(new ItemStack(ItemLoader.itemNukeThrowable, 1, 0))
+         * .itemInputsUnsafe(
+         * GTModHandler.getModItem(OpenComputers.ID(), "item", 1, 33),
+         * GTModHandler.getModItem(OpenComputers.ID(), "item", 1, 90),
+         * setStackSize(GTModHandler.getModItem(OpenComputers.ID(), "item", 1, 103), 3072),
+         * setStackSize(GTModHandler.getModItem(OpenComputers.ID(), "item", 1, 39), 4096),
+         * GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 15300),
+         * setStackSize(GTOreDictUnificator.get(OrePrefixes.wireFine, Materials.AnnealedCopper, 1), 16384),
+         * setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32178), 2048),
+         * setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32179), 2048),
+         * setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32180), 2048),
+         * setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32181), 2048),
+         * setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32184), 2048),
+         * setStackSize(GTModHandler.getModItem("IC2", "reactorVentDiamond", 1, 1), 48),
+         * GTOreDictUnificator.get(OrePrefixes.pipeTiny, Materials.Copper, 16))
+         * .fluidInputs(
+         * FluidRegistry.getFluidStack("molten.solderingalloy", 4096),
+         * FluidRegistry.getFluidStack("supercoolant", 500))
+         * .duration(3600 * 20)
+         * .eut(220)
+         * .addTo(ISA);
+         */
         // Magmatter
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 0, 4143),
                 ItemList.Field_Generator_MAX.get(0),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, 15411),
@@ -367,8 +367,8 @@ public class RecipesMegaISAForge implements IRecipePool {
             .addTo(ISA);
 
         // Better magmatter
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 GTModHandler.getModItem("gregtech", "gt.metaitem.03", 0, 4143),
                 ItemList.Field_Generator_MAX.get(0),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, 15411),
@@ -399,8 +399,8 @@ public class RecipesMegaISAForge implements IRecipePool {
             .addTo(ISA);
 
         // quark
-        RecipeBuilder.builder()
-            .itemInputs(
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(
                 OTHItemList.beeISAM.get(0),
                 ItemList.Field_Generator_MAX.get(0),
                 GTModHandler.getModItem("dreamcraft", "StargateShieldingFoil", 0),

@@ -8,7 +8,6 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 import com.newmaa.othtech.common.recipemap.Recipemaps;
-import com.newmaa.othtech.utils.RecipeBuilder;
 
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
@@ -282,7 +281,7 @@ public class RecipesSINOPEC implements IRecipePool {
             .eut(TierEU.HV)
             .addTo(SINOPEC);
 
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .fluidInputs(FluidRegistry.getFluidStack("sulfuricacid", 24000))
             .fluidOutputs(
                 FluidRegistry.getFluidStack("aceticacid", 12800),
@@ -306,7 +305,7 @@ public class RecipesSINOPEC implements IRecipePool {
                 FluidRegistry.getFluidStack("bioethanol", 29700),
                 FluidRegistry.getFluidStack("fluid.anthracene", 2000),
                 FluidRegistry.getFluidStack("acetone", 6400))
-            .itemInputs(
+            .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(24),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.log, Materials.Wood, 1), 1280))
 
@@ -314,7 +313,7 @@ public class RecipesSINOPEC implements IRecipePool {
             .eut(TierEU.HV)
             .addTo(SINOPEC);
 
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .fluidInputs(FluidRegistry.getFluidStack("charcoal_byproducts", 640000))
             .fluidOutputs(
                 FluidRegistry.getFluidStack("aceticacid", 25600),
@@ -339,7 +338,7 @@ public class RecipesSINOPEC implements IRecipePool {
             .addTo(SINOPEC);
 
         // Octane
-        RecipeBuilder.builder()
+        GTValues.RA.stdBuilder()
             .fluidOutputs(
                 new FluidStack(CH4, 64 * 125),
                 FluidRegistry.getFluidStack("butane", 64 * 150),

@@ -23,6 +23,7 @@ public final class OTHMaterials {
     public static Materials IrOsSm;
     public static Materials Gunmu;
     public static Materials DeGunmu;
+    public static Materials ManifestedPsionics;
 
     private static boolean installed;
 
@@ -55,6 +56,7 @@ public final class OTHMaterials {
         Materials.add(OTHMetalMaterials.irOsSm());
         Materials.add(OTHMetalMaterials.gunmu());
         Materials.add(OTHMetalMaterials.deGunmu());
+        Materials.add(OTHMetalMaterials.manifestedPsionics());
     }
 
     static void assign(String name, Materials material) {
@@ -75,6 +77,7 @@ public final class OTHMaterials {
             case "IrOsSm" -> IrOsSm = material;
             case "Gunmu" -> Gunmu = material;
             case "DeGunmu" -> DeGunmu = material;
+            case "ManifestedPsionics" -> ManifestedPsionics = material;
             default -> OTHTechnology.LOG.error("Unknown 123 Technology material {}", name);
         }
     }

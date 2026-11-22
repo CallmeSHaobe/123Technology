@@ -30,7 +30,7 @@ import com.cleanroommc.modularui.widgets.slot.ModularSlot;
 import com.cleanroommc.modularui.widgets.textfield.TextFieldWidget;
 import com.newmaa.othtech.common.materials.AbstractSanctumContent;
 import com.newmaa.othtech.machine.OTEAbstractSanctum;
-import com.newmaa.othtech.recipe.AbstractSanctumRecipes;
+import com.newmaa.othtech.recipe.RecipesAbstractSanctum;
 
 import codechicken.nei.item.ItemFluidDisplay;
 import codechicken.nei.recipe.GuiUsageRecipe;
@@ -238,7 +238,7 @@ public class OTEAbstractSanctumGui extends MTEMultiBlockBaseGui<OTEAbstractSanct
     private static boolean openUsageRecipe(UsageResource resource) {
         ItemStack usageStack = switch (resource) {
             case MANA -> ItemFluidDisplay.createStack(AbstractSanctumContent.getManaStack(1));
-            case SALT -> AbstractSanctumRecipes.getWorldSaltStack(1);
+            case SALT -> RecipesAbstractSanctum.getWorldSaltStack(1);
             case BLOOD -> ItemFluidDisplay.createStack(AbstractSanctumContent.getBloodStack(1));
         };
         return usageStack != null && GuiUsageRecipe.openRecipeGui("item", usageStack);

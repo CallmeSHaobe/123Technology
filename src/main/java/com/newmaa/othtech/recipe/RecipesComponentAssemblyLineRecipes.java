@@ -12,7 +12,6 @@ import net.minecraftforge.fluids.FluidStack;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.materials.BWLiquids;
 import com.newmaa.othtech.common.materials.OTHMaterials;
-import com.newmaa.othtech.utils.RecipeBuilder;
 
 import goodgenerator.api.recipe.GoodGeneratorRecipeMaps;
 import gregtech.api.enums.GTValues;
@@ -36,8 +35,8 @@ public class RecipesComponentAssemblyLineRecipes implements IRecipePool {
         final RecipeMap<?> comass = GoodGeneratorRecipeMaps.componentAssemblyLineRecipes;
         ItemStack coil = GTModHandler.getModItem("gregtech", "gt.blockcasings5", 1, 13);
 
-        RecipeBuilder.builder()
-            .itemInputs(getEternalSingularity(48), setStackSize(coil, 2 * 48), getNanites(48, Materials.Eternity))
+        GTValues.RA.stdBuilder()
+            .itemInputsUnsafe(getEternalSingularity(48), setStackSize(coil, 2 * 48), getNanites(48, Materials.Eternity))
             .itemOutputs(ItemList.Electric_Motor_MAX.get(64))
             .fluidInputs(
                 OTHMaterials.Gunmu.getMolten(297216),

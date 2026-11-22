@@ -20,6 +20,7 @@ import tectech.recipe.TecTechRecipeMaps;
 public final class OTHEntangled {
 
     public static final int UNIT = 1000;
+    public static final int sUNIT = 144;
     public static final int DURATION = 40 * 20;
     public static final long EUT = TierEU.RECIPE_UXV;
 
@@ -40,17 +41,17 @@ public final class OTHEntangled {
             "stars",
             "Entangled Molten Stardust",
             0xDDE2BC,
-            () -> BWLiquids.Stars.getFluidOrGas(UNIT));
+            () -> BWLiquids.Stars.getFluidOrGas(sUNIT));
         SuperconductorUIV = new OTHEntangled(
             "superconductoruiv",
             "Entangled Superconductor UIV Base",
             0x99CCFF,
-            () -> FluidRegistry.getFluidStack("molten.superconductoruivbase", UNIT));
+            () -> FluidRegistry.getFluidStack("molten.superconductoruivbase", sUNIT));
         SuperconductorUMV = new OTHEntangled(
             "superconductorumv",
             "Entangled Superconductor UMV Base",
             0xCC99FF,
-            () -> FluidRegistry.getFluidStack("molten.superconductorumvbase", UNIT));
+            () -> FluidRegistry.getFluidStack("molten.superconductorumvbase", sUNIT));
 
     }
 
@@ -142,13 +143,21 @@ public final class OTHEntangled {
                     .warn("Entangled fluid {} is missing, condensate generator recipe skipped", type.getName());
                 continue;
             }
-
-            GTValues.RA.stdBuilder()
-                .fluidInputs(new FluidStack(sourceStack.getFluid(), UNIT))
-                .fluidOutputs(new FluidStack(type.entangled, UNIT))
-                .duration(DURATION)
-                .eut(EUT)
-                .addTo(TecTechRecipeMaps.condensateGeneratorRecipes);
+            if (type.equals(OTHEntangled.Void)) {
+                GTValues.RA.stdBuilder()
+                    .fluidInputs(new FluidStack(sourceStack.getFluid(), UNIT))
+                    .fluidOutputs(new FluidStack(type.entangled, UNIT))
+                    .duration(DURATION)
+                    .eut(EUT)
+                    .addTo(TecTechRecipeMaps.condensateGeneratorRecipes);
+            } else {
+                GTValues.RA.stdBuilder()
+                    .fluidInputs(new FluidStack(sourceStack.getFluid(), sUNIT))
+                    .fluidOutputs(new FluidStack(type.entangled, sUNIT))
+                    .duration(DURATION)
+                    .eut(EUT)
+                    .addTo(TecTechRecipeMaps.condensateGeneratorRecipes);
+            }
         }
     }
 }

@@ -1,6 +1,25 @@
-// Add any additional repositories for your dependencies here.
-
 repositories { handler ->
+    maven {
+        url 'https://jitpack.io'
+        content {
+            includeGroup 'com.github.Nxer'
+        }
+    }
+    exclusiveContent {
+        forRepository {
+            handler.ivy {
+                name = 'etFuturumGitHubReleases'
+                url = 'https://github.com/GTNewHorizons/Et-Futurum-Requiem/releases/download'
+                patternLayout {
+                    artifact '[revision]/[artifact]-[revision](-[classifier]).[ext]'
+                }
+                metadataSources { artifact() }
+            }
+        }
+        filter {
+            includeModule('ganymedes01.etfuturum', 'etfuturum')
+        }
+    }
     exclusiveContent {
         forRepository {
             handler.maven {

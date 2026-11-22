@@ -382,7 +382,6 @@ public class NukeExplosion extends Explosion {
 
                 if (block.getMaterial() != Material.air) {
                     if (block.canDropFromExplosion(this)) {
-                        // world, x, y, z, world.getBlockMetadata(x, y, z), dropProb, 0
                         block.dropBlockAsItemWithChance(
                             this.worldObj,
                             i,

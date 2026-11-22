@@ -25,13 +25,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -39,7 +36,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.kuba6000.mobsinfo.api.DummyWorld;
-import com.kuba6000.mobsinfo.api.IChanceModifier;
 import com.kuba6000.mobsinfo.api.IMobInfoProvider;
 import com.kuba6000.mobsinfo.api.MobDrop;
 import com.kuba6000.mobsinfo.api.MobRecipe;
@@ -47,7 +43,6 @@ import com.kuba6000.mobsinfo.api.event.PostMobRegistrationEvent;
 import com.kuba6000.mobsinfo.api.event.PreMobsRegistrationEvent;
 import com.kuba6000.mobsinfo.loader.MobRecipeLoader;
 import com.newmaa.othtech.common.entity.EntityFakePlayer;
-import com.newmaa.othtech.machine.OTEMegaEEC;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import kubatech.config.Config;
@@ -63,7 +58,9 @@ public class OTHMobHandlerLoader {
 
     public static Map<String, MobEECRecipe> recipeMap = new HashMap<>();
 
-    /** 本模组自己注册、需要在 EEC / mobsinfo 里出现的实体 */
+    /**
+     * 本模组自己注册、需要在 EEC / mobsinfo 里出现的实体
+     */
     private static final List<Class<? extends EntityLiving>> OWN_MOBS = java.util.Collections
         .singletonList(EntityFakePlayer.class);
 
@@ -88,117 +85,115 @@ public class OTHMobHandlerLoader {
             }
             mDuration = 20;
         }
+        /*
+         * public ItemStack[] generateOutputs(Random rnd, OTEMegaEEC MTE, double attackDamage, int lootinglevel,
+         * boolean preferInfernalDrops, boolean voidAllDamagedAndEnchantedItems) {
+         * MTE.lEUt = 2147483640L * 64;
+         * MTE.mMaxProgresstime = 20;
+         * ArrayList<ItemStack> stacks = new ArrayList<>(this.mOutputs.size());
+         * this.entityCopy.setPosition(
+         * MTE.getBaseMetaTileEntity()
+         * .getXCoord(),
+         * MTE.getBaseMetaTileEntity()
+         * .getYCoord(),
+         * MTE.getBaseMetaTileEntity()
+         * .getZCoord());
+         * for (MobDrop o : this.mOutputs) {
+         * if (voidAllDamagedAndEnchantedItems && (o.damages != null || o.enchantable != null)) continue;
+         * int chance = o.chance;
+         * double dChance = (double) chance / 100d;
+         * for (IChanceModifier chanceModifier : o.chanceModifiers) {
+         * dChance = chanceModifier.apply(
+         * dChance,
+         * MTE.getBaseMetaTileEntity()
+         * .getWorld(),
+         * stacks,
+         * MTE.EECPlayer,
+         * this.entityCopy);
+         * }
+         * chance = (int) (dChance * 100d);
+         * if (chance == 0) continue;
+         * if (o.playerOnly) {
+         * chance = (int) ((double) chance * Config.MobHandler.playerOnlyDropsModifier);
+         * if (chance < 1) chance = 1;
+         * }
+         * int amount = o.stack.stackSize;
+         * if (lootinglevel > 0) {
+         * chance += lootinglevel * 5000;
+         * if (chance > 10000) {
+         * int div = (int) Math.ceil(chance / 10000d);
+         * amount *= div * 134217728;
+         * chance /= div;
+         * }
+         * }
+         * if (chance == 10000 || rnd.nextInt(10000) < chance) {
+         * ItemStack s = o.stack.copy();
+         * s.stackSize = amount;
+         * if (o.enchantable != null) EnchantmentHelper.addRandomEnchantment(rnd, s, o.enchantable);
+         * if (o.damages != null) {
+         * int rChance = rnd.nextInt(recipe.mMaxDamageChance);
+         * int cChance = 0;
+         * for (Map.Entry<Integer, Integer> damage : o.damages.entrySet()) {
+         * cChance += damage.getValue();
+         * if (rChance <= cChance) {
+         * s.setItemDamage(damage.getKey());
+         * break;
+         * }
+         * }
+         * }
+         * stacks.add(s);
+         * }
+         * }
+         * return stacks.toArray(new ItemStack[0]);
+         * }
+         * }
+         */
 
-        public ItemStack[] generateOutputs(Random rnd, OTEMegaEEC MTE, double attackDamage, int lootinglevel,
-            boolean preferInfernalDrops, boolean voidAllDamagedAndEnchantedItems) {
-            MTE.lEUt = 2147483640L * 64;
-            MTE.mMaxProgresstime = 20;
-            ArrayList<ItemStack> stacks = new ArrayList<>(this.mOutputs.size());
-            this.entityCopy.setPosition(
-                MTE.getBaseMetaTileEntity()
-                    .getXCoord(),
-                MTE.getBaseMetaTileEntity()
-                    .getYCoord(),
-                MTE.getBaseMetaTileEntity()
-                    .getZCoord());
-            for (MobDrop o : this.mOutputs) {
-                if (voidAllDamagedAndEnchantedItems && (o.damages != null || o.enchantable != null)) continue;
-                int chance = o.chance;
+        @SubscribeEvent
+        @SuppressWarnings("unused")
+        public void onPreMobsRegistration(PreMobsRegistrationEvent event) {
+            recipeMap.clear();
+            registerOwnMobsIfMissing();
+        }
 
-                double dChance = (double) chance / 100d;
-                for (IChanceModifier chanceModifier : o.chanceModifiers) {
-                    dChance = chanceModifier.apply(
-                        dChance,
-                        MTE.getBaseMetaTileEntity()
-                            .getWorld(),
-                        stacks,
-                        MTE.EECPlayer,
-                        this.entityCopy);
-                }
+        private static void registerOwnMobsIfMissing() {
+            for (Class<? extends EntityLiving> clazz : OWN_MOBS) {
+                String mobName = EntityList.classToStringMapping.get(clazz);
+                if (mobName == null || MobRecipeLoader.GeneralMobList.containsKey(mobName)) continue;
 
-                chance = (int) (dChance * 100d);
-                if (chance == 0) continue;
+                Entity entity = EntityList.createEntityByName(mobName, new DummyWorld());
+                if (!(entity instanceof EntityLiving mob) || !(entity instanceof IMobInfoProvider provider)) continue;
 
-                if (o.playerOnly) {
-                    chance = (int) ((double) chance * Config.MobHandler.playerOnlyDropsModifier);
-                    if (chance < 1) chance = 1;
-                }
-                int amount = o.stack.stackSize;
-                if (lootinglevel > 0) {
-                    chance += lootinglevel * 5000;
-                    if (chance > 10000) {
-                        int div = (int) Math.ceil(chance / 10000d);
-                        amount *= div * 134217728;
-                        chance /= div;
+                ArrayList<MobDrop> drops = new ArrayList<>();
+                provider.provideDropsInformation(drops);
+                for (MobDrop drop : drops) drop.clampChance();
+
+                MobRecipe recipe = MobRecipe.generateMobRecipe(mob, mobName, drops);
+                MobRecipeLoader.GeneralMobList
+                    .put(mobName, new MobRecipeLoader.GeneralMappedMob(mob, recipe, drops, true));
+
+                LOG.info("Registered own mob {} into mobsinfo (cache did not contain it)", mobName);
+            }
+        }
+
+        @SubscribeEvent
+        @SuppressWarnings("unused")
+        public void onPostMobRegistration(PostMobRegistrationEvent event) {
+            if (!event.drops.isEmpty() && event.recipe.isUsableInVial) {
+                for (MobDrop drop : event.drops) {
+                    if (drop.playerOnly) {
+                        drop.additionalInfo.add(
+                            StatCollector.translateToLocalFormatted(
+                                "kubatech.mobhandler.eec_chance",
+                                (((double) drop.chance / 100d) * Config.MobHandler.playerOnlyDropsModifier)));
                     }
                 }
-                if (chance == 10000 || rnd.nextInt(10000) < chance) {
-                    ItemStack s = o.stack.copy();
-                    s.stackSize = amount;
-                    if (o.enchantable != null) EnchantmentHelper.addRandomEnchantment(rnd, s, o.enchantable);
-                    if (o.damages != null) {
-                        int rChance = rnd.nextInt(recipe.mMaxDamageChance);
-                        int cChance = 0;
-                        for (Map.Entry<Integer, Integer> damage : o.damages.entrySet()) {
-                            cChance += damage.getValue();
-                            if (rChance <= cChance) {
-                                s.setItemDamage(damage.getKey());
-                                break;
-                            }
-                        }
-                    }
-                    stacks.add(s);
+                @SuppressWarnings("unchecked")
+                ArrayList<MobDrop> drops = (ArrayList<MobDrop>) event.drops.clone();
+                if (!drops.isEmpty()) {
+                    recipeMap.put(event.currentMob, new MobEECRecipe(drops, event.recipe));
                 }
             }
-            return stacks.toArray(new ItemStack[0]);
-        }
-
-    }
-
-    @SubscribeEvent
-    @SuppressWarnings("unused")
-    public void onPreMobsRegistration(PreMobsRegistrationEvent event) {
-        recipeMap.clear();
-        registerOwnMobsIfMissing();
-    }
-
-    private static void registerOwnMobsIfMissing() {
-        for (Class<? extends EntityLiving> clazz : OWN_MOBS) {
-            String mobName = EntityList.classToStringMapping.get(clazz);
-            if (mobName == null || MobRecipeLoader.GeneralMobList.containsKey(mobName)) continue;
-
-            Entity entity = EntityList.createEntityByName(mobName, new DummyWorld());
-            if (!(entity instanceof EntityLiving mob) || !(entity instanceof IMobInfoProvider provider)) continue;
-
-            ArrayList<MobDrop> drops = new ArrayList<>();
-            provider.provideDropsInformation(drops);
-            for (MobDrop drop : drops) drop.clampChance();
-
-            MobRecipe recipe = MobRecipe.generateMobRecipe(mob, mobName, drops);
-            MobRecipeLoader.GeneralMobList.put(mobName, new MobRecipeLoader.GeneralMappedMob(mob, recipe, drops, true));
-
-            LOG.info("Registered own mob {} into mobsinfo (cache did not contain it)", mobName);
         }
     }
-
-    @SubscribeEvent
-    @SuppressWarnings("unused")
-    public void onPostMobRegistration(PostMobRegistrationEvent event) {
-        if (!event.drops.isEmpty() && event.recipe.isUsableInVial) {
-            for (MobDrop drop : event.drops) {
-                if (drop.playerOnly) {
-                    drop.additionalInfo.add(
-                        StatCollector.translateToLocalFormatted(
-                            "kubatech.mobhandler.eec_chance",
-                            (((double) drop.chance / 100d) * Config.MobHandler.playerOnlyDropsModifier)));
-                }
-            }
-            @SuppressWarnings("unchecked")
-            ArrayList<MobDrop> drops = (ArrayList<MobDrop>) event.drops.clone();
-            if (!drops.isEmpty()) {
-                recipeMap.put(event.currentMob, new MobEECRecipe(drops, event.recipe));
-            }
-        }
-    }
-
 }
