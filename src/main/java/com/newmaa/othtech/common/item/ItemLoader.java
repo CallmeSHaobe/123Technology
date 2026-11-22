@@ -136,7 +136,6 @@ public class ItemLoader {
         OTHItemList.SuicideDroneNuclear.set(registryAndCallback(suicideDroneNuclear, "suicideDroneNuclear"));
         OTHItemList.SuicideDroneNvidia.set(registryAndCallback(suicideDroneNvidia, "suicideDroneNvidia"));
 
-        // 三种狗共用一个刷怪蛋物品，靠 metadata 区分（registryAndCallback 里已经 registerItem 过一次）
         OTHItemList.DogYellowSpawnEgg.set(registryAndCallback(dogSpawnEgg, "dogSpawnEgg"));
         OTHItemList.DogRedSpawnEgg.set(new ItemStack(dogSpawnEgg, 1, ItemDogSpawnEgg.META_RED));
         OTHItemList.DogBlueSpawnEgg.set(new ItemStack(dogSpawnEgg, 1, ItemDogSpawnEgg.META_BLUE));

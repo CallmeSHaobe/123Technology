@@ -74,7 +74,6 @@ public class OTEBeeyonds extends OTHTTMultiMachineBaseEM implements IConstructab
 
     private static final double BEE_ACCELERATION = 2d;
 
-    /** 高于未升级工业蜂箱的 2, 低于巨型工业蜂箱的 17.19926784 */
     private static final float BASE_PRODUCTION_MODIFIER = 4f;
 
     private static final String STRUCTURE_PIECE_MAIN = "main";
@@ -91,10 +90,8 @@ public class OTEBeeyonds extends OTHTTMultiMachineBaseEM implements IConstructab
 
     private IBeeRoot beeRoot;
 
-    /** false = 产出模式, true = 取回模式(把女王送回输出总线) */
     private boolean outputMode = false;
 
-    /** 当前这轮实际供电运行的女王数(受能源仓功率限制) */
     private int activeBees = 0;
 
     private static final String[] description = new String[] {
@@ -204,13 +201,13 @@ public class OTEBeeyonds extends OTHTTMultiMachineBaseEM implements IConstructab
     public OTEBeeyonds(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
         useLongPower = true;
-        eDismantleBoom = true;
+        eDismantleBoom = false;
     }
 
     public OTEBeeyonds(String aName) {
         super(aName);
         useLongPower = true;
-        eDismantleBoom = true;
+        eDismantleBoom = false;
     }
 
     // ===================== NBT =====================
@@ -487,7 +484,6 @@ public class OTEBeeyonds extends OTHTTMultiMachineBaseEM implements IConstructab
         return beeRoot;
     }
 
-    /** 能源仓(含激光/无线)最多一个 */
     private void checkEnergyHatchLimit(List<StructureError> errors) {
         int count = (int) (Energy.count(this) + ExoticEnergy.count(this));
         if (count < 1) {
@@ -552,7 +548,6 @@ public class OTEBeeyonds extends OTHTTMultiMachineBaseEM implements IConstructab
                 + EnumChatFormatting.RESET);
     }
 
-    /** 输出总线放得下才拿走, 避免把女王吞掉 */
     private boolean ejectQueen(ItemStack queen) {
         for (IOutputBus bus : getOutputBusses()) {
             if (!bus.storePartial(queen.copy(), true)) continue;
@@ -564,7 +559,6 @@ public class OTEBeeyonds extends OTHTTMultiMachineBaseEM implements IConstructab
     private int getTierIndex() {
         long voltage = getMaxInputVoltage();
         if (voltage > 0) return Math.max(1, Math.min(V.length - 1, GTUtility.getTier(voltage)));
-        // 兜底: 直接按能源仓等级推
         int tier = 1;
         for (MTEHatchEnergy hatch : validMTEList(mEnergyHatches)) {
             tier = Math.max(tier, GTUtility.getTier(hatch.maxEUInput()));
@@ -572,7 +566,6 @@ public class OTEBeeyonds extends OTHTTMultiMachineBaseEM implements IConstructab
         return Math.min(V.length - 1, tier);
     }
 
-    /** 12 槽塞满且能源仓高于 EV 时每级增加 10% 产出, 最多 1.5 倍 */
     private double getOutputMultiplier() {
         int tier = getTierIndex();
         if (mStorage.size() < MAX_SLOTS || tier <= VoltageIndex.EV) return 1d;
@@ -600,7 +593,6 @@ public class OTEBeeyonds extends OTHTTMultiMachineBaseEM implements IConstructab
             translateToLocal(outputMode ? "ote.tm.bee.mode.out" : "ote.tm.bee.mode.produce"));
     }
 
-    /** 拆机把存着的女王蜂吐出来, 别吞物品 */
     @Override
     public void onRemoval() {
         super.onRemoval();
