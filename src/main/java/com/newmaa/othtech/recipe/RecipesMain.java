@@ -1556,5 +1556,99 @@ public class RecipesMain implements IRecipePool {
             .eut(RECIPE_IV)
             .duration(120 * 20)
             .addTo(assemblerRecipes);
+        // Drone Platform
+        GTValues.RA.stdBuilder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
+                GTModHandler.getModItem(GregTech.ID, "gt.blockmachines", 1, 14),
+                ItemList.Cover_SolarPanel_MV.get(1),
+                ItemList.Cover_Screen.get(1),
+                ItemList.Electric_Piston_EV.get(4),
+                ItemList.Sensor_EV.get(2),
+                ItemList.Emitter_EV.get(2),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.IV, 2))
+            .itemOutputs(OTHItemList.DroneLaunchPlatform.get(1))
+            .fluidInputs(Materials.StainlessSteel.getMolten(2880))
+            .duration(20 * SECONDS)
+            .eut(RECIPE_EV)
+            .addTo(Assem);
+        // Drone P1-G
+        GTValues.RA.stdBuilder()
+            .itemOutputs(OTHItemList.SuicideDronePig.get(1))
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
+                GTOreDictUnificator.get(OrePrefixes.plate, Materials.Steel, 5),
+                GTOreDictUnificator.get(OrePrefixes.rotor, Materials.Steel, 1),
+                ItemList.Sensor_MV.get(1),
+                ItemList.Emitter_MV.get(1),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.LV, 2),
+                new ItemStack(Items.porkchop, 1),
+                new ItemStack(Items.gunpowder, 4))
+            .fluidInputs(Materials.SolderingAlloy.getMolten(288))
+            .duration(5 * SECONDS)
+            .eut(RECIPE_MV)
+            .addTo(Assem);
+        // Drone Angelica
+        GTValues.RA.stdBuilder()
+            .itemOutputs(OTHItemList.SuicideDroneAngelica.get(1))
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
+                GTOreDictUnificator.get(OrePrefixes.plate, Materials.RedSteel, 5),
+                GTOreDictUnificator.get(OrePrefixes.rotor, Materials.TungstenSteel, 1),
+                ItemList.Sensor_HV.get(1),
+                ItemList.Emitter_HV.get(1),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.HV, 2),
+                new ItemStack(Blocks.tnt, 4))
+            .fluidInputs(Materials.SolderingAlloy.getMolten(576))
+            .duration(5 * SECONDS)
+            .eut(RECIPE_IV)
+            .addTo(Assem);
+        // Drone NVIDIA
+        GTValues.RA.stdBuilder()
+            .metadata(RESEARCH_ITEM, OTHItemList.SuicideDronePig.get(1))
+            .metadata(SCANNING, new Scanning(400, RECIPE_IV))
+            .itemOutputs(OTHItemList.SuicideDroneNvidia.get(1))
+            .itemInputs(
+                GTOreDictUnificator.get(OrePrefixes.plate, Materials.NaquadahAlloy, 10),
+                GTOreDictUnificator.get(OrePrefixes.stickLong, Materials.TungstenSteel, 2),
+                GTOreDictUnificator.get(OrePrefixes.rotor, Materials.NaquadahAlloy, 2),
+                ItemList.Sensor_IV.get(1),
+                ItemList.Emitter_IV.get(1),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.IV, 2),
+                OTHItemList.NukeThrowable.get(1))
+            .fluidInputs(Materials.SolderingAlloy.getMolten(14400), Materials.Lubricant.getFluid(1440))
+            .duration(5 * SECONDS)
+            .eut(RECIPE_LuV)
+            .addTo(AssemblyLine);
+        // Drone NUKE
+        GTValues.RA.stdBuilder()
+            .metadata(RESEARCH_ITEM, OTHItemList.SuicideDroneNvidia.get(1))
+            .metadata(SCANNING, new Scanning(800, RECIPE_LuV))
+            .itemOutputs(OTHItemList.SuicideDroneNuclear.get(1))
+            .itemInputs(
+                GTOreDictUnificator.get(OrePrefixes.plate, Materials.Neutronium, 10),
+                ItemList.Radiation_Proof_Prismatic_Naquadah_Composite_Sheet.get(4),
+                GTOreDictUnificator.get(OrePrefixes.stickLong, Materials.Osmiridium, 2),
+                GTOreDictUnificator.get(OrePrefixes.rotor, Materials.Iridium, 3),
+                ItemList.Sensor_LuV.get(1),
+                ItemList.Emitter_LuV.get(1),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.LuV, 3),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.IV, 5),
+                ItemList.Cover_AdvancedRedstoneReceiver.get(1),
+                GTModHandler.getModItem(IC2.MODID, "blockITNT", 2),
+                GTModHandler.getModItem(IC2.MODID, "blockGenerator", 1, 5),
+                GTModHandler.getModItem(IC2.MODID, "blockReactorChamber", 1),
+                ItemList.Neutron_Reflector.get(2),
+                ItemList.RodNaquadah32.get(2),
+                ItemList.RodUranium4.get(2),
+                ItemList.Neutron_Reflector.get(2))
+            .fluidInputs(
+                new FluidStack(FluidRegistry.getFluidID("molten.indalloy140"), 57600),
+                Materials.Lubricant.getFluid(2880),
+                Materials.Uranium.getMolten(1440),
+                Materials.Polybenzimidazole.getMolten(5760))
+            .duration(5 * SECONDS)
+            .eut(RECIPE_UV)
+            .addTo(AssemblyLine);
     }
 }

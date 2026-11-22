@@ -1,4 +1,4 @@
-package com.newmaa.othtech.machine.voidnexus;
+package com.newmaa.othtech.machine.machineclass.voidnexus;
 
 import java.util.ArrayList;
 import java.util.Iterator;

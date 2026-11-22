@@ -33,9 +33,9 @@ import com.newmaa.othtech.common.compat.thaumcraft.VoidNexusUpgrade;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.gui.OTEPsionicManifestationModuleGui;
 import com.newmaa.othtech.machine.machineclass.OTHTTMultiMachineBaseEM;
-import com.newmaa.othtech.machine.voidnexus.PsionicOutputQueue;
-import com.newmaa.othtech.machine.voidnexus.VoidNexusCalculator;
-import com.newmaa.othtech.machine.voidnexus.VoidNexusControllerTextures;
+import com.newmaa.othtech.machine.machineclass.voidnexus.PsionicOutputQueue;
+import com.newmaa.othtech.machine.machineclass.voidnexus.VoidNexusCalculator;
+import com.newmaa.othtech.machine.machineclass.voidnexus.VoidNexusControllerTextures;
 
 import appeng.api.networking.IGrid;
 import appeng.me.GridAccessException;

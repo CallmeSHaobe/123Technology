@@ -1,6 +1,6 @@
 package com.newmaa.othtech.common.compat.thaumcraft;
 
-import com.newmaa.othtech.machine.voidnexus.VoidNexusCalculator;
+import com.newmaa.othtech.machine.machineclass.voidnexus.VoidNexusCalculator;
 
 /**
  * One entry in the ordered Void Nexus Matrix progression tree.

@@ -59,6 +59,8 @@ import thaumcraft.common.config.ConfigBlocks;
 
 public final class OTELargeEssentiaGenerator extends TTMultiblockBase implements ISurvivalConstructable {
 
+    // ===================== Tuning Constants =====================
+
     private static final String STRUCTURE_PIECE_MAIN = "reactor";
     private static final String SHAPE_PATH = "/assets/123technology/structures/ote/OTELargeEssentiaGenerator_shapeMain.shape.gz";
     private static final int HORIZONTAL_OFFSET = 4;
@@ -72,6 +74,8 @@ public final class OTELargeEssentiaGenerator extends TTMultiblockBase implements
     private static final int MAX_STABILITY = DIFFUSION_CELLS * STABILITY[MAX_STRUCTURE_TIER - 1];
     private static IStructureDefinition<OTELargeEssentiaGenerator> STRUCTURE_DEFINITION;
 
+    // ===================== Machine State =====================
+
     private final List<OTEEssentiaInputHatch> intakes = new ArrayList<>();
     private final List<OTEEssentiaStockingInputBusME> networkIntakes = new ArrayList<>();
     private AspectList bufferedEssentia = new AspectList();
@@ -83,6 +87,8 @@ public final class OTELargeEssentiaGenerator extends TTMultiblockBase implements
     private String lastReagent = "";
     private String burnReagent = "";
 
+    // ===================== Constructors =====================
+
     public OTELargeEssentiaGenerator(int id, String name, String display) {
         super(id, name, display);
         useLongPower = true;
@@ -93,10 +99,14 @@ public final class OTELargeEssentiaGenerator extends TTMultiblockBase implements
         useLongPower = true;
     }
 
+    // ===================== Standard Overrides =====================
+
     @Override
     public IMetaTileEntity newMetaEntity(IGregTechTileEntity base) {
         return new OTELargeEssentiaGenerator(mName);
     }
+
+    // ===================== NBT =====================
 
     @Override
     public void saveNBTData(NBTTagCompound tag) {
@@ -116,6 +126,8 @@ public final class OTELargeEssentiaGenerator extends TTMultiblockBase implements
         bufferedEssentia = new AspectList();
         bufferedEssentia.readFromNBT(tag.getCompoundTag("essentiaBuffer"));
     }
+
+    // ===================== Structure =====================
 
     private static IStructureElement<OTELargeEssentiaGenerator> cell(int meta) {
         return onElementPass(machine -> {
@@ -221,6 +233,8 @@ public final class OTELargeEssentiaGenerator extends TTMultiblockBase implements
         intake.updateTexture(casing);
         return networkIntakes.add(intake);
     }
+
+    // ===================== Processing Logic =====================
 
     @Override
     protected boolean shouldCheckRecipeThisTick(long tick) {
@@ -331,6 +345,8 @@ public final class OTELargeEssentiaGenerator extends TTMultiblockBase implements
         if (world.isAirBlock(x, y, z)) world.setBlock(x, y, z, ConfigBlocks.blockFluxGas, world.rand.nextInt(8), 3);
     }
 
+    // ===================== Upgrades =====================
+
     @Override
     public boolean onRightclick(IGregTechTileEntity base, EntityPlayer player) {
         ItemStack held = player.getHeldItem();
@@ -346,6 +362,8 @@ public final class OTELargeEssentiaGenerator extends TTMultiblockBase implements
         }
         return true;
     }
+
+    // ===================== GUI =====================
 
     public int getDiffusionTier() {
         return mMachine ? structureTier : 0;
@@ -384,6 +402,8 @@ public final class OTELargeEssentiaGenerator extends TTMultiblockBase implements
         return new OTELargeEssentiaGeneratorGui(this);
     }
 
+    // ===================== Tooltip =====================
+
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
         return new MultiblockTooltipBuilder().addMachineType(translateToLocal("ote.tn.essentia_generator"))
@@ -391,8 +411,19 @@ public final class OTELargeEssentiaGenerator extends TTMultiblockBase implements
             .addInfo(translateToLocal("oth.essentia.output"))
             .addInfo(translateToLocal("oth.essentia.me_tier"))
             .addInfo(translateToLocal("oth.essentia.upgrades"))
+            .addSeparator()
+            .addInfo("§aAdded by: 123Technology - LargeEssentialGenerato")
+            .addController(translateToLocal("ote.tn.essentia_generator"))
+            .beginStructureBlock(9, 3, 9, false)
+            .addInputBus(translateToLocal("oth.hint.any_input_bus"), 1)
+            .addOutputBus(translateToLocal("oth.hint.any_output_bus"), 1)
+            .addInputHatch(translateToLocal("oth.hint.any_input_hatch"), 1)
+            .addOutputHatch(translateToLocal("oth.hint.any_output_hatch"), 1)
+            .addEnergyHatch(translateToLocal("oth.hint.any_energy_hatch"), 1)
             .toolTipFinisher();
     }
+
+    // ===================== Textures =====================
 
     @Override
     public ITexture[] getTexture(IGregTechTileEntity base, ForgeDirection side, ForgeDirection facing, int color,

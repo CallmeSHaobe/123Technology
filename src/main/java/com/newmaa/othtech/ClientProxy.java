@@ -20,6 +20,7 @@ import com.newmaa.othtech.common.entity.EntityDogBlue;
 import com.newmaa.othtech.common.entity.EntityDogRed;
 import com.newmaa.othtech.common.entity.EntityDogYellow;
 import com.newmaa.othtech.common.entity.EntityFakePlayer;
+import com.newmaa.othtech.common.entity.EntityLonginus;
 import com.newmaa.othtech.common.entity.EntityNukeThrowable;
 import com.newmaa.othtech.common.entity.EntityPositronShot;
 import com.newmaa.othtech.common.entity.EntitySuicideDrone;
@@ -34,6 +35,8 @@ import com.newmaa.othtech.common.item.itemMisc.ItemSuicideDrone;
 import com.newmaa.othtech.common.item.itemWeapons.RenderPositronCannon;
 import com.newmaa.othtech.common.materials.OTHMaterials;
 import com.newmaa.othtech.common.render.RenderDrone;
+import com.newmaa.othtech.common.render.RenderLonginus;
+import com.newmaa.othtech.common.render.RenderLonginusItem;
 import com.newmaa.othtech.common.render.RenderPositronShot;
 import com.newmaa.othtech.common.render.RenderSuicideDrone;
 import com.newmaa.othtech.common.render.RiceBowlRenderer;
@@ -80,6 +83,7 @@ public class ClientProxy extends CommonProxy {
 
         registerRenderers();
         MinecraftForgeClient.registerItemRenderer(OTHItemList.PositronCannon.getItem(), new RenderPositronCannon());
+        MinecraftForgeClient.registerItemRenderer(OTHItemList.Longinus.getItem(), new RenderLonginusItem());
         MinecraftForgeClient.registerItemRenderer(OTHItemList.SuicideDronePig.getItem(), new RenderDrone(1));
         MinecraftForgeClient.registerItemRenderer(OTHItemList.SuicideDroneAngelica.getItem(), new RenderDrone(2));
         MinecraftForgeClient
@@ -106,6 +110,7 @@ public class ClientProxy extends CommonProxy {
         RenderingRegistry.registerEntityRenderingHandler(
             EntityNukeThrowable.class,
             new RenderSnowball(ItemLoader.itemNukeThrowable));
+        RenderingRegistry.registerEntityRenderingHandler(EntityLonginus.class, new RenderLonginus());
         RenderingRegistry.registerEntityRenderingHandler(EntityPositronShot.class, new RenderPositronShot());
         RenderingRegistry.registerEntityRenderingHandler(EntitySuicideDrone.class, new RenderSuicideDrone());
 

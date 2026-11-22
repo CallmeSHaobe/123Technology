@@ -82,6 +82,7 @@ public enum OTHItemList {
     itemTST,
     NukeThrowable,
     PositronCannon,
+    Longinus,
     PoweredElytra,
     RecordPRKA,
     RecordPRKB,

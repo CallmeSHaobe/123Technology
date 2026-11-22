@@ -28,6 +28,7 @@ import com.newmaa.othtech.common.item.itemSpawnEgg.ItemDogSpawnEgg;
 import com.newmaa.othtech.common.item.itemTools.Dasima;
 import com.newmaa.othtech.common.item.itemTools.ItemRecord;
 import com.newmaa.othtech.common.item.itemTools.ItemSunLighter;
+import com.newmaa.othtech.common.item.itemWeapons.ItemLonginus;
 import com.newmaa.othtech.common.item.itemWeapons.ItemNukeThrowable;
 import com.newmaa.othtech.common.item.itemWeapons.ItemPositronCannon;
 import com.newmaa.othtech.common.item.itemWeapons.ShikanokoNoko;
@@ -105,6 +106,7 @@ public class ItemLoader {
         OTHItemList.LeekBox.set(registryAndCallback(itemLeekBox, "itemLeekBox"));
         OTHItemList.NukeThrowable.set(registryAndCallback(itemNukeThrowable, "itemNukeThrowable"));
         OTHItemList.PositronCannon.set(registryAndCallback(itemPositronCannon, "itemPositronCannon"));
+        OTHItemList.Longinus.set(registryAndCallback(new ItemLonginus(), ItemLonginus.REGISTRY_NAME));
         if (Loader.isModLoaded("etfuturum")) {
             OTHItemList.PoweredElytra
                 .set(registryAndCallback(new ItemPoweredElytra(), ItemPoweredElytra.REGISTRY_NAME));

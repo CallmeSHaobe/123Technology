@@ -32,7 +32,7 @@ import com.cleanroommc.modularui.widgets.ToggleButton;
 import com.cleanroommc.modularui.widgets.layout.Flow;
 import com.newmaa.othtech.common.compat.thaumcraft.VoidNexusUpgrade;
 import com.newmaa.othtech.machine.OTEVoidNexusMatrix;
-import com.newmaa.othtech.machine.voidnexus.VoidNexusCalculator;
+import com.newmaa.othtech.machine.machineclass.voidnexus.VoidNexusCalculator;
 
 import gregtech.api.util.GTUtility;
 import gregtech.common.gui.modularui.multiblock.base.MTEMultiBlockBaseGui;

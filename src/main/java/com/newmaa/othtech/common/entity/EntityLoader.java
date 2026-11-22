@@ -22,6 +22,7 @@ public class EntityLoader {
         registerEntity(EntityNukeThrowable.class, "entityNukeThrowable", 1, 64, 10, true);
         registerEntity(EntityPositronShot.class, "entityPositronShot", 5, 512, 1, true);
         registerEntity(EntitySuicideDrone.class, "entitySuicideDrone", 6, 512, 1, true);
+        registerEntity(EntityLonginus.class, "entityLonginus", 7, 96, 1, true);
         registerEntity(EntityFakePlayer.class, "CustomPlayer", 0, 80, 3, true);
         registerSpawns();
         MinecraftForge.EVENT_BUS.register(this);

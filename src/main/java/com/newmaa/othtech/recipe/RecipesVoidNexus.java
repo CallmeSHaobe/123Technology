@@ -21,7 +21,7 @@ import com.newmaa.othtech.common.blocks.nailong.NailongCasingMeta;
 import com.newmaa.othtech.common.compat.thaumcraft.VoidNexusFuelProfiles;
 import com.newmaa.othtech.common.materials.OTHMaterials;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
-import com.newmaa.othtech.machine.voidnexus.VoidNexusCalculator;
+import com.newmaa.othtech.machine.machineclass.voidnexus.VoidNexusCalculator;
 
 import fox.spiteful.avaritia.items.LudicrousItems;
 import gregtech.api.enums.CondensateType;

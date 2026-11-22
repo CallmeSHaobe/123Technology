@@ -61,10 +61,10 @@ import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.gui.OTEVoidNexusMatrixGui;
 import com.newmaa.othtech.machine.hatch.OTEEssentiaStockingInputBusME;
 import com.newmaa.othtech.machine.machineclass.OTHTTMultiMachineBaseEM;
-import com.newmaa.othtech.machine.voidnexus.PsionicOutputQueue;
-import com.newmaa.othtech.machine.voidnexus.VoidNexusCalculator;
-import com.newmaa.othtech.machine.voidnexus.VoidNexusControllerTextures;
-import com.newmaa.othtech.machine.voidnexus.VoidNexusEssentiaBuffer;
+import com.newmaa.othtech.machine.machineclass.voidnexus.PsionicOutputQueue;
+import com.newmaa.othtech.machine.machineclass.voidnexus.VoidNexusCalculator;
+import com.newmaa.othtech.machine.machineclass.voidnexus.VoidNexusControllerTextures;
+import com.newmaa.othtech.machine.machineclass.voidnexus.VoidNexusEssentiaBuffer;
 import com.newmaa.othtech.utils.ShapeLoader;
 
 import appeng.api.networking.IGrid;
@@ -117,6 +117,8 @@ import thaumicenergistics.common.storage.EnumEssentiaStorageTypes;
 public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
     implements IConstructable, ISurvivalConstructable, IMTERenderer {
 
+    // ===================== Tuning Constants =====================
+
     private static final VoidNexusControllerTextures CONTROLLER_TEXTURES = VoidNexusControllerTextures.MATRIX;
     private static final String STRUCTURE_PIECE_MAIN = "main";
     private static final char CONTROLLER_HATCH_SYMBOL = 'X';
@@ -154,6 +156,8 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
 
     private static volatile IStructureDefinition<OTEVoidNexusMatrix> STRUCTURE_DEFINITION;
     private static volatile List<PreviewCell> PREVIEW_CELLS = Collections.emptyList();
+
+    // ===================== Machine State =====================
 
     private VoidNexusCalculator.Stage stage = VoidNexusCalculator.Stage.UHV;
     private final VoidNexusEssentiaBuffer bufferedEssentia = new VoidNexusEssentiaBuffer();
@@ -193,6 +197,8 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
     private UUID ownerUUID;
     private final int[] upgradeVariants = new int[5];
     private final List<OTEPsionicManifestationModule> psionicModules = new ArrayList<>();
+
+    // ===================== Input Consumption Types =====================
 
     private static final class StackConsumption {
 
@@ -246,6 +252,8 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
         }
     }
 
+    // ===================== Constructors =====================
+
     public OTEVoidNexusMatrix(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
         useLongPower = true;
@@ -256,15 +264,21 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
         useLongPower = true;
     }
 
+    // ===================== Standard Overrides =====================
+
     @Override
     public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
         return new OTEVoidNexusMatrix(mName);
     }
 
+    // ===================== Recipe Map =====================
+
     @Override
     public RecipeMap<?> getRecipeMap() {
         return Recipemaps.VOID_NEXUS;
     }
+
+    // ===================== NBT =====================
 
     @Override
     public void saveNBTData(NBTTagCompound tag) {
@@ -334,6 +348,8 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
         super.loadNBTData(tag);
     }
 
+    // ===================== Lifecycle =====================
+
     @Override
     public void onFirstTick_EM(IGregTechTileEntity base) {
         super.onFirstTick_EM(base);
@@ -351,6 +367,8 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
         disconnectPsionicModules();
         super.onUnload();
     }
+
+    // ===================== Machine Parameters =====================
 
     @Override
     public int getMaxEfficiency(ItemStack stack) {
@@ -395,6 +413,8 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
     public boolean supportsBatchMode() {
         return false;
     }
+
+    // ===================== Processing Logic =====================
 
     @Override
     public @NotNull CheckRecipeResult checkProcessing_EM() {
@@ -530,6 +550,8 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
         markDirty();
         return CheckRecipeResultRegistry.GENERATING;
     }
+
+    // ===================== Runtime Ticks and Bonuses =====================
 
     @Override
     public boolean onRunningTick(ItemStack stack) {
@@ -800,6 +822,8 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
         return result;
     }
 
+    // ===================== Fuel and Catalyst Inputs =====================
+
     private boolean hasBloodForRound(int duration) {
         if (!hasUpgrade(BLOOD_RUNE_SAVER)) return false;
         Fluid blood = FluidRegistry.getFluid("lifeessence");
@@ -929,6 +953,8 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
         return amount - remaining;
     }
 
+    // ===================== Host Wand and Special Items =====================
+
     private ItemStack getHostWand() {
         ItemStack stack = getControllerSlot();
         return stack != null && stack.getItem() instanceof ItemWandCasting ? stack : null;
@@ -980,6 +1006,8 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
         return stack != null && starArray != null && GTUtility.areStacksEqual(copyOne(stack), starArray);
     }
 
+    // ===================== Upgrades =====================
+
     private boolean hasUpgrade(VoidNexusUpgrade upgrade) {
         if (upgrade == null || stage.index < upgrade.minimumStage.index
             || structureTier < upgrade.minimumStructureTier
@@ -1026,6 +1054,8 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
         return true;
     }
 
+    // ===================== Utility Methods =====================
+
     private static ItemStack copyOne(ItemStack stack) {
         ItemStack result = stack.copy();
         result.stackSize = 1;
@@ -1045,6 +1075,8 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
         if (left <= 0L || right <= 0L) return 0L;
         return left > Long.MAX_VALUE / right ? Long.MAX_VALUE : left * right;
     }
+
+    // ===================== Virtual Potential =====================
 
     private long addVirtualPotential(long amount) {
         if (amount <= 0L || virtualPotential >= MAX_VIRTUAL_POTENTIAL) return 0L;
@@ -1110,6 +1142,8 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
         return true;
     }
 
+    // ===================== Essentia Input Buses =====================
+
     @Override
     protected boolean shouldCheckRecipeThisTick(long tick) {
         return super.shouldCheckRecipeThisTick(tick) || (tick % 20L == 0L && !isMaterialInputModeEnabled()
@@ -1124,6 +1158,8 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
         }
         return busses;
     }
+
+    // ===================== Energy Output =====================
 
     @Override
     public boolean addEnergyOutput_EM(long EU, long amperes) {
@@ -1163,6 +1199,8 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
         }
         return false;
     }
+
+    // ===================== Structure =====================
 
     @Override
     public void checkMachine(IGregTechTileEntity base, ItemStack stack, List<StructureError> errors) {
@@ -1258,6 +1296,8 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
         }
         return false;
     }
+
+    // ===================== Psionic Modules =====================
 
     private void connectPsionicModules() {
         int connected = 0;
@@ -1360,6 +1400,8 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
         for (OTEPsionicManifestationModule module : psionicModules) module.disconnect();
         psionicModules.clear();
     }
+
+    // ===================== Structure Definition and Construction =====================
 
     private void clearVoidState() {
         java.util.Arrays.fill(upgradeVariants, 0);
@@ -2026,6 +2068,8 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
             && ((IGregTechTileEntity) tile).getMetaTileEntity() instanceof MTEHatch;
     }
 
+    // ===================== Tooltip =====================
+
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
         MultiblockTooltipBuilder tooltip = new MultiblockTooltipBuilder();
@@ -2046,11 +2090,15 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
         return tooltip;
     }
 
+    // ===================== Textures =====================
+
     @Override
     public ITexture[] getTexture(IGregTechTileEntity base, ForgeDirection side, ForgeDirection facing, int colorIndex,
         boolean active, boolean redstone) {
         return CONTROLLER_TEXTURES.get(side, facing, active);
     }
+
+    // ===================== Player Interaction =====================
 
     @Override
     public void onScrewdriverRightClick(ForgeDirection side, EntityPlayer player, float x, float y, float z,
@@ -2068,6 +2116,8 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
                 isMaterialInputModeEnabled() ? translateToLocal("ote.vnm.material")
                     : translateToLocal("ote.vnm.essentia")));
     }
+
+    // ===================== Waila =====================
 
     @Override
     public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
@@ -2128,6 +2178,8 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
                 + tag.getInteger("vnU26Bonus")
                 + "%");
     }
+
+    // ===================== Machine Status =====================
 
     public long getVirtualPotential() {
         return virtualPotential;
@@ -2193,6 +2245,8 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
         return Math.min(psionicModules.size(), getPsionicModuleLimit());
     }
 
+    // ===================== Rendering =====================
+
     @Override
     @SideOnly(Side.CLIENT)
     public void renderTESR(double x, double y, double z, float partialTicks) {
@@ -2234,6 +2288,8 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
     public boolean isClientRenderActive() {
         return clientRenderActive;
     }
+
+    // ===================== Upgrade Status and Machine Settings =====================
 
     public boolean isUpgradeActive(VoidNexusUpgrade upgrade) {
         return hasUpgrade(upgrade);
@@ -2293,6 +2349,8 @@ public class OTEVoidNexusMatrix extends OTHTTMultiMachineBaseEM
         return ((ItemWandCasting) stack.getItem()).getAllVis(stack)
             .visSize() / 100;
     }
+
+    // ===================== GUI =====================
 
     @Override
     protected @NotNull MTEMultiBlockBaseGui<?> getGui() {

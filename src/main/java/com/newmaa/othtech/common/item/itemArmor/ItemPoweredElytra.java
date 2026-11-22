@@ -19,6 +19,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ganymedes01.etfuturum.api.elytra.IElytraPlayer;
 import ganymedes01.etfuturum.items.equipment.ItemArmorElytra;
+import gregtech.api.enums.VoltageIndex;
 import ic2.api.item.ElectricItem;
 import ic2.api.item.ICustomDamageItem;
 import ic2.api.item.IElectricItemManager;
@@ -51,6 +52,7 @@ public class ItemPoweredElytra extends ItemArmorElytra implements ISpecialElectr
     }
 
     public ItemPoweredElytra() {
+        setMaxDamage(4320);
         setUnlocalizedName(REGISTRY_NAME);
         setTextureName("123technology:" + REGISTRY_NAME);
         setCreativeTab(CreativeTabsLoader.tabothtech);
@@ -119,7 +121,7 @@ public class ItemPoweredElytra extends ItemArmorElytra implements ISpecialElectr
 
     @Override
     public int getTier(ItemStack stack) {
-        return 8;
+        return VoltageIndex.IV;
     }
 
     @Override
