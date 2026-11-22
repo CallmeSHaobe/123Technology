@@ -159,7 +159,7 @@ public class OTHItemCombs extends Item {
             .itemInputs(
                 GTUtility.getIntegratedCircuit(17),
                 OTHCombTypes.HYPOGEN.getStackForType(4),
-                GTModHandler.getModItem(NewHorizonsCoreMod.ID, "tile.Quantinum", 4),
+                GTModHandler.getModItem(NewHorizonsCoreMod.ID, "Quantinum", 4),
                 GTModHandler.getModItem("miscutils", "MU-metaitem.01", 3, 32105))
             .itemOutputs(GTModHandler.getModItem(GTPlusPlus.ID, "blockBlockAstralTitanium", 4))
             .fluidInputs(
@@ -179,7 +179,7 @@ public class OTHItemCombs extends Item {
             .itemInputs(
                 GTUtility.getIntegratedCircuit(17),
                 OTHCombTypes.HYPOGEN.getStackForType(2),
-                GTModHandler.getModItem(NewHorizonsCoreMod.ID, "tile.Quantinum", 2),
+                GTModHandler.getModItem(NewHorizonsCoreMod.ID, "Quantinum", 2),
                 GTModHandler.getModItem("miscutils", "MU-metaitem.01", 2, 32105))
             .itemOutputs(GTModHandler.getModItem(GTPlusPlus.ID, "blockBlockAstralTitanium", 2))
             .fluidInputs(
