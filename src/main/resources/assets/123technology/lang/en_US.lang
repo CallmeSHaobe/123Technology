@@ -1,3 +1,7 @@
+# Terminology (zh_CN -> en_US)
+# 滚木 / 棍木 = log0
+# 超理学 = Hyperology
+
 # Speaking Stone
 ote.tn.speaking_stone=Speaking Stone
 ote.speaking_stone.tooltip=Right-click to open the GUI. Each block of broadcast radius costs 1 EU/t.
@@ -24,7 +28,7 @@ ote.speaking_stone.gui.cost=%s EU/t
 ote.speaking_stone.gui.status_active=Status: Broadcasting
 ote.speaking_stone.gui.status_idle=Status: Not broadcasting
 ote.speaking_stone.gui.now_playing=Now playing: %s
-ote.speaking_stone.gui.now_playing.none=Now playing: —
+ote.speaking_stone.gui.now_playing.none=Now playing: -
 ote.speaking_stone.ffmpeg_failed=Speaking Stone could not start FFmpeg. Check the configured executable path.
 ote.speaking_stone.stream_failed=Speaking Stone could not read the stream. Check the URL and your connection.
 ote.speaking_stone.audio_failed=Speaking Stone could not output audio. Check your audio device.
@@ -72,12 +76,12 @@ ote.drone.gui.coordinate_selector=Coord. Selector
 ote.drone.gui.coordinate_selector.help=Insert an Ender IO Coordinate Selector recorded in this dimension to copy its coordinates and disarm continuous launch. The selector is not consumed.
 ote.drone.gui.mode.coordinates=Mode: Coordinates
 ote.drone.gui.mode.downlink=Mode: Hunt Downlinks
-ote.drone.gui.mode.help=Auto: attacks the nearest loaded GT drone downlink 16–4096 blocks away in this dimension, regardless of ownership. Ignores manual coordinates. No target consumes no item. Switching disarms. No obstacle avoidance.
+ote.drone.gui.mode.help=Auto: attacks the nearest loaded GT drone downlink 16-4096 blocks away in this dimension, regardless of ownership. Ignores manual coordinates. No target consumes no item. Switching disarms. No obstacle avoidance.
 ote.drone.gui.enabled=Continuous launch: ON
 ote.drone.gui.disabled=Continuous launch: OFF
 ote.drone.gui.help=Enter target and launch speed, leave the field, then enable. Uses 1 drone every 5s. Editing disarms the launcher.
 ote.drone.gui.speed=Speed km/h
-ote.drone.gui.speed.help=50–300 km/h, default 200; assumes 1 block = 1 meter at 20 TPS. Also sets powered cruise airspeed.
+ote.drone.gui.speed.help=50-300 km/h, default 200; assumes 1 block = 1 meter at 20 TPS. Also sets powered cruise airspeed.
 ote.drone.info.1=Physical input buses only; no power required; launches once every 5 seconds
 ote.drone.hint.input_bus=Any Solid Steel Machine Casing (A)
 ote.drone.info.rail_length=Blueprint stack size sets rail slices (7-64); one fixed head and end add 2 blocks. Total length: 9-66.
@@ -91,13 +95,13 @@ ote.tn.imba=The IMBA EBF
 
 # Rocket assembly workshop (previously missing keys)
 ote.tm.nasa.0=Integrated Rocket Assembly Workshop
-ote.tm.nasa.1=Integrated production of rocket components and final assembly
-ote.tm.nasa.2=An assembly line for space exploration
-ote.tm.nasa.3=Combines multiple rocket manufacturing processes
-ote.tm.nasa.4=Operates as a multiblock structure
-ote.tm.nasa.5=Supports TecTech energy hatches
-ote.tm.nasa.6=Work in progress
-otht.cm.nasa.0=1 - Energy hatch and input/output buses and hatches replace designated machine casings; consult the structure preview
+ote.tm.nasa.1=
+ote.tm.nasa.2=
+ote.tm.nasa.3=
+ote.tm.nasa.4=
+ote.tm.nasa.5=
+ote.tm.nasa.6=
+otht.cm.nasa.0=1 - Install energy hatches, input and output buses, input and output hatches, and one Schematic Chip Hatch in the designated casing positions; see the structure preview.
 
 # Machine status
 ote.computer.chat.wireless.enabled=Wireless mode enabled
@@ -113,11 +117,11 @@ oth.recipe.main.formerNineInOne=This used to be nine-in-one.
 oth.recipe.main.any256000Items=Any 256,000 items each
 oth.recipe.main.anyItem=Any item
 oth.recipe.wetware.humanReplica=§b§nHuman Replica-RK800-01
-oth.recipe.deepSeiko.unlockCondensate=Machine upgrade → Unlock condensate
+oth.recipe.deepSeiko.unlockCondensate=Machine upgrade→ Unlock condensate
 oth.recipe.deepSeiko.condensateRequirement=Consumes 4× Condensate Adapters
-oth.recipe.deepSeiko.naniteUpgrade=Machine upgrade → Swarm T%s→T%s
+oth.recipe.deepSeiko.naniteUpgrade=Machine upgrade→ Swarm T%s→ T%s
 oth.recipe.deepSeiko.naniteRequirement=Requires %s tier-%s nanoswarms
-oth.recipe.deepSeiko.ultimateUpgrade=Machine upgrade → Ultimate objective (total compute ×2)
+oth.recipe.deepSeiko.ultimateUpgrade=Machine upgrade→ Ultimate objective (total compute ×2)
 oth.recipe.deepSeiko.ultimateRequirement=UXV casings %s + magnetic nanoswarms %s + stargate plates %s
 
 # Items and bee breeding
@@ -179,7 +183,7 @@ tt.resTrans=§aAn encapsulated multidimensional spacetime generation device, pro
 tt.glassSingularity=§5§l「Emit Life-Dissolving Rainbow」
 tt.machineSingularity=§a§lCompressed to palm size.
 tt.socCosmic=§4§oThe Milky Way's star river lies motionless across the firmament, as if §b§l§ofrozen§4§o....
-tt.socInf=§7§k//§9§lGive life to time, give civilization to the years.§7§k//
+tt.socInf=§7§k//§9§lGive life to time, give civilization to the years. §7§k//
 tt.socNor=§c§lAll is One...
 tt.transTrans=§aBreaks through the limitations of distance and time within any encapsulated space, making hyperdimensional communication possible.
 tt.neiISA=Check NEI..
@@ -288,10 +292,10 @@ fluid.HCl10000.name=Magic Hydrochloric Acid
 fluid.HCl100000.name=Final Hydrochloric Acid
 item.IrOsSm.name=Iridiosamarium
 fluid.IrOsSm.name=Iridiosamarium
-item.gunmu.name=§qObservable Gunmu - Hyperphysics Polymer
-fluid.gunmu.name=§qObservable Gunmu - Hyperphysics Polymer
-item.degunmu.name=§8Unobservable Gunmu - Hyperphysics Polymer
-fluid.degunmu.name=§8Unobservable Gunmu - Hyperphysics Polymer
+item.gunmu.name=§qObservable log0 - Hyperology Polymer
+fluid.gunmu.name=§qObservable log0 - Hyperology Polymer
+item.degunmu.name=§8Unobservable log0 - Hyperology Polymer
+fluid.degunmu.name=§8Unobservable log0 - Hyperology Polymer
 oth.tt.gunmu.name=§z§m§l--------------------------------
 bw.werkstoff.12320.name=Iridiosamarium
 LCL=L.C.L
@@ -460,7 +464,7 @@ ote.tm.m9in1.mode.2=Laser Engrave-Autoclave-Fluid Solidify (Misc)
 ote.tm.m9in1.mode.3=Isa-Float-Vacuum Dry (Isa)
 ote.tm.m9in1.mode.4=Molecular-Brew-Fluid Heat (Col)
 ote.cm.mnio.0=1 - Muffler Hatch, Energy Hatch, Input/Output Bus, Input/Output Hatch : Replace Multi-Machine Casing, supports TecTech Energy Hatch.
-ote.cm.mnio.1=God said, "Let there be light," and there was 9-in-1.
+ote.cm.mnio.1=God said, "Let there be light, " and there was 9-in-1.
 ote.cm.mnio.2=There are no two suns in the sky; 9-in-1 is the only sun in our hearts.
 
 #EIO
@@ -480,7 +484,7 @@ ote.tm.cocc.0=§d§nXiaodeng's Ultimate Creation, Zhongdeng's Hope, Laodeng's Un
 ote.tm.cocc.1=§n§cNever underestimate the power of Xiaodeng...
 ote.tm.cocc.2=§oThe true ultimate machine, no exorbitant cost, no messy mechanics(
 ote.tm.cocc.3=§oAll it does is burn specific materials into coke.
-ote.tm.cocc.4=§eConversion Ratio: Diamond(dust)->Coke 1:1024, Coal(dust)->Coke 1:16, Dirt->Coke 1:1 (How is this done?)
+ote.tm.cocc.4=§eConversion Ratio: Diamond(dust)-> Coke 1:1024, Coal(dust)-> Coke 1:16, Dirt-> Coke 1:1 (How is this done?)
 ote.tm.cocc.5=§eTime: 1800 * 20ticks - (Coal Output / 5)ticks, Power: 0 EU/t
 ote.tm.cocc.6=§c§lNote: Machine pollution too high: If power trips reporting "Cannot exhaust pollution", try placing multiple Muffler Hatches.
 ote.cm.cocc.0=1 - Input/Output Bus, Input/Output Hatch, Muffler Hatch : Replace Deoxidized Steel Machine Casing.
@@ -642,7 +646,7 @@ ote.tm.fz.1=§b  EU Consumption: 100%
 ote.tm.fz.2=§b  Speed + 100%
 ote.tm.fz.3=§b  Parallel: 1024
 ote.tm.fz.4=§6  Does not consume Gelid Cryotheum, but Input Hatch must have at least 123 * 1000L Gelid Cryotheum to run.
-ote.tm.fz.5=§q§l「The Giant Cryotheum tier is awkward. Above it is the TST Freezer, below it is the vanilla cube. Giant Cryotheum is stuck in the middle, can't go up or down.」
+ote.tm.fz.5=§q§l「The Giant Cryotheum tier is awkward. Above it is the TST Freezer, below it is the vanilla cube. Giant Cryotheum is stuck in the middle, can't go up or down. 」
 ote.cm.fz.0=1 - Muffler Hatch, Energy Hatch, Input/Output Bus, Input/Output Hatch : Replace Gelid Cryo Casing, supports TecTech Energy Hatch.
 ote.cm.fz.1=You actually built it?
 
@@ -747,11 +751,11 @@ ote.bbpf.wireless.off=This machine's power is sealed (Wireless Off).
 ote.bbpf.wireless.on=This machine unleashes its full power (Wireless On).
 ote.bbpf.wireless.energyhatch=Please remove all energy hatches before enabling wireless mode.
 ote.bbpf.wireless.invalid=The Astral Array Fabricators is required to use wireless mode.
-ote.bbpf.8=§6"The fury of innumerable Coreflames, consume me!"§r§7 — tearing dimensions apart, burning causality itself
+ote.bbpf.8=§6"The fury of innumerable Coreflames, consume me!"§r§7 - tearing dimensions apart, burning causality itself
 ote.bbpf.9=§7Each coil tier: energy §c-8%§7, duration §a-8%§7. A §fMAX (Eternal) coil§7 costs only §b1%§7 energy at §b100x§7 speed
 ote.bbpf.10=§7At MLevel 2 the parallel count breaks the int ceiling: §f2,147,483,647§7, no longer bound by coil tier
 ote.bbpf.11=§7Wireless mode: resonates with the Astral Array Fabricators, toggled via GUI/screwdriver; §cenergy hatches forbidden§7; parallel is capped by wireless energy, drained in one instant at recipe start
-ote.bbpf.12=§7Structure: §f605§7 heating coils — the source of heat and efficiency
+ote.bbpf.12=§7Structure: §f605§7 heating coils - the source of heat and efficiency
 ote.bbpf.13=§7plus §f1,864§7 transcendent casings, §f153§7 bridge casings, §f250§7 injection casings (hatches)
 ote.bbpf.14=§7§f54§7 quantum glass blocks float at the core, staring into the dimensional rift
 
@@ -773,7 +777,7 @@ ote.computer.coolantinput=Any Input Hatch (Coolant Input Hatch)
 ote.computer.info.coolant_usage=Coolant Consumption: %s
 ote.computer.desc.coolant.01=§c[§lCoolant System]§r Coolant input supports §cME Input Hatch§r!
 ote.computer.noliquid=Insufficient Super Coolant, cannot compute.
-ote.computer.output.x2=§cDue to Biebie God's favor, all output computation is doubled,§r§l please note coolant consumption.
+ote.computer.output.x2=§cDue to Biebie God's favor, all output computation is doubled, §r§l please note coolant consumption.
 ote.computer.recipe=Alien Computer Usable Component Recipes
 
 #SINOPEC
@@ -888,7 +892,7 @@ ote.tm.mtc.1=§b  EU Cost: 100%
 ote.tm.mtc.2=§b  Speed + 100%
 ote.tm.mtc.3=§b  Parallel: 1024
 ote.tm.mtc.4=§6  Uses GT++ Thermal Processing Casings for structure
-ote.tm.mtc.5=§l "The steel torrent of the Urals never ceases — ores are forged into the Motherland's lifeblood in the centrifugal inferno"
+ote.tm.mtc.5=§l "The steel torrent of the Urals never ceases - ores are forged into the Motherland's lifeblood in the centrifugal inferno"
 
 #LargeQuHub
 ote.tn.quhub=Large Qu-Brand Hub
@@ -902,8 +906,8 @@ ote.cm.quhub.0=1 - Energy Hatch / Multi-Amp Energy Hatch / Dynamo Hatch / Multi-
 ote.tm.wtf.0=Stores energy in a global network.
 ote.tm.wtf.1=Does not connect to wires. This block can draw EU from the network.
 ote.tm.wtf.2=No need to worry about energy overflow.
-ote.tm.wtf.3=Ignore one hundred words here,LOL.
-ote.tm.wtf.4=Just a joke, don't use if buggy, hehe.  
+ote.tm.wtf.3=Ignore one hundred words here, LOL.
+ote.tm.wtf.4=Just a joke, don't use if buggy, hehe.
 
 #custom_hatch
 ote.tm.largesteamhatch.name=Large Steam Input Hatch
@@ -986,7 +990,7 @@ ote.tm.ds.1=§b■ Assembly Line: lossless overclock + no data sticks needed
 ote.tm.ds.2=§b■ Assembly Line: structure block tiers give extra bonuses
 ote.tm.ds.3=§d■ Condensate: only the recipe's own fluids are needed; still BEC point mechanics, but stronger
 ote.tm.ds.4=§d■ Condensate: unlock it in the machine upgrade panel, and raise nanite tier as recipes require
-ote.tm.ds.5=§d■ Condensate: compute cards give extra speed (Optical, Quantum, Planck, D99, D199, D999) ... and 690?!
+ote.tm.ds.5=§d■ Condensate: compute cards give extra speed (Optical, Quantum, Planck, D99, D199, D999)... and 690?!
 ote.tm.ds.6=§cA§6t§et§ae§bn§dt§ci§6o§en §ai§bs §da§cl§6l §ey§ao§bu §dn§ce§6e§ed§a.
 ote.tm.ds.7=§dAuthors: §bLokisidus §d&& §9§zDeepSeek 41F
 
@@ -1056,7 +1060,7 @@ GT5U.gui.text.recipe_result.ds_need_card=Condensate mode needs a compute card in
 ote.tm.ds.hint.controller=Controller: tip of the head
 ote.tm.ds.hint.bays=Standard bays on the head ring, any hatch
 ote.tm.ds.hint.rings.2=Each channel level 1~10: 1 = fin block, 2~10 = field generator (Crude~Hongmeng)
-ote.tm.ds.hint.rings.6=§bTop Fin (stability)§7: §a+2.5% speed§7 and §b-2.5% EU§7 per level => §a×1.20 §7/ §b×0.80 at max
+ote.tm.ds.hint.rings.6=§bTop Fin (stability)§7: §a+2.5% speed§7 and §b-2.5% EU§7 per level=> §a×1.20 §7/ §b×0.80 at max
 ote.tm.ds.hint.rings.5=§7Right Fin (space): §b-5% EU§7 per level, min §b×0.50
 ote.tm.ds.hint.rings.4=§7Left Fin (time): §a+5% speed§7 per level (shorter duration), max §a×1.50
 GT5U.gui.text.shutdown.ds_no_card=§cCompute card removed
@@ -1116,7 +1120,7 @@ ote.abstract_sanctum.gui.mana=Mana
 ote.abstract_sanctum.gui.salt=World Salt
 ote.abstract_sanctum.gui.blood=Blood
 ote.abstract_sanctum.gui.config=§b✦ Material Multipliers ✦
-ote.abstract_sanctum.gui.range=§8Range 1.0–10.0, step 0.1
+ote.abstract_sanctum.gui.range=§8Range 1.0-10.0, step 0.1
 ote.abstract_sanctum.gui.open_usage=§eClick to view related NEI recipes and bookmarks
 ote.abstract_sanctum.gui.parallel=§6Current parallels:§f %s
 ote.abstract_sanctum.gui.core.active=§b✦ Sanctum Core: §aMana circuits resonating
@@ -1124,7 +1128,7 @@ ote.abstract_sanctum.gui.core.idle=§5✦ Sanctum Core: §7Idle; rune array rema
 ote.abstract_sanctum.upgrade.mana=§bEternal Mana Pool: Mana cost is reduced to zero
 ote.abstract_sanctum.upgrade.salt=§6Akashic Record: World Salt cost is reduced to zero
 ote.abstract_sanctum.upgrade.blood=§cArmok's Blood Orb: Life Essence cost is reduced to zero
-ote.abstract_sanctum.tooltip.0=§d✦ AbstractSanctum ✦ §7— Arcane Craft Integration
+ote.abstract_sanctum.tooltip.0=§d✦ AbstractSanctum ✦ §7- Arcane Craft Integration
 ote.abstract_sanctum.tooltip.1=§d❖ §7"Arcane mass production? Hold my mana pool."
 ote.abstract_sanctum.tooltip.2=§5❖ §7"Mages cast spells. Machines work overtime."
 ote.abstract_sanctum.tooltip.3=§b❖ §7"Duplication is not cheating. It is throughput."
@@ -1136,7 +1140,7 @@ ote.abstract_sanctum.tooltip.8=§3◆ MANA CIRCUIT §7Liquid Mana and Life Essen
 ote.abstract_sanctum.tooltip.9=§e◆ OGANESSON SURGE §7Fixed 144 mB per run; +4 crafting parallels, +64 duplication parallels
 ote.abstract_sanctum.tooltip.10=§a◆ GLASS AUTHORITY §7ZPM+ glass unlocks multi-amp energy hatches; UIV+ glass unlocks laser energy hatches
 ote.abstract_sanctum.tooltip.11=§c✖ ENERGY INTERDICTION §7Wireless energy hatches are rejected
-ote.abstract_sanctum.tooltip.12=§b✦ ACCELERATION LAW §7F(x,y,z)=1+3.23×(∫qx[1,x]+∫qy[1,y]+∫qz[1,z])
+ote.abstract_sanctum.tooltip.12=§b✦ ACCELERATION LAW §7F(x, y, z)=1+3.23×(∫qx[1, x]+∫qy[1, y]+∫qz[1, z])
 ote.abstract_sanctum.tooltip.13=§8◆ ACCELERATION CURVES §7t is the matching material multiplier
 ote.abstract_sanctum.tooltip.14=§8qx(t)=0.01+1/(1+exp(160(t-1.05)))
 ote.abstract_sanctum.tooltip.15=§8qy(t)=0.01+1/(1+exp(8(t-3.50)))
@@ -1150,7 +1154,15 @@ otht.recipe.AbstractSanctumCraft=AbstractSanctum - Crafting
 otht.recipe.AbstractSanctumDuplicate=AbstractSanctum - Duplication
 ote.ds.nei.nanite.line1=§bRequires upgrading the nanite swarm
 ote.ds.nei.nanite.line2=§bto tier %s
-GT5U.gui.text.recipe_result.ote_no_schematic=§4Missing rocket assembly schematic in the controller slot
+GT5U.gui.text.recipe_result.ote_no_schematic=§4The machine needs the required schematic chip in its Schematic Chip Hatch.
+ote.tn.rocket_schematic_hatch=Schematic Chip Hatch
+ote.tt.rocket_schematic_hatch.0=8 slots, accepts only T1-T8 rocket schematics
+ote.tt.rocket_schematic_hatch.1=Supplies schematic chips to the Rocket Assembly Workshop without consuming them.
+ote.nasa.missing_schematic_hatch=Install one Schematic Chip Hatch in a designated hatch position.
+ote.nasa.schematic_hatch_hint=Install one in any designated hatch position
+ote.nasa.nei.schematic_hint=Insert into the Schematic Chip Hatch. Not consumed.
+ote.nasa.waila.perfect_oc.enabled=Perfect Overclock: Enabled
+ote.nasa.waila.perfect_oc.disabled=Perfect Overclock: Disabled
 otht.tier.1=Ross123b
 
 # ==== entangled condensate fluids (123 Technology) ====
@@ -1178,8 +1190,8 @@ Material.hcl1000=Strange Hydrochloric Acid
 Material.hcl10000=Magic Hydrochloric Acid
 Material.hcl100000=Final Hydrochloric Acid
 Material.irossm=Iridiosamarium
-Material.gunmu=Observable Gunmu
-Material.degunmu=Unobservable Gunmu
+Material.gunmu=Observable log0 - Hyperology Polymer
+Material.degunmu=Unobservable log0 - Hyperology Polymer
 
 # ==== GT fluid names (123 Technology migration) ====
 fluid.galaxy=Molten Galaxy
@@ -1210,10 +1222,10 @@ fluid.hcl100000=Final Hydrochloric Acid
 fluid.hcl100000.name=Final Hydrochloric Acid
 fluid.molten.irossm=Molten IrOsSm
 fluid.molten.irossm.name=Molten IrOsSm
-fluid.molten.gunmu=Molten Observable Gunmu
-fluid.molten.gunmu.name=Molten Observable Gunmu
-fluid.molten.degunmu=Molten Unobservable Gunmu
-fluid.molten.degunmu.name=Molten Unobservable Gunmu
+fluid.molten.gunmu=Molten Observable log0 - Hyperology Polymer
+fluid.molten.gunmu.name=Molten Observable log0 - Hyperology Polymer
+fluid.molten.degunmu=Molten Unobservable log0 - Hyperology Polymer
+fluid.molten.degunmu.name=Molten Unobservable log0 - Hyperology Polymer
 
 # BetterQuesting: betterquesting.quest.<base64url-uuid>.name|desc  (%% = %, %n = newline)
 # Base text lives in quest/DefaultQuests json; keep in sync, or drop the key to fall back.
@@ -1355,7 +1367,7 @@ ote.pmm.gui.final_duration=§7Final duration including overclock: §b
 ote.pmm.gui.progress=§7Recipe progress: §f
 ote.tm.vnm.1=§d✦ Where the six phases meet, the echoes of essentia are forged into eternal embers that light the void.
 ote.tm.vnm.2=§b❖ When the Void's boundless psionic energy pours into the matrix, essentia becomes the ultimate energy source, recognized by reality itself.
-ote.tm.vnm.3=§d You weren't supposed to see this§kasdasd§h.§kasdasdas.
+ote.tm.vnm.3=§d You weren't supposed to see this§kasdasd§h. §kasdasdas.
 ote.tm.vnm.4=§6━━━━━━━━━━━━━━━━━━━━
 ote.tm.vnm.5=§6✦ STRUCTURE (WARNING: This structure is enormous and may cause a crash)
 ote.tm.vnm.6=§bStructure §7 266 × 233 × 266; controller offset (133, 115, 129).
@@ -1380,10 +1392,10 @@ ote.tm.vnm.24=§aEfficiencyMultiplier §7= (1 + 0.05×I_U2 + 0.10×I_U5 + 0.50×
 ote.tm.vnm.25=§aOrdinaryMultiplier §7= 1 + Σ(activeNode.OrdinaryBonus)
 ote.tm.vnm.26=§aSpecialMultiplier §7= Stabilizer × Potential × Cycle
 ote.tm.vnm.27=§7Stabilizer = 1 + I_stabilizer × (1 + 0.5×I_U16); T1/T2 have a floor of 2.0.
-ote.tm.vnm.28=§7With U18 active, Potential = 1 + 0.05×min(P,20) + 0.01×min(max(P-20,0),80) + 0.002×max(P-100,0); otherwise 1.
+ote.tm.vnm.28=§7With U18 active, Potential = 1 + 0.05×min(P, 20) + 0.01×min(max(P-20, 0), 80) + 0.002×max(P-100, 0); otherwise 1.
 ote.tm.vnm.29=§7Cycle = 5 when U22 is active and the next round number mod 3 = 0; otherwise 1.
-ote.tm.vnm.30=§aStructureDecay §7= exp(-0.6×(t-1)^2 + 0.7×G(t,1) - 1.1×G(t,2) - 0.2×G(t,3))
-ote.tm.vnm.31=§7G(t,w) = (1/Z) × ∫[-0.1,0.1] exp(-(t-w-x)^2 / 0.1) dx; Z is the same integral centered at 0.
+ote.tm.vnm.30=§aStructureDecay §7= exp(-0.6×(t-1)^2 + 0.7×G(t, 1) - 1.1×G(t, 2) - 0.2×G(t, 3))
+ote.tm.vnm.31=§7G(t, w) = (1/Z) × ∫[-0.1, 0.1] exp(-(t-w-x)^2 / 0.1) dx; Z is the same integral centered at 0.
 ote.tm.vnm.32=§7D_t is T1 2.013573, T2 0.182691, T3 0.074267, T4 0.004517, T5 0.000068.
 ote.tm.vnm.33=§aStructureUpgrade §7= exp(1.0×I_U3) × exp(1.5×(t-1)×I_U2) × exp(1.6×(t-1)×I_U4)
 ote.tm.vnm.34=§aPower_core §7= floor[(R/T) × QualityMultiplier × PhaseMultiplier × GloriaMultiplier × EfficiencyMultiplier × OrdinaryMultiplier × SpecialMultiplier × StructureDecay × StructureUpgrade × MaterialPenalty × BloodBonus × StarBonus]
@@ -1535,88 +1547,88 @@ GT5U.gui.text.recipe_result.psionic_module_advanced_locked="Find One's Own Path"
 GT5U.gui.text.recipe_result.psionic_module_insufficient_buffer=The module buffer cannot pay the next tick of recipe power
 
 tc.research_name.OTH_VOID_NEXUS_1=Psionic Theory
-tc.research_page.OTH_VOID_NEXUS_1.description=For a long time, essentia has been regarded as a fundamental building block of our world. It can be extracted, stored, mixed, and used to change the form of matter.<BR>Yet we have never truly understood the nature of essentia itself.<BR>The six primal aspects are not entirely independent. There seems to be a subtle link between them, one that may hold more energy than anything we currently understand.<BR>We are no longer content merely to use essentia.<BR>We will try to understand it.
+tc.research_page.OTH_VOID_NEXUS_1.description=For a long time, essentia has been regarded as a fundamental building block of our world. It can be extracted, stored, mixed, and used to change the form of matter. <BR>Yet we have never truly understood the nature of essentia itself. <BR>The six primal aspects are not entirely independent. There seems to be a subtle link between them, one that may hold more energy than anything we currently understand. <BR>We are no longer content merely to use essentia. <BR>We will try to understand it.
 tc.research_page.OTH_VOID_NEXUS_1.effect=Unlocks the Void Nexus Matrix's basic power generation mode.
 tc.research_name.OTH_VOID_NEXUS_2=Hyper Gaia Crystal Communicator
-tc.research_page.OTH_VOID_NEXUS_2.description=The power contained in the Gaia Crystal far exceeded our expectations.<BR>Using an Advanced Bio Processor to analyze its internal structure, we discovered that the crystal can link to distant energy sources. It appears to do more than store energy: it can somehow sense psionic activity across the entire world.<BR>If we can put this property to use in the matrix, we may be able to bypass many of the limitations of conventional power transmission.<BR>We are trying to send signals farther afield.<BR>We still cannot say where the reply comes from.
-tc.research_page.OTH_VOID_NEXUS_2.effect=Increases base power output by 10%. Increases aspect combustion efficiency by 5%.<BR>Structure tier multiplier: exp(1.5 × (n - 1))
+tc.research_page.OTH_VOID_NEXUS_2.description=The power contained in the Gaia Crystal far exceeded our expectations. <BR>Using an Advanced Bio Processor to analyze its internal structure, we discovered that the crystal can link to distant energy sources. It appears to do more than store energy: it can somehow sense psionic activity across the entire world. <BR>If we can put this property to use in the matrix, we may be able to bypass many of the limitations of conventional power transmission. <BR>We are trying to send signals farther afield. <BR>We still cannot say where the reply comes from.
+tc.research_page.OTH_VOID_NEXUS_2.effect=Increases base power output by 10%. Increases aspect combustion efficiency by 5%. <BR>Structure tier multiplier: exp(1.5 × (n - 1))
 tc.research_name.OTH_VOID_NEXUS_3=Endless Wand Charging
-tc.research_page.OTH_VOID_NEXUS_3.description=The current six-phase cycle has an unacceptable flaw: the wand's vis reserves cannot keep the matrix running for long.<BR>We have to stop the machine frequently, recharge the wand, and start it up again.<BR>That kind of maintenance is far too primitive for industry at this scale.<BR>Fortunately, Infinity Ingots will solve the problem.<BR>With an Infinity-reinforced charging system and Crystal Matrix Wand Caps, we'll no longer have to worry about replenishing the wand's vis.<BR>They'll become as permanent a fixture in the matrix as a bolt torqued tight.
-tc.research_page.OTH_VOID_NEXUS_3.effect=The controller's wand no longer consumes any of the 6 primal types of vis.<BR>Structure tier multiplier: exp(1)
+tc.research_page.OTH_VOID_NEXUS_3.description=The current six-phase cycle has an unacceptable flaw: the wand's vis reserves cannot keep the matrix running for long. <BR>We have to stop the machine frequently, recharge the wand, and start it up again. <BR>That kind of maintenance is far too primitive for industry at this scale. <BR>Fortunately, Infinity Ingots will solve the problem. <BR>With an Infinity-reinforced charging system and Crystal Matrix Wand Caps, we'll no longer have to worry about replenishing the wand's vis. <BR>They'll become as permanent a fixture in the matrix as a bolt torqued tight.
+tc.research_page.OTH_VOID_NEXUS_3.effect=The controller's wand no longer consumes any of the 6 primal types of vis. <BR>Structure tier multiplier: exp(1)
 tc.research_name.OTH_VOID_NEXUS_4=Blood Rune Economizer
-tc.research_page.OTH_VOID_NEXUS_4.description=Magical power does not always come from somewhere outside ourselves.<BR>Blood, magic, and essentia share a peculiar connection. Blood Runes exploit that connection, turning a process that would normally consume vast amounts of essentia into a more direct exchange of energy.<BR>At first, we were reluctant to use this technology in industrial machinery.<BR>But after a series of experiments, we had to admit that it works.<BR>Some costs don't disappear just because we refuse to acknowledge them.
-tc.research_page.OTH_VOID_NEXUS_4.effect=The matrix can consume 1,440 L of Life Essence per tick for 15% more power output.<BR>Structure tier multiplier: exp(1.6 × (n - 1))
+tc.research_page.OTH_VOID_NEXUS_4.description=Magical power does not always come from somewhere outside ourselves. <BR>Blood, magic, and essentia share a peculiar connection. Blood Runes exploit that connection, turning a process that would normally consume vast amounts of essentia into a more direct exchange of energy. <BR>At first, we were reluctant to use this technology in industrial machinery. <BR>But after a series of experiments, we had to admit that it works. <BR>Some costs don't disappear just because we refuse to acknowledge them.
+tc.research_page.OTH_VOID_NEXUS_4.effect=The matrix can consume 1,440 L of Life Essence per tick for 15% more power output. <BR>Structure tier multiplier: exp(1.6 × (n - 1))
 tc.research_name.OTH_VOID_NEXUS_5=Beyond Dimensions
-tc.research_page.OTH_VOID_NEXUS_5.description=We can now reliably extract and convert the six primal aspects.<BR>Yet no matter how we improve the existing structure, the matrix's output always hits the same ceiling.<BR>After repeated experiments, we began to realize that the machine itself was not the problem.<BR>The space we inhabit may be the real constraint.<BR>If energy has to travel through three-dimensional space, why not try to find a fourth direction?<BR>There may be more space to explore beyond the world we know.
-tc.research_page.OTH_VOID_NEXUS_5.effect=Increases aspect combustion efficiency by 10%.<BR>Raises the relative multiplier for tier 9 aspects to 1.8.
+tc.research_page.OTH_VOID_NEXUS_5.description=We can now reliably extract and convert the six primal aspects. <BR>Yet no matter how we improve the existing structure, the matrix's output always hits the same ceiling. <BR>After repeated experiments, we began to realize that the machine itself was not the problem. <BR>The space we inhabit may be the real constraint. <BR>If energy has to travel through three-dimensional space, why not try to find a fourth direction?<BR>There may be more space to explore beyond the world we know.
+tc.research_page.OTH_VOID_NEXUS_5.effect=Increases aspect combustion efficiency by 10%. <BR>Raises the relative multiplier for tier 9 aspects to 1.8.
 tc.research_name.OTH_VOID_NEXUS_6=Void Link Theory
-tc.research_page.OTH_VOID_NEXUS_6.description=We managed to create a stable fold in space inside the matrix.<BR>During one experiment, however, the energy readings suddenly changed in a way we could not explain.<BR>Some of the energy went missing without following its expected path.<BR>It seemed to have entered a region we could not observe.<BR>Further experiments showed that this was no accident. We had discovered a realm outside reality, and early results confirmed that we could establish a link to it.<BR>We call it the Void.<BR>From now on, we won't just draw power from our own world.<BR>We will try to reach beyond it.
-tc.research_page.OTH_VOID_NEXUS_6.effect=When all six phases are perfectly balanced, the phase multiplier is B = 1.8 - 0.8D.<BR>Every 3,600 s of operation, there is a 45% chance that nearby players gain 1 temporary Warp.<BR>Unlocks Void Potential.<BR>Void Potential is an internal currency earned through the activities below and spent on branch upgrades.<BR>Gain 1 Void Potential per 7,200 s of continuous operation.<BR>Gain 1 Void Potential per 1G essentia consumed.<BR>Gain 1 Void Potential per 900 s of operation with all six phases perfectly balanced.
+tc.research_page.OTH_VOID_NEXUS_6.description=We managed to create a stable fold in space inside the matrix. <BR>During one experiment, however, the energy readings suddenly changed in a way we could not explain. <BR>Some of the energy went missing without following its expected path. <BR>It seemed to have entered a region we could not observe. <BR>Further experiments showed that this was no accident. We had discovered a realm outside reality, and early results confirmed that we could establish a link to it. <BR>We call it the Void. <BR>From now on, we won't just draw power from our own world. <BR>We will try to reach beyond it.
+tc.research_page.OTH_VOID_NEXUS_6.effect=When all six phases are perfectly balanced, the phase multiplier is B = 1.8 - 0.8D. <BR>Every 3,600 s of operation, there is a 45% chance that nearby players gain 1 temporary Warp. <BR>Unlocks Void Potential. <BR>Void Potential is an internal currency earned through the activities below and spent on branch upgrades. <BR>Gain 1 Void Potential per 7,200 s of continuous operation. <BR>Gain 1 Void Potential per 1G essentia consumed. <BR>Gain 1 Void Potential per 900 s of operation with all six phases perfectly balanced.
 tc.research_name.OTH_VOID_NEXUS_7=Soul Moon Nest
-tc.research_page.OTH_VOID_NEXUS_7.description=The Void is not empty.<BR>After we established the first stable link, we picked up an unusual energy fluctuation.<BR>It had a distinct rhythm, as though some distant celestial body were breathing.<BR>More surprisingly, the signal carried a wealth of information about souls, memory, and perception.<BR>We tried to model its rhythm and built a structure capable of holding the fluctuation.<BR>We call it the Soul Moon Nest.<BR>Perhaps the Void has a moon of its own somewhere in its depths.
-tc.research_page.OTH_VOID_NEXUS_7.effect=Doubles the heat values of the Time, Soul, and Stars aspects.<BR>Increases power output by 10%.
+tc.research_page.OTH_VOID_NEXUS_7.description=The Void is not empty. <BR>After we established the first stable link, we picked up an unusual energy fluctuation. <BR>It had a distinct rhythm, as though some distant celestial body were breathing. <BR>More surprisingly, the signal carried a wealth of information about souls, memory, and perception. <BR>We tried to model its rhythm and built a structure capable of holding the fluctuation. <BR>We call it the Soul Moon Nest. <BR>Perhaps the Void has a moon of its own somewhere in its depths.
+tc.research_page.OTH_VOID_NEXUS_7.effect=Doubles the heat values of the Time, Soul, and Stars aspects. <BR>Increases power output by 10%.
 tc.research_name.OTH_VOID_NEXUS_8=Hungry Implement
-tc.research_page.OTH_VOID_NEXUS_8.description=Tools are an extension of civilization.<BR>From the first stone implements to industrial machines that can alter the structure of matter, we have always tried to impart our will to our tools.<BR>The Void seems able to sense that will.<BR>In one experiment, an ordinary tool produced a reaction far stronger than its materials alone could account for.<BR>We began to suspect that a tool's power comes not from the way it is built,<BR>but from how badly its wielder wants to use it.<BR>If we can harness that power, the machine itself may be able to surpass the limits of the tools we use.
-tc.research_page.OTH_VOID_NEXUS_8.effect=Doubles the heat values of the Tool, Craft, and Mechanism aspects.<BR>Increases the matrix's power output by 10%.
+tc.research_page.OTH_VOID_NEXUS_8.description=Tools are an extension of civilization. <BR>From the first stone implements to industrial machines that can alter the structure of matter, we have always tried to impart our will to our tools. <BR>The Void seems able to sense that will. <BR>In one experiment, an ordinary tool produced a reaction far stronger than its materials alone could account for. <BR>We began to suspect that a tool's power comes not from the way it is built, <BR>but from how badly its wielder wants to use it. <BR>If we can harness that power, the machine itself may be able to surpass the limits of the tools we use.
+tc.research_page.OTH_VOID_NEXUS_8.effect=Doubles the heat values of the Tool, Craft, and Mechanism aspects. <BR>Increases the matrix's power output by 10%.
 tc.research_name.OTH_VOID_NEXUS_9=Life Weave
-tc.research_page.OTH_VOID_NEXUS_9.description=Life is an unusual phenomenon.<BR>It is neither a mere collection of matter nor an arrangement of energy that can easily be copied.<BR>From the earliest cells to complex ecosystems, life seems to follow a hidden pattern.<BR>In the Void, we found traces of that pattern.<BR>They resemble countless fine threads, woven together into a whole we can scarcely comprehend.<BR>We have begun to weave these threads into the matrix.<BR>A new possibility is taking shape.
-tc.research_page.OTH_VOID_NEXUS_9.effect=Doubles the heat values of the Life, Mind, and Death aspects.<BR>Increases the matrix's power output by 10%.
+tc.research_page.OTH_VOID_NEXUS_9.description=Life is an unusual phenomenon. <BR>It is neither a mere collection of matter nor an arrangement of energy that can easily be copied. <BR>From the earliest cells to complex ecosystems, life seems to follow a hidden pattern. <BR>In the Void, we found traces of that pattern. <BR>They resemble countless fine threads, woven together into a whole we can scarcely comprehend. <BR>We have begun to weave these threads into the matrix. <BR>A new possibility is taking shape.
+tc.research_page.OTH_VOID_NEXUS_9.effect=Doubles the heat values of the Life, Mind, and Death aspects. <BR>Increases the matrix's power output by 10%.
 tc.research_name.OTH_VOID_NEXUS_10=World Devourer
-tc.research_page.OTH_VOID_NEXUS_10.description=We discovered an ancient energy reaction in the Void.<BR>It has no distinct form and no fixed boundary.<BR>It does nothing but devour everything around it and assimilate whatever it consumes.<BR>No one knows whether it is conscious.<BR>Yet it seems to sense our presence.<BR>We tried to imitate its behavior and put it to work in the matrix.<BR>It was an extraordinarily dangerous experiment.
-tc.research_page.OTH_VOID_NEXUS_10.effect=Doubles the heat values of the Gluttony, Pride, and Taint aspects.<BR>Increases the matrix's power output by 10%.
+tc.research_page.OTH_VOID_NEXUS_10.description=We discovered an ancient energy reaction in the Void. <BR>It has no distinct form and no fixed boundary. <BR>It does nothing but devour everything around it and assimilate whatever it consumes. <BR>No one knows whether it is conscious. <BR>Yet it seems to sense our presence. <BR>We tried to imitate its behavior and put it to work in the matrix. <BR>It was an extraordinarily dangerous experiment.
+tc.research_page.OTH_VOID_NEXUS_10.effect=Doubles the heat values of the Gluttony, Pride, and Taint aspects. <BR>Increases the matrix's power output by 10%.
 tc.research_name.OTH_VOID_NEXUS_11=Psionic Harmony
-tc.research_page.OTH_VOID_NEXUS_11.description=In earlier experiments, we tried to make every kind of energy obey the same rules.<BR>But the Soul Moon Nest, Hungry Implement, Life Weave, and World Devourer behave in very different ways.<BR>They defy easy classification, and we cannot force them to behave alike.<BR>The real problem was that we had always treated their differences as obstacles.<BR>But if these forces can coexist, can we make them work in harmony?<BR>We finally realized it wasn't the Void that needed to change.<BR>It was the way we understood it.
-tc.research_page.OTH_VOID_NEXUS_11.effect=Phase multiplier: B = 2 - D.<BR>Increases aspect combustion efficiency by 50%.<BR>Increases the matrix's power output by 25%.<BR>Every 3,600 s of operation, there is a 75% chance that nearby players gain 1 normal Warp.<BR>Unlocks the Psionic Manifestation Module.<BR>The Psionic Manifestation Module can produce Manifested Psionics from 1 Shijima Ingot in 1,800 s at UIV voltage.<BR>Supply a Psionic Stabilizer to the matrix itself to double EU output per round.
+tc.research_page.OTH_VOID_NEXUS_11.description=In earlier experiments, we tried to make every kind of energy obey the same rules. <BR>But the Soul Moon Nest, Hungry Implement, Life Weave, and World Devourer behave in very different ways. <BR>They defy easy classification, and we cannot force them to behave alike. <BR>The real problem was that we had always treated their differences as obstacles. <BR>But if these forces can coexist, can we make them work in harmony?<BR>We finally realized it wasn't the Void that needed to change. <BR>It was the way we understood it.
+tc.research_page.OTH_VOID_NEXUS_11.effect=Phase multiplier: B = 2 - D. <BR>Increases aspect combustion efficiency by 50%. <BR>Increases the matrix's power output by 25%. <BR>Every 3,600 s of operation, there is a 75% chance that nearby players gain 1 normal Warp. <BR>Unlocks the Psionic Manifestation Module. <BR>The Psionic Manifestation Module can produce Manifested Psionics from 1 Shijima Ingot in 1,800 s at UIV voltage. <BR>Supply a Psionic Stabilizer to the matrix itself to double EU output per round.
 tc.research_name.OTH_VOID_NEXUS_12=Moon Nest Contract
-tc.research_page.OTH_VOID_NEXUS_12.description=The Soul Moon Nest is not easily tamed.<BR>The power it carries comes from something beyond matter.<BR>We cannot control it directly, but we can try to form a bond with it.<BR>Once the contract is sealed, our relationship will be about more than supplying and drawing power.<BR>We give it a place to dwell.<BR>In return, it lets us reach deeper into the realm of souls and stars.
-tc.research_page.OTH_VOID_NEXUS_12.effect=Increases the matrix's power output by 15%.<BR>Allows Molten Infinity to be fed into the Psionic Manifestation Module for overclocking.<BR>Each overclock consumes 1,440 mL.
+tc.research_page.OTH_VOID_NEXUS_12.description=The Soul Moon Nest is not easily tamed. <BR>The power it carries comes from something beyond matter. <BR>We cannot control it directly, but we can try to form a bond with it. <BR>Once the contract is sealed, our relationship will be about more than supplying and drawing power. <BR>We give it a place to dwell. <BR>In return, it lets us reach deeper into the realm of souls and stars.
+tc.research_page.OTH_VOID_NEXUS_12.effect=Increases the matrix's power output by 15%. <BR>Allows Molten Infinity to be fed into the Psionic Manifestation Module for overclocking. <BR>Each overclock consumes 1,440 mL.
 tc.research_name.OTH_VOID_NEXUS_13=Implement Contract
-tc.research_page.OTH_VOID_NEXUS_13.description=A tool does not understand its own purpose.<BR>Yet over years of use, it takes on something of its wielder's will.<BR>We finally found a way to preserve that will and use it to reinforce the matrix.<BR>Once the contract is sealed, the machine will no longer rely on external tools to maintain its structure.<BR>It can become a tool in its own right.<BR>A tool that can generate power, transmit it, and keep improving itself.
-tc.research_page.OTH_VOID_NEXUS_13.effect=Increases the matrix's power output by 15%.<BR>The Psionic Manifestation Module gains parallels equal to the host matrix's power output divided by (max × 100), rounded down, plus 4 additional parallels.
+tc.research_page.OTH_VOID_NEXUS_13.description=A tool does not understand its own purpose. <BR>Yet over years of use, it takes on something of its wielder's will. <BR>We finally found a way to preserve that will and use it to reinforce the matrix. <BR>Once the contract is sealed, the machine will no longer rely on external tools to maintain its structure. <BR>It can become a tool in its own right. <BR>A tool that can generate power, transmit it, and keep improving itself.
+tc.research_page.OTH_VOID_NEXUS_13.effect=Increases the matrix's power output by 15%. <BR>The Psionic Manifestation Module gains parallels equal to the host matrix's power output divided by (max × 100), rounded down, plus 4 additional parallels.
 tc.research_name.OTH_VOID_NEXUS_14=Life Weave Contract
-tc.research_page.OTH_VOID_NEXUS_14.description=Life has never been a matter of simply existing.<BR>It grows, changes, and rebuilds itself through countless cycles.<BR>We finally understand what the Life Weave is for.<BR>It does not seek to create life.<BR>It gives what already exists a way to endure.
-tc.research_page.OTH_VOID_NEXUS_14.effect=Increases the matrix's power output by 15%.<BR>Install Nanites of different tiers in the Psionic Manifestation Module controller for a 20% speed boost per tier.
+tc.research_page.OTH_VOID_NEXUS_14.description=Life has never been a matter of simply existing. <BR>It grows, changes, and rebuilds itself through countless cycles. <BR>We finally understand what the Life Weave is for. <BR>It does not seek to create life. <BR>It gives what already exists a way to endure.
+tc.research_page.OTH_VOID_NEXUS_14.effect=Increases the matrix's power output by 15%. <BR>Install Nanites of different tiers in the Psionic Manifestation Module controller for a 20% speed boost per tier.
 tc.research_name.OTH_VOID_NEXUS_15=Devourer Contract
-tc.research_page.OTH_VOID_NEXUS_15.description=We no longer try to control the World Devourer.<BR>Rather than making it part of the Matrix, we will make the Matrix part of it.<BR>Once the contract is complete, the Devourer will no longer be merely a passive energy conversion module.<BR>It will seek out usable energy on its own and turn it into new power.<BR>All we have to do is make sure it still remembers where it belongs.
+tc.research_page.OTH_VOID_NEXUS_15.description=We no longer try to control the World Devourer. <BR>Rather than making it part of the Matrix, we will make the Matrix part of it. <BR>Once the contract is complete, the Devourer will no longer be merely a passive energy conversion module. <BR>It will seek out usable energy on its own and turn it into new power. <BR>All we have to do is make sure it still remembers where it belongs.
 tc.research_page.OTH_VOID_NEXUS_15.effect=Increases the machine's power output by 15%<BR>Unlocks three additional Psionic Manifestation Modules
 tc.research_name.OTH_VOID_NEXUS_16=Enter the Void
-tc.research_page.OTH_VOID_NEXUS_16.description=We can now establish a stable connection to the Void.<BR>But contact has always been one-sided.<BR>We can observe it and draw on its power, yet we cannot truly understand it.<BR>We have begun experimenting with a different way to connect.<BR>Instead of continuing to send signals from our world into the Void,<BR>we will send part of the Matrix into the Void itself.<BR>The machine will no longer fully obey the spatial laws of our world.<BR>We do not know what lies on the other side.<BR>But we are ready.
+tc.research_page.OTH_VOID_NEXUS_16.description=We can now establish a stable connection to the Void. <BR>But contact has always been one-sided. <BR>We can observe it and draw on its power, yet we cannot truly understand it. <BR>We have begun experimenting with a different way to connect. <BR>Instead of continuing to send signals from our world into the Void, <BR>we will send part of the Matrix into the Void itself. <BR>The machine will no longer fully obey the spatial laws of our world. <BR>We do not know what lies on the other side. <BR>But we are ready.
 tc.research_page.OTH_VOID_NEXUS_16.effect=Unlocks wireless energy mode<BR>Supplying Manifested Psionics multiplies EU output per round by 2.5<BR>For every 60 s of operation, there is a 100% chance that nearby players gain 1 permanent Warp
 tc.research_name.OTH_VOID_NEXUS_17=Earth Shaper
-tc.research_page.OTH_VOID_NEXUS_17.description=Matter is the most tangible expression of the world.<BR>Rock, metal, and even the tiny particles that make up everything seem to follow a common set of rules.<BR>In the Void, we found those rules expressed in a different way.<BR>Matter there does not always take a fixed form.<BR>By studying this phenomenon, we have learned to alter the composition of matter to a limited degree.<BR>If we can understand the force that shapes the world, perhaps we will no longer be bound by the forms matter already takes.
+tc.research_page.OTH_VOID_NEXUS_17.description=Matter is the most tangible expression of the world. <BR>Rock, metal, and even the tiny particles that make up everything seem to follow a common set of rules. <BR>In the Void, we found those rules expressed in a different way. <BR>Matter there does not always take a fixed form. <BR>By studying this phenomenon, we have learned to alter the composition of matter to a limited degree. <BR>If we can understand the force that shapes the world, perhaps we will no longer be bound by the forms matter already takes.
 tc.research_page.OTH_VOID_NEXUS_17.effect=Increases EU output by 20%<BR>Unlocks item input mode<BR>In this mode:<BR>EU output is reduced by 80%<BR>Aspect combustion efficiency is reduced by 80%<BR>Items can be fed directly into the machine instead of essentia
 tc.research_name.OTH_VOID_NEXUS_18=Outer Plane Guest
-tc.research_page.OTH_VOID_NEXUS_18.description=We have finally confirmed that the Void is not a single space.<BR>It contains many distinct regions.<BR>Each has its own spatial properties and laws of energy, and they may even operate on entirely different timescales.<BR>In those regions, we found traces of entities we could not classify.<BR>They seem never to have belonged to any known plane, yet they can move freely between them.<BR>We tried to trace their movements.<BR>Then, during one experiment, the Matrix received a reply from beyond our own coordinates.
+tc.research_page.OTH_VOID_NEXUS_18.description=We have finally confirmed that the Void is not a single space. <BR>It contains many distinct regions. <BR>Each has its own spatial properties and laws of energy, and they may even operate on entirely different timescales. <BR>In those regions, we found traces of entities we could not classify. <BR>They seem never to have belonged to any known plane, yet they can move freely between them. <BR>We tried to trace their movements. <BR>Then, during one experiment, the Matrix received a reply from beyond our own coordinates.
 tc.research_page.OTH_VOID_NEXUS_18.effect=Increases EU output by 20%<BR>For Void Potential points 1-20, each point adds 5% to EU output and 5% to Psionic Manifestation Module speed (additive)<BR>Points 21-100 add 1% each<BR>Points above 100 add 0.2% each
 tc.research_name.OTH_VOID_NEXUS_19=Golden Dream
-tc.research_page.OTH_VOID_NEXUS_19.description=Gold has not always meant wealth.<BR>In the history of some civilizations, it stood for eternity, glory, and undying power.<BR>Deep in the Void, we discovered an unusual energy phenomenon.<BR>It links the value of matter and the memories of civilizations to a concept we can barely explain.<BR>We cannot say whether it truly has anything to do with wealth.<BR>But it does let otherwise ordinary matter release far more energy than expected.<BR>We call this phenomenon the Golden Dream.
+tc.research_page.OTH_VOID_NEXUS_19.description=Gold has not always meant wealth. <BR>In the history of some civilizations, it stood for eternity, glory, and undying power. <BR>Deep in the Void, we discovered an unusual energy phenomenon. <BR>It links the value of matter and the memories of civilizations to a concept we can barely explain. <BR>We cannot say whether it truly has anything to do with wealth. <BR>But it does let otherwise ordinary matter release far more energy than expected. <BR>We call this phenomenon the Golden Dream.
 tc.research_page.OTH_VOID_NEXUS_19.effect=Increases EU output by 20%<BR>Multiplies the Terminus aspect's heat value by 4<BR>Raises the cap on the Gloria aspect's additional bonus to 2 times its original value
 tc.research_name.OTH_VOID_NEXUS_20=Endless Tide
-tc.research_page.OTH_VOID_NEXUS_20.description=Tides are an ancient force.<BR>They move oceans, redraw the edges of continents, and shape the lives of countless creatures.<BR>In the Void, this force seems unbound by space or distance.<BR>Energy flows, gathers, and disperses toward places unknown.<BR>We tried to harness this current to draw energy from the Void into the Matrix.<BR>The experiment succeeded.<BR>The energy never stops.<BR>It simply flows onward.
+tc.research_page.OTH_VOID_NEXUS_20.description=Tides are an ancient force. <BR>They move oceans, redraw the edges of continents, and shape the lives of countless creatures. <BR>In the Void, this force seems unbound by space or distance. <BR>Energy flows, gathers, and disperses toward places unknown. <BR>We tried to harness this current to draw energy from the Void into the Matrix. <BR>The experiment succeeded. <BR>The energy never stops. <BR>It simply flows onward.
 tc.research_page.OTH_VOID_NEXUS_20.effect=Increases EU output by 20%<BR>Supply Molten Spacetime to overclock the Psionic Manifestation Module<BR>Each 1440 mL provides one overclock round
 tc.research_name.OTH_VOID_NEXUS_21=Vast Mountain
-tc.research_page.OTH_VOID_NEXUS_21.description=Mountain ranges are the world's oldest witnesses.<BR>Over the ages, they have endured countless changes and yet retained their shape.<BR>We found something similar in the Void.<BR>Some spatial structures there are almost impossibly stable.<BR>They are not immune to outside influences. They take every change into themselves.<BR>If the Matrix could do the same, we would no longer have to worry about what the Void's power might do to the fabric of reality.
+tc.research_page.OTH_VOID_NEXUS_21.description=Mountain ranges are the world's oldest witnesses. <BR>Over the ages, they have endured countless changes and yet retained their shape. <BR>We found something similar in the Void. <BR>Some spatial structures there are almost impossibly stable. <BR>They are not immune to outside influences. They take every change into themselves. <BR>If the Matrix could do the same, we would no longer have to worry about what the Void's power might do to the fabric of reality.
 tc.research_page.OTH_VOID_NEXUS_21.effect=Increases EU output by 20%<BR>The machine no longer inflicts Warp on nearby players while running
 tc.research_name.OTH_VOID_NEXUS_22=Hollow Point
-tc.research_page.OTH_VOID_NEXUS_22.description=A hollow is not the same as nothingness.<BR>Under extreme spatial conditions, matter and energy can be compressed into states we scarcely understand.<BR>We found that shrinking a spatial structure in the Void into a small enough region yields an astonishing energy density.<BR>This is not compression in the usual sense.<BR>It is more like squeezing an entire world into a point that cannot be observed.
+tc.research_page.OTH_VOID_NEXUS_22.description=A hollow is not the same as nothingness. <BR>Under extreme spatial conditions, matter and energy can be compressed into states we scarcely understand. <BR>We found that shrinking a spatial structure in the Void into a small enough region yields an astonishing energy density. <BR>This is not compression in the usual sense. <BR>It is more like squeezing an entire world into a point that cannot be observed.
 tc.research_page.OTH_VOID_NEXUS_22.effect=Increases EU output by 20%<BR>After every three rounds of operation, the next round's EU output increases by 400%; the cycle then repeats
 tc.research_name.OTH_VOID_NEXUS_23=Empty Throne
-tc.research_page.OTH_VOID_NEXUS_23.description=A throne does not necessarily need a ruler.<BR>Once all the rules are in place and every command can carry itself out, the throne is only a symbol.<BR>We found structures in the Void that keep running without any outside intervention.<BR>They seem to need neither awareness nor anyone to direct them.<BR>The rules themselves govern them.<BR>We decided to bring such a structure into the Matrix.
+tc.research_page.OTH_VOID_NEXUS_23.description=A throne does not necessarily need a ruler. <BR>Once all the rules are in place and every command can carry itself out, the throne is only a symbol. <BR>We found structures in the Void that keep running without any outside intervention. <BR>They seem to need neither awareness nor anyone to direct them. <BR>The rules themselves govern them. <BR>We decided to bring such a structure into the Matrix.
 tc.research_page.OTH_VOID_NEXUS_23.effect=Increases EU output by 20%<BR>The machine supplies 1 A of MAX per tick to the wireless grid even without aspect input
 tc.research_name.OTH_VOID_NEXUS_24=Dark River
-tc.research_page.OTH_VOID_NEXUS_24.description=In the deepest reaches of the Void runs a river no one can observe.<BR>It has no beginning and no end.<BR>Everything that flows into it gradually loses its original form.<BR>We tried to trace it to its source, only to find that the river does not actually exist in space.<BR>It is more like a process that never stops.<BR>Entropy, corruption, decay, and every irretrievable loss all seem to flow in the same direction.<BR>If we can harness that current, perhaps wasted energy need not be lost after all.
+tc.research_page.OTH_VOID_NEXUS_24.description=In the deepest reaches of the Void runs a river no one can observe. <BR>It has no beginning and no end. <BR>Everything that flows into it gradually loses its original form. <BR>We tried to trace it to its source, only to find that the river does not actually exist in space. <BR>It is more like a process that never stops. <BR>Entropy, corruption, decay, and every irretrievable loss all seem to flow in the same direction. <BR>If we can harness that current, perhaps wasted energy need not be lost after all.
 tc.research_page.OTH_VOID_NEXUS_24.effect=Increases EU output by 50%<BR>Every 360 s of continuous operation permanently increases Psionic Manifestation Module speed by 1%, up to 1000% of its original speed
 tc.research_name.OTH_VOID_NEXUS_25=Reforge the Void
-tc.research_page.OTH_VOID_NEXUS_25.description=We have explored several regions of the Void.<BR>We have seen matter shaped, space folded, and energy flow under different laws.<BR>It has gradually become clear that the Void is not a wholly separate world.<BR>It is more like a place where all possibilities converge.<BR>It has no fixed boundaries and need not obey any absolute rule.<BR>So why shouldn't we change it?<BR>We are no longer content merely to explore.<BR>We will try to shape the Void ourselves.
+tc.research_page.OTH_VOID_NEXUS_25.description=We have explored several regions of the Void. <BR>We have seen matter shaped, space folded, and energy flow under different laws. <BR>It has gradually become clear that the Void is not a wholly separate world. <BR>It is more like a place where all possibilities converge. <BR>It has no fixed boundaries and need not obey any absolute rule. <BR>So why shouldn't we change it?<BR>We are no longer content merely to explore. <BR>We will try to shape the Void ourselves.
 tc.research_page.OTH_VOID_NEXUS_25.effect=Supply Universium, Molten Eternity, or Molten Magnetohydrodynamically Constrained Star Matter to the Psionic Manifestation Module. Each 28800 mL/14400 mL/5670 mL, respectively, provides one round of extreme overclocking (8/4)
 tc.research_name.OTH_VOID_NEXUS_26=Whisper of Void
-tc.research_page.OTH_VOID_NEXUS_26.description=After we reshaped the Void, we began to hear something.<BR>It came from no known life form and carried no message we could readily understand.<BR>It seemed as though something was answering us.<BR>At first, all we could record were erratic fluctuations in energy.<BR>As we studied them, we found that the fluctuations seemed to carry a warning.<BR>They foreshadowed changes about to take place in the Void.<BR>We do not know who is whispering.<BR>But we have learned to listen.
+tc.research_page.OTH_VOID_NEXUS_26.description=After we reshaped the Void, we began to hear something. <BR>It came from no known life form and carried no message we could readily understand. <BR>It seemed as though something was answering us. <BR>At first, all we could record were erratic fluctuations in energy. <BR>As we studied them, we found that the fluctuations seemed to carry a warning. <BR>They foreshadowed changes about to take place in the Void. <BR>We do not know who is whispering. <BR>But we have learned to listen.
 tc.research_page.OTH_VOID_NEXUS_26.effect=Insert a Stargate Core Crystal into the host machine. The EU output bonus rises by 14% every 1145 s of operation, up to 1919810%. For every 10 s the machine is idle, the bonus drops by 1000%, down to 0. Removing the Stargate Core Crystal immediately clears the entire bonus
 tc.research_name.OTH_VOID_NEXUS_27=End of Reincarnation
-tc.research_page.OTH_VOID_NEXUS_27.description=Time is not a simple straight line.<BR>In the Void, we found that certain events recur in exactly the same form.<BR>These repetitions are not coincidences or replays of something recorded.<BR>It is more as though the world itself keeps returning to the same state.<BR>We tried to bring this phenomenon into the Matrix.<BR>If an energy conversion can be recorded, can it happen again?<BR>If a process can be repeated, must we pay the same price each time?<BR>We are close to an answer.
-tc.research_page.OTH_VOID_NEXUS_27.effect=Allows the machine to burn Astral Array Fabricators.<BR>An Astral Array Fabricator is consumed alongside the aspects, forcing the round to last 3600 s and counting it as six-phase balanced regardless of how many aspects are supplied. Void Potential output for the round is multiplied by 4, and energy output is multiplied by 36000%.
+tc.research_page.OTH_VOID_NEXUS_27.description=Time is not a simple straight line. <BR>In the Void, we found that certain events recur in exactly the same form. <BR>These repetitions are not coincidences or replays of something recorded. <BR>It is more as though the world itself keeps returning to the same state. <BR>We tried to bring this phenomenon into the Matrix. <BR>If an energy conversion can be recorded, can it happen again?<BR>If a process can be repeated, must we pay the same price each time?<BR>We are close to an answer.
+tc.research_page.OTH_VOID_NEXUS_27.effect=Allows the machine to burn Astral Array Fabricators. <BR>An Astral Array Fabricator is consumed alongside the aspects, forcing the round to last 3600 s and counting it as six-phase balanced regardless of how many aspects are supplied. Void Potential output for the round is multiplied by 4, and energy output is multiplied by 36000%.
 tc.research_name.OTH_VOID_NEXUS_28=Find One's Own Path
-tc.research_page.OTH_VOID_NEXUS_28.description=We have mastered the laws of the Void.<BR>We can shape matter, cross space, manipulate energy, and even influence time to a degree.<BR>But all our research rests on a single premise.<BR>The Matrix must depend on the Void.<BR>It requires a connection, inputs, maintenance, and a steady supply of energy from outside.<BR>We began to ask ourselves a question.<BR>If the Void ever stops answering us, can the Matrix keep running?<BR>We tried removing every external command.<BR>We removed the preset connections.<BR>We removed its dependence on existing rules.<BR>In the end, we found a new possibility.<BR>The Matrix no longer needs to find a path into the Void.<BR>It can find its own way out.
+tc.research_page.OTH_VOID_NEXUS_28.description=We have mastered the laws of the Void. <BR>We can shape matter, cross space, manipulate energy, and even influence time to a degree. <BR>But all our research rests on a single premise. <BR>The Matrix must depend on the Void. <BR>It requires a connection, inputs, maintenance, and a steady supply of energy from outside. <BR>We began to ask ourselves a question. <BR>If the Void ever stops answering us, can the Matrix keep running?<BR>We tried removing every external command. <BR>We removed the preset connections. <BR>We removed its dependence on existing rules. <BR>In the end, we found a new possibility. <BR>The Matrix no longer needs to find a path into the Void. <BR>It can find its own way out.
 tc.research_page.OTH_VOID_NEXUS_28.effect=Allows Void Potential to be withdrawn and deposited<BR>Unlocks advanced recipes for producing Manifested Psionics
 
 ote.tn.essentia_generator=Large Essentia Generator

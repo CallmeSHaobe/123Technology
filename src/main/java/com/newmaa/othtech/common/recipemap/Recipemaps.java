@@ -1,5 +1,6 @@
 package com.newmaa.othtech.common.recipemap;
 
+import java.util.Collections;
 import java.util.Comparator;
 
 import net.minecraft.item.ItemStack;
@@ -26,6 +27,7 @@ import gregtech.api.recipe.maps.AssemblyLineFrontend;
 import gregtech.api.recipe.maps.FluidOnlyFrontend;
 import gregtech.api.recipe.maps.FuelBackend;
 import gregtech.api.recipe.maps.QuantumComputerFrontend;
+import gregtech.api.util.GTRecipeBuilder;
 import gregtech.nei.formatter.HeatingCoilSpecialValueFormatter;
 import gregtech.nei.formatter.SimpleSpecialValueFormatter;
 
@@ -243,7 +245,13 @@ public class Recipemaps {
         .build();
     public static final RecipeMap<OTH_RecipeMapBackend> NASA = RecipeMapBuilder
         .of("otht.recipe.nasa", OTH_RecipeMapBackend::new)
-        .maxIO(70, 1, 7, 3)
+        .maxIO(OTH_GeneralFrontendFireRocket.MAX_ITEM_INPUTS, 1, OTH_GeneralFrontendFireRocket.MAX_FLUID_INPUTS, 0)
+        .recipeEmitter(builder -> {
+            GTRecipeBuilder copy = builder.copy();
+            return (copy.getItemInputsOreDict() == null ? copy.build() : copy.buildWithAlt())
+                .map(Collections::singletonList)
+                .orElseGet(Collections::emptyList);
+        })
         .useSpecialSlot()
         .dontUseProgressBar()
         .frontend(OTH_GeneralFrontendFireRocket::new)

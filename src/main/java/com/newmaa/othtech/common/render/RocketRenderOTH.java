@@ -35,6 +35,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class RocketRenderOTH extends TileEntitySpecialRenderer {
 
+    private static final float MODEL_SCALE = 3F;
+
     private final RenderBlocks itemBlocks = new RenderBlocks();
     private final Random itemRandom = new Random();
     private EntityItem renderItem;
@@ -91,8 +93,14 @@ public class RocketRenderOTH extends TileEntitySpecialRenderer {
             renderItem.setPosition(display.xCoord + 0.5, display.yCoord + 0.5, display.zCoord + 0.5);
             renderItem.setEntityItemStack(stack);
             itemRandom.setSeed(187L);
-            if (ForgeHooksClient.renderEntityItem(renderItem, stack, 0F, 0F, itemRandom, textures, itemBlocks, 1))
-                return;
+            GL11.glPushMatrix();
+            try {
+                GL11.glScalef(MODEL_SCALE, MODEL_SCALE, MODEL_SCALE);
+                if (ForgeHooksClient.renderEntityItem(renderItem, stack, 0F, 0F, itemRandom, textures, itemBlocks, 1))
+                    return;
+            } finally {
+                GL11.glPopMatrix();
+            }
         }
 
         Block block = stack.getItem() instanceof ItemBlock ? Block.getBlockFromItem(stack.getItem()) : null;
@@ -101,7 +109,8 @@ public class RocketRenderOTH extends TileEntitySpecialRenderer {
             GL11.glPushMatrix();
             try {
                 GL11.glRotatef(90F, 1F, 0F, 0F);
-                GL11.glScalef(1F / 16F, 1F / 16F, 1F / 16F);
+                float scale = MODEL_SCALE / 16F;
+                GL11.glScalef(scale, scale, scale);
                 if (ForgeHooksClient.renderInventoryItem(itemBlocks, textures, stack, true, 3F, -8F, -8F)) return;
             } finally {
                 GL11.glPopMatrix();
@@ -109,7 +118,8 @@ public class RocketRenderOTH extends TileEntitySpecialRenderer {
         }
         if (block != null && RenderBlocks.renderItemIn3d(block.getRenderType())) {
             textures.bindTexture(TextureMap.locationBlocksTexture);
-            GL11.glScalef(0.8F, 0.8F, 0.8F);
+            float scale = 0.8F * MODEL_SCALE;
+            GL11.glScalef(scale, scale, scale);
             if (block.getRenderBlockPass() > 0) {
                 GL11.glEnable(GL11.GL_BLEND);
                 OpenGlHelper.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);

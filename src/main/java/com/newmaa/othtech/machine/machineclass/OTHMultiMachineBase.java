@@ -38,6 +38,7 @@ import com.gtnewhorizons.modularui.api.widget.Widget;
 import com.gtnewhorizons.modularui.common.widget.ButtonWidget;
 import com.gtnewhorizons.modularui.common.widget.FakeSyncWidget;
 import com.newmaa.othtech.Config;
+import com.newmaa.othtech.machine.gui.OTHMultiMachineGui;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
@@ -60,6 +61,7 @@ import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.threads.RunnableSound;
 import gregtech.api.util.GTUtility;
 import gregtech.client.GTSoundLoop;
+import gregtech.common.gui.modularui.multiblock.base.MTEMultiBlockBaseGui;
 import gregtech.common.tileentities.machines.IDualInputHatch;
 import gregtech.common.tileentities.machines.IDualInputInventory;
 import gregtech.common.tileentities.machines.MTEHatchInputBusME;
@@ -80,6 +82,11 @@ public abstract class OTHMultiMachineBase<T extends OTHMultiMachineBase<T>> exte
     }
 
     // endregion
+
+    @Override
+    protected MTEMultiBlockBaseGui<?> getGui() {
+        return new OTHMultiMachineGui<>(this);
+    }
 
     // region new methods
     public void repairMachine() {

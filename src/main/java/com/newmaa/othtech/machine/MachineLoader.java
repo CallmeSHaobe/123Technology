@@ -9,6 +9,7 @@ import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.machine.hatch.OTEDeepSeikoNaniteCell;
 import com.newmaa.othtech.machine.hatch.OTEEssentiaStockingInputBusME;
 import com.newmaa.othtech.machine.hatch.OTEHatchRack;
+import com.newmaa.othtech.machine.hatch.OTERocketSchematicHatch;
 import com.newmaa.othtech.machine.hatch.OTEWTFHatch;
 import com.newmaa.othtech.machine.single.OTESpeakingStone;
 import com.newmaa.othtech.utils.AuthorAnimation;
@@ -202,6 +203,11 @@ public class MachineLoader {
         OTEHatchRack.run();
         OTHItemList.NASA
             .set(new OTEFireRocketAssembler(IDs + 62, "FireRocketAssembler", translateToLocal("ote.tn.nasa"))); // 模型错位,已无言
+        OTHItemList.RocketSchematicHatch.set(
+            new OTERocketSchematicHatch(
+                IDs + 76,
+                "RocketSchematicHatch",
+                translateToLocal(OTERocketSchematicHatch.NAME_KEY)));
         OTHItemList.MegaThermalCentrifuge
             .set(new OTEMegaThermalCentrifuge(IDs + 64, "MegaThermalCentrifuge", translateToLocal("ote.tn.mtc")));
 

@@ -24,6 +24,7 @@ import com.gtnewhorizons.modularui.api.screen.ModularWindow;
 import com.gtnewhorizons.modularui.api.screen.UIBuildContext;
 import com.gtnewhorizons.modularui.common.widget.DrawableWidget;
 import com.gtnewhorizons.modularui.common.widget.FakeSyncWidget;
+import com.newmaa.othtech.machine.gui.OTHMultiMachineGui;
 
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.Textures;
@@ -50,6 +51,7 @@ import gregtech.api.util.GTUtility;
 import gregtech.api.util.HatchElementBuilder;
 import gregtech.api.util.IGTHatchAdder;
 import gregtech.api.util.shutdown.ShutDownReasonRegistry;
+import gregtech.common.gui.modularui.multiblock.base.MTEMultiBlockBaseGui;
 import gregtech.common.tileentities.machines.IDualInputHatch;
 import gregtech.common.tileentities.machines.IDualInputInventory;
 import gregtech.common.tileentities.machines.IDualInputInventoryWithPattern;
@@ -76,6 +78,11 @@ public abstract class OTHSteamMultiBase<T extends OTHSteamMultiBase<T>> extends 
     public OTHSteamMultiBase(int aID, String aName, String aNameRegional) {
         super(aID, aName, aNameRegional);
         this.overclockDescriber = createOverclockDescriber();
+    }
+
+    @Override
+    protected MTEMultiBlockBaseGui<?> getGui() {
+        return new OTHMultiMachineGui<>(this);
     }
 
     @Override

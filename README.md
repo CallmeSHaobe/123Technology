@@ -18,6 +18,8 @@
 
 千万记得更新lang文件 , 否则tooltip会有很大错误 .
 
+汉化lang仓库 : https://github.com/Kiwi233/Translation-of-GTNH .
+
 有关于123Technology的TT机器爆炸 , 可在配置文件内控制 .
 
 为规避mod命名导致的一些奇怪bug , mod的文件名通常是OTHTechnology .

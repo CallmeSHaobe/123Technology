@@ -48,6 +48,7 @@ import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
+import gregtech.api.util.GTRecipeBuilder;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.recipe.Scanning;
 import gregtech.common.items.CombType;
@@ -1655,11 +1656,41 @@ public class RecipesMain implements IRecipePool {
             .itemInputs(
                 GTUtility.getIntegratedCircuit(17),
                 ItemList.Hull_LV.get(1),
+                new ItemStack(Blocks.noteblock, 4),
                 ItemList.Sensor_LV.get(1),
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.LV, 1L))
             .itemOutputs(OTHItemList.SpeakingStone.get(1))
             .duration(5 * SECONDS)
             .eut(RECIPE_LV)
             .addTo(assemblerRecipes);
+        // NASA Hatch
+        // Schematic chip hatch: crafted in a standard assembler, not in the NASA workshop.
+        GTRecipeBuilder.builder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
+                ItemList.Hatch_Input_Bus_HV.get(1),
+                ItemList.Sensor_HV.get(1),
+                ItemList.Robot_Arm_HV.get(2),
+                Materials.StainlessSteel.getPlates(16))
+            .fluidInputs(Materials.SolderingAlloy.getMolten(2880))
+            .itemOutputs(OTHItemList.RocketSchematicHatch.get(1))
+            .duration(100)
+            .eut(TierEU.RECIPE_HV)
+            .addTo(RecipeMaps.assemblerRecipes);
+        // NASA
+        GTRecipeBuilder.builder()
+            .itemOutputs(OTHItemList.NASA.get(1))
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
+                GTModHandler.getModItem(GalacticraftCore.ID, "tile.rocketWorkbench", 1),
+                GTModHandler.getModItem(GalacticraftCore.ID, "item.basicItem", 64, 14),
+                GTModHandler.getModItem(GalaxySpace.ID, "item.RobotArm", 4),
+                ItemList.Machine_HV_Compressor.get(1),
+                ItemList.Machine_HV_Bender.get(1),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.IV, 8))
+            .fluidInputs(Materials.Titanium.getMolten(5760))
+            .duration(20 * SECONDS)
+            .eut(RECIPE_HV)
+            .addTo(Assem);
     }
 }

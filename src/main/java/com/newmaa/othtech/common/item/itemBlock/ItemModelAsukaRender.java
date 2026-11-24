@@ -45,9 +45,10 @@ public class ItemModelAsukaRender implements IItemRenderer {
     public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
         GL11.glPushMatrix();
         GL11.glScalef(0.8f, 0.8f, 0.8f);
-        GL11.glRotated(0, 1, 0, 0);
         GL11.glTranslatef(-0.2f, 0f, -0.4f);
-        GL11.glRotated(0, 1, 0, 0);
+        if (type == ItemRenderType.INVENTORY) {
+            GL11.glRotatef(180f, 0f, 1f, 0f);
+        }
         Minecraft.getMinecraft().renderEngine.bindTexture(Main);
         ModelAsuka.renderAll();
         GL11.glPopMatrix();

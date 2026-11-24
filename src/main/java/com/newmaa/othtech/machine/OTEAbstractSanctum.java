@@ -30,6 +30,7 @@ import java.util.stream.Stream;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -38,6 +39,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -68,8 +70,8 @@ import com.newmaa.othtech.utils.ShapeLoader;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import fox.spiteful.avaritia.items.LudicrousItems;
-import gregtech.api.enums.Textures;
 import gregtech.api.enums.VoltageIndex;
+import gregtech.api.interfaces.IIconContainer;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
@@ -1093,35 +1095,50 @@ public class OTEAbstractSanctum extends OTHMultiMachineBase<OTEAbstractSanctum> 
 
     // ===================== Textures =====================
 
+    // Casing meta 0 is opaque, although the shared casing block renders in the translucent pass for its glass variants.
+    // Use its atlas icon directly so the controller base and front overlays draw in the same pass, in layer order.
+    private static final ITexture CONTROLLER_CASING = TextureFactory.of(new IIconContainer() {
+
+        @Override
+        public IIcon getIcon() {
+            return NailongCasings.nailongCasing.getIcon(ForgeDirection.SOUTH.ordinal(), 0);
+        }
+
+        @Override
+        public IIcon getOverlayIcon() {
+            return null;
+        }
+
+        @Override
+        public ResourceLocation getTextureFile() {
+            return TextureMap.locationBlocksTexture;
+        }
+    });
+
     @Override
     public ITexture[] getTexture(IGregTechTileEntity baseMetaTileEntity, ForgeDirection sideDirection,
         ForgeDirection facing, int colorIndex, boolean active, boolean redstone) {
         if (sideDirection == facing) {
-            if (active) return new ITexture[] {
-                Textures.BlockIcons.getCasingTextureForId(NailongCasings.nailongCasing.getTextureIndex(0)),
-                TextureFactory.builder()
-                    .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_ACTIVE)
-                    .extFacing()
-                    .build(),
+            if (active) return new ITexture[] { CONTROLLER_CASING, TextureFactory.builder()
+                .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_ACTIVE)
+                .extFacing()
+                .build(),
                 TextureFactory.builder()
                     .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_ACTIVE_GLOW)
                     .extFacing()
                     .glow()
                     .build() };
-            return new ITexture[] {
-                Textures.BlockIcons.getCasingTextureForId(NailongCasings.nailongCasing.getTextureIndex(0)),
-                TextureFactory.builder()
-                    .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE)
-                    .extFacing()
-                    .build(),
+            return new ITexture[] { CONTROLLER_CASING, TextureFactory.builder()
+                .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE)
+                .extFacing()
+                .build(),
                 TextureFactory.builder()
                     .addIcon(OVERLAY_FRONT_ASSEMBLY_LINE_GLOW)
                     .extFacing()
                     .glow()
                     .build() };
         }
-        return new ITexture[] {
-            Textures.BlockIcons.getCasingTextureForId(NailongCasings.nailongCasing.getTextureIndex(0)) };
+        return new ITexture[] { CONTROLLER_CASING };
     }
 
     // ===================== Misc =====================

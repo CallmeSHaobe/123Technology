@@ -11,6 +11,7 @@ import com.newmaa.othtech.client.OTEEntangledFluidRenderer;
 import com.newmaa.othtech.client.OTEMaterialRenderEffects;
 import com.newmaa.othtech.client.OTEVoidNexusClientEffects;
 import com.newmaa.othtech.client.PoweredElytraSpeedHud;
+import com.newmaa.othtech.client.PoweredElytraTrail;
 import com.newmaa.othtech.client.SpeakingStoneClient;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.blocks.deepseiko.TEDeepSeikoHolo;
@@ -99,6 +100,9 @@ public class ClientProxy extends CommonProxy {
         SpeakingStoneClient.install();
         if (Loader.isModLoaded("etfuturum")) {
             MinecraftForge.EVENT_BUS.register(new PoweredElytraSpeedHud());
+            FMLCommonHandler.instance()
+                .bus()
+                .register(new PoweredElytraTrail());
         }
 
         ClientRegistry.bindTileEntitySpecialRenderer(TEDeepSeikoHolo.class, new RiceBowlRenderer());

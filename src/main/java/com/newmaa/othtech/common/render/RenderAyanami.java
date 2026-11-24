@@ -1,7 +1,5 @@
 package com.newmaa.othtech.common.render;
 
-import static mcp.mobius.waila.overlay.OverlayConfig.scale;
-
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
@@ -38,7 +36,6 @@ public class RenderAyanami extends TileEntitySpecialRenderer {
         } else if (orientation == 3) {
             GL11.glRotatef(180, 0, 0.2F, 0);
         }
-        GL11.glScalef(scale, scale, scale);
         GL11.glPushMatrix();
         model.renderAll();
         GL11.glPopMatrix();

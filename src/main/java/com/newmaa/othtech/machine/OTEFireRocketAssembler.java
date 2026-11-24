@@ -12,17 +12,21 @@ import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_ASSEMBLY_LINE
 import static gregtech.api.util.GTStructureUtility.buildHatchAdder;
 import static net.minecraft.util.StatCollector.translateToLocal;
 
+import java.util.Collections;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import org.jetbrains.annotations.NotNull;
 
+import com.dreammaster.item.NHItemList;
 import com.gtnewhorizon.structurelib.alignment.IAlignmentLimits;
 import com.gtnewhorizon.structurelib.alignment.constructable.IConstructable;
 import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructable;
@@ -33,11 +37,13 @@ import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.newmaa.othtech.common.blocks.oterender.OTERocketRender;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
+import com.newmaa.othtech.machine.hatch.OTERocketSchematicHatch;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 
 import gregtech.api.GregTechAPI;
 import gregtech.api.enums.SoundResource;
 import gregtech.api.enums.Textures;
+import gregtech.api.interfaces.IHatchElement;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
@@ -48,9 +54,12 @@ import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.recipe.check.SimpleCheckRecipeResult;
 import gregtech.api.render.TextureFactory;
 import gregtech.api.structure.error.StructureError;
+import gregtech.api.structure.error.StructureErrors;
 import gregtech.api.util.GTRecipe;
-import gregtech.api.util.GTUtility;
+import gregtech.api.util.IGTHatchAdder;
 import gregtech.api.util.MultiblockTooltipBuilder;
+import mcp.mobius.waila.api.IWailaConfigHandler;
+import mcp.mobius.waila.api.IWailaDataAccessor;
 
 public class OTEFireRocketAssembler extends OTHMultiMachineBase<OTEFireRocketAssembler>
     implements ISurvivalConstructable, IConstructable {
@@ -64,6 +73,33 @@ public class OTEFireRocketAssembler extends OTHMultiMachineBase<OTEFireRocketAss
     private static final int ROCKET_OFFSET_RIGHT = 20;
 
     private static final CheckRecipeResult NO_SCHEMATIC = SimpleCheckRecipeResult.ofFailure("ote_no_schematic");
+
+    private enum RocketHatchElement implements IHatchElement<OTEFireRocketAssembler> {
+
+        SCHEMATIC;
+
+        @Override
+        public List<Class<? extends IMetaTileEntity>> mteClasses() {
+            return Collections.singletonList(OTERocketSchematicHatch.class);
+        }
+
+        @Override
+        public IGTHatchAdder<OTEFireRocketAssembler> adder() {
+            return OTEFireRocketAssembler::addSchematicHatch;
+        }
+
+        @Override
+        public String getDisplayName() {
+            return translateToLocal(OTERocketSchematicHatch.NAME_KEY);
+        }
+
+        @Override
+        public long count(OTEFireRocketAssembler machine) {
+            return machine.mSchematicHatch == null ? 0 : 1;
+        }
+    }
+
+    private OTERocketSchematicHatch mSchematicHatch;
 
     private boolean mRocketPlaced;
 
@@ -119,7 +155,8 @@ public class OTEFireRocketAssembler extends OTHMultiMachineBase<OTEFireRocketAss
 
     @Override
     protected boolean isEnablePerfectOverclock() {
-        return true;
+        return mSchematicHatch != null && mSchematicHatch.isValid()
+            && mSchematicHatch.containsSchematic(NHItemList.SchematicsTier8.get(1));
     }
 
     public int getMaxParallelRecipes() {
@@ -190,6 +227,10 @@ public class OTEFireRocketAssembler extends OTHMultiMachineBase<OTEFireRocketAss
     @Override
     public void checkMachine(IGregTechTileEntity aBaseMetaTileEntity, ItemStack aStack, List<StructureError> errors) {
         if (!checkPiece(STRUCTURE_PIECE_MAIN, horizontalOffSet, verticalOffSet, depthOffSet, errors)) return;
+        if (mSchematicHatch == null) {
+            errors.add(StructureErrors.of("ote.nasa.missing_schematic_hatch"));
+            return;
+        }
         repairMachine();
     }
 
@@ -239,7 +280,13 @@ public class OTEFireRocketAssembler extends OTHMultiMachineBase<OTEFireRocketAss
                 .addElement(
                     'F',
                     buildHatchAdder(OTEFireRocketAssembler.class)
-                        .atLeast(OutputBus, InputBus, InputHatch, OutputHatch, Energy.or(ExoticEnergy))
+                        .atLeast(
+                            OutputBus,
+                            InputBus,
+                            InputHatch,
+                            OutputHatch,
+                            Energy.or(ExoticEnergy),
+                            RocketHatchElement.SCHEMATIC)
                         .adder(OTEFireRocketAssembler::addToMachineList)
                         .hint(1)
                         .casingIndex(210)
@@ -251,8 +298,25 @@ public class OTEFireRocketAssembler extends OTHMultiMachineBase<OTEFireRocketAss
 
     @Override
     public boolean addToMachineList(IGregTechTileEntity aTileEntity, int aBaseCasingIndex) {
-        return super.addToMachineList(aTileEntity, aBaseCasingIndex)
+        return addSchematicHatch(aTileEntity, aBaseCasingIndex) || super.addToMachineList(aTileEntity, aBaseCasingIndex)
             || addExoticEnergyInputToMachineList(aTileEntity, aBaseCasingIndex);
+    }
+
+    private boolean addSchematicHatch(IGregTechTileEntity tile, int casingIndex) {
+        IMetaTileEntity meta = tile.getMetaTileEntity();
+        if (!(meta instanceof OTERocketSchematicHatch)) return false;
+        OTERocketSchematicHatch hatch = (OTERocketSchematicHatch) meta;
+        if (mSchematicHatch != null) return mSchematicHatch == hatch;
+        hatch.updateTexture(casingIndex);
+        mSchematicHatch = hatch;
+        addIfSmartInput(hatch);
+        return true;
+    }
+
+    @Override
+    public void clearHatches() {
+        super.clearHatches();
+        mSchematicHatch = null;
     }
 
     // ===================== Tooltip =====================
@@ -260,13 +324,12 @@ public class OTEFireRocketAssembler extends OTHMultiMachineBase<OTEFireRocketAss
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
         final MultiblockTooltipBuilder tt = new MultiblockTooltipBuilder();
-        tt.addMachineType(EnumChatFormatting.DARK_RED + translateToLocal("ote.tm.nasa.0"))
+        tt.addMachineType(EnumChatFormatting.BLUE + translateToLocal("ote.tm.nasa.0"))
             .addInfo(EnumChatFormatting.ITALIC + translateToLocal("ote.tm.nasa.1"))
             .addInfo(EnumChatFormatting.ITALIC + translateToLocal("ote.tm.nasa.2"))
             .addInfo(EnumChatFormatting.ITALIC + translateToLocal("ote.tm.nasa.3"))
-            .addInfo(EnumChatFormatting.WHITE + translateToLocal("ote.tm.nasa.4"))
-            .addInfo(EnumChatFormatting.WHITE + translateToLocal("ote.tm.nasa.5"))
-            .addInfo(translateToLocal("ote.tm.nasa.6"))
+            .addInfo(EnumChatFormatting.ITALIC + translateToLocal("ote.tm.nasa.4"))
+            .addInfo(EnumChatFormatting.DARK_RED + translateToLocal("ote.tm.nasa.5"))
             .addTecTechHatchInfo()
             .addSeparator()
             .addInfo("§aAdded by: 123Technology - FIRE-RocketAssembler")
@@ -277,6 +340,10 @@ public class OTEFireRocketAssembler extends OTHMultiMachineBase<OTEFireRocketAss
             .addInputHatch(translateToLocal("oth.hint.any_input_hatch"), 1)
             .addOutputHatch(translateToLocal("oth.hint.any_output_hatch"), 1)
             .addEnergyHatch(translateToLocal("oth.hint.any_energy_hatch"), 1)
+            .addOtherStructurePart(
+                translateToLocal(OTERocketSchematicHatch.NAME_KEY),
+                translateToLocal("ote.nasa.schematic_hatch_hint"),
+                1)
             .toolTipFinisher();
         return tt;
     }
@@ -323,22 +390,37 @@ public class OTEFireRocketAssembler extends OTHMultiMachineBase<OTEFireRocketAss
 
     // ===================== Misc =====================
 
-    private boolean hasRequiredSpecialItems(Object aSpecialItems) {
-        if (aSpecialItems == null) return true;
-        ItemStack specialSlot = getControllerSlot();
-        if (aSpecialItems instanceof ItemStack) {
-            return isSpecialItemPresent(specialSlot, (ItemStack) aSpecialItems);
-        }
-        if (aSpecialItems instanceof ItemStack[]) {
-            for (ItemStack stack : (ItemStack[]) aSpecialItems) {
-                if (stack != null && !isSpecialItemPresent(specialSlot, stack)) return false;
-            }
-        }
-        return true;
+    @Override
+    public void getWailaNBTData(EntityPlayerMP player, TileEntity tile, NBTTagCompound tag, World world, int x, int y,
+        int z) {
+        super.getWailaNBTData(player, tile, tag, world, x, y, z);
+        tag.setBoolean("oteNasaPerfectOverclock", isEnablePerfectOverclock());
     }
 
-    private static boolean isSpecialItemPresent(ItemStack aSpecialSlot, ItemStack aRequired) {
-        return aSpecialSlot != null && GTUtility.areStacksEqual(aSpecialSlot, aRequired);
+    @Override
+    public void getWailaBody(ItemStack itemStack, List<String> currentTip, IWailaDataAccessor accessor,
+        IWailaConfigHandler config) {
+        super.getWailaBody(itemStack, currentTip, accessor, config);
+        NBTTagCompound tag = accessor.getNBTData();
+        if (!tag.hasKey("oteNasaPerfectOverclock")) return;
+        boolean enabled = tag.getBoolean("oteNasaPerfectOverclock");
+        currentTip.add(
+            (enabled ? EnumChatFormatting.GREEN : EnumChatFormatting.GRAY)
+                + translateToLocal(enabled ? "ote.nasa.waila.perfect_oc.enabled" : "ote.nasa.waila.perfect_oc.disabled")
+                + EnumChatFormatting.RESET);
+    }
+
+    private boolean hasRequiredSpecialItems(Object specialItems) {
+        if (specialItems == null) return true;
+        if (mSchematicHatch == null || !mSchematicHatch.isValid()) return false;
+        if (specialItems instanceof ItemStack) return mSchematicHatch.containsSchematic((ItemStack) specialItems);
+        if (specialItems instanceof ItemStack[]) {
+            for (ItemStack stack : (ItemStack[]) specialItems) {
+                if (stack != null && !mSchematicHatch.containsSchematic(stack)) return false;
+            }
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -378,7 +460,9 @@ public class OTEFireRocketAssembler extends OTHMultiMachineBase<OTEFireRocketAss
                 || !world.setBlock(rocketX, rocketY, rocketZ, RocketRenderBlock, getRocketMeta(base), 3)))
             return;
 
-        if (!(world.getTileEntity(rocketX, rocketY, rocketZ) instanceof OTERocketRender display)) return;
+        TileEntity tile = world.getTileEntity(rocketX, rocketY, rocketZ);
+        if (!(tile instanceof OTERocketRender)) return;
+        OTERocketRender display = (OTERocketRender) tile;
         int ownerX = base.getXCoord();
         int ownerY = base.getYCoord();
         int ownerZ = base.getZCoord();
@@ -403,8 +487,9 @@ public class OTEFireRocketAssembler extends OTHMultiMachineBase<OTEFireRocketAss
         if (base == null || !base.isServerSide()) return;
         World world = base.getWorld();
         if (world == null) return;
-        if (world.getTileEntity(mRocketX, mRocketY, mRocketZ) instanceof OTERocketRender display
-            && display.isOwnedBy(base.getXCoord(), base.getYCoord(), base.getZCoord())
+        TileEntity tile = world.getTileEntity(mRocketX, mRocketY, mRocketZ);
+        if (tile instanceof OTERocketRender
+            && ((OTERocketRender) tile).isOwnedBy(base.getXCoord(), base.getYCoord(), base.getZCoord())
             && !world.setBlockToAir(mRocketX, mRocketY, mRocketZ)) return;
         mRocketPlaced = false;
         markDirty();

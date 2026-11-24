@@ -4,7 +4,9 @@ import static gregtech.api.enums.GTValues.V;
 
 import com.brandon3055.draconicevolution.common.tileentities.multiblocktiles.reactor.ReactorExplosion;
 import com.brandon3055.draconicevolution.common.utils.handlers.ProcessHandler;
+import com.gtnewhorizons.modularui.api.screen.ModularWindow;
 import com.newmaa.othtech.Config;
+import com.newmaa.othtech.machine.gui.OTHGuiBranding;
 
 import gregtech.api.interfaces.ISecondaryDescribable;
 import gregtech.common.pollution.Pollution;
@@ -19,6 +21,11 @@ public abstract class OTHTTMultiMachineBaseEM extends TTMultiblockBase implement
 
     public OTHTTMultiMachineBaseEM(String aName) {
         super(aName);
+    }
+
+    @Override
+    public void addGregTechLogo(ModularWindow.Builder builder) {
+        OTHGuiBranding.addLegacyTecTechBranding(builder);
     }
 
     public void repairMachine() {
