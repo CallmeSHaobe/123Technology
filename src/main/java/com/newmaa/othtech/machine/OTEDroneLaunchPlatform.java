@@ -8,17 +8,22 @@ import static net.minecraft.util.StatCollector.translateToLocal;
 import java.util.List;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants.NBT;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.opengl.GL11;
 
+import com.cleanroommc.modularui.utils.item.ItemStackHandler;
 import com.dreammaster.block.BlockList;
+import com.enderio.core.common.util.BlockCoord;
 import com.gtnewhorizon.structurelib.alignment.IAlignmentLimits;
 import com.gtnewhorizon.structurelib.alignment.constructable.ChannelDataAccessor;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
@@ -34,6 +39,7 @@ import com.newmaa.othtech.utils.ShapeLoader;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import crazypants.enderio.teleport.telepad.ItemCoordSelector;
 import gregtech.api.GregTechAPI;
 import gregtech.api.casing.Casings;
 import gregtech.api.enums.Textures;
@@ -106,6 +112,49 @@ public class OTEDroneLaunchPlatform extends OTHMultiMachineBase<OTEDroneLaunchPl
     private boolean launchEnabled;
     private int launchSpeedKmh = 200;
     private boolean autoDownlinkTarget;
+    private final ItemStackHandler coordinateSelectorSlot = new ItemStackHandler(1) {
+
+        @Override
+        public boolean isItemValid(int slot, ItemStack stack) {
+            return stack != null && stack.getItem() instanceof ItemCoordSelector;
+        }
+
+        @Override
+        public int getSlotLimit(int slot) {
+            return 1;
+        }
+    };
+
+    public ItemStackHandler getCoordinateSelectorSlot() {
+        return coordinateSelectorSlot;
+    }
+
+    public void onCoordinateSelectorChanged(ItemStack stack) {
+        IGregTechTileEntity tile = getBaseMetaTileEntity();
+        if (tile == null || !tile.isServerSide()) return;
+        markDirty();
+        if (stack == null || !(stack.getItem() instanceof ItemCoordSelector selector)) return;
+
+        NBTTagCompound tag = stack.getTagCompound();
+        if (tag == null || tag.getBoolean("default")
+            || !tag.hasKey("bc:x", NBT.TAG_INT)
+            || !tag.hasKey("bc:y", NBT.TAG_INT)
+            || !tag.hasKey("bc:z", NBT.TAG_INT)) return;
+        World world = tile.getWorld();
+        // Ender IO omits the dimension tag for selectors first recorded in dimension 0.
+        if (selector.getDimension(stack) != world.provider.dimensionId) return;
+        BlockCoord coords = selector.getCoords(stack);
+        if (coords.x < -WORLD_LIMIT || coords.x > WORLD_LIMIT
+            || coords.z < -WORLD_LIMIT
+            || coords.z > WORLD_LIMIT
+            || coords.y < 0
+            || coords.y >= world.getActualHeight()) return;
+
+        targetX = coords.x;
+        targetY = coords.y;
+        targetZ = coords.z;
+        targetChanged();
+    }
 
     public boolean isAutoDownlinkTarget() {
         return autoDownlinkTarget;
@@ -196,6 +245,7 @@ public class OTEDroneLaunchPlatform extends OTHMultiMachineBase<OTEDroneLaunchPl
         aNBT.setBoolean("DroneLaunchEnabled", launchEnabled);
         aNBT.setInteger("DroneLaunchSpeedKmh", launchSpeedKmh);
         aNBT.setBoolean("DroneAutoDownlinkTarget", autoDownlinkTarget);
+        aNBT.setTag("DroneCoordinateSelector", coordinateSelectorSlot.serializeNBT());
     }
 
     @Override
@@ -212,6 +262,28 @@ public class OTEDroneLaunchPlatform extends OTHMultiMachineBase<OTEDroneLaunchPl
         launchSpeedKmh = aNBT.hasKey("DroneLaunchSpeedKmh")
             ? Math.max(50, Math.min(300, aNBT.getInteger("DroneLaunchSpeedKmh")))
             : 200;
+        if (aNBT.hasKey("DroneCoordinateSelector", NBT.TAG_COMPOUND)) {
+            coordinateSelectorSlot.deserializeNBT(aNBT.getCompoundTag("DroneCoordinateSelector"));
+        }
+    }
+
+    @Override
+    public void onRemoval() {
+        IGregTechTileEntity tile = getBaseMetaTileEntity();
+        if (tile != null && tile.isServerSide()) {
+            ItemStack stack = coordinateSelectorSlot.extractItem(0, 1, false);
+            if (stack != null) {
+                World world = tile.getWorld();
+                world.spawnEntityInWorld(
+                    new EntityItem(
+                        world,
+                        tile.getXCoord() + 0.5,
+                        tile.getYCoord() + 0.5,
+                        tile.getZCoord() + 0.5,
+                        stack));
+            }
+        }
+        super.onRemoval();
     }
 
     // ===================== Machine Parameters =====================

@@ -1,3 +1,34 @@
+# Speaking Stone
+ote.tn.speaking_stone=Speaking Stone
+ote.speaking_stone.tooltip=Right-click to open the GUI. Each block of broadcast radius costs 1 EU/t.
+ote.speaking_stone.builtin_failed=Speaking Stone could not play this stream. The built-in decoder requires an unencrypted MPEG-TS/AAC-LC HLS media playlist; other sources may need FFmpeg.
+ote.speaking_stone.cnr1=CNR Voice of China
+ote.speaking_stone.cnr2=CNR Business Radio
+ote.speaking_stone.cnr4=CNR Music Radio
+ote.speaking_stone.cctv_news=CCTV-13 News (audio only)
+ote.speaking_stone.bbc_radio_one=BBC Radio 1 (UK)
+ote.speaking_stone.fip=FIP (France)
+ote.speaking_stone.france_culture=France Culture
+ote.speaking_stone.abc_classic=ABC Classic (Australia)
+ote.speaking_stone.gui.presets=Station Presets
+ote.speaking_stone.gui.presets.domestic=Chinese Stations
+ote.speaking_stone.gui.presets.international=International Stations
+ote.speaking_stone.gui.presets.back=Back
+ote.speaking_stone.now_playing_unavailable=Live radio
+ote.speaking_stone.gui.stream_url=Stream URL
+ote.speaking_stone.gui.stream_url.help=Click outside to apply. Custom multiplayer URLs require client permission.
+ote.speaking_stone.gui.broadcast_on=Broadcast: Enabled
+ote.speaking_stone.gui.broadcast_off=Broadcast: Disabled
+ote.speaking_stone.gui.radius=Radius (blocks)
+ote.speaking_stone.gui.cost=%s EU/t
+ote.speaking_stone.gui.status_active=Status: Broadcasting
+ote.speaking_stone.gui.status_idle=Status: Not broadcasting
+ote.speaking_stone.gui.now_playing=Now playing: %s
+ote.speaking_stone.gui.now_playing.none=Now playing: —
+ote.speaking_stone.ffmpeg_failed=Speaking Stone could not start FFmpeg. Check the configured executable path.
+ote.speaking_stone.stream_failed=Speaking Stone could not read the stream. Check the URL and your connection.
+ote.speaking_stone.audio_failed=Speaking Stone could not output audio. Check your audio device.
+
 # Common machine structure hints
 oth.hint.any_input_bus=AnyInputBus
 oth.hint.any_output_bus=AnyOutputBus
@@ -33,9 +64,12 @@ ote.drone.tooltip.angelica=Angelica edition
 death.attack.droneBlast=%1$s was caught in the blast from %2$s
 ote.drone.tooltip.nuclear=Gray livery with a radiation symbol
 ote.drone.tooltip.nvidia=Black livery with a green NVIDIA logo
-ote.tn.drone_launch_platform=Drone Launch Platform (Name Pending)
+ote.tn.drone_launch_platform="Lancet"-Class Suicide Drone Launch Platform
+ote.tt.drone_launch_platform=The Youngsters' Ultimate Weapon - OTH Drone Launch Platform
 ote.tm.drone_launch_platform.0=Consumes drone items to attack coordinates or automatically hunt drone downlinks in this dimension
 ote.drone.gui.target=Manual target (current dimension)
+ote.drone.gui.coordinate_selector=Coord. Selector
+ote.drone.gui.coordinate_selector.help=Insert an Ender IO Coordinate Selector recorded in this dimension to copy its coordinates and disarm continuous launch. The selector is not consumed.
 ote.drone.gui.mode.coordinates=Mode: Coordinates
 ote.drone.gui.mode.downlink=Mode: Hunt Downlinks
 ote.drone.gui.mode.help=Auto: attacks the nearest loaded GT drone downlink 16–4096 blocks away in this dimension, regardless of ownership. Ignores manual coordinates. No target consumes no item. Switching disarms. No obstacle avoidance.
@@ -1285,7 +1319,8 @@ betterquesting.quest.DRxHUCDZRuS86P4_DDae7w.name=【Tier 13 UXV】Divine Isa For
 betterquesting.quest.DRxHUCDZRuS86P4_DDae7w.desc=§a【Tier 13 UXV】Divine Isa Forge§r%nIsa Lord certified - divine speed and parallelism.%nThe structure also requires Dyson Sphere components (sBlockCasingsDyson) and can only be built at the UXV stage.%nTime = NEI Time * { 1 / {Voltage Tier^[(Glass Tier / 2) + 1]}^(1/3) }%nInsert a Star Matrix into the main block to unlock Space Assembly Mode.%nOne of the ultimate solutions for large-scale ore grinding and processing.
 
 # Void Nexus Matrix
-ote.tn.vnm=The Veterans' Ultimate Creation of Magic and Technology - Mega Essentia Generator ┊ Psionic Generator
+ote.tn.vnm=Void Nexus Matrix
+ote.tt.vnm=The Veterans' Ultimate Creation of Magic and Technology - Mega Essentia Generator ┊ Psionic Generator
 Material.ManifestedPsionics=Manifested Psionics
 Material.manifestedpsionics=Manifested Psionics
 item.VoidPotential.name=Void Potential

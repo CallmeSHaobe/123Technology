@@ -11,6 +11,7 @@ import com.newmaa.othtech.client.OTEEntangledFluidRenderer;
 import com.newmaa.othtech.client.OTEMaterialRenderEffects;
 import com.newmaa.othtech.client.OTEVoidNexusClientEffects;
 import com.newmaa.othtech.client.PoweredElytraSpeedHud;
+import com.newmaa.othtech.client.SpeakingStoneClient;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.blocks.deepseiko.TEDeepSeikoHolo;
 import com.newmaa.othtech.common.blocks.fluids.RossFluids;
@@ -95,6 +96,7 @@ public class ClientProxy extends CommonProxy {
         OTEMaterialRenderEffects.install();
         OTEEntangledFluidRenderer.register();
         OTEVoidNexusClientEffects.install();
+        SpeakingStoneClient.install();
         if (Loader.isModLoaded("etfuturum")) {
             MinecraftForge.EVENT_BUS.register(new PoweredElytraSpeedHud());
         }

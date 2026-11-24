@@ -31,6 +31,7 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.IStructureElement;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
+import com.newmaa.othtech.common.blocks.oterender.OTERocketRender;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.OTHMultiMachineBase;
 
@@ -103,13 +104,15 @@ public class OTEFireRocketAssembler extends OTHMultiMachineBase<OTEFireRocketAss
     @Override
     public void saveNBTData(NBTTagCompound aNBT) {
         super.saveNBTData(aNBT);
-
+        if (mRocketPlaced) aNBT.setIntArray("RocketDisplayPosition", new int[] { mRocketX, mRocketY, mRocketZ });
     }
 
     @Override
     public void loadNBTData(final NBTTagCompound aNBT) {
         super.loadNBTData(aNBT);
-
+        int[] displayPosition = aNBT.getIntArray("RocketDisplayPosition");
+        mRocketPlaced = false;
+        if (displayPosition.length == 3) rememberRocket(displayPosition[0], displayPosition[1], displayPosition[2]);
     }
 
     // ===================== Machine Parameters =====================
@@ -165,17 +168,21 @@ public class OTEFireRocketAssembler extends OTHMultiMachineBase<OTEFireRocketAss
     }
 
     @Override
-    public boolean onRunningTick(ItemStack stack) {
-        super.onRunningTick(stack);
-        createRenderBlock();
-        return true;
-    }
-
-    @Override
     public void onPostTick(IGregTechTileEntity aBaseMetaTileEntity, long aTick) {
         super.onPostTick(aBaseMetaTileEntity, aTick);
         if (!aBaseMetaTileEntity.isServerSide()) return;
-        if (!mMachine || mMaxProgresstime <= 0) clearRenderBlock();
+        ItemStack output = mMachine && mMaxProgresstime > 0 ? getDisplayOutput() : null;
+        if (output == null) clearRenderBlock();
+        else updateRenderBlock(aBaseMetaTileEntity, output);
+    }
+
+    private ItemStack getDisplayOutput() {
+        if (mOutputItems != null) {
+            for (ItemStack stack : mOutputItems) {
+                if (stack != null && stack.getItem() != null && stack.stackSize > 0) return stack;
+            }
+        }
+        return null;
     }
 
     // ===================== Structure =====================
@@ -221,8 +228,8 @@ public class OTEFireRocketAssembler extends OTHMultiMachineBase<OTEFireRocketAss
         if (STRUCTURE_DEFINITION == null) {
             STRUCTURE_DEFINITION = StructureDefinition.<OTEFireRocketAssembler>builder()
                 .addShape(STRUCTURE_PIECE_MAIN, transpose(shapeMain))
-                .addElement('A', ofBlockOr(IndustrialCraft2.ID + ":blockAlloy", 0, sBlockReinforced, 0))
-                .addElement('B', ofBlockOr(IndustrialCraft2.ID + ":blockAlloyGlass", 0, sBlockReinforced, 1))
+                .addElement('A', ofBlock(sBlockReinforced, 13))
+                .addElement('B', ofBlock(sBlockGlass1, 10))
                 .addElement('C', ofBlock(GregTechAPI.sBlockCasings2, 0))
                 .addElement('D', ofBlock(GregTechAPI.sBlockCasings3, 11))
                 .addElement('E', ofBlock(GregTechAPI.sBlockFrames, 335))
@@ -350,9 +357,7 @@ public class OTEFireRocketAssembler extends OTHMultiMachineBase<OTEFireRocketAss
         return (d, r, f) -> d.offsetY == 0 && r.isNotRotated() && !f.isVerticallyFliped();
     }
 
-    private void createRenderBlock() {
-        IGregTechTileEntity base = getBaseMetaTileEntity();
-        if (base == null || !base.isServerSide()) return;
+    private void updateRenderBlock(IGregTechTileEntity base, ItemStack output) {
         World world = base.getWorld();
         if (world == null) return;
 
@@ -363,14 +368,26 @@ public class OTEFireRocketAssembler extends OTHMultiMachineBase<OTEFireRocketAss
         int rocketY = base.getYCoord() + ROCKET_OFFSET_BACK * back.offsetY - ROCKET_OFFSET_RIGHT * right.offsetY;
         int rocketZ = base.getZCoord() + ROCKET_OFFSET_BACK * back.offsetZ - ROCKET_OFFSET_RIGHT * right.offsetZ;
 
-        if (world.getBlock(rocketX, rocketY, rocketZ) == RocketRenderBlock) {
-            rememberRocket(rocketX, rocketY, rocketZ);
-            return;
+        if (mRocketPlaced && (mRocketX != rocketX || mRocketY != rocketY || mRocketZ != rocketZ)) {
+            clearRenderBlock();
+            if (mRocketPlaced) return;
         }
-        if (mRocketPlaced && (mRocketX != rocketX || mRocketY != rocketY || mRocketZ != rocketZ)) clearRenderBlock();
-        if (!world.isAirBlock(rocketX, rocketY, rocketZ)) return;
-        world.setBlock(rocketX, rocketY, rocketZ, RocketRenderBlock, getRocketMeta(base), 3);
-        rememberRocket(rocketX, rocketY, rocketZ);
+        if (!world.blockExists(rocketX, rocketY, rocketZ)) return;
+        if (world.getBlock(rocketX, rocketY, rocketZ) != RocketRenderBlock
+            && (!world.isAirBlock(rocketX, rocketY, rocketZ)
+                || !world.setBlock(rocketX, rocketY, rocketZ, RocketRenderBlock, getRocketMeta(base), 3)))
+            return;
+
+        if (!(world.getTileEntity(rocketX, rocketY, rocketZ) instanceof OTERocketRender display)) return;
+        int ownerX = base.getXCoord();
+        int ownerY = base.getYCoord();
+        int ownerZ = base.getZCoord();
+        if (!display.isUnclaimed() && !display.isOwnedBy(ownerX, ownerY, ownerZ)) return;
+        display.setDisplay(ownerX, ownerY, ownerZ, output);
+        if (!mRocketPlaced) {
+            rememberRocket(rocketX, rocketY, rocketZ);
+            markDirty();
+        }
     }
 
     private void rememberRocket(int x, int y, int z) {
@@ -382,13 +399,15 @@ public class OTEFireRocketAssembler extends OTHMultiMachineBase<OTEFireRocketAss
 
     private void clearRenderBlock() {
         if (!mRocketPlaced) return;
-        mRocketPlaced = false;
         IGregTechTileEntity base = getBaseMetaTileEntity();
         if (base == null || !base.isServerSide()) return;
         World world = base.getWorld();
-        if (world != null && world.getBlock(mRocketX, mRocketY, mRocketZ) == RocketRenderBlock) {
-            world.setBlockToAir(mRocketX, mRocketY, mRocketZ);
-        }
+        if (world == null) return;
+        if (world.getTileEntity(mRocketX, mRocketY, mRocketZ) instanceof OTERocketRender display
+            && display.isOwnedBy(base.getXCoord(), base.getYCoord(), base.getZCoord())
+            && !world.setBlockToAir(mRocketX, mRocketY, mRocketZ)) return;
+        mRocketPlaced = false;
+        markDirty();
     }
 
     private static int getRocketMeta(IGregTechTileEntity base) {

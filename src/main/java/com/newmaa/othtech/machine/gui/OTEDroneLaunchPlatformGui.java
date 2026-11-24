@@ -18,6 +18,8 @@ import com.cleanroommc.modularui.widgets.ButtonWidget;
 import com.cleanroommc.modularui.widgets.ListWidget;
 import com.cleanroommc.modularui.widgets.TextWidget;
 import com.cleanroommc.modularui.widgets.layout.Flow;
+import com.cleanroommc.modularui.widgets.slot.ItemSlot;
+import com.cleanroommc.modularui.widgets.slot.ModularSlot;
 import com.cleanroommc.modularui.widgets.textfield.TextFieldWidget;
 import com.newmaa.othtech.machine.OTEDroneLaunchPlatform;
 
@@ -92,7 +94,7 @@ public class OTEDroneLaunchPlatformGui extends MTEMultiBlockBaseGui<OTEDroneLaun
 
     @Override
     protected int getTextBoxToInventoryGap() {
-        return 102;
+        return 124;
     }
 
     @Override
@@ -106,7 +108,7 @@ public class OTEDroneLaunchPlatformGui extends MTEMultiBlockBaseGui<OTEDroneLaun
             .child(
                 Flow.column()
                     .width(152)
-                    .height(100)
+                    .height(122)
                     .child(
                         new ButtonWidget<>().size(152, 20)
                             .overlay(
@@ -129,6 +131,24 @@ public class OTEDroneLaunchPlatformGui extends MTEMultiBlockBaseGui<OTEDroneLaun
                             .child(coordinateRow("X", "droneX", syncManager))
                             .child(coordinateRow("Y", "droneY", syncManager))
                             .child(coordinateRow("Z", "droneZ", syncManager)))
+                    .child(
+                        Flow.row()
+                            .width(152)
+                            .height(22)
+                            .child(
+                                new TextWidget<>(IKey.lang("ote.drone.gui.coordinate_selector")).width(100)
+                                    .height(18))
+                            .child(
+                                new ItemSlot().size(18)
+                                    .slot(
+                                        new ModularSlot(multiblock.getCoordinateSelectorSlot(), 0).singletonSlotGroup()
+                                            .changeListener(
+                                                (stack, countOnly, client, initial) -> {
+                                                    if (!client && !initial)
+                                                        multiblock.onCoordinateSelectorChanged(stack);
+                                                }))
+                                    .tooltipBuilder(
+                                        t -> t.addLine(IKey.lang("ote.drone.gui.coordinate_selector.help")))))
                     .child(
                         Flow.row()
                             .width(152)

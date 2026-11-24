@@ -10,7 +10,7 @@ import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
-import com.newmaa.othtech.machine.EssentiaGeneratorFuel;
+import com.newmaa.othtech.machine.machineclass.EssentiaGeneratorFuel;
 
 import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.aspects.Aspect;
