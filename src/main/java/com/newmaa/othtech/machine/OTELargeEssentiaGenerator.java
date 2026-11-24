@@ -34,6 +34,7 @@ import com.newmaa.othtech.common.compat.thaumcraft.EssentiaGeneratorCompat;
 import com.newmaa.othtech.machine.gui.OTELargeEssentiaGeneratorGui;
 import com.newmaa.othtech.machine.hatch.OTEEssentiaInputHatch;
 import com.newmaa.othtech.machine.hatch.OTEEssentiaStockingInputBusME;
+import com.newmaa.othtech.machine.machineclass.EssentiaGeneratorFuel;
 import com.newmaa.othtech.utils.ShapeLoader;
 
 import goodgenerator.loader.Loaders;
@@ -322,7 +323,7 @@ public final class OTELargeEssentiaGenerator extends TTMultiblockBase implements
         }
     }
 
-    boolean useFluid(FluidStack demand, boolean simulate) {
+    public boolean useFluid(FluidStack demand, boolean simulate) {
         if (demand == null) return false;
         boolean available = demand.amount > 0 ? depleteInput(demand, true)
             : getStoredFluids().stream()
@@ -335,7 +336,7 @@ public final class OTELargeEssentiaGenerator extends TTMultiblockBase implements
         return true;
     }
 
-    void releaseFlux(int percent) {
+    public void releaseFlux(int percent) {
         IGregTechTileEntity base = getBaseMetaTileEntity();
         World world = base.getWorld();
         if (world.rand.nextInt(100) >= percent) return;

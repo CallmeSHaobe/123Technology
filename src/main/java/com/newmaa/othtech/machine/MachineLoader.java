@@ -2,12 +2,15 @@ package com.newmaa.othtech.machine;
 
 import static net.minecraft.util.StatCollector.translateToLocal;
 
+import net.minecraft.util.EnumChatFormatting;
+
 import com.gtnewhorizon.gtnhlib.util.AnimatedTooltipHandler;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.machine.hatch.OTEDeepSeikoNaniteCell;
 import com.newmaa.othtech.machine.hatch.OTEEssentiaStockingInputBusME;
 import com.newmaa.othtech.machine.hatch.OTEHatchRack;
 import com.newmaa.othtech.machine.hatch.OTEWTFHatch;
+import com.newmaa.othtech.machine.single.OTESpeakingStone;
 import com.newmaa.othtech.utils.AuthorAnimation;
 
 import gregtech.api.enums.Materials;
@@ -222,6 +225,13 @@ public class MachineLoader {
                 IDs + 74,
                 "OTHLargeEssentiaGenerator",
                 translateToLocal("ote.tn.essentia_generator")));
+        OTHItemList.SpeakingStone.set(
+            new OTESpeakingStone(
+                IDs + 75,
+                "OTESpeakingStone",
+                translateToLocal("ote.tn.speaking_stone"),
+                new String[] { translateToLocal("ote.speaking_stone.tooltip"),
+                    EnumChatFormatting.YELLOW + "123Technology" }));
         OTHItemList.DeepSeiko.set(new OTEDeepSeiko(IDs + 9, "DeepSeiko", translateToLocal("ote.tn.ds")));
         OTHItemList.DeepSeikoNaniteCell.set(
             new OTEDeepSeikoNaniteCell(IDs + 67, "DeepSeikoNaniteCell", translateToLocal("ote.tn.nanite"), 0)

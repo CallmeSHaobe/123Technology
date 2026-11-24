@@ -1,3 +1,34 @@
+# 讲解石
+ote.tn.speaking_stone=讲解石
+ote.speaking_stone.tooltip=右键打开GUI. 每格广播半径消耗 1 EU/t.
+ote.speaking_stone.builtin_failed=讲解石无法播放该流. 内置解码需要未加密的 MPEG-TS/AAC-LC HLS 媒体列表; 其他音源可尝试配置 FFmpeg.
+ote.speaking_stone.cnr1=央广中国之声
+ote.speaking_stone.cnr2=央广经济之声
+ote.speaking_stone.cnr4=央广音乐之声
+ote.speaking_stone.cctv_news=CCTV-13 新闻频道（伴音）
+ote.speaking_stone.bbc_radio_one=BBC Radio 1（英国）
+ote.speaking_stone.fip=FIP（法国）
+ote.speaking_stone.france_culture=France Culture（法国）
+ote.speaking_stone.abc_classic=ABC Classic（澳大利亚）
+ote.speaking_stone.gui.presets=电台预设
+ote.speaking_stone.gui.presets.domestic=国内电台
+ote.speaking_stone.gui.presets.international=国际电台
+ote.speaking_stone.gui.presets.back=返回
+ote.speaking_stone.now_playing_unavailable=正在直播
+ote.speaking_stone.gui.stream_url=音源地址
+ote.speaking_stone.gui.stream_url.help=点击输入框外应用. 多人游戏的自定义地址需要客户端授权.
+ote.speaking_stone.gui.broadcast_on=广播: 开启
+ote.speaking_stone.gui.broadcast_off=广播: 关闭
+ote.speaking_stone.gui.radius=广播半径（格）
+ote.speaking_stone.gui.cost=%s EU/t
+ote.speaking_stone.gui.status_active=状态：广播中
+ote.speaking_stone.gui.status_idle=状态：未广播
+ote.speaking_stone.gui.now_playing=正在播放: %s
+ote.speaking_stone.gui.now_playing.none=正在播放: —
+ote.speaking_stone.ffmpeg_failed=讲解石无法启动 FFmpeg, 请检查配置的程序路径.
+ote.speaking_stone.stream_failed=讲解石无法读取广播流, 请检查地址和网络连接.
+ote.speaking_stone.audio_failed=讲解石无法输出声音, 请检查系统音频设备.
+
 # 通用机器结构提示
 oth.hint.any_input_bus=任意输入总线
 oth.hint.any_output_bus=任意输出总线

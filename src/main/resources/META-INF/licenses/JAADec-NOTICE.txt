@@ -1,0 +1,10 @@
+123Technology Speaking Stone AAC decoder
+
+Includes the AAC decoder classes from de.sfuhrm:jaad:0.8.7 (JAADec).
+Upstream: https://github.com/sfuhrm/JAADec
+Original author: in-somnia. The upstream README and Maven POM identify this fork as Public Domain.
+Maven artifact: https://repo.maven.apache.org/maven2/de/sfuhrm/jaad/0.8.7/jaad-0.8.7.jar
+SHA-256: f6a179169c390e939d737435268406ff6d681af6c6e50a219ce473318174037f
+
+Only the AAC decoder package is included, relocated to com.newmaa.othtech.internal.radio.aac.
+No JAADec Java Sound SPI providers, NetMusic code, or native binaries are included.

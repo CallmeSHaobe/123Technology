@@ -1,4 +1,4 @@
-package com.newmaa.othtech.machine;
+package com.newmaa.othtech.machine.machineclass;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -14,6 +14,7 @@ import net.minecraftforge.fluids.FluidStack;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.newmaa.othtech.machine.OTELargeEssentiaGenerator;
 
 import bartworks.system.material.WerkstoffLoader;
 import goodgenerator.items.GGMaterial;
@@ -24,7 +25,7 @@ import thaumcraft.api.aspects.Aspect;
 public final class EssentiaGeneratorFuel {
 
     // Bit positions are persisted on the machine and intake.
-    enum Family {
+    public enum Family {
         NORMAL,
         AIR,
         THERMAL,
@@ -37,7 +38,7 @@ public final class EssentiaGeneratorFuel {
         ELECTRIC
     }
 
-    final Family family;
+    public final Family family;
     private final long baseEU;
     private final int reagentUnits;
 
@@ -152,11 +153,11 @@ public final class EssentiaGeneratorFuel {
         }
     }
 
-    long burn(OTELargeEssentiaGenerator machine, int stability, int tier) {
+    public long burn(OTELargeEssentiaGenerator machine, int stability, int tier) {
         return energy(machine, stability, tier, false);
     }
 
-    long preview(OTELargeEssentiaGenerator machine, int stability, int tier) {
+    public long preview(OTELargeEssentiaGenerator machine, int stability, int tier) {
         return energy(machine, stability, tier, true);
     }
 

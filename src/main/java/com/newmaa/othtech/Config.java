@@ -58,6 +58,24 @@ public class Config {
             .getBoolean("OTHTechnology : 开启奈隆圣地的诡异大笑, true为是, false为否", "A", is_Abstract_Sanctum_HAHAHAH, "A");
         renderDeepSeikoRiceBowl = configuration
             .getBoolean("renderDeepSeikoRiceBowl", "client", true, "是否显示迪普西科装配机的米饭投影。仅影响客户端画面，修改后需重启客户端。");
+        speakingStoneFfmpeg = configuration
+            .getString(
+                "ffmpegPath",
+                "speaking_stone",
+                "",
+                "Client only. Optional absolute path to FFmpeg. Empty uses the built-in HLS AAC-LC decoder.")
+            .trim();
+        speakingStoneStream = configuration.getString(
+            "streamUrl",
+            "speaking_stone",
+            DEFAULT_RADIO_STREAM,
+            "Client only. Exact trusted stream URL additionally allowed in multiplayer. Empty disables radio playback.")
+            .trim();
+        speakingStoneAllowServerUrls = configuration.getBoolean(
+            "allowServerUrls",
+            "speaking_stone",
+            false,
+            "Client only. Allow multiplayer worlds to make this client load custom radio URLs. Enable only on trusted servers; URLs or redirects can contact services reachable from your network.");
         if (configuration.hasChanged()) {
             configuration.save();
         }
@@ -78,6 +96,10 @@ public class Config {
 
     public static String[] fishtorioFullPoolItemBlacklist = DEFAULT_FISHTORIO_FULL_POOL_ITEM_BLACKLIST;
 
+    private static final String DEFAULT_RADIO_STREAM = "https://apicnrapp.cnr.cn/html/play.html?channelId=1";
+    public static String speakingStoneFfmpeg = "";
+    public static String speakingStoneStream = DEFAULT_RADIO_STREAM;
+    public static boolean speakingStoneAllowServerUrls;
     public static boolean renderDeepSeikoRiceBowl = true;
     public static boolean DEFAULT_BATCH_MODE = false;
     public static boolean NEIFrontend = true;

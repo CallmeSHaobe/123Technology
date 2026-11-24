@@ -8,8 +8,8 @@ import net.minecraft.item.ItemStack;
 
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
-import com.newmaa.othtech.machine.EssentiaGeneratorFuel;
 import com.newmaa.othtech.machine.hatch.OTEEssentiaInputHatch;
+import com.newmaa.othtech.machine.machineclass.EssentiaGeneratorFuel;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import goodgenerator.loader.Loaders;

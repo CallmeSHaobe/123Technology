@@ -24,10 +24,15 @@ tasks.withType<JavaExec>().configureEach {
 val regressionSources = sourceSets.create("regression")
 dependencies {
     add(regressionSources.implementationConfigurationName, "com.google.code.gson:gson:2.2.4")
+    add(regressionSources.implementationConfigurationName, "com.paulscode:soundsystem:20120107")
 }
 val compileRegression = tasks.named<JavaCompile>(regressionSources.compileJavaTaskName) {
     source("src/main/java/com/newmaa/othtech/common/entity/FlightDynamics.java")
     source("src/main/java/com/newmaa/othtech/utils/ShapeLoader.java")
+    source("src/main/java/com/newmaa/othtech/machine/single/SpeakingStonePreset.java")
+    source(fileTree("src/main/java/com/newmaa/othtech/client/radio") {
+        exclude("FfmpegRadioDecoder.java", "GameRadioOutput.java")
+    })
     options.release.set(8)
 }
 val flightDynamicsCheck = tasks.register<JavaExec>("flightDynamicsCheck") {
@@ -51,11 +56,50 @@ val shapeLoaderCheck = tasks.register<JavaExec>("shapeLoaderCheck") {
         fixtures.get().asFile.mkdirs()
     }
 }
+val radioDecoderCheck = tasks.register<JavaExec>("radioDecoderCheck") {
+    group = "verification"
+    description = "Verify the built-in radio playlist parser and MPEG-TS AAC extraction offline."
+    dependsOn(compileRegression)
+    classpath = regressionSources.runtimeClasspath
+    mainClass.set("com.newmaa.othtech.client.radio.RadioDecoderCheck")
+}
 tasks.named("check") {
-    dependsOn(flightDynamicsCheck, shapeLoaderCheck)
+    dependsOn(flightDynamicsCheck, shapeLoaderCheck, radioDecoderCheck)
 }
 
+// Isolate only the Java 8 AAC decoder; do not install JAAD's global Java Sound providers.
+val radioAac = configurations.create("radioAac") {
+    isCanBeConsumed = false
+    isTransitive = false
+}
+dependencies {
+    add(radioAac.name, "de.sfuhrm:jaad:0.8.7")
+}
+val radioAacJar = tasks.register<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("radioAacJar") {
+    archiveFileName.set("oth-radio-aac.jar")
+    destinationDirectory.set(layout.buildDirectory.dir("radio-codec"))
+    configurations.set(listOf(radioAac))
+    include("net/sourceforge/jaad/aac/**")
+    relocate("net.sourceforge.jaad.aac", "com.newmaa.othtech.internal.radio.aac")
+}
+val radioCodec = files(radioAacJar.flatMap { it.archiveFile }).builtBy(radioAacJar)
+dependencies {
+    implementation(radioCodec)
+    add(regressionSources.implementationConfigurationName, radioCodec)
+}
+
+interface RadioArchiveAccess {
+    @get:javax.inject.Inject
+    val archives: org.gradle.api.file.ArchiveOperations
+}
+
+val radioArchives = objects.newInstance<RadioArchiveAccess>().archives
 tasks.named<Jar>("jar") {
+    val archives = radioArchives
+    dependsOn(radioAacJar)
+    from(radioAacJar.flatMap { it.archiveFile }.map { file -> archives.zipTree(file) }) {
+        include("com/newmaa/othtech/internal/radio/aac/**")
+    }
     doFirst {
         manifest.attributes["MixinConfigs"] = "mixins.123technology.json"
     }

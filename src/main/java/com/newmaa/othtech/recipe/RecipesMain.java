@@ -1650,5 +1650,16 @@ public class RecipesMain implements IRecipePool {
             .duration(5 * SECONDS)
             .eut(RECIPE_UV)
             .addTo(AssemblyLine);
+        // Chiang Kai Shek
+        GTValues.RA.stdBuilder()
+            .itemInputs(
+                GTUtility.getIntegratedCircuit(17),
+                ItemList.Hull_LV.get(1),
+                ItemList.Sensor_LV.get(1),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.LV, 1L))
+            .itemOutputs(OTHItemList.SpeakingStone.get(1))
+            .duration(5 * SECONDS)
+            .eut(RECIPE_LV)
+            .addTo(assemblerRecipes);
     }
 }

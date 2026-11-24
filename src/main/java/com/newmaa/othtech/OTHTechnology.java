@@ -164,6 +164,11 @@ public class OTHTechnology {
     public void remapLegacyRegistrations(FMLMissingMappingsEvent event) {
         String legacyPrefix = LEGACY_MODID + ":";
         for (FMLMissingMappingsEvent.MissingMapping mapping : event.getAll()) {
+            if ((MODID + ":speaking_stone_vanilla").equals(mapping.name)) {
+                // The temporary comparison block is intentionally removed; do not block world loading for it.
+                mapping.ignore();
+                continue;
+            }
             if (!mapping.name.startsWith(legacyPrefix)) continue;
 
             String path = mapping.name.substring(legacyPrefix.length());
