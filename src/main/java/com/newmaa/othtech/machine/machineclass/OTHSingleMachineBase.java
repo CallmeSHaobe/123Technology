@@ -1,6 +1,11 @@
 package com.newmaa.othtech.machine.machineclass;
 
+import com.cleanroommc.modularui.factory.PosGuiData;
+import com.cleanroommc.modularui.screen.ModularPanel;
+import com.cleanroommc.modularui.screen.UISettings;
+import com.cleanroommc.modularui.value.sync.PanelSyncManager;
 import com.newmaa.othtech.OTHTechnology;
+import com.newmaa.othtech.machine.gui.OTHSingleMachineGui;
 
 import gregtech.api.enums.SoundResource;
 import gregtech.api.enums.Textures;
@@ -81,6 +86,11 @@ public abstract class OTHSingleMachineBase extends MTEBasicMachineWithRecipe {
         setMachineEUtMultiplier(prototype.machineEUtMultiplier);
         setRecipeCatalystPriority(prototype.recipeCatalystPriority);
         setDeprecated(prototype.isDeprecated());
+    }
+
+    @Override
+    public ModularPanel buildUI(PosGuiData data, PanelSyncManager sync, UISettings settings) {
+        return new OTHSingleMachineGui(this, getUIProperties()).build(data, sync, settings);
     }
 
     /** Implement as {@code return new YourMachine(this);} using the copy constructor above. */

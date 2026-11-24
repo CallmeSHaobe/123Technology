@@ -13,7 +13,7 @@ import com.newmaa.othtech.common.blocks.fluids.RossFluids;
 import cpw.mods.fml.common.registry.GameRegistry;
 import gregtech.api.GregTechAPI;
 
-/** Places only the vanilla quartz and redstone shell from the exported schematic. */
+/** Places the schematic shell and stamps the headquarters interiors into each intersecting chunk. */
 public final class NervHeadquarters {
 
     private static final String RESOURCE = "/assets/123technology/structures/nervvvv.schematic";
@@ -119,7 +119,12 @@ public final class NervHeadquarters {
                     neonMeta,
                     casing,
                     casingMeta);
-                stampUnderworld(blocks, metadata, column, (chunkX << 4) + x, (chunkZ << 4) + z, concrete, concreteMeta);
+                int worldX = (chunkX << 4) + x;
+                int worldZ = (chunkZ << 4) + z;
+                TacticalCommandRoom.stamp(blocks, metadata, column, worldX, worldZ);
+                EvaCageInterior.stamp(blocks, metadata, column, worldX, worldZ);
+                stampUnderworld(blocks, metadata, column, worldX, worldZ, concrete, concreteMeta);
+                TerminalDogmaInterior.stamp(blocks, metadata, column, worldX, worldZ);
                 stampCorruption(blocks, metadata, column, (chunkX << 4) + x, (chunkZ << 4) + z, seed);
             }
         }
@@ -239,7 +244,6 @@ public final class NervHeadquarters {
         boolean concourse = radius <= 63;
         boolean crosswalk = (ax <= 5 || az <= 5) && radius <= 75;
         boolean hall = radius <= 55;
-        boolean dais = ax <= 15 && az <= 15;
         boolean upperRing = radius >= 33 && radius <= 43;
         boolean upperBridge = ax >= 15 && ax <= 48 && az <= 5;
         boolean stairs = x >= 44 && x <= 48 && z >= -43 && z <= -5;
@@ -335,23 +339,6 @@ public final class NervHeadquarters {
             for (int y = 65; y <= 76; y++) {
                 put(blocks, metadata, column, y, y == 71 ? Blocks.glowstone : Blocks.stonebrick, 0);
             }
-        }
-        if (dais) {
-            int platformY = z <= -10 ? 65 : z <= -7 ? 66 : 67;
-            for (int y = 65; y <= platformY + 3; y++) put(blocks, metadata, column, y, null, 0);
-            put(blocks, metadata, column, platformY, Blocks.stonebrick, 0);
-            if (z == 11 && ax <= 9) {
-                for (int y = 68; y <= 73; y++) {
-                    put(
-                        blocks,
-                        metadata,
-                        column,
-                        y,
-                        y == 69 || y == 73 ? Blocks.redstone_block : Blocks.stained_hardened_clay,
-                        y == 69 || y == 73 ? 0 : 15);
-                }
-            }
-            if ((x == -10 || x == 10) && (z == -8 || z == 6)) put(blocks, metadata, column, 70, Blocks.glowstone, 0);
         }
         if (upperRing || upperBridge) {
             if (radius == 40 && ((ax == 40 && (z == 0 || az == 40)) || (az == 40 && x == 0))) {
@@ -576,7 +563,7 @@ public final class NervHeadquarters {
         int az = Math.abs(z);
         boolean workshop = ax >= 94 && ax <= 137 && az >= 24 && az <= 59;
         boolean records = ax >= 18 && ax <= 56 && z >= 104 && z <= 140;
-        if (!workshop && !records) return -1;
+        if ((!workshop && !records) || EvaCageInterior.contains(x, z)) return -1;
         // Keep the casing rack entrance and its maintenance aisle clear of live machines.
         if (ax >= 110 && ax <= 118 && z >= 37 && z <= 47) return -1;
         // A second, deliberately irregular machine grid fills the workshop and archive

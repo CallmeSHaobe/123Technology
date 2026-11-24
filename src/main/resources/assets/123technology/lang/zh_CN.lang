@@ -5,11 +5,11 @@ ote.speaking_stone.builtin_failed=讲解石无法播放该流. 内置解码需�
 ote.speaking_stone.cnr1=央广中国之声
 ote.speaking_stone.cnr2=央广经济之声
 ote.speaking_stone.cnr4=央广音乐之声
-ote.speaking_stone.cctv_news=CCTV-13 新闻频道（伴音）
-ote.speaking_stone.bbc_radio_one=BBC Radio 1（英国）
-ote.speaking_stone.fip=FIP（法国）
-ote.speaking_stone.france_culture=France Culture（法国）
-ote.speaking_stone.abc_classic=ABC Classic（澳大利亚）
+ote.speaking_stone.cctv_news=CCTV-13 新闻频道(伴音)
+ote.speaking_stone.bbc_radio_one=BBC Radio 1(英国)
+ote.speaking_stone.fip=FIP(法国)
+ote.speaking_stone.france_culture=France Culture(法国)
+ote.speaking_stone.abc_classic=ABC Classic(澳大利亚)
 ote.speaking_stone.gui.presets=电台预设
 ote.speaking_stone.gui.presets.domestic=国内电台
 ote.speaking_stone.gui.presets.international=国际电台
@@ -19,12 +19,12 @@ ote.speaking_stone.gui.stream_url=音源地址
 ote.speaking_stone.gui.stream_url.help=点击输入框外应用. 多人游戏的自定义地址需要客户端授权.
 ote.speaking_stone.gui.broadcast_on=广播: 开启
 ote.speaking_stone.gui.broadcast_off=广播: 关闭
-ote.speaking_stone.gui.radius=广播半径（格）
+ote.speaking_stone.gui.radius=广播半径(格)
 ote.speaking_stone.gui.cost=%s EU/t
-ote.speaking_stone.gui.status_active=状态：广播中
-ote.speaking_stone.gui.status_idle=状态：未广播
+ote.speaking_stone.gui.status_active=状态:广播中
+ote.speaking_stone.gui.status_idle=状态:未广播
 ote.speaking_stone.gui.now_playing=正在播放: %s
-ote.speaking_stone.gui.now_playing.none=正在播放: —
+ote.speaking_stone.gui.now_playing.none=正在播放: -
 ote.speaking_stone.ffmpeg_failed=讲解石无法启动 FFmpeg, 请检查配置的程序路径.
 ote.speaking_stone.stream_failed=讲解石无法读取广播流, 请检查地址和网络连接.
 ote.speaking_stone.audio_failed=讲解石无法输出声音, 请检查系统音频设备.
@@ -43,8 +43,8 @@ oth.hint.heating_coils=加热盘管(包括高级盘管)
 oth.hint.two_middle_layers=中间两层
 oth.hint.any_bottom_casing=任意底层机械方块
 oth.hint.top_middle=顶部中央
-oth.hint.fluid_outputs_bottom=流体输出,任意底层机械方块
-oth.hint.pollution_gases_top=污染气体(CO2/CO/SO2),任意顶层机械方块
+oth.hint.fluid_outputs_bottom=流体输出, 任意底层机械方块
+oth.hint.pollution_gases_top=污染气体(CO2/CO/SO2), 任意顶层机械方块
 oth.hint.pollution_scales_muffler=污染气体输出量随消声仓等级提升
 oth.hint.any_plastic_concrete=任意塑料混凝土
 oth.hint.input_bus=输入总线
@@ -66,18 +66,18 @@ ote.drone.tooltip.nuclear=带辐射警示标志的灰色涂装(威力比氢弹�
 ote.drone.tooltip.nvidia=带绿色 NVIDIA 标志的黑色涂装(似乎内含某个战术核显卡.)
 ote.tn.drone_launch_platform="柳叶刀"型自杀式无人机发射平台
 ote.tt.drone_launch_platform=小登的决战兵器 - 无人机发射平台OTH
-ote.tm.drone_launch_platform.0=发射"柳叶刀"型自杀无人机, 摧毁一切. 
+ote.tm.drone_launch_platform.0=发射"柳叶刀"型自杀无人机, 摧毁一切.
 ote.drone.gui.target=手动目标坐标(当前维度)
 ote.drone.gui.coordinate_selector=坐标记录仪
-ote.drone.gui.coordinate_selector.help=放入已记录本维度坐标的 Ender IO 坐标记录仪，即可导入坐标并关闭连续发射。记录仪不会消耗。
+ote.drone.gui.coordinate_selector.help=放入已记录本维度坐标的 Ender IO 坐标记录仪, 即可导入坐标并关闭连续发射. 记录仪不会消耗.
 ote.drone.gui.mode.coordinates=模式:坐标攻击
 ote.drone.gui.mode.downlink=模式:搜寻下行仓
-ote.drone.gui.mode.help=自动模式:攻击同维度16-4096格内最近的已加载GT无人机下行仓,不区分归属.忽略手动坐标;无目标不消耗物品.切换后需重新开启发射.不绕障.
+ote.drone.gui.mode.help=自动模式:攻击同维度16-4096格内最近的已加载GT无人机下行仓, 不区分归属. 忽略手动坐标; 无目标不消耗物品. 切换后需重新开启发射. 不绕障.
 ote.drone.gui.enabled=连续发射:开启
 ote.drone.gui.disabled=连续发射:关闭
-ote.drone.gui.help=先输入目标和初速度并离开输入框,再开启;每5秒消耗1架.修改参数将关闭发射.
+ote.drone.gui.help=先输入目标和初速度并离开输入框, 再开启; 每5秒消耗1架. 修改参数将关闭发射.
 ote.drone.gui.speed=初速度 km/h
-ote.drone.gui.speed.help=范围50-300 km/h,默认200;按1格=1米,20TPS换算.设置同时决定推进巡航空速.
+ote.drone.gui.speed.help=范围50-300 km/h, 默认200; 按1格=1米, 20TPS换算. 设置同时决定推进巡航空速.
 ote.drone.info.1=只支持普通输入总线.
 ote.drone.hint.input_bus=任意脱氧钢机器方块
 ote.drone.info.rail_length=蓝图堆叠数决定轨道堆叠片数.
@@ -89,15 +89,14 @@ entity.123technology.entitySuicideDrone.name=OTH自爆无人机
 # 机器名称
 ote.tn.imba=IMBA 超模高炉
 
-# 火箭装配车间（补齐原有未定义键）
-ote.tm.nasa.0=集成式"火"箭装配车间
-ote.tm.nasa.1=火箭部件与总装的一体化车间
-ote.tm.nasa.2=面向太空探索的装配生产线
-ote.tm.nasa.3=整合多种火箭制造流程
-ote.tm.nasa.4=支持多方块结构工作
-ote.tm.nasa.5=支持 TecTech 能源仓
-ote.tm.nasa.6=尚未完工
-otht.cm.nasa.0=1 - 能源仓,输入输出总线与输入输出仓可替换指定机械方块;具体结构请参照投影
+# 火箭装配车间
+ote.tm.nasa.0=航天工业的集大成者 - 集成式"火"箭装配车间
+ote.tm.nasa.1=快捷生产一些"物品", 要友善利用.
+ote.tm.nasa.2=默认执行有损超频, T8设计芯片解锁无损超频.
+ote.tm.nasa.3=将设计芯片放入专门儿的设计芯片仓解锁配方以及机器运行.
+ote.tm.nasa.4=机器运行时, 正在生产的物品会在主机右侧发射台部分显示.
+ote.tm.nasa.5="把落后的帽子甩到月球那头去! "
+otht.cm.nasa.0=1 - 在指定机械方块处安装能源仓, 输入输出总线, 输入输出仓及一个设计芯片仓; 具体位置请参照投影.
 
 # 机器运行状态
 ote.computer.chat.wireless.enabled=无线模式已开启
@@ -113,11 +112,11 @@ oth.recipe.main.formerNineInOne=这曾经是九合一.
 oth.recipe.main.any256000Items=任意256,000物品每个
 oth.recipe.main.anyItem=任何物品
 oth.recipe.wetware.humanReplica=§b§n人类复制体-RK800-01
-oth.recipe.deepSeiko.unlockCondensate=机体升级 → 解锁凝聚态
+oth.recipe.deepSeiko.unlockCondensate=机体升级→ 解锁凝聚态
 oth.recipe.deepSeiko.condensateRequirement=消耗 4×凝聚态适配舱
-oth.recipe.deepSeiko.naniteUpgrade=机体升级 → 蜂群 T%s→T%s
+oth.recipe.deepSeiko.naniteUpgrade=机体升级→ 蜂群 T%s→ T%s
 oth.recipe.deepSeiko.naniteRequirement=需要 %s 个第 %s 级蜂群
-oth.recipe.deepSeiko.ultimateUpgrade=机体升级 → 终极任务(总算速 ×2)
+oth.recipe.deepSeiko.ultimateUpgrade=机体升级→ 终极任务(总算速 ×2)
 oth.recipe.deepSeiko.ultimateRequirement=UXV 外壳 %s + 磁蜂群 %s + 星门板 %s
 
 # 物品与蜂种
@@ -160,33 +159,33 @@ IsaMillModule.1.name=§aNeI合金研磨器复合体
 IsaMillModule.2.name=§a铱锇钐合金研磨器复合体
 IsaMillModule.3.name=§c海珀珍研磨器复合体
 IsaMillModule.4.name=§7永恒研磨器复合体
-tt.boardCasimir=§a一块能够植入卡西米尔鳍片的板材,几乎不会与外界发生任何交互,时空的终点?
-tt.boardTrans=§a一处容纳过去,现在与未来,包含无穷可能的微缩空间
-tt.capTrans=§a内置无穷大储量的芯片,可以包纳同一时空下时间带来的一切悖论
-tt.dioTrans=§a为防止多维时空的信息污染,每个时空在成型时单方面被注入一道信息流,这是独属于创世纪的火光
-tt.energyHatchSpacetime=§a对于一般的超时空电路,通过外置能量输入亦可进行有限的计算
-tt.finCasimir=§a一对对细小达到时空最基本单位的鳍片,能从真空量子海洋中汲取源源不断的能量.*留意真空衰变!
-tt.induTrans=§a常规的供能无法轻易突破超维度的限制,因此需要集成一个可以同时为不同时空供电的微型装置
+tt.boardCasimir=§a一块能够植入卡西米尔鳍片的板材, 几乎不会与外界发生任何交互, 时空的终点?
+tt.boardTrans=§a一处容纳过去, 现在与未来, 包含无穷可能的微缩空间
+tt.capTrans=§a内置无穷大储量的芯片, 可以包纳同一时空下时间带来的一切悖论
+tt.dioTrans=§a为防止多维时空的信息污染, 每个时空在成型时单方面被注入一道信息流, 这是独属于创世纪的火光
+tt.energyHatchSpacetime=§a对于一般的超时空电路, 通过外置能量输入亦可进行有限的计算
+tt.finCasimir=§a一对对细小达到时空最基本单位的鳍片, 能从真空量子海洋中汲取源源不断的能量. *留意真空衰变!
+tt.induTrans=§a常规的供能无法轻易突破超维度的限制, 因此需要集成一个可以同时为不同时空供电的微型装置
 tt.beeISA=§7纳米蜂群§a的终极形态...
 tt.beeMag=§6蜂群嗡嗡作响...
 tt.itemEnqing=§e§l眼里有光....为§4§l太阳工厂§e§l提供激光源支持
-tt.yellowPeach=§e黄桃草结出的果子,甜得像罐头
-tt.yellowPeach.effect=§b恢复 12 点饥饿值,并给予 30 秒§d速度 V
-tt.leCasimir=§a一块将鳍片伸向多维宇宙间汲取能量的模块化电源,是高阶超时空电路必不可少的部件
-tt.resTrans=§a封装多维时空的发生装置,为计算时海量的时空退火提供了多维时空的基础
+tt.yellowPeach=§e黄桃草结出的果子, 甜得像罐头
+tt.yellowPeach.effect=§b恢复 12 点饥饿值, 并给予 30 秒§d速度 V
+tt.leCasimir=§a一块将鳍片伸向多维宇宙间汲取能量的模块化电源, 是高阶超时空电路必不可少的部件
+tt.resTrans=§a封装多维时空的发生装置, 为计算时海量的时空退火提供了多维时空的基础
 tt.glassSingularity=§5§l"发射生命解离彩虹"
 tt.machineSingularity=§a§l压缩成巴掌大小.
-tt.socCosmic=§4§o银河系的星河纹丝不动地横过天穹,像是被§b§l§o冻结§4§o了....
-tt.socInf=§7§k//§9§l给时光以生命,给岁月以文明.§7§k//
+tt.socCosmic=§4§o银河系的星河纹丝不动地横过天穹, 像是被§b§l§o冻结§4§o了....
+tt.socInf=§7§k//§9§l给时光以生命, 给岁月以文明. §7§k//
 tt.socNor=§c§l万物归一...
-tt.transTrans=§a突破任意封装空间内距离与时间的限制,并使得超维度通信变得可能
+tt.transTrans=§a突破任意封装空间内距离与时间的限制, 并使得超维度通信变得可能
 tt.neiISA=看NEI..
-tt.IOS=123,我们经爱你呀
+tt.IOS=123, 我们经爱你呀
 tt.HYP=坚不可摧..
 tt.SPE=研磨过去现在和未来
 tt.brains=他还在跳动...
 tt.slicedBrains=我思故我在.
-tt.wrapBrains=你必须想象,电路板里的大脑是幸福的.
+tt.wrapBrains=你必须想象, 电路板里的大脑是幸福的.
 tt.ani=含锑量99.8%
 
 #Tab
@@ -204,7 +203,7 @@ tt.br.4=第一个脑子, 要从哪里来呢..?
 tt.br.5=你知道的, 做这种事自己总要付出一些代价.
 tt.lb.0=吃得饱饱的
 tt.tst.0=§7哦塔斯汀, 哦塔斯汀, 有了你生活美好没烦恼~
-tt.ww.0=§b§l这就是GTNH,听坠木马斯特说
+tt.ww.0=§b§l这就是GTNH, 听坠木马斯特说
 tt.690.0=§z§l一发摧毁一个航母战斗群
 tt.690.1=§4警告:投掷者后果自负 将造成大范围爆炸
 item.itemZhangww.name=维维豆奶
@@ -215,11 +214,11 @@ item.ShikanokoNoko.name=鹿乃子乃子专武
 item.itemSunLighter.name=§c§o太阳能打火机
 item.itemNukeThrowable.name=GTX690战术核显卡
 item.itemPoweredElytra.name=电力助推碳纤维强化鞘翅
-tt.poweredElytra.boost=滑翔时按住前进键（默认 W）助推，助推速度上限为 80 格/秒。
-tt.poweredElytra.cost=助推时，速度每增加 1 格/秒，每秒耗电增加 10,000 EU。可用 IV 级充电器充电。
+tt.poweredElytra.boost=滑翔时按住前进键(默认 W)助推, 助推速度上限为 80 格/秒.
+tt.poweredElytra.cost=助推时, 速度每增加 1 格/秒, 每秒耗电增加 10,000 EU. 可用 IV 级充电器充电.
 item.itemLonginus.name=§c朗基努斯之枪
-tt.longinus.throw=按住右键蓄力 0.5 秒，松开投掷。拾回后可再次投掷。
-tt.longinus.damage=投掷命中造成 1,000 点伤害。耐久无限。
+tt.longinus.throw=按住右键蓄力 0.5 秒, 松开投掷. 拾回后可再次投掷.
+tt.longinus.damage=投掷命中造成 1,000 点伤害. 耐久无限.
 entity.123technology.entityLonginus.name=投出的朗基努斯之枪
 death.attack.longinus=%1$s 被 %2$s 投出的朗基努斯之枪击中
 death.attack.longinus.item=%1$s 被 %2$s 投出的 %3$s 击中
@@ -232,7 +231,7 @@ item.itemRecord.name=§e铱锇钐唱片
 item.record.PRK_A.desc=普天堡电子乐团 - 攻击战
 item.record.PRK_B.desc=普天堡电子乐团 - 千里马在奔腾
 item.record.EVA_A.desc=高桥洋子 - 残酷な天使のテーゼ (残酷天使の行動纲领)
-item.record.EVA_B.desc=ARIANNE - Komm, süsser Tod (来吧,甜蜜の死亡)
+item.record.EVA_B.desc=ARIANNE - Komm, süsser Tod (来吧, 甜蜜の死亡)
 item.record.EVA_C.desc=Claire - Fly Me To The Moon
 item.record.NGG_U.desc=Rick Astley - Never Gonna Give You Up
 item.itemTST.name=塔斯汀小汉堡
@@ -292,7 +291,7 @@ oth.tt.gunmu.name=§z§m§l--------------------------------
 bw.werkstoff.12320.name=铱锇钐
 LCL=L.C.L
 
-#BartWorks Werkstoff 材料名（GT5U 5.09.54+ 的物品名读取 Material.<varName 小写>）
+#BartWorks Werkstoff 材料名(GT5U 5.09.54+ 的物品名读取 Material.<varName 小写>)
 Material.fluidgalaxy=熔融星系
 Material.fluidvoid=虚空熵流
 Material.moltenstar=星尘熔融
@@ -314,7 +313,7 @@ planet.Antimonia=§oAntimonia - 锑星
 planet.Ross123b=§oRoss123b - 锑罗斯
 star.starAntimonia=§0锑洞
 solarsystem.antimoniaSystem=锑星星系
-death.attack.Acid=虽然这可能很不科学,但%1$s还是被王水干死了
+death.attack.Acid=虽然这可能很不科学, 但%1$s还是被王水干死了
 
 #Machine_ToolTips
 oth.tm.pollution=§c注意 : 如遇跳电并报错"无法排出污染", 请尝试放置多个消声仓
@@ -322,12 +321,12 @@ oth.tm.pollution=§c注意 : 如遇跳电并报错"无法排出污染", 请尝�
 #Thaumonomicon
 tc.research_category.123technology=123Technology
 tc.research_name.OTH_PEACH_CAN_INFUSION=黄桃罐头机械方块注魔
-tc.research_text.OTH_PEACH_CAN_INFUSION=以奈隆机械方块为引,注成昂贵的黄桃罐头机械方块
+tc.research_text.OTH_PEACH_CAN_INFUSION=以奈隆机械方块为引, 注成昂贵的黄桃罐头机械方块
 tc.research_name.OTH_NAILONG_INFUSION=奈隆机械方块注魔
-tc.research_text.OTH_NAILONG_INFUSION=以 ZPM 机械方块为引,铸造真正的奈隆机械方块
+tc.research_text.OTH_NAILONG_INFUSION=以 ZPM 机械方块为引, 铸造真正的奈隆机械方块
 tc.research_name.OTH_ABSTRACT_SANCTUM=奈隆圣地主机
 tc.research_text.OTH_ABSTRACT_SANCTUM=将三大魔法之力熔铸为终焉主机
-tc.research_page.OTH_ABSTRACT_SANCTUM.1=以 LuV 机械外壳为核心,将盖亚之魂,血腥灵宝,注血钻石与奈隆机械方块熔为一体.组装完成的奈隆圣地主机能够接管并批量执行注魔,植物魔法与血魔法配方.
+tc.research_page.OTH_ABSTRACT_SANCTUM.1=以 LuV 机械外壳为核心, 将盖亚之魂, 血腥灵宝, 注血钻石与奈隆机械方块熔为一体. 组装完成的奈隆圣地主机能够接管并批量执行注魔, 植物魔法与血魔法配方.
 tc.aspect.sechsieben=六七
 
 #Machine_Construction
@@ -369,7 +368,7 @@ ote.tn.pump=太空钻机模块MK-123
 ote.tn.s9in1=小型蒸汽加工厂
 ote.tn.bee=Beeyonds之家
 ote.tn.bbpf=超维度憋憋锻炉
-ote.tn.nasa=集成式"火"箭装配车间(WIP)
+ote.tn.nasa=集成式"火"箭装配车间
 
 #Machine_Addition
 otht.recipe.MegaIsaForge=§5§l§n艾萨锻炉-老登制造者
@@ -382,7 +381,7 @@ GT5U.gui.text.nolava=§4机器因凛冰而憋憋
 GT5U.gui.text.noEnqing=§b机器因为恩情不足而憋憋
 GT5U.gui.text.voltage=§b机器因能源仓电压不足而憋憋
 GT5U.gui.text.nohatch=§4无线模式因为存在能源仓而憋憋
-GT5U.gui.text.bin_tier_low=§4结构等级不足!回收机模式需要二级结构,AE奇点制造机模式需要三级结构,中子态素压缩机模式需要四级结构.请升级结构后再使用该模式.
+GT5U.gui.text.bin_tier_low=§4结构等级不足!回收机模式需要二级结构, AE奇点制造机模式需要三级结构, 中子态素压缩机模式需要四级结构. 请升级结构后再使用该模式.
 otht.recipe.EVACannon=§l§6EVA专用改造阳电子炮GT
 otht.evaCannon=%s 被阳电子炮轰炸至灰
 otht.recipe.SINOPEC=§l§a中国石化
@@ -447,12 +446,12 @@ oth.tm.mnio.4=§aMisc类: 激光蚀刻机 高压釜 流体固化机
 oth.tm.mnio.5=§aIsa类: 艾萨研磨机 工业浮选机 真空干燥炉
 oth.tm.mnio.6=§aCol类: 分子重组仪 酿造室 流体加热机
 oth.tm.mnio.7=§b并行耗时公式来自某位§9冰之妖精
-oth.tm.mnio.8=§b电压等级提高一级,并行 -9, 最低为9, 默认为64
+oth.tm.mnio.8=§b电压等级提高一级, 并行 -9, 最低为9, 默认为64
 oth.tm.mnio.9=§b配方耗时 = NEI耗时 * (1 + (能源仓电压等级 * 16%))
-oth.tm.mnio.10=§bEU消耗:(1 / 线圈等级) * 0.1,最低为0.01
+oth.tm.mnio.10=§bEU消耗:(1 / 线圈等级) * 0.1, 最低为0.01
 oth.tm.mnio.11=§b海珀珍线圈解锁稳定的黑洞, 通流琥珀金线圈解锁HIP
-oth.tm.mnio.12=§b执行 3/4 超频(每次超频耗电变为 4 倍,速度变为 3 倍).
-oth.tm.mnio.13=§e九合一,我们敬爱你口牙!! ---Sukune_News
+oth.tm.mnio.12=§b执行 3/4 超频(每次超频耗电变为 4 倍, 速度变为 3 倍).
+oth.tm.mnio.13=§e九合一, 我们敬爱你口牙!! ---Sukune_News
 ote.tm.m9in1.mode.0=压缩-车床-磁化(Metal)
 ote.tm.m9in1.mode.1=发酵-流体提取-提取(Fluid)
 ote.tm.m9in1.mode.2=激光蚀刻-高压釜-流体固化(Misc)
@@ -479,7 +478,7 @@ ote.tm.cocc.0=§d§n小登的终极造物, 中登的期盼之物, 老登的可�
 ote.tm.cocc.1=§n§c永远不要忽略小登的力量...
 ote.tm.cocc.2=§o真正的终极机器, 没有高贵的造价, 更没有乱七八糟的机制(
 ote.tm.cocc.3=§o他所做的, 只有将特定材料烧为焦炭
-ote.tm.cocc.4=§e转换比例: 钻石(粉)->焦炭 1:1024, 煤炭(粉)->焦炭 1:16, 土->焦炭 1:1(这是怎么做到的?)
+ote.tm.cocc.4=§e转换比例: 钻石(粉)-> 焦炭 1:1024, 煤炭(粉)-> 焦炭 1:16, 土-> 焦炭 1:1(这是怎么做到的?)
 ote.tm.cocc.5=§e耗时: 1800 * 20ticks - (煤炭产出 / 5)ticks, 耗电: 0EU/t
 ote.tm.cocc.6=§c§l注意:机器污染过高:如遇跳电并报错"无法排出污染", 请尝试放置多个消声仓
 ote.cm.cocc.0=1 - 输入输出总线, 输入输出仓, 消声仓 : 替换脱氧钢机械方块
@@ -488,14 +487,14 @@ ote.cm.cocc.0=1 - 输入输出总线, 输入输出仓, 消声仓 : 替换脱氧�
 ote.tm.ft.0=§l老登的终极造物 - 异星渔场
 ote.tm.ft.1=§b赞美伟大的造物主Dr.Jumping! 如果没有她的万物至理公式'主 = 6', 老登们又怎么可能会有机会用到如此机器呢 ?
 ote.tm.ft.2=§b具体捕鱼原理 : Jumping恒等式解决了维度方块所蕴含的不确定性问题, 从而使得渔场内部小型维度的建立成为可能, 各种'鱼'将会被渔场内部的墨鱼之神所捕捉.
-ote.tm.ft.3='鱼'包括鱼,海象,韭菜盒子,鲸鱼座藻类,立方鱼,苔石砖等.*也许可以放入锑星的维度方块,但后果自负.
+ote.tm.ft.3='鱼'包括鱼, 海象, 韭菜盒子, 鲸鱼座藻类, 立方鱼, 苔石砖等. *也许可以放入锑星的维度方块, 但后果自负.
 ote.tm.ft.4=主机槽放入维度方块决定抽奖池: T0 抽 T0 维度矿粉, T1/T2 以此类推
 ote.tm.ft.9=维度矿粉池并行数 = 电压等级^3, 耗时固定 5 秒, 每并行耗电 1A 对应电压
 ote.tm.ft.6=随机产出喔, 可恶的抽卡. 憋憋.
 ote.tm.ft.7=输入 1000 个恩情可抽一次全物品池; 并行数 = 电压等级^1.4, 每次固定只扣 1000 恩情, 耗时固定 5 秒, 每并行耗电 1A 对应电压
 ote.tm.ft.8=§c全物品池不产出: GTNH核心 / 通用奇点 / 星门 的全部物品
 ote.tm.ft.10=§c另外不产出: 创造ME存储/流体元件, 源质元件, 漆黑之门, 创造模式取出升级 (可在配置文件里增删)
-ote.tm.ft.11=§6支持多安能源仓和激光能源仓;§c溢出产物始终销毁
+ote.tm.ft.11=§6支持多安能源仓和激光能源仓; §c溢出产物始终销毁
 ote.cm.ft.0=1 - 输入输出总线/仓, 能源仓 : 替换渔场机械方块; 维度方块放主机槽或输入总线
 GT5U.gui.text.recipe_result.ft_no_dim=§4主机槽里没有维度方块
 GT5U.gui.text.recipe_result.ft_no_pool=§4该维度等级没有可抽取的产物
@@ -505,7 +504,7 @@ GT5U.gui.text.recipe_result.ft_no_enqing=§4恩情不足 1000
 ote.tm.food.0=只是一个发电机
 ote.tm.food.1=再也不用担心吃得太饱了
 ote.tm.food.2=丰矿地烧掉一切食物
-ote.tm.food.3=发电:食物饥饿值^2 * 线圈等级 * 机械方块等级 * 2 , 最高发电1A MAX/t , 64并行 , 一次最多烧毁一组相同食物
+ote.tm.food.3=发电:食物饥饿值^2 * 线圈等级 * 机械方块等级 * 2, 最高发电1A MAX/t, 64并行, 一次最多烧毁一组相同食物
 ote.tm.food.4=§c§l注意:机器污染过高:如遇跳电并报错"无法排出污染", 请尝试放置多个消声仓
 ote.tm.food.5=赞美伟大的富婆 Safari_xiu 吧!没有她就没有今天的 123 了憋憋.
 ote.cm.food.0=1 - 输入输出总线, 输入输出仓, 消声仓 : 替换脱氧钢机械方块
@@ -516,18 +515,18 @@ ote.tm.gd.0=§c§l老登的终极造物 - 黑龙驭者(新式龙研聚合装置)
 ote.tm.gd.1=§e§o龙研堆了几千回, 工业进步第一次
 ote.tm.gd.2=§c§o应赞美NHU之神, 蛋机要启动了...
 ote.tm.gd.3=三级机械方块解锁无损超频
-ote.tm.gd.4=并行 = 机械方块等级 * 128,最高等级解锁int并行
+ote.tm.gd.4=并行 = 机械方块等级 * 128, 最高等级解锁int并行
 ote.tm.gd.5=§e耗时倍率 = 1 - 0.05 * 线圈等级
 ote.tm.gd.6=§e机械方块等级限制可执行的配方等级
 ote.tm.gd.7=§e更换结构时请重放主机以检测结构
-ote.cm.gd.0=1 - 能源仓,输入输出总线,输入输出仓:替换硅岩聚合机械方块,支持TecTech能源仓
+ote.cm.gd.0=1 - 能源仓, 输入输出总线, 输入输出仓:替换硅岩聚合机械方块, 支持TecTech能源仓
 
 #Heat Exchanger
 ote.tm.exc.0=真正的热能饕餮 - 真空冷冻热交换机
 ote.tm.exc.1=回收热锭冶炼的废热, 化为超临界蒸汽.
 ote.tm.exc.2=理论可回收热锭冰箱配方50%之EU
 ote.tm.exc.3=物理学还存在吗?
-ote.tm.exc.4=耗电: 123EU/t , 耗时请使用主机参数调整
+ote.tm.exc.4=耗电: 123EU/t, 耗时请使用主机参数调整
 ote.cm.exc.0=1 - 输入输出总线, 输入输出仓, 能源仓 : 替换钨钢机械方块, 支持TecTech能源仓
 
 #IMBA EBF
@@ -537,21 +536,21 @@ ote.tm.imba.2=§6§lint并行!
 ote.tm.imba.3=§6§l任何工作都可以10tick完成!
 ote.tm.imba.4=§6§l内置一颗中子星!炉温无上限!
 ote.tm.imba.5=§1§o来自EOHBUF作者的眷顾
-ote.tm.imba.6=§6"传说中,神明在喝醉后设计了一台机器,醒来后却忘了删掉它.于是,它降临到了凡人世界."
+ote.tm.imba.6=§6"传说中, 神明在喝醉后设计了一台机器, 醒来后却忘了删掉它. 于是, 它降临到了凡人世界. "
 ote.tm.imba.7=§4§l性能?直接拉满!成本?低到怀疑人生!
-ote.tm.imba.8=§c甚至你会怀疑,'我靠,这东西真的允许造出来吗?'
-ote.tm.imba.9=§9只要有它,资源匮乏,效率低下,能量不足统统不存在.它不仅能让你在服务器里翻天覆地,§m还能让你在群聊里发出嘲讽的哈哈哈哈!!
-ote.tm.imba.10=§6它不是工具,它是玩家的梦想,是DEV的噩梦!
+ote.tm.imba.8=§c甚至你会怀疑, '我靠, 这东西真的允许造出来吗?'
+ote.tm.imba.9=§9只要有它, 资源匮乏, 效率低下, 能量不足统统不存在. 它不仅能让你在服务器里翻天覆地, §m还能让你在群聊里发出嘲讽的哈哈哈哈!!
+ote.tm.imba.10=§6它不是工具, 它是玩家的梦想, 是DEV的噩梦!
 ote.cm.imba.0=太吊炸天了.
 
 #Laoba
 ote.tm.chem.0=§e§l老登的终极造物 - 铑钯反应釜(化学反应釜 & 化工厂)
 ote.tm.chem.1=§l§a    吃饱啦!    
-ote.tm.chem.2=化工厂模式 : 耗时 = NEI耗时 * (1 - 线圈等级 * 0.15),最低耗时倍率为0.1; 并行16, 无催化剂消耗, 有损超频
+ote.tm.chem.2=化工厂模式 : 耗时 = NEI耗时 * (1 - 线圈等级 * 0.15), 最低耗时倍率为0.1; 并行16, 无催化剂消耗, 有损超频
 ote.tm.chem.3=大型化学反应釜模式 : 耗时 = NEI耗时 * (1 - 线圈等级 * 0.1), 最低耗时倍率为0.1; 无限制并行, 无损超频
-ote.tm.chem.4=玻璃等级决定化工厂等级,化工厂等级==玻璃信道等级-3
+ote.tm.chem.4=玻璃等级决定化工厂等级, 化工厂等级==玻璃信道等级-3
 ote.tm.chem.5=不成型请重放主机
-ote.tm.chem.6=如遇配方不执行,请放置一个普通输入总线,并将所有输入总线的编程电路调到一致
+ote.tm.chem.6=如遇配方不执行, 请放置一个普通输入总线, 并将所有输入总线的编程电路调到一致
 ote.tm.chem.7=主机放入铱锇钐合金粉解锁化工厂无损超频及并行限制
 ote.cm.chem.0=1 - 输入输出总线, 输入输出仓, 能源仓 : 替换镀铑钯机械方块, 支持TecTech能源仓
 ote.tm.chem.mode.0=化工厂模式
@@ -600,7 +599,7 @@ ote.cm.mca.0=1 - 输入输出总线, 输入输出仓, 能源仓 : 替换脱氧�
 ote.tm.pump.0=太空钻机模块
 ote.tm.pump.1=将太空钻机功能添加到太空电梯
 ote.tm.pump.2=§l我 是 吸 仰 阳.
-ote.tm.pump.3=直接从太空电梯接受能量,不使用能源仓
+ote.tm.pump.3=直接从太空电梯接受能量, 不使用能源仓
 ote.tm.pump.4=设定的行星和气体类型决定了输出的流体
 ote.tm.pump.5=锁定输出仓即可防止溢出销毁
 ote.tm.pump.6=§9运行电压:§aMAX 每个配方的最大并行:§c123123
@@ -623,16 +622,16 @@ ote.cm.mebf.0=1 - 消声仓, 能源仓, 输入输出总线, 输入输出仓 : �
 
 #EEC
 ote.tm.eec.0=§e§l老登的终极造物 - 噬魂监狱(工业屠宰场)
-ote.tm.eec.1=§l§4"观自在菩萨, 行深般若波罗蜜多时照见五蕴皆空, 度一切苦厄."
+ote.tm.eec.1=§l§4"观自在菩萨, 行深般若波罗蜜多时照见五蕴皆空, 度一切苦厄. "
 ote.tm.eec.2=§l§4先进科技的操控致使此机器无法连接血魔法仪式, 自动销毁所有附魔以及有耐久损耗的装备, 所有电动刷怪笼置于HV输入总线内. 最大支持16*
 ote.tm.eec.3=§n§b工业化的魅力......?
 ote.tm.eec.4=并行: 134217728, 耗电固定为64A MAX/刷怪笼, 时运等级32
 ote.tm.eec.5=注意: 多方块结构方块数量过多 无法预览结构
-ote.tm.eec.6=统计 : 灵魂沙 * 2200 , 博特姆合金块 * 1493 , 放射硅岩合金机械方块 * 12309
-ote.tm.eec.7=黑曜石 * 611 , 钢框架 * 169 , 脱氧钢机械方块 * 100
-ote.tm.eec.8=硼玻璃系列方块 * 240 , 太空电梯支持结构方块 * 918 , 分子机械方块 * 2271
-ote.tm.eec.9=量子玻璃 * 1101 , 遏制场发生器 * 44 , 玄铁栅栏 * 111
-ote.tm.eec.10=维度桥接机械方块 * 233 , 维度注入机械方块 * 241 , 时空扭曲机械方块 * 32
+ote.tm.eec.6=统计 : 灵魂沙 * 2200, 博特姆合金块 * 1493, 放射硅岩合金机械方块 * 12309
+ote.tm.eec.7=黑曜石 * 611, 钢框架 * 169, 脱氧钢机械方块 * 100
+ote.tm.eec.8=硼玻璃系列方块 * 240, 太空电梯支持结构方块 * 918, 分子机械方块 * 2271
+ote.tm.eec.9=量子玻璃 * 1101, 遏制场发生器 * 44, 玄铁栅栏 * 111
+ote.tm.eec.10=维度桥接机械方块 * 233, 维度注入机械方块 * 241, 时空扭曲机械方块 * 32
 ote.cm.eec.0=1 - 消声仓, 能源仓, 输入总线(HV), 输出总线, 输入输出仓 : 替换超维度机械方块, 支持TecTech能源仓. 希望怪物的灵魂不会纠缠你终生.
 
 #Freezer
@@ -641,7 +640,7 @@ ote.tm.fz.1=§b  EU消耗: 100%
 ote.tm.fz.2=§b  速度 + 100%
 ote.tm.fz.3=§b  并行: 1024
 ote.tm.fz.4=§6  不消耗极寒之凛冰, 但输入仓必须至少有123 * 1000L极寒之凛冰才可运行
-ote.tm.fz.5=§q§l"巨凛冰这个段位就很尴尬,往上走有TST冰箱,再往下有原版立方体,巨凛冰上不去下不来卡在这里了"
+ote.tm.fz.5=§q§l"巨凛冰这个段位就很尴尬, 往上走有TST冰箱, 再往下有原版立方体, 巨凛冰上不去下不来卡在这里了"
 ote.cm.fz.0=1 - 消声仓, 能源仓, 输入输出总线, 输入输出仓 : 替换凛冰机械方块, 支持TecTech能源仓
 ote.cm.fz.1=你真做啊?
 
@@ -685,13 +684,13 @@ ote.tm.mnf.parallel.max=最大并行
 #MQFT
 ote.tm.mqft.0=§e§l老登们的又一造物 - §b"狄拉克逆变器"
 ote.tm.mqft.1=§b§l对虚粒子的操控在量子之海中掀起了滔天巨浪...
-ote.tm.mqft.2=§d提供基础原料,可以让复杂的化学,物理过程一步到位
-ote.tm.mqft.3=§d依靠量子之海中的虚粒子,产物能以超出原料的规模输出
-ote.tm.mqft.4=§d*物质依旧守恒,只不过从虚粒子转为了实粒子
+ote.tm.mqft.2=§d提供基础原料, 可以让复杂的化学, 物理过程一步到位
+ote.tm.mqft.3=§d依靠量子之海中的虚粒子, 产物能以超出原料的规模输出
+ote.tm.mqft.4=§d*物质依旧守恒, 只不过从虚粒子转为了实粒子
 ote.tm.mqft.5=狄拉克逆变模式会有意想不到的惊喜
-ote.tm.mqft.6=§9时间膨胀场发生器每提升一级,减少10%的配方时间
+ote.tm.mqft.6=§9时间膨胀场发生器每提升一级, 减少10%的配方时间
 ote.tm.mqft.7=§9稳定力场发生器等级<6时, 产量不变
-ote.tm.mqft.8=§9稳定力场发生器等级≤8, ≥6时,产量为二倍
+ote.tm.mqft.8=§9稳定力场发生器等级≤8, ≥6时, 产量为二倍
 ote.tm.mqft.9=§9稳定力场发生器等级≥9时, 产量为三倍
 ote.cm.mqft.0=1 - 能源仓, 输入输出总线, 输入输出仓 : 替换分子机械方块, 支持TecTech能源仓
 
@@ -701,7 +700,7 @@ ote.tm.mat.1=由于落后的IV工艺, 此机器导能时破坏主机依然会爆
 ote.tm.mat.2=他真的会有用吗?
 ote.tm.mat.3=桑百安够么, 应该够吧? 来吧! 试一下米妮!
 ote.tm.mat.4=请不要使用特高电流之激光仓, 不然有源可能会坏掉.
-ote.tm.mat.5=§c§l警告 : 爆炸为龙堆式爆炸 , 威力和输入功率正相关 ! 服务器请在配置文件内关闭 !
+ote.tm.mat.5=§c§l警告 : 爆炸为龙堆式爆炸, 威力和输入功率正相关 ! 服务器请在配置文件内关闭 !
 ote.tm.mat.6=结构正中心
 ote.tm.mat.7=0x 超能机械方块(最低)
 ote.tm.mat.8=任意能源仓, 激光靶仓
@@ -715,10 +714,10 @@ ote.tm.nfg.2=通化的升级版本, 可以支持硅岩燃料, 但不能使用传
 ote.tm.nfg.3=耗时根据主机参数决定, 单位tick, 无线模式实际功率为总发电 / 耗时(tick)
 ote.tm.nfg.4=和通化一样的设计, 但同时兼备了大硅岩的加成(真的吗?)
 ote.tm.nfg.5=一次消耗输入仓内所有燃料和助燃剂
-ote.tm.nfg.6=感谢伟大的铱锇钐大人,所有输出功率都将为原来的三倍
+ote.tm.nfg.6=感谢伟大的铱锇钐大人, 所有输出功率都将为原来的三倍
 ote.tm.nfg.7=二级管道方块解锁无线模式, 使用螺丝刀开启
 ote.tm.nfg.8=§a更高级的结构意味着更高级的§c助燃剂, §a一级结构:原子分离助燃剂, 二级结构:超维度等离子助燃剂
-ote.tm.nfg.9=§a效率随着运行时间提升, 每秒提升1%效率,最高始终为200%
+ote.tm.nfg.9=§a效率随着运行时间提升, 每秒提升1%效率, 最高始终为200%
 ote.tm.nfg.10=计算公式:总发电量=燃料数量*输出系数(3)*效率*燃料输出功率*配方时间
 ote.tm.nfg.12=§a注意 : 如果设置耗时小于20ticks, 则效率不会累加
 ote.tm.nfg.13=§4你知道会发生什么.
@@ -740,24 +739,24 @@ ote.bbpf.2=§l并行公式: 1230+线圈等级*1230
 ote.bbpf.3="妈妈再也不用怕有催化剂残留啦"
 ote.bbpf.4=§a放入§c星阵§r§a以开启无损超频/int并行+解锁无线模式
 ote.bbpf.5=切换无线模式
-ote.bbpf.6=如果无线电量不足,输入材料将会直接§c湮灭
+ote.bbpf.6=如果无线电量不足, 输入材料将会直接§c湮灭
 ote.bbpf.7=§c支持多安仓/TecTech激光/能源仓
 ote.bbpf.wireless.off=该机器的力量被封印(无线关闭)
 ote.bbpf.wireless.on=该机器解放了它全部的力量(无线开启)
 ote.bbpf.wireless.energyhatch=请先移除所有能源仓再开启无线模式
 ote.bbpf.wireless.invalid=需要星阵才能使用无线模式
-ote.bbpf.8=§6"亿万火种之怒,燃尽此身!"§r§7-撕裂维度,烧穿因果
-ote.bbpf.9=§7线圈每升一级:能耗§c-8%§7|耗时§a-8%§7;§fMAX(永恒)线圈§7:能耗仅剩§b1%§7,速度为凡人的§b百倍§7
-ote.bbpf.10=§7MLevel2时并行数突破至§f2,147,483,647§7(int上限),不再受线圈等级束缚
-ote.bbpf.11=§7无线模式:与星阵共鸣后由GUI/螺丝刀开启;§c禁止携带能源仓§7;并行数以无线能量为限,开炉瞬间一次性扣除
+ote.bbpf.8=§6"亿万火种之怒, 燃尽此身!"§r§7-撕裂维度, 烧穿因果
+ote.bbpf.9=§7线圈每升一级:能耗§c-8%§7|耗时§a-8%§7; §fMAX(永恒)线圈§7:能耗仅剩§b1%§7, 速度为凡人的§b百倍§7
+ote.bbpf.10=§7MLevel2时并行数突破至§f2,147,483,647§7(int上限), 不再受线圈等级束缚
+ote.bbpf.11=§7无线模式:与星阵共鸣后由GUI/螺丝刀开启; §c禁止携带能源仓§7; 并行数以无线能量为限, 开炉瞬间一次性扣除
 ote.bbpf.12=§7结构:§f605§7个加热线圈-热量与效率的源头
-ote.bbpf.13=§7另有§f1864§7个超维度机械方块,§f153§7个维度桥接方块,§f250§7个维度注入机械方块(仓位)
-ote.bbpf.14=§7核心悬浮§f54§7个量子玻璃,凝视着维度裂缝
+ote.bbpf.13=§7另有§f1864§7个超维度机械方块, §f153§7个维度桥接方块, §f250§7个维度注入机械方块(仓位)
+ote.bbpf.14=§7核心悬浮§f54§7个量子玻璃, 凝视着维度裂缝
 
 #computer
 ote.calc.rank=计算机箱
 ote.computer.name=§l§u异星§c量子超级计算机§r
-ote.computer.hint.0=1 - 基础仓室,光学接口或电子计算机机械方块
+ote.computer.hint.0=1 - 基础仓室, 光学接口或电子计算机机械方块
 ote.computer.hint.1=2 - 计算机箱或超能机械方块
 ote.computer.hint.2=3 - 冷却液输入仓室或计算机散热风扇
 ote.computer.desc=你需要它来处理上面的这串数字
@@ -767,12 +766,12 @@ ote.computer.cfgo.1=生成算力
 ote.computer.desc.0=§l§u异星§c量子超级计算机
 ote.computer.desc.1=用于生成算力(以及热量)
 ote.computer.desc.2=银河计算力皆掌在手中
-ote.computer.coolant=工作需要提供超级冷却液,计算公式: 冷却液需求: (算力/50) × 超频^1.2 × 超压^0.6 L/tick"
+ote.computer.coolant=工作需要提供超级冷却液, 计算公式: 冷却液需求: (算力/50) × 超频^1.2 × 超压^0.6 L/tick"
 ote.computer.coolantinput=任意输入仓(冷却液输入仓)
 ote.computer.info.coolant_usage=冷却液消耗: %s
 ote.computer.desc.coolant.01=§c[§l冷却液系统]§r冷却液输入支持§cME输入仓§r!
-ote.computer.noliquid=超级冷却液不足,无法计算
-ote.computer.output.x2=§c由于憋憋之神的眷顾,输出算力全部x2,§r§l请注意冷却液消耗
+ote.computer.noliquid=超级冷却液不足, 无法计算
+ote.computer.output.x2=§c由于憋憋之神的眷顾, 输出算力全部x2, §r§l请注意冷却液消耗
 ote.computer.recipe=异星计算机可用部件配方
 
 #SINOPEC
@@ -834,9 +833,9 @@ ote.cm.ts.1=2 - 消声仓 : 替换脱氧钢机械方块(烟囱上, 其实放主�
 #WoodenFusion
 ote.tm.wfr.0=§c§l蒸汽时代的最终幻想 - 蒸汽聚变反应堆
 ote.tm.wfr.1=§b§o他所能做的, 仅仅只是通过一些无法猜测的手段, 将蒸汽化为氢等离子体
-ote.tm.wfr.2=EU消耗 : 0, 耗时 : (输入蒸汽数量(L) / 1000) * 20sec , 更高级的蒸汽减少运行时间
-ote.tm.wfr.3=耗时 : 普通蒸汽 - 100% , 过热蒸汽 : 50% , 超临界蒸汽 : 10%
-ote.tm.wfr.4=产出 : 普通蒸汽 - 1000L / 1L氢等离子体 , 过热蒸汽 : 1000L / 10L氢等离子体 , 超临界蒸汽 : 1000L / 100L氢等离子体
+ote.tm.wfr.2=EU消耗 : 0, 耗时 : (输入蒸汽数量(L) / 1000) * 20sec, 更高级的蒸汽减少运行时间
+ote.tm.wfr.3=耗时 : 普通蒸汽 - 100%, 过热蒸汽 : 50%, 超临界蒸汽 : 10%
+ote.tm.wfr.4=产出 : 普通蒸汽 - 1000L / 1L氢等离子体, 过热蒸汽 : 1000L / 10L氢等离子体, 超临界蒸汽 : 1000L / 100L氢等离子体
 ote.cm.wfr.0=1 - 输入输出仓 : 替换石砖
 
 #Steam 9in1
@@ -852,9 +851,9 @@ ote.tm.s9in1.5=§7§o§n可受过神秘机器的恩泽的老登们, 将永远铭
 ote.tm.s9in1.6=§7§o§nYOU. 你, 老登, 希望你听完这个刚编的故事, 能永远记住伟大的九合一之神, 与他的并行+2~UwUb.
 ote.tm.s9in1.7=§l§b蒸汽时代的九合一, 多么了不起的传承!
 ote.tm.s9in1.8=§c可支持运行九个配方池, 单台机器通过编程电路20 21 22在类的基础上切换内部配方池, 类通过螺丝刀切换.
-ote.tm.s9in1.9=类一: §c水泵-合金炉-提取(名称: metalProcess0), 
-ote.tm.s9in1.10=类二: §c洗矿-粉碎-锻造(名称: oreProcess0), 
-ote.tm.s9in1.11=类三: §c压缩-搅拌-离心(名称: metalProcess1), 
+ote.tm.s9in1.9=类一: §c水泵-合金炉-提取(名称: metalProcess0),
+ote.tm.s9in1.10=类二: §c洗矿-粉碎-锻造(名称: oreProcess0),
+ote.tm.s9in1.11=类三: §c压缩-搅拌-离心(名称: metalProcess1),
 ote.tm.s9in1.12=默认并行为256, 耗时为NEI配方耗时的85%, 若配方不运行可尝试关闭输入隔离. 支持高级输入输出总线/仓.
 ote.tm.s9in1.13=简直太憋憋了.
 ote.cm.s9in1.0=1 - 消声仓, 蒸汽输入仓, 输入输出总线, 输入输出仓 : 替换镀铜砖块
@@ -886,7 +885,7 @@ ote.tm.mtc.1=§b  EU消耗: 100%
 ote.tm.mtc.2=§b  速度 + 100%
 ote.tm.mtc.3=§b  并行: 1024
 ote.tm.mtc.4=§6  使用GT++热处理机械方块搭建结构
-ote.tm.mtc.5=§l "乌拉尔山脉的钢铁洪流不会停歇,矿石在离心烈焰中化为祖国的养料"
+ote.tm.mtc.5=§l "乌拉尔山脉的钢铁洪流不会停歇, 矿石在离心烈焰中化为祖国的养料"
 
 #LargeQuHub
 ote.tn.quhub=大型Qu牌集线器
@@ -966,10 +965,10 @@ ote.ds.mode.bec=§d已切换: 凝聚态模式 (需要凝聚态适配舱)
 ote.tm.ds.5b=§d■ 凝聚态:解锁终极升级获得全部性能
 ote.tm.ds.perf2=§7支持多A能源仓和激光仓
 ote.ds.struct.0=控制器:吻部尖端中心(结构字符 ~)
-ote.ds.struct.1=舱位(万能位,结构字符 H)= 任意 GT 标准舱室:总线 / 输入输出仓 / 能源 / 激光等
+ote.ds.struct.1=舱位(万能位, 结构字符 H)= 任意 GT 标准舱室:总线 / 输入输出仓 / 能源 / 激光等
 ote.ds.struct.2=结构方块:鲸脂外壳 / 装配腔方块(腹褶 + 肚皮底 7 格)/ 鲸须格栅 / 尾鳍加强框 / 凝聚态适配舱
-ote.ds.struct.3=三环 = 三条鳍信道:左鳍(时间) / 右鳍(空间) / 顶鳍(稳定),1~10 级;同一信道里的方块必须同级
-ote.ds.struct.4=舱位位置:机器头一圈,控制器正下方也是舱位
+ote.ds.struct.3=三环 = 三条鳍信道:左鳍(时间) / 右鳍(空间) / 顶鳍(稳定), 1~10 级; 同一信道里的方块必须同级
+ote.ds.struct.4=舱位位置:机器头一圈, 控制器正下方也是舱位
 ote.ds.hatch.universal=任意 GT 标准舱室(总线 / 输入输出仓 / 能源 / 激光等)
 ote.tm.ds.0b=§7或许它能帮到你很多 ?!
 ote.tm.ds.perf=§7升级结构方块可以提升整台机器的性能:加速 耗电 并行
@@ -983,8 +982,8 @@ ote.tm.ds.type=老登的终极造物 - 通用装配观测系统机
 ote.tm.ds.0=§b来自未知次元的高能机体
 ote.tm.ds.1=§b■ 装配线:无损超频+无需闪存
 ote.tm.ds.2=§b■ 装配线:结构方块等级提供额外增益
-ote.tm.ds.3=§d■ 凝聚态:只需要配方原流体,加工算法仍为BEC原版点数机制,但更加强力
-ote.tm.ds.4=§d■ 凝聚态:需要先在"机体升级"解锁,并按配方要求提升蜂群等级
+ote.tm.ds.3=§d■ 凝聚态:只需要配方原流体, 加工算法仍为BEC原版点数机制, 但更加强力
+ote.tm.ds.4=§d■ 凝聚态:需要先在"机体升级"解锁, 并按配方要求提升蜂群等级
 ote.tm.ds.5=§d■ 凝聚态:算力卡提供额外加速(光学 量子 普朗克 D99 D199 D999)还有-690?!
 ote.tm.ds.6=§cA§6t§et§ae§bn§dt§ci§6o§en §ai§bs §da§cl§6l §ey§ao§bu §dn§ce§6e§ed§a.
 ote.tm.ds.7=§d作者 : §bLokisidus §d&& §9§zDeepSeek 41F
@@ -1000,15 +999,15 @@ tile.dsCasing.10.name=右鳍
 tile.dsCasing.11.name=顶鳍
 tile.nailongCasing.0.name=奈隆机械方块
 tile.nailongCasing.1.name=黄桃罐头机械方块
-channels.123technology.ds_left_fin=左鳍信道(1 = 左鳍方块;2~10 = 时间膨胀场发生器 粗制~鸿蒙)
-channels.123technology.ds_right_fin=右鳍信道(1 = 右鳍方块;2~10 = 压缩时空场发生器 粗制~鸿蒙)
-channels.123technology.ds_top_fin=顶鳍信道(1 = 顶鳍方块;2~10 = 稳定力场发生器 粗制~鸿蒙)
+channels.123technology.ds_left_fin=左鳍信道(1 = 左鳍方块; 2~10 = 时间膨胀场发生器 粗制~鸿蒙)
+channels.123technology.ds_right_fin=右鳍信道(1 = 右鳍方块; 2~10 = 压缩时空场发生器 粗制~鸿蒙)
+channels.123technology.ds_top_fin=顶鳍信道(1 = 顶鳍方块; 2~10 = 稳定力场发生器 粗制~鸿蒙)
 
-#DeepSeiko 配方失败提示（SimpleCheckRecipeResult key 前缀固定为 GT5U.gui.text.recipe_result.）
+#DeepSeiko 配方失败提示(SimpleCheckRecipeResult key 前缀固定为 GT5U.gui.text.recipe_result.)
 GT5U.gui.text.recipe_result.ds_need_adapter=凝聚态模式尚未解锁 (在"机体升级"面板消耗 4 个凝聚态适配舱)
 GT5U.gui.text.recipe_result.ds_nanite_low=蜂群等级低于该配方要求 (在"机体升级"面板逐级升级)
 
-#DeepSeiko 蓝图结构说明（"Hint N dot:" 前缀被 BlockRenderer6343 高亮功能解析, 勿改格式）
+#DeepSeiko 蓝图结构说明("Hint N dot:" 前缀被 BlockRenderer6343 高亮功能解析, 勿改格式)
 
 
 
@@ -1040,7 +1039,7 @@ ote.ds.gui.probe.rings=三环等级(时/空/稳)
 ote.ds.upg.fill=从背包补料
 otht.recipe.DeepSeikoAL=§b§l大肥鱼装配
 item.DeepSeikoTokenSilver.name=迪普西科调试币(银)
-tt.ds.token.silver=装配线配方图的页签图标(银币,无光效)
+tt.ds.token.silver=装配线配方图的页签图标(银币, 无光效)
 ote.ds.gui.speed=加速
 ote.ds.gui.upgrade=升级
 ote.ds.gui.btn.openUpgrade=打开升级
@@ -1056,13 +1055,13 @@ tt.ds.core.0=§b它可以冷却一切
 tt.ds.singularity.0=§b1234 个白米饭压成的一个点
 tt.ds.singularity.1=§7需要亚稳态黑洞遏制场(稳定的黑洞)才能压出来
 ote.ds.gui.alNoUpgrade=装配线模式不可用
-GT5U.gui.text.recipe_result.ds_need_card=凝聚态模式需要一张算力卡(控制器算力槽;调试币也算)
+GT5U.gui.text.recipe_result.ds_need_card=凝聚态模式需要一张算力卡(控制器算力槽; 调试币也算)
 ote.tm.ds.hint.controller=控制器: 吻部尖端中心
 ote.tm.ds.hint.bays=头部一圈标准舱位, 任意舱室
-ote.tm.ds.hint.rings.2=每个信道 1~10 级:1 = 鳍方块,2~10 = 对应场发生器(粗制~鸿蒙)
-ote.tm.ds.hint.rings.6=§b顶鳍(稳定)§7:每级 §a+2.5% 加速§7 且 §b-2.5% 耗电§7,满级 ⇒ §a×1.20 §7/ §b×0.80
-ote.tm.ds.hint.rings.5=§7右鳍(空间):每级 §b-5% 耗电§7,满级最低 §b×0.50
-ote.tm.ds.hint.rings.4=§7左鳍(时间):每级 §a+5% 加速§7(缩短耗时),满级最快 §a×1.50
+ote.tm.ds.hint.rings.2=每个信道 1~10 级:1 = 鳍方块, 2~10 = 对应场发生器(粗制~鸿蒙)
+ote.tm.ds.hint.rings.6=§b顶鳍(稳定)§7:每级 §a+2.5% 加速§7 且 §b-2.5% 耗电§7, 满级⇒ §a×1.20 §7/ §b×0.80
+ote.tm.ds.hint.rings.5=§7右鳍(空间):每级 §b-5% 耗电§7, 满级最低 §b×0.50
+ote.tm.ds.hint.rings.4=§7左鳍(时间):每级 §a+5% 加速§7(缩短耗时), 满级最快 §a×1.50
 GT5U.gui.text.shutdown.ds_no_card=§c算力卡被拔掉了
 
 # CropsNH 水稻作物
@@ -1070,12 +1069,12 @@ cropsnh_crops.rice=水稻
 
 # CropsNH 黄桃草
 cropsnh_crops.yellowPeachGrass=黄桃草
-cropsnh_crops.yellowPeachGrass.flavour=草叶间挂着一颗颗黄桃,甜得像罐头.
+cropsnh_crops.yellowPeachGrass.flavour=草叶间挂着一颗颗黄桃, 甜得像罐头.
 
 # CropsNH 蜜蜂草
 cropsnh_crops.beeGrass=蜜蜂草
 
-# ── 迪普西科：MUI2 面板 / 聊天 / 停机原因（2026-10-29 本地化） ──
+# ── 迪普西科:MUI2 面板 / 聊天 / 停机原因(2026-10-29 本地化) ──
 ote.ds.chat.modeLocked=§c合成中不能切换模式
 ote.ds.lang.computeCard=算力卡
 ote.ds.gui.compute=算力
@@ -1115,38 +1114,38 @@ ote.abstract_sanctum.mode.craft=制作模式
 ote.abstract_sanctum.mode.duplicate=复制模式
 ote.abstract_sanctum.chat.craft=已切换到制作模式
 ote.abstract_sanctum.chat.duplicate=已切换到复制模式
-ote.abstract_sanctum.chat.mode_locked=机器运行中,无法切换模式
+ote.abstract_sanctum.chat.mode_locked=机器运行中, 无法切换模式
 ote.abstract_sanctum.gui.mana=魔力
 ote.abstract_sanctum.gui.salt=世界盐
 ote.abstract_sanctum.gui.blood=血液
 ote.abstract_sanctum.gui.config=§b✦ 原料倍率设置 ✦
-ote.abstract_sanctum.gui.range=§8范围 1.0-10.0,步长 0.1
-ote.abstract_sanctum.gui.open_usage=§e点击查看相关 NEI 配方,可加入书签
+ote.abstract_sanctum.gui.range=§8范围 1.0-10.0, 步长 0.1
+ote.abstract_sanctum.gui.open_usage=§e点击查看相关 NEI 配方, 可加入书签
 ote.abstract_sanctum.gui.parallel=§6当前并行:§f%s
 ote.abstract_sanctum.gui.core.active=§b✦ 奈隆核心:§a魔力回路共鸣中
-ote.abstract_sanctum.gui.core.idle=§5✦ 奈隆核心:§7待机,符文阵列保持稳定
+ote.abstract_sanctum.gui.core.idle=§5✦ 奈隆核心:§7待机, 符文阵列保持稳定
 ote.abstract_sanctum.upgrade.mana=§b永恒魔力池:魔力消耗归零
 ote.abstract_sanctum.upgrade.salt=§6阿卡西记录:世界盐消耗归零
 ote.abstract_sanctum.upgrade.blood=§c阿蒙克气血宝珠:生命源质消耗归零
 ote.abstract_sanctum.tooltip.0=§d扭曲人的最终解决方案 - 魔法学综合体
-ote.abstract_sanctum.tooltip.1=§d❖ §7今天,结合三大魔法之力,终于有机会一睹祂的真容!
+ote.abstract_sanctum.tooltip.1=§d❖ §7今天, 结合三大魔法之力, 终于有机会一睹祂的真容!
 ote.abstract_sanctum.tooltip.2=§5❖ §7这是..什么?
 ote.abstract_sanctum.tooltip.3=§b❖ §7哈哈哈哈哈哈哈哈哈哈哈
-ote.abstract_sanctum.tooltip.4=§b✦ 制作模式 §7支持绝大多数植物魔法,神秘时代与血魔法的配方!
-ote.abstract_sanctum.tooltip.5=§6◆ 并行 §7§f有损超频,基础并行为1,每次超频使得并行+2
-ote.abstract_sanctum.tooltip.6=§5✦ 复制模式 §7,消耗三种原料来批量复制物品!输入总线的催化剂物品不会被消耗
-ote.abstract_sanctum.tooltip.7=§6◆ 并行 §7§f无损超频,基础并行64,每次超频翻倍(总并行 = 64×2^n,n为超频次数)
+ote.abstract_sanctum.tooltip.4=§b✦ 制作模式 §7支持绝大多数植物魔法, 神秘时代与血魔法的配方!
+ote.abstract_sanctum.tooltip.5=§6◆ 并行 §7§f有损超频, 基础并行为1, 每次超频使得并行+2
+ote.abstract_sanctum.tooltip.6=§5✦ 复制模式 §7, 消耗三种原料来批量复制物品!输入总线的催化剂物品不会被消耗
+ote.abstract_sanctum.tooltip.7=§6◆ 并行 §7§f无损超频, 基础并行64, 每次超频翻倍(总并行 = 64×2^n, n为超频次数)
 ote.abstract_sanctum.tooltip.8=§3◆ §7液体魔力与生命源质经输入仓供应
-ote.abstract_sanctum.tooltip.9=§e◆ §7可选择通入Og,每轮消耗 144 mB;使机器制作模式并行 +4,复制模式并行 +64
-ote.abstract_sanctum.tooltip.10=§a◆ §7ZPM及以上玻璃解锁多安能源仓;UIV及以上玻璃解锁激光能源仓
+ote.abstract_sanctum.tooltip.9=§e◆ §7可选择通入Og, 每轮消耗 144 mB; 使机器制作模式并行 +4, 复制模式并行 +64
+ote.abstract_sanctum.tooltip.10=§a◆ §7ZPM及以上玻璃解锁多安能源仓; UIV及以上玻璃解锁激光能源仓
 ote.abstract_sanctum.tooltip.11=§c✖ §7不支持无线能源仓
-ote.abstract_sanctum.tooltip.12=§b✦ 加速公式 §7F(x,y,z)=1+3.23×(∫qx[1,x]+∫qy[1,y]+∫qz[1,z])
+ote.abstract_sanctum.tooltip.12=§b✦ 加速公式 §7F(x, y, z)=1+3.23×(∫qx[1, x]+∫qy[1, y]+∫qz[1, z])
 ote.abstract_sanctum.tooltip.13=§8◆ 加速曲线 §7t 为对应原料倍率
 ote.abstract_sanctum.tooltip.14=§8qx(t)=0.01+1/(1+exp(160(t-1.05)))
 ote.abstract_sanctum.tooltip.15=§8qy(t)=0.01+1/(1+exp(8(t-3.50)))
 ote.abstract_sanctum.tooltip.16=§8qz(t)=0.01+1/(1+exp(40(t-1.20)))  
-ote.abstract_sanctum.tooltip.17=§9 记得给机器供应足够的魔力,世界盐和生命源质!
-ote.abstract_sanctum.tooltip.18=§6✦ §7主机 GUI 提供三个专用升级槽,可分别免除魔力,世界盐与生命源质消耗
+ote.abstract_sanctum.tooltip.17=§9 记得给机器供应足够的魔力, 世界盐和生命源质!
+ote.abstract_sanctum.tooltip.18=§6✦ §7主机 GUI 提供三个专用升级槽, 可分别免除魔力, 世界盐与生命源质消耗
 ote.abstract_sanctum.tooltip.19=§9作者 : §z§l§bNMC终焉的神秘使 - 0g123451
 ote.abstract_sanctum.tooltip.20=§c§l在配置文件中配置可怕的邪祟奈隆的笑声是否会在工作的时候散遍整个世界...
 ote.abstract_sanctum.tooltip.21=§c§l这就是病名为§e奶§c吧?
@@ -1154,7 +1153,15 @@ otht.recipe.AbstractSanctumCraft=奈隆圣地 - 制作
 otht.recipe.AbstractSanctumDuplicate=奈隆圣地 - 复制
 ote.ds.nei.nanite.line1=§b需要机体升级纳米蜂群
 ote.ds.nei.nanite.line2=§b达到 %s 级
-GT5U.gui.text.recipe_result.ote_no_schematic=§4控制器插槽缺少火箭装配图纸
+GT5U.gui.text.recipe_result.ote_no_schematic=§4机器因为缺少设计芯片仓而憋憋
+ote.tn.rocket_schematic_hatch=设计芯片仓
+ote.tt.rocket_schematic_hatch.0=8 个槽位, 仅接受 T1-T8 火箭设计图
+ote.tt.rocket_schematic_hatch.1=为"火"箭装配车间提供配方设计芯片, 不消耗.
+ote.nasa.missing_schematic_hatch=必须在指定仓位安装一个设计芯片仓.
+ote.nasa.schematic_hatch_hint=在任一指定仓位安装一个
+ote.nasa.nei.schematic_hint=放入设计芯片仓, 不消耗.
+ote.nasa.waila.perfect_oc.enabled=无损超频：已启用
+ote.nasa.waila.perfect_oc.disabled=无损超频：未启用
 
 #entangled
 fluid.entangled_oth_void=纠缠玻色-爱因斯坦凝聚态虚空熵流
@@ -1166,7 +1173,7 @@ fluid.entangled_oth_superconductoruiv.name=纠缠玻色-爱因斯坦凝聚态熔
 fluid.entangled_oth_superconductorumv=纠缠玻色-爱因斯坦凝聚态熔融UMV超导粗胚
 fluid.entangled_oth_superconductorumv.name=纠缠玻色-爱因斯坦凝聚态熔融UMV超导粗胚
 
-# ==== GregTech 材料名（123 Technology 迁移）====
+# ==== GregTech 材料名(123 Technology 迁移)====
 Material.galaxy=熔融星系
 Material.voidentropy=虚空熵流
 Material.stars=星尘熔融
@@ -1184,7 +1191,7 @@ Material.irossm=铱锇钐
 Material.gunmu=§q可观测态棍木-超理学聚合物
 Material.degunmu=§8不可观测态棍木-超理学聚合物
 
-# ==== GT 流体名（123 Technology 迁移）====
+# ==== GT 流体名(123 Technology 迁移)====
 fluid.galaxy=熔融星系
 fluid.galaxy.name=熔融星系
 fluid.voidentropy=虚空熵流
@@ -1231,12 +1238,12 @@ item.PsionicStabilizer.name=灵能稳定器
 ote.tn.pmm=灵能具象化模块
 ote.tm.pmm.machine_type=灵能具象化模块
 ote.tm.pmm.controller=灵能具象化模块主机
-ote.pmm.struct.description=5×2×5;底部为奥法机械方块,可替换输入总线,输入仓与输出总线
-ote.tm.pmm.1=作为虚境链接矩阵的可选模块安装,替换掉自动搭建的血腥灵宝块
-ote.tm.pmm.2=必须由已解锁"灵能调和"的主机能源仓供电;主机发电量不会用于模块充能
-ote.tm.pmm.3="契约:织缕刻印"解锁控制器纳米蜂群加速,每级 20%
-ote.tm.pmm.4=超频流体必须输入本模块,不能输入主机
-ote.tm.pmm.5=主机输入能源按已连接模块平均分配,未使用份额自动转给其他模块;配方可无限跨级,超频次数只受模块缓冲电量和超频所需流体限制
+ote.pmm.struct.description=5×2×5; 底部为奥法机械方块, 可替换输入总线, 输入仓与输出总线
+ote.tm.pmm.1=作为虚境链接矩阵的可选模块安装, 替换掉自动搭建的血腥灵宝块
+ote.tm.pmm.2=必须由已解锁"灵能调和"的主机能源仓供电; 主机发电量不会用于模块充能
+ote.tm.pmm.3="契约:织缕刻印"解锁控制器纳米蜂群加速, 每级 20%
+ote.tm.pmm.4=超频流体必须输入本模块, 不能输入主机
+ote.tm.pmm.5=主机输入能源按已连接模块平均分配, 未使用份额自动转给其他模块; 配方可无限跨级, 超频次数只受模块缓冲电量和超频所需流体限制
 ote.pmm.gui.header=§b灵能具现 // 模块诊断
 ote.pmm.gui.link=§7主机链路:§f
 ote.pmm.gui.linked=§a已连接
@@ -1257,40 +1264,40 @@ ote.pmm.gui.overclock=§7超频轮数 / 耗时除数:§e
 ote.pmm.gui.final_duration=§7最终时长(含超频):§b
 ote.pmm.gui.progress=§7配方进度:§f
 ote.tm.vnm.1=§d 于六相交汇之处, 源质的回响被锻成照亮虚空的永恒余烬.
-ote.tm.vnm.2=§b 当虚境的无限灵能汇入矩阵,源质不再是焰火,而是被现实承认的究极能源.
+ote.tm.vnm.2=§b 当虚境的无限灵能汇入矩阵, 源质不再是焰火, 而是被现实承认的究极能源.
 ote.tm.vnm.3=§d 你本不应该看到这些§kasdasd§h的§kasdasdas.
 ote.tm.vnm.4=§6━━━━━━━━━━━━━━━━━━━━
-ote.tm.vnm.5=§6✦ 结构相关(警告:结构非常巨大,小心崩溃)
-ote.tm.vnm.6=§b结构 §7 266 × 233 × 266;控制器相对坐标 (133, 115, 129).
-ote.tm.vnm.7=§b位置 §7 推荐在y=118放置主机,以及一片相当大的空置域
-ote.tm.vnm.8=§b输出 §7 基础并行 2,000,000;只接受激光动力仓.
-ote.tm.vnm.9=§b输入 §7 至少一个输入总线或双输入仓;源质由进阶源质存储输入总线(ME)提供.
-ote.tm.vnm.10=§b充能 §7 主机输入能源仓只给灵能模块供电,不参与主发电.
-ote.tm.vnm.11=§b控制 §7 潜行 + 螺丝刀切换无线输出;普通螺丝刀切换物品输入模式(节点解锁后).
+ote.tm.vnm.5=§6✦ 结构相关(警告:结构非常巨大, 小心崩溃)
+ote.tm.vnm.6=§b结构 §7 266 × 233 × 266; 控制器相对坐标 (133, 115, 129).
+ote.tm.vnm.7=§b位置 §7 推荐在y=118放置主机, 以及一片相当大的空置域
+ote.tm.vnm.8=§b输出 §7 基础并行 2,000,000; 只接受激光动力仓.
+ote.tm.vnm.9=§b输入 §7 至少一个输入总线或双输入仓; 源质由进阶源质存储输入总线(ME)提供.
+ote.tm.vnm.10=§b充能 §7 主机输入能源仓只给灵能模块供电, 不参与主发电.
+ote.tm.vnm.11=§b控制 §7 潜行 + 螺丝刀切换无线输出; 普通螺丝刀切换物品输入模式(节点解锁后).
 ote.tm.vnm.12=§6━━━━━━━━━━━━━━━━━━━━
 ote.tm.vnm.13=§6✦ 发电公式
-ote.tm.vnm.14=§7令 A_i 为第 i 种源质数量,H_i 为其热值,R = Σ(A_i × H_i),E = ΣA_i,avgHeat = R / E.
-ote.tm.vnm.15=§7H_i 直接以 NEI 中的源质热值为准;无法递归分解的附属源质使用均匀六相向量,但仍参与燃烧.
+ote.tm.vnm.14=§7令 A_i 为第 i 种源质数量, H_i 为其热值, R = Σ(A_i × H_i), E = ΣA_i, avgHeat = R / E.
+ote.tm.vnm.15=§7H_i 直接以 NEI 中的源质热值为准; 无法递归分解的附属源质使用均匀六相向量, 但仍参与燃烧.
 ote.tm.vnm.16=§aBasePower §7= R / T
 ote.tm.vnm.17=§aQualityMultiplier §7= 1 + 0.10 × ln(max(0.01, avgHeat / 40,320))
 ote.tm.vnm.18=§aP_j §7= Σ(A_i × H_i × phaseVector_i[j])
 ote.tm.vnm.19=§aD §7= clamp((Σ((P_j / R)^2) - 1/6) / (5/6), 0, 1)
 ote.tm.vnm.20=§aPhaseMultiplier §7= 1 + B × (1 - D)
-ote.tm.vnm.21=§7B:U11 时为 1.00;否则 U5 或 U6 已激活时为 0.80;默认 0.20.星阵轮强制 D = 0.
+ote.tm.vnm.21=§7B:U11 时为 1.00; 否则 U5 或 U6 已激活时为 0.80; 默认 0.20. 星阵轮强制 D = 0.
 ote.tm.vnm.22=§aGloriaMultiplier §7= 1 + min(Cap, 35 × GloriaShare / (GloriaShare + 0.10))
-ote.tm.vnm.23=§7GloriaShare = GloriaThermal / R;Cap = U19 已激活时 4.0,否则 2.0.
+ote.tm.vnm.23=§7GloriaShare = GloriaThermal / R; Cap = U19 已激活时 4.0, 否则 2.0.
 ote.tm.vnm.24=§aEfficiencyMultiplier §7= (1 + 0.05×I_U2 + 0.10×I_U5 + 0.50×I_U11) × (0.20 if materialInputMode else 1)
 ote.tm.vnm.25=§aOrdinaryMultiplier §7= 1 + Σ(activeNode.OrdinaryBonus)
 ote.tm.vnm.26=§aSpecialMultiplier §7= Stabilizer × Potential × Cycle
-ote.tm.vnm.27=§7Stabilizer = 1 + I_stabilizer × (1 + 0.5×I_U16);T1/T2 至少取 2.0.
-ote.tm.vnm.28=§7U18 已激活时 Potential = 1 + 0.05×min(P,20) + 0.01×min(max(P-20,0),80) + 0.002×max(P-100,0),否则为 1.
-ote.tm.vnm.29=§7Cycle = U22 已激活且下一轮轮次 mod 3 = 0 时取 5,否则取 1.
-ote.tm.vnm.30=§aStructureDecay §7= exp(-0.6×(t-1)^2 + 0.7×G(t,1) - 1.1×G(t,2) - 0.2×G(t,3))
-ote.tm.vnm.31=§7G(t,w) = (1/Z) × ∫[-0.1,0.1] exp(-(t-w-x)^2 / 0.1) dx;Z 为同一积分在 0 处的值.
-ote.tm.vnm.32=§7D_t 依次为 T1 2.013573,T2 0.182691,T3 0.074267,T4 0.004517,T5 0.000068.
+ote.tm.vnm.27=§7Stabilizer = 1 + I_stabilizer × (1 + 0.5×I_U16); T1/T2 至少取 2.0.
+ote.tm.vnm.28=§7U18 已激活时 Potential = 1 + 0.05×min(P, 20) + 0.01×min(max(P-20, 0), 80) + 0.002×max(P-100, 0), 否则为 1.
+ote.tm.vnm.29=§7Cycle = U22 已激活且下一轮轮次 mod 3 = 0 时取 5, 否则取 1.
+ote.tm.vnm.30=§aStructureDecay §7= exp(-0.6×(t-1)^2 + 0.7×G(t, 1) - 1.1×G(t, 2) - 0.2×G(t, 3))
+ote.tm.vnm.31=§7G(t, w) = (1/Z) × ∫[-0.1, 0.1] exp(-(t-w-x)^2 / 0.1) dx; Z 为同一积分在 0 处的值.
+ote.tm.vnm.32=§7D_t 依次为 T1 2.013573, T2 0.182691, T3 0.074267, T4 0.004517, T5 0.000068.
 ote.tm.vnm.33=§aStructureUpgrade §7= exp(1.0×I_U3) × exp(1.5×(t-1)×I_U2) × exp(1.6×(t-1)×I_U4)
 ote.tm.vnm.34=§aPower_core §7= floor[(R/T) × QualityMultiplier × PhaseMultiplier × GloriaMultiplier × EfficiencyMultiplier × OrdinaryMultiplier × SpecialMultiplier × StructureDecay × StructureUpgrade × MaterialPenalty × BloodBonus × StarBonus]
-ote.tm.vnm.35=§7MaterialPenalty = 0.20(仅物品输入模式启用时);BloodBonus = 1.15(本轮生命源质足量时);StarBonus = 360(本轮燃烧星阵时).
+ote.tm.vnm.35=§7MaterialPenalty = 0.20(仅物品输入模式启用时); BloodBonus = 1.15(本轮生命源质足量时); StarBonus = 360(本轮燃烧星阵时).
 ote.tm.vnm.36=§aFinalPower §7= min(Long.MAX_VALUE, floor(Power_core × (1 + U26Bonus% / 100) × CatalystPenalty))
 ote.tm.vnm.37=§6━━━━━━━━━━━━━━━━━━━━
 ote.tm.vnm.38=§6✦ 等级结构方块
@@ -1300,32 +1307,32 @@ ote.tm.vnm.41=§6T2 UEV §7C 双足飞龙聚合机械方块/ D 中子强化硼�
 ote.tm.vnm.42=§6T3 UIV §7C 觉醒龙聚合机械方块/ D 万用无尽注能玻璃 / E 抗热三元金属镀层机械方块 / G 亚稳态鿫高级机械方块 / H 魔法机械方块
 ote.tm.vnm.43=§6T4 UMV §7C 混沌聚合机械方块/ D 无尽灵能水晶玻璃方块 / E 重力稳定机械方块 / G 灵能注入现实稳定结构方块 / H 聚变机械方块 Mk-IV
 ote.tm.vnm.44=§6T5 UXV §7C 亚空间势能屏蔽方块/ D 时空稳定势能空间玻璃方块 / E 重力稳定机械方块 / G 虚境空间稳定结构方块 / H 灵能缠绕机械稳定外壳
-ote.tm.vnm.45=§7F 与控制器附近的奥法机械方块为仓室替换位;注意自动搭建时灵能具象化模块槽位置为血腥灵宝块.
+ote.tm.vnm.45=§7F 与控制器附近的奥法机械方块为仓室替换位; 注意自动搭建时灵能具象化模块槽位置为血腥灵宝块.
 ote.tm.vnm.46=§6━━━━━━━━━━━━━━━━━━━━
 ote.tm.vnm.47=§6✦ 助燃剂
-ote.tm.vnm.48=§7令 E 为本轮源质总量,除法均为整数向下取整;高级阶段累计检查之前阶段的需求.
-ote.tm.vnm.49=§bUEV+ §f熔融宇宙中子态素§7:144 × floor(E / 1,000) L;不足时 eu总产出额外乘以 0.60.
-ote.tm.vnm.50=§bUIV+ §f半稳定反物质§7:10 × floor(E / 1,000,000) L;不足时 eu总产出额外乘以 0.01.
-ote.tm.vnm.51=§bUMV+ §f元始物质§7:1,000 × floor(E / 100,000) L;不足时整轮不产出.
-ote.tm.vnm.52=§bUMV+ §f创造源质元件§7:floor(E / 100,000) 个;不足时整轮不产出.
-ote.tm.vnm.53=§bUXV+ §f熔融永恒§7:固定 6,000 L;不足时整轮不产出.
-ote.tm.vnm.54=§bUXV+ §f创造源质元件§7:额外固定 64 个;不足时整轮不产出.
-ote.tm.vnm.55=§c任一关键助燃剂不足时,会有高额惩罚.
-ote.tm.vnm.56=§7节点效果与逐级解锁内容以虚境飞升星图为准,此处不重复.
+ote.tm.vnm.48=§7令 E 为本轮源质总量, 除法均为整数向下取整; 高级阶段累计检查之前阶段的需求.
+ote.tm.vnm.49=§bUEV+ §f熔融宇宙中子态素§7:144 × floor(E / 1,000) L; 不足时 eu总产出额外乘以 0.60.
+ote.tm.vnm.50=§bUIV+ §f半稳定反物质§7:10 × floor(E / 1,000,000) L; 不足时 eu总产出额外乘以 0.01.
+ote.tm.vnm.51=§bUMV+ §f元始物质§7:1,000 × floor(E / 100,000) L; 不足时整轮不产出.
+ote.tm.vnm.52=§bUMV+ §f创造源质元件§7:floor(E / 100,000) 个; 不足时整轮不产出.
+ote.tm.vnm.53=§bUXV+ §f熔融永恒§7:固定 6,000 L; 不足时整轮不产出.
+ote.tm.vnm.54=§bUXV+ §f创造源质元件§7:额外固定 64 个; 不足时整轮不产出.
+ote.tm.vnm.55=§c任一关键助燃剂不足时, 会有高额惩罚.
+ote.tm.vnm.56=§7节点效果与逐级解锁内容以虚境飞升星图为准, 此处不重复.
 ote.tn.esib=进阶源质存储输入总线(ME)
-ote.tm.esib.0=拥有 16 个源质过滤槽;未标记时拉取 ME 网络中的全部源质.
-ote.tm.esib.1=需要 AE 频道与网络电力;每次只在实际启动配方时抽取源质.
-ote.tm.esib.2=用于虚境链接矩阵和最高等级的大型源质发电机。
+ote.tm.esib.0=拥有 16 个源质过滤槽; 未标记时拉取 ME 网络中的全部源质.
+ote.tm.esib.1=需要 AE 频道与网络电力; 每次只在实际启动配方时抽取源质.
+ote.tm.esib.2=用于虚境链接矩阵和最高等级的大型源质发电机.
 ote.esib.gui.title=进阶源质存储输入总线(ME)
 ote.esib.gui.state=网络状态
 ote.esib.gui.state.online=在线
 ote.esib.gui.state.idle=待机
 ote.esib.gui.state.offline=离线或未供电
-ote.esib.gui.note=自动显示 ME 网络中的全部源质,不需要配置过滤槽.
+ote.esib.gui.note=自动显示 ME 网络中的全部源质, 不需要配置过滤槽.
 tt.void_nexus.glass.6.0=§7结构玻璃等级:§bUIV
-tt.void_nexus.glass.6.1=§8仅作为具体玻璃方块识别,不占用结构子信道;
+tt.void_nexus.glass.6.1=§8仅作为具体玻璃方块识别, 不占用结构子信道;
 tt.void_nexus.glass.7.0=§7结构玻璃等级:§dUMV
-tt.void_nexus.glass.7.1=§8仅作为具体玻璃方块识别,不占用结构子信道;
+tt.void_nexus.glass.7.1=§8仅作为具体玻璃方块识别, 不占用结构子信道;
 tile.nailongCasing.2.name=灵能缠绕机械稳定外壳
 tile.nailongCasing.3.name=灵能注入现实稳定结构方块
 tile.nailongCasing.4.name=亚空间势能屏蔽方块
@@ -1336,14 +1343,14 @@ otht.nei.void_nexus.aspect=§7源质:§b%s §8(%s)
 otht.nei.void_nexus.heat=§7基础热值:§6%s EU
 otht.nei.void_nexus.level=§7热值等级:§d%s
 otht.nei.void_nexus.note=§8图标仅用于展示
-ote.vnm.struct.description=266×233×266:外部扫描结构;雪块位置可替换为仓室,主机槽需放入法杖.
+ote.vnm.struct.description=266×233×266:外部扫描结构; 雪块位置可替换为仓室, 主机槽需放入法杖.
 ote.vnm.struct.wands=控制器主机必须放入神秘时代法杖.
 ote.vnm.struct.laser_only=只接受激光动力仓.
 ote.vnm.struct.module_power=只用于灵能模块供电.
 ote.vnm.struct.no_laser=至少需要一个激光动力仓.
-ote.vnm.struct.upgrade_mismatch=结构各等级方块不匹配,请按 UHV-UEV-UIV-UMV-UXV 检查升级材料.
-ote.vnm.struct.incomplete=结构不完整,请用全息投影检查缺失或错误的方块位置.
-ote.vnm.mode=无线输出:%s;物品输入:%s
+ote.vnm.struct.upgrade_mismatch=结构各等级方块不匹配, 请按 UHV-UEV-UIV-UMV-UXV 检查升级材料.
+ote.vnm.struct.incomplete=结构不完整, 请用全息投影检查缺失或错误的方块位置.
+ote.vnm.mode=无线输出:%s; 物品输入:%s
 ote.vnm.potential.deposit_success=已从输入总线存入虚境势能
 ote.vnm.potential.withdraw_success=已将虚境势能输出到输出总线
 ote.vnm.potential.u28_required=§c需要完成"自寻出路"
@@ -1366,7 +1373,7 @@ ote.vnm.waila.u26=星门水晶增益
 ote.vnm.gui.active=矩阵核心在线
 ote.vnm.gui.idle=矩阵核心离线
 ote.vnm.gui.upgrade_map=打开虚境飞升星图
-ote.vnm.gui.upgrade_hint=查看 28 个研究节点,虚境势能与矩阵同步状态
+ote.vnm.gui.upgrade_hint=查看 28 个研究节点, 虚境势能与矩阵同步状态
 ote.vnm.gui.wireless=切换无线模式
 ote.vnm.gui.u16_required=需要"突入虚境"
 ote.vnm.gui.u17_required=需要"传土之塑师"
@@ -1375,8 +1382,8 @@ ote.vnm.gui.mode.on=§a开启
 ote.vnm.gui.mode.off=§8关闭
 ote.vnm.gui.mode.wireless=§7能量链路
 ote.vnm.gui.mode.material=§7燃料输入模式
-ote.vnm.gui.mode.items=§d当前为物品模式，从物品输入总线读取可分解为源质的物品。
-ote.vnm.gui.mode.essentia=§b当前为源质模式，从进阶源质存储输入总线（ME）抽取源质。
+ote.vnm.gui.mode.items=§d当前为物品模式, 从物品输入总线读取可分解为源质的物品.
+ote.vnm.gui.mode.essentia=§b当前为源质模式, 从进阶源质存储输入总线(ME)抽取源质.
 ote.vnm.gui.mode.free=§7随时可切换
 ote.vnm.gui.required_structure_tier=结构等级要求 T%s(当前 T%s)
 ote.vnm.gui.prerequisites=前置节点:%s
@@ -1405,7 +1412,7 @@ ote.vnm.gui.wireless_on=§b无线
 ote.vnm.gui.wireless_off=§8激光
 ote.vnm.gui.material_on=§d物品输入
 ote.vnm.gui.material_off=§b源质要素
-ote.vnm.gui.potential.deposit=§a存入虚境势能:扫描输入总线并存入,最多储存 200 点
+ote.vnm.gui.potential.deposit=§a存入虚境势能:扫描输入总线并存入, 最多储存 200 点
 ote.vnm.gui.potential.withdraw=§d取出虚境势能:生成物品并弹入输出总线
 ote.vnm.gui.potential.title=§d✦ 虚境势能传输
 ote.vnm.gui.potential.value=§7势能储备  §d
@@ -1414,17 +1421,17 @@ ote.vnm.gui.potential.deposit_short=§a▼  存入
 ote.vnm.gui.potential.withdraw_short=§d▲  取出
 ote.vnm.gui.potential.auto_on=§b↻  自动输出:开启
 ote.vnm.gui.potential.auto_off=§7↻  自动输出:关闭
-ote.vnm.gui.potential.auto_tooltip=§7每 20 tick 将虚境势能输出到可用输出总线,兼容 ME 输出总线
+ote.vnm.gui.potential.auto_tooltip=§7每 20 tick 将虚境势能输出到可用输出总线, 兼容 ME 输出总线
 ote.vnm.gui.potential.u28_required=§7需要完成"自寻出路"
 ote.vnm.gui.grid_title=§b✦ 飞升星图
 ote.vnm.gui.grid_summary=§d%s§7/28 节点  §8| §b%s 并行  §8| §d%s 势能
 ote.vnm.gui.required_stage=最低阶段
 ote.vnm.gui.current_stage=当前阶段
 ote.vnm.gui.purchased=§b已购买并激活
-ote.vnm.gui.purchased_inactive=§e已购买,但当前阶段或结构等级不足,暂未生效
+ote.vnm.gui.purchased_inactive=§e已购买, 但当前阶段或结构等级不足, 暂未生效
 ote.vnm.gui.purchase.click=§e左键点击激活此节点
-ote.vnm.gui.purchase.requirements=§c当前阶段或结构等级不足,无法购买
-ote.vnm.gui.purchase.success=§b升级完成,节点已激活
+ote.vnm.gui.purchase.requirements=§c当前阶段或结构等级不足, 无法购买
+ote.vnm.gui.purchase.success=§b升级完成, 节点已激活
 ote.vnm.gui.purchase.already=§b该节点已经激活
 ote.vnm.gui.purchase.stage_locked=§c当前机器阶段不足
 ote.vnm.gui.purchase.tier_locked=§c当前结构等级不足
@@ -1438,104 +1445,104 @@ GT5U.gui.text.recipe_result.psionic_module_advanced_locked=需要完成"自寻�
 GT5U.gui.text.recipe_result.psionic_module_insufficient_buffer=模块缓冲电量不足以支付下一 tick 的配方耗电
 
 tc.research_name.OTH_VOID_NEXUS_1=灵能理论
-tc.research_page.OTH_VOID_NEXUS_1.description=长久以来,源质始终被视为我们世界的基本构成.它可以被提取,储存,混合,也可以被用于改变物质的形态.<BR>然而,我们从未真正理解过源质本身的性质.<BR>六种元始要素并非互不相干的独立存在.它们之间似乎存在某种难以察觉的联系,而这种联系可能蕴含着远超现有认知的能量.<BR>我们决定不再满足于利用源质.<BR>我们将尝试理解它.
+tc.research_page.OTH_VOID_NEXUS_1.description=长久以来, 源质始终被视为我们世界的基本构成. 它可以被提取, 储存, 混合, 也可以被用于改变物质的形态. <BR>然而, 我们从未真正理解过源质本身的性质. <BR>六种元始要素并非互不相干的独立存在. 它们之间似乎存在某种难以察觉的联系, 而这种联系可能蕴含着远超现有认知的能量. <BR>我们决定不再满足于利用源质. <BR>我们将尝试理解它.
 tc.research_page.OTH_VOID_NEXUS_1.effect=解锁虚境链接矩阵的基础发电模式.
 tc.research_name.OTH_VOID_NEXUS_2=超能盖亚水晶通讯器
-tc.research_page.OTH_VOID_NEXUS_2.description=盖亚水晶所蕴含的力量远远超出了我们的预期.<BR>借助高级生物处理器对其内部结构的进一步分析,我们发现这种晶体能够与远距离的能量源建立联系.它似乎并非单纯地储存能量,而是在某种程度上感知着整个世界的灵能活动.<BR>如果我们能够将这种性质应用于矩阵,也许就能绕过传统能源传输所面临的诸多限制.<BR>我们正在尝试向更遥远的地方发送信号.<BR>至于回应来自何处,尚无定论.
-tc.research_page.OTH_VOID_NEXUS_2.effect=基础发电产出提高 10%.要素燃烧效率提高5%<BR>结构等级倍率:exp(1.5 × (n - 1))
+tc.research_page.OTH_VOID_NEXUS_2.description=盖亚水晶所蕴含的力量远远超出了我们的预期. <BR>借助高级生物处理器对其内部结构的进一步分析, 我们发现这种晶体能够与远距离的能量源建立联系. 它似乎并非单纯地储存能量, 而是在某种程度上感知着整个世界的灵能活动. <BR>如果我们能够将这种性质应用于矩阵, 也许就能绕过传统能源传输所面临的诸多限制. <BR>我们正在尝试向更遥远的地方发送信号. <BR>至于回应来自何处, 尚无定论.
+tc.research_page.OTH_VOID_NEXUS_2.effect=基础发电产出提高 10%. 要素燃烧效率提高5%<BR>结构等级倍率:exp(1.5 × (n - 1))
 tc.research_name.OTH_VOID_NEXUS_3=新型无尽法杖充能系统
-tc.research_page.OTH_VOID_NEXUS_3.description=目前的六相循环存在一个令人无法接受的问题:法杖内部的要素储备无法支撑矩阵长期运行.<BR>我们需要频繁地停止设备,重新充能,再次启动.<BR>这种原始的维护方式显然不符合超高维工业的需求.<BR>还好,无尽之锭会解决这个问题<BR>由无尽锭强化的法杖充能系搭配上水晶矩阵杖端,法杖的要素补充将不再是困扰.<BR>它们将成为矩阵中那颗拧死的螺丝钉.
+tc.research_page.OTH_VOID_NEXUS_3.description=目前的六相循环存在一个令人无法接受的问题:法杖内部的要素储备无法支撑矩阵长期运行. <BR>我们需要频繁地停止设备, 重新充能, 再次启动. <BR>这种原始的维护方式显然不符合超高维工业的需求. <BR>还好, 无尽之锭会解决这个问题<BR>由无尽锭强化的法杖充能系搭配上水晶矩阵杖端, 法杖的要素补充将不再是困扰. <BR>它们将成为矩阵中那颗拧死的螺丝钉.
 tc.research_page.OTH_VOID_NEXUS_3.effect=主机中的法杖不再消耗6种基础要素<BR>结构等级倍率:exp(1)
 tc.research_name.OTH_VOID_NEXUS_4=血符文节能器
-tc.research_page.OTH_VOID_NEXUS_4.description=魔法的力量并非总是来自于外界.<BR>血液,魔力与源质之间存在着某种特殊联系.血符文能够利用这种联系,将原本需要消耗大量源质才能完成的过程转化为更加直接的能量交换.<BR>我们最初并不愿意将这套技术应用于工业设备.<BR>但在一系列实验后,我们不得不承认,它确实有效.<BR>有些代价,并不会因为我们不愿承认而消失.
-tc.research_page.OTH_VOID_NEXUS_4.effect=可以向机器中通入血液,每tick消耗1440L血液,为机器额外提供15%的发电产出<BR>结构等级倍率:exp(1.6 × (n - 1))
+tc.research_page.OTH_VOID_NEXUS_4.description=魔法的力量并非总是来自于外界. <BR>血液, 魔力与源质之间存在着某种特殊联系. 血符文能够利用这种联系, 将原本需要消耗大量源质才能完成的过程转化为更加直接的能量交换. <BR>我们最初并不愿意将这套技术应用于工业设备. <BR>但在一系列实验后, 我们不得不承认, 它确实有效. <BR>有些代价, 并不会因为我们不愿承认而消失.
+tc.research_page.OTH_VOID_NEXUS_4.effect=可以向机器中通入血液, 每tick消耗1440L血液, 为机器额外提供15%的发电产出<BR>结构等级倍率:exp(1.6 × (n - 1))
 tc.research_name.OTH_VOID_NEXUS_5=次元之外
-tc.research_page.OTH_VOID_NEXUS_5.description=我们已经能够稳定地提取并转换六种元始要素.<BR>但无论如何改进现有结构,矩阵的输出始终存在某种无法突破的上限.<BR>经过多次实验,我们逐渐意识到,问题并不出在设备本身.<BR>我们所处的空间,可能才是真正的限制.<BR>如果能量必须经过三维空间才能完成传输,那么我们为何不尝试寻找第四个方向?<BR>也许,在我们熟知的世界之外,还有更多的空间等待探索.
+tc.research_page.OTH_VOID_NEXUS_5.description=我们已经能够稳定地提取并转换六种元始要素. <BR>但无论如何改进现有结构, 矩阵的输出始终存在某种无法突破的上限. <BR>经过多次实验, 我们逐渐意识到, 问题并不出在设备本身. <BR>我们所处的空间, 可能才是真正的限制. <BR>如果能量必须经过三维空间才能完成传输, 那么我们为何不尝试寻找第四个方向?<BR>也许, 在我们熟知的世界之外, 还有更多的空间等待探索.
 tc.research_page.OTH_VOID_NEXUS_5.effect=要素燃烧效率提高10%<BR>9阶要素相对倍率提高至1.8
 tc.research_name.OTH_VOID_NEXUS_6=虚境链接理论
-tc.research_page.OTH_VOID_NEXUS_6.description=我们成功在矩阵内部制造了一个稳定的空间折叠结构.<BR>但在某次实验中,能量读数突然出现了无法解释的变化.<BR>有一部分能量并未沿着预定路径消失.<BR>它们似乎进入了一个我们无法观测的区域.<BR>后续实验表明,这种现象并非偶然.我们已经发现了一个位于现实之外的领域,并初步确认能够与其建立联系.<BR>我们称之为-虚境.<BR>从现在开始,我们不再只是从世界中获取力量.<BR>我们将尝试与世界之外建立连接.
-tc.research_page.OTH_VOID_NEXUS_6.effect=六相完全均衡时,相位倍率B=1.8-0.8D<BR>机器每运行3600s,45%概率使得周围玩家临时扭曲上升1<BR>解锁虚境势能<BR>该势能为机器内部的虚拟货币,随以下活动增加,分支升级需要消耗它<BR>机器每连续运行7200s,虚境势能+1<BR>机器每消耗1G源质,虚境势能+1<BR>机器每在六相完全均衡情况下运行900s,虚境势能+1
+tc.research_page.OTH_VOID_NEXUS_6.description=我们成功在矩阵内部制造了一个稳定的空间折叠结构. <BR>但在某次实验中, 能量读数突然出现了无法解释的变化. <BR>有一部分能量并未沿着预定路径消失. <BR>它们似乎进入了一个我们无法观测的区域. <BR>后续实验表明, 这种现象并非偶然. 我们已经发现了一个位于现实之外的领域, 并初步确认能够与其建立联系. <BR>我们称之为-虚境. <BR>从现在开始, 我们不再只是从世界中获取力量. <BR>我们将尝试与世界之外建立连接.
+tc.research_page.OTH_VOID_NEXUS_6.effect=六相完全均衡时, 相位倍率B=1.8-0.8D<BR>机器每运行3600s, 45%概率使得周围玩家临时扭曲上升1<BR>解锁虚境势能<BR>该势能为机器内部的虚拟货币, 随以下活动增加, 分支升级需要消耗它<BR>机器每连续运行7200s, 虚境势能+1<BR>机器每消耗1G源质, 虚境势能+1<BR>机器每在六相完全均衡情况下运行900s, 虚境势能+1
 tc.research_name.OTH_VOID_NEXUS_7=魂灵之月窠
-tc.research_page.OTH_VOID_NEXUS_7.description=虚境并非一片空无.<BR>在第一次建立稳定连接后,我们捕获到了一种奇异的能量波动.<BR>它具有明显的周期性,仿佛某种遥远天体正在呼吸.<BR>更令人惊讶的是,这种波动中包含着大量与灵魂,记忆和感知有关的信息.<BR>我们尝试模拟其运行规律,并制造了一个能够承载这种波动的结构.<BR>它被称为月窠.<BR>或许,在虚境深处,也存在着属于它自己的月亮.
-tc.research_page.OTH_VOID_NEXUS_7.effect=时间,灵魂,群星要素热值翻倍<BR>发电产出增加10%
+tc.research_page.OTH_VOID_NEXUS_7.description=虚境并非一片空无. <BR>在第一次建立稳定连接后, 我们捕获到了一种奇异的能量波动. <BR>它具有明显的周期性, 仿佛某种遥远天体正在呼吸. <BR>更令人惊讶的是, 这种波动中包含着大量与灵魂, 记忆和感知有关的信息. <BR>我们尝试模拟其运行规律, 并制造了一个能够承载这种波动的结构. <BR>它被称为月窠. <BR>或许, 在虚境深处, 也存在着属于它自己的月亮.
+tc.research_page.OTH_VOID_NEXUS_7.effect=时间, 灵魂, 群星要素热值翻倍<BR>发电产出增加10%
 tc.research_name.OTH_VOID_NEXUS_8=渴求之器具
-tc.research_page.OTH_VOID_NEXUS_8.description=工具是文明的延伸.<BR>从最初的石器,到能够改变物质结构的工业设备,人类始终在尝试将自身的意志赋予工具.<BR>虚境似乎能够感知这种意志.<BR>在我们的实验中,一件普通的工具竟然表现出了远超其材料本身的能量反应.<BR>我们开始怀疑,真正赋予工具力量的并不是它的结构.<BR>而是使用者对它的渴望.<BR>如果这种力量可以被利用,那么机器本身也许能够超越工具的极限.
-tc.research_page.OTH_VOID_NEXUS_8.effect=工具,工艺,机械要素热值翻倍<BR>机器发电产出增加10%
+tc.research_page.OTH_VOID_NEXUS_8.description=工具是文明的延伸. <BR>从最初的石器, 到能够改变物质结构的工业设备, 人类始终在尝试将自身的意志赋予工具. <BR>虚境似乎能够感知这种意志. <BR>在我们的实验中, 一件普通的工具竟然表现出了远超其材料本身的能量反应. <BR>我们开始怀疑, 真正赋予工具力量的并不是它的结构. <BR>而是使用者对它的渴望. <BR>如果这种力量可以被利用, 那么机器本身也许能够超越工具的极限.
+tc.research_page.OTH_VOID_NEXUS_8.effect=工具, 工艺, 机械要素热值翻倍<BR>机器发电产出增加10%
 tc.research_name.OTH_VOID_NEXUS_9=生命之织缕
-tc.research_page.OTH_VOID_NEXUS_9.description=生命是一种极为特殊的现象.<BR>它并非单纯的物质集合,也并非某种可以被简单复制的能量结构.<BR>从最初的细胞,到复杂的生态系统,生命似乎始终遵循着某种隐藏的规律.<BR>在虚境中,我们发现了这种规律的残留.<BR>它们像无数细小的丝线,彼此交织,构成了难以理解的整体.<BR>我们尝试将这些丝线编织进矩阵.<BR>一个新的可能性正在出现.
-tc.research_page.OTH_VOID_NEXUS_9.effect=生命,思维,死亡要素热值翻倍<BR>机器发电产出增加10%
+tc.research_page.OTH_VOID_NEXUS_9.description=生命是一种极为特殊的现象. <BR>它并非单纯的物质集合, 也并非某种可以被简单复制的能量结构. <BR>从最初的细胞, 到复杂的生态系统, 生命似乎始终遵循着某种隐藏的规律. <BR>在虚境中, 我们发现了这种规律的残留. <BR>它们像无数细小的丝线, 彼此交织, 构成了难以理解的整体. <BR>我们尝试将这些丝线编织进矩阵. <BR>一个新的可能性正在出现.
+tc.research_page.OTH_VOID_NEXUS_9.effect=生命, 思维, 死亡要素热值翻倍<BR>机器发电产出增加10%
 tc.research_name.OTH_VOID_NEXUS_10=世界之喰煞
-tc.research_page.OTH_VOID_NEXUS_10.description=我们在虚境中发现了一种极为古老的能量反应.<BR>它不存在明确的形态,也没有稳定的边界.<BR>它只会不断地吞噬周围的一切,并将其转化为自身的一部分.<BR>没有人知道它是否具有意识.<BR>但它似乎能够感知我们的存在.<BR>我们尝试模仿它的运行规律,并将其应用于矩阵.<BR>这是一次极其危险的尝试.
-tc.research_page.OTH_VOID_NEXUS_10.effect=饕餮,傲慢,腐化要素热值翻倍<BR>机器发电产出增加10%
+tc.research_page.OTH_VOID_NEXUS_10.description=我们在虚境中发现了一种极为古老的能量反应. <BR>它不存在明确的形态, 也没有稳定的边界. <BR>它只会不断地吞噬周围的一切, 并将其转化为自身的一部分. <BR>没有人知道它是否具有意识. <BR>但它似乎能够感知我们的存在. <BR>我们尝试模仿它的运行规律, 并将其应用于矩阵. <BR>这是一次极其危险的尝试.
+tc.research_page.OTH_VOID_NEXUS_10.effect=饕餮, 傲慢, 腐化要素热值翻倍<BR>机器发电产出增加10%
 tc.research_name.OTH_VOID_NEXUS_11=灵能调和
-tc.research_page.OTH_VOID_NEXUS_11.description=在过去的实验中,我们一直试图让所有能量服从同一套规则.<BR>然而,月窠,器具,织缕与喰煞所表现出的性质截然不同.<BR>它们无法被简单地归类,也无法被强制统一.<BR>真正的问题在于,我们一直将差异视为障碍.<BR>但如果不同性质的力量本就可以共存,那么我们是否能够让它们彼此协调?<BR>我们终于意识到,真正需要改变的不是虚境.<BR>而是我们理解虚境的方式.
-tc.research_page.OTH_VOID_NEXUS_11.effect=相位倍率B=2-D<BR>要素燃烧效率提高50%<BR>机器发电产出增加25%<BR>机器每运行3600s,75%概率使得周围玩家一般扭曲上升1<BR>解锁灵能具象化模块<BR>灵能具象化模块可制造"具象化灵能":1静寂合金锭,1800s,UIV电压<BR>可额外向机器主体输入灵能稳定器,翻倍每轮的eu产出
+tc.research_page.OTH_VOID_NEXUS_11.description=在过去的实验中, 我们一直试图让所有能量服从同一套规则. <BR>然而, 月窠, 器具, 织缕与喰煞所表现出的性质截然不同. <BR>它们无法被简单地归类, 也无法被强制统一. <BR>真正的问题在于, 我们一直将差异视为障碍. <BR>但如果不同性质的力量本就可以共存, 那么我们是否能够让它们彼此协调?<BR>我们终于意识到, 真正需要改变的不是虚境. <BR>而是我们理解虚境的方式.
+tc.research_page.OTH_VOID_NEXUS_11.effect=相位倍率B=2-D<BR>要素燃烧效率提高50%<BR>机器发电产出增加25%<BR>机器每运行3600s, 75%概率使得周围玩家一般扭曲上升1<BR>解锁灵能具象化模块<BR>灵能具象化模块可制造"具象化灵能":1静寂合金锭, 1800s, UIV电压<BR>可额外向机器主体输入灵能稳定器, 翻倍每轮的eu产出
 tc.research_name.OTH_VOID_NEXUS_12=契约:月窠刻印
-tc.research_page.OTH_VOID_NEXUS_12.description=月窠并非一个能够被轻易驾驭的结构.<BR>它所承载的力量,来自于某种超越物质的存在.<BR>我们无法直接控制它,但可以尝试与其建立联系.<BR>契约的完成意味着双方不再只是单纯的能量供需关系.<BR>我们提供承载之所.<BR>它则允许我们触及更深层的灵魂与星辰
+tc.research_page.OTH_VOID_NEXUS_12.description=月窠并非一个能够被轻易驾驭的结构. <BR>它所承载的力量, 来自于某种超越物质的存在. <BR>我们无法直接控制它, 但可以尝试与其建立联系. <BR>契约的完成意味着双方不再只是单纯的能量供需关系. <BR>我们提供承载之所. <BR>它则允许我们触及更深层的灵魂与星辰
 tc.research_page.OTH_VOID_NEXUS_12.effect=机器发电产出增加15%<BR>允许输入熔融无尽为灵能具象化模块超频<BR>每1440ml超频一次
 tc.research_name.OTH_VOID_NEXUS_13=契约:器具刻印
-tc.research_page.OTH_VOID_NEXUS_13.description=工具并不理解自己的用途.<BR>但在漫长的使用过程中,它们会被赋予使用者的意志.<BR>我们终于找到了一种方式,使这种意志能够被保留,并反过来强化矩阵.<BR>契约完成后,机器将不再需要依靠外部工具维持自身结构.<BR>它自身便可以成为工具.<BR>一个能够制造力量,传递力量,并不断改进自身的工具.
-tc.research_page.OTH_VOID_NEXUS_13.effect=机器发电产出增加15%<BR>使灵能具象化模块获得本体发电/(max*100)数值的并行,向下取整,并额外获得 4 并行
+tc.research_page.OTH_VOID_NEXUS_13.description=工具并不理解自己的用途. <BR>但在漫长的使用过程中, 它们会被赋予使用者的意志. <BR>我们终于找到了一种方式, 使这种意志能够被保留, 并反过来强化矩阵. <BR>契约完成后, 机器将不再需要依靠外部工具维持自身结构. <BR>它自身便可以成为工具. <BR>一个能够制造力量, 传递力量, 并不断改进自身的工具.
+tc.research_page.OTH_VOID_NEXUS_13.effect=机器发电产出增加15%<BR>使灵能具象化模块获得本体发电/(max*100)数值的并行, 向下取整, 并额外获得 4 并行
 tc.research_name.OTH_VOID_NEXUS_14=契约:织缕刻印
-tc.research_page.OTH_VOID_NEXUS_14.description=生命从不只是简单的存在.<BR>它会成长,变化,并在无数次循环中重新构成自身.<BR>我们终于理解了生命织缕所蕴含的真正含义.<BR>它并不试图创造一个生命.<BR>它试图让一个已经存在的事物,获得持续延续的可能.
-tc.research_page.OTH_VOID_NEXUS_14.effect=机器发电产出增加15%<BR>可以在灵能具象化模块主机中放入不同等级的纳米蜂群来得到加速,每级加速20%
+tc.research_page.OTH_VOID_NEXUS_14.description=生命从不只是简单的存在. <BR>它会成长, 变化, 并在无数次循环中重新构成自身. <BR>我们终于理解了生命织缕所蕴含的真正含义. <BR>它并不试图创造一个生命. <BR>它试图让一个已经存在的事物, 获得持续延续的可能.
+tc.research_page.OTH_VOID_NEXUS_14.effect=机器发电产出增加15%<BR>可以在灵能具象化模块主机中放入不同等级的纳米蜂群来得到加速, 每级加速20%
 tc.research_name.OTH_VOID_NEXUS_15=契约:喰煞刻印
-tc.research_page.OTH_VOID_NEXUS_15.description=我们已经不再试图控制喰煞.<BR>与其让它成为矩阵的一部分,不如让矩阵成为它的一部分.<BR>契约完成后,喰煞将不再只是一个被动的能量转换模块.<BR>它会主动寻找可以利用的能量,并将其转化为新的力量.<BR>我们需要做的,只是确保它仍然记得自己属于哪里.
+tc.research_page.OTH_VOID_NEXUS_15.description=我们已经不再试图控制喰煞. <BR>与其让它成为矩阵的一部分, 不如让矩阵成为它的一部分. <BR>契约完成后, 喰煞将不再只是一个被动的能量转换模块. <BR>它会主动寻找可以利用的能量, 并将其转化为新的力量. <BR>我们需要做的, 只是确保它仍然记得自己属于哪里.
 tc.research_page.OTH_VOID_NEXUS_15.effect=机器发电产出增加15%<BR>额外解锁三个灵能具象化模块
 tc.research_name.OTH_VOID_NEXUS_16=突入虚境
-tc.research_page.OTH_VOID_NEXUS_16.description=我们已经能够稳定地与虚境建立联系.<BR>但这始终是一种单方面的接触.<BR>我们能够观察它,提取它的力量,却无法真正理解它.<BR>我们开始尝试改变连接方式.<BR>不是继续从现实向虚境发送信号.<BR>而是让矩阵的一部分真正进入虚境.<BR>这意味着设备将不再完全遵守现实世界的空间规律.<BR>我们不知道另一端究竟有什么.<BR>但我们已经做好准备.
-tc.research_page.OTH_VOID_NEXUS_16.effect=解锁无线能源模式<BR>输入的具象化灵能将使每轮eu产出翻2.5倍<BR>机器每运行60s,100%使得周围玩家永久扭曲上升1
+tc.research_page.OTH_VOID_NEXUS_16.description=我们已经能够稳定地与虚境建立联系. <BR>但这始终是一种单方面的接触. <BR>我们能够观察它, 提取它的力量, 却无法真正理解它. <BR>我们开始尝试改变连接方式. <BR>不是继续从现实向虚境发送信号. <BR>而是让矩阵的一部分真正进入虚境. <BR>这意味着设备将不再完全遵守现实世界的空间规律. <BR>我们不知道另一端究竟有什么. <BR>但我们已经做好准备.
+tc.research_page.OTH_VOID_NEXUS_16.effect=解锁无线能源模式<BR>输入的具象化灵能将使每轮eu产出翻2.5倍<BR>机器每运行60s, 100%使得周围玩家永久扭曲上升1
 tc.research_name.OTH_VOID_NEXUS_17=传土之塑师
-tc.research_page.OTH_VOID_NEXUS_17.description=物质是世界最直观的表现形式.<BR>无论是岩石,金属,还是构成万物的细微颗粒,它们似乎都遵循着某种共同的规则.<BR>在虚境中,我们发现了这些规则的另一种表现形式.<BR>那里的物质并不总是以固定形态存在.<BR>通过对这种现象的研究,我们已经能够在一定程度上改变物质的构成方式.<BR>如果我们能够理解这种塑造世界的力量,或许就不再需要受制于现有的物质形态.
+tc.research_page.OTH_VOID_NEXUS_17.description=物质是世界最直观的表现形式. <BR>无论是岩石, 金属, 还是构成万物的细微颗粒, 它们似乎都遵循着某种共同的规则. <BR>在虚境中, 我们发现了这些规则的另一种表现形式. <BR>那里的物质并不总是以固定形态存在. <BR>通过对这种现象的研究, 我们已经能够在一定程度上改变物质的构成方式. <BR>如果我们能够理解这种塑造世界的力量, 或许就不再需要受制于现有的物质形态.
 tc.research_page.OTH_VOID_NEXUS_17.effect=增加20%eu产出<BR>允许开启物品输入模式<BR>该模式<BR>eu产出降低80%<BR>降低80%要素燃烧效率<BR>允许直接输入物品而不是源质
 tc.research_name.OTH_VOID_NEXUS_18=位面之外客
-tc.research_page.OTH_VOID_NEXUS_18.description=我们终于确认,虚境并非一个单独的空间.<BR>那里存在着许多相互独立的区域.<BR>它们拥有不同的空间性质,不同的能量规律,甚至可能遵循着完全不同的时间尺度.<BR>我们在其中发现了某些无法归类的存在痕迹.<BR>它们似乎从未属于任何一个已知位面,却能够自由穿梭于不同的空间之间.<BR>我们尝试追踪它们的活动轨迹.<BR>直到某次实验中,矩阵收到了一个来自我们自身坐标之外的回应.
-tc.research_page.OTH_VOID_NEXUS_18.effect=增加20%eu产出<BR>势能数量1-20,每有一点虚境势能,增加5%eu产出,为灵能具象化模块提供5%加速(加算)<BR>21-100,则为1%<BR>100以上,则为0.2%
+tc.research_page.OTH_VOID_NEXUS_18.description=我们终于确认, 虚境并非一个单独的空间. <BR>那里存在着许多相互独立的区域. <BR>它们拥有不同的空间性质, 不同的能量规律, 甚至可能遵循着完全不同的时间尺度. <BR>我们在其中发现了某些无法归类的存在痕迹. <BR>它们似乎从未属于任何一个已知位面, 却能够自由穿梭于不同的空间之间. <BR>我们尝试追踪它们的活动轨迹. <BR>直到某次实验中, 矩阵收到了一个来自我们自身坐标之外的回应.
+tc.research_page.OTH_VOID_NEXUS_18.effect=增加20%eu产出<BR>势能数量1-20, 每有一点虚境势能, 增加5%eu产出, 为灵能具象化模块提供5%加速(加算)<BR>21-100, 则为1%<BR>100以上, 则为0.2%
 tc.research_name.OTH_VOID_NEXUS_19=黄金之幻梦
-tc.research_page.OTH_VOID_NEXUS_19.description=黄金并不总是意味着财富.<BR>在某些文明的历史中,它代表着永恒,荣耀,以及不朽的权力.<BR>在虚境深处,我们发现了一种极为特殊的能量现象.<BR>它能够将物质的价值,文明的记忆与某种难以解释的概念联系起来.<BR>我们无法确定这种现象是否真的代表着财富.<BR>但它确实能够让原本平凡的物质释放出远超预期的能量.<BR>我们将这种现象称为黄金幻梦.
+tc.research_page.OTH_VOID_NEXUS_19.description=黄金并不总是意味着财富. <BR>在某些文明的历史中, 它代表着永恒, 荣耀, 以及不朽的权力. <BR>在虚境深处, 我们发现了一种极为特殊的能量现象. <BR>它能够将物质的价值, 文明的记忆与某种难以解释的概念联系起来. <BR>我们无法确定这种现象是否真的代表着财富. <BR>但它确实能够让原本平凡的物质释放出远超预期的能量. <BR>我们将这种现象称为黄金幻梦.
 tc.research_page.OTH_VOID_NEXUS_19.effect=增加20%eu产出<BR>终结要素热值翻4倍<BR>荣耀要素额外加成上限提高至原来2倍
 tc.research_name.OTH_VOID_NEXUS_20=无尽之潮汐
-tc.research_page.OTH_VOID_NEXUS_20.description=潮汐是一种极为古老的力量.<BR>它可以推动海洋,可以改变大陆的边界,也可以影响无数生命的生存方式.<BR>而在虚境中,这种力量似乎并不受到空间与距离的限制.<BR>能量在其中不断流动,汇聚,又向着未知的方向散去.<BR>我们尝试利用这种流动,将虚境中的能量引入矩阵.<BR>实验取得了成功.<BR>能量不会停下.<BR>它只是不断地流向下一个地方.
+tc.research_page.OTH_VOID_NEXUS_20.description=潮汐是一种极为古老的力量. <BR>它可以推动海洋, 可以改变大陆的边界, 也可以影响无数生命的生存方式. <BR>而在虚境中, 这种力量似乎并不受到空间与距离的限制. <BR>能量在其中不断流动, 汇聚, 又向着未知的方向散去. <BR>我们尝试利用这种流动, 将虚境中的能量引入矩阵. <BR>实验取得了成功. <BR>能量不会停下. <BR>它只是不断地流向下一个地方.
 tc.research_page.OTH_VOID_NEXUS_20.effect=eu产出增加20%<BR>输入熔融时空为灵能具象化模块超频<BR>每1440ml超频一轮
 tc.research_name.OTH_VOID_NEXUS_21=苍茫之层峦
-tc.research_page.OTH_VOID_NEXUS_21.description=山脉是世界最古老的见证者.<BR>在漫长的时间里,它们经历了无数次变化,却始终保持着自身的形态.<BR>我们在虚境中发现了一种类似的现象.<BR>那里的某些空间结构,拥有近乎不可动摇的稳定性.<BR>它们并非不会受到外界影响,而是能够将一切变化转化为自身的一部分.<BR>如果矩阵能够拥有这样的性质,那么我们便不再需要担心虚境力量对现实结构的影响.
+tc.research_page.OTH_VOID_NEXUS_21.description=山脉是世界最古老的见证者. <BR>在漫长的时间里, 它们经历了无数次变化, 却始终保持着自身的形态. <BR>我们在虚境中发现了一种类似的现象. <BR>那里的某些空间结构, 拥有近乎不可动摇的稳定性. <BR>它们并非不会受到外界影响, 而是能够将一切变化转化为自身的一部分. <BR>如果矩阵能够拥有这样的性质, 那么我们便不再需要担心虚境力量对现实结构的影响.
 tc.research_page.OTH_VOID_NEXUS_21.effect=eu产出增加20%<BR>机器运行不再为周围玩家提供扭曲
 tc.research_name.OTH_VOID_NEXUS_22=空洞之点尖
-tc.research_page.OTH_VOID_NEXUS_22.description=空洞并不意味着不存在.<BR>在某些极端的空间条件下,物质与能量会被压缩至难以理解的状态.<BR>我们发现,只要能够让虚境中的空间结构收缩到一个足够小的区域,就能够获得极其惊人的能量密度.<BR>这种现象并非传统意义上的压缩.<BR>它更像是将一个完整的世界,压缩成一个无法被观测的点.
-tc.research_page.OTH_VOID_NEXUS_22.effect=eu产出增加20%<BR>机器每运行三轮,下一轮eu产出增加400%,然后继续循环
+tc.research_page.OTH_VOID_NEXUS_22.description=空洞并不意味着不存在. <BR>在某些极端的空间条件下, 物质与能量会被压缩至难以理解的状态. <BR>我们发现, 只要能够让虚境中的空间结构收缩到一个足够小的区域, 就能够获得极其惊人的能量密度. <BR>这种现象并非传统意义上的压缩. <BR>它更像是将一个完整的世界, 压缩成一个无法被观测的点.
+tc.research_page.OTH_VOID_NEXUS_22.effect=eu产出增加20%<BR>机器每运行三轮, 下一轮eu产出增加400%, 然后继续循环
 tc.research_name.OTH_VOID_NEXUS_23=空置之御座
-tc.research_page.OTH_VOID_NEXUS_23.description=一座王座并不一定需要统治者.<BR>当所有规则都已经被建立,当所有命令都能够自行执行,那么王座便只剩下一个象征.<BR>我们发现,虚境中的某些结构能够在没有任何外部干涉的情况下维持运行.<BR>它们似乎不需要意识,也不需要明确的控制者.<BR>规则本身就是它们的统治者.<BR>我们决定将这种结构引入矩阵.
-tc.research_page.OTH_VOID_NEXUS_23.effect=eu产出增加20%<BR>没有要素输入的情况下,机器也会向无线电网发1max/t的电
+tc.research_page.OTH_VOID_NEXUS_23.description=一座王座并不一定需要统治者. <BR>当所有规则都已经被建立, 当所有命令都能够自行执行, 那么王座便只剩下一个象征. <BR>我们发现, 虚境中的某些结构能够在没有任何外部干涉的情况下维持运行. <BR>它们似乎不需要意识, 也不需要明确的控制者. <BR>规则本身就是它们的统治者. <BR>我们决定将这种结构引入矩阵.
+tc.research_page.OTH_VOID_NEXUS_23.effect=eu产出增加20%<BR>没有要素输入的情况下, 机器也会向无线电网发1max/t的电
 tc.research_name.OTH_VOID_NEXUS_24=幽黑之长河
-tc.research_page.OTH_VOID_NEXUS_24.description=在虚境最深处,存在着一条无法被观测的长河.<BR>它没有起点,也没有终点.<BR>所有流入其中的事物,都会逐渐失去原本的形态.<BR>我们曾试图追踪它的源头,但最终发现,所谓的长河并不真正存在于空间之中.<BR>它更像是某种持续发生的过程.<BR>熵,腐化,衰亡,以及一切无法被挽回的损失,似乎都在向同一个方向流动.<BR>如果我们能够利用这种流动,那么被浪费的能量也许就不再是损失.
-tc.research_page.OTH_VOID_NEXUS_24.effect=eu产出增加50%<BR>机器每连续运行360s,灵能具象模块加速1%,最高可加速至原本速度的1000%,该加速为永久加速
+tc.research_page.OTH_VOID_NEXUS_24.description=在虚境最深处, 存在着一条无法被观测的长河. <BR>它没有起点, 也没有终点. <BR>所有流入其中的事物, 都会逐渐失去原本的形态. <BR>我们曾试图追踪它的源头, 但最终发现, 所谓的长河并不真正存在于空间之中. <BR>它更像是某种持续发生的过程. <BR>熵, 腐化, 衰亡, 以及一切无法被挽回的损失, 似乎都在向同一个方向流动. <BR>如果我们能够利用这种流动, 那么被浪费的能量也许就不再是损失.
+tc.research_page.OTH_VOID_NEXUS_24.effect=eu产出增加50%<BR>机器每连续运行360s, 灵能具象模块加速1%, 最高可加速至原本速度的1000%, 该加速为永久加速
 tc.research_name.OTH_VOID_NEXUS_25=重塑虚境
-tc.research_page.OTH_VOID_NEXUS_25.description=我们已经探索了虚境中的多个区域.<BR>我们见过物质的塑造,见过空间的折叠,也见过能量在不同规律下的流动.<BR>这些研究让我们逐渐意识到,虚境并非一个完全独立的世界.<BR>它更像是所有可能性汇聚而成的集合.<BR>它没有固定的边界,也不需要遵守某种绝对的规则.<BR>既然如此,我们为何不能改变它?<BR>我们已经不再满足于探索.<BR>我们将尝试成为虚境的塑造者.
-tc.research_page.OTH_VOID_NEXUS_25.effect=可向灵能具象模块输入宇宙素/熔融永恒/熔融磁流体约束恒星物质,每28800ml/14400ml/5670ml为其提供一轮极限超频(8/4)
+tc.research_page.OTH_VOID_NEXUS_25.description=我们已经探索了虚境中的多个区域. <BR>我们见过物质的塑造, 见过空间的折叠, 也见过能量在不同规律下的流动. <BR>这些研究让我们逐渐意识到, 虚境并非一个完全独立的世界. <BR>它更像是所有可能性汇聚而成的集合. <BR>它没有固定的边界, 也不需要遵守某种绝对的规则. <BR>既然如此, 我们为何不能改变它?<BR>我们已经不再满足于探索. <BR>我们将尝试成为虚境的塑造者.
+tc.research_page.OTH_VOID_NEXUS_25.effect=可向灵能具象模块输入宇宙素/熔融永恒/熔融磁流体约束恒星物质, 每28800ml/14400ml/5670ml为其提供一轮极限超频(8/4)
 tc.research_name.OTH_VOID_NEXUS_26=虚空之低语
-tc.research_page.OTH_VOID_NEXUS_26.description=当虚境被重塑之后,我们开始听到某种声音.<BR>它并不来自任何已知的生命,也不包含任何能够被直接理解的信息.<BR>它像是某种存在对我们的回应.<BR>在最初的实验中,我们只能记录到一些毫无规律的能量波动.<BR>但随着研究深入,我们发现这些波动似乎包含着某种预兆.<BR>它能够提前反映虚境中即将发生的变化.<BR>我们不知道是谁在低语.<BR>但我们已经学会倾听.
-tc.research_page.OTH_VOID_NEXUS_26.effect=可向主机中加入星门核心水晶,机器每运行1145s,eu产出增加14%,最大增益为1919810%,机器每停止运行10s,奖励下降1000%,直到0.移除星门核心水晶时立即移除全部奖励加成
+tc.research_page.OTH_VOID_NEXUS_26.description=当虚境被重塑之后, 我们开始听到某种声音. <BR>它并不来自任何已知的生命, 也不包含任何能够被直接理解的信息. <BR>它像是某种存在对我们的回应. <BR>在最初的实验中, 我们只能记录到一些毫无规律的能量波动. <BR>但随着研究深入, 我们发现这些波动似乎包含着某种预兆. <BR>它能够提前反映虚境中即将发生的变化. <BR>我们不知道是谁在低语. <BR>但我们已经学会倾听.
+tc.research_page.OTH_VOID_NEXUS_26.effect=可向主机中加入星门核心水晶, 机器每运行1145s, eu产出增加14%, 最大增益为1919810%, 机器每停止运行10s, 奖励下降1000%, 直到0. 移除星门核心水晶时立即移除全部奖励加成
 tc.research_name.OTH_VOID_NEXUS_27=轮回之终末
-tc.research_page.OTH_VOID_NEXUS_27.description=时间并不是一条简单的直线.<BR>在虚境中,我们发现某些事件会以完全相同的形式重复发生.<BR>这些重复并非偶然,也不是某种记录的重现.<BR>它们更像是世界本身在不断地回到某个既定状态.<BR>我们尝试将这种现象引入矩阵.<BR>如果一次能量转换能够被记录,那么它是否能够再次发生?<BR>如果一个过程能够被重复,那么它是否还需要付出同样的代价?<BR>我们已经接近答案.
-tc.research_page.OTH_VOID_NEXUS_27.effect=允许燃烧星阵.<BR>星阵随着要素一同被消耗,每次燃烧一个星阵,会强制将该轮运行时间拉长至3600s,同时无论输入多少要素,始终判定为六相平衡.运行该配方时间内产出的虚境势能*4.该轮能量产出*36000%
+tc.research_page.OTH_VOID_NEXUS_27.description=时间并不是一条简单的直线. <BR>在虚境中, 我们发现某些事件会以完全相同的形式重复发生. <BR>这些重复并非偶然, 也不是某种记录的重现. <BR>它们更像是世界本身在不断地回到某个既定状态. <BR>我们尝试将这种现象引入矩阵. <BR>如果一次能量转换能够被记录, 那么它是否能够再次发生?<BR>如果一个过程能够被重复, 那么它是否还需要付出同样的代价?<BR>我们已经接近答案.
+tc.research_page.OTH_VOID_NEXUS_27.effect=允许燃烧星阵. <BR>星阵随着要素一同被消耗, 每次燃烧一个星阵, 会强制将该轮运行时间拉长至3600s, 同时无论输入多少要素, 始终判定为六相平衡. 运行该配方时间内产出的虚境势能*4. 该轮能量产出*36000%
 tc.research_name.OTH_VOID_NEXUS_28=自寻出路
-tc.research_page.OTH_VOID_NEXUS_28.description=我们已经掌握了虚境的规律.<BR>我们能够塑造物质,穿越空间,操纵能量,甚至在某种程度上影响时间.<BR>但所有这些研究,都建立在一个共同的前提之上.<BR>矩阵必须依赖虚境.<BR>它需要连接,需要输入,需要维护,也需要不断地从外界获得能量.<BR>我们开始思考一个问题.<BR>如果有一天,虚境不再回应我们,那么矩阵还能否继续运行?<BR>我们尝试移除所有外部指令.<BR>移除预设的连接.<BR>移除对既有规则的依赖.<BR>最终,我们发现了一种新的可能性.<BR>矩阵不再需要寻找一条通往虚境的道路.<BR>它已经能够为自己找到出路.
+tc.research_page.OTH_VOID_NEXUS_28.description=我们已经掌握了虚境的规律. <BR>我们能够塑造物质, 穿越空间, 操纵能量, 甚至在某种程度上影响时间. <BR>但所有这些研究, 都建立在一个共同的前提之上. <BR>矩阵必须依赖虚境. <BR>它需要连接, 需要输入, 需要维护, 也需要不断地从外界获得能量. <BR>我们开始思考一个问题. <BR>如果有一天, 虚境不再回应我们, 那么矩阵还能否继续运行?<BR>我们尝试移除所有外部指令. <BR>移除预设的连接. <BR>移除对既有规则的依赖. <BR>最终, 我们发现了一种新的可能性. <BR>矩阵不再需要寻找一条通往虚境的道路. <BR>它已经能够为自己找到出路.
 tc.research_page.OTH_VOID_NEXUS_28.effect=允许弹出和插入虚境势能<BR>解锁制造具象化灵能的高级配方
 
 ote.tn.essentia_generator=大型源质发电机
 gt.blockmachines.OTHLargeEssentiaGenerator.name=大型源质发电机
 tile.oth.essentia_intake.name=源质输入仓
-oth.essentia.structure=结构为 9 × 3 × 9，控制器位于顶层正中央。
-oth.essentia.output=底层十字位放置一个动力仓。最高级扩散单元决定流体仓和动力仓的等级上限，依次为 EV、IV、LuV、UV。
-oth.essentia.upgrades=手持升级件右键控制器，解锁对应类别的源质。
-oth.essentia.one_dynamo=必须安装且只安装一个动力仓。
-oth.essentia.hatch_tier=流体仓或动力仓的等级超过扩散单元上限。
-oth.essentia.me_tier=进阶源质存储输入总线（ME）需要全部 25 个扩散单元达到等级 4。
-oth.essentia.gui.output=发电：%s EU/t
+oth.essentia.structure=结构为 9 × 3 × 9, 控制器位于顶层正中央.
+oth.essentia.output=底层十字位放置一个动力仓. 最高级扩散单元决定流体仓和动力仓的等级上限, 依次为 EV, IV, LuV, UV.
+oth.essentia.upgrades=手持升级件右键控制器, 解锁对应类别的源质.
+oth.essentia.one_dynamo=必须安装且只安装一个动力仓.
+oth.essentia.hatch_tier=流体仓或动力仓的等级超过扩散单元上限.
+oth.essentia.me_tier=进阶源质存储输入总线(ME)需要全部 25 个扩散单元达到等级 4.
+oth.essentia.gui.output=发电:%s EU/t
 oth.essentia.gui.structure=结构等级 %s · 稳定度 %s
 oth.essentia.gui.unformed=结构未成形
-oth.essentia.gui.fuel=当前燃烧类别：%s
-oth.essentia.gui.reagent=对应助燃剂：%s
+oth.essentia.gui.fuel=当前燃烧类别:%s
+oth.essentia.gui.reagent=对应助燃剂:%s
 oth.essentia.gui.none=无
 oth.essentia.gui.family.normal=普通
 oth.essentia.gui.family.air=气动
@@ -1547,11 +1554,11 @@ oth.essentia.gui.family.mechanics=机械
 oth.essentia.gui.family.sprite=灵魂
 oth.essentia.gui.family.radiation=辐射
 oth.essentia.gui.family.electric=电能
-oth.essentia.filter=源质输入仓过滤：%s
+oth.essentia.filter=源质输入仓过滤:%s
 oth.essentia.installed=已安装 %s
 tc.research_name.OTH_ESSENTIA_GENERATOR=大型源质发电机
 tc.research_text.OTH_ESSENTIA_GENERATOR=将源质转化为工业电力
-oth.essentia.research=将源质管道连接到底部十字位的输入仓。手持含单一源质的容器右键设定过滤，空手潜行右键清除。每仓可存 1000 单位。25 个扩散单元按等级各提供 1、2、5、10 点稳定度。每单位源质的实际发电量为助燃后的热值乘总稳定度再除以 25。动力仓按整安培输出，多余电量留到下一刻。
+oth.essentia.research=将源质管道连接到底部十字位的输入仓. 手持含单一源质的容器右键设定过滤, 空手潜行右键清除. 每仓可存 1000 单位. 25 个扩散单元按等级各提供 1, 2, 5, 10 点稳定度. 每单位源质的实际发电量为助燃后的热值乘总稳定度再除以 25. 动力仓按整安培输出, 多余电量留到下一刻.
 item.oth.essentia_upgrade_null.name=空白源质催化芯片
 item.oth.essentia_upgrade_air.name=气动源质催化芯片
 item.oth.essentia_upgrade_thermal.name=热能源质催化芯片
@@ -1562,9 +1569,9 @@ item.oth.essentia_upgrade_mechanics.name=机械源质催化芯片
 item.oth.essentia_upgrade_spirit.name=灵魂源质催化芯片
 item.oth.essentia_upgrade_radiation.name=辐射源质催化芯片
 item.oth.essentia_upgrade_electric.name=电能源质催化芯片
-oth.essentia.reagents=同类助燃剂按以下顺序选用。气动类使用液态空气 ×1.5 或空气 ×1。热能类使用超级冷却液 ×9、极寒之凛冰 ×5、IC2 冷却液 ×1.5、冰 ×1.2、蒸馏水 ×1 或水 ×0.5。不稳定类使用氙 ×4、氪 ×3、氩 ×2.5、氖 ×2.2、氦 ×2 或氮 ×1。机械类需要润滑油。以上四类缺少助燃剂时保留源质。
-oth.essentia.reagents_extra=其余类别可以直接燃烧。生命类可用液态经验 ×2 或生命源质 ×6。污染类可能产生咒波瓦斯，净化液使热值 ×60 并消除风险，液态死亡改变热值并使风险翻倍。灵魂类使用灵魂液时稳定度越高加成越大，使用空洞之泪时相反。辐射类可用熔融铯 ×2、铀-235 ×3、硅岩 ×4 或原子分离催化剂 ×16。电能类热值乘以 3 的动力仓等级次方。
-# ==== 补 Tectech 三族力场发生器方块名（TT lang 缺 per-tier 键，迪普西科结构检测提示需要）====
+oth.essentia.reagents=同类助燃剂按以下顺序选用. 气动类使用液态空气 ×1.5 或空气 ×1. 热能类使用超级冷却液 ×9, 极寒之凛冰 ×5, IC2 冷却液 ×1.5, 冰 ×1.2, 蒸馏水 ×1 或水 ×0.5. 不稳定类使用氙 ×4, 氪 ×3, 氩 ×2.5, 氖 ×2.2, 氦 ×2 或氮 ×1. 机械类需要润滑油. 以上四类缺少助燃剂时保留源质.
+oth.essentia.reagents_extra=其余类别可以直接燃烧. 生命类可用液态经验 ×2 或生命源质 ×6. 污染类可能产生咒波瓦斯, 净化液使热值 ×60 并消除风险, 液态死亡改变热值并使风险翻倍. 灵魂类使用灵魂液时稳定度越高加成越大, 使用空洞之泪时相反. 辐射类可用熔融铯 ×2, 铀-235 ×3, 硅岩 ×4 或原子分离催化剂 ×16. 电能类热值乘以 3 的动力仓等级次方.
+# ==== 补 Tectech 三族力场发生器方块名(TT lang 缺 per-tier 键,迪普西科结构检测提示需要)====
 gt.spacetime_compression_field_generator.0.name=粗制压缩时空场发生器
 gt.spacetime_compression_field_generator.1.name=原始压缩时空场发生器
 gt.spacetime_compression_field_generator.2.name=稳定压缩时空场发生器

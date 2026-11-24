@@ -189,7 +189,8 @@ public enum OTHItemList {
     DeepSeiko,
     DeepSeikoNaniteCell,
     PrimitiveRareEarthCatalyst,
-    SpeakingStone;
+    SpeakingStone,
+    RocketSchematicHatch;
 
     private boolean mHasNotBeenSet;
     private boolean mDeprecated;
