@@ -17,6 +17,7 @@ import com.newmaa.othtech.common.recipemap.Recipemaps;
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
+import gregtech.api.enums.NaniteTier;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMap;
@@ -412,6 +413,41 @@ public class RecipesMegaISAForge implements IRecipePool {
             .fluidOutputs(FluidRegistry.getFluidStack("quarkgluonplasma", 3690000))
             .duration(123 * 20)
             .eut(TierEU.RECIPE_MAX)
+            .addTo(ISA);
+
+        // 惰性寰宇焊料 -> 无界寰宇焊料（定制配方）
+        GTValues.RA.stdBuilder()
+            .itemInputs(
+                setStackSize(NaniteTier.Universium.getStack(), 16),
+                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32264), 256),
+                OTHItemList.dustIrOsSmM.get(1),
+                GTModHandler.getModItem("miscutils", "particleBase", 64, 0),
+                GTModHandler.getModItem("miscutils", "particleBase", 64, 17))
+            .fluidInputs(Materials.InactiveCosmicSolder.getFluid(3_210_000))
+            .fluidOutputs(Materials.BoundlessCosmicSolder.getFluid(3_210_000))
+            .duration(200 * 20)
+            .eut(Integer.MAX_VALUE)
+            .specialValue(1)
+            .addTo(ISA);
+
+        // 稳定空白约束单元 -> 四类稳定约束单元（定制配方）
+        GTValues.RA.stdBuilder()
+            .itemInputs(
+                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32304), 4096),
+                setStackSize(GTModHandler.getModItem("miscutils", "particleBase", 1, 18), 256),
+                setStackSize(GTModHandler.getModItem("miscutils", "particleBase", 1, 7), 256),
+                setStackSize(GTModHandler.getModItem("miscutils", "particleBase", 1, 23), 256),
+                setStackSize(GTModHandler.getModItem("miscutils", "particleBase", 1, 17), 256),
+                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32234), 64))
+            .fluidInputs(FluidRegistry.getFluidStack("oganesson", 1_000_000))
+            .itemOutputs(
+                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32300), 1024),
+                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32301), 1024),
+                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32302), 1024),
+                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32303), 1024))
+            .duration(500 * 20)
+            .eut(Integer.MAX_VALUE)
+            .specialValue(1)
             .addTo(ISA);
     }
 }

@@ -1091,6 +1091,18 @@ public class RecipesSunFactoryEnqing implements IRecipePool {
             .duration(60 * 64 * 20)
             .eut(TierEU.UV)
             .addTo(NMD);
+        // 阿米功率IC晶圆 -> 仄米功率IC晶圆（定制配方）
+        RecipeBuilder.builder()
+            .itemInputs(
+                setStackSize(ItemList.Circuit_Wafer_APIC.get(1), 4096),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.plateSuperdense, Materials.SpaceTime, 1), 64),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.plateSuperdense, Materials.Creon, 1), 123),
+                setStackSize(GTOreDictUnificator.get(OrePrefixes.plateSuperdense, Materials.Mellion, 1), 123),
+                setStackSize(GTModHandler.getModItem("miscutils", "particleBase", 1, 0), 999))
+            .itemOutputs(setStackSize(ItemList.Circuit_Wafer_ZPIC.get(1), 4096 * a))
+            .duration(999 * 20)
+            .eut(125_829_120)
+            .addTo(NMD);
         // UNI
         // Crystal Processing Unit
         RecipeBuilder.builder()
