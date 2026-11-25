@@ -44,7 +44,7 @@ public class RecipesCircuit implements IRecipePool {
         return new ItemStack(ItemAstralArrayFabricator.INSTANCE, amount);
     }
 
-    // TODO
+
     @Override
     public void loadRecipes() {
         Fluid i140 = FluidRegistry.getFluid("molten.indalloy140");
