@@ -578,8 +578,7 @@ public class RecipesDeepSeiko implements IRecipePool {
         }
 
         ItemStack[] d199Inputs = new ItemStack[] { GTModHandler.getModItem("dreamcraft", "PlanckCircuit", 8),
-            GTModHandler.getModItem("gregtech", "gt.metaitem.03", 16, 32278),
-            GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 32275),
+            GTModHandler.getModItem("gregtech", "gt.metaitem.03", 16, 32278), OTHItemList.beeMagM.get(32),
             GTModHandler.getModItem("gregtech", "gt.metaitem.01", 2, 32043),
             GTModHandler.getModItem("gregtech", "gt.metaitem.01", 2, 32039),
             GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 32047), computeCenter(8, 0),
