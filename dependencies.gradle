@@ -8,6 +8,7 @@ elytraModpackVersion {
 
 dependencies {
     implementation(gtnhDev("GT5-Unofficial"))
+    implementation(gtnhDev("ModularUI2"))
     compileOnly(gtnhDev("CropsNH"))
     implementation(gtnhDev("NewHorizonsCoreMod"))
     implementation('com.github.GTNewHorizons:Mobs-Info:0.6.0-GTNH:dev')

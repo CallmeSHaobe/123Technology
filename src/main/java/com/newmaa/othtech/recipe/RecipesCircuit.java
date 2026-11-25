@@ -43,7 +43,8 @@ public class RecipesCircuit implements IRecipePool {
     public static ItemStack getAstralArray(int amount) {
         return new ItemStack(ItemAstralArrayFabricator.INSTANCE, amount);
     }
-    //TODO
+
+    // TODO
     @Override
     public void loadRecipes() {
         Fluid i140 = FluidRegistry.getFluid("molten.indalloy140");
@@ -340,81 +341,84 @@ public class RecipesCircuit implements IRecipePool {
             .requiresLowGravity()
             .eut(TierEU.UMV)
             .addTo(MQFT);
-        // ULV - ZPM general soc recipes
-        // ULV
+        // ULV–ZPM circuits from Universal SoC in the Nanochip Assembly Matrix.
+        addUniversalSocRecipe(
+            CircuitComponent.NandChip,
+            4096,
+            1,
+            20,
+            30,
+            OTHCircuitComponent.PLASTIC_BOARD.getFakeStack(4),
+            Materials.Lead.getMolten(72));
+        addUniversalSocRecipe(
+            CircuitComponent.Microprocessor,
+            2048,
+            1,
+            80,
+            120,
+            OTHCircuitComponent.ADVANCED_PLASTIC_BOARD.getFakeStack(8),
+            Materials.Tin.getMolten(144));
+        addUniversalSocRecipe(
+            CircuitComponent.IntegratedProcessor,
+            1024,
+            1,
+            320,
+            480,
+            OTHCircuitComponent.ADVANCED_PLASTIC_BOARD.getFakeStack(16),
+            Materials.SolderingAlloy.getMolten(576));
+        addUniversalSocRecipe(
+            CircuitComponent.NanoProcessor,
+            512,
+            1,
+            1280,
+            1920,
+            OTHCircuitComponent.ADVANCED_PLASTIC_BOARD.getFakeStack(16),
+            new FluidStack(i140, 2304));
+        addUniversalSocRecipe(
+            CircuitComponent.QuantumProcessor,
+            256,
+            2,
+            5120,
+            7680,
+            OTHCircuitComponent.ADVANCED_BOARD.getFakeStack(32),
+            new FluidStack(i140, 2304 * 4));
+        addUniversalSocRecipe(
+            CircuitComponent.CrystalProcessor,
+            128,
+            2,
+            5120 * 4,
+            7680 * 4,
+            CircuitComponent.ProcessedBoardMultifiberglassElite.getFakeStack(32),
+            new FluidStack(bio, 576));
+        addUniversalSocRecipe(
+            CircuitComponent.WetwareProcessor,
+            64,
+            4,
+            5120 * 16,
+            7680 * 16,
+            CircuitComponent.ProcessedBoardWetwareLifesupport.getFakeStack(16),
+            new FluidStack(bio, 576));
+        addUniversalSocRecipe(
+            CircuitComponent.BiowareProcessor,
+            32,
+            16,
+            5120 * 64,
+            7680 * 64,
+            CircuitComponent.ProcessedBoardBioMutated.getFakeStack(8),
+            new FluidStack(bio, 2304),
+            new FluidStack(FluidRegistry.getFluidID("molten.chromaticglass"), 16 * 72));
+    }
+
+    private static void addUniversalSocRecipe(CircuitComponent output, int outputCount, int socCount, int duration,
+        long eut, ItemStack board, FluidStack... fluids) {
         GTValues.RA.stdBuilder()
-            .itemInputs(
-                GTUtility.getIntegratedCircuit(1),
-                ItemList.Circuit_Board_Plastic.get(4),
-                OTHItemList.socNorM.get(1))
-            .itemOutputs(setStackSize(ItemList.NandChip.get(1), 4096))
-            .fluidInputs(new FluidStack(i140, 72))
-            .duration(20)
-            .eut(30)
-            .addTo(ISA);
-        // LV
-        GTValues.RA.stdBuilder()
-            .itemInputs(
-                GTUtility.getIntegratedCircuit(2),
-                ItemList.Circuit_Board_Plastic_Advanced.get(8),
-                OTHItemList.socNorM.get(1))
-            .itemOutputs(setStackSize(ItemList.Circuit_Microprocessor.get(1), 2048))
-            .fluidInputs(new FluidStack(i140, 144))
-            .duration(80)
-            .eut(120)
-            .addTo(ISA);
-        // MV
-        GTValues.RA.stdBuilder()
-            .itemInputs(
-                GTUtility.getIntegratedCircuit(3),
-                ItemList.Circuit_Board_Plastic_Advanced.get(16),
-                OTHItemList.socNorM.get(1))
-            .itemOutputs(setStackSize(ItemList.Circuit_Processor.get(1), 1024))
-            .fluidInputs(new FluidStack(i140, 576))
-            .duration(320)
-            .eut(480)
-            .addTo(ISA);
-        // HV
-        GTValues.RA.stdBuilder()
-            .itemInputs(ItemList.Circuit_Board_Plastic_Advanced.get(16), OTHItemList.socNorM.get(1))
-            .itemOutputs(setStackSize(ItemList.Circuit_Nanoprocessor.get(1), 512))
-            .fluidInputs(new FluidStack(i140, 2304))
-            .duration(1280)
-            .eut(1920)
-            .addTo(ISA);
-        // EV
-        GTValues.RA.stdBuilder()
-            .itemInputs(ItemList.Circuit_Board_Advanced.get(32), OTHItemList.socNorM.get(2))
-            .itemOutputs(setStackSize(ItemList.Circuit_Quantumprocessor.get(1), 256))
-            .fluidInputs(new FluidStack(i140, 2304 * 4))
-            .duration(5120)
-            .eut(7680)
-            .addTo(ISA);
-        // IV
-        GTValues.RA.stdBuilder()
-            .itemInputs(ItemList.Circuit_Board_Multifiberglass_Elite.get(32), OTHItemList.socNorM.get(2))
-            .itemOutputs(setStackSize(ItemList.Circuit_Crystalprocessor.get(1), 128))
-            .fluidInputs(new FluidStack(bio, 576))
-            .duration(5120 * 4)
-            .eut(7680 * 4)
-            .addTo(ISA);
-        // LuV
-        GTValues.RA.stdBuilder()
-            .itemInputs(ItemList.Circuit_Board_Wetware_Extreme.get(16), OTHItemList.socNorM.get(4))
-            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 32092))
-            .fluidInputs(new FluidStack(bio, 576))
-            .duration(5120 * 16)
-            .eut(7680 * 16)
-            .addTo(ISA);
-        // ZPM
-        GTValues.RA.stdBuilder()
-            .itemInputs(ItemList.Circuit_Board_Bio_Ultra.get(8), OTHItemList.socNorM.get(16))
-            .itemOutputs(setStackSize(ItemList.Circuit_Bioprocessor.get(1), 32))
-            .fluidInputs(
-                new FluidStack(bio, 2304),
-                new FluidStack(FluidRegistry.getFluidID("molten.chromaticglass"), 16 * 72))
-            .duration(5120 * 64)
-            .eut(7680 * 64)
-            .addTo(ISA);
+            .metadata(NanochipAssemblyMatrixTierKey.INSTANCE, VoltageIndex.ZPM)
+            .metadata(GTRecipeConstants.CIRCUIT_CALIBRATION_TYPE, output.circuitType)
+            .itemInputs(board, OTHCircuitComponent.UNIVERSAL_SOC.getFakeStack(socCount))
+            .itemOutputs(output.getFakeStack(outputCount))
+            .fluidInputs(fluids)
+            .duration(duration)
+            .eut(eut)
+            .addTo(nanochipAssemblyMatrixRecipes);
     }
 }

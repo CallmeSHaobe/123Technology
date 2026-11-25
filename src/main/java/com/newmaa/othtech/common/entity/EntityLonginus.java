@@ -132,7 +132,16 @@ public class EntityLonginus extends EntityThrowable implements IEntityAdditional
 
     @Override
     protected void onImpact(MovingObjectPosition hit) {
+        if (worldObj.isRemote) return;
         if (hit.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
+            if (isEmbedded()) return;
+            worldObj.playSoundEffect(
+                hit.hitVec.xCoord,
+                hit.hitVec.yCoord,
+                hit.hitVec.zCoord,
+                "123technology:weapons.longinus.hit_block",
+                0.85F,
+                varySoundPitch());
             blockX = hit.blockX;
             blockY = hit.blockY;
             blockZ = hit.blockZ;
@@ -183,6 +192,13 @@ public class EntityLonginus extends EntityThrowable implements IEntityAdditional
         entityImpactPosition = contact == null ? start : contact.hitVec;
 
         setImpactFlag(HIT_ENTITY_FLAG, true);
+        worldObj.playSoundEffect(
+            entityImpactPosition.xCoord,
+            entityImpactPosition.yCoord,
+            entityImpactPosition.zCoord,
+            "123technology:weapons.longinus.hit_entity",
+            0.8F,
+            varySoundPitch());
         target.attackEntityFrom(new EntityDamageSourceIndirect("longinus", this, thrower).setProjectile(), DAMAGE);
         // Lose forward momentum after the hit and let gravity carry the spear to the ground.
         motionX *= 0.02D;
@@ -196,8 +212,12 @@ public class EntityLonginus extends EntityThrowable implements IEntityAdditional
         if (worldObj.isRemote || isDead || !isEmbedded()) return;
         if (creativeThrow ? !player.capabilities.isCreativeMode
             : spear == null || !player.inventory.addItemStackToInventory(spear)) return;
-        playSound("random.pop", 0.2F, 1F);
+        worldObj.playSoundEffect(posX, posY, posZ, "123technology:weapons.longinus.pickup", 0.62F, varySoundPitch());
         setDead();
+    }
+
+    private float varySoundPitch() {
+        return 0.97F + rand.nextFloat() * 0.06F;
     }
 
     public boolean hasImpacted() {

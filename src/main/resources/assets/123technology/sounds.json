@@ -1,4 +1,20 @@
 {
+  "weapons.longinus.throw": {
+    "category": "player",
+    "sounds": ["weapons/longinus/throw"]
+  },
+  "weapons.longinus.hit_block": {
+    "category": "player",
+    "sounds": ["weapons/longinus/hit_block"]
+  },
+  "weapons.longinus.hit_entity": {
+    "category": "player",
+    "sounds": ["weapons/longinus/hit_entity"]
+  },
+  "weapons.longinus.pickup": {
+    "category": "player",
+    "sounds": ["weapons/longinus/pickup"]
+  },
   "machines.abstract_sanctum": {
     "category": "block",
     "sounds": [

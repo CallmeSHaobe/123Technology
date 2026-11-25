@@ -9,7 +9,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 
 import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
@@ -19,8 +18,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemHelmTallHatLaodeng extends ItemArmor {
 
-    @SideOnly(Side.CLIENT)
-    private IIcon helmIcon;
+    static final String HAT_TEXTURE = "123technology:models/tallHatLaodengTexture.png";
 
     public ItemHelmTallHatLaodeng(ArmorMaterial material, int armorType, String name) {
         super(material, 0, 0);
@@ -42,13 +40,12 @@ public class ItemHelmTallHatLaodeng extends ItemArmor {
     @SideOnly(Side.CLIENT)
     @Override
     public ModelBiped getArmorModel(EntityLivingBase entity, ItemStack stack, int slot) {
-        return null;
-
+        return slot == 0 ? ItemHelmTallHatRender.getWornModel(entity) : null;
     }
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type) {
-        return super.getArmorTexture(stack, entity, slot, type);
+        return slot == 0 ? HAT_TEXTURE : super.getArmorTexture(stack, entity, slot, type);
     }
 
     @Override

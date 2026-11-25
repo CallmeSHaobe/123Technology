@@ -50,7 +50,13 @@ public class ItemLonginus extends Item {
         if (!player.capabilities.isCreativeMode) {
             player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
         }
-        world.playSoundAtEntity(player, "random.bow", 0.8F, 0.8F);
+        world.playSoundEffect(
+            player.posX,
+            player.posY + player.getEyeHeight() * 0.8D,
+            player.posZ,
+            "123technology:weapons.longinus.throw",
+            0.85F,
+            1F);
     }
 
 }

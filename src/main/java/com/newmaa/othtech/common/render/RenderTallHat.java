@@ -39,9 +39,18 @@ public class RenderTallHat extends TileEntitySpecialRenderer {
             GL11.glRotatef(180, 0, 0.2F, 0);
         }
         GL11.glScalef(scale, scale, scale);
+        renderModel(model);
+        GL11.glPopMatrix();
+    }
+
+    public static void renderModel(IModelCustom model) {
         GL11.glPushMatrix();
-        model.renderAll();
-        GL11.glPopMatrix();
-        GL11.glPopMatrix();
+        try {
+            // Clockwise as seen from above the upright OBJ.
+            GL11.glRotatef(-90F, 0F, 1F, 0F);
+            model.renderAll();
+        } finally {
+            GL11.glPopMatrix();
+        }
     }
 }

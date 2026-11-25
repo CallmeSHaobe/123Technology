@@ -28,6 +28,15 @@ dependencies {
 }
 val compileRegression = tasks.named<JavaCompile>(regressionSources.compileJavaTaskName) {
     source("src/main/java/com/newmaa/othtech/common/entity/FlightDynamics.java")
+    source("src/main/java/com/newmaa/othtech/common/blocks/AyanamiAction.java")
+    source("src/main/java/com/newmaa/othtech/common/blocks/AyanamiBlink.java")
+    source("src/main/java/com/newmaa/othtech/common/dialogue/AyanamiChatApi.java")
+    source("src/main/java/com/newmaa/othtech/common/dialogue/AyanamiDialogueText.java")
+    source("src/main/java/com/newmaa/othtech/common/dialogue/AyanamiEventLinePrompt.java")
+    source("src/main/java/com/newmaa/othtech/common/dialogue/AyanamiInputEdit.java")
+    source("src/main/java/com/newmaa/othtech/common/dialogue/AyanamiKeyVault.java")
+    source("src/main/java/com/newmaa/othtech/common/dialogue/AyanamiReasoning.java")
+    source("src/main/java/com/newmaa/othtech/common/render/AyanamiRig.java")
     source("src/main/java/com/newmaa/othtech/utils/ShapeLoader.java")
     source("src/main/java/com/newmaa/othtech/machine/single/SpeakingStonePreset.java")
     source(fileTree("src/main/java/com/newmaa/othtech/client/radio") {
@@ -63,8 +72,30 @@ val radioDecoderCheck = tasks.register<JavaExec>("radioDecoderCheck") {
     classpath = regressionSources.runtimeClasspath
     mainClass.set("com.newmaa.othtech.client.radio.RadioDecoderCheck")
 }
+val ayanamiRigCheck = tasks.register<JavaExec>("ayanamiRigCheck") {
+    group = "verification"
+    description = "Verify Ayanami OBJ bindings and animation keyframe sampling offline."
+    dependsOn(compileRegression)
+    classpath = regressionSources.runtimeClasspath + files("src/main/resources")
+    mainClass.set("com.newmaa.othtech.common.render.AyanamiRigCheck")
+}
+val ayanamiDialogueCheck = tasks.register<JavaExec>("ayanamiDialogueCheck") {
+    group = "verification"
+    description = "Verify Ayanami dialogue against a loopback provider and test the animation allowlist."
+    dependsOn(compileRegression, tasks.named("processResources"))
+    classpath = regressionSources.runtimeClasspath + files(tasks.named("processResources").map { it.outputs.files })
+    mainClass.set("com.newmaa.othtech.common.dialogue.AyanamiChatApiCheck")
+}
+val ayanamiKeyVaultCheck = tasks.register<JavaExec>("ayanamiKeyVaultCheck") {
+    group = "verification"
+    description = "Verify authenticated encryption and per-endpoint isolation for Ayanami API keys."
+    dependsOn(compileRegression)
+    classpath = regressionSources.runtimeClasspath
+    mainClass.set("com.newmaa.othtech.common.dialogue.AyanamiKeyVaultCheck")
+}
 tasks.named("check") {
-    dependsOn(flightDynamicsCheck, shapeLoaderCheck, radioDecoderCheck)
+    dependsOn(flightDynamicsCheck, shapeLoaderCheck, radioDecoderCheck, ayanamiRigCheck, ayanamiDialogueCheck,
+        ayanamiKeyVaultCheck)
 }
 
 // Isolate only the Java 8 AAC decoder; do not install JAAD's global Java Sound providers.
