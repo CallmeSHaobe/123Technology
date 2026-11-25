@@ -14,6 +14,12 @@
     "ItemDimensionDisplayRendererOTHMixin",
     "PoweredElytraMovementMixin"
   ],
-  "client": ["RossRainSplashMixin", "PositronCannonArmsMixin", "LonginusThrowPoseMixin", "VoidNexusSkyMixin"],
+  "client": [
+    "RossRainSplashMixin",
+    "PositronCannonArmsMixin",
+    "LonginusThrowPoseMixin",
+    "VoidNexusSkyMixin",
+    "CircuitComponentFakeItemOTHMixin"
+  ],
   "server": []
 }

@@ -2,13 +2,14 @@ package com.newmaa.othtech.common.blocks;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 import com.newmaa.othtech.common.IRegistry;
-import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
 import com.newmaa.othtech.common.item.itemBlock.ItemModelAyanami;
 
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -27,7 +28,7 @@ public class ModelAyanami extends BaseBlockContainer implements IRegistry<ModelA
     public ModelAyanami register() {
         GameRegistry.registerBlock(this, ItemModelAyanami.class, "modelAyanami");
         GameRegistry.registerTileEntity(OTEModelAyanami.class, "modelAyanami");
-        setCreativeTab(CreativeTabsLoader.tabothtech);
+        // Keep the old registry IDs readable for existing worlds; new gameplay uses the clone pod.
         return this;
     }
 
@@ -49,6 +50,25 @@ public class ModelAyanami extends BaseBlockContainer implements IRegistry<ModelA
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
         return new OTEModelAyanami();
+    }
+
+    @Override
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX,
+        float hitY, float hitZ) {
+        if (!player.isSneaking() || player.getHeldItem() != null) return false;
+        if (world.isRemote) return true;
+
+        TileEntity tile = world.getTileEntity(x, y, z);
+        if (!(tile instanceof OTEModelAyanami ayanami)) return false;
+
+        ayanami.cycleAction();
+        player.addChatMessage(
+            new ChatComponentTranslation(
+                "oth.ayanami.action.selected",
+                new ChatComponentTranslation(
+                    "oth.ayanami.action." + ayanami.getAction()
+                        .getId())));
+        return true;
     }
 
     @Override

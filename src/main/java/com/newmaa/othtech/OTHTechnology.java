@@ -17,6 +17,7 @@ import com.newmaa.othtech.common.ItemAndBlockHandler;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.OreDictionaryLoader;
 import com.newmaa.othtech.common.beeyonds.OTHBeeyonds;
+import com.newmaa.othtech.common.blocks.BlockAyanamiClonePod;
 import com.newmaa.othtech.common.blocks.antimonia.AntimoniaBlocks;
 import com.newmaa.othtech.common.blocks.deepseiko.DeepSeikoBlocks;
 import com.newmaa.othtech.common.blocks.fluids.AntimoniaFluids;
@@ -28,6 +29,7 @@ import com.newmaa.othtech.common.compat.thaumcraft.EssentiaGeneratorCompat;
 import com.newmaa.othtech.common.compat.thaumcraft.ThaumcraftResearchCompat;
 import com.newmaa.othtech.common.compat.thaumcraft.VoidNexusResearchCompat;
 import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
+import com.newmaa.othtech.common.dialogue.AyanamiDialogue;
 import com.newmaa.othtech.common.dimensions.AntimoniaUndergroundFluids;
 import com.newmaa.othtech.common.dimensions.OTHDimensionIntegration;
 import com.newmaa.othtech.common.dimensions.RegisterDimensions;
@@ -57,6 +59,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerAboutToStartEvent;
 import cpw.mods.fml.common.event.FMLServerStartedEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.common.event.FMLServerStoppingEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.GameRegistry.Type;
 import gregtech.api.GregTechAPI;
@@ -75,6 +78,7 @@ import gtnhintergalactic.recipe.SpacePumpingRecipes;
         + "required-after:Avaritia;"
         + "required-after:eternalsingularity;"
         + "required-after:modularui;"
+        + "required-after:modularui2;"
         + "required-after:GalacticraftCore;"
         + "required-after:bartworks;"
         + "required-after:miscutils;"
@@ -125,6 +129,7 @@ public class OTHTechnology {
         }
 
         new CreativeTabsLoader(event);
+        BlockAyanamiClonePod.register();
         EssentiaGeneratorCompat.registerParts();
         new ItemLoader(event);
         new OreDictionaryLoader(event);
@@ -157,6 +162,7 @@ public class OTHTechnology {
         API.hideItem(new ItemStack(DeepSeikoBlocks.dsHolo));
         API.hideItem(new ItemStack(AntimoniaFluids.BlockAquaRegia));
         API.hideItem(new ItemStack(RossFluids.BlockLCL));
+        API.hideItem(new ItemStack(ItemAndBlockHandler.MODEL_AYANAMI));
         API.hideItem(new ItemStack(new BlockRocketRender()));
     }
 
@@ -236,7 +242,12 @@ public class OTHTechnology {
     @Mod.EventHandler
     public void serverStarting(FMLServerStartingEvent event) {
         proxy.serverStarting(event);
+        AyanamiDialogue.start(event.getServer());
+    }
 
+    @Mod.EventHandler
+    public void serverStopping(FMLServerStoppingEvent event) {
+        AyanamiDialogue.stop();
     }
 
     @Mod.EventHandler

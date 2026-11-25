@@ -24,6 +24,7 @@ public class EntityLoader {
         registerEntity(EntitySuicideDrone.class, "entitySuicideDrone", 6, 512, 1, true);
         registerEntity(EntityLonginus.class, "entityLonginus", 7, 96, 1, true);
         registerEntity(EntityFakePlayer.class, "CustomPlayer", 0, 80, 3, true);
+        registerEntity(EntityAyanami.class, "Ayanami", 8, 80, 3, true);
         registerSpawns();
         MinecraftForge.EVENT_BUS.register(this);
     }

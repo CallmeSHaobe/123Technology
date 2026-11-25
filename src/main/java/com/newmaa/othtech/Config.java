@@ -4,6 +4,8 @@ import java.io.File;
 
 import net.minecraftforge.common.config.Configuration;
 
+import com.newmaa.othtech.common.dialogue.AyanamiDialogue;
+
 public class Config {
 
     public static String greeting = "Hello World";
@@ -76,6 +78,7 @@ public class Config {
             "speaking_stone",
             false,
             "Client only. Allow multiplayer worlds to make this client load custom radio URLs. Enable only on trusted servers; URLs or redirects can contact services reachable from your network.");
+        AyanamiDialogue.configure(configuration, configFile.toPath());
         if (configuration.hasChanged()) {
             configuration.save();
         }

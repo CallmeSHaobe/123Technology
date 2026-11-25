@@ -51,7 +51,7 @@ public class ItemModelTallHatRender implements IItemRenderer {
         GL11.glTranslatef(-0.2f, 0f, -0.4f);
         GL11.glRotated(0, 1, 0, 0);
         Minecraft.getMinecraft().renderEngine.bindTexture(Main);
-        ModelHelmTallHatLaodeng.renderAll();
+        RenderTallHat.renderModel(ModelHelmTallHatLaodeng);
         GL11.glPopMatrix();
     }
 }

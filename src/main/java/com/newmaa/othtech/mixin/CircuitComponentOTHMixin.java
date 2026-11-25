@@ -39,23 +39,27 @@ public abstract class CircuitComponentOTHMixin {
             value = "INVOKE",
             target = "Lgregtech/common/tileentities/machines/multi/nanochip/util/CircuitComponent;values()[Lgregtech/common/tileentities/machines/multi/nanochip/util/CircuitComponent;"),
         require = 1)
-    private static void oth$registerAF(CallbackInfo ci) {
-        int meta = OTHCircuitComponent.AF_NAC_META;
-        for (CircuitComponent existing : $VALUES) {
-            if (existing.metaId == meta || existing.name()
-                .equals(OTHCircuitComponent.AF_NAC_NAME)) {
-                throw new IllegalStateException("NAC component collision for AF (meta " + meta + ")");
-            }
-        }
+    private static void oth$registerComponents(CallbackInfo ci) {
+        OTHCircuitComponent[] additions = OTHCircuitComponent.values();
         int ordinal = $VALUES.length;
-        CircuitComponent af = oth$newComponent(
-            OTHCircuitComponent.AF_NAC_NAME,
-            ordinal,
-            meta,
-            "ote.tn.mat",
-            OTHCircuitComponent.afRealStackSupplier());
-        CircuitComponent[] extended = Arrays.copyOf($VALUES, ordinal + 1);
-        extended[ordinal] = af;
+        CircuitComponent[] extended = Arrays.copyOf($VALUES, ordinal + additions.length);
+        for (OTHCircuitComponent addition : additions) {
+            for (int i = 0; i < ordinal; i++) {
+                CircuitComponent existing = extended[i];
+                if (existing.metaId == addition.metaId || existing.name()
+                    .equals(addition.nacName)) {
+                    throw new IllegalStateException(
+                        "NAC component collision for " + addition.nacName + " (meta " + addition.metaId + ")");
+                }
+            }
+            extended[ordinal] = oth$newComponent(
+                addition.nacName,
+                ordinal,
+                addition.metaId,
+                addition.nameKey,
+                addition.realStack);
+            ordinal++;
+        }
         $VALUES = extended;
     }
 }

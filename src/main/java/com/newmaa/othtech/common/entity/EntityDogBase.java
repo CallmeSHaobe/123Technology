@@ -13,7 +13,6 @@ public abstract class EntityDogBase extends EntityWolf implements IEntityBreatha
 
     public EntityDogBase(World worldIn) {
         super(worldIn);
-        // 优先度 5：比原版狼的「主人被打 / 自己被打 / 抓羊」都低一档，但永远生效
         this.targetTasks.addTask(5, new EntityAINearestAttackableTarget(this, EntityDogBase.class, 0, true));
     }
 

@@ -539,17 +539,6 @@ public class RecipesMain implements IRecipePool {
             .eut(1920)
             .duration(80 * 20)
             .addTo(RecipeMaps.electrolyzerNonCellRecipes);
-        GTValues.RA.stdBuilder()
-            .fluidInputs(BWLiquids.LCL.getFluidOrGas(50000))
-            .itemInputsUnsafe(
-                GTUtility.getIntegratedCircuit(17),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.02", 8, 32429),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.02", 8, 32420),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 17472))
-            .itemOutputs(GTModHandler.getModItem(OTHTechnology.MODID, "modelAyanami", 1))
-            .eut(320)
-            .duration(40 * 20)
-            .addTo(assemblerRecipes);
         // Asuka Model
         GTValues.RA.stdBuilder()
             .fluidInputs(BWLiquids.LCL.getFluidOrGas(50000))
@@ -577,10 +566,8 @@ public class RecipesMain implements IRecipePool {
             .addTo(assemblerRecipes);
         // Record EVA
         GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(
-                GTUtility.getIntegratedCircuit(17),
-                GTModHandler.getModItem(OTHTechnology.MODID, "modelAyanami", 0),
-                new ItemStack(Items.diamond, 3))
+            .itemInputsUnsafe(GTUtility.getIntegratedCircuit(17), new ItemStack(Items.diamond, 3))
+            .fluidInputs(BWLiquids.LCL.getFluidOrGas(1000))
             .itemOutputs(
                 new ItemStack(ItemLoader.RecordEVAA, 1),
                 new ItemStack(ItemLoader.RecordEVAB, 1),

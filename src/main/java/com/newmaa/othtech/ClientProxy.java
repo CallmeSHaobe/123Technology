@@ -7,6 +7,7 @@ import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.client.model.IModelCustom;
 import net.minecraftforge.common.MinecraftForge;
 
+import com.newmaa.othtech.client.AyanamiDialogueClient;
 import com.newmaa.othtech.client.OTEEntangledFluidRenderer;
 import com.newmaa.othtech.client.OTEMaterialRenderEffects;
 import com.newmaa.othtech.client.OTEVoidNexusClientEffects;
@@ -18,6 +19,7 @@ import com.newmaa.othtech.common.blocks.deepseiko.TEDeepSeikoHolo;
 import com.newmaa.othtech.common.blocks.fluids.RossFluids;
 import com.newmaa.othtech.common.dimensions.sky.RossFogHandler;
 import com.newmaa.othtech.common.dimensions.sky.SkyProviderHandler;
+import com.newmaa.othtech.common.entity.EntityAyanami;
 import com.newmaa.othtech.common.entity.EntityDogBlue;
 import com.newmaa.othtech.common.entity.EntityDogRed;
 import com.newmaa.othtech.common.entity.EntityDogYellow;
@@ -36,6 +38,7 @@ import com.newmaa.othtech.common.item.itemBlock.ItemModelTallHatRender;
 import com.newmaa.othtech.common.item.itemMisc.ItemSuicideDrone;
 import com.newmaa.othtech.common.item.itemWeapons.RenderPositronCannon;
 import com.newmaa.othtech.common.materials.OTHMaterials;
+import com.newmaa.othtech.common.render.RenderAyanamiEntity;
 import com.newmaa.othtech.common.render.RenderDrone;
 import com.newmaa.othtech.common.render.RenderLonginus;
 import com.newmaa.othtech.common.render.RenderLonginusItem;
@@ -98,6 +101,7 @@ public class ClientProxy extends CommonProxy {
         OTEEntangledFluidRenderer.register();
         OTEVoidNexusClientEffects.install();
         SpeakingStoneClient.install();
+        AyanamiDialogueClient.install();
         if (Loader.isModLoaded("etfuturum")) {
             MinecraftForge.EVENT_BUS.register(new PoweredElytraSpeedHud());
             FMLCommonHandler.instance()
@@ -116,6 +120,7 @@ public class ClientProxy extends CommonProxy {
         RenderingRegistry.registerEntityRenderingHandler(
             EntityNukeThrowable.class,
             new RenderSnowball(ItemLoader.itemNukeThrowable));
+        RenderingRegistry.registerEntityRenderingHandler(EntityAyanami.class, new RenderAyanamiEntity());
         RenderingRegistry.registerEntityRenderingHandler(EntityLonginus.class, new RenderLonginus());
         RenderingRegistry.registerEntityRenderingHandler(EntityPositronShot.class, new RenderPositronShot());
         RenderingRegistry.registerEntityRenderingHandler(EntitySuicideDrone.class, new RenderSuicideDrone());
@@ -133,6 +138,21 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void postInit(FMLPostInitializationEvent event) {
         super.postInit(event);
+    }
+
+    @Override
+    public void queueAyanamiReply(int dimension, int entityId, String text) {
+        AyanamiDialogueClient.enqueueReply(dimension, entityId, text);
+    }
+
+    @Override
+    public void queueAyanamiLocalReply(int dimension, int entityId, String key) {
+        AyanamiDialogueClient.enqueueLocalReply(dimension, entityId, key);
+    }
+
+    @Override
+    public void queueAyanamiAmbientReply(int dimension, int entityId, String text, boolean localize) {
+        AyanamiDialogueClient.enqueueAmbientReply(dimension, entityId, text, localize);
     }
 
     public void registerRenderers() {
