@@ -67,19 +67,27 @@ import org.apache.logging.log4j.Logger;
 import com.Nxer.TwistSpaceTechnology.common.GTCMItemList;
 import com.Nxer.TwistSpaceTechnology.common.api.ModItemHandler.ModItem;
 import com.Nxer.TwistSpaceTechnology.util.recipes.TST_RecipeBuilder;
+import com.dreammaster.block.BlockList;
 import com.dreammaster.item.NHItemList;
 import com.newmaa.othtech.OTHTechnology;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.blocks.deepseiko.DeepSeikoBlocks;
 import com.newmaa.othtech.common.blocks.deepseiko.DeepSeikoCasingMeta;
+import com.newmaa.othtech.common.item.ItemLoader;
 import com.newmaa.othtech.common.materials.BWLiquids;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.OTEDeepSeiko;
+import com.newmaa.othtech.utils.ExternalRecipeItems;
+import com.newmaa.othtech.utils.RecipeFluids;
+import com.newmaa.othtech.utils.RecipeStacks;
 
+import bartworks.common.loaders.ItemRegistry;
 import bartworks.system.material.WerkstoffLoader;
+import fox.spiteful.avaritia.items.LudicrousItems;
 import goodgenerator.items.GGMaterial;
 import goodgenerator.util.ItemRefer;
 import gregtech.api.GregTechAPI;
+import gregtech.api.casing.Casings;
 import gregtech.api.enums.CondensateType;
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
@@ -97,14 +105,21 @@ import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTRecipeBuilder;
 import gregtech.api.util.GTRecipeConstants;
 import gregtech.api.util.GTUtility;
+import gregtech.common.items.MetaGeneratedItem01;
+import gregtech.common.items.MetaGeneratedItem02;
+import gregtech.common.items.MetaGeneratedItem03;
+import gtPlusPlus.core.block.ModBlocks;
 import gtPlusPlus.core.material.MaterialMisc;
 import gtPlusPlus.core.material.MaterialsAlloy;
 import gtPlusPlus.core.material.MaterialsElements;
 import gtPlusPlus.xmod.gregtech.api.enums.GregtechItemList;
 import gtnhlanth.common.register.LanthItemList;
 import gtnhlanth.common.register.WerkstoffMaterialPool;
+import ic2.core.init.InternalName;
 import tectech.recipe.TTRecipeAdder;
 import tectech.recipe.TecTechRecipeMaps;
+import tectech.thing.casing.TTCasingsContainer;
+import tectech.thing.item.ItemAstralArrayFabricator;
 import wanion.avaritiaddons.block.chest.infinity.BlockInfinityChest;
 
 public class RecipesDeepSeiko implements IRecipePool {
@@ -160,7 +175,7 @@ public class RecipesDeepSeiko implements IRecipePool {
         ItemStack[] inputs = new ItemStack[] { new ItemStack(Blocks.ice, 64), new ItemStack(Blocks.packed_ice, 64),
             firstNonNull(getModItem("BiomesOPlenty", "hardIce", 64, 0), getModItem("BiomesOPlenty", "hard_ice", 64, 0)),
             getModItem("etfuturum", "blue_ice", 64, 0), getModItem(GraviSuite.ID, "itemSimpleItem", 64, 2),
-            new ItemStack(GregTechAPI.sBlockCasings8, 64, 14), ItemList.StableAdhesive.get(32),
+            RecipeStacks.casing(64, Casings.InfinityCooledCasing), ItemList.StableAdhesive.get(32),
             ItemList.EnergisedTesseract.get(16), GTOreDictUnificator.get("plateSuperdenseCallistoIce", 64),
             getModItem("universalsingularities", "universal.vanilla.singularity", 64, 3) };
 
@@ -171,15 +186,15 @@ public class RecipesDeepSeiko implements IRecipePool {
         }
 
         FluidStack water = Materials.Water.getFluid(123321);
-        FluidStack coolant = FluidRegistry.getFluidStack("ic2coolant", 123321);
+        FluidStack coolant = FluidRegistry.getFluidStack(RecipeFluids.ic2FluidName(InternalName.fluidCoolant), 123321);
         FluidStack superCoolant = Materials.SuperCoolant.getFluid(123321);
-        FluidStack spacetime = FluidRegistry.getFluidStack("molten.spacetime", 1017);
+        FluidStack spacetime = Materials.SpaceTime.getMolten(1017);
         if (water == null || coolant == null || superCoolant == null || spacetime == null) {
             OTHTechnology.LOG.warn("Spacetime Cooling Core recipe skipped: missing fluid inputs");
             return;
         }
 
-        ItemStack researchItem = new ItemStack(GregTechAPI.sBlockCasingsFoundry, 1, 9);
+        ItemStack researchItem = RecipeStacks.casing(1, Casings.HypercoolerCasing);
         boolean ok = TTRecipeAdder.addResearchableAssemblylineRecipe(
             researchItem,
             123_321_000,
@@ -207,7 +222,11 @@ public class RecipesDeepSeiko implements IRecipePool {
             if (hasNullItem((Object[]) recipe)) continue;
             GTValues.RA.stdBuilder()
                 .itemInputs(tail(recipe))
-                .fluidInputs(new FluidStack(FluidRegistry.getFluid("molten.polytetrafluoroethylene"), 288))
+                .fluidInputs(
+                    new FluidStack(
+                        FluidRegistry.getFluid(
+                            RecipeFluids.registryName(Materials.Polytetrafluoroethylene.mStandardMoltenFluid)),
+                        288))
                 .itemOutputs(recipe[0])
                 .duration(100)
                 .eut(TierEU.RECIPE_IV)
@@ -225,18 +244,19 @@ public class RecipesDeepSeiko implements IRecipePool {
     private void addDsCasingAssemblyLineRecipe() {
         ItemStack[] inputs = new ItemStack[] {
             new ItemStack(GregTechAPI.sBlockMachines, 64, MetaTileEntityIDs.HULL_UIV.ID),
-            GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 32017),
-            GTModHandler.getModItem("gregtech", "gt.metaitem.01", 48, 32041),
-            GTModHandler.getModItem("gregtech", "gt.metaitem.01", 32, 32045),
-            GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 6154),
-            GTModHandler.getModItem("gregtech", "gt.metaitem.02", 64, 31174),
-            GTModHandler.getModItem("gregtech", "gt.metaitem.02", 64, 18174),
-            GTModHandler.getModItem("gregtech", "gt.blockcasings5", 32, 13),
-            GTModHandler.getModItem("gregtech", "gt.foundrycasings", 8, 9),
-            GTModHandler.getModItem("bartworks", "BW_ExtraGlass", 32, 4),
-            GTModHandler.getModItem("gregtech", "gt.blockframes", 48, 588),
-            GTModHandler.getModItem("gregtech", "gt.blockframes", 32, 154),
-            GTModHandler.getModItem("gregtech", "gt.sheetmetal", 64, 582) };
+            RecipeStacks.exact(64, ItemList.Electric_Motor_UIV), RecipeStacks.exact(48, ItemList.Sensor_UIV),
+            RecipeStacks.exact(32, ItemList.Field_Generator_UIV),
+            RecipeStacks
+                .generated(64, MetaGeneratedItem03.INSTANCE, OrePrefixes.plateSuperdense, Materials.ProtoHalkonite),
+            RecipeStacks.generated(64, MetaGeneratedItem02.INSTANCE, OrePrefixes.gearGt, Materials.Hexanite),
+            RecipeStacks.generated(64, MetaGeneratedItem02.INSTANCE, OrePrefixes.itemCasing, Materials.Hexanite),
+            RecipeStacks.casing(32, Casings.EternalCoilBlock), RecipeStacks.casing(8, Casings.HypercoolerCasing),
+            (GregTechAPI.sPreloadStarted && gregtech.api.enums.Mods.BartWorks.isModLoaded()
+                ? RecipeStacks.exact(32, ItemRegistry.bw_realglas2, 4)
+                : null),
+            RecipeStacks.exact(48, GregTechAPI.sBlockFrames, Materials.SpaceTime.getId()),
+            RecipeStacks.exact(32, GregTechAPI.sBlockFrames, Materials.ProtoHalkonite.getId()),
+            RecipeStacks.exact(64, GregTechAPI.sBlockSheetmetalGT, Materials.EnrichedHolmium.getId()) };
         if (hasNullItem((Object[]) inputs)) {
             OTHTechnology.LOG.warn("[DeepSeiko] Blubber Casing assembly line recipe skipped: missing item inputs");
             return;
@@ -284,16 +304,22 @@ public class RecipesDeepSeiko implements IRecipePool {
 
     private void addAssemblyCasingAssemblyLineRecipe() {
         ItemStack[] inputs = new ItemStack[] {
-            GTModHandler.getModItem("GoodGenerator", "componentAssemblylineCasing", 1, 10),
-            GTModHandler.getModItem("gregtech", "gt.metaitem.01", 4, 32033),
-            GTModHandler.getModItem("gregtech", "gt.metaitem.02", 8, 21588),
-            GTModHandler.getModItem("gregtech", "gt.metaitem.02", 16, 24588),
-            new ItemStack(GregTechAPI.sBlockMachines, 16, 876), new ItemStack(GregTechAPI.sBlockMachines, 1, 2716),
-            GTModHandler.getModItem("gtnhintergalactic", "dysonswarmparts", 8, 4),
-            GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 32269),
-            GTModHandler.getModItem("gregtech", "gt.metaitem.03", 2, 6148),
-            GTModHandler.getModItem("gregtech", "gt.metaitem.03", 4, 6154),
-            GTModHandler.getModItem("gregtech", "gt.sheetmetal", 2, 588),
+            (GregTechAPI.sPreloadStarted && gregtech.api.enums.Mods.GoodGenerator.isModLoaded()
+                ? RecipeStacks.exact(1, ItemRefer.Compassline_Casing_UIV.get(1))
+                : null),
+            RecipeStacks.exact(4, ItemList.Robot_Arm_UIV),
+            RecipeStacks.generated(8, MetaGeneratedItem02.INSTANCE, OrePrefixes.rotor, Materials.SpaceTime),
+            RecipeStacks.generated(16, MetaGeneratedItem02.INSTANCE, OrePrefixes.spring, Materials.SpaceTime),
+            new ItemStack(GregTechAPI.sBlockMachines, 16, MetaTileEntityIDs.GT4_Multi_Crafter.ID),
+            RecipeStacks.exact(1, ItemList.Hatch_CraftingInput_Bus_Slave),
+            (GregTechAPI.sPreloadStarted && gregtech.api.enums.Mods.GTNHIntergalactic.isModLoaded()
+                ? RecipeStacks.exact(8, GregTechAPI.sBlockCasingsDyson, 4)
+                : null),
+            RecipeStacks.exact(64, ItemList.Circuit_Chip_APIC),
+            RecipeStacks.generated(2, MetaGeneratedItem03.INSTANCE, OrePrefixes.plateSuperdense, Materials.Mellion),
+            RecipeStacks
+                .generated(4, MetaGeneratedItem03.INSTANCE, OrePrefixes.plateSuperdense, Materials.ProtoHalkonite),
+            RecipeStacks.exact(2, GregTechAPI.sBlockSheetmetalGT, Materials.SpaceTime.getId()),
             new ItemStack(DeepSeikoBlocks.dsCasing, 1, DeepSeikoCasingMeta.BLUBBER_CASING) };
         if (hasNullItem((Object[]) inputs)) {
             OTHTechnology.LOG
@@ -302,7 +328,11 @@ public class RecipesDeepSeiko implements IRecipePool {
         }
         FluidStack solder = mutatedLivingSolder(12_000);
         FluidStack spacetime = moltenOrFluid(Materials.SpaceTime, 24_000);
-        FluidStack hypogen = fluidByNames(30_000, "molten.hypogen", "hypogen", "liquid_hypogen");
+        FluidStack hypogen = fluidByNames(
+            30_000,
+            RecipeFluids.gtppMoltenName(MaterialsElements.STANDALONE.HYPOGEN),
+            "hypogen",
+            "liquid_hypogen");
         FluidStack superconductor = moltenOrFluid(Materials.SuperconductorUIVBase, 6000);
         if (hasNullItem((Object[]) new FluidStack[] { solder, spacetime, hypogen, superconductor })) {
             OTHTechnology.LOG
@@ -345,8 +375,8 @@ public class RecipesDeepSeiko implements IRecipePool {
         ItemStack blubber = new ItemStack(DeepSeikoBlocks.dsCasing, 8, DeepSeikoCasingMeta.BLUBBER_CASING);
 
         ItemStack[] darkInputs = new ItemStack[] { blubber,
-            GTModHandler.getModItem("gregtech", "gt.sheetmetal", 64, 368),
-            GTModHandler.getModItem("gregtech", "gt.blockmetal9", 32, 4), exoticCircuit(8),
+            RecipeStacks.exact(64, GregTechAPI.sBlockSheetmetalGT, Materials.Shadow.getId()),
+            RecipeStacks.exact(32, GregTechAPI.sBlockMetal9, 4), exoticCircuit(8),
             new ItemStack(GregTechAPI.sBlockMachines, 2, 2086) };
         if (!hasNullItem((Object[]) darkInputs)) {
             try {
@@ -365,9 +395,9 @@ public class RecipesDeepSeiko implements IRecipePool {
         }
 
         ItemStack[] lightInputs = new ItemStack[] { blubber, GTUtility.getIntegratedCircuit(5),
-            GTModHandler.getModItem("gregtech", "gt.blockframes", 16, 174),
-            GTModHandler.getModItem("Avaritia", "Resource", 8, 8), exoticCircuit(8),
-            GTModHandler.getModItem("gregtech", "gt.sheetmetal", 64, 80) };
+            RecipeStacks.exact(16, GregTechAPI.sBlockFrames, Materials.Hexanite.getId()),
+            RecipeStacks.exact(8, LudicrousItems.resource, 8), exoticCircuit(8),
+            RecipeStacks.exact(64, GregTechAPI.sBlockSheetmetalGT, Materials.Tantalum.getId()) };
         if (!hasNullItem((Object[]) lightInputs)) {
             try {
                 GTValues.RA.stdBuilder()
@@ -385,13 +415,12 @@ public class RecipesDeepSeiko implements IRecipePool {
         }
 
         ItemStack[] grilleInputs = new ItemStack[] { GTUtility.getIntegratedCircuit(7),
-            GTModHandler.getModItem("dreamcraft", "NeutroniumBars", 64),
-            GTModHandler.getModItem("gregtech", "gt.metaitem.01", 4, 32025),
-            new ItemStack(GregTechAPI.sBlockMachines, 8, 5306),
-            GTModHandler.getModItem("gregtech", "gt.metaitem.01", 4, 32051),
-            GTModHandler.getModItem("gregtech", "gt.metaitem.01", 32, 22154),
-            GTModHandler.getModItem("gregtech", "gt.metaitem.03", 16, 32264),
-            GTModHandler.getModItem("gregtech", "gt.metaitem.03", 16, 4581) };
+            RecipeStacks.exact(64, BlockList.NeutroniumBars.block, 0),
+            RecipeStacks.exact(4, ItemList.Electric_Pump_UIV), new ItemStack(GregTechAPI.sBlockMachines, 8, 5306),
+            RecipeStacks.exact(4, ItemList.FluidRegulator_UIV),
+            RecipeStacks.generated(32, MetaGeneratedItem01.INSTANCE, OrePrefixes.plateDense, Materials.ProtoHalkonite),
+            RecipeStacks.exact(16, ItemList.PseudoStar),
+            RecipeStacks.generated(16, MetaGeneratedItem03.INSTANCE, OrePrefixes.nanite, Materials.TranscendentMetal) };
         if (!hasNullItem((Object[]) grilleInputs)) {
             try {
                 GTValues.RA.stdBuilder()
@@ -447,14 +476,15 @@ public class RecipesDeepSeiko implements IRecipePool {
                 "[DeepSeiko] Ore Dictionary entry circuitExotic not found. Falling back to Circuit_ExoticMainframe ×48");
         }
         ItemStack[] inputs = new ItemStack[] { OTHItemList.RiceSingularity.get(8),
-            OTHItemList.SpacetimeCoolingCore.get(16), exoticCircuit, new ItemStack(GregTechAPI.sBlockCasings8, 32, 14),
+            OTHItemList.SpacetimeCoolingCore.get(16), exoticCircuit,
+            RecipeStacks.casing(32, Casings.InfinityCooledCasing),
             new ItemStack(GregTechAPI.sBlockMachines, 64, MetaTileEntityIDs.ASSEMBLING_LINE_CONTROLLER.ID),
             new ItemStack(GregTechAPI.sBlockMachines, 64, MetaTileEntityIDs.AdvancedAssline.ID),
             new ItemStack(GregTechAPI.sBlockMachines, 64, MetaTileEntityIDs.CircuitAssemblyLine.ID),
             new ItemStack(GregTechAPI.sBlockMachines, 64, MetaTileEntityIDs.ComponentAssemblyLine.ID),
-            GTModHandler.getModItem("gregtech", "gt.metaitem.03", 32, 32277),
+            RecipeStacks.exact(32, ItemList.Gravitational_Lens),
             new ItemStack(GregTechAPI.sBlockMachines, 16, MetaTileEntityIDs.UncertaintyResolution.ID),
-            GTModHandler.getModItem("gregtech", "gt.metaitem.01", 48, 32045),
+            RecipeStacks.exact(48, ItemList.Field_Generator_UIV),
             GTModHandler.getModItem("OpenComputers", "item", 32, 44),
             GTModHandler.getModItem("OpenComputers", "item", 32, 10),
             GTModHandler.getModItem("computronics", "computronics.ocSpecialParts", 8) };
@@ -501,16 +531,18 @@ public class RecipesDeepSeiko implements IRecipePool {
             new ItemStack(DeepSeikoBlocks.dsCasing, 16, DeepSeikoCasingMeta.BLUBBER_LIGHT),
             new ItemStack(DeepSeikoBlocks.dsCasing, 16, DeepSeikoCasingMeta.BLUBBER_DARK),
             new ItemStack(DeepSeikoBlocks.dsCasing, 32, DeepSeikoCasingMeta.BALEEN_GRILLE),
-            GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 32307),
-            GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 32310),
-            GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 32313),
-            GTModHandler.getModItem("gregtech", "gt.metaitem.03", 32, 32316), exoticCircuit(64),
-            GTModHandler.getModItem("gregtech", "gt.blockframes", 16, 588),
-            GTModHandler.getModItem("miscutils", "gtplusplus.blockcasings.5", 16, 10),
-            GTModHandler.getModItem("appliedenergistics2", "item.ItemExtremeStorageCell.Singularity", 1),
-            GTModHandler.getModItem("ae2fc", "fluid_storage.singularity", 1),
-            GTModHandler.getModItem("dreamcraft", "HeavenlyPikoCircuit", 16),
-            GTModHandler.getModItem(OTHTechnology.MODID, "WhiteRice", 64) };
+            RecipeStacks.exact(64, ItemList.MetaMaterial_Shielding1),
+            RecipeStacks.exact(64, ItemList.MetaMaterial_Waveguide1),
+            RecipeStacks.exact(64, ItemList.MetaMaterial_EnergyConduit1),
+            RecipeStacks.exact(32, ItemList.MetaMaterial_ElectrograviticValve1), exoticCircuit(64),
+            RecipeStacks.exact(16, GregTechAPI.sBlockFrames, Materials.SpaceTime.getId()),
+            (GregTechAPI.sPreloadStarted && gregtech.api.enums.Mods.GTPlusPlus.isModLoaded()
+                ? RecipeStacks.exact(16, ModBlocks.blockCasings5Misc, 10)
+                : null),
+            ExternalRecipeItems.aeItem(1, ExternalRecipeItems.AeItem.SINGULARITY_CELL),
+            ExternalRecipeItems.aeFluidItem(1, ExternalRecipeItems.AeFluidItem.SINGULARITY_CELL),
+            RecipeStacks.exact(16, NHItemList.PikoCircuitHeavenly.item, 0),
+            RecipeStacks.exact(64, ItemLoader.itemWhiteRice, 0) };
         if (hasNullItem((Object[]) inputs)) {
             OTHTechnology.LOG.warn("[DeepSeiko] Condensate Adapter recipe skipped: missing item inputs");
             return;
@@ -545,11 +577,11 @@ public class RecipesDeepSeiko implements IRecipePool {
 
     private void addComputeCenterBecRecipes() {
         ItemStack[] d99Inputs = new ItemStack[] { cosmicCircuit(4),
-            GTModHandler.getModItem("dreamcraft", "HeavenlyQuantumCircuit", 8),
-            GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32758),
-            GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 28585),
-            GTModHandler.getModItem("gregtech", "gt.metaitem.01", 48, 28586),
-            GTModHandler.getModItem("gregtech", "gt.metaitem.01", 32, 28139),
+            RecipeStacks.exact(8, NHItemList.QuantumCircuitHeavenly.item, 0),
+            RecipeStacks.exact(1, ItemList.Transdimensional_Alignment_Matrix),
+            RecipeStacks.generated(64, MetaGeneratedItem01.INSTANCE, OrePrefixes.ring, Materials.WhiteDwarfMatter),
+            RecipeStacks.generated(48, MetaGeneratedItem01.INSTANCE, OrePrefixes.ring, Materials.BlackDwarfMatter),
+            RecipeStacks.generated(32, MetaGeneratedItem01.INSTANCE, OrePrefixes.ring, Materials.Universium),
             OTHItemList.SpacetimeCoolingCore.get(16) };
         if (hasNullItem((Object[]) d99Inputs)) {
             OTHTechnology.LOG.warn("[DeepSeiko] D99 Compute Center recipe skipped: missing item inputs");
@@ -577,12 +609,10 @@ public class RecipesDeepSeiko implements IRecipePool {
             }
         }
 
-        ItemStack[] d199Inputs = new ItemStack[] { GTModHandler.getModItem("dreamcraft", "PlanckCircuit", 8),
-            GTModHandler.getModItem("gregtech", "gt.metaitem.03", 16, 32278),
-            GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 32275),
-            GTModHandler.getModItem("gregtech", "gt.metaitem.01", 2, 32043),
-            GTModHandler.getModItem("gregtech", "gt.metaitem.01", 2, 32039),
-            GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 32047), computeCenter(8, 0),
+        ItemStack[] d199Inputs = new ItemStack[] { RecipeStacks.exact(8, NHItemList.PlanckCircuit.item, 0),
+            RecipeStacks.exact(16, ItemList.CalabiYauManifold), OTHItemList.beeMagM.get(32),
+            RecipeStacks.exact(2, ItemList.Sensor_UXV), RecipeStacks.exact(2, ItemList.Emitter_UXV),
+            RecipeStacks.exact(1, ItemList.Field_Generator_UXV), computeCenter(8, 0),
             OTHItemList.SpacetimeCoolingCore.get(32) };
         if (hasNullItem((Object[]) d199Inputs)) {
             OTHTechnology.LOG.warn("[DeepSeiko] D199 Compute Center recipe skipped: missing item inputs");
@@ -610,21 +640,34 @@ public class RecipesDeepSeiko implements IRecipePool {
             }
         }
 
-        ItemStack[] d999Inputs = new ItemStack[] { GTModHandler.getModItem("dreamcraft", "PlanckCircuit", 64),
-            GTModHandler.getModItem("tectech", "gt.godforgecasing", 32, 7),
-            GTModHandler.getModItem("gregtech", "gt.metaitem.02", 16, 30192),
-            GTModHandler.getModItem("appliedenergistics2", "item.ItemExtremeStorageCell.Universe", 1),
-            GTModHandler.getModItem("ae2fc", "fluid_storage.Universe", 1),
-            GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 4143),
-            GTModHandler.getModItem("gregtech", "gt.metaitem.03", 32, 6141), computeCenter(16, 1),
-            GTModHandler.getModItem("GoodGenerator", "componentAssemblylineCasing", 12, 12),
-            GTModHandler.getModItem("appliedenergistics2", "tile.BlockSingularityCraftingStorage", 8),
-            GTModHandler.getModItem("tectech", "gt.spacetime_compression_field_generator", 64, 8),
-            GTModHandler.getModItem("tectech", "gt.time_acceleration_field_generator", 64, 8),
-            GTModHandler.getModItem("tectech", "gt.stabilisation_field_generator", 64, 8),
-            GTModHandler.getModItem("tectech", "item.tm.itemAstralArrayFabricator", 1),
-            GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 6583),
-            GTModHandler.getModItem("gregtech", "gt.metaitem.01", 16, 32039) };
+        ItemStack[] d999Inputs = new ItemStack[] { RecipeStacks.exact(64, NHItemList.PlanckCircuit.item, 0),
+            (GregTechAPI.sPreloadStarted && gregtech.api.enums.Mods.TecTech.isModLoaded()
+                ? RecipeStacks.exact(32, TTCasingsContainer.GodforgeCasings, 7)
+                : null),
+            RecipeStacks.generated(16, MetaGeneratedItem02.INSTANCE, OrePrefixes.gemExquisite, Materials.Amalgatite),
+            ExternalRecipeItems.aeItem(1, ExternalRecipeItems.AeItem.UNIVERSE_CELL),
+            ExternalRecipeItems.aeFluidItem(1, ExternalRecipeItems.AeFluidItem.UNIVERSE_CELL),
+            RecipeStacks.generated(64, MetaGeneratedItem03.INSTANCE, OrePrefixes.nanite, Materials.MagMatter),
+            RecipeStacks.generated(32, MetaGeneratedItem03.INSTANCE, OrePrefixes.plateSuperdense, Materials.Eternity),
+            computeCenter(16, 1),
+            (GregTechAPI.sPreloadStarted && gregtech.api.enums.Mods.GoodGenerator.isModLoaded()
+                ? RecipeStacks.exact(12, ItemRefer.Compassline_Casing_UXV.get(1))
+                : null),
+            ExternalRecipeItems.aeItem(8, ExternalRecipeItems.AeItem.SINGULARITY_CRAFTING_STORAGE),
+            (GregTechAPI.sPreloadStarted && gregtech.api.enums.Mods.TecTech.isModLoaded()
+                ? RecipeStacks.exact(64, TTCasingsContainer.SpacetimeCompressionFieldGenerators, 8)
+                : null),
+            (GregTechAPI.sPreloadStarted && gregtech.api.enums.Mods.TecTech.isModLoaded()
+                ? RecipeStacks.exact(64, TTCasingsContainer.TimeAccelerationFieldGenerator, 8)
+                : null),
+            (GregTechAPI.sPreloadStarted && gregtech.api.enums.Mods.TecTech.isModLoaded()
+                ? RecipeStacks.exact(64, TTCasingsContainer.StabilisationFieldGenerators, 8)
+                : null),
+            (GregTechAPI.sPreloadStarted && gregtech.api.enums.Mods.TecTech.isModLoaded()
+                ? RecipeStacks.exact(1, ItemAstralArrayFabricator.INSTANCE, 0)
+                : null),
+            RecipeStacks.generated(64, MetaGeneratedItem03.INSTANCE, OrePrefixes.plateSuperdense, Materials.MHDCSM),
+            RecipeStacks.exact(16, ItemList.Emitter_UXV) };
         if (hasNullItem((Object[]) d999Inputs)) {
             OTHTechnology.LOG.warn("[DeepSeiko] D999 Compute Center recipe skipped: missing item inputs");
         } else {
@@ -937,11 +980,11 @@ public class RecipesDeepSeiko implements IRecipePool {
      */
     private static void loadSpecialAssemblyLineRecipes() {
         final RecipeMap<?> MASL = Recipemaps.DeepSeikoAL;
-        final Fluid solderUEV = FluidRegistry.getFluid("molten.mutatedlivingsolder") != null
-            ? FluidRegistry.getFluid("molten.mutatedlivingsolder")
-            : FluidRegistry.getFluid("molten.solderingalloy");
+        final Fluid solderUEV = FluidRegistry.getFluid(RecipeFluids.gtppMoltenName(MaterialMisc.MUTATED_LIVING_SOLDER))
+            != null ? FluidRegistry.getFluid(RecipeFluids.gtppMoltenName(MaterialMisc.MUTATED_LIVING_SOLDER))
+                : FluidRegistry.getFluid("molten.solderingalloy");
         final Fluid solderIndalloy = MaterialsAlloy.INDALLOY_140.getFluid();
-        final Fluid ic2coolant = FluidRegistry.getFluid("ic2coolant");
+        final Fluid ic2coolant = FluidRegistry.getFluid(RecipeFluids.ic2FluidName(InternalName.fluidCoolant));
 
         {
             TST_RecipeBuilder.builder()
@@ -2398,8 +2441,8 @@ public class RecipesDeepSeiko implements IRecipePool {
         put(map, "eternity", Materials.Eternity.getMolten(1));
         putOth(map, "void", BWLiquids.Void.getFluidOrGas(1));
         putOth(map, "stars", BWLiquids.Stars.getFluidOrGas(1));
-        putOth(map, "superconductoruiv", FluidRegistry.getFluidStack("molten.superconductoruivbase", 1));
-        putOth(map, "superconductorumv", FluidRegistry.getFluidStack("molten.superconductorumvbase", 1));
+        putOth(map, "superconductoruiv", Materials.SuperconductorUIVBase.getMolten(1));
+        putOth(map, "superconductorumv", Materials.SuperconductorUMVBase.getMolten(1));
         return map;
     }
 

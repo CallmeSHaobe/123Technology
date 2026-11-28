@@ -6,12 +6,12 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
 
 import com.newmaa.othtech.common.recipemap.Recipemaps;
+import com.newmaa.othtech.utils.ExternalRecipeItems;
+import com.newmaa.othtech.utils.ExternalRecipeItems.EnderMaterial;
 
-import crazypants.enderio.EnderIO;
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.recipe.RecipeMap;
-import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTRecipeBuilder;
 import gregtech.api.util.GTUtility;
 
@@ -21,22 +21,22 @@ public class RecipesEIO implements IRecipePool {
     public void loadRecipes() {
         final RecipeMap<?> EIO = Recipemaps.EIO;
 
-        final ItemStack villagerTag = GTModHandler.getModItem(EnderIO.MODID, "itemSoulVessel", 1);
+        final ItemStack villagerTag = ExternalRecipeItems.enderIo(1, ExternalRecipeItems.EnderItem.SOUL_VESSEL, 0);
         NBTTagCompound Villager = new NBTTagCompound();
         Villager.setString("id", "Villager");
         villagerTag.setTagCompound(Villager);
 
-        final ItemStack EnderManTag = GTModHandler.getModItem(EnderIO.MODID, "itemSoulVessel", 1);
+        final ItemStack EnderManTag = ExternalRecipeItems.enderIo(1, ExternalRecipeItems.EnderItem.SOUL_VESSEL, 0);
         NBTTagCompound EnderMan = new NBTTagCompound();
         EnderMan.setString("id", "Enderman");
         EnderManTag.setTagCompound(EnderMan);
 
-        final ItemStack WitschTag = GTModHandler.getModItem(EnderIO.MODID, "itemSoulVessel", 1);
+        final ItemStack WitschTag = ExternalRecipeItems.enderIo(1, ExternalRecipeItems.EnderItem.SOUL_VESSEL, 0);
         NBTTagCompound Witsch = new NBTTagCompound();
         Witsch.setString("id", "Witch");
         WitschTag.setTagCompound(Witsch);
 
-        final ItemStack ZombieTag = GTModHandler.getModItem(EnderIO.MODID, "itemSoulVessel", 1);
+        final ItemStack ZombieTag = ExternalRecipeItems.enderIo(1, ExternalRecipeItems.EnderItem.SOUL_VESSEL, 0);
         NBTTagCompound Zombie = new NBTTagCompound();
         Zombie.setString("id", "Zombie");
         ZombieTag.setTagCompound(Zombie);
@@ -44,7 +44,7 @@ public class RecipesEIO implements IRecipePool {
         // Villager Crystals
         GTRecipeBuilder.builder()
             .itemInputs(GTUtility.getIntegratedCircuit(1), Materials.Emerald.getGems(1), villagerTag)
-            .itemOutputs(GTModHandler.getModItem(EnderIO.MODID, "itemMaterial", 1, 9))
+            .itemOutputs(ExternalRecipeItems.enderMaterial(1, EnderMaterial.ATTRACTOR_CRYSTAL))
             .eut(480)
             .nbtSensitive()
             .duration(60 * 20)
@@ -53,8 +53,8 @@ public class RecipesEIO implements IRecipePool {
             .itemInputs(
                 GTUtility.getIntegratedCircuit(24),
                 Materials.Emerald.getGems(1),
-                GTModHandler.getModItem(EnderIO.MODID, "itemMaterial", 0, 9))
-            .itemOutputs(GTModHandler.getModItem(EnderIO.MODID, "itemMaterial", 1, 9))
+                ExternalRecipeItems.enderMaterial(0, EnderMaterial.ATTRACTOR_CRYSTAL))
+            .itemOutputs(ExternalRecipeItems.enderMaterial(1, EnderMaterial.ATTRACTOR_CRYSTAL))
             .eut(480)
             .nbtSensitive()
             .duration(80 * 20)
@@ -64,9 +64,9 @@ public class RecipesEIO implements IRecipePool {
         GTRecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(1),
-                GTModHandler.getModItem(EnderIO.MODID, "itemFrankenSkull", 1, 1),
+                ExternalRecipeItems.enderIo(1, ExternalRecipeItems.EnderItem.FRANKEN_SKULL, 1),
                 ZombieTag)
-            .itemOutputs(GTModHandler.getModItem(EnderIO.MODID, "itemFrankenSkull", 1, 2))
+            .itemOutputs(ExternalRecipeItems.enderIo(1, ExternalRecipeItems.EnderItem.FRANKEN_SKULL, 2))
             .eut(480)
             .nbtSensitive()
             .duration(60 * 20)
@@ -74,9 +74,9 @@ public class RecipesEIO implements IRecipePool {
         GTRecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(24),
-                GTModHandler.getModItem(EnderIO.MODID, "itemFrankenSkull", 1, 1),
-                GTModHandler.getModItem(EnderIO.MODID, "itemFrankenSkull", 0, 2))
-            .itemOutputs(GTModHandler.getModItem(EnderIO.MODID, "itemFrankenSkull", 1, 2))
+                ExternalRecipeItems.enderIo(1, ExternalRecipeItems.EnderItem.FRANKEN_SKULL, 1),
+                ExternalRecipeItems.enderIo(0, ExternalRecipeItems.EnderItem.FRANKEN_SKULL, 2))
+            .itemOutputs(ExternalRecipeItems.enderIo(1, ExternalRecipeItems.EnderItem.FRANKEN_SKULL, 2))
             .eut(480)
             .nbtSensitive()
             .duration(80 * 20)
@@ -86,9 +86,9 @@ public class RecipesEIO implements IRecipePool {
         GTRecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(1),
-                GTModHandler.getModItem(EnderIO.MODID, "itemFrankenSkull", 1, 3),
+                ExternalRecipeItems.enderIo(1, ExternalRecipeItems.EnderItem.FRANKEN_SKULL, 3),
                 EnderManTag)
-            .itemOutputs(GTModHandler.getModItem(EnderIO.MODID, "itemFrankenSkull", 1, 4))
+            .itemOutputs(ExternalRecipeItems.enderIo(1, ExternalRecipeItems.EnderItem.FRANKEN_SKULL, 4))
             .eut(480)
             .nbtSensitive()
             .duration(60 * 20)
@@ -96,9 +96,9 @@ public class RecipesEIO implements IRecipePool {
         GTRecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(24),
-                GTModHandler.getModItem(EnderIO.MODID, "itemFrankenSkull", 1, 3),
-                GTModHandler.getModItem(EnderIO.MODID, "itemFrankenSkull", 0, 4))
-            .itemOutputs(GTModHandler.getModItem(EnderIO.MODID, "itemFrankenSkull", 1, 4))
+                ExternalRecipeItems.enderIo(1, ExternalRecipeItems.EnderItem.FRANKEN_SKULL, 3),
+                ExternalRecipeItems.enderIo(0, ExternalRecipeItems.EnderItem.FRANKEN_SKULL, 4))
+            .itemOutputs(ExternalRecipeItems.enderIo(1, ExternalRecipeItems.EnderItem.FRANKEN_SKULL, 4))
             .eut(480)
             .nbtSensitive()
             .duration(80 * 20)
@@ -108,9 +108,9 @@ public class RecipesEIO implements IRecipePool {
         GTRecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(1),
-                GTModHandler.getModItem(EnderIO.MODID, "itemMaterial", 1, 6),
+                ExternalRecipeItems.enderMaterial(1, EnderMaterial.VIBRANT_CRYSTAL),
                 EnderManTag)
-            .itemOutputs(GTModHandler.getModItem(EnderIO.MODID, "itemMaterial", 1, 8))
+            .itemOutputs(ExternalRecipeItems.enderMaterial(1, EnderMaterial.ENDER_CRYSTAL))
             .eut(480)
             .nbtSensitive()
             .duration(60 * 20)
@@ -118,9 +118,9 @@ public class RecipesEIO implements IRecipePool {
         GTRecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(24),
-                GTModHandler.getModItem(EnderIO.MODID, "itemMaterial", 1, 6),
-                GTModHandler.getModItem(EnderIO.MODID, "itemMaterial", 0, 8))
-            .itemOutputs(GTModHandler.getModItem(EnderIO.MODID, "itemMaterial", 1, 8))
+                ExternalRecipeItems.enderMaterial(1, EnderMaterial.VIBRANT_CRYSTAL),
+                ExternalRecipeItems.enderMaterial(0, EnderMaterial.ENDER_CRYSTAL))
+            .itemOutputs(ExternalRecipeItems.enderMaterial(1, EnderMaterial.ENDER_CRYSTAL))
             .eut(480)
             .nbtSensitive()
             .duration(80 * 20)
@@ -129,9 +129,9 @@ public class RecipesEIO implements IRecipePool {
         GTRecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(1),
-                GTModHandler.getModItem(EnderIO.MODID, "itemMaterial", 1, 5),
+                ExternalRecipeItems.enderMaterial(1, EnderMaterial.PULSATING_CRYSTAL),
                 EnderManTag)
-            .itemOutputs(GTModHandler.getModItem(EnderIO.MODID, "itemMaterial", 1, 13))
+            .itemOutputs(ExternalRecipeItems.enderMaterial(1, EnderMaterial.PRECIENT_CRYSTAL))
             .eut(480)
             .nbtSensitive()
             .duration(60 * 20)
@@ -139,9 +139,9 @@ public class RecipesEIO implements IRecipePool {
         GTRecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(24),
-                GTModHandler.getModItem(EnderIO.MODID, "itemMaterial", 1, 5),
-                GTModHandler.getModItem(EnderIO.MODID, "itemMaterial", 0, 13))
-            .itemOutputs(GTModHandler.getModItem(EnderIO.MODID, "itemMaterial", 1, 13))
+                ExternalRecipeItems.enderMaterial(1, EnderMaterial.PULSATING_CRYSTAL),
+                ExternalRecipeItems.enderMaterial(0, EnderMaterial.PRECIENT_CRYSTAL))
+            .itemOutputs(ExternalRecipeItems.enderMaterial(1, EnderMaterial.PRECIENT_CRYSTAL))
             .eut(480)
             .nbtSensitive()
             .duration(80 * 20)
@@ -151,9 +151,9 @@ public class RecipesEIO implements IRecipePool {
         GTRecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(1),
-                GTModHandler.getModItem(EnderIO.MODID, "itemFrankenSkull", 1, 3),
+                ExternalRecipeItems.enderIo(1, ExternalRecipeItems.EnderItem.FRANKEN_SKULL, 3),
                 WitschTag)
-            .itemOutputs(GTModHandler.getModItem(EnderIO.MODID, "itemFrankenSkull", 1, 4))
+            .itemOutputs(ExternalRecipeItems.enderIo(1, ExternalRecipeItems.EnderItem.FRANKEN_SKULL, 4))
             .eut(480)
             .nbtSensitive()
             .duration(60 * 20)
@@ -161,9 +161,9 @@ public class RecipesEIO implements IRecipePool {
         GTRecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(24),
-                GTModHandler.getModItem(EnderIO.MODID, "itemFrankenSkull", 1, 3),
-                GTModHandler.getModItem(EnderIO.MODID, "itemFrankenSkull", 0, 4))
-            .itemOutputs(GTModHandler.getModItem(EnderIO.MODID, "itemFrankenSkull", 1, 4))
+                ExternalRecipeItems.enderIo(1, ExternalRecipeItems.EnderItem.FRANKEN_SKULL, 3),
+                ExternalRecipeItems.enderIo(0, ExternalRecipeItems.EnderItem.FRANKEN_SKULL, 4))
+            .itemOutputs(ExternalRecipeItems.enderIo(1, ExternalRecipeItems.EnderItem.FRANKEN_SKULL, 4))
             .eut(480)
             .nbtSensitive()
             .duration(80 * 20)
@@ -171,14 +171,14 @@ public class RecipesEIO implements IRecipePool {
 
         GTRecipeBuilder.builder()
             .itemInputs(
-                GTModHandler.getModItem(EnderIO.MODID, "itemSoulVessel", 1)
+                ExternalRecipeItems.enderIo(1, ExternalRecipeItems.EnderItem.SOUL_VESSEL, 0)
                     .setStackDisplayName(StatCollector.translateToLocal("oth.recipe.eio.anySoulVial")),
-                GTModHandler.getModItem(EnderIO.MODID, "itemBrokenSpawner", 1)
+                ExternalRecipeItems.enderIo(1, ExternalRecipeItems.EnderItem.BROKEN_SPAWNER, 0)
                     .setStackDisplayName(StatCollector.translateToLocal("oth.recipe.eio.anySpawner")))
             .itemOutputs(
-                GTModHandler.getModItem(EnderIO.MODID, "itemBrokenSpawner", 1)
+                ExternalRecipeItems.enderIo(1, ExternalRecipeItems.EnderItem.BROKEN_SPAWNER, 0)
                     .setStackDisplayName(StatCollector.translateToLocal("oth.recipe.eio.boundSpawner")),
-                GTModHandler.getModItem(EnderIO.MODID, "itemSoulVessel", 1))
+                ExternalRecipeItems.enderIo(1, ExternalRecipeItems.EnderItem.SOUL_VESSEL, 0))
             .eut(114)
             .duration(100)
             .fake()
@@ -186,18 +186,18 @@ public class RecipesEIO implements IRecipePool {
 
         // SkullAssembler
         GTValues.RA.stdBuilder()
-            .itemOutputs(GTModHandler.getModItem(EnderIO.MODID, "itemFrankenSkull", 1, 0))
+            .itemOutputs(ExternalRecipeItems.enderIo(1, ExternalRecipeItems.EnderItem.FRANKEN_SKULL, 0))
             .itemInputsUnsafe(
                 new ItemStack(Items.skull, 1),
                 Materials.EnergeticAlloy.getIngots(2),
                 Materials.Silicon.getPlates(2),
-                GTModHandler.getModItem(EnderIO.MODID, "itemBasicCapacitor", 1))
+                ExternalRecipeItems.enderIo(1, ExternalRecipeItems.EnderItem.BASIC_CAPACITOR, 0))
             .eut(120)
             .duration(60 * 20)
             .addTo(EIO);
 
         GTValues.RA.stdBuilder()
-            .itemOutputs(GTModHandler.getModItem(EnderIO.MODID, "itemFrankenSkull", 1, 1))
+            .itemOutputs(ExternalRecipeItems.enderIo(1, ExternalRecipeItems.EnderItem.FRANKEN_SKULL, 1))
             .itemInputsUnsafe(
                 new ItemStack(Items.skull, 1),
                 Materials.Soularium.getIngots(2),
@@ -208,29 +208,29 @@ public class RecipesEIO implements IRecipePool {
             .addTo(EIO);
 
         GTValues.RA.stdBuilder()
-            .itemOutputs(GTModHandler.getModItem(EnderIO.MODID, "blockEndermanSkull", 1, 2))
+            .itemOutputs(ExternalRecipeItems.enderIo(1, ExternalRecipeItems.EnderItem.ENDERMAN_SKULL, 2))
             .itemInputsUnsafe(
-                GTModHandler.getModItem(EnderIO.MODID, "itemBasicCapacitor", 1),
+                ExternalRecipeItems.enderIo(1, ExternalRecipeItems.EnderItem.BASIC_CAPACITOR, 0),
                 Materials.Soularium.getIngots(2),
                 new ItemStack(Items.potionitem, 2),
-                GTModHandler.getModItem(EnderIO.MODID, "blockEndermanSkull", 1))
+                ExternalRecipeItems.enderIo(1, ExternalRecipeItems.EnderItem.ENDERMAN_SKULL, 0))
             .eut(120)
             .duration(60 * 20)
             .addTo(EIO);
 
         GTValues.RA.stdBuilder()
-            .itemOutputs(GTModHandler.getModItem(EnderIO.MODID, "itemFrankenSkull", 1, 3))
+            .itemOutputs(ExternalRecipeItems.enderIo(1, ExternalRecipeItems.EnderItem.FRANKEN_SKULL, 3))
             .itemInputsUnsafe(
                 Materials.VibrantAlloy.getIngots(1),
                 Materials.Soularium.getIngots(2),
                 Materials.Silicon.getPlates(2),
-                GTModHandler.getModItem(EnderIO.MODID, "blockEndermanSkull", 1))
+                ExternalRecipeItems.enderIo(1, ExternalRecipeItems.EnderItem.ENDERMAN_SKULL, 0))
             .eut(120)
             .duration(60 * 20)
             .addTo(EIO);
 
         GTValues.RA.stdBuilder()
-            .itemOutputs(GTModHandler.getModItem(EnderIO.MODID, "itemFrankenSkull", 1, 5))
+            .itemOutputs(ExternalRecipeItems.enderIo(1, ExternalRecipeItems.EnderItem.FRANKEN_SKULL, 5))
             .itemInputsUnsafe(
                 new ItemStack(Items.skull, 1),
                 Materials.Soularium.getIngots(2),
@@ -241,23 +241,23 @@ public class RecipesEIO implements IRecipePool {
             .addTo(EIO);
 
         GTValues.RA.stdBuilder()
-            .itemOutputs(GTModHandler.getModItem(EnderIO.MODID, "itemFrankenSkull", 1, 6))
+            .itemOutputs(ExternalRecipeItems.enderIo(1, ExternalRecipeItems.EnderItem.FRANKEN_SKULL, 6))
             .itemInputsUnsafe(
                 Materials.EnergeticAlloy.getIngots(1),
                 Materials.Soularium.getIngots(2),
                 Materials.Silicon.getPlates(1),
-                GTModHandler.getModItem(EnderIO.MODID, "itemMaterial", 2, 5))
+                ExternalRecipeItems.enderMaterial(2, EnderMaterial.PULSATING_CRYSTAL))
             .eut(120)
             .duration(60 * 20)
             .addTo(EIO);
 
         GTValues.RA.stdBuilder()
-            .itemOutputs(GTModHandler.getModItem(EnderIO.MODID, "itemBasicCapacitor", 1, 6))
+            .itemOutputs(ExternalRecipeItems.enderIo(1, ExternalRecipeItems.EnderItem.BASIC_CAPACITOR, 6))
             .itemInputsUnsafe(
                 new ItemStack(Items.golden_apple, 1, 1),
                 Materials.Soularium.getIngots(2),
-                GTModHandler.getModItem(EnderIO.MODID, "itemMaterial", 2, 15),
-                GTModHandler.getModItem(EnderIO.MODID, "itemBasicCapacitor", 1, 3))
+                ExternalRecipeItems.enderMaterial(2, EnderMaterial.VIBRANT_POWDER),
+                ExternalRecipeItems.enderIo(1, ExternalRecipeItems.EnderItem.BASIC_CAPACITOR, 3))
             .eut(120)
             .duration(60 * 20)
             .addTo(EIO);

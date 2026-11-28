@@ -5,15 +5,27 @@ import static com.newmaa.othtech.utils.Utils.setStackSize;
 import net.minecraftforge.fluids.FluidRegistry;
 
 import com.newmaa.othtech.common.recipemap.Recipemaps;
+import com.newmaa.othtech.utils.RecipeFluids;
+import com.newmaa.othtech.utils.RecipeStacks;
 
+import bartworks.system.material.WerkstoffLoader;
+import fox.spiteful.avaritia.items.LudicrousItems;
+import goodgenerator.items.GGMaterial;
+import gregtech.api.GregTechAPI;
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
+import gregtech.api.enums.Mods;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTUtility;
+import gtPlusPlus.core.item.base.BaseItemComponent.ComponentTypes;
+import gtPlusPlus.core.material.MaterialsAlloy;
+import gtPlusPlus.core.material.MaterialsElements;
+import gtPlusPlus.core.material.MaterialsElements.STANDALONE;
+import gtnhlanth.common.register.WerkstoffMaterialPool;
 
 public class RecipesTangshanSteelFactory implements IRecipePool {
 
@@ -27,7 +39,7 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 1), 5120),
                 GTUtility.getIntegratedCircuit(24))
             .itemOutputs(setStackSize(GTOreDictUnificator.get(OrePrefixes.ingot, Materials.Steel, 1), 256000))
-            .fluidInputs(FluidRegistry.getFluidStack("oxygen", 25600))
+            .fluidInputs(Materials.Oxygen.getGas(25600))
 
             .specialValue(3200)
             .eut(7680)
@@ -103,7 +115,10 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Sulfur, 1), 64000 * 3),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Silicon, 1), 64000 * 12),
                 GTUtility.getIntegratedCircuit(6))
-            .itemOutputs(setStackSize(GTModHandler.getModItem("miscutils", "itemIngotEglinSteel", 1), 64000 * 48))
+            .itemOutputs(
+                setStackSize(
+                    RecipeStacks.gtppComponent(1, MaterialsAlloy.EGLIN_STEEL, ComponentTypes.INGOT),
+                    64000 * 48))
 
             .specialValue(1600)
             .eut(480)
@@ -145,7 +160,10 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Cobalt, 1), 64000 * 9),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Nickel, 1), 64000 * 9),
                 GTUtility.getIntegratedCircuit(24))
-            .itemOutputs(setStackSize(GTModHandler.getModItem("miscutils", "itemIngotIncoloyDS", 1), 64000 * 50))
+            .itemOutputs(
+                setStackSize(
+                    RecipeStacks.gtppComponent(1, MaterialsAlloy.INCOLOY_DS, ComponentTypes.INGOT),
+                    64000 * 50))
 
             .specialValue(5400)
             .eut(1920)
@@ -159,7 +177,10 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Copper, 1), 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Nickel, 1), 64000 * 9),
                 GTUtility.getIntegratedCircuit(24))
-            .itemOutputs(setStackSize(GTModHandler.getModItem("miscutils", "itemIngotIncoloy020", 1), 64000 * 25))
+            .itemOutputs(
+                setStackSize(
+                    RecipeStacks.gtppComponent(1, MaterialsAlloy.INCOLOY_020, ComponentTypes.INGOT),
+                    64000 * 25))
 
             .specialValue(5400)
             .eut(1920)
@@ -173,7 +194,10 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Aluminium, 1), 64000 * 3),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Yttrium, 1), 64000),
                 GTUtility.getIntegratedCircuit(24))
-            .itemOutputs(setStackSize(GTModHandler.getModItem("miscutils", "itemIngotIncoloyMA956", 1), 64000 * 25))
+            .itemOutputs(
+                setStackSize(
+                    RecipeStacks.gtppComponent(1, MaterialsAlloy.INCOLOY_MA956, ComponentTypes.INGOT),
+                    64000 * 25))
 
             .specialValue(6300)
             .eut(7680)
@@ -188,7 +212,10 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Nickel, 1), 64000 * 31),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Molybdenum, 1), 64000 * 12),
                 GTUtility.getIntegratedCircuit(5))
-            .itemOutputs(setStackSize(GTModHandler.getModItem("miscutils", "itemIngotHastelloyW", 1), 64000 * 50))
+            .itemOutputs(
+                setStackSize(
+                    RecipeStacks.gtppComponent(1, MaterialsAlloy.HASTELLOY_W, ComponentTypes.INGOT),
+                    64000 * 50))
 
             .specialValue(5400)
             .eut(1920)
@@ -204,7 +231,10 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Nickel, 1), 64000 * 24),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Molybdenum, 1), 64000 * 4),
                 GTUtility.getIntegratedCircuit(6))
-            .itemOutputs(setStackSize(GTModHandler.getModItem("miscutils", "itemIngotHastelloyX", 1), 64000 * 50))
+            .itemOutputs(
+                setStackSize(
+                    RecipeStacks.gtppComponent(1, MaterialsAlloy.HASTELLOY_X, ComponentTypes.INGOT),
+                    64000 * 50))
 
             .specialValue(5400)
             .eut(1920)
@@ -297,7 +327,12 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
         // Liuming
         GTValues.RA.stdBuilder()
             .itemOutputs(
-                setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedingot", 1, 10101), 5 * 64000))
+                setStackSize(
+                    (GregTechAPI.sPreloadStarted && Mods.BartWorks.isModLoaded() ? RecipeStacks.exact(
+                        1,
+                        WerkstoffLoader.items.get(OrePrefixes.ingot),
+                        (Mods.GoodGenerator.isModLoaded() ? GGMaterial.lumiium.getmID() : 10101)) : null),
+                    5 * 64000))
             .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(19),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tin, 1), 20 * 64000),
@@ -316,12 +351,13 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
         // -----Of Fe50C
         // highDur
         GTValues.RA.stdBuilder()
-            .itemOutputs(
-                setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedingot", 1, 92), 297 * 64000))
+            .itemOutputs(setStackSize(RecipeStacks.werkstoff(1, OrePrefixes.ingot, WerkstoffLoader.HDCS), 297 * 64000))
             .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(11),
-                setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 64), 18 * 64000),
-                setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 36), 18 * 64000),
+                setStackSize(RecipeStacks.werkstoff(1, OrePrefixes.dust, WerkstoffLoader.Ruthenium), 18 * 64000),
+                setStackSize(
+                    RecipeStacks.werkstoff(1, OrePrefixes.dust, WerkstoffLoader.MagnetoResonaticDust),
+                    18 * 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Molybdenum, 1), 24 * 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tungsten, 1), 84 * 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Steel, 1), 84 * 64000),
@@ -340,7 +376,7 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
         // HardSteel
         GTValues.RA.stdBuilder()
             .itemOutputs(
-                setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedingot", 1, 96), 72 * 64000))
+                setStackSize(RecipeStacks.werkstoff(1, OrePrefixes.ingot, WerkstoffLoader.AdemicSteel), 72 * 64000))
             .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(20),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Molybdenum, 1), 64000),
@@ -360,7 +396,12 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
         // MAR200
         GTValues.RA.stdBuilder()
             .itemOutputs(
-                setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedingot", 1, 10096), 59 * 64000))
+                setStackSize(
+                    (GregTechAPI.sPreloadStarted && Mods.BartWorks.isModLoaded() ? RecipeStacks.exact(
+                        1,
+                        WerkstoffLoader.items.get(OrePrefixes.ingot),
+                        (Mods.GoodGenerator.isModLoaded() ? GGMaterial.marM200.getmID() : 10096)) : null),
+                    59 * 64000))
             .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(21),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Aluminium, 1), 5 * 64000),
@@ -378,7 +419,12 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
         // MARCe
         GTValues.RA.stdBuilder()
             .itemOutputs(
-                setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedingot", 1, 10097), 1121 * 64000))
+                setStackSize(
+                    (GregTechAPI.sPreloadStarted && Mods.BartWorks.isModLoaded() ? RecipeStacks.exact(
+                        1,
+                        WerkstoffLoader.items.get(OrePrefixes.ingot),
+                        (Mods.GoodGenerator.isModLoaded() ? GGMaterial.marCeM200.getmID() : 10097)) : null),
+                    1121 * 64000))
             .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(19),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Aluminium, 1), 5 * 64000 * 59),
@@ -570,7 +616,10 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Molybdenum, 1), 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Steel, 1), 64000 * 16),
                 GTUtility.getIntegratedCircuit(9))
-            .itemOutputs(setStackSize(GTModHandler.getModItem("miscutils", "itemIngotMaragingSteel250", 1), 64000 * 24))
+            .itemOutputs(
+                setStackSize(
+                    RecipeStacks.gtppComponent(1, MaterialsAlloy.MARAGING250, ComponentTypes.INGOT),
+                    64000 * 24))
 
             .specialValue(3200)
             .eut(480)
@@ -585,7 +634,10 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Molybdenum, 1), 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Steel, 1), 64000 * 16),
                 GTUtility.getIntegratedCircuit(5))
-            .itemOutputs(setStackSize(GTModHandler.getModItem("miscutils", "itemIngotMaragingSteel350", 1), 64000 * 24))
+            .itemOutputs(
+                setStackSize(
+                    RecipeStacks.gtppComponent(1, MaterialsAlloy.MARAGING350, ComponentTypes.INGOT),
+                    64000 * 24))
 
             .specialValue(3200)
             .eut(480)
@@ -600,7 +652,10 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Aluminium, 1), 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Steel, 1), 64000 * 16),
                 GTUtility.getIntegratedCircuit(5))
-            .itemOutputs(setStackSize(GTModHandler.getModItem("miscutils", "itemIngotMaragingSteel300", 1), 64000 * 24))
+            .itemOutputs(
+                setStackSize(
+                    RecipeStacks.gtppComponent(1, MaterialsAlloy.MARAGING300, ComponentTypes.INGOT),
+                    64000 * 24))
 
             .specialValue(3200)
             .eut(480)
@@ -617,7 +672,10 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 1), 64000 * 2),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Steel, 1), 64000 * 12),
                 GTUtility.getIntegratedCircuit(7))
-            .itemOutputs(setStackSize(GTModHandler.getModItem("miscutils", "itemIngotWatertightSteel", 1), 64000 * 20))
+            .itemOutputs(
+                setStackSize(
+                    RecipeStacks.gtppComponent(1, MaterialsAlloy.AQUATIC_STEEL, ComponentTypes.INGOT),
+                    64000 * 20))
 
             .specialValue(3200)
             .eut(480)
@@ -633,7 +691,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tungsten, 1), 64000 * 2),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Steel, 1), 64000 * 20),
                 GTUtility.getIntegratedCircuit(7))
-            .itemOutputs(setStackSize(GTModHandler.getModItem("miscutils", "itemIngotZeron100", 1), 64000 * 50))
+            .itemOutputs(
+                setStackSize(RecipeStacks.gtppComponent(1, MaterialsAlloy.ZERON_100, ComponentTypes.INGOT), 64000 * 50))
 
             .specialValue(7200)
             .eut(122880)
@@ -649,7 +708,10 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.InfusedFire, 1), 64000 * 20),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.InfusedEarth, 1), 64000 * 20),
                 GTUtility.getIntegratedCircuit(7))
-            .itemOutputs(setStackSize(GTModHandler.getModItem("miscutils", "itemIngotTitansteel", 1), 64000 * 120))
+            .itemOutputs(
+                setStackSize(
+                    RecipeStacks.gtppComponent(1, MaterialsAlloy.TITANSTEEL, ComponentTypes.INGOT),
+                    64000 * 120))
 
             .specialValue(10000)
             .eut(TierEU.UHV)
@@ -658,7 +720,7 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
         // EightSteel
         GTValues.RA.stdBuilder()
             .itemInputsUnsafe(
-                setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 30), 64000 * 240),
+                setStackSize(RecipeStacks.werkstoff(1, OrePrefixes.dust, WerkstoffLoader.Thorium232), 64000 * 240),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tungsten, 1), 64000 * 105),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Steel, 1), 64000 * 120),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Silver, 1), 64000 * 8),
@@ -675,7 +737,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 1), 64000 * 105),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Thaumium, 1), 64000 * 500),
                 GTUtility.getIntegratedCircuit(22))
-            .itemOutputs(setStackSize(GTModHandler.getModItem("miscutils", "itemIngotOctiron", 1), 64000 * 2000))
+            .itemOutputs(
+                setStackSize(RecipeStacks.gtppComponent(1, MaterialsAlloy.OCTIRON, ComponentTypes.INGOT), 64000 * 2000))
 
             .specialValue(10000)
             .eut(TierEU.UHV)
@@ -734,13 +797,20 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
         // EnrichedNq
         GTValues.RA.stdBuilder()
             .itemInputsUnsafe(
-                setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 39), 64000 * 3),
+                setStackSize(RecipeStacks.werkstoff(1, OrePrefixes.dust, WerkstoffLoader.Californium), 64000 * 3),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.NaquadahEnriched, 1), 64000 * 8),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tritanium, 1), 64000 * 5),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.BlackPlutonium, 1), 64000 * 2),
                 GTUtility.getIntegratedCircuit(5))
             .itemOutputs(
-                setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedingot", 1, 10110), 64000 * 18))
+                setStackSize(
+                    (GregTechAPI.sPreloadStarted && Mods.BartWorks.isModLoaded()
+                        ? RecipeStacks.exact(
+                            1,
+                            WerkstoffLoader.items.get(OrePrefixes.ingot),
+                            (Mods.GoodGenerator.isModLoaded() ? GGMaterial.enrichedNaquadahAlloy.getmID() : 10110))
+                        : null),
+                    64000 * 18))
 
             .specialValue(12000)
             .eut(TierEU.UIV)
@@ -752,12 +822,19 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Palladium, 1), 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Osmium, 1), 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Iridium, 1), 64000),
-                setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 64), 64000),
-                setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 78), 64000),
+                setStackSize(RecipeStacks.werkstoff(1, OrePrefixes.dust, WerkstoffLoader.Ruthenium), 64000),
+                setStackSize(RecipeStacks.werkstoff(1, OrePrefixes.dust, WerkstoffLoader.Rhodium), 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Platinum, 1), 64000),
                 GTUtility.getIntegratedCircuit(5))
             .itemOutputs(
-                setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedingot", 1, 10109), 64000 * 6))
+                setStackSize(
+                    (GregTechAPI.sPreloadStarted && Mods.BartWorks.isModLoaded()
+                        ? RecipeStacks.exact(
+                            1,
+                            WerkstoffLoader.items.get(OrePrefixes.ingot),
+                            (Mods.GoodGenerator.isModLoaded() ? GGMaterial.preciousMetalAlloy.getmID() : 10109))
+                        : null),
+                    64000 * 6))
 
             .specialValue(11000)
             .eut(TierEU.UIV)
@@ -766,7 +843,7 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
         // Ao SHI
         GTValues.RA.stdBuilder()
             .itemInputsUnsafe(
-                setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 30), 64000 * 4),
+                setStackSize(RecipeStacks.werkstoff(1, OrePrefixes.dust, WerkstoffLoader.Thorium232), 64000 * 4),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.InfusedOrder, 1), 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.InfusedEntropy, 1), 64000),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.InfusedWater, 1), 64000 * 4),
@@ -774,7 +851,8 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.InfusedFire, 1), 64000 * 4),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.InfusedEarth, 1), 64000 * 4),
                 GTUtility.getIntegratedCircuit(7))
-            .itemOutputs(setStackSize(GTModHandler.getModItem("miscutils", "itemIngotArcanite", 1), 64000 * 10))
+            .itemOutputs(
+                setStackSize(RecipeStacks.gtppComponent(1, MaterialsAlloy.ARCANITE, ComponentTypes.INGOT), 64000 * 10))
 
             .specialValue(6200)
             .eut(TierEU.LuV)
@@ -799,7 +877,10 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Ytterbium, 1), 64000 * 720),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Niobium, 1), 64000 * 960),
                 GTUtility.getIntegratedCircuit(21))
-            .itemOutputs(setStackSize(GTModHandler.getModItem("miscutils", "itemIngotPikyonium64B", 1), 64000 * 20880))
+            .itemOutputs(
+                setStackSize(
+                    RecipeStacks.gtppComponent(1, MaterialsAlloy.PIKYONIUM, ComponentTypes.INGOT),
+                    64000 * 20880))
 
             .specialValue(10000)
             .eut(TierEU.UV)
@@ -822,9 +903,12 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Gallium, 1), 64000 * 20),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Americium, 1), 64000 * 20),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 1), 64000 * 10),
-                setStackSize(GTModHandler.getModItem("miscutils", "itemDustGermanium", 1), 64000 * 20),
+                setStackSize(
+                    RecipeStacks.gtppComponent(1, MaterialsElements.getInstance().GERMANIUM, ComponentTypes.DUST),
+                    64000 * 20),
                 GTUtility.getIntegratedCircuit(21))
-            .itemOutputs(setStackSize(GTModHandler.getModItem("miscutils", "itemIngotQuantum", 1), 64000 * 200))
+            .itemOutputs(
+                setStackSize(RecipeStacks.gtppComponent(1, MaterialsAlloy.QUANTUM, ComponentTypes.INGOT), 64000 * 200))
 
             .specialValue(11000)
             .eut(TierEU.UIV)
@@ -848,7 +932,10 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Gadolinium, 1), 64000 * 250),
                 setStackSize(GTModHandler.getModItem("Thaumcraft", "ItemResource", 1, 3), 64000 * 100),
                 GTUtility.getIntegratedCircuit(20))
-            .itemOutputs(setStackSize(GTModHandler.getModItem("miscutils", "itemIngotCinobiteA243", 1), 64000 * 2650))
+            .itemOutputs(
+                setStackSize(
+                    RecipeStacks.gtppComponent(1, MaterialsAlloy.CINOBITE, ComponentTypes.INGOT),
+                    64000 * 2650))
 
             .specialValue(11000)
             .eut(TierEU.UV)
@@ -868,7 +955,12 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Sunnarium, 1), 64000 * 20),
                 GTUtility.getIntegratedCircuit(20))
             .itemOutputs(
-                setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedingot", 1, 10105), 150 * 64000))
+                setStackSize(
+                    (GregTechAPI.sPreloadStarted && Mods.BartWorks.isModLoaded() ? RecipeStacks.exact(
+                        1,
+                        WerkstoffLoader.items.get(OrePrefixes.ingot),
+                        (Mods.GoodGenerator.isModLoaded() ? GGMaterial.hikarium.getmID() : 10105)) : null),
+                    150 * 64000))
 
             .specialValue(9000)
             .eut(TierEU.ZPM)
@@ -888,8 +980,9 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Yttrium, 1), 64000 * 8),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Chrome, 1), 64000 * 8),
                 GTUtility.getIntegratedCircuit(15))
-            .fluidInputs(FluidRegistry.getFluidStack("argon", 64000 * 25000))
-            .itemOutputs(setStackSize(GTModHandler.getModItem("miscutils", "itemIngotLafiumCompound", 1), 64000 * 450))
+            .fluidInputs(Materials.Argon.getGas(64000 * 25000))
+            .itemOutputs(
+                setStackSize(RecipeStacks.gtppComponent(1, MaterialsAlloy.LAFIUM, ComponentTypes.INGOT), 64000 * 450))
 
             .specialValue(9000)
             .eut(TierEU.ZPM)
@@ -898,13 +991,16 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
         // Botem
         GTValues.RA.stdBuilder()
             .itemInputsUnsafe(
-                setStackSize(GTModHandler.getModItem("miscutils", "itemDustThallium", 1), 64000 * 15),
+                setStackSize(
+                    RecipeStacks.gtppComponent(1, MaterialsElements.getInstance().THALLIUM, ComponentTypes.DUST),
+                    64000 * 15),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Titanium, 1), 64000 * 3),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Nickel, 1), 64000 * 2),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Osmium, 1), 64000 * 30),
-                setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 64), 30 * 64000),
+                setStackSize(RecipeStacks.werkstoff(1, OrePrefixes.dust, WerkstoffLoader.Ruthenium), 30 * 64000),
                 GTUtility.getIntegratedCircuit(20))
-            .itemOutputs(setStackSize(GTModHandler.getModItem("miscutils", "itemIngotBotmium", 1), 64000 * 80))
+            .itemOutputs(
+                setStackSize(RecipeStacks.gtppComponent(1, MaterialsAlloy.BOTMIUM, ComponentTypes.INGOT), 64000 * 80))
 
             .specialValue(11000)
             .eut(TierEU.UHV)
@@ -913,7 +1009,9 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
         // Abyssal Alloy
         GTValues.RA.stdBuilder()
             .itemInputsUnsafe(
-                setStackSize(GTModHandler.getModItem("miscutils", "itemDustGermanium", 1), 64000 * 180),
+                setStackSize(
+                    RecipeStacks.gtppComponent(1, MaterialsElements.getInstance().GERMANIUM, ComponentTypes.DUST),
+                    64000 * 180),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tungsten, 1), 64000 * 450),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Aluminium, 1), 64000 * 108),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tin, 1), 64000 * 225),
@@ -924,10 +1022,18 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Copper, 1), 64000 * 675),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 1), 64000 * 450),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Yttrium, 1), 64000 * 36),
-                setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 11012), 180 * 64000),
+                setStackSize(
+                    (GregTechAPI.sPreloadStarted && Mods.BartWorks.isModLoaded()
+                        ? RecipeStacks.exact(
+                            1,
+                            WerkstoffLoader.items.get(OrePrefixes.dust),
+                            (Mods.GTNHLanthanides.isModLoaded() ? WerkstoffMaterialPool.Iodine.getmID() : 11012))
+                        : null),
+                    180 * 64000),
                 GTUtility.getIntegratedCircuit(14))
-            .fluidInputs(FluidRegistry.getFluidStack("radon", Integer.MAX_VALUE))
-            .itemOutputs(setStackSize(GTModHandler.getModItem("miscutils", "itemIngotAbyssalAlloy", 1), 64000 * 5040))
+            .fluidInputs(Materials.Radon.getGas(Integer.MAX_VALUE))
+            .itemOutputs(
+                setStackSize(RecipeStacks.gtppComponent(1, MaterialsAlloy.ABYSSAL, ComponentTypes.INGOT), 64000 * 5040))
 
             .specialValue(11000)
             .eut(TierEU.UEV)
@@ -945,8 +1051,11 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Palladium, 1), 64000 * 4),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Niobium, 1), 64000 * 2),
                 GTUtility.getIntegratedCircuit(13))
-            .fluidInputs(FluidRegistry.getFluidStack("argon", 64000 * 5000))
-            .itemOutputs(setStackSize(GTModHandler.getModItem("miscutils", "itemIngotBlackTitanium", 1), 64000 * 100))
+            .fluidInputs(Materials.Argon.getGas(64000 * 5000))
+            .itemOutputs(
+                setStackSize(
+                    RecipeStacks.gtppComponent(1, MaterialsAlloy.BLACK_TITANIUM, ComponentTypes.INGOT),
+                    64000 * 100))
 
             .specialValue(11000)
             .eut(TierEU.UHV)
@@ -966,7 +1075,10 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Trinium, 1), 64000 * 36),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Strontium, 1), 64000 * 12),
                 GTUtility.getIntegratedCircuit(8))
-            .itemOutputs(setStackSize(GTModHandler.getModItem("miscutils", "itemIngotArceusAlloy2B", 1), 64000 * 132))
+            .itemOutputs(
+                setStackSize(
+                    RecipeStacks.gtppComponent(1, MaterialsAlloy.TRINIUM_REINFORCED_STEEL, ComponentTypes.INGOT),
+                    64000 * 132))
 
             .specialValue(9000)
             .eut(TierEU.UV)
@@ -980,14 +1092,27 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Tritanium, 1), 64000 * 11),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.FierySteel, 1), 64000 * 7),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Firestone, 1), 64000 * 13),
-                setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 10022), 64000 * 13),
-                setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 10023), 64000 * 8),
+                setStackSize(
+                    (GregTechAPI.sPreloadStarted && Mods.BartWorks.isModLoaded()
+                        ? RecipeStacks.exact(
+                            1,
+                            WerkstoffLoader.items.get(OrePrefixes.dust),
+                            (Mods.GoodGenerator.isModLoaded() ? GGMaterial.atomicSeparationCatalyst.getmID() : 10022))
+                        : null),
+                    64000 * 13),
+                setStackSize(
+                    (GregTechAPI.sPreloadStarted && Mods.BartWorks.isModLoaded() ? RecipeStacks.exact(
+                        1,
+                        WerkstoffLoader.items.get(OrePrefixes.dust),
+                        (Mods.GoodGenerator.isModLoaded() ? GGMaterial.orundum.getmID() : 10023)) : null),
+                    64000 * 8),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Thorium, 1), 3200),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Calcium, 1), 3200),
-                setStackSize(GTModHandler.getModItem("miscutils", "itemDustCelestialTungsten", 1), 3200))
+                setStackSize(RecipeStacks.gtppComponent(1, STANDALONE.CELESTIAL_TUNGSTEN, ComponentTypes.DUST), 3200))
             .fluidInputs(
-                FluidRegistry.getFluidStack("dimensionallytranscendentresidue", 64000 * 10000),
-                FluidRegistry.getFluidStack("plasma.fermium", 448000))
+                Materials.DTR.getFluid(64000 * 10000),
+                FluidRegistry
+                    .getFluidStack(RecipeFluids.gtppPlasmaName(MaterialsElements.getInstance().FERMIUM), 448000))
             .itemOutputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.ingot, Materials.Mellion, 1), 64000 * 63),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.ingot, Materials.Creon, 1), 64000 * 63))
@@ -1000,12 +1125,18 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
             .itemOutputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.ingot, Materials.SixPhasedCopper, 1), 64000 * 72))
             .itemInputsUnsafe(
-                setStackSize(GTModHandler.getModItem("Avaritia", "Singularity", 1, 5), 64000 * 8),
-                setStackSize(GTModHandler.getModItem("miscutils", "itemDustCelestialTungsten", 1), 64000 * 72),
-                setStackSize(GTModHandler.getModItem("miscutils", "itemDustAstralTitanium", 1), 64000 * 288),
-                setStackSize(GTModHandler.getModItem("miscutils", "itemDustHypogen", 1), 64000 * 36),
-                setStackSize(GTModHandler.getModItem("miscutils", "itemDustChromaticGlass", 1), 64000 * 576),
-                setStackSize(GTModHandler.getModItem("miscutils", "itemDustRhugnor", 1), 64000 * 18),
+                setStackSize(RecipeStacks.exact(1, LudicrousItems.singularity, 5), 64000 * 8),
+                setStackSize(
+                    RecipeStacks.gtppComponent(1, STANDALONE.CELESTIAL_TUNGSTEN, ComponentTypes.DUST),
+                    64000 * 72),
+                setStackSize(
+                    RecipeStacks.gtppComponent(1, STANDALONE.ASTRAL_TITANIUM, ComponentTypes.DUST),
+                    64000 * 288),
+                setStackSize(RecipeStacks.gtppComponent(1, STANDALONE.HYPOGEN, ComponentTypes.DUST), 64000 * 36),
+                setStackSize(
+                    RecipeStacks.gtppComponent(1, STANDALONE.CHRONOMATIC_GLASS, ComponentTypes.DUST),
+                    64000 * 576),
+                setStackSize(RecipeStacks.gtppComponent(1, STANDALONE.RHUGNOR, ComponentTypes.DUST), 64000 * 18),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Mellion, 1), 64000 * 72))
             .eut(TierEU.RECIPE_UXV)
             .duration(60 * 72 * 20 * 512)
@@ -1028,7 +1159,7 @@ public class RecipesTangshanSteelFactory implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.InfusedFire, 1), 1000 * 180),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.InfusedEarth, 1), 1000 * 180),
                 GTUtility.getIntegratedCircuit(11))
-            .fluidInputs(FluidRegistry.getFluidStack("dimensionallytranscendentresidue", 1000 * 1080000))
+            .fluidInputs(Materials.DTR.getFluid(1000 * 1080000))
             .fluidOutputs(Materials.MoltenProtoHalkoniteBase.getFluid(1244160000))
 
             .specialValue(10000)

@@ -7,12 +7,23 @@ import net.minecraftforge.fluids.FluidRegistry;
 import com.newmaa.othtech.OTHTechnology;
 import com.newmaa.othtech.machine.OTEMiniSteamNineInOne;
 import com.newmaa.othtech.utils.ModsEnum;
+import com.newmaa.othtech.utils.RecipeFluids;
+import com.newmaa.othtech.utils.RecipeStacks;
 
+import bartworks.system.material.WerkstoffLoader;
+import goodgenerator.items.GGMaterial;
+import gregtech.api.GregTechAPI;
 import gregtech.api.enums.GTValues;
+import gregtech.api.enums.ItemList;
+import gregtech.api.enums.Materials;
+import gregtech.api.enums.Mods;
+import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTUtility;
+import gregtech.common.items.MetaGeneratedItem03;
+import gtPlusPlus.xmod.gregtech.api.enums.GregtechItemList;
 
 public class RecipeLoader {
 
@@ -35,13 +46,20 @@ public class RecipeLoader {
             // 78water
             GTValues.RA.stdBuilder()
                 .itemOutputs(GTModHandler.getModItem("miscutils", "item.BasicGenericChemItem", 1, 30))
-                .fluidInputs(FluidRegistry.getFluidStack("molten.shirabon", 92160))
+                .fluidInputs(
+                    FluidRegistry.getFluidStack(
+                        Mods.GoodGenerator.isModLoaded() ? RecipeFluids.werkstoffMoltenName(GGMaterial.shirabon)
+                            : "molten.shirabon",
+                        92160))
                 .itemInputs(
                     GTUtility.getIntegratedCircuit(10),
-                    GTModHandler.getModItem("miscutils", "item.BasicAgrichemItem", 1, 13),
-                    GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedlens", 64, 25),
-                    GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 4054),
-                    GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 32722))
+                    (GregTechAPI.sPreloadStarted && Mods.GTPlusPlus.isModLoaded()
+                        && GregtechItemList.EmptyCatalystCarrier.hasBeenSet()
+                            ? RecipeStacks.exact(1, GregtechItemList.EmptyCatalystCarrier.getItem(), 13)
+                            : null),
+                    RecipeStacks.werkstoff(64, OrePrefixes.lens, WerkstoffLoader.Hedenbergit),
+                    RecipeStacks.generated(64, MetaGeneratedItem03.INSTANCE, OrePrefixes.nanite, Materials.Silver),
+                    RecipeStacks.exact(64, ItemList.Circuit_Silicon_Wafer6))
                 .duration(60 * 20)
                 .eut(TierEU.UMV)
                 .addTo(RecipeMaps.assemblerRecipes);

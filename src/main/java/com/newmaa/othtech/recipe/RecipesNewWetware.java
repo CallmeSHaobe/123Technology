@@ -12,20 +12,24 @@ import net.minecraftforge.fluids.FluidStack;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.materials.BWLiquids;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
+import com.newmaa.othtech.utils.ExternalRecipeItems;
+import com.newmaa.othtech.utils.RecipeFluids;
+import com.newmaa.othtech.utils.RecipeStacks;
 
-import crazypants.enderio.EnderIO;
+import gregtech.api.GregTechAPI;
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
+import gregtech.api.enums.Mods;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
 import gregtech.api.objects.SubstituteFluidStack;
 import gregtech.api.recipe.RecipeMaps;
-import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTRecipeBuilder;
 import gregtech.api.util.GTUtility;
 import gregtech.loaders.postload.recipes.FakeCuttingSpecialInfo;
+import gtPlusPlus.core.material.MaterialsAlloy;
 
 public class RecipesNewWetware implements IRecipePool {
 
@@ -35,7 +39,7 @@ public class RecipesNewWetware implements IRecipePool {
             GTOreDictUnificator.get(OrePrefixes.wireFine, Materials.Osmiridium, 24),
             OTHItemList.Brains.get(1),
             OTHItemList.slicedBrains.get(4),
-            FluidRegistry.getFluidStack("lifeessence", 100));
+            Materials.LifeEssence.getFluid(100));
         addSlicedBrainRecipe(
             GTOreDictUnificator.get(OrePrefixes.wireFine, Materials.Osmiridium, 24),
             OTHItemList.Brains.get(1),
@@ -45,7 +49,7 @@ public class RecipesNewWetware implements IRecipePool {
         GTRecipeBuilder.builder()
             .itemInputs(OTHItemList.slicedBrains.get(16))
             .itemOutputs(OTHItemList.encapsulatedBranins.get(1))
-            .fluidInputs(FluidRegistry.getFluidStack("molten.indalloy140", 72))
+            .fluidInputs(FluidRegistry.getFluidStack(RecipeFluids.gtppMoltenName(MaterialsAlloy.INDALLOY_140), 72))
             .eut(TierEU.RECIPE_LuV)
             .requiresCleanRoom()
             .duration(4 * GTRecipeBuilder.SECONDS)
@@ -92,7 +96,9 @@ public class RecipesNewWetware implements IRecipePool {
         // Adv Recipes
         GTValues.RA.stdBuilder()
             .itemInputs(
-                GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32746),
+                (GregTechAPI.sPreloadStarted && Mods.BartWorks.isModLoaded()
+                    ? RecipeStacks.exact(1, ItemList.Wrap_UltraBioMutatedCircuitBoards)
+                    : null),
                 OTHItemList.encapsulatedBranins.get(4),
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.Polybenzimidazole, 32),
                 GTOreDictUnificator.get(OrePrefixes.plateDouble, Materials.RubberSilicone, 64),
@@ -107,7 +113,9 @@ public class RecipesNewWetware implements IRecipePool {
 
         GTValues.RA.stdBuilder()
             .itemInputs(
-                GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedItem0", 1, 32750),
+                (GregTechAPI.sPreloadStarted && Mods.BartWorks.isModLoaded()
+                    ? RecipeStacks.exact(1, ItemList.Wrap_ExtremeWetwareLifesupportCircuitBoards)
+                    : null),
                 OTHItemList.encapsulatedBranins.get(2),
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.Polybenzimidazole, 32),
                 GTOreDictUnificator.get(OrePrefixes.plateDouble, Materials.RubberSilicone, 64),
@@ -120,7 +128,7 @@ public class RecipesNewWetware implements IRecipePool {
             .duration(16 * 12 * 20)
             .addTo(Recipemaps.EIO);
         // FakePlayer
-        final ItemStack YourTag = GTModHandler.getModItem(EnderIO.MODID, "itemSoulVessel", 1);
+        final ItemStack YourTag = ExternalRecipeItems.enderIo(1, ExternalRecipeItems.EnderItem.SOUL_VESSEL, 0);
         NBTTagCompound You = new NBTTagCompound();
         You.setString("id", "123technology.CustomPlayer");
         YourTag.setTagCompound(You);
@@ -129,7 +137,7 @@ public class RecipesNewWetware implements IRecipePool {
             .itemInputs(
                 GTUtility.getIntegratedCircuit(17),
                 OTHItemList.Brains.get(1),
-                GTModHandler.getModItem(EnderIO.MODID, "itemSoulVessel", 1),
+                ExternalRecipeItems.enderIo(1, ExternalRecipeItems.EnderItem.SOUL_VESSEL, 0),
                 Materials.Titanium.getPlates(4),
                 GTOreDictUnificator.get(OrePrefixes.bolt, Materials.Iridium, 16),
                 Materials.Calcium.getPlates(10),

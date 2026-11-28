@@ -1,14 +1,14 @@
 package com.newmaa.othtech.recipe;
 
-import com.newmaa.othtech.OTHTechnology;
 import com.newmaa.othtech.common.OTHItemList;
+import com.newmaa.othtech.common.blocks.antimonia.AntimoniaBlocks;
 import com.newmaa.othtech.common.materials.BWLiquids;
+import com.newmaa.othtech.utils.RecipeStacks;
 
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.recipe.RecipeMaps;
-import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTRecipeBuilder;
 
@@ -54,7 +54,7 @@ public class RecipesAntimonia implements IRecipePool {
             .duration(123 * 20)
             .addTo(RecipeMaps.centrifugeNonCellRecipes);
         GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(GTModHandler.getModItem(OTHTechnology.MODID, "antimoniaDirtBlock", 1))
+            .itemInputsUnsafe(RecipeStacks.exact(1, AntimoniaBlocks.antimoniaBlockDirt, 0))
             .itemOutputs(
                 OTHItemList.AntimoniaPlanetDust.get(1),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Antimony, 3))
@@ -63,7 +63,7 @@ public class RecipesAntimonia implements IRecipePool {
             .duration(100)
             .addTo(RecipeMaps.maceratorRecipes);
         GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(GTModHandler.getModItem(OTHTechnology.MODID, "antimoniaGrassBlock", 1))
+            .itemInputsUnsafe(RecipeStacks.exact(1, AntimoniaBlocks.antimoniaBlockGrass, 0))
             .itemOutputs(
                 OTHItemList.AntimoniaPlanetDust.get(1),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Antimony, 3))
@@ -72,7 +72,7 @@ public class RecipesAntimonia implements IRecipePool {
             .duration(100)
             .addTo(RecipeMaps.maceratorRecipes);
         GTValues.RA.stdBuilder()
-            .itemInputsUnsafe(GTModHandler.getModItem(OTHTechnology.MODID, "antimoniaStoneBlock", 1))
+            .itemInputsUnsafe(RecipeStacks.exact(1, AntimoniaBlocks.antimoniaBlockStone, 0))
             .itemOutputs(
                 OTHItemList.AntimoniaPlanetDust.get(1),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Antimony, 3))

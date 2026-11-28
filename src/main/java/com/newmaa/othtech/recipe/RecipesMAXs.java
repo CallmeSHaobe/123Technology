@@ -18,17 +18,26 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
+import com.dreammaster.item.NHItemList;
 import com.newmaa.othtech.OTHTechnology;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.materials.BWLiquids;
 import com.newmaa.othtech.common.materials.BWMaterials;
 import com.newmaa.othtech.common.materials.OTHEntangled;
 import com.newmaa.othtech.common.materials.OTHMaterials;
+import com.newmaa.othtech.utils.RecipeFluids;
+import com.newmaa.othtech.utils.RecipeStacks;
 
+import goodgenerator.loader.Loaders;
+import goodgenerator.util.ItemRefer;
+import gregtech.api.GregTechAPI;
+import gregtech.api.casing.Casings;
 import gregtech.api.enums.CondensateType;
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
+import gregtech.api.enums.MetaTileEntityIDs;
+import gregtech.api.enums.Mods;
 import gregtech.api.enums.NaniteTier;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
@@ -38,7 +47,11 @@ import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTRecipeConstants;
 import gregtech.api.util.GTUtility;
+import gtPlusPlus.core.block.ModBlocks;
+import gtPlusPlus.core.material.MaterialsAlloy;
+import kekztech.common.Blocks;
 import tectech.recipe.TecTechRecipeMaps;
+import tectech.thing.casing.TTCasingsContainer;
 
 public class RecipesMAXs implements IRecipePool {
 
@@ -93,17 +106,20 @@ public class RecipesMAXs implements IRecipePool {
                 BWMaterials.Gunmu.get(OrePrefixes.plate, 8),
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.MHDCSM, 8),
                 GTUtility.getIntegratedCircuit(8))
-            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.blockcasingsNH", 1, 14))
+            .itemOutputs(RecipeStacks.casing(1, Casings.MAXMachineCasing))
             .duration(50)
             .eut(TierEU.LV)
             .addTo(Assembler);
 
         GTValues.RA.stdBuilder()
-            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 11234))
+            .itemOutputs(RecipeStacks.exact(1, ItemList.Hull_MAXV))
             .itemInputs(
-                GTModHandler.getModItem("gregtech", "gt.blockcasingsNH", 1, 14),
+                RecipeStacks.casing(1, Casings.MAXMachineCasing),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 2, 2611))
-            .fluidInputs(new FluidStack(FluidRegistry.getFluidID("molten.radoxpoly"), 576))
+            .fluidInputs(
+                new FluidStack(
+                    FluidRegistry.getFluidID(RecipeFluids.registryName(Materials.RadoxPolymer.mStandardMoltenFluid)),
+                    576))
             .duration(50)
             .eut(TierEU.UXV)
             .addTo(Assembler);
@@ -113,16 +129,19 @@ public class RecipesMAXs implements IRecipePool {
             .itemInputs(
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.MAX, 16),
                 GTUtility.getIntegratedCircuit(16))
-            .fluidInputs(FluidRegistry.getFluidStack("molten.solderingalloy", 72))
+            .fluidInputs(Materials.SolderingAlloy.getMolten(72))
             .duration(30 * 20)
             .eut(TierEU.LV)
             .addTo(Assembler);
 
         GTValues.RA.stdBuilder()
-            .fluidInputs(new FluidStack(FluidRegistry.getFluidID("molten.universium"), 24 * 144))
+            .fluidInputs(
+                new FluidStack(
+                    FluidRegistry.getFluidID(RecipeFluids.registryName(Materials.Universium.mStandardMoltenFluid)),
+                    24 * 144))
             .fluidOutputs(
                 BWLiquids.Galaxy.getFluidOrGas(48 * 144),
-                new FluidStack(FluidRegistry.getFluidID("molten.quantum"), 16 * 144))
+                new FluidStack(FluidRegistry.getFluidID(RecipeFluids.gtppMoltenName(MaterialsAlloy.QUANTUM)), 16 * 144))
             .duration(123 * 20)
             .requiresLowGravity()
             .eut(512000000)
@@ -136,9 +155,8 @@ public class RecipesMAXs implements IRecipePool {
                 getGM(48, OrePrefixes.round), getGM(64, OrePrefixes.wireFine), getGM(64, OrePrefixes.wireFine),
                 getUN(64, OrePrefixes.wireFine), getUN(64, OrePrefixes.wireFine), getET(64, OrePrefixes.wireFine),
                 getET(64, OrePrefixes.wireFine), getMM(64, OrePrefixes.wireFine), getMM(64, OrePrefixes.wireFine),
-                setStackSize(GTModHandler.getModItem("gregtech", "gt.blockcasings5", 1, 13), 2),
-                getNanites(1, Materials.Universium), getNanites(4, Materials.WhiteDwarfMatter),
-                getNanites(4, Materials.BlackDwarfMatter) });
+                setStackSize(RecipeStacks.casing(1, Casings.EternalCoilBlock), 2), getNanites(1, Materials.Universium),
+                getNanites(4, Materials.WhiteDwarfMatter), getNanites(4, Materials.BlackDwarfMatter) });
 
         addPartBec(
             ItemList.Electric_Pump_MAX.get(1),
@@ -151,7 +169,7 @@ public class RecipesMAXs implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.rotor, OTHMaterials.Gunmu, 8),
                 GTOreDictUnificator.get(OrePrefixes.rotor, Materials.Universium, 8),
                 GTOreDictUnificator.get(OrePrefixes.rotor, Materials.MHDCSM, 8),
-                GTModHandler.getModItem("gregtech", "gt.blockcasings5", 2, 13),
+                RecipeStacks.casing(2, Casings.EternalCoilBlock),
                 GTOreDictUnificator.get(OrePrefixes.nanite, Materials.Universium, 1),
                 GTOreDictUnificator.get(OrePrefixes.nanite, Materials.WhiteDwarfMatter, 2),
                 GTOreDictUnificator.get(OrePrefixes.nanite, Materials.BlackDwarfMatter, 2),
@@ -170,7 +188,7 @@ public class RecipesMAXs implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.gearGtSmall, OTHMaterials.Gunmu, 8),
                 GTOreDictUnificator.get(OrePrefixes.gearGtSmall, Materials.Universium, 8),
                 GTOreDictUnificator.get(OrePrefixes.gearGtSmall, Materials.Eternity, 8),
-                GTModHandler.getModItem("gregtech", "gt.blockcasings5", 4, 13),
+                RecipeStacks.casing(4, Casings.EternalCoilBlock),
                 GTOreDictUnificator.get(OrePrefixes.nanite, Materials.Universium, 1),
                 GTOreDictUnificator.get(OrePrefixes.nanite, Materials.WhiteDwarfMatter, 2),
                 GTOreDictUnificator.get(OrePrefixes.nanite, Materials.BlackDwarfMatter, 2),
@@ -183,7 +201,7 @@ public class RecipesMAXs implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.ring, OTHMaterials.Gunmu, 16),
                 GTOreDictUnificator.get(OrePrefixes.ring, OTHMaterials.Gunmu, 64),
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.MAX, 2),
-                GTModHandler.getModItem("gregtech", "gt.blockcasings5", 4, 13),
+                RecipeStacks.casing(4, Casings.EternalCoilBlock),
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.Universium, 4),
                 GTOreDictUnificator.get(OrePrefixes.plateSuperdense, Materials.Kevlar, 16),
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.BlackDwarfMatter, 4),
@@ -205,7 +223,7 @@ public class RecipesMAXs implements IRecipePool {
                 ItemList.Electric_Piston_MAX.get(1), new Object[] { OrePrefixes.circuit.get(Materials.MAX), 2 },
                 new Object[] { OrePrefixes.circuit.get(Materials.UXV), 4 },
                 new Object[] { OrePrefixes.circuit.get(Materials.UMV), 8 },
-                GTModHandler.getModItem("gregtech", "gt.blockcasings5", 4, 13),
+                RecipeStacks.casing(4, Casings.EternalCoilBlock),
                 GTOreDictUnificator.get(OrePrefixes.nanite, Materials.Universium, 1),
                 GTOreDictUnificator.get(OrePrefixes.nanite, Materials.WhiteDwarfMatter, 2),
                 GTOreDictUnificator.get(OrePrefixes.nanite, Materials.BlackDwarfMatter, 2) });
@@ -214,13 +232,13 @@ public class RecipesMAXs implements IRecipePool {
             ItemList.Sensor_MAX.get(1),
             new Object[] { GTOreDictUnificator.get(OrePrefixes.frameGt, OTHMaterials.Gunmu, 4),
                 ItemList.Electric_Motor_MAX.get(1), GTOreDictUnificator.get(OrePrefixes.plate, OTHMaterials.Gunmu, 16),
-                OTHItemList.glassSingularityM.get(4), GTModHandler.getModItem("dreamcraft", "ChromaticLens", 64),
+                OTHItemList.glassSingularityM.get(4), RecipeStacks.exact(64, NHItemList.ChromaticLens.item, 0),
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.MAX, 4),
                 GTOreDictUnificator.get(OrePrefixes.foil, OTHMaterials.Gunmu, 64),
                 GTOreDictUnificator.get(OrePrefixes.foil, Materials.Universium, 64),
                 GTOreDictUnificator.get(OrePrefixes.foil, Materials.Eternity, 64),
                 GTOreDictUnificator.get(OrePrefixes.foil, Materials.MHDCSM, 64),
-                GTModHandler.getModItem("gregtech", "gt.blockcasings5", 8, 13),
+                RecipeStacks.casing(8, Casings.EternalCoilBlock),
                 GTOreDictUnificator.get(OrePrefixes.nanite, Materials.Universium, 1),
                 GTOreDictUnificator.get(OrePrefixes.nanite, Materials.WhiteDwarfMatter, 2),
                 GTOreDictUnificator.get(OrePrefixes.nanite, Materials.BlackDwarfMatter, 2) },
@@ -230,13 +248,13 @@ public class RecipesMAXs implements IRecipePool {
             ItemList.Emitter_MAX.get(1),
             new Object[] { GTOreDictUnificator.get(OrePrefixes.frameGt, OTHMaterials.Gunmu, 4),
                 ItemList.Electric_Motor_MAX.get(1), GTOreDictUnificator.get(OrePrefixes.stick, OTHMaterials.Gunmu, 16),
-                OTHItemList.glassSingularityM.get(4), GTModHandler.getModItem("dreamcraft", "ChromaticLens", 64),
+                OTHItemList.glassSingularityM.get(4), RecipeStacks.exact(64, NHItemList.ChromaticLens.item, 0),
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.MAX, 4),
                 GTOreDictUnificator.get(OrePrefixes.foil, OTHMaterials.Gunmu, 64),
                 GTOreDictUnificator.get(OrePrefixes.foil, Materials.Universium, 64),
                 GTOreDictUnificator.get(OrePrefixes.foil, Materials.Eternity, 64),
                 GTOreDictUnificator.get(OrePrefixes.foil, Materials.MHDCSM, 64),
-                GTModHandler.getModItem("gregtech", "gt.blockcasings5", 8, 13),
+                RecipeStacks.casing(8, Casings.EternalCoilBlock),
                 GTOreDictUnificator.get(OrePrefixes.nanite, Materials.Universium, 1),
                 GTOreDictUnificator.get(OrePrefixes.nanite, Materials.WhiteDwarfMatter, 2),
                 GTOreDictUnificator.get(OrePrefixes.nanite, Materials.BlackDwarfMatter, 2) },
@@ -253,7 +271,7 @@ public class RecipesMAXs implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.wireFine, OTHMaterials.Gunmu, 64),
                 GTOreDictUnificator.get(OrePrefixes.wireFine, OTHMaterials.Gunmu, 64),
                 GTOreDictUnificator.get(OrePrefixes.wireFine, OTHMaterials.Gunmu, 64),
-                GTModHandler.getModItem("gregtech", "gt.blockcasings5", 16, 13),
+                RecipeStacks.casing(16, Casings.EternalCoilBlock),
                 GTOreDictUnificator.get(OrePrefixes.nanite, Materials.Universium, 4),
                 GTOreDictUnificator.get(OrePrefixes.nanite, Materials.WhiteDwarfMatter, 8),
                 GTOreDictUnificator.get(OrePrefixes.nanite, Materials.BlackDwarfMatter, 8) },
@@ -262,65 +280,81 @@ public class RecipesMAXs implements IRecipePool {
 
     private void loadBecHatches() {
         addHatchBec(
-            GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 23522),
-            new Object[] { GTModHandler.getModItem("gregtech", "gt.blockmachines", 16, 11234),
-                GTModHandler.getModItem("GoodGenerator", "compactFusionCoil", 64, 4),
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 16, 15300),
-                GTModHandler.getModItem("tectech", "gt.blockcasingsTT", 64), getMM(64, OrePrefixes.wireFine),
-                getMC(64, OrePrefixes.plateDense),
+            RecipeStacks.exact(1, OTHItemList.inf_WirelessHatch),
+            new Object[] { RecipeStacks.exact(16, ItemList.Hull_MAXV),
+                (GregTechAPI.sPreloadStarted && Mods.GoodGenerator.isModLoaded()
+                    ? RecipeStacks.exact(64, Loaders.compactFusionCoil, 4)
+                    : null),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 16, MetaTileEntityIDs.ActiveTransformer.ID),
+                (GregTechAPI.sPreloadStarted && Mods.TecTech.isModLoaded()
+                    ? RecipeStacks.exact(64, TTCasingsContainer.sBlockCasingsTT, 0)
+                    : null),
+                getMM(64, OrePrefixes.wireFine), getMC(64, OrePrefixes.plateDense),
                 new Object[] { OrePrefixes.circuit.get(Materials.TranscendentMetal), 64 },
-                ItemList.EnergisedTesseract.get(64), GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23524),
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23524),
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23524),
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23524),
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23524),
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23524),
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23524),
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 23524) });
+                ItemList.EnergisedTesseract.get(64), RecipeStacks.exact(64, OTHItemList.WirelessMAX),
+                RecipeStacks.exact(64, OTHItemList.WirelessMAX), RecipeStacks.exact(64, OTHItemList.WirelessMAX),
+                RecipeStacks.exact(64, OTHItemList.WirelessMAX), RecipeStacks.exact(64, OTHItemList.WirelessMAX),
+                RecipeStacks.exact(64, OTHItemList.WirelessMAX), RecipeStacks.exact(64, OTHItemList.WirelessMAX),
+                RecipeStacks.exact(64, OTHItemList.WirelessMAX) });
 
         addHatchBec(
-            GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 23523),
-            new Object[] { GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 13106),
-                GTModHandler.getModItem("kekztech", "kekztech_lapotronicenergyunit_block", 64),
-                GTModHandler.getModItem("kekztech", "kekztech_lapotronicenergyunit_block", 64, 10),
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 15497),
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 15465),
+            RecipeStacks.exact(1, OTHItemList.legendary_WirelessHatch),
+            new Object[] { GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, MetaTileEntityIDs.lsc.ID),
+                (GregTechAPI.sPreloadStarted && Mods.KekzTech.isModLoaded()
+                    ? RecipeStacks.exact(64, Blocks.lscLapotronicEnergyUnit, 0)
+                    : null),
+                (GregTechAPI.sPreloadStarted && Mods.KekzTech.isModLoaded()
+                    ? RecipeStacks.exact(64, Blocks.lscLapotronicEnergyUnit, 10)
+                    : null),
+                GTModHandler
+                    .getModItem("gregtech", "gt.blockmachines", 1, MetaTileEntityIDs.AutoTapingMaintenanceHatch.ID),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, MetaTileEntityIDs.LaserVacuumPipe.ID),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 64, 2611),
-                GTModHandler.getModItem("miscutils", "gtplusplus.blockcasings.6", 16, 1),
-                GTModHandler.getModItem("gregtech", "gt.blockcasings", 1, 15),
-                GTModHandler.getModItem("tectech", "gt.blockcasingsTT", 64),
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 15300),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 32165),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 32417) });
+                (GregTechAPI.sPreloadStarted && Mods.GTPlusPlus.isModLoaded()
+                    ? RecipeStacks.exact(16, ModBlocks.blockCasings6Misc, 1)
+                    : null),
+                RecipeStacks.casing(1, Casings.SuperconductingCoilBlock),
+                (GregTechAPI.sPreloadStarted && Mods.TecTech.isModLoaded()
+                    ? RecipeStacks.exact(64, TTCasingsContainer.sBlockCasingsTT, 0)
+                    : null),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, MetaTileEntityIDs.ActiveTransformer.ID),
+                RecipeStacks.exact(64, ItemList.Circuit_Chip_QPIC),
+                RecipeStacks.exact(64, ItemList.EnergisedTesseract) });
 
         addHatchBec(
-            GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 23524),
-            new Object[] { GTModHandler.getModItem("gregtech", "gt.blockmachines", 4, 286),
+            RecipeStacks.exact(1, OTHItemList.WirelessMAX),
+            new Object[] { RecipeStacks.exact(4, ItemList.Wireless_Hatch_Energy_MAX),
                 ItemList.Electric_Pump_MAX.get(64), ItemList.Sensor_MAX.get(64),
                 GTOreDictUnificator.get(OrePrefixes.lens, Materials.Diamond, 64),
                 GTModHandler.getModItem("gregtech", "gt.blockmachines", 16, 2611), GTUtility.getIntegratedCircuit(7) });
 
         addHatchBec(
-            GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 286),
-            new Object[] { GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 11234),
-                GTModHandler.getModItem("GoodGenerator", "compactFusionCoil", 16, 2),
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 15300),
-                GTModHandler.getModItem("tectech", "gt.blockcasingsTT", 16), getUN(64, OrePrefixes.wireFine),
-                getMC(4, OrePrefixes.plateDense), new Object[] { OrePrefixes.circuit.get(Materials.MAX), 16 },
-                getNanites(4, Materials.Eternity), ItemList.Circuit_Chip_YPIC.get(2), ItemList.MAX_Coil.get(4),
-                ItemList.Electric_Pump_MAX.get(1), ItemList.Reactor_Coolant_Sp_6.get(1),
+            RecipeStacks.exact(1, ItemList.Wireless_Hatch_Energy_MAX),
+            new Object[] { RecipeStacks.exact(1, ItemList.Hull_MAXV),
+                (GregTechAPI.sPreloadStarted && Mods.GoodGenerator.isModLoaded()
+                    ? RecipeStacks.exact(16, Loaders.compactFusionCoil, 2)
+                    : null),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, MetaTileEntityIDs.ActiveTransformer.ID),
+                (GregTechAPI.sPreloadStarted && Mods.TecTech.isModLoaded()
+                    ? RecipeStacks.exact(16, TTCasingsContainer.sBlockCasingsTT, 0)
+                    : null),
+                getUN(64, OrePrefixes.wireFine), getMC(4, OrePrefixes.plateDense),
+                new Object[] { OrePrefixes.circuit.get(Materials.MAX), 16 }, getNanites(4, Materials.Eternity),
+                ItemList.Circuit_Chip_YPIC.get(2), ItemList.MAX_Coil.get(4), ItemList.Electric_Pump_MAX.get(1),
                 ItemList.Reactor_Coolant_Sp_6.get(1), ItemList.Reactor_Coolant_Sp_6.get(1),
-                ItemList.Reactor_Coolant_Sp_6.get(1) });
+                ItemList.Reactor_Coolant_Sp_6.get(1), ItemList.Reactor_Coolant_Sp_6.get(1) });
 
         addHatchBec(
-            GTModHandler.getModItem("GoodGenerator", "componentAssemblylineCasing", 1, 13),
+            (GregTechAPI.sPreloadStarted && Mods.GoodGenerator.isModLoaded()
+                ? RecipeStacks.exact(1, ItemRefer.Compassline_Casing_MAX.get(1))
+                : null),
             new Object[] { GTOreDictUnificator.get(OrePrefixes.frameGt, OTHMaterials.Gunmu, 1),
                 StargateFramePart.get(1), GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.MHDCSM, 12),
                 GTOreDictUnificator.get(OrePrefixes.plateDense, OTHMaterials.Gunmu, 12), ItemList.Robot_Arm_MAX.get(8),
                 ItemList.Electric_Piston_MAX.get(10), ItemList.Electric_Motor_MAX.get(16),
                 GTOreDictUnificator.get(OrePrefixes.gearGt, OTHMaterials.Gunmu, 4),
                 GTOreDictUnificator.get(OrePrefixes.gearGtSmall, OTHMaterials.Gunmu, 16), getAstralArray(1),
-                setStackSize(GTModHandler.getModItem("gregtech", "gt.blockcasings5", 1, 13), 64),
+                setStackSize(RecipeStacks.casing(1, Casings.EternalCoilBlock), 64),
                 OTHItemList.machineSingularityM.get(12), getNanites(64, Materials.Universium),
                 getNanites(64, Materials.Eternity) },
             BEC_CASING_SECONDS);
