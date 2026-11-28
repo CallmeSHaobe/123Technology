@@ -12,14 +12,19 @@ import net.minecraftforge.fluids.FluidStack;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.materials.BWLiquids;
 import com.newmaa.othtech.common.materials.OTHMaterials;
+import com.newmaa.othtech.utils.RecipeFluids;
+import com.newmaa.othtech.utils.RecipeStacks;
 
 import goodgenerator.api.recipe.GoodGeneratorRecipeMaps;
+import goodgenerator.loader.Loaders;
+import gregtech.api.GregTechAPI;
+import gregtech.api.casing.Casings;
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
+import gregtech.api.enums.Mods;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.recipe.RecipeMap;
-import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTUtility;
 import gtPlusPlus.core.material.MaterialsElements;
@@ -33,7 +38,7 @@ public class RecipesComponentAssemblyLineRecipes implements IRecipePool {
     @Override
     public void loadRecipes() {
         final RecipeMap<?> comass = GoodGeneratorRecipeMaps.componentAssemblyLineRecipes;
-        ItemStack coil = GTModHandler.getModItem("gregtech", "gt.blockcasings5", 1, 13);
+        ItemStack coil = RecipeStacks.casing(1, Casings.EternalCoilBlock);
 
         GTValues.RA.stdBuilder()
             .itemInputsUnsafe(getEternalSingularity(48), setStackSize(coil, 2 * 48), getNanites(48, Materials.Eternity))
@@ -94,7 +99,9 @@ public class RecipesComponentAssemblyLineRecipes implements IRecipePool {
         GTValues.RA.stdBuilder()
             .itemInputs(
                 setStackSize(ItemList.Electric_Motor_MAX.get(1), 96),
-                GTModHandler.getModItem("GoodGenerator", "circuitWrap", 6, 14),
+                (GregTechAPI.sPreloadStarted && Mods.GoodGenerator.isModLoaded()
+                    ? RecipeStacks.exact(6, Loaders.circuitWrap, 14)
+                    : null),
                 setStackSize(coil, 8 * 48),
                 getNanites(28, Materials.Eternity),
                 GTUtility.getIntegratedCircuit(5))
@@ -118,7 +125,9 @@ public class RecipesComponentAssemblyLineRecipes implements IRecipePool {
             .itemInputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.frameGt, OTHMaterials.Gunmu, 1), 192),
                 ItemList.Electric_Motor_MAX.get(48),
-                GTModHandler.getModItem("GoodGenerator", "circuitWrap", 12, 14),
+                (GregTechAPI.sPreloadStarted && Mods.GoodGenerator.isModLoaded()
+                    ? RecipeStacks.exact(12, Loaders.circuitWrap, 14)
+                    : null),
                 setStackSize(coil, 8 * 48),
                 setStackSize(getNanites(1, Materials.Eternity), 32),
                 setStackSize(OTHItemList.glassSingularityM.get(1), 192),
@@ -131,7 +140,9 @@ public class RecipesComponentAssemblyLineRecipes implements IRecipePool {
                 Materials.MHDCSM.getMolten(110592),
                 MaterialsElements.STANDALONE.CHRONOMATIC_GLASS.getFluidStack(552960),
                 Materials.SuperconductorUMVBase.getMolten(276480),
-                new FluidStack(FluidRegistry.getFluidID("temporalfluid"), 3072000),
+                new FluidStack(
+                    FluidRegistry.getFluidID(RecipeFluids.registryName(Materials.Time.mStandardMoltenFluid)),
+                    3072000),
                 BWLiquids.Void.getFluidOrGas(16000 * 48),
                 BWLiquids.Stars.getFluidOrGas(16 * 48 * 144))
             .duration(25 * 48 * 20)
@@ -142,7 +153,9 @@ public class RecipesComponentAssemblyLineRecipes implements IRecipePool {
             .itemInputs(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.frameGt, OTHMaterials.Gunmu, 1), 192),
                 ItemList.Electric_Motor_MAX.get(48),
-                GTModHandler.getModItem("GoodGenerator", "circuitWrap", 12, 14),
+                (GregTechAPI.sPreloadStarted && Mods.GoodGenerator.isModLoaded()
+                    ? RecipeStacks.exact(12, Loaders.circuitWrap, 14)
+                    : null),
                 setStackSize(coil, 8 * 48),
                 setStackSize(getNanites(1, Materials.Eternity), 32),
                 setStackSize(OTHItemList.glassSingularityM.get(1), 192),
@@ -155,7 +168,9 @@ public class RecipesComponentAssemblyLineRecipes implements IRecipePool {
                 Materials.MHDCSM.getMolten(110592),
                 MaterialsElements.STANDALONE.CHRONOMATIC_GLASS.getFluidStack(552960),
                 Materials.SuperconductorUMVBase.getMolten(276480),
-                new FluidStack(FluidRegistry.getFluidID("spatialfluid"), 3072000),
+                new FluidStack(
+                    FluidRegistry.getFluidID(RecipeFluids.registryName(Materials.Space.mStandardMoltenFluid)),
+                    3072000),
                 BWLiquids.Void.getFluidOrGas(16000 * 48),
                 BWLiquids.Stars.getFluidOrGas(16 * 48 * 144))
             .duration(25 * 48 * 20)
@@ -166,9 +181,15 @@ public class RecipesComponentAssemblyLineRecipes implements IRecipePool {
             .itemInputs(
                 setStackSize(ItemList.Electric_Motor_MAX.get(1), 96),
                 setStackSize(ItemList.Electric_Piston_MAX.get(1), 48),
-                GTModHandler.getModItem("GoodGenerator", "circuitWrap", 6, 14),
-                GTModHandler.getModItem("GoodGenerator", "circuitWrap", 12, 13),
-                GTModHandler.getModItem("GoodGenerator", "circuitWrap", 24, 12),
+                (GregTechAPI.sPreloadStarted && Mods.GoodGenerator.isModLoaded()
+                    ? RecipeStacks.exact(6, Loaders.circuitWrap, 14)
+                    : null),
+                (GregTechAPI.sPreloadStarted && Mods.GoodGenerator.isModLoaded()
+                    ? RecipeStacks.exact(12, Loaders.circuitWrap, 13)
+                    : null),
+                (GregTechAPI.sPreloadStarted && Mods.GoodGenerator.isModLoaded()
+                    ? RecipeStacks.exact(24, Loaders.circuitWrap, 12)
+                    : null),
                 setStackSize(coil, 4 * 48),
                 setStackSize(getNanites(1, Materials.Eternity), 36),
                 GTUtility.getIntegratedCircuit(4))
@@ -188,7 +209,9 @@ public class RecipesComponentAssemblyLineRecipes implements IRecipePool {
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.frameGt, OTHMaterials.Gunmu, 1), 192),
                 getAstralArray(48),
                 setStackSize(ItemList.Emitter_MAX.get(1), 4 * 48),
-                GTModHandler.getModItem("GoodGenerator", "circuitWrap", 12, 14),
+                (GregTechAPI.sPreloadStarted && Mods.GoodGenerator.isModLoaded()
+                    ? RecipeStacks.exact(12, Loaders.circuitWrap, 14)
+                    : null),
                 setStackSize(coil, 16 * 48),
                 setStackSize(getNanites(1, Materials.Eternity), 48),
                 setStackSize(OTHItemList.glassSingularityM.get(1), 192),

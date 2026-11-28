@@ -4,12 +4,10 @@ import static bartworks.system.material.WerkstoffLoader.Ruridit;
 import static com.newmaa.othtech.common.recipemap.Recipemaps.NASA;
 import static com.newmaa.othtech.utils.Utils.isStackValid;
 import static com.newmaa.othtech.utils.Utils.setStackSize;
-import static gregtech.api.enums.Mods.GTNHIntergalactic;
 import static gregtech.api.enums.Mods.GalacticraftAmunRa;
 import static gregtech.api.enums.Mods.GalacticraftCore;
 import static gregtech.api.enums.Mods.GalacticraftMars;
 import static gregtech.api.enums.Mods.GalaxySpace;
-import static gregtech.api.enums.Mods.GoodGenerator;
 import static gregtech.api.enums.Mods.NewHorizonsCoreMod;
 import static gregtech.api.enums.TierEU.RECIPE_EV;
 import static gregtech.api.enums.TierEU.RECIPE_LV;
@@ -33,9 +31,13 @@ import net.minecraftforge.fluids.FluidStack;
 import com.dreammaster.item.NHItemList;
 import com.newmaa.othtech.OTHTechnology;
 import com.newmaa.othtech.common.OTHItemList;
+import com.newmaa.othtech.utils.RecipeFluids;
+import com.newmaa.othtech.utils.RecipeStacks;
 import com.newmaa.othtech.utils.Utils;
 
 import galaxyspace.core.recipe.RocketRecipes;
+import goodgenerator.loader.Loaders;
+import gregtech.api.GregTechAPI;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
@@ -46,6 +48,7 @@ import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTRecipe.RecipeAssemblyLine;
 import gregtech.api.util.GTRecipeBuilder;
+import gtPlusPlus.core.material.MaterialsAlloy;
 import ic2.core.IC2;
 import micdoodle8.mods.galacticraft.api.recipe.INasaWorkbenchRecipe;
 
@@ -59,7 +62,7 @@ public class RecipesNASA implements IRecipePool {
     @Override
     public void loadRecipes() {
 
-        ItemStack schematic = GTModHandler.getModItem(NewHorizonsCoreMod.ID, "SchematicsTier1", 0, 0);
+        ItemStack schematic = RecipeStacks.exact(0, NHItemList.SchematicsTier1.item, 0);
         if (!isStackValid(schematic)) return;
 
         ItemStack computer = GTModHandler.getModItem(GalaxySpace.ID, "item.RocketControlComputer", 1, 1);
@@ -86,7 +89,9 @@ public class RecipesNASA implements IRecipePool {
         if (GalaxySpace.isModLoaded()) registerHigherTierRockets();
 
         // Mining drone.
-        ItemStack drone = GTModHandler.getModItem(GTNHIntergalactic.ID, "item.MiningDrone", 1, 0);
+        ItemStack drone = (GregTechAPI.sPreloadStarted && gregtech.api.enums.Mods.GTNHIntergalactic.isModLoaded()
+            ? RecipeStacks.exact(1, ItemList.MiningDroneLV)
+            : null);
         ItemStack[] droneInputs = { ItemList.Sensor_LV.get(1),
             GTOreDictUnificator.get(OrePrefixes.toolHeadDrill, Materials.Titanium, 1), ItemList.Robot_Arm_LV.get(1),
             GTModHandler.getModItem(GalacticraftCore.ID, "item.heavyPlating", 14), computer,
@@ -113,13 +118,13 @@ public class RecipesNASA implements IRecipePool {
                 ItemList.Cover_SolarPanel_MV.get(1),
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.EV, 2))
             .fluidInputs(Materials.Iridium.getMolten(144))
-            .special(GTModHandler.getModItem(NewHorizonsCoreMod.ID, "SchematicsTier3", 0, 0))
+            .special(RecipeStacks.exact(0, NHItemList.SchematicsTier3.item, 0))
             .duration(10 * SECONDS)
             .eut(RECIPE_EV)
             .addTo(NASA);
         GTRecipeBuilder.builder()
             .itemOutputs(OTHItemList.SuicideDronePig.get(1))
-            .special(GTModHandler.getModItem(NewHorizonsCoreMod.ID, "SchematicsTier1", 0, 0))
+            .special(RecipeStacks.exact(0, NHItemList.SchematicsTier1.item, 0))
             .itemInputs(
                 OTHItemList.SuicideDronePig.get(0),
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.Steel, 4),
@@ -134,7 +139,7 @@ public class RecipesNASA implements IRecipePool {
             .addTo(NASA);
         GTRecipeBuilder.builder()
             .itemOutputs(OTHItemList.SuicideDroneAngelica.get(1))
-            .special(GTModHandler.getModItem(NewHorizonsCoreMod.ID, "SchematicsTier3", 0, 0))
+            .special(RecipeStacks.exact(0, NHItemList.SchematicsTier3.item, 0))
             .itemInputs(
                 OTHItemList.SuicideDroneAngelica.get(0),
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.RedstoneAlloy, 4),
@@ -148,7 +153,7 @@ public class RecipesNASA implements IRecipePool {
             .addTo(NASA);
         GTRecipeBuilder.builder()
             .itemOutputs(OTHItemList.SuicideDroneNvidia.get(1))
-            .special(GTModHandler.getModItem(NewHorizonsCoreMod.ID, "SchematicsTier5", 0, 0))
+            .special(RecipeStacks.exact(0, NHItemList.SchematicsTier5.item, 0))
             .itemInputs(
                 OTHItemList.SuicideDroneNvidia.get(0),
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.NaquadahAlloy, 4),
@@ -163,7 +168,7 @@ public class RecipesNASA implements IRecipePool {
             .addTo(NASA);
         GTRecipeBuilder.builder()
             .itemOutputs(OTHItemList.SuicideDroneNuclear.get(1))
-            .special(GTModHandler.getModItem(NewHorizonsCoreMod.ID, "SchematicsTier8", 0, 0))
+            .special(RecipeStacks.exact(0, NHItemList.SchematicsTier8.item, 0))
             .itemInputs(
                 OTHItemList.SuicideDroneNuclear.get(0),
                 GTOreDictUnificator.get(OrePrefixes.plate, Materials.Neutronium, 4),
@@ -172,7 +177,9 @@ public class RecipesNASA implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.ZPM, 3),
                 ItemList.Sensor_LuV.get(1),
                 ItemList.Emitter_LuV.get(1),
-                GTModHandler.getModItem(GoodGenerator.ID, "advancedRadiationProtectionPlate", 1),
+                (GregTechAPI.sPreloadStarted && gregtech.api.enums.Mods.GoodGenerator.isModLoaded()
+                    ? RecipeStacks.exact(1, Loaders.advancedRadiationProtectionPlate, 0)
+                    : null),
                 ItemList.Cover_AdvancedRedstoneReceiver.get(1),
                 GTModHandler.getModItem(IC2.MODID, "blockGenerator", 1, 5),
                 ItemList.RodNaquadah32.get(2))
@@ -183,7 +190,7 @@ public class RecipesNASA implements IRecipePool {
 
         // Heavy plating.
         ItemStack plating = GTModHandler.getModItem(GalacticraftCore.ID, "item.heavyPlating", 1);
-        Fluid solder = FluidRegistry.getFluid("molten.indalloy140");
+        Fluid solder = FluidRegistry.getFluid(RecipeFluids.gtppMoltenName(MaterialsAlloy.INDALLOY_140));
         if (isStackValid(plating) && solder != null) {
             OTHTechnology.LOG.info("NASA: registering heavy plating");
             GTRecipeBuilder.builder()
@@ -375,15 +382,15 @@ public class RecipesNASA implements IRecipePool {
             4,
             tier4,
             RECIPE_LuV,
-            FluidRegistry.getFluidStack("molten.indalloy140", 36),
+            FluidRegistry.getFluidStack(RecipeFluids.gtppMoltenName(MaterialsAlloy.INDALLOY_140), 36),
             tier3,
             Materials.Ledox.getPlates(9),
             Materials.CallistoIce.getPlates(9),
             Ruridit.get(OrePrefixes.bolt, 4));
 
         // T5–T8 use the upstream assembly line's solder fallback when Indalloy 140 is absent.
-        String solder = FluidRegistry.getFluid("molten.indalloy140") != null ? "molten.indalloy140"
-            : "molten.solderingalloy";
+        String indalloy = RecipeFluids.gtppMoltenName(MaterialsAlloy.INDALLOY_140);
+        String solder = FluidRegistry.getFluid(indalloy) != null ? indalloy : "molten.solderingalloy";
         registerBulkPlating(
             5,
             tier5,

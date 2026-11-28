@@ -14,23 +14,34 @@ import net.minecraftforge.fluids.FluidStack;
 
 import com.Nxer.TwistSpaceTechnology.common.GTCMItemList;
 import com.brandon3055.draconicevolution.common.ModItems;
+import com.dreammaster.block.BlockList;
+import com.dreammaster.item.NHItemList;
 import com.newmaa.othtech.OTHTechnology;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.compat.thaumcraft.VoidNexusUpgrade;
 import com.newmaa.othtech.common.materials.OTHMaterials;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
+import com.newmaa.othtech.utils.RecipeStacks;
 
+import fox.spiteful.avaritia.items.LudicrousItems;
 import goodgenerator.items.GGMaterial;
-import goodgenerator.loader.Loaders;
+import goodgenerator.util.ItemRefer;
 import gregtech.api.GregTechAPI;
+import gregtech.api.casing.Casings;
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
+import gregtech.api.enums.Mods;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTUtility;
 import gtPlusPlus.core.block.ModBlocks;
+import gtPlusPlus.core.item.base.BaseItemComponent.ComponentTypes;
+import gtPlusPlus.core.material.MaterialsElements.STANDALONE;
+import gtPlusPlus.core.material.Particle;
+import gtPlusPlus.xmod.gregtech.api.enums.GregtechItemList;
+import gtPlusPlus.xmod.gregtech.common.items.MetaGeneratedItemIDs;
 import micdoodle8.mods.galacticraft.core.blocks.GCBlocks;
 import tectech.thing.CustomItemList;
 import thaumcraft.common.config.ConfigBlocks;
@@ -76,7 +87,7 @@ public final class RecipesVoidNexusUpgradePreview {
             block(WayofTime.alchemicalWizardry.ModBlocks.bloodRune, 6, 4),
             block(WayofTime.alchemicalWizardry.ModBlocks.bloodRune, 5, 4),
             block(WayofTime.alchemicalWizardry.ModBlocks.bloodRune, 6, 4),
-            modItem("dreamcraft", "BloodyIchorium", 4, 0),
+            block(BlockList.BloodyIchorium.block, 0, 4),
             avaritiaResource(6, 2),
             ItemList.MagicEnergyAbsorber_EV.get(1));
         add(
@@ -112,13 +123,13 @@ public final class RecipesVoidNexusUpgradePreview {
             9,
             "生物活性晶圆×32；海珀珍锭×64；生物细胞×128",
             ItemList.Circuit_Wafer_Bioware.get(32),
-            GTModHandler.getModItem("miscutils", "itemIngotHypogen", 64),
+            RecipeStacks.gtppComponent(64, STANDALONE.HYPOGEN, ComponentTypes.INGOT),
             exactAmount(128, ItemList.Circuit_Chip_Biocell.get(1)));
         add(
             10,
             "超级煲×1；寰宇肉丸×64；治愈之斧×1",
-            GTModHandler.getModItem("Avaritia", "Ultimate_Stew", 1),
-            GTModHandler.getModItem("Avaritia", "Cosmic_Meatballs", 64),
+            RecipeStacks.exact(1, LudicrousItems.ultimate_stew, 0),
+            RecipeStacks.exact(64, LudicrousItems.cosmic_meatballs, 0),
             GTModHandler.getModItem("ExtraUtilities", "defoliageAxe", 1));
         add(
             11,
@@ -126,14 +137,26 @@ public final class RecipesVoidNexusUpgradePreview {
             plate(Materials.ProtoHalkonite, 8),
             ItemList.Circuit_OpticalMainframe.get(1),
             ingot(Materials.SpaceTime, 16),
-            modItem("miscutils", "MU-metaitem.01", 2, 32105),
-            modItem("miscutils", "particleBase", 128, 24));
+            exactAmount(
+                2,
+                (GregTechAPI.sPreloadStarted && Mods.GTPlusPlus.isModLoaded()
+                    && GregtechItemList.Laser_Lens_Special.hasBeenSet()
+                        ? RecipeStacks.exact(
+                            1,
+                            GregtechItemList.Laser_Lens_Special.getItem(),
+                            32000 + MetaGeneratedItemIDs.Laser_Lens_Special.ID)
+                        : null)),
+            exactAmount(
+                128,
+                (GregTechAPI.sPreloadStarted && Mods.GTPlusPlus.isModLoaded()
+                    ? RecipeStacks.exact(1, Particle.getBaseParticle(Particle.UNKNOWN))
+                    : null)));
         add(12, "引力透镜×1；恒星燃料×1", GTCMItemList.GravitationalLens.get(1), avaritiaResource(8, 1));
         add(
             13,
             "充能超立方体×64；永恒线圈×64；UIV力场发生器×1",
             ItemList.EnergisedTesseract.get(64),
-            block(GregTechAPI.sBlockCasings5, 13, 64),
+            RecipeStacks.casing(64, Casings.EternalCoilBlock),
             ItemList.Field_Generator_UIV.get(1));
         add(
             14,
@@ -156,7 +179,7 @@ public final class RecipesVoidNexusUpgradePreview {
             20,
             "无尽锭×128；寰宇支配之剑×1；白矮星物质锭×123；黑矮星物质锭×123；具象化灵能锭×123",
             avaritiaResource(6, 128),
-            GTModHandler.getModItem("Avaritia", "Infinity_Sword", 1));
+            RecipeStacks.exact(1, LudicrousItems.infinity_sword, 0));
         addMAXPath(
             21,
             "时空连续体撕裂方块×1；白矮星物质锭×123；黑矮星物质锭×123；具象化灵能锭×123",
@@ -172,7 +195,7 @@ public final class RecipesVoidNexusUpgradePreview {
         addMAXPath(
             24,
             "感知超频机械方块×1；白矮星物质锭×123；黑矮星物质锭×123；具象化灵能锭×123",
-            new ItemStack(GregTechAPI.sBlockCasingsFoundry, 1, 5));
+            RecipeStacks.casing(1, Casings.SentientOverclockerCasing));
         add(25, "永恒锭×123；熔融磁流体约束恒星物质锭×123", ingot(Materials.Eternity, 123), ingot(Materials.MHDCSM, 123));
         add(
             26,
@@ -189,10 +212,10 @@ public final class RecipesVoidNexusUpgradePreview {
         add(
             28,
             "宇宙坍缩者机械方块×1；UXV部件装配线外壳×1；超致密具象化灵能板×4；星门辐射防护板×1",
-            new ItemStack(GregTechAPI.sBlockCasingsFoundry, 1, 4),
-            block(Loaders.componentAssemblylineCasing, 12, 1),
+            RecipeStacks.casing(1, Casings.UniversalCollapserCasing),
+            ItemRefer.Compassline_Casing_UXV.get(1),
             manifested(OrePrefixes.plateSuperdense, 4),
-            GTModHandler.getModItem("dreamcraft", "StargateShieldingFoil", 1));
+            RecipeStacks.exact(1, NHItemList.StargateShieldingFoil.item, 0));
         OTHTechnology.LOG.info("[VoidNexus] Registered 28 upgrade material previews in NEI.");
     }
 
@@ -288,7 +311,7 @@ public final class RecipesVoidNexusUpgradePreview {
     }
 
     private static ItemStack avaritiaResource(int meta, int amount) {
-        return modItem("Avaritia", "Resource", amount, meta);
+        return item(LudicrousItems.resource, meta, amount);
     }
 
     private static ItemStack eternalSingularity(int amount) {

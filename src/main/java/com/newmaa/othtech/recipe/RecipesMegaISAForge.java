@@ -10,13 +10,22 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
+import com.dreammaster.item.NHItemList;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.item.ItemLoader;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
+import com.newmaa.othtech.utils.RecipeFluids;
+import com.newmaa.othtech.utils.RecipeStacks;
 
+import bartworks.system.material.WerkstoffLoader;
+import fox.spiteful.avaritia.items.LudicrousItems;
+import goodgenerator.items.GGMaterial;
+import gregtech.api.GregTechAPI;
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
+import gregtech.api.enums.MetaTileEntityIDs;
+import gregtech.api.enums.Mods;
 import gregtech.api.enums.NaniteTier;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
@@ -24,28 +33,42 @@ import gregtech.api.recipe.RecipeMap;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTUtility;
+import gregtech.common.items.MetaGeneratedItem01;
+import gregtech.common.items.MetaGeneratedItem03;
+import gtPlusPlus.core.item.base.BaseItemComponent.ComponentTypes;
+import gtPlusPlus.core.material.MaterialMisc;
+import gtPlusPlus.core.material.MaterialsAlloy;
 import gtPlusPlus.core.material.MaterialsElements;
+import gtPlusPlus.core.material.Particle;
+import gtPlusPlus.xmod.gregtech.api.enums.GregtechItemList;
+import gtPlusPlus.xmod.gregtech.common.items.MetaGeneratedItemIDs;
+import ic2.core.init.InternalName;
+import tectech.thing.casing.TTCasingsContainer;
 
 public class RecipesMegaISAForge implements IRecipePool {
 
     @Override
     public void loadRecipes() {
-        Fluid UIVsc = FluidRegistry.getFluid("molten.superconductoruivbase");
-        Fluid UMVsc = FluidRegistry.getFluid("molten.superconductorumvbase");
+        Fluid UIVsc = FluidRegistry
+            .getFluid(RecipeFluids.registryName(Materials.SuperconductorUIVBase.mStandardMoltenFluid));
+        Fluid UMVsc = FluidRegistry
+            .getFluid(RecipeFluids.registryName(Materials.SuperconductorUMVBase.mStandardMoltenFluid));
         final RecipeMap<?> ISA = Recipemaps.MegaIsaForge;
 
         GTValues.RA.stdBuilder()
-            .fluidInputs(new FluidStack(FluidRegistry.getFluid("molten.helicopter"), 514))
+            .fluidInputs(
+                new FluidStack(FluidRegistry.getFluid(RecipeFluids.gtppMoltenName(MaterialsAlloy.HELICOPTER)), 514))
             .itemInputs(OTHItemList.dustLookNEIM.get(1))
             .itemOutputs(
-                GTModHandler.getModItem("miscutils", "itemDustRhenium", 64),
-                GTModHandler.getModItem("miscutils", "itemDustThallium", 64),
-                GTModHandler.getModItem("miscutils", "itemDustSelenium", 64),
-                GTModHandler.getModItem("miscutils", "itemDustGermanium", 64),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 2044),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 2073),
-                GTModHandler.getModItem("dreamcraft", "LapotronDust", 64))
-            .fluidOutputs(new FluidStack(FluidRegistry.getFluid("molten.quantum"), 114))
+                RecipeStacks.gtppComponent(64, MaterialsElements.getInstance().RHENIUM, ComponentTypes.DUST),
+                RecipeStacks.gtppComponent(64, MaterialsElements.getInstance().THALLIUM, ComponentTypes.DUST),
+                RecipeStacks.gtppComponent(64, MaterialsElements.getInstance().SELENIUM, ComponentTypes.DUST),
+                RecipeStacks.gtppComponent(64, MaterialsElements.getInstance().GERMANIUM, ComponentTypes.DUST),
+                RecipeStacks.generated(64, MetaGeneratedItem01.INSTANCE, OrePrefixes.dust, Materials.Strontium),
+                RecipeStacks.generated(64, MetaGeneratedItem01.INSTANCE, OrePrefixes.dust, Materials.Dysprosium),
+                RecipeStacks.exact(64, NHItemList.LapotronDust.item, 0))
+            .fluidOutputs(
+                new FluidStack(FluidRegistry.getFluid(RecipeFluids.gtppMoltenName(MaterialsAlloy.QUANTUM)), 114))
 
             .eut(TierEU.RECIPE_MAX)
             .duration(20)
@@ -53,7 +76,10 @@ public class RecipesMegaISAForge implements IRecipePool {
             .addTo(ISA);
         GTValues.RA.stdBuilder()
             .itemInputs(ItemList.Robot_Arm_UXV.get(0), Materials.Gold.getDust(1))
-            .fluidOutputs(new FluidStack(FluidRegistry.getFluid("molten.sunnarium"), 144))
+            .fluidOutputs(
+                new FluidStack(
+                    FluidRegistry.getFluid(RecipeFluids.registryName(Materials.Sunnarium.mStandardMoltenFluid)),
+                    144))
             .duration(100)
             .eut(123123123)
             .specialValue(1)
@@ -62,7 +88,10 @@ public class RecipesMegaISAForge implements IRecipePool {
             .itemInputs(
                 ItemList.Robot_Arm_UXV.get(0),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Glowstone, 1))
-            .fluidOutputs(new FluidStack(FluidRegistry.getFluid("molten.sunnarium"), 288))
+            .fluidOutputs(
+                new FluidStack(
+                    FluidRegistry.getFluid(RecipeFluids.registryName(Materials.Sunnarium.mStandardMoltenFluid)),
+                    288))
 
             .duration(50)
             .eut(123123123)
@@ -70,10 +99,18 @@ public class RecipesMegaISAForge implements IRecipePool {
             .addTo(ISA);
         GTValues.RA.stdBuilder()
             .itemInputs(
-                GTModHandler.getModItem("tectech", "gt.spacetime_compression_field_generator", 0, 2),
+                (GregTechAPI.sPreloadStarted && Mods.TecTech.isModLoaded()
+                    ? RecipeStacks.exact(0, TTCasingsContainer.SpacetimeCompressionFieldGenerators, 2)
+                    : null),
                 ItemList.Field_Generator_UMV.get(1))
-            .fluidInputs(new FluidStack(FluidRegistry.getFluid("molten.neutronium"), 5760))
-            .fluidOutputs(new FluidStack(FluidRegistry.getFluid("molten.whitedwarfmatter"), 3600))
+            .fluidInputs(
+                new FluidStack(
+                    FluidRegistry.getFluid(RecipeFluids.registryName(Materials.Neutronium.mStandardMoltenFluid)),
+                    5760))
+            .fluidOutputs(
+                new FluidStack(
+                    FluidRegistry.getFluid(RecipeFluids.registryName(Materials.WhiteDwarfMatter.mStandardMoltenFluid)),
+                    3600))
 
             .duration(4000)
             .eut(2000000000)
@@ -81,10 +118,18 @@ public class RecipesMegaISAForge implements IRecipePool {
             .addTo(ISA);
         GTValues.RA.stdBuilder()
             .itemInputs(
-                GTModHandler.getModItem("tectech", "gt.spacetime_compression_field_generator", 0, 5),
+                (GregTechAPI.sPreloadStarted && Mods.TecTech.isModLoaded()
+                    ? RecipeStacks.exact(0, TTCasingsContainer.SpacetimeCompressionFieldGenerators, 5)
+                    : null),
                 ItemList.Field_Generator_UMV.get(2))
-            .fluidInputs(new FluidStack(FluidRegistry.getFluid("molten.cosmicneutronium"), 5760))
-            .fluidOutputs(new FluidStack(FluidRegistry.getFluid("molten.blackdwarfmatter"), 3600))
+            .fluidInputs(
+                new FluidStack(
+                    FluidRegistry.getFluid(RecipeFluids.registryName(Materials.CosmicNeutronium.mStandardMoltenFluid)),
+                    5760))
+            .fluidOutputs(
+                new FluidStack(
+                    FluidRegistry.getFluid(RecipeFluids.registryName(Materials.BlackDwarfMatter.mStandardMoltenFluid)),
+                    3600))
 
             .duration(8000)
             .eut(2000000000)
@@ -92,14 +137,22 @@ public class RecipesMegaISAForge implements IRecipePool {
             .addTo(ISA);
         GTValues.RA.stdBuilder()
             .itemInputs(
-                GTModHandler.getModItem("tectech", "gt.spacetime_compression_field_generator", 0, 8),
+                (GregTechAPI.sPreloadStarted && Mods.TecTech.isModLoaded()
+                    ? RecipeStacks.exact(0, TTCasingsContainer.SpacetimeCompressionFieldGenerators, 8)
+                    : null),
                 getAstralArray(0))
             .fluidInputs(
-                new FluidStack(FluidRegistry.getFluid("molten.spacetime"), 16 * 144),
-                new FluidStack(FluidRegistry.getFluid("rawstarmatter"), 1000))
+                new FluidStack(
+                    FluidRegistry.getFluid(RecipeFluids.registryName(Materials.SpaceTime.mStandardMoltenFluid)),
+                    16 * 144),
+                new FluidStack(FluidRegistry.getFluid(RecipeFluids.registryName(Materials.RawStarMatter.mFluid)), 1000))
             .fluidOutputs(
-                new FluidStack(FluidRegistry.getFluid("molten.infinity"), 576),
-                new FluidStack(FluidRegistry.getFluid("molten.hypogen"), 288))
+                new FluidStack(
+                    FluidRegistry.getFluid(RecipeFluids.registryName(Materials.Infinity.mStandardMoltenFluid)),
+                    576),
+                new FluidStack(
+                    FluidRegistry.getFluid(RecipeFluids.gtppMoltenName(MaterialsElements.STANDALONE.HYPOGEN)),
+                    288))
 
             .duration(16000)
             .eut(2000000000)
@@ -107,10 +160,18 @@ public class RecipesMegaISAForge implements IRecipePool {
             .addTo(ISA);
         GTValues.RA.stdBuilder()
             .itemInputs(
-                GTModHandler.getModItem("tectech", "gt.spacetime_compression_field_generator", 0, 2),
+                (GregTechAPI.sPreloadStarted && Mods.TecTech.isModLoaded()
+                    ? RecipeStacks.exact(0, TTCasingsContainer.SpacetimeCompressionFieldGenerators, 2)
+                    : null),
                 ItemList.Field_Generator_UXV.get(1))
-            .fluidInputs(new FluidStack(FluidRegistry.getFluid("molten.cosmicneutronium"), 5760))
-            .fluidOutputs(new FluidStack(FluidRegistry.getFluid("molten.whitedwarfmatter"), 57600))
+            .fluidInputs(
+                new FluidStack(
+                    FluidRegistry.getFluid(RecipeFluids.registryName(Materials.CosmicNeutronium.mStandardMoltenFluid)),
+                    5760))
+            .fluidOutputs(
+                new FluidStack(
+                    FluidRegistry.getFluid(RecipeFluids.registryName(Materials.WhiteDwarfMatter.mStandardMoltenFluid)),
+                    57600))
 
             .duration(40000)
             .eut(2000000000)
@@ -118,10 +179,18 @@ public class RecipesMegaISAForge implements IRecipePool {
             .addTo(ISA);
         GTValues.RA.stdBuilder()
             .itemInputs(
-                GTModHandler.getModItem("tectech", "gt.spacetime_compression_field_generator", 0, 5),
+                (GregTechAPI.sPreloadStarted && Mods.TecTech.isModLoaded()
+                    ? RecipeStacks.exact(0, TTCasingsContainer.SpacetimeCompressionFieldGenerators, 5)
+                    : null),
                 ItemList.Field_Generator_UXV.get(2))
-            .fluidInputs(new FluidStack(FluidRegistry.getFluid("molten.cosmicneutronium"), 5760))
-            .fluidOutputs(new FluidStack(FluidRegistry.getFluid("molten.blackdwarfmatter"), 57600))
+            .fluidInputs(
+                new FluidStack(
+                    FluidRegistry.getFluid(RecipeFluids.registryName(Materials.CosmicNeutronium.mStandardMoltenFluid)),
+                    5760))
+            .fluidOutputs(
+                new FluidStack(
+                    FluidRegistry.getFluid(RecipeFluids.registryName(Materials.BlackDwarfMatter.mStandardMoltenFluid)),
+                    57600))
 
             .duration(80000)
             .eut(2000000000)
@@ -130,11 +199,13 @@ public class RecipesMegaISAForge implements IRecipePool {
         GTValues.RA.stdBuilder()
             .itemInputs(
                 OTHItemList.beeISAM.get(0),
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, 31027),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 16, 4581),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, MetaTileEntityIDs.Controller_IsaMill.ID),
+                RecipeStacks
+                    .generated(16, MetaGeneratedItem03.INSTANCE, OrePrefixes.nanite, Materials.TranscendentMetal),
                 ItemList.Field_Generator_UIV.get(1))
             .itemOutputs(OTHItemList.beeISAM.get(1))
-            .fluidInputs(new FluidStack(FluidRegistry.getFluidID("ic2uumatter"), 16000))
+            .fluidInputs(
+                new FluidStack(FluidRegistry.getFluidID(RecipeFluids.ic2FluidName(InternalName.fluidUuMatter)), 16000))
 
             .duration(1000 * 20)
             .eut(Integer.MAX_VALUE)
@@ -143,9 +214,15 @@ public class RecipesMegaISAForge implements IRecipePool {
             .itemInputs(
                 GTUtility.getIntegratedCircuit(8),
                 OTHItemList.beeISAM.get(0),
-                GTModHandler.getModItem("Avaritia", "Resource", 64, 5))
-            .fluidInputs(new FluidStack(FluidRegistry.getFluidID("exciteddtsc"), 181968))
-            .fluidOutputs(new FluidStack(FluidRegistry.getFluidID("molten.infinity"), 2359296))
+                RecipeStacks.exact(64, LudicrousItems.resource, 5))
+            .fluidInputs(
+                new FluidStack(
+                    FluidRegistry.getFluidID(RecipeFluids.registryName(Materials.ExcitedDTSC.mFluid)),
+                    181968))
+            .fluidOutputs(
+                new FluidStack(
+                    FluidRegistry.getFluidID(RecipeFluids.registryName(Materials.Infinity.mStandardMoltenFluid)),
+                    2359296))
 
             .eut(Integer.MAX_VALUE)
             .duration(2000 * 20)
@@ -154,30 +231,47 @@ public class RecipesMegaISAForge implements IRecipePool {
             .itemInputs(
                 GTUtility.getIntegratedCircuit(8),
                 OTHItemList.beeISAM.get(0),
-                GTModHandler.getModItem("miscutils", "MU-metaitem.01", 0, 32100))
+                (GregTechAPI.sPreloadStarted && Mods.GTPlusPlus.isModLoaded()
+                    && GregtechItemList.Compressed_Fusion_Reactor.hasBeenSet()
+                        ? RecipeStacks.exact(
+                            0,
+                            GregtechItemList.Compressed_Fusion_Reactor.getItem(),
+                            32000 + MetaGeneratedItemIDs.Compressed_Fusion_Reactor.ID)
+                        : null))
             .fluidInputs(
-                new FluidStack(FluidRegistry.getFluidID("molten.neutronium"), 115200),
-                new FluidStack(FluidRegistry.getFluidID("molten.quantum"), 57600),
-                new FluidStack(FluidRegistry.getFluidID("molten.infinity"), 14400),
-                new FluidStack(FluidRegistry.getFluidID("exciteddtsc"), 10000))
-            .fluidOutputs(new FluidStack(FluidRegistry.getFluidID("molten.hypogen"), 230400))
+                new FluidStack(
+                    FluidRegistry.getFluidID(RecipeFluids.registryName(Materials.Neutronium.mStandardMoltenFluid)),
+                    115200),
+                new FluidStack(FluidRegistry.getFluidID(RecipeFluids.gtppMoltenName(MaterialsAlloy.QUANTUM)), 57600),
+                new FluidStack(
+                    FluidRegistry.getFluidID(RecipeFluids.registryName(Materials.Infinity.mStandardMoltenFluid)),
+                    14400),
+                new FluidStack(
+                    FluidRegistry.getFluidID(RecipeFluids.registryName(Materials.ExcitedDTSC.mFluid)),
+                    10000))
+            .fluidOutputs(
+                new FluidStack(
+                    FluidRegistry.getFluidID(RecipeFluids.gtppMoltenName(MaterialsElements.STANDALONE.HYPOGEN)),
+                    230400))
 
             .eut(Integer.MAX_VALUE)
             .duration(4000 * 20)
             .addTo(ISA);
         GTValues.RA.stdBuilder()
             .itemInputs(
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, 15560),
+                RecipeStacks.exact(0, ItemList.FlotationCell),
                 OTHItemList.beeISAM.get(1),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 16, 4139),
+                RecipeStacks.generated(16, MetaGeneratedItem03.INSTANCE, OrePrefixes.nanite, Materials.Universium),
                 ItemList.Field_Generator_UMV.get(4))
             .itemOutputs(OTHItemList.beeMagM.get(4))
             .fluidInputs(
-                new FluidStack(FluidRegistry.getFluidID("ic2uumatter"), 64000),
+                new FluidStack(FluidRegistry.getFluidID(RecipeFluids.ic2FluidName(InternalName.fluidUuMatter)), 64000),
                 new FluidStack(
-                    FluidRegistry.getFluidID("molten.magnetohydrodynamicallyconstrainedstarmatter"),
+                    FluidRegistry.getFluidID(RecipeFluids.registryName(Materials.MHDCSM.mStandardMoltenFluid)),
                     144 * 24),
-                new FluidStack(FluidRegistry.getFluidID("molten.tengampurified"), 144 * 64))
+                new FluidStack(
+                    FluidRegistry.getFluidID(RecipeFluids.registryName(Materials.TengamPurified.mStandardMoltenFluid)),
+                    144 * 64))
 
             .duration(2000 * 20)
             .eut(Integer.MAX_VALUE)
@@ -186,10 +280,11 @@ public class RecipesMegaISAForge implements IRecipePool {
             .itemInputs(
                 OTHItemList.beeMagM.get(0),
                 getAstralArray(0),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 4, 32727),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 4, 4581),
+                RecipeStacks.exact(4, ItemList.Optical_Cpu_Containment_Housing),
+                RecipeStacks
+                    .generated(4, MetaGeneratedItem03.INSTANCE, OrePrefixes.nanite, Materials.TranscendentMetal),
                 GTOreDictUnificator.get(OrePrefixes.wireFine, Materials.Infinity, 64),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 29979),
+                RecipeStacks.generated(64, MetaGeneratedItem01.INSTANCE, OrePrefixes.foil, Materials.RadoxPolymer),
                 GTModHandler.getModItem("eternalsingularity", "eternal_singularity", 1))
             .itemOutputs(OTHItemList.socCosmicM.get(4))
 
@@ -199,11 +294,16 @@ public class RecipesMegaISAForge implements IRecipePool {
         GTValues.RA.stdBuilder()
             .itemInputs(
                 OTHItemList.socCosmicM.get(8),
-                GTModHandler.getModItem("bartworks", "gt.bwMetaGeneratedwireFine", 64, 10112),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 4, 32417))
-            .itemOutputs(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 16, 32170))
-            .fluidInputs(new FluidStack(FluidRegistry.getFluidID("plasma.hydrogen"), 400))
-            .fluidOutputs(new FluidStack(FluidRegistry.getFluidID("dimensionallytranscendentresidue"), 333 * 8))
+                (GregTechAPI.sPreloadStarted && Mods.BartWorks.isModLoaded() ? RecipeStacks.exact(
+                    64,
+                    WerkstoffLoader.items.get(OrePrefixes.wireFine),
+                    (Mods.GoodGenerator.isModLoaded() ? GGMaterial.shirabon.getmID() : 10112)) : null),
+                RecipeStacks.exact(4, ItemList.EnergisedTesseract))
+            .itemOutputs(RecipeStacks.exact(16, ItemList.Circuit_CosmicProcessor))
+            .fluidInputs(
+                new FluidStack(FluidRegistry.getFluidID(RecipeFluids.registryName(Materials.Hydrogen.mPlasma)), 400))
+            .fluidOutputs(
+                new FluidStack(FluidRegistry.getFluidID(RecipeFluids.registryName(Materials.DTR.mFluid)), 333 * 8))
 
             .duration(40 * 16 * 20)
             .eut(TierEU.MAX)
@@ -214,8 +314,14 @@ public class RecipesMegaISAForge implements IRecipePool {
                 GTModHandler.getModItem("GalacticraftAmunRa", "item.baseItem", 0, 26),
                 OTHItemList.beeISAM.get(0))
             .fluidInputs(
-                new FluidStack(FluidRegistry.getFluidID("molten.blackdwarfmatter"), 72),
-                new FluidStack(FluidRegistry.getFluidID("molten.whitedwarfmatter"), 72))
+                new FluidStack(
+                    FluidRegistry
+                        .getFluidID(RecipeFluids.registryName(Materials.BlackDwarfMatter.mStandardMoltenFluid)),
+                    72),
+                new FluidStack(
+                    FluidRegistry
+                        .getFluidID(RecipeFluids.registryName(Materials.WhiteDwarfMatter.mStandardMoltenFluid)),
+                    72))
 
             .duration(100 * 20)
             .eut(123123123)
@@ -224,20 +330,42 @@ public class RecipesMegaISAForge implements IRecipePool {
             .itemOutputs(OTHItemList.glassSingularityM.get(1))
             .itemInputs(
                 GTUtility.getIntegratedCircuit(12),
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, 15410),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, MetaTileEntityIDs.EyeofHarmony.ID),
                 GTModHandler.getModItem("eternalsingularity", "eternal_singularity", 0),
-                GTModHandler.getModItem("gregtech", "gt.blockframes", 4, 141),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 64, 32230),
-                GTModHandler.getModItem("miscutils", "itemPlateDenseChromaticGlass", 64),
-                GTModHandler.getModItem("miscutils", "itemPlateDenseChromaticGlass", 64),
-                GTModHandler.getModItem("miscutils", "itemPlateDenseChromaticGlass", 64),
-                GTModHandler.getModItem("miscutils", "itemPlateDenseChromaticGlass", 64),
-                GTModHandler.getModItem("miscutils", "itemPlateDenseChromaticGlass", 64))
+                RecipeStacks.exact(4, GregTechAPI.sBlockFrames, Materials.Eternity.getId()),
+                RecipeStacks.exact(64, ItemList.NuclearStar),
+                RecipeStacks.gtppComponent(
+                    64,
+                    gtPlusPlus.core.material.MaterialsElements.STANDALONE.CHRONOMATIC_GLASS,
+                    ComponentTypes.PLATEDENSE),
+                RecipeStacks.gtppComponent(
+                    64,
+                    gtPlusPlus.core.material.MaterialsElements.STANDALONE.CHRONOMATIC_GLASS,
+                    ComponentTypes.PLATEDENSE),
+                RecipeStacks.gtppComponent(
+                    64,
+                    gtPlusPlus.core.material.MaterialsElements.STANDALONE.CHRONOMATIC_GLASS,
+                    ComponentTypes.PLATEDENSE),
+                RecipeStacks.gtppComponent(
+                    64,
+                    gtPlusPlus.core.material.MaterialsElements.STANDALONE.CHRONOMATIC_GLASS,
+                    ComponentTypes.PLATEDENSE),
+                RecipeStacks.gtppComponent(
+                    64,
+                    gtPlusPlus.core.material.MaterialsElements.STANDALONE.CHRONOMATIC_GLASS,
+                    ComponentTypes.PLATEDENSE))
             .fluidInputs(
-                new FluidStack(FluidRegistry.getFluidID("molten.hypogen"), 144000),
-                new FluidStack(FluidRegistry.getFluidID("molten.infinity"), 144000),
-                new FluidStack(FluidRegistry.getFluidID("molten.spacetime"), 144000))
-            .fluidOutputs(new FluidStack(FluidRegistry.getFluidID("dimensionallytranscendentresidue"), 288000))
+                new FluidStack(
+                    FluidRegistry.getFluidID(RecipeFluids.gtppMoltenName(MaterialsElements.STANDALONE.HYPOGEN)),
+                    144000),
+                new FluidStack(
+                    FluidRegistry.getFluidID(RecipeFluids.registryName(Materials.Infinity.mStandardMoltenFluid)),
+                    144000),
+                new FluidStack(
+                    FluidRegistry.getFluidID(RecipeFluids.registryName(Materials.SpaceTime.mStandardMoltenFluid)),
+                    144000))
+            .fluidOutputs(
+                new FluidStack(FluidRegistry.getFluidID(RecipeFluids.registryName(Materials.DTR.mFluid)), 288000))
 
             .duration(123 * 20)
             .eut(TierEU.MAX / 2)
@@ -254,56 +382,70 @@ public class RecipesMegaISAForge implements IRecipePool {
                 ItemList.Robot_Arm_UEV.get(64),
                 ItemList.Robot_Arm_UHV.get(64))
             .fluidInputs(
-                new FluidStack(FluidRegistry.getFluidID("molten.mutatedlivingsolder"), 144000),
-                new FluidStack(FluidRegistry.getFluidID("exciteddtsc"), 128000),
-                new FluidStack(FluidRegistry.getFluidID("molten.infinity"), 144000))
+                new FluidStack(
+                    FluidRegistry.getFluidID(RecipeFluids.gtppMoltenName(MaterialMisc.MUTATED_LIVING_SOLDER)),
+                    144000),
+                new FluidStack(
+                    FluidRegistry.getFluidID(RecipeFluids.registryName(Materials.ExcitedDTSC.mFluid)),
+                    128000),
+                new FluidStack(
+                    FluidRegistry.getFluidID(RecipeFluids.registryName(Materials.Infinity.mStandardMoltenFluid)),
+                    144000))
 
             .duration(123 * 20)
             .eut(TierEU.MAX / 2)
             .addTo(ISA);
         // byd Glass
         GTValues.RA.stdBuilder()
-            .fluidInputs(
-                FluidRegistry.getFluidStack("exciteddtsc", 11116 / 4),
-                FluidRegistry.getFluidStack("molten.glass", 294912 * 2))
+            .fluidInputs(Materials.ExcitedDTSC.getFluid(11116 / 4), Materials.Glass.getMolten(294912 * 2))
             .fluidOutputs(
-                FluidRegistry.getFluidStack("dimensionallytranscendentresidue", 11116 * 4),
-                FluidRegistry.getFluidStack("molten.chromaticglass", 294912 * 2))
+                Materials.DTR.getFluid(11116 * 4),
+                FluidRegistry.getFluidStack(
+                    RecipeFluids.gtppMoltenName(MaterialsElements.STANDALONE.CHRONOMATIC_GLASS),
+                    294912 * 2))
 
             .eut(TierEU.MAX)
             .duration(20 * 20)
             .addTo(ISA);
         // NanoBee - GlowStone
         GTValues.RA.stdBuilder()
-            .itemOutputs(setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 4811), 512))
-            .fluidInputs(FluidRegistry.getFluidStack("molten.spacetime", 288))
+            .itemOutputs(
+                setStackSize(
+                    RecipeStacks.generated(1, MetaGeneratedItem03.INSTANCE, OrePrefixes.nanite, Materials.Glowstone),
+                    512))
+            .fluidInputs(Materials.SpaceTime.getMolten(288))
             .itemInputsUnsafe(
                 setStackSize(new ItemStack(Blocks.glowstone, 1), 256),
-                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32049), 256))
+                setStackSize(RecipeStacks.exact(1, ItemList.Circuit_Chip_SoC2), 256))
 
             .eut(TierEU.RECIPE_UMV)
             .duration(123 * 20)
             .addTo(ISA);
         // NanoBee - Neut
         GTValues.RA.stdBuilder()
-            .itemOutputs(setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 4129), 512))
-            .fluidInputs(FluidRegistry.getFluidStack("molten.spacetime", 288 * 4))
+            .itemOutputs(
+                setStackSize(
+                    RecipeStacks.generated(1, MetaGeneratedItem03.INSTANCE, OrePrefixes.nanite, Materials.Neutronium),
+                    512))
+            .fluidInputs(Materials.SpaceTime.getMolten(288 * 4))
             .itemInputsUnsafe(
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.block, Materials.Neutronium, 1), 4096),
-                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32049), 20480))
+                setStackSize(RecipeStacks.exact(1, ItemList.Circuit_Chip_SoC2), 20480))
 
             .eut(TierEU.RECIPE_UXV)
             .duration(114 * 20)
             .addTo(ISA);
         // IMBABlastFurnace
         GTValues.RA.stdBuilder()
-            .itemOutputs(setStackSize(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 23543), 1))
-            .fluidInputs(FluidRegistry.getFluidStack("molten.solderingalloy", Integer.MAX_VALUE))
+            .itemOutputs(setStackSize(RecipeStacks.exact(1, OTHItemList.ImbaBlastFurnace), 1))
+            .fluidInputs(Materials.SolderingAlloy.getMolten(Integer.MAX_VALUE))
             .itemInputsUnsafe(
-                setStackSize(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 15517), Integer.MAX_VALUE),
-                setStackSize(GTModHandler.getModItem("dreamcraft", "StargateShieldingFoil", 1), 114514),
-                setStackSize(GTModHandler.getModItem("dreamcraft", "StargateFramePart", 1), 114514),
-                setStackSize(GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, 15411), 123123123),
+                setStackSize(RecipeStacks.exact(1, ItemList.ExothermicHearth), Integer.MAX_VALUE),
+                setStackSize(RecipeStacks.exact(1, NHItemList.StargateShieldingFoil.item, 0), 114514),
+                setStackSize(RecipeStacks.exact(1, NHItemList.StargateFramePart.item, 0), 114514),
+                setStackSize(
+                    GTModHandler.getModItem("gregtech", "gt.blockmachines", 1, MetaTileEntityIDs.ForgeoftheGods.ID),
+                    123123123),
                 setStackSize(new ItemStack(ItemLoader.itemLeekBox, 1), Integer.MAX_VALUE),
                 setStackSize(new ItemStack(ItemLoader.itemZhangww, 1), Integer.MAX_VALUE),
                 setStackSize(new ItemStack(ItemLoader.itemNukeThrowable, 1), 123123),
@@ -340,29 +482,32 @@ public class RecipesMegaISAForge implements IRecipePool {
         // Magmatter
         GTValues.RA.stdBuilder()
             .itemInputsUnsafe(
-                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 0, 4143),
+                RecipeStacks.generated(0, MetaGeneratedItem03.INSTANCE, OrePrefixes.nanite, Materials.MagMatter),
                 ItemList.Field_Generator_MAX.get(0),
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, 15411),
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, 15415))
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, MetaTileEntityIDs.ForgeoftheGods.ID),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, MetaTileEntityIDs.HeliofusionExoticizer.ID))
             .fluidInputs(
-                FluidRegistry.getFluidStack("temporalfluid", 1152),
-                FluidRegistry.getFluidStack("spatialfluid", 1152),
-                FluidRegistry.getFluidStack("molten.magnetohydrodynamicallyconstrainedstarmatter", 4608),
-                FluidRegistry.getFluidStack("plasma.infinity", 9216),
-                FluidRegistry.getFluidStack("plasma.neutronium", 9216),
-                FluidRegistry.getFluidStack("plasma.sixphasedcopper", 9216),
-                FluidRegistry.getFluidStack("plasma.bedrockium", 9216),
-                FluidRegistry.getFluidStack("plasma.celestialtungsten", 9216),
-                FluidRegistry.getFluidStack("plasma.cosmicneutronium", 9216),
-                FluidRegistry.getFluidStack("plasma.chromaticglass", 9216),
-                FluidRegistry.getFluidStack("plasma.hypogen", 9216),
-                FluidRegistry.getFluidStack("plasma.ichorium", 9216),
-                FluidRegistry.getFluidStack("plasma.draconiumawakened", 9216),
-                FluidRegistry.getFluidStack("plasma.rhugnor", 9216),
-                FluidRegistry.getFluidStack("plasma.draconium", 9216),
-                FluidRegistry.getFluidStack("plasma.dragonblood", 9216),
-                FluidRegistry.getFluidStack("plasma.flerovium_gt5u", 9216))
-            .fluidOutputs(FluidRegistry.getFluidStack("molten.magmatter", 123123))
+                Materials.Time.getMolten(1152),
+                Materials.Space.getMolten(1152),
+                Materials.MHDCSM.getMolten(4608),
+                Materials.Infinity.getPlasma(9216),
+                Materials.Neutronium.getPlasma(9216),
+                Materials.SixPhasedCopper.getPlasma(9216),
+                Materials.Bedrockium.getPlasma(9216),
+                FluidRegistry
+                    .getFluidStack(RecipeFluids.gtppPlasmaName(MaterialsElements.STANDALONE.CELESTIAL_TUNGSTEN), 9216),
+                Materials.CosmicNeutronium.getPlasma(9216),
+                FluidRegistry
+                    .getFluidStack(RecipeFluids.gtppPlasmaName(MaterialsElements.STANDALONE.CHRONOMATIC_GLASS), 9216),
+                FluidRegistry.getFluidStack(RecipeFluids.gtppPlasmaName(MaterialsElements.STANDALONE.HYPOGEN), 9216),
+                Materials.Ichorium.getPlasma(9216),
+                Materials.DraconiumAwakened.getPlasma(9216),
+                FluidRegistry.getFluidStack(RecipeFluids.gtppPlasmaName(MaterialsElements.STANDALONE.RHUGNOR), 9216),
+                Materials.Draconium.getPlasma(9216),
+                FluidRegistry
+                    .getFluidStack(RecipeFluids.gtppPlasmaName(MaterialsElements.STANDALONE.DRAGON_METAL), 9216),
+                Materials.Flerovium.getPlasma(9216))
+            .fluidOutputs(Materials.MagMatter.getMolten(123123))
             .duration(12 * 20)
             .eut(TierEU.RECIPE_MAX)
             .addTo(ISA);
@@ -370,31 +515,32 @@ public class RecipesMegaISAForge implements IRecipePool {
         // Better magmatter
         GTValues.RA.stdBuilder()
             .itemInputsUnsafe(
-                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 0, 4143),
+                RecipeStacks.generated(0, MetaGeneratedItem03.INSTANCE, OrePrefixes.nanite, Materials.MagMatter),
                 ItemList.Field_Generator_MAX.get(0),
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, 15411),
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, 15415),
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, 15414),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 2397),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 2129),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 2147),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 2395),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, MetaTileEntityIDs.ForgeoftheGods.ID),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, MetaTileEntityIDs.HeliofusionExoticizer.ID),
+                GTModHandler
+                    .getModItem("gregtech", "gt.blockmachines", 0, MetaTileEntityIDs.HeliothermalPlasmaFabricator.ID),
+                RecipeStacks.generated(64, MetaGeneratedItem01.INSTANCE, OrePrefixes.dust, Materials.Infinity),
+                RecipeStacks.generated(64, MetaGeneratedItem01.INSTANCE, OrePrefixes.dust, Materials.Neutronium),
+                RecipeStacks.generated(64, MetaGeneratedItem01.INSTANCE, OrePrefixes.dust, Materials.SixPhasedCopper),
+                RecipeStacks.generated(64, MetaGeneratedItem01.INSTANCE, OrePrefixes.dust, Materials.Bedrockium),
                 MaterialsElements.STANDALONE.CELESTIAL_TUNGSTEN.getDust(64),
                 MaterialsElements.STANDALONE.CHRONOMATIC_GLASS.getDust(64),
                 MaterialsElements.STANDALONE.HYPOGEN.getDust(64),
                 MaterialsElements.STANDALONE.RHUGNOR.getDust(64),
                 MaterialsElements.STANDALONE.DRAGON_METAL.getDust(64),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Draconium, 64),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 2982),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 2978),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 2976),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.01", 64, 2984))
+                RecipeStacks.generated(64, MetaGeneratedItem01.INSTANCE, OrePrefixes.dust, Materials.CosmicNeutronium),
+                RecipeStacks.generated(64, MetaGeneratedItem01.INSTANCE, OrePrefixes.dust, Materials.Ichorium),
+                RecipeStacks.generated(64, MetaGeneratedItem01.INSTANCE, OrePrefixes.dust, Materials.DraconiumAwakened),
+                RecipeStacks.generated(64, MetaGeneratedItem01.INSTANCE, OrePrefixes.dust, Materials.Flerovium))
             .fluidInputs(
-                FluidRegistry.getFluidStack("temporalfluid", 9216),
-                FluidRegistry.getFluidStack("spatialfluid", 9216),
-                FluidRegistry.getFluidStack("molten.magnetohydrodynamicallyconstrainedstarmatter", 159408),
-                FluidRegistry.getFluidStack("molten.eternity", 159408))
-            .fluidOutputs(FluidRegistry.getFluidStack("molten.magmatter", 123123123))
+                Materials.Time.getMolten(9216),
+                Materials.Space.getMolten(9216),
+                Materials.MHDCSM.getMolten(159408),
+                Materials.Eternity.getMolten(159408))
+            .fluidOutputs(Materials.MagMatter.getMolten(123123123))
             .duration(123 * 20)
             .eut(TierEU.RECIPE_MAX)
             .addTo(ISA);
@@ -404,13 +550,13 @@ public class RecipesMegaISAForge implements IRecipePool {
             .itemInputsUnsafe(
                 OTHItemList.beeISAM.get(0),
                 ItemList.Field_Generator_MAX.get(0),
-                GTModHandler.getModItem("dreamcraft", "StargateShieldingFoil", 0),
-                GTModHandler.getModItem("gregtech", "gt.metaitem.03", 0, 4143),
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, 15411),
-                GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, 15415),
-                GTModHandler.getModItem("dreamcraft", "StargateCrystalDust", 64))
-            .fluidInputs(FluidRegistry.getFluidStack("phononmedium", 256000))
-            .fluidOutputs(FluidRegistry.getFluidStack("quarkgluonplasma", 3690000))
+                RecipeStacks.exact(0, NHItemList.StargateShieldingFoil.item, 0),
+                RecipeStacks.generated(0, MetaGeneratedItem03.INSTANCE, OrePrefixes.nanite, Materials.MagMatter),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, MetaTileEntityIDs.ForgeoftheGods.ID),
+                GTModHandler.getModItem("gregtech", "gt.blockmachines", 0, MetaTileEntityIDs.HeliofusionExoticizer.ID),
+                RecipeStacks.exact(64, NHItemList.StargateCrystalDust.item, 0))
+            .fluidInputs(Materials.PhononMedium.getFluid(256000))
+            .fluidOutputs(Materials.QuarkGluonPlasma.getFluid(3690000))
             .duration(123 * 20)
             .eut(TierEU.RECIPE_MAX)
             .addTo(ISA);
@@ -419,10 +565,14 @@ public class RecipesMegaISAForge implements IRecipePool {
         GTValues.RA.stdBuilder()
             .itemInputs(
                 setStackSize(NaniteTier.Universium.getStack(), 16),
-                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32264), 256),
+                setStackSize(RecipeStacks.exact(1, ItemList.PseudoStar), 256),
                 OTHItemList.dustIrOsSmM.get(1),
-                GTModHandler.getModItem("miscutils", "particleBase", 64, 0),
-                GTModHandler.getModItem("miscutils", "particleBase", 64, 17))
+                (GregTechAPI.sPreloadStarted && Mods.GTPlusPlus.isModLoaded()
+                    ? RecipeStacks.exact(64, Particle.getBaseParticle(Particle.GRAVITON))
+                    : null),
+                (GregTechAPI.sPreloadStarted && Mods.GTPlusPlus.isModLoaded()
+                    ? RecipeStacks.exact(64, Particle.getBaseParticle(Particle.HIGGS_BOSON))
+                    : null))
             .fluidInputs(Materials.InactiveCosmicSolder.getFluid(3_210_000))
             .fluidOutputs(Materials.BoundlessCosmicSolder.getFluid(3_210_000))
             .duration(200 * 20)
@@ -433,18 +583,34 @@ public class RecipesMegaISAForge implements IRecipePool {
         // 稳定空白约束单元 -> 四类稳定约束单元（定制配方）
         GTValues.RA.stdBuilder()
             .itemInputs(
-                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32304), 4096),
-                setStackSize(GTModHandler.getModItem("miscutils", "particleBase", 1, 18), 256),
-                setStackSize(GTModHandler.getModItem("miscutils", "particleBase", 1, 7), 256),
-                setStackSize(GTModHandler.getModItem("miscutils", "particleBase", 1, 23), 256),
-                setStackSize(GTModHandler.getModItem("miscutils", "particleBase", 1, 17), 256),
-                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32234), 64))
-            .fluidInputs(FluidRegistry.getFluidStack("oganesson", 1_000_000))
+                setStackSize(RecipeStacks.exact(1, ItemList.StableEmptyContainmentUnit), 4096),
+                setStackSize(
+                    (GregTechAPI.sPreloadStarted && Mods.GTPlusPlus.isModLoaded()
+                        ? RecipeStacks.exact(1, Particle.getBaseParticle(Particle.PROTON))
+                        : null),
+                    256),
+                setStackSize(
+                    (GregTechAPI.sPreloadStarted && Mods.GTPlusPlus.isModLoaded()
+                        ? RecipeStacks.exact(1, Particle.getBaseParticle(Particle.ELECTRON))
+                        : null),
+                    256),
+                setStackSize(
+                    (GregTechAPI.sPreloadStarted && Mods.GTPlusPlus.isModLoaded()
+                        ? RecipeStacks.exact(1, Particle.getBaseParticle(Particle.ETA_MESON))
+                        : null),
+                    256),
+                setStackSize(
+                    (GregTechAPI.sPreloadStarted && Mods.GTPlusPlus.isModLoaded()
+                        ? RecipeStacks.exact(1, Particle.getBaseParticle(Particle.HIGGS_BOSON))
+                        : null),
+                    256),
+                setStackSize(RecipeStacks.exact(1, ItemList.Quark_Catalyst_Housing), 64))
+            .fluidInputs(FluidRegistry.getFluidStack(RecipeFluids.werkstoffName(WerkstoffLoader.Oganesson), 1_000_000))
             .itemOutputs(
-                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32300), 1024),
-                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32301), 1024),
-                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32302), 1024),
-                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.03", 1, 32303), 1024))
+                setStackSize(RecipeStacks.exact(1, ItemList.StableBaryonContainmentUnit), 1024),
+                setStackSize(RecipeStacks.exact(1, ItemList.StableLeptonContainmentUnit), 1024),
+                setStackSize(RecipeStacks.exact(1, ItemList.StableMesonContainmentUnit), 1024),
+                setStackSize(RecipeStacks.exact(1, ItemList.StableBosonContainmentUnit), 1024))
             .duration(500 * 20)
             .eut(Integer.MAX_VALUE)
             .specialValue(1)

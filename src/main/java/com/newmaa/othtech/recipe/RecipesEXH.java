@@ -12,6 +12,7 @@ import net.minecraftforge.fluids.FluidStack;
 
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 
+import gregtech.api.enums.Materials;
 import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GTRecipe;
 import gregtech.api.util.GTRecipeBuilder;
@@ -49,7 +50,7 @@ public class RecipesEXH implements IRecipePool {
 
             long waterAmount = Math.max((long) recipe.mEUt * recipe.mDuration / 1000, 2);
             int safeWaterAmount = (int) Math.min(waterAmount, Integer.MAX_VALUE);
-            FluidStack waterInput = FluidRegistry.getFluidStack("water", safeWaterAmount);
+            FluidStack waterInput = FluidRegistry.getFluidStack(FluidRegistry.WATER.getName(), safeWaterAmount);
             if (waterInput != null) inputFluids.add(waterInput);
 
             builder.fluidInputs(inputFluids.toArray(new FluidStack[0]));
@@ -82,7 +83,7 @@ public class RecipesEXH implements IRecipePool {
 
             long steamAmount = Math.max((long) recipe.mEUt * recipe.mDuration / 2000, 1);
             int safeSteamAmount = (int) Math.min(steamAmount, Integer.MAX_VALUE);
-            FluidStack steamOutput = FluidRegistry.getFluidStack("densesupercriticalsteam", safeSteamAmount);
+            FluidStack steamOutput = Materials.DenseSupercriticalSteam.getGas(safeSteamAmount);
             if (steamOutput != null) outputFluids.add(steamOutput);
 
             builder.fluidOutputs(outputFluids.toArray(new FluidStack[0]));

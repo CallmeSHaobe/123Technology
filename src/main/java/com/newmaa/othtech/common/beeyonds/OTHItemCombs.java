@@ -13,12 +13,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.fluids.FluidRegistry;
 
+import com.dreammaster.block.BlockList;
 import com.newmaa.othtech.OTHTechnology;
 import com.newmaa.othtech.common.creativetab.CreativeTabsLoader;
+import com.newmaa.othtech.utils.RecipeFluids;
+import com.newmaa.othtech.utils.RecipeStacks;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import gregtech.api.GregTechAPI;
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
@@ -27,6 +31,12 @@ import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTUtility;
+import gtPlusPlus.core.block.base.BasicBlock.BlockTypes;
+import gtPlusPlus.core.item.base.BaseItemComponent.ComponentTypes;
+import gtPlusPlus.core.material.MaterialsAlloy;
+import gtPlusPlus.core.material.MaterialsElements.STANDALONE;
+import gtPlusPlus.xmod.gregtech.api.enums.GregtechItemList;
+import gtPlusPlus.xmod.gregtech.common.items.MetaGeneratedItemIDs;
 
 public class OTHItemCombs extends Item {
 
@@ -110,12 +120,14 @@ public class OTHItemCombs extends Item {
                 OTHCombTypes.HYPOGEN.getStackForType(1),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Neutronium, 1), 40))
             .fluidInputs(
-                FluidRegistry.getFluidStack("molten.quantum", 5760),
-                FluidRegistry.getFluidStack("molten.infinity", 1440),
-                FluidRegistry.getFluidStack("exciteddtrc", 1000))
+                FluidRegistry.getFluidStack(RecipeFluids.gtppMoltenName(MaterialsAlloy.QUANTUM), 5760),
+                Materials.Infinity.getMolten(1440),
+                Materials.ExcitedDTRC.getFluid(1000))
             .fluidOutputs(
-                FluidRegistry.getFluidStack("molten.hypogen", 2880 * 2),
-                FluidRegistry.getFluidStack("dimensionallytranscendentresidue", 1000))
+                FluidRegistry.getFluidStack(
+                    RecipeFluids.gtppMoltenName(gtPlusPlus.core.material.MaterialsElements.STANDALONE.HYPOGEN),
+                    2880 * 2),
+                Materials.DTR.getFluid(1000))
             .specialValue(12000)
             .eut(1200000000)
             .duration(75 * 20)
@@ -124,15 +136,23 @@ public class OTHItemCombs extends Item {
             .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 OTHCombTypes.HYPOGEN.getStackForType(1),
-                GTModHandler.getModItem("miscutils", "MU-metaitem.01", 0, 32100),
+                (GregTechAPI.sPreloadStarted && gregtech.api.enums.Mods.GTPlusPlus.isModLoaded()
+                    && GregtechItemList.Compressed_Fusion_Reactor.hasBeenSet()
+                        ? RecipeStacks.exact(
+                            0,
+                            GregtechItemList.Compressed_Fusion_Reactor.getItem(),
+                            32000 + MetaGeneratedItemIDs.Compressed_Fusion_Reactor.ID)
+                        : null),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Neutronium, 1), 40))
             .fluidInputs(
-                FluidRegistry.getFluidStack("molten.quantum", 5760),
-                FluidRegistry.getFluidStack("molten.infinity", 1440),
-                FluidRegistry.getFluidStack("exciteddtec", 1000))
+                FluidRegistry.getFluidStack(RecipeFluids.gtppMoltenName(MaterialsAlloy.QUANTUM), 5760),
+                Materials.Infinity.getMolten(1440),
+                Materials.ExcitedDTEC.getFluid(1000))
             .fluidOutputs(
-                FluidRegistry.getFluidStack("molten.hypogen", 5760 * 2),
-                FluidRegistry.getFluidStack("dimensionallytranscendentresidue", 1000 * 2))
+                FluidRegistry.getFluidStack(
+                    RecipeFluids.gtppMoltenName(gtPlusPlus.core.material.MaterialsElements.STANDALONE.HYPOGEN),
+                    5760 * 2),
+                Materials.DTR.getFluid(1000 * 2))
             .specialValue(13000)
             .eut(1600000000)
             .duration(75 * 20)
@@ -141,15 +161,23 @@ public class OTHItemCombs extends Item {
             .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 OTHCombTypes.HYPOGEN.getStackForType(1),
-                GTModHandler.getModItem("miscutils", "MU-metaitem.01", 0, 32100),
+                (GregTechAPI.sPreloadStarted && gregtech.api.enums.Mods.GTPlusPlus.isModLoaded()
+                    && GregtechItemList.Compressed_Fusion_Reactor.hasBeenSet()
+                        ? RecipeStacks.exact(
+                            0,
+                            GregtechItemList.Compressed_Fusion_Reactor.getItem(),
+                            32000 + MetaGeneratedItemIDs.Compressed_Fusion_Reactor.ID)
+                        : null),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Neutronium, 1), 80))
             .fluidInputs(
-                FluidRegistry.getFluidStack("molten.quantum", 5760),
-                FluidRegistry.getFluidStack("molten.infinity", 1440),
-                FluidRegistry.getFluidStack("exciteddtsc", 1000))
+                FluidRegistry.getFluidStack(RecipeFluids.gtppMoltenName(MaterialsAlloy.QUANTUM), 5760),
+                Materials.Infinity.getMolten(1440),
+                Materials.ExcitedDTSC.getFluid(1000))
             .fluidOutputs(
-                FluidRegistry.getFluidStack("molten.hypogen", 11520 * 2),
-                FluidRegistry.getFluidStack("dimensionallytranscendentresidue", 2000 * 2))
+                FluidRegistry.getFluidStack(
+                    RecipeFluids.gtppMoltenName(gtPlusPlus.core.material.MaterialsElements.STANDALONE.HYPOGEN),
+                    11520 * 2),
+                Materials.DTR.getFluid(2000 * 2))
             .specialValue(13000)
             .eut(2000000000)
             .duration(75 * 20)
@@ -159,18 +187,30 @@ public class OTHItemCombs extends Item {
             .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 OTHCombTypes.HYPOGEN.getStackForType(4),
-                GTModHandler.getModItem(NewHorizonsCoreMod.ID, "Quantinum", 4),
-                GTModHandler.getModItem("miscutils", "MU-metaitem.01", 3, 32105))
-            .itemOutputs(GTModHandler.getModItem(GTPlusPlus.ID, "blockBlockAstralTitanium", 4))
+                RecipeStacks.exact(4, BlockList.Quantinum.block, 0),
+                (GregTechAPI.sPreloadStarted && gregtech.api.enums.Mods.GTPlusPlus.isModLoaded()
+                    && GregtechItemList.Laser_Lens_Special.hasBeenSet()
+                        ? RecipeStacks.exact(
+                            3,
+                            GregtechItemList.Laser_Lens_Special.getItem(),
+                            32000 + MetaGeneratedItemIDs.Laser_Lens_Special.ID)
+                        : null))
+            .itemOutputs(
+                (GregTechAPI.sPreloadStarted && gregtech.api.enums.Mods.GTPlusPlus.isModLoaded()
+                    ? GTModHandler.getModItem(
+                        gregtech.api.enums.Mods.GTPlusPlus.ID,
+                        BlockTypes.STANDARD.getTexture() + STANDALONE.ASTRAL_TITANIUM.getUnlocalizedName(),
+                        4)
+                    : null))
             .fluidInputs(
-                FluidRegistry.getFluidStack("molten.blacktitanium", 64512),
-                FluidRegistry.getFluidStack("molten.americium", 9216),
-                FluidRegistry.getFluidStack("molten.bismuth", 9216),
-                FluidRegistry.getFluidStack("plasma.titanium", 10368),
-                FluidRegistry.getFluidStack("exciteddtsc", 1023))
+                FluidRegistry.getFluidStack(RecipeFluids.gtppMoltenName(MaterialsAlloy.BLACK_TITANIUM), 64512),
+                Materials.Americium.getMolten(9216),
+                Materials.Bismuth.getMolten(9216),
+                Materials.Titanium.getPlasma(10368),
+                Materials.ExcitedDTSC.getFluid(1023))
             .fluidOutputs(
-                FluidRegistry.getFluidStack("molten.quantum", 92160),
-                FluidRegistry.getFluidStack("dimensionallytranscendentresidue", 2046))
+                FluidRegistry.getFluidStack(RecipeFluids.gtppMoltenName(MaterialsAlloy.QUANTUM), 92160),
+                Materials.DTR.getFluid(2046))
             .specialValue(13000)
             .eut(534141769)
             .duration(13 * 20)
@@ -179,18 +219,30 @@ public class OTHItemCombs extends Item {
             .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(17),
                 OTHCombTypes.HYPOGEN.getStackForType(2),
-                GTModHandler.getModItem(NewHorizonsCoreMod.ID, "Quantinum", 2),
-                GTModHandler.getModItem("miscutils", "MU-metaitem.01", 2, 32105))
-            .itemOutputs(GTModHandler.getModItem(GTPlusPlus.ID, "blockBlockAstralTitanium", 2))
+                RecipeStacks.exact(2, BlockList.Quantinum.block, 0),
+                (GregTechAPI.sPreloadStarted && gregtech.api.enums.Mods.GTPlusPlus.isModLoaded()
+                    && GregtechItemList.Laser_Lens_Special.hasBeenSet()
+                        ? RecipeStacks.exact(
+                            2,
+                            GregtechItemList.Laser_Lens_Special.getItem(),
+                            32000 + MetaGeneratedItemIDs.Laser_Lens_Special.ID)
+                        : null))
+            .itemOutputs(
+                (GregTechAPI.sPreloadStarted && gregtech.api.enums.Mods.GTPlusPlus.isModLoaded()
+                    ? GTModHandler.getModItem(
+                        gregtech.api.enums.Mods.GTPlusPlus.ID,
+                        BlockTypes.STANDARD.getTexture() + STANDALONE.ASTRAL_TITANIUM.getUnlocalizedName(),
+                        2)
+                    : null))
             .fluidInputs(
-                FluidRegistry.getFluidStack("molten.blacktitanium", 32256),
-                FluidRegistry.getFluidStack("molten.americium", 4608),
-                FluidRegistry.getFluidStack("molten.bismuth", 4608),
-                FluidRegistry.getFluidStack("plasma.titanium", 5184),
-                FluidRegistry.getFluidStack("exciteddtec", 2274))
+                FluidRegistry.getFluidStack(RecipeFluids.gtppMoltenName(MaterialsAlloy.BLACK_TITANIUM), 32256),
+                Materials.Americium.getMolten(4608),
+                Materials.Bismuth.getMolten(4608),
+                Materials.Titanium.getPlasma(5184),
+                Materials.ExcitedDTEC.getFluid(2274))
             .fluidOutputs(
-                FluidRegistry.getFluidStack("molten.quantum", 46080),
-                FluidRegistry.getFluidStack("dimensionallytranscendentresidue", 2274))
+                FluidRegistry.getFluidStack(RecipeFluids.gtppMoltenName(MaterialsAlloy.QUANTUM), 46080),
+                Materials.DTR.getFluid(2274))
             .specialValue(13000)
             .eut(267070884)
             .duration(27 * 20)
@@ -201,10 +253,13 @@ public class OTHItemCombs extends Item {
                 GTUtility.getIntegratedCircuit(17),
                 OTHCombTypes.CHROMATICGLASS.getStackForType(4),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Glass, 1), 256))
-            .fluidInputs(FluidRegistry.getFluidStack("exciteddtcc", 156040))
+            .fluidInputs(Materials.ExcitedDTCC.getFluid(156040))
             .fluidOutputs(
-                FluidRegistry.getFluidStack("molten.chromaticglass", 36864),
-                FluidRegistry.getFluidStack("dimensionallytranscendentresidue", 19505))
+                FluidRegistry.getFluidStack(
+                    RecipeFluids
+                        .gtppMoltenName(gtPlusPlus.core.material.MaterialsElements.STANDALONE.CHRONOMATIC_GLASS),
+                    36864),
+                Materials.DTR.getFluid(19505))
             .specialValue(10000)
             .eut(50331648 * 4)
             .duration(150 / 4 * 20)
@@ -214,10 +269,13 @@ public class OTHItemCombs extends Item {
                 GTUtility.getIntegratedCircuit(17),
                 OTHCombTypes.CHROMATICGLASS.getStackForType(4),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Glass, 1), 512))
-            .fluidInputs(FluidRegistry.getFluidStack("exciteddtpc", 61059))
+            .fluidInputs(Materials.ExcitedDTPC.getFluid(61059))
             .fluidOutputs(
-                FluidRegistry.getFluidStack("molten.chromaticglass", 73728),
-                FluidRegistry.getFluidStack("dimensionallytranscendentresidue", 15264))
+                FluidRegistry.getFluidStack(
+                    RecipeFluids
+                        .gtppMoltenName(gtPlusPlus.core.material.MaterialsElements.STANDALONE.CHRONOMATIC_GLASS),
+                    73728),
+                Materials.DTR.getFluid(15264))
             .specialValue(11000)
             .eut(100663296 * 4)
             .duration(75 * 20 / 4)
@@ -227,10 +285,13 @@ public class OTHItemCombs extends Item {
                 GTUtility.getIntegratedCircuit(17),
                 OTHCombTypes.CHROMATICGLASS.getStackForType(4),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Glass, 1), 1024))
-            .fluidInputs(FluidRegistry.getFluidStack("exciteddtrc", 26350))
+            .fluidInputs(Materials.ExcitedDTRC.getFluid(26350))
             .fluidOutputs(
-                FluidRegistry.getFluidStack("molten.chromaticglass", 147456),
-                FluidRegistry.getFluidStack("dimensionallytranscendentresidue", 13175))
+                FluidRegistry.getFluidStack(
+                    RecipeFluids
+                        .gtppMoltenName(gtPlusPlus.core.material.MaterialsElements.STANDALONE.CHRONOMATIC_GLASS),
+                    147456),
+                Materials.DTR.getFluid(13175))
             .specialValue(10000)
             .eut(201326592 * 4)
             .duration(187)
@@ -240,10 +301,13 @@ public class OTHItemCombs extends Item {
                 GTUtility.getIntegratedCircuit(17),
                 OTHCombTypes.CHROMATICGLASS.getStackForType(4),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Glass, 1), 2048))
-            .fluidInputs(FluidRegistry.getFluidStack("exciteddtec", 11116))
+            .fluidInputs(Materials.ExcitedDTEC.getFluid(11116))
             .fluidOutputs(
-                FluidRegistry.getFluidStack("molten.chromaticglass", 294912),
-                FluidRegistry.getFluidStack("dimensionallytranscendentresidue", 11116))
+                FluidRegistry.getFluidStack(
+                    RecipeFluids
+                        .gtppMoltenName(gtPlusPlus.core.material.MaterialsElements.STANDALONE.CHRONOMATIC_GLASS),
+                    294912),
+                Materials.DTR.getFluid(11116))
             .specialValue(13000)
             .eut(402653184 * 4)
             .duration(93)
@@ -252,8 +316,14 @@ public class OTHItemCombs extends Item {
             .itemInputsUnsafe(
                 GTUtility.getIntegratedCircuit(24),
                 OTHCombTypes.CHROMATICGLASS.getStackForType(4),
-                GTModHandler.getModItem("miscutils", "MU-metaitem.01", 0, 32105))
-            .itemOutputs(GTModHandler.getModItem(GTPlusPlus.ID, "itemDustChromaticGlass", 2))
+                (GregTechAPI.sPreloadStarted && gregtech.api.enums.Mods.GTPlusPlus.isModLoaded()
+                    && GregtechItemList.Laser_Lens_Special.hasBeenSet()
+                        ? RecipeStacks.exact(
+                            0,
+                            GregtechItemList.Laser_Lens_Special.getItem(),
+                            32000 + MetaGeneratedItemIDs.Laser_Lens_Special.ID)
+                        : null))
+            .itemOutputs(RecipeStacks.gtppComponent(2, STANDALONE.CHRONOMATIC_GLASS, ComponentTypes.DUST))
             .duration(250 * 20)
             .eut(TierEU.RECIPE_UHV)
             .addTo(RecipeMaps.laserEngraverRecipes);
@@ -262,8 +332,14 @@ public class OTHItemCombs extends Item {
                 GTUtility.getIntegratedCircuit(17),
                 OTHCombTypes.CHROMATICGLASS.getStackForType(1),
                 new ItemStack(Blocks.glass, 32),
-                GTModHandler.getModItem("miscutils", "MU-metaitem.01", 0, 32105))
-            .itemOutputs(GTModHandler.getModItem(GTPlusPlus.ID, "itemDustChromaticGlass", 2))
+                (GregTechAPI.sPreloadStarted && gregtech.api.enums.Mods.GTPlusPlus.isModLoaded()
+                    && GregtechItemList.Laser_Lens_Special.hasBeenSet()
+                        ? RecipeStacks.exact(
+                            0,
+                            GregtechItemList.Laser_Lens_Special.getItem(),
+                            32000 + MetaGeneratedItemIDs.Laser_Lens_Special.ID)
+                        : null))
+            .itemOutputs(RecipeStacks.gtppComponent(2, STANDALONE.CHRONOMATIC_GLASS, ComponentTypes.DUST))
             .duration(75 * 20)
             .eut(TierEU.RECIPE_UEV)
             .addTo(RecipeMaps.laserEngraverRecipes);

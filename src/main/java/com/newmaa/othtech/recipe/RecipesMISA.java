@@ -8,12 +8,22 @@ import net.minecraftforge.fluids.FluidRegistry;
 
 import com.newmaa.othtech.Config;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
+import com.newmaa.othtech.utils.RecipeFluids;
+import com.newmaa.othtech.utils.RecipeStacks;
 
+import bartworks.system.material.WerkstoffLoader;
+import gregtech.api.GregTechAPI;
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
-import gregtech.api.util.GTModHandler;
+import gregtech.api.enums.Mods;
+import gregtech.api.enums.OrePrefixes;
 import gregtech.common.items.CombType;
+import gregtech.common.items.MetaGeneratedItem01;
 import gregtech.loaders.misc.GTBees;
+import gtPlusPlus.core.item.base.BaseItemComponent.ComponentTypes;
+import gtPlusPlus.core.material.MaterialsElements;
+import gtPlusPlus.core.material.MaterialsElements.STANDALONE;
+import gtnhlanth.common.register.WerkstoffMaterialPool;
 
 public class RecipesMISA implements IRecipePool {
 
@@ -24,15 +34,21 @@ public class RecipesMISA implements IRecipePool {
                 setStackSize(Materials.Magnesium.getDust(1), 16 * 110),
                 setStackSize(Materials.Manganese.getDust(1), 16 * 70),
                 setStackSize(Materials.Borax.getDust(1), 16 * 60),
-                setStackSize(GTModHandler.getModItem("miscutils", "itemDustRhenium", 1), 16 * 20))
+                setStackSize(
+                    RecipeStacks.gtppComponent(1, MaterialsElements.getInstance().RHENIUM, ComponentTypes.DUST),
+                    16 * 20))
             .itemInputsUnsafe(
-                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5835), 16 * 256),
+                setStackSize(
+                    RecipeStacks.generated(1, MetaGeneratedItem01.INSTANCE, OrePrefixes.crushed, Materials.Pyrope),
+                    16 * 256),
                 setStackSize(Materials.Carbon.getDust(1), 40),
                 Materials.Sulfur.getDust(80),
                 Materials.Sodium.getDust(20))
-            .fluidInputs(FluidRegistry.getFluidStack("bioethanol", 20000), FluidRegistry.getFluidStack("steam", 4000))
+            .fluidInputs(
+                FluidRegistry.getFluidStack(RecipeFluids.registryName(Materials.Ethanol.mFluid), 20000),
+                Materials.Steam.getGas(4000))
             .fluidOutputs(
-                FluidRegistry.getFluidStack("water", 32000),
+                FluidRegistry.getFluidStack(FluidRegistry.WATER.getName(), 32000),
                 FluidRegistry.getFluidStack("mud.red.slurry", 32000))
             .specialValue(1)
             .eut(30720)
@@ -47,13 +63,18 @@ public class RecipesMISA implements IRecipePool {
                 setStackSize(Materials.Cadmium.getDust(1), 16 * 50),
                 setStackSize(Materials.Indium.getDust(1), 16 * 10))
             .itemInputsUnsafe(
-                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5855), 16 * 256),
+                setStackSize(
+                    RecipeStacks
+                        .generated(1, MetaGeneratedItem01.INSTANCE, OrePrefixes.crushed, Materials.Chalcopyrite),
+                    16 * 256),
                 setStackSize(Materials.Carbon.getDust(1), 40),
                 Materials.Sulfur.getDust(80),
                 Materials.Sodium.getDust(20))
-            .fluidInputs(FluidRegistry.getFluidStack("bioethanol", 20000), FluidRegistry.getFluidStack("steam", 4000))
+            .fluidInputs(
+                FluidRegistry.getFluidStack(RecipeFluids.registryName(Materials.Ethanol.mFluid), 20000),
+                Materials.Steam.getGas(4000))
             .fluidOutputs(
-                FluidRegistry.getFluidStack("water", 32000),
+                FluidRegistry.getFluidStack(FluidRegistry.WATER.getName(), 32000),
                 FluidRegistry.getFluidStack("mud.red.slurry", 32000))
             .specialValue(1)
             .eut(122880)
@@ -65,15 +86,19 @@ public class RecipesMISA implements IRecipePool {
                 setStackSize(Materials.Magnesium.getDust(1), 16 * 150),
                 setStackSize(Materials.Manganese.getDust(1), 16 * 110),
                 setStackSize(Materials.Borax.getDust(1), 16 * 32),
-                setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 64), 16 * 16))
+                setStackSize(RecipeStacks.werkstoff(1, OrePrefixes.dust, WerkstoffLoader.Ruthenium), 16 * 16))
             .itemInputsUnsafe(
-                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5034), 16 * 256),
+                setStackSize(
+                    RecipeStacks.generated(1, MetaGeneratedItem01.INSTANCE, OrePrefixes.crushed, Materials.Nickel),
+                    16 * 256),
                 setStackSize(Materials.Carbon.getDust(1), 40),
                 Materials.Sulfur.getDust(80),
                 Materials.Sodium.getDust(20))
-            .fluidInputs(FluidRegistry.getFluidStack("bioethanol", 20000), FluidRegistry.getFluidStack("steam", 4000))
+            .fluidInputs(
+                FluidRegistry.getFluidStack(RecipeFluids.registryName(Materials.Ethanol.mFluid), 20000),
+                Materials.Steam.getGas(4000))
             .fluidOutputs(
-                FluidRegistry.getFluidStack("water", 32000),
+                FluidRegistry.getFluidStack(FluidRegistry.WATER.getName(), 32000),
                 FluidRegistry.getFluidStack("mud.red.slurry", 32000))
             .specialValue(1)
             .eut(122880)
@@ -87,13 +112,17 @@ public class RecipesMISA implements IRecipePool {
                 setStackSize(Materials.Firestone.getDust(1), 16 * 45),
                 setStackSize(Materials.Dysprosium.getDust(1), 16 * 16))
             .itemInputsUnsafe(
-                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5810), 16 * 256),
+                setStackSize(
+                    RecipeStacks.generated(1, MetaGeneratedItem01.INSTANCE, OrePrefixes.crushed, Materials.Redstone),
+                    16 * 256),
                 setStackSize(Materials.Carbon.getDust(1), 40),
                 Materials.Sulfur.getDust(80),
                 Materials.Sodium.getDust(20))
-            .fluidInputs(FluidRegistry.getFluidStack("bioethanol", 20000), FluidRegistry.getFluidStack("steam", 4000))
+            .fluidInputs(
+                FluidRegistry.getFluidStack(RecipeFluids.registryName(Materials.Ethanol.mFluid), 20000),
+                Materials.Steam.getGas(4000))
             .fluidOutputs(
-                FluidRegistry.getFluidStack("water", 32000),
+                FluidRegistry.getFluidStack(FluidRegistry.WATER.getName(), 32000),
                 FluidRegistry.getFluidStack("mud.red.slurry", 32000))
             .specialValue(1)
             .eut(122880)
@@ -105,15 +134,21 @@ public class RecipesMISA implements IRecipePool {
                 setStackSize(Materials.Zinc.getDust(1), 16 * 180),
                 setStackSize(Materials.Iron.getDust(1), 16 * 120),
                 setStackSize(Materials.Indium.getDust(1), 16 * 64),
-                setStackSize(GTModHandler.getModItem("miscutils", "itemDustGermanium", 1), 16 * 15))
+                setStackSize(
+                    RecipeStacks.gtppComponent(1, MaterialsElements.getInstance().GERMANIUM, ComponentTypes.DUST),
+                    16 * 15))
             .itemInputsUnsafe(
-                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5839), 16 * 256),
+                setStackSize(
+                    RecipeStacks.generated(1, MetaGeneratedItem01.INSTANCE, OrePrefixes.crushed, Materials.Sphalerite),
+                    16 * 256),
                 setStackSize(Materials.Carbon.getDust(1), 40),
                 Materials.Sulfur.getDust(80),
                 Materials.Sodium.getDust(20))
-            .fluidInputs(FluidRegistry.getFluidStack("bioethanol", 20000), FluidRegistry.getFluidStack("steam", 4000))
+            .fluidInputs(
+                FluidRegistry.getFluidStack(RecipeFluids.registryName(Materials.Ethanol.mFluid), 20000),
+                Materials.Steam.getGas(4000))
             .fluidOutputs(
-                FluidRegistry.getFluidStack("water", 32000),
+                FluidRegistry.getFluidStack(FluidRegistry.WATER.getName(), 32000),
                 FluidRegistry.getFluidStack("mud.red.slurry", 32000))
             .specialValue(1)
             .eut(491520)
@@ -124,16 +159,22 @@ public class RecipesMISA implements IRecipePool {
             .itemOutputs(
                 setStackSize(Materials.Platinum.getDust(1), 16 * 128),
                 setStackSize(Materials.Tellurium.getDust(1), 16 * 70),
-                setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 78), 16 * 60),
-                setStackSize(GTModHandler.getModItem("miscutils", "itemDustSelenium", 1, 0), 16 * 40))
+                setStackSize(RecipeStacks.werkstoff(1, OrePrefixes.dust, WerkstoffLoader.Rhodium), 16 * 60),
+                setStackSize(
+                    RecipeStacks.gtppComponent(1, MaterialsElements.getInstance().SELENIUM, ComponentTypes.DUST, 0),
+                    16 * 40))
             .itemInputsUnsafe(
-                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5085), 16 * 256),
+                setStackSize(
+                    RecipeStacks.generated(1, MetaGeneratedItem01.INSTANCE, OrePrefixes.crushed, Materials.Platinum),
+                    16 * 256),
                 setStackSize(Materials.Carbon.getDust(1), 40),
                 Materials.Sulfur.getDust(80),
                 Materials.Sodium.getDust(20))
-            .fluidInputs(FluidRegistry.getFluidStack("bioethanol", 20000), FluidRegistry.getFluidStack("steam", 4000))
+            .fluidInputs(
+                FluidRegistry.getFluidStack(RecipeFluids.registryName(Materials.Ethanol.mFluid), 20000),
+                Materials.Steam.getGas(4000))
             .fluidOutputs(
-                FluidRegistry.getFluidStack("water", 32000),
+                FluidRegistry.getFluidStack(FluidRegistry.WATER.getName(), 32000),
                 FluidRegistry.getFluidStack("mud.red.slurry", 32000))
             .specialValue(1)
             .eut(491520)
@@ -144,16 +185,27 @@ public class RecipesMISA implements IRecipePool {
             .itemOutputs(
                 setStackSize(Materials.Iron.getDust(1), 16 * 150),
                 setStackSize(Materials.Nickel.getDust(1), 16 * 100),
-                setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 11000), 16 * 10),
+                setStackSize(
+                    (GregTechAPI.sPreloadStarted && Mods.BartWorks.isModLoaded()
+                        ? RecipeStacks.exact(
+                            1,
+                            WerkstoffLoader.items.get(OrePrefixes.dust),
+                            (Mods.GTNHLanthanides.isModLoaded() ? WerkstoffMaterialPool.Hafnium.getmID() : 11000))
+                        : null),
+                    16 * 10),
                 setStackSize(Materials.Promethium.getDust(1), 16 * 20))
             .itemInputsUnsafe(
-                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5909), 16 * 256),
+                setStackSize(
+                    RecipeStacks.generated(1, MetaGeneratedItem01.INSTANCE, OrePrefixes.crushed, Materials.Pentlandite),
+                    16 * 256),
                 setStackSize(Materials.Carbon.getDust(1), 40),
                 Materials.Sulfur.getDust(80),
                 Materials.Sodium.getDust(20))
-            .fluidInputs(FluidRegistry.getFluidStack("bioethanol", 20000), FluidRegistry.getFluidStack("steam", 4000))
+            .fluidInputs(
+                FluidRegistry.getFluidStack(RecipeFluids.registryName(Materials.Ethanol.mFluid), 20000),
+                Materials.Steam.getGas(4000))
             .fluidOutputs(
-                FluidRegistry.getFluidStack("water", 32000),
+                FluidRegistry.getFluidStack(FluidRegistry.WATER.getName(), 32000),
                 FluidRegistry.getFluidStack("mud.red.slurry", 32000))
             .specialValue(1)
             .eut(491520)
@@ -167,13 +219,17 @@ public class RecipesMISA implements IRecipePool {
                 setStackSize(Materials.Osmium.getDust(1), 16 * 30),
                 setStackSize(Materials.Strontium.getDust(1), 16 * 20))
             .itemInputsUnsafe(
-                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5838), 16 * 256),
+                setStackSize(
+                    RecipeStacks.generated(1, MetaGeneratedItem01.INSTANCE, OrePrefixes.crushed, Materials.Spessartine),
+                    16 * 256),
                 setStackSize(Materials.Carbon.getDust(1), 40),
                 Materials.Sulfur.getDust(80),
                 Materials.Sodium.getDust(20))
-            .fluidInputs(FluidRegistry.getFluidStack("bioethanol", 20000), FluidRegistry.getFluidStack("steam", 4000))
+            .fluidInputs(
+                FluidRegistry.getFluidStack(RecipeFluids.registryName(Materials.Ethanol.mFluid), 20000),
+                Materials.Steam.getGas(4000))
             .fluidOutputs(
-                FluidRegistry.getFluidStack("water", 32000),
+                FluidRegistry.getFluidStack(FluidRegistry.WATER.getName(), 32000),
                 FluidRegistry.getFluidStack("mud.red.slurry", 32000))
             .specialValue(1)
             .eut(491520)
@@ -185,15 +241,21 @@ public class RecipesMISA implements IRecipePool {
                 setStackSize(Materials.Calcium.getDust(1), 16 * 180),
                 setStackSize(Materials.Aluminium.getDust(1), 16 * 110),
                 setStackSize(Materials.Tungsten.getDust(1), 16 * 60),
-                setStackSize(GTModHandler.getModItem("miscutils", "itemDustThallium", 1), 16 * 15))
+                setStackSize(
+                    RecipeStacks.gtppComponent(1, MaterialsElements.getInstance().THALLIUM, ComponentTypes.DUST),
+                    16 * 15))
             .itemInputsUnsafe(
-                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5831), 16 * 256),
+                setStackSize(
+                    RecipeStacks.generated(1, MetaGeneratedItem01.INSTANCE, OrePrefixes.crushed, Materials.Grossular),
+                    16 * 256),
                 setStackSize(Materials.Carbon.getDust(1), 40),
                 Materials.Sulfur.getDust(80),
                 Materials.Sodium.getDust(20))
-            .fluidInputs(FluidRegistry.getFluidStack("bioethanol", 20000), FluidRegistry.getFluidStack("steam", 4000))
+            .fluidInputs(
+                FluidRegistry.getFluidStack(RecipeFluids.registryName(Materials.Ethanol.mFluid), 20000),
+                Materials.Steam.getGas(4000))
             .fluidOutputs(
-                FluidRegistry.getFluidStack("water", 32000),
+                FluidRegistry.getFluidStack(FluidRegistry.WATER.getName(), 32000),
                 FluidRegistry.getFluidStack("mud.red.slurry", 32000))
             .specialValue(1)
             .eut(491520)
@@ -207,13 +269,17 @@ public class RecipesMISA implements IRecipePool {
                 setStackSize(Materials.Yttrium.getDust(1), 16 * 25),
                 setStackSize(Materials.Ytterbium.getDust(1), 16 * 15))
             .itemInputsUnsafe(
-                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5820), 16 * 256),
+                setStackSize(
+                    RecipeStacks.generated(1, MetaGeneratedItem01.INSTANCE, OrePrefixes.crushed, Materials.Almandine),
+                    16 * 256),
                 setStackSize(Materials.Carbon.getDust(1), 40),
                 Materials.Sulfur.getDust(80),
                 Materials.Sodium.getDust(20))
-            .fluidInputs(FluidRegistry.getFluidStack("bioethanol", 20000), FluidRegistry.getFluidStack("steam", 4000))
+            .fluidInputs(
+                FluidRegistry.getFluidStack(RecipeFluids.registryName(Materials.Ethanol.mFluid), 20000),
+                Materials.Steam.getGas(4000))
             .fluidOutputs(
-                FluidRegistry.getFluidStack("water", 32000),
+                FluidRegistry.getFluidStack(FluidRegistry.WATER.getName(), 32000),
                 FluidRegistry.getFluidStack("mud.red.slurry", 32000))
             .specialValue(1)
             .eut(491520)
@@ -227,13 +293,17 @@ public class RecipesMISA implements IRecipePool {
                 setStackSize(Materials.Lutetium.getDust(1), 16 * 16),
                 setStackSize(Materials.Europium.getDust(1), 16 * 8))
             .itemInputsUnsafe(
-                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5520), 16 * 256),
+                setStackSize(
+                    RecipeStacks.generated(1, MetaGeneratedItem01.INSTANCE, OrePrefixes.crushed, Materials.Monazite),
+                    16 * 256),
                 setStackSize(Materials.Carbon.getDust(1), 40),
                 Materials.Sulfur.getDust(80),
                 Materials.Potassium.getDust(20))
-            .fluidInputs(FluidRegistry.getFluidStack("bioethanol", 20000), FluidRegistry.getFluidStack("steam", 4000))
+            .fluidInputs(
+                FluidRegistry.getFluidStack(RecipeFluids.registryName(Materials.Ethanol.mFluid), 20000),
+                Materials.Steam.getGas(4000))
             .fluidOutputs(
-                FluidRegistry.getFluidStack("water", 32000),
+                FluidRegistry.getFluidStack(FluidRegistry.WATER.getName(), 32000),
                 FluidRegistry.getFluidStack("mud.red.slurry", 32000))
             .specialValue(2)
             .eut(7864320)
@@ -254,16 +324,18 @@ public class RecipesMISA implements IRecipePool {
                 setStackSize(Materials.Iridium.getDust(1), 16 * 60),
                 setStackSize(Materials.Osmium.getDust(1), 16 * 20))
             .itemInputsUnsafe(
-                setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5083), 16 * 256),
+                setStackSize(
+                    RecipeStacks.generated(1, MetaGeneratedItem01.INSTANCE, OrePrefixes.crushed, Materials.Osmium),
+                    16 * 256),
                 setStackSize(Materials.Carbon.getDust(1), 40),
                 Materials.Sulfur.getDust(80),
                 Materials.Sodium.getDust(20))
             .fluidInputs(
-                FluidRegistry.getFluidStack("bioethanol", 20000),
-                FluidRegistry.getFluidStack("steam", 4000),
+                FluidRegistry.getFluidStack(RecipeFluids.registryName(Materials.Ethanol.mFluid), 20000),
+                Materials.Steam.getGas(4000),
                 Materials.HydrochloricAcid.getFluid(16000))
             .fluidOutputs(
-                FluidRegistry.getFluidStack("water", 32000),
+                FluidRegistry.getFluidStack(FluidRegistry.WATER.getName(), 32000),
                 FluidRegistry.getFluidStack("mud.red.slurry", 32000))
             .specialValue(2)
             .eut(491520)
@@ -289,7 +361,10 @@ public class RecipesMISA implements IRecipePool {
             // Cosmic Neut
             GTValues.RA.stdBuilder()
                 .itemInputsUnsafe(
-                    setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5388), 16 * 256))
+                    setStackSize(
+                        RecipeStacks
+                            .generated(1, MetaGeneratedItem01.INSTANCE, OrePrefixes.crushed, Materials.BlackPlutonium),
+                        16 * 256))
                 .itemOutputs(
                     setStackSize(Materials.BlackPlutonium.getDust(1), 16 * 120),
                     setStackSize(Materials.CosmicNeutronium.getDust(1), 16 * 32))
@@ -307,11 +382,19 @@ public class RecipesMISA implements IRecipePool {
                     setStackSize(Materials.CosmicNeutronium.getDust(1), 16 * 10),
                     setStackSize(Materials.Neutronium.getDust(1), 16 * 20))
                 .itemInputsUnsafe(
-                    setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5394), 16 * 256),
+                    setStackSize(
+                        RecipeStacks.generated(
+                            1,
+                            MetaGeneratedItem01.INSTANCE,
+                            OrePrefixes.crushed,
+                            Materials.InfinityCatalyst),
+                        16 * 256),
                     setStackSize(Materials.Carbon.getDust(1), 40),
                     Materials.Sulfur.getDust(80),
                     Materials.Sodium.getDust(20))
-                .fluidInputs(FluidRegistry.getFluidStack("bioethanol", 20000), Materials.Nitrogen.getPlasma(32000))
+                .fluidInputs(
+                    FluidRegistry.getFluidStack(RecipeFluids.registryName(Materials.Ethanol.mFluid), 20000),
+                    Materials.Nitrogen.getPlasma(32000))
                 .fluidOutputs(Materials.Nitrogen.getGas(32000), FluidRegistry.getFluidStack("mud.red.slurry", 32000))
                 .specialValue(3)
                 .eut(16777216)
@@ -323,13 +406,21 @@ public class RecipesMISA implements IRecipePool {
                     setStackSize(Materials.DraconiumAwakened.getDust(1), 16 * 110),
                     setStackSize(Materials.Draconium.getDust(1), 16 * 40),
                     setStackSize(Materials.NetherStar.getDust(1), 16 * 35),
-                    setStackSize(GTModHandler.getModItem("miscutils", "itemDustDragonblood", 1), 16 * 4))
+                    setStackSize(RecipeStacks.gtppComponent(1, STANDALONE.DRAGON_METAL, ComponentTypes.DUST), 16 * 4))
                 .itemInputsUnsafe(
-                    setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5976), 16 * 256),
+                    setStackSize(
+                        RecipeStacks.generated(
+                            1,
+                            MetaGeneratedItem01.INSTANCE,
+                            OrePrefixes.crushed,
+                            Materials.DraconiumAwakened),
+                        16 * 256),
                     setStackSize(Materials.Carbon.getDust(1), 40),
                     Materials.Sulfur.getDust(80),
                     Materials.Sodium.getDust(20))
-                .fluidInputs(FluidRegistry.getFluidStack("bioethanol", 20000), Materials.Oxygen.getPlasma(32000))
+                .fluidInputs(
+                    FluidRegistry.getFluidStack(RecipeFluids.registryName(Materials.Ethanol.mFluid), 20000),
+                    Materials.Oxygen.getPlasma(32000))
                 .fluidOutputs(Materials.Oxygen.getGas(32000), FluidRegistry.getFluidStack("mud.red.slurry", 32000))
                 .specialValue(3)
                 .eut(67108864)
@@ -340,7 +431,10 @@ public class RecipesMISA implements IRecipePool {
             // Cosmic Neut
             GTValues.RA.stdBuilder()
                 .itemInputsUnsafe(
-                    setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5388), 16 * 256))
+                    setStackSize(
+                        RecipeStacks
+                            .generated(1, MetaGeneratedItem01.INSTANCE, OrePrefixes.crushed, Materials.BlackPlutonium),
+                        16 * 256))
                 .itemOutputs(setStackSize(Materials.BlackPlutonium.getDust(1), 32 * 120))
                 .fluidInputs(Materials.Helium.getPlasma(16000))
                 .fluidOutputs(Materials.Helium.getGas(16000))
@@ -355,11 +449,19 @@ public class RecipesMISA implements IRecipePool {
                     setStackSize(Materials.CosmicNeutronium.getDust(1), 16 * 10),
                     setStackSize(Materials.Neutronium.getDust(1), 16 * 20))
                 .itemInputsUnsafe(
-                    setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5394), 16 * 256),
+                    setStackSize(
+                        RecipeStacks.generated(
+                            1,
+                            MetaGeneratedItem01.INSTANCE,
+                            OrePrefixes.crushed,
+                            Materials.InfinityCatalyst),
+                        16 * 256),
                     setStackSize(Materials.Carbon.getDust(1), 40),
                     Materials.Sulfur.getDust(80),
                     Materials.Sodium.getDust(20))
-                .fluidInputs(FluidRegistry.getFluidStack("bioethanol", 20000), Materials.Nitrogen.getPlasma(32000))
+                .fluidInputs(
+                    FluidRegistry.getFluidStack(RecipeFluids.registryName(Materials.Ethanol.mFluid), 20000),
+                    Materials.Nitrogen.getPlasma(32000))
                 .fluidOutputs(Materials.Nitrogen.getGas(32000), FluidRegistry.getFluidStack("mud.red.slurry", 32000))
                 .specialValue(3)
                 .eut(16777216)
@@ -371,13 +473,21 @@ public class RecipesMISA implements IRecipePool {
                     setStackSize(Materials.DraconiumAwakened.getDust(1), 16 * 110),
                     setStackSize(Materials.Draconium.getDust(1), 16 * 40),
                     setStackSize(Materials.NetherStar.getDust(1), 16 * 35),
-                    setStackSize(GTModHandler.getModItem("miscutils", "itemDustDragonblood", 1), 2 * 4))
+                    setStackSize(RecipeStacks.gtppComponent(1, STANDALONE.DRAGON_METAL, ComponentTypes.DUST), 2 * 4))
                 .itemInputsUnsafe(
-                    setStackSize(GTModHandler.getModItem("gregtech", "gt.metaitem.01", 1, 5976), 16 * 256),
+                    setStackSize(
+                        RecipeStacks.generated(
+                            1,
+                            MetaGeneratedItem01.INSTANCE,
+                            OrePrefixes.crushed,
+                            Materials.DraconiumAwakened),
+                        16 * 256),
                     setStackSize(Materials.Carbon.getDust(1), 40),
                     Materials.Sulfur.getDust(80),
                     Materials.Sodium.getDust(20))
-                .fluidInputs(FluidRegistry.getFluidStack("bioethanol", 20000), Materials.Oxygen.getPlasma(32000))
+                .fluidInputs(
+                    FluidRegistry.getFluidStack(RecipeFluids.registryName(Materials.Ethanol.mFluid), 20000),
+                    Materials.Oxygen.getPlasma(32000))
                 .fluidOutputs(Materials.Oxygen.getGas(32000), FluidRegistry.getFluidStack("mud.red.slurry", 32000))
                 .specialValue(3)
                 .eut(67108864)

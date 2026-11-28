@@ -18,7 +18,7 @@ public class RecipesFreezerRecipes implements IRecipePool {
     @Override
     public void loadRecipes() {
         Fluid colder = FluidRegistry.getFluid("cryotheum");
-        Fluid water = FluidRegistry.getFluid("water");
+        Fluid water = FluidRegistry.getFluid(FluidRegistry.WATER.getName());
 
         final IRecipeMap VaF = RecipeMaps.vacuumFreezerRecipes;
         GTValues.RA.stdBuilder()

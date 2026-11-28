@@ -15,6 +15,8 @@ import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.item.OTHCircuitComponent;
 import com.newmaa.othtech.common.materials.BWLiquids;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
+import com.newmaa.othtech.utils.RecipeFluids;
+import com.newmaa.othtech.utils.RecipeStacks;
 
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
@@ -32,8 +34,11 @@ import gregtech.api.util.GTUtility;
 import gregtech.api.util.recipe.Scanning;
 import gregtech.common.tileentities.machines.multi.nanochip.util.CircuitCalibration;
 import gregtech.common.tileentities.machines.multi.nanochip.util.CircuitComponent;
+import gtPlusPlus.core.material.MaterialMisc;
+import gtPlusPlus.core.material.MaterialsAlloy;
 import gtPlusPlus.core.material.MaterialsElements;
 import gtnhlanth.common.register.WerkstoffMaterialPool;
+import ic2.core.Ic2Items;
 import li.cil.oc.OpenComputers;
 import tectech.thing.CustomItemList;
 import tectech.thing.item.ItemAstralArrayFabricator;
@@ -46,8 +51,8 @@ public class RecipesCircuit implements IRecipePool {
 
     @Override
     public void loadRecipes() {
-        Fluid i140 = FluidRegistry.getFluid("molten.indalloy140");
-        Fluid bio = FluidRegistry.getFluid("molten.mutatedlivingsolder");
+        Fluid i140 = FluidRegistry.getFluid(RecipeFluids.gtppMoltenName(MaterialsAlloy.INDALLOY_140));
+        Fluid bio = FluidRegistry.getFluid(RecipeFluids.gtppMoltenName(MaterialMisc.MUTATED_LIVING_SOLDER));
 
         final RecipeMap<?> ISA = Recipemaps.MegaIsaForge;
         final RecipeMap<?> MQFT = Recipemaps.QFTMega;
@@ -70,7 +75,7 @@ public class RecipesCircuit implements IRecipePool {
                 setStackSize(ItemList.Circuit_Parts_TransistorASMD.get(1), 512),
                 setStackSize(ItemList.Circuit_Parts_CapacitorASMD.get(1), 512),
                 setStackSize(ItemList.Circuit_Parts_InductorASMD.get(1), 512),
-                setStackSize(GTModHandler.getModItem("IC2", "reactorVentDiamond", 1, 1), 48),
+                setStackSize(RecipeStacks.exact(1, Ic2Items.reactorVentDiamond.getItem(), 1), 48),
                 GTOreDictUnificator.get(OrePrefixes.pipeTiny, Materials.Copper, 16),
                 GTOreDictUnificator.get(OrePrefixes.wireGt01, Materials.SuperconductorLuV, 64))
             .fluidInputs(
@@ -405,7 +410,9 @@ public class RecipesCircuit implements IRecipePool {
             7680 * 64,
             CircuitComponent.ProcessedBoardBioMutated.getFakeStack(8),
             new FluidStack(bio, 2304),
-            new FluidStack(FluidRegistry.getFluidID("molten.chromaticglass"), 16 * 72));
+            new FluidStack(
+                FluidRegistry.getFluidID(RecipeFluids.gtppMoltenName(MaterialsElements.STANDALONE.CHRONOMATIC_GLASS)),
+                16 * 72));
     }
 
     private static void addUniversalSocRecipe(CircuitComponent output, int outputCount, int socCount, int duration,

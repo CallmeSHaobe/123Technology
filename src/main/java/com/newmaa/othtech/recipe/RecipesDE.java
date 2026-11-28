@@ -11,6 +11,7 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 import com.newmaa.othtech.utils.ModsEnum;
+import com.newmaa.othtech.utils.RecipeFluids;
 
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
@@ -31,7 +32,10 @@ public class RecipesDE implements IRecipePool {
                 new ItemStack(Items.egg, 1),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Enderium, 16),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.EnderEye, 32))
-            .fluidInputs(new FluidStack(FluidRegistry.getFluidID("biohmediumsterilized"), 4000))
+            .fluidInputs(
+                new FluidStack(
+                    FluidRegistry.getFluidID(RecipeFluids.registryName(Materials.BioMediumSterilized.mFluid)),
+                    4000))
             .itemOutputs(new ItemStack(Blocks.dragon_egg, 1))
             .eut(TierEU.RECIPE_UV)
             .duration(1280)
@@ -43,7 +47,10 @@ public class RecipesDE implements IRecipePool {
                 GTModHandler.getModItem(String.valueOf(ModsEnum.NHUtilities), "AncientDragonEgg", 0),
                 new ItemStack(Items.egg, 8),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.DraconiumAwakened, 4))
-            .fluidInputs(new FluidStack(FluidRegistry.getFluidID("biohmediumsterilized"), 2000))
+            .fluidInputs(
+                new FluidStack(
+                    FluidRegistry.getFluidID(RecipeFluids.registryName(Materials.BioMediumSterilized.mFluid)),
+                    2000))
             .itemOutputs(GTModHandler.getModItem(String.valueOf(ModsEnum.NHUtilities), "AncientDragonEgg", 1))
             .eut(TierEU.RECIPE_UV)
             .duration(2560)
@@ -55,7 +62,10 @@ public class RecipesDE implements IRecipePool {
                 GTModHandler.getModItem(String.valueOf(ModsEnum.NHUtilities), "ChaosDragonEgg", 0),
                 new ItemStack(Items.egg, 16),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Draconium, 4))
-            .fluidInputs(new FluidStack(FluidRegistry.getFluidID("biohmediumsterilized"), 1000))
+            .fluidInputs(
+                new FluidStack(
+                    FluidRegistry.getFluidID(RecipeFluids.registryName(Materials.BioMediumSterilized.mFluid)),
+                    1000))
             .itemOutputs(GTModHandler.getModItem(String.valueOf(ModsEnum.NHUtilities), "ChaosDragonEgg", 1))
             .eut(TierEU.RECIPE_UV)
             .duration(5120)

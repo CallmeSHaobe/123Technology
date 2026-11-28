@@ -1,7 +1,6 @@
 package com.newmaa.othtech.recipe;
 
 import static com.newmaa.othtech.utils.Utils.setStackSize;
-import static gregtech.api.GregTechAPI.sBlockGlass1;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,8 +21,11 @@ import com.newmaa.othtech.common.compat.thaumcraft.VoidNexusFuelProfiles;
 import com.newmaa.othtech.common.materials.OTHMaterials;
 import com.newmaa.othtech.common.recipemap.Recipemaps;
 import com.newmaa.othtech.machine.machineclass.voidnexus.VoidNexusCalculator;
+import com.newmaa.othtech.utils.RecipeFluids;
+import com.newmaa.othtech.utils.RecipeStacks;
 
 import fox.spiteful.avaritia.items.LudicrousItems;
+import gregtech.api.casing.Casings;
 import gregtech.api.enums.CondensateType;
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
@@ -155,7 +157,13 @@ public class RecipesVoidNexus implements IRecipePool {
             120);
 
         ItemStack subspaceCasing = casing(NailongCasingMeta.SUBSPACE_SHIELD_CASING, 1);
-        ItemStack[] subspaceInputs = new ItemStack[] { new ItemStack(BlockLoader.defcCasingBlock, 1, 12),
+        ItemStack[] subspaceInputs = new ItemStack[] { new ItemStack(
+            BlockLoader.defcCasingBlock,
+            1,
+            kubatech.api.enums.ItemList.DEFCCasingT5.hasBeenSet()
+                ? kubatech.api.enums.ItemList.DEFCCasingT5.getInternalStack_unsafe()
+                    .getItemDamage()
+                : 12),
             manifested(OrePrefixes.plateDense, 12), OTHItemList.SpacetimeCoolingCore.get(1) };
         addAssemblerRecipe(
             "subspace shield casing",
@@ -184,14 +192,14 @@ public class RecipesVoidNexus implements IRecipePool {
             60);
 
         ItemStack endlessGlass = casing(NailongCasingMeta.ENDLESS_PSIONIC_GLASS, 1);
-        if (!containsNullInputs(new ItemStack(sBlockGlass1, 1, 2), endlessGlass)) {
+        if (!containsNullInputs(RecipeStacks.casing(1, Casings.OmniPurposeInfinityFusedGlass), endlessGlass)) {
             FluidStack manifestedFluid = OTHMaterials.ManifestedPsionics.getMolten(1_152);
             if (manifestedFluid == null) {
                 OTHTechnology.LOG
                     .warn("Void Nexus endless psionic glass recipe skipped: molten fluid is" + " unavailable.");
             } else {
                 GTValues.RA.stdBuilder()
-                    .itemInputs(new ItemStack(sBlockGlass1, 1, 2))
+                    .itemInputs(RecipeStacks.casing(1, Casings.OmniPurposeInfinityFusedGlass))
                     .fluidInputs(manifestedFluid)
                     .itemOutputs(endlessGlass)
                     .duration(20 * 10)
@@ -292,8 +300,8 @@ public class RecipesVoidNexus implements IRecipePool {
             GTOreDictUnificator.get(OrePrefixes.plate, Materials.Infinity, 64),
             MaterialsElements.STANDALONE.HYPOGEN.getPlate(64) };
         FluidStack[] fluids = new FluidStack[] { MaterialsElements.STANDALONE.CELESTIAL_TUNGSTEN.getFluidStack(2_880),
-            MaterialsElements.STANDALONE.CHRONOMATIC_GLASS.getFluidStack(2_880),
-            FluidRegistry.getFluidStack("molten.dragonblood", 14_400) };
+            MaterialsElements.STANDALONE.CHRONOMATIC_GLASS.getFluidStack(2_880), FluidRegistry
+                .getFluidStack(RecipeFluids.gtppMoltenName(MaterialsElements.STANDALONE.DRAGON_METAL), 14_400) };
         if (containsNullInputs(research) || containsNullInputs(inputs) || containsNullInputs(fluids)) {
             OTHTechnology.LOG.warn(
                 "Psionic manifestation module recipe skipped: one or more research or recipe"

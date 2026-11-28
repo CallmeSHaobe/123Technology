@@ -11,27 +11,41 @@ import net.minecraftforge.fluids.FluidStack;
 import com.newmaa.othtech.common.OTHItemList;
 import com.newmaa.othtech.common.materials.BWLiquids;
 import com.newmaa.othtech.utils.RecipeBuilder;
+import com.newmaa.othtech.utils.RecipeFluids;
+import com.newmaa.othtech.utils.RecipeStacks;
 
 import bartworks.system.material.WerkstoffLoader;
 import goodgenerator.items.GGMaterial;
+import gregtech.api.GregTechAPI;
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
+import gregtech.api.enums.Mods;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.enums.TierEU;
 import gregtech.api.recipe.RecipeMaps;
-import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
+import gtPlusPlus.core.item.base.BaseItemComponent.ComponentTypes;
 import gtPlusPlus.core.material.MaterialsElements;
 
 public class RecipesNaquadah implements IRecipePool {
 
     public void loadRecipes() {
         RecipeBuilder.builder()
-            .fluidOutputs(FluidRegistry.getFluidStack("naquadah based liquid fuel mkv", 4000))
+            .fluidOutputs(
+                FluidRegistry.getFluidStack(
+                    Mods.GoodGenerator.isModLoaded() ? RecipeFluids.werkstoffName(GGMaterial.naquadahBasedFuelMkV)
+                        : "naquadah based liquid fuel mkv",
+                    4000))
             .fluidInputs(
-                FluidRegistry.getFluidStack("heavy naquadah fuel", 512000),
-                FluidRegistry.getFluidStack("light naquadah fuel", 640000),
-                FluidRegistry.getFluidStack("heavyradox", 1000),
+                FluidRegistry.getFluidStack(
+                    Mods.GoodGenerator.isModLoaded() ? RecipeFluids.werkstoffName(GGMaterial.heavyNaquadahFuel)
+                        : "heavy naquadah fuel",
+                    512000),
+                FluidRegistry.getFluidStack(
+                    Mods.GoodGenerator.isModLoaded() ? RecipeFluids.werkstoffName(GGMaterial.lightNaquadahFuel)
+                        : "light naquadah fuel",
+                    640000),
+                Materials.RadoxHeavy.getFluid(1000),
                 Materials.Praseodymium.getFluid(294912))
             .itemInputs(
                 setStackSize(GGMaterial.plutoniumOxideUraniumMixture.get(OrePrefixes.dust, 1), 12800),
@@ -48,34 +62,91 @@ public class RecipesNaquadah implements IRecipePool {
 
             .addTo(NQF);
         RecipeBuilder.builder()
-            .fluidOutputs(FluidRegistry.getFluidStack("naquadah based liquid fuel mkv", 6000))
+            .fluidOutputs(
+                FluidRegistry.getFluidStack(
+                    Mods.GoodGenerator.isModLoaded() ? RecipeFluids.werkstoffName(GGMaterial.naquadahBasedFuelMkV)
+                        : "naquadah based liquid fuel mkv",
+                    6000))
             .fluidInputs(
-                FluidRegistry.getFluidStack("heavy naquadah fuel", 128000),
-                FluidRegistry.getFluidStack("light naquadah fuel", 160000),
-                FluidRegistry.getFluidStack("molten.mellion", 1152),
-                FluidRegistry.getFluidStack("molten.creon", 1152),
-                FluidRegistry.getFluidStack("molten.hypogen", 3840))
+                FluidRegistry.getFluidStack(
+                    Mods.GoodGenerator.isModLoaded() ? RecipeFluids.werkstoffName(GGMaterial.heavyNaquadahFuel)
+                        : "heavy naquadah fuel",
+                    128000),
+                FluidRegistry.getFluidStack(
+                    Mods.GoodGenerator.isModLoaded() ? RecipeFluids.werkstoffName(GGMaterial.lightNaquadahFuel)
+                        : "light naquadah fuel",
+                    160000),
+                Materials.Mellion.getMolten(1152),
+                Materials.Creon.getMolten(1152),
+                FluidRegistry.getFluidStack(RecipeFluids.gtppMoltenName(MaterialsElements.STANDALONE.HYPOGEN), 3840))
             .itemInputs(
-                setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 10009), 12800),
-                setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 10024), 1712),
-                setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 10022), 192),
-                setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 10023), 1024),
+                setStackSize(
+                    (GregTechAPI.sPreloadStarted && Mods.BartWorks.isModLoaded() ? RecipeStacks.exact(
+                        1,
+                        WerkstoffLoader.items.get(OrePrefixes.dust),
+                        (Mods.GoodGenerator.isModLoaded() ? GGMaterial.plutoniumOxideUraniumMixture.getmID() : 10009))
+                        : null),
+                    12800),
+                setStackSize(
+                    (GregTechAPI.sPreloadStarted && Mods.BartWorks.isModLoaded()
+                        ? RecipeStacks.exact(
+                            1,
+                            WerkstoffLoader.items.get(OrePrefixes.dust),
+                            (Mods.GoodGenerator.isModLoaded() ? GGMaterial.extremelyUnstableNaquadah.getmID() : 10024))
+                        : null),
+                    1712),
+                setStackSize(
+                    (GregTechAPI.sPreloadStarted && Mods.BartWorks.isModLoaded()
+                        ? RecipeStacks.exact(
+                            1,
+                            WerkstoffLoader.items.get(OrePrefixes.dust),
+                            (Mods.GoodGenerator.isModLoaded() ? GGMaterial.atomicSeparationCatalyst.getmID() : 10022))
+                        : null),
+                    192),
+                setStackSize(
+                    (GregTechAPI.sPreloadStarted && Mods.BartWorks.isModLoaded() ? RecipeStacks.exact(
+                        1,
+                        WerkstoffLoader.items.get(OrePrefixes.dust),
+                        (Mods.GoodGenerator.isModLoaded() ? GGMaterial.orundum.getmID() : 10023)) : null),
+                    1024),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.DraconiumAwakened, 1), 1024),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.TranscendentMetal, 1), 64),
                 setStackSize(GTOreDictUnificator.get(OrePrefixes.dust, Materials.Bedrockium, 1), 1024),
-                setStackSize(GTModHandler.getModItem("bartworks", "gt.bwMetaGenerateddust", 1, 10001), 25600),
-                setStackSize(GTModHandler.getModItem("miscutils", "itemDustChromaticGlass", 1), 1440))
+                setStackSize(
+                    (GregTechAPI.sPreloadStarted && Mods.BartWorks.isModLoaded()
+                        ? RecipeStacks.exact(
+                            1,
+                            WerkstoffLoader.items.get(OrePrefixes.dust),
+                            (Mods.GoodGenerator.isModLoaded() ? GGMaterial.graphiteUraniumMixture.getmID() : 10001))
+                        : null),
+                    25600),
+                setStackSize(
+                    RecipeStacks.gtppComponent(
+                        1,
+                        gtPlusPlus.core.material.MaterialsElements.STANDALONE.CHRONOMATIC_GLASS,
+                        ComponentTypes.DUST),
+                    1440))
             .eut(TierEU.RECIPE_UMV)
             .duration(100 * 20)
 
             .addTo(NQF);
         RecipeBuilder.builder()
-            .fluidOutputs(FluidRegistry.getFluidStack("naquadah based liquid fuel mkvi", 4500))
+            .fluidOutputs(
+                FluidRegistry.getFluidStack(
+                    Mods.GoodGenerator.isModLoaded() ? RecipeFluids.werkstoffName(GGMaterial.naquadahBasedFuelMkVI)
+                        : "naquadah based liquid fuel mkvi",
+                    4500))
             .fluidInputs(
-                FluidRegistry.getFluidStack("heavy naquadah fuel", 128000),
-                FluidRegistry.getFluidStack("light naquadah fuel", 160000),
-                FluidRegistry.getFluidStack("molten.mellion", 1152),
-                FluidRegistry.getFluidStack("molten.creon", 1152),
+                FluidRegistry.getFluidStack(
+                    Mods.GoodGenerator.isModLoaded() ? RecipeFluids.werkstoffName(GGMaterial.heavyNaquadahFuel)
+                        : "heavy naquadah fuel",
+                    128000),
+                FluidRegistry.getFluidStack(
+                    Mods.GoodGenerator.isModLoaded() ? RecipeFluids.werkstoffName(GGMaterial.lightNaquadahFuel)
+                        : "light naquadah fuel",
+                    160000),
+                Materials.Mellion.getMolten(1152),
+                Materials.Creon.getMolten(1152),
                 GGMaterial.shirabon.getMolten(1440))
             .itemInputs(
                 setStackSize(GGMaterial.plutoniumOxideUraniumMixture.get(OrePrefixes.dust, 1), 12800),
@@ -94,11 +165,21 @@ public class RecipesNaquadah implements IRecipePool {
 
             .addTo(NQF);
         RecipeBuilder.builder()
-            .fluidOutputs(FluidRegistry.getFluidStack("naquadah based liquid fuel mkvi", 7500))
+            .fluidOutputs(
+                FluidRegistry.getFluidStack(
+                    Mods.GoodGenerator.isModLoaded() ? RecipeFluids.werkstoffName(GGMaterial.naquadahBasedFuelMkVI)
+                        : "naquadah based liquid fuel mkvi",
+                    7500))
             .fluidInputs(
-                FluidRegistry.getFluidStack("heavy naquadah fuel", 128000),
-                FluidRegistry.getFluidStack("light naquadah fuel", 160000),
-                FluidRegistry.getFluidStack("rawstarmatter", 400),
+                FluidRegistry.getFluidStack(
+                    Mods.GoodGenerator.isModLoaded() ? RecipeFluids.werkstoffName(GGMaterial.heavyNaquadahFuel)
+                        : "heavy naquadah fuel",
+                    128000),
+                FluidRegistry.getFluidStack(
+                    Mods.GoodGenerator.isModLoaded() ? RecipeFluids.werkstoffName(GGMaterial.lightNaquadahFuel)
+                        : "light naquadah fuel",
+                    160000),
+                Materials.RawStarMatter.getFluid(400),
                 GGMaterial.shirabon.getMolten(1440))
             .itemInputs(
                 setStackSize(GGMaterial.plutoniumOxideUraniumMixture.get(OrePrefixes.dust, 1), 12800),
@@ -155,7 +236,7 @@ public class RecipesNaquadah implements IRecipePool {
             .fluidOutputs(BWLiquids.FUELA.getFluidOrGas(1000))
             .fluidInputs(
                 Materials.Naquadah.getMolten(864),
-                FluidRegistry.getFluidStack("highoctanegasoline", 4000),
+                Materials.GasolinePremium.getFluid(4000),
                 FluidRegistry.getFluidStack("fluid.rocketfuelmixa", 2000))
             .eut(TierEU.RECIPE_ZPM)
             .duration(5)
@@ -164,7 +245,7 @@ public class RecipesNaquadah implements IRecipePool {
             .fluidOutputs(BWLiquids.FUELA.getFluidOrGas(1000))
             .fluidInputs(
                 Materials.Naquadah.getMolten(864),
-                FluidRegistry.getFluidStack("highoctanegasoline", 4000),
+                Materials.GasolinePremium.getFluid(4000),
                 FluidRegistry.getFluidStack("fluid.rocketfuelmixa", 2000))
             .eut(TierEU.RECIPE_ZPM)
             .duration(5)
